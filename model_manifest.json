@@ -1,0 +1,941 @@
+{
+  "stan_example_models_commit": "e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b",
+  "default_run": {
+    "chains": 4,
+    "iter_warmup": 250,
+    "iter_sampling": 250,
+    "seed": 12345
+  },
+  "models": [
+    {
+      "id": "bernoulli",
+      "title": "Bernoulli Estimator",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "easy",
+      "description": "One-parameter Bernoulli model for binary outcomes.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/bernoulli.stan",
+      "source_path": "basic_estimators/bernoulli",
+      "data_source": "basic_estimators/bernoulli.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/bernoulli"
+    },
+    {
+      "id": "normal-location",
+      "title": "Normal Location",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "easy",
+      "description": "Normal mean estimator with data in transformed data.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/normal_loc.stan",
+      "source_path": "basic_estimators/normal_loc",
+      "data_source": null,
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/normal-location"
+    },
+    {
+      "id": "truncated-normal",
+      "title": "Truncated Normal",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "easy",
+      "description": "Normal estimator with truncation in the likelihood.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/normal_truncated.stan",
+      "source_path": "basic_estimators/normal_truncated",
+      "data_source": "basic_estimators/normal_truncated.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/truncated-normal"
+    },
+    {
+      "id": "censored-normal",
+      "title": "Censored Normal",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "medium",
+      "description": "Normal estimator with censored observations.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/normal_censored.stan",
+      "source_path": "basic_estimators/normal_censored",
+      "data_source": "basic_estimators/normal_censored.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/censored-normal"
+    },
+    {
+      "id": "multivariate-normal",
+      "title": "Multivariate Normal",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "medium",
+      "description": "Multivariate normal mean/covariance estimator.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/normal_multi.stan",
+      "source_path": "basic_estimators/normal_multi",
+      "data_source": "basic_estimators/normal_multi.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/multivariate-normal"
+    },
+    {
+      "id": "negative-binomial",
+      "title": "Negative Binomial",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "easy",
+      "description": "Count model using the negative binomial distribution.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/negative_binomial.stan",
+      "source_path": "basic_estimators/negative_binomial",
+      "data_source": "basic_estimators/negative_binomial.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/negative-binomial"
+    },
+    {
+      "id": "negative-binomial2",
+      "title": "Negative Binomial 2",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "easy",
+      "description": "Alternative mean/precision parameterization for counts.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/negative_binomial2.stan",
+      "source_path": "basic_estimators/negative_binomial2",
+      "data_source": "basic_estimators/negative_binomial2.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/negative-binomial2"
+    },
+    {
+      "id": "normal-mixture",
+      "title": "Normal Mixture",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "medium",
+      "description": "Two-component normal mixture model.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/normal_mixture.stan",
+      "source_path": "basic_estimators/normal_mixture",
+      "data_source": "basic_estimators/normal_mixture.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/normal-mixture"
+    },
+    {
+      "id": "k-component-normal-mixture",
+      "title": "K-Component Normal Mixture",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "medium",
+      "description": "Finite normal mixture with configurable component count.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/normal_mixture_k.stan",
+      "source_path": "basic_estimators/normal_mixture_k",
+      "data_source": "basic_estimators/normal_mixture_k.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/k-component-normal-mixture"
+    },
+    {
+      "id": "k-component-normal-mixture-simplex",
+      "title": "K-Component Normal Mixture with Simplex Weights",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "medium",
+      "description": "Finite mixture using simplex-valued component weights.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/normal_mixture_k_prop.stan",
+      "source_path": "basic_estimators/normal_mixture_k_prop",
+      "data_source": "basic_estimators/normal_mixture_k_prop.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/k-component-normal-mixture-simplex"
+    },
+    {
+      "id": "simple-regression",
+      "title": "Simple Regression",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "easy",
+      "description": "Introductory linear regression from the Stan chapter material.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/chapter1/simplest-regression.stan",
+      "source_path": "knitr/chapter1/simplest-regression",
+      "data_source": "knitr/chapter1/simplest-regression.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/simple-regression"
+    },
+    {
+      "id": "vector-regression",
+      "title": "Vector Regression",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "easy",
+      "description": "Vectorized linear regression from the Stan chapter material.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/chapter1/vector-regression.stan",
+      "source_path": "knitr/chapter1/vector-regression",
+      "data_source": "knitr/chapter1/vector-regression.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/vector-regression"
+    },
+    {
+      "id": "two-parameter-logistic-irt",
+      "title": "Two-Parameter Logistic IRT",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "medium",
+      "description": "Two-parameter item-response model from Stan education material.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/education/tutorial_twopl/twopl.stan",
+      "source_path": "education/tutorial_twopl/twopl",
+      "data_source": "education/tutorial_twopl/twopl.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/two-parameter-logistic-irt"
+    },
+    {
+      "id": "two-pl-regression-centered",
+      "title": "2PL Regression Centered",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "advanced",
+      "description": "Centered hierarchical 2PL regression model.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/education/tutorial_twopl/reg_centered.stan",
+      "source_path": "education/tutorial_twopl/reg_centered",
+      "data_source": "education/tutorial_twopl/reg_centered.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/two-pl-regression-centered"
+    },
+    {
+      "id": "two-pl-regression-noncentered",
+      "title": "2PL Regression Noncentered",
+      "source_group": "stan_tutorials",
+      "source_group_label": "Stan tutorials",
+      "difficulty": "advanced",
+      "description": "Non-centered hierarchical 2PL regression model.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/education/tutorial_twopl/reg_noncentered.stan",
+      "source_path": "education/tutorial_twopl/reg_noncentered",
+      "data_source": "education/tutorial_twopl/reg_noncentered.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_tutorials/two-pl-regression-noncentered"
+    },
+    {
+      "id": "golf-putting-logistic",
+      "title": "Golf Putting Logistic",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "easy",
+      "description": "Logistic model for golf putting success by distance.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/golf/golf1.stan",
+      "source_path": "knitr/golf/golf1",
+      "data_source": "knitr/golf/golf1.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/golf-putting-logistic"
+    },
+    {
+      "id": "worldcup-first-try",
+      "title": "World Cup First Try",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "medium",
+      "description": "Initial World Cup scoring model.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/world-cup/worldcup_first_try.stan",
+      "source_path": "knitr/world-cup/worldcup_first_try",
+      "data_source": "knitr/world-cup/worldcup_first_try.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/worldcup-first-try"
+    },
+    {
+      "id": "worldcup-no-sqrt",
+      "title": "World Cup No Square Root",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "medium",
+      "description": "World Cup model variant without square-root transform.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/world-cup/worldcup_no_sqrt.stan",
+      "source_path": "knitr/world-cup/worldcup_no_sqrt",
+      "data_source": "knitr/world-cup/worldcup_no_sqrt.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/worldcup-no-sqrt"
+    },
+    {
+      "id": "worldcup-fixed",
+      "title": "World Cup Fixed",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "medium",
+      "description": "Revised World Cup scoring model with fixed issues.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/world-cup/worldcup_fixed.stan",
+      "source_path": "knitr/world-cup/worldcup_fixed",
+      "data_source": "knitr/world-cup/worldcup_fixed.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/worldcup-fixed"
+    },
+    {
+      "id": "worldcup-replication",
+      "title": "World Cup with Replication",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "advanced",
+      "description": "World Cup scoring model with generated replications.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/world-cup/worldcup_with_replication.stan",
+      "source_path": "knitr/world-cup/worldcup_with_replication",
+      "data_source": "knitr/world-cup/worldcup_with_replication.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/worldcup-replication"
+    },
+    {
+      "id": "worldcup-no-prior",
+      "title": "World Cup No Prior",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "medium",
+      "description": "World Cup model variant without explicit prior.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/world-cup/worldcup_first_try_noprior.stan",
+      "source_path": "knitr/world-cup/worldcup_first_try_noprior",
+      "data_source": "knitr/world-cup/worldcup_first_try_noprior.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/worldcup-no-prior"
+    },
+    {
+      "id": "binary-trials-no-pool",
+      "title": "Binary Trials No Pooling",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "easy",
+      "description": "Independent binomial rates for pooled binary-trial case study.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/pool-binary-trials/no-pool.stan",
+      "source_path": "knitr/pool-binary-trials/no-pool",
+      "data_source": "knitr/pool-binary-trials/no-pool.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/binary-trials-no-pool"
+    },
+    {
+      "id": "binary-trials-complete-pool",
+      "title": "Binary Trials Complete Pooling",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "easy",
+      "description": "Complete pooling binomial model for binary trials.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/pool-binary-trials/pool.stan",
+      "source_path": "knitr/pool-binary-trials/pool",
+      "data_source": "knitr/pool-binary-trials/pool.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/binary-trials-complete-pool"
+    },
+    {
+      "id": "binary-trials-hierarchical",
+      "title": "Binary Trials Hierarchical",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "medium",
+      "description": "Hierarchical binomial model for binary trials.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/pool-binary-trials/hier.stan",
+      "source_path": "knitr/pool-binary-trials/hier",
+      "data_source": "knitr/pool-binary-trials/hier.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/binary-trials-hierarchical"
+    },
+    {
+      "id": "binary-trials-hier-logit",
+      "title": "Binary Trials Hierarchical Logit",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "medium",
+      "description": "Hierarchical logistic parameterization for binary trials.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/pool-binary-trials/hier-logit.stan",
+      "source_path": "knitr/pool-binary-trials/hier-logit",
+      "data_source": "knitr/pool-binary-trials/hier-logit.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/binary-trials-hier-logit"
+    },
+    {
+      "id": "binary-trials-hier-logit-centered",
+      "title": "Binary Trials Hierarchical Logit Centered",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "medium",
+      "description": "Centered hierarchical logistic model for binary trials.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/pool-binary-trials/hier-logit-centered.stan",
+      "source_path": "knitr/pool-binary-trials/hier-logit-centered",
+      "data_source": "knitr/pool-binary-trials/hier-logit-centered.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/binary-trials-hier-logit-centered"
+    },
+    {
+      "id": "sir-ode",
+      "title": "SIR ODE",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "advanced",
+      "description": "Susceptible-infected-recovered ODE model.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/convert-odes/sir.stan",
+      "source_path": "knitr/convert-odes/sir",
+      "data_source": "knitr/convert-odes/sir.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/sir-ode"
+    },
+    {
+      "id": "one-compartment-mm-ode",
+      "title": "One-Compartment Michaelis-Menten ODE",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "advanced",
+      "description": "One-compartment pharmacokinetic ODE with Michaelis-Menten elimination.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/convert-odes/one_comp_mm_elim_abs.stan",
+      "source_path": "knitr/convert-odes/one_comp_mm_elim_abs",
+      "data_source": "knitr/convert-odes/one_comp_mm_elim_abs.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/one-compartment-mm-ode"
+    },
+    {
+      "id": "soil-incubation-ode",
+      "title": "Soil Incubation ODE",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "advanced",
+      "description": "Two-pool soil carbon incubation ODE model.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/soil-carbon/soil_incubation.stan",
+      "source_path": "knitr/soil-carbon/soil_incubation",
+      "data_source": "knitr/soil-carbon/AK_T25.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/soil-incubation-ode"
+    },
+    {
+      "id": "bym2-spatial-poisson",
+      "title": "BYM2 Spatial Poisson",
+      "source_group": "stan_case_studies",
+      "source_group_label": "Stan case studies",
+      "difficulty": "advanced",
+      "description": "Spatial Poisson BYM2 model with ICAR component.",
+      "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/car-iar-poisson/update_2021_02/bym2.stan",
+      "source_path": "knitr/car-iar-poisson/update_2021_02/bym2",
+      "data_source": "knitr/car-iar-poisson/update_2021_02/scotland_connected.data.json",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/stan_case_studies/bym2-spatial-poisson"
+    },
+    {
+      "id": "binomial-inference",
+      "title": "Inferences with Binomials",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "easy",
+      "description": "Beta-binomial update for a binomial observation.",
+      "source_url": "https://forestdb.org/models/binomial-inference.html",
+      "translation_note": "Direct continuous-parameter translation.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/binomial-inference"
+    },
+    {
+      "id": "gaussian-inference",
+      "title": "Inferences with Gaussians",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "easy",
+      "description": "Normal model with unknown mean and standard deviation.",
+      "source_url": "https://forestdb.org/models/gaussian-inference.html",
+      "translation_note": "Direct continuous-parameter translation.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/gaussian-inference"
+    },
+    {
+      "id": "gaussian-gamma",
+      "title": "1D Gaussian with Gaussian/Gamma Hyperparameters",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "medium",
+      "description": "Normal likelihood with normal-gamma prior structure.",
+      "source_url": "https://forestdb.org/models/gaussian-gamma.html",
+      "translation_note": "Uses precision parameterization for the gamma prior.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/gaussian-gamma"
+    },
+    {
+      "id": "linear-regression",
+      "title": "Bayesian Linear Regression",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "easy",
+      "description": "Gaussian linear regression with weakly informative priors.",
+      "source_url": "https://forestdb.org/models/linear-regression.html",
+      "translation_note": "Direct regression translation.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/linear-regression"
+    },
+    {
+      "id": "logistic-regression",
+      "title": "Bayesian Logistic Regression",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "easy",
+      "description": "Bernoulli-logit regression for binary outcomes.",
+      "source_url": "https://forestdb.org/models/logistic-regression.html",
+      "translation_note": "Direct regression translation.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/logistic-regression"
+    },
+    {
+      "id": "finite-mixture",
+      "title": "Finite Mixture Model",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "medium",
+      "description": "Two-component Bernoulli mixture marginalized over labels.",
+      "source_url": "https://forestdb.org/models/finite-mixture.html",
+      "translation_note": "Discrete component labels are marginalized with log_mix.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/finite-mixture"
+    },
+    {
+      "id": "finite-gaussian-mixture",
+      "title": "Finite Gaussian Mixture",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "medium",
+      "description": "Two-component Gaussian mixture with ordered locations.",
+      "source_url": "https://forestdb.org/models/finite-gaussian-mixture.html",
+      "translation_note": "Discrete component labels are marginalized with log_mix.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/finite-gaussian-mixture"
+    },
+    {
+      "id": "dirichlet-multinomial-mixture",
+      "title": "Finite Dirichlet-Multinomial Mixture",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "advanced",
+      "description": "Mixture of count vectors with Dirichlet-multinomial components.",
+      "source_url": "https://forestdb.org/models/dm-mixture.html",
+      "translation_note": "Discrete document clusters are marginalized with log_sum_exp.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/dirichlet-multinomial-mixture"
+    },
+    {
+      "id": "markov-model",
+      "title": "Markov Model",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "medium",
+      "description": "Categorical first-order Markov chain with learned transition matrix.",
+      "source_url": "https://forestdb.org/models/markov.html",
+      "translation_note": "Direct finite-state Markov-chain translation.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/markov-model"
+    },
+    {
+      "id": "hidden-markov-model",
+      "title": "Discrete-Time Hidden Markov Model",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "advanced",
+      "description": "Hidden Markov model with marginalized latent states.",
+      "source_url": "https://forestdb.org/models/hmm.html",
+      "translation_note": "Hidden states are marginalized with the forward algorithm.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/hidden-markov-model"
+    },
+    {
+      "id": "rat-growth",
+      "title": "Rat Growth",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "advanced",
+      "description": "Hierarchical linear growth curves for repeated rat weights.",
+      "source_url": "https://forestdb.org/models/rat-growth.html",
+      "translation_note": "Continuous hierarchical regression translation.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/rat-growth"
+    },
+    {
+      "id": "geometric-distribution",
+      "title": "Geometric Distribution",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "easy",
+      "description": "Geometric likelihood for trials until first success.",
+      "source_url": "https://forestdb.org/models/geometric.html",
+      "translation_note": "Stan's geometric distribution counts failures, so data are shifted by one.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/geometric-distribution"
+    },
+    {
+      "id": "medical-diagnosis",
+      "title": "Medical Diagnosis",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "medium",
+      "description": "Bayes-net-style diagnostic model with latent disease marginalized.",
+      "source_url": "https://forestdb.org/models/medical-bayesnet.html",
+      "translation_note": "The binary disease state is marginalized analytically.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/medical-diagnosis"
+    },
+    {
+      "id": "burglary-bayesnet",
+      "title": "Burglary Bayesnet",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "advanced",
+      "description": "Classic burglary/earthquake/alarm network with calls observed.",
+      "source_url": "https://forestdb.org/models/burglary.html",
+      "translation_note": "Binary burglary, earthquake, and alarm nodes are marginalized.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/burglary-bayesnet"
+    },
+    {
+      "id": "model-selection",
+      "title": "Model Selection",
+      "source_group": "forestdb",
+      "source_group_label": "ForestDB translations",
+      "difficulty": "advanced",
+      "description": "Mixture over linear and quadratic regression models.",
+      "source_url": "https://forestdb.org/models/model-selection.html",
+      "translation_note": "The discrete model indicator is marginalized over the whole data set.",
+      "stan_file": "model.stan",
+      "data_file": "data.json",
+      "method": "sample",
+      "default_run": {
+        "chains": 4,
+        "iter_warmup": 250,
+        "iter_sampling": 250,
+        "seed": 12345
+      },
+      "path": "models/forestdb/model-selection"
+    }
+  ]
+}

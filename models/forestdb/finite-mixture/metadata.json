@@ -1,0 +1,19 @@
+{
+  "id": "finite-mixture",
+  "title": "Finite Mixture Model",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "difficulty": "medium",
+  "description": "Two-component Bernoulli mixture marginalized over labels.",
+  "source_url": "https://forestdb.org/models/finite-mixture.html",
+  "translation_note": "Discrete component labels are marginalized with log_mix.",
+  "stan_file": "model.stan",
+  "data_file": "data.json",
+  "method": "sample",
+  "default_run": {
+    "chains": 4,
+    "iter_warmup": 250,
+    "iter_sampling": 250,
+    "seed": 12345
+  }
+}

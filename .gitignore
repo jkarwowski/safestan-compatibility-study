@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+runs/
+models/*/*/runs/
+models/*/*/model
+models/*/*/*.d
+models/*/*/*.hpp
+models/*/*/*.o
+models/*/*/*.csv

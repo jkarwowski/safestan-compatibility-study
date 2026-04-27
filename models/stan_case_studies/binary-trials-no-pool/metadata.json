@@ -1,0 +1,20 @@
+{
+  "id": "binary-trials-no-pool",
+  "title": "Binary Trials No Pooling",
+  "source_group": "stan_case_studies",
+  "source_group_label": "Stan case studies",
+  "difficulty": "easy",
+  "description": "Independent binomial rates for pooled binary-trial case study.",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/pool-binary-trials/no-pool.stan",
+  "source_path": "knitr/pool-binary-trials/no-pool",
+  "data_source": "knitr/pool-binary-trials/no-pool.data.json",
+  "stan_file": "model.stan",
+  "data_file": "data.json",
+  "method": "sample",
+  "default_run": {
+    "chains": 4,
+    "iter_warmup": 250,
+    "iter_sampling": 250,
+    "seed": 12345
+  }
+}

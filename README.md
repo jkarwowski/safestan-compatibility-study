@@ -1,0 +1,58 @@
+# Stan/SafeStan Regression Model Collection
+
+This repository contains a small, uniform corpus of Stan models for comparing original Stan programs with SafeStan translations through a CmdStan-compatible runner such as `cmdsafestan`.
+
+## Layout
+
+Each model directory contains:
+
+- `model.stan`: the Stan model to compile.
+- `data.json`: the default data set for the model.
+- `metadata.json`: source, difficulty, and default run settings.
+- `source.md`: upstream link and translation notes.
+- `run.py`: thin wrapper around `scripts/run_cmdstan_model.py`.
+
+Model groups live under `models/stan_tutorials`, `models/stan_case_studies`, and `models/forestdb`.
+
+## Running One Model
+
+```sh
+python3 models/forestdb/binomial-inference/run.py --cmdstan /path/to/cmdsafestan
+```
+
+You can also set `CMDSAFESTAN` or `CMDSTAN`:
+
+```sh
+CMDSAFESTAN=/path/to/cmdsafestan python3 models/forestdb/binomial-inference/run.py
+```
+
+By default each model uses 4 chains, 250 warmup iterations, and 250 sampling iterations. Override these with `--chains`, `--iter-warmup`, and `--iter-sampling`.
+
+## Running a Suite
+
+```sh
+python3 scripts/run_suite.py --cmdstan /path/to/cmdsafestan --source forestdb
+python3 scripts/run_suite.py --cmdstan /path/to/cmdsafestan --difficulty advanced --limit 5
+```
+
+Use `--dry-run` to inspect compile and run commands without executing them.
+
+## Comparing Runs
+
+After running a Stan baseline and a SafeStan candidate into separate output roots:
+
+```sh
+python3 scripts/compare_outputs.py runs/baseline runs/safestan --json-output runs/comparison.json
+```
+
+The comparison script summarizes common CmdStan CSV columns and checks mean and standard-deviation differences with configurable `--atol` and `--rtol`.
+
+## SafeStan Translation Workflow
+
+A simple workflow is to keep the original `model.stan`, add a translated SafeStan file such as `model_safe.stan` in the same directory, and run:
+
+```sh
+python3 models/forestdb/binomial-inference/run.py --cmdstan /path/to/cmdsafestan --stan-file model_safe.stan --output-dir runs/safestan/forestdb/binomial-inference
+```
+
+If your SafeStan compiler expects a different extension, pass that filename with `--stan-file`; the runner compiles the executable target by stripping the file suffix.
