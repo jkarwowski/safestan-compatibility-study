@@ -76,6 +76,24 @@ python3 scripts/check_safestan_compatibility.py \
 
 The expanded bootstrap copies upstream same-stem JSON data when present and otherwise writes synthetic data from `stanc --debug-generate-data`.
 
+## Validating Minor SafeStan Rewrites
+
+`MINOR` compatibility is only confirmed when an explicit `model_safe.stan` exists and an original-vs-safe run comparison passes. Generate conservative safe rewrites and run the comparison with:
+
+```sh
+python3 scripts/validate_minor_models.py \
+  --manifest expanded_model_manifest.json \
+  --compatibility safestan_compatibility_all.json \
+  --json-output minor_validation_all.json \
+  --md-output MINOR_VALIDATION_ALL.md \
+  --results-md ALL_RESULTS.md \
+  --model-list-md ALL_MODEL_LIST.md \
+  --run \
+  --write-report-markers
+```
+
+For the curated 45-model set, use `model_manifest.json`, `safestan_compatibility.json`, `minor_validation.json`, `MINOR_VALIDATION.md`, `RESULTS.md`, and `MODEL_LIST.md`.
+
 ## SafeStan Translation Workflow
 
 A simple workflow is to keep the original `model.stan`, add a translated SafeStan file such as `model_safe.stan` in the same directory, and run:

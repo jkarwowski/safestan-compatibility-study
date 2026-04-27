@@ -1,0 +1,458 @@
+{
+  "metadata": {
+    "cmdsafestan_root": "/private/tmp/cmdsafestan",
+    "compatibility": "/Users/jacski/synthstats/stan-collection/safestan_compatibility.json",
+    "generated_at": "2026-04-27T18:47:02+00:00",
+    "manifest": "/Users/jacski/synthstats/stan-collection/model_manifest.json",
+    "run_enabled": true,
+    "stanc": "/private/tmp/cmdsafestan/safestan/_build/default/src/stanc/stanc.exe"
+  },
+  "results": [
+    {
+      "abs_lp_diff": 0.0,
+      "data_safe_exists": true,
+      "data_status": "upstream",
+      "id": "binary-trials-no-pool",
+      "model_safe_exists": true,
+      "original": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc  --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-onjp3iil/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-onjp3iil/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=plain\n[cmdsafestan] STANCFLAGS=\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-onjp3iil/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -820.94837,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-onjp3iil/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-onjp3iil/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 2.2e-05 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": false,
+        "timings_seconds": {
+          "compile_exe": 4.231251540593803,
+          "compile_hpp": 0.694986124522984,
+          "run_sample": 0.8836497077718377,
+          "total": 5.814348333515227,
+          "write_inputs": 0.0005588755011558533
+        },
+        "violation": null
+      },
+      "path": "models/stan_case_studies/binary-trials-no-pool",
+      "protect_vars": [
+        "y"
+      ],
+      "reason": "Move protected-data summary statistics out of transformed data or pass them as separate data; add explicit uniform(0, 1) prior for bounded theta.",
+      "rel_lp_diff": 0.0,
+      "safe": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc --sstanc --sstan-protect=y --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4muc4t24/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4muc4t24/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=safestan\n[cmdsafestan] STANCFLAGS=--sstanc --sstan-protect=y\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4muc4t24/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -820.94837,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4muc4t24/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4muc4t24/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 1.5e-05 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": true,
+        "timings_seconds": {
+          "compile_exe": 3.1632679998874664,
+          "compile_hpp": 0.357849707826972,
+          "run_sample": 0.47685379069298506,
+          "total": 4.001815625466406,
+          "write_inputs": 0.00083145871758461
+        },
+        "violation": null
+      },
+      "safe_compile": {
+        "output": "",
+        "returncode": 0,
+        "status": "pass"
+      },
+      "safe_protect_vars": [
+        "y"
+      ],
+      "started_at": "2026-04-27T18:46:12+00:00",
+      "title": "Binary Trials No Pooling",
+      "transform_notes": [
+        "duplicated 1 protected data variable(s) for transformed data",
+        "added explicit uniform(0, 1) prior(s) for theta"
+      ],
+      "validation_status": "same-lp"
+    },
+    {
+      "abs_lp_diff": 0.0,
+      "data_safe_exists": true,
+      "data_status": "upstream",
+      "id": "binary-trials-complete-pool",
+      "model_safe_exists": true,
+      "original": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc  --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-k4nng4k6/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-k4nng4k6/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=plain\n[cmdsafestan] STANCFLAGS=\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-k4nng4k6/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -565.6954,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-k4nng4k6/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-k4nng4k6/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 2.9e-05 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.29 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": false,
+        "timings_seconds": {
+          "compile_exe": 2.4778532907366753,
+          "compile_hpp": 0.25163920782506466,
+          "run_sample": 0.2909683743491769,
+          "total": 3.024045334197581,
+          "write_inputs": 0.00043000001460313797
+        },
+        "violation": null
+      },
+      "path": "models/stan_case_studies/binary-trials-complete-pool",
+      "protect_vars": [
+        "y"
+      ],
+      "reason": "Move protected-data summary statistics out of transformed data or pass them as separate data; add explicit uniform(0, 1) prior for bounded theta.",
+      "rel_lp_diff": 0.0,
+      "safe": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc --sstanc --sstan-protect=y --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-uptcnr_x/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-uptcnr_x/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=safestan\n[cmdsafestan] STANCFLAGS=--sstanc --sstan-protect=y\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-uptcnr_x/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -565.6954,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-uptcnr_x/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-uptcnr_x/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 2.4e-05 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.24 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": true,
+        "timings_seconds": {
+          "compile_exe": 2.3591460827738047,
+          "compile_hpp": 0.330914749763906,
+          "run_sample": 0.30256641563028097,
+          "total": 2.9974636249244213,
+          "write_inputs": 0.0008501671254634857
+        },
+        "violation": null
+      },
+      "safe_compile": {
+        "output": "",
+        "returncode": 0,
+        "status": "pass"
+      },
+      "safe_protect_vars": [
+        "y"
+      ],
+      "started_at": "2026-04-27T18:46:21+00:00",
+      "title": "Binary Trials Complete Pooling",
+      "transform_notes": [
+        "duplicated 1 protected data variable(s) for transformed data",
+        "added explicit uniform(0, 1) prior(s) for phi"
+      ],
+      "validation_status": "same-lp"
+    },
+    {
+      "abs_lp_diff": 0.0,
+      "data_safe_exists": true,
+      "data_status": "upstream",
+      "id": "binary-trials-hierarchical",
+      "model_safe_exists": true,
+      "original": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc  --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-y62o818y/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-y62o818y/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=plain\n[cmdsafestan] STANCFLAGS=\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-y62o818y/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -824.90997,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-y62o818y/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-y62o818y/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 3.5e-05 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.35 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": false,
+        "timings_seconds": {
+          "compile_exe": 3.297717958688736,
+          "compile_hpp": 0.2577227093279362,
+          "run_sample": 0.29955270886421204,
+          "total": 3.871635416522622,
+          "write_inputs": 0.0005624163895845413
+        },
+        "violation": null
+      },
+      "path": "models/stan_case_studies/binary-trials-hierarchical",
+      "protect_vars": [
+        "y"
+      ],
+      "reason": "Move protected-data summary statistics out of transformed data or pass them as separate data; model priors and likelihood are otherwise SafeStan-shaped.",
+      "rel_lp_diff": 0.0,
+      "safe": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc --sstanc --sstan-protect=y --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-at07abpf/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-at07abpf/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=safestan\n[cmdsafestan] STANCFLAGS=--sstanc --sstan-protect=y\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-at07abpf/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -824.90997,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-at07abpf/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-at07abpf/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 4.1e-05 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.41 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": true,
+        "timings_seconds": {
+          "compile_exe": 3.274940208531916,
+          "compile_hpp": 0.32134649995714426,
+          "run_sample": 0.3027437087148428,
+          "total": 3.9027960831299424,
+          "write_inputs": 0.0008091246709227562
+        },
+        "violation": null
+      },
+      "safe_compile": {
+        "output": "",
+        "returncode": 0,
+        "status": "pass"
+      },
+      "safe_protect_vars": [
+        "y"
+      ],
+      "started_at": "2026-04-27T18:46:28+00:00",
+      "title": "Binary Trials Hierarchical",
+      "transform_notes": [
+        "duplicated 1 protected data variable(s) for transformed data",
+        "added explicit uniform(0, 1) prior(s) for phi"
+      ],
+      "validation_status": "same-lp"
+    },
+    {
+      "abs_lp_diff": 0.0,
+      "data_safe_exists": true,
+      "data_status": "upstream",
+      "id": "binary-trials-hier-logit",
+      "model_safe_exists": true,
+      "original": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc  --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-jentsvcn/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-jentsvcn/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=plain\n[cmdsafestan] STANCFLAGS=\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-jentsvcn/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -3488.4539,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-jentsvcn/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-jentsvcn/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 6.4e-05 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.64 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": false,
+        "timings_seconds": {
+          "compile_exe": 2.9732910003513098,
+          "compile_hpp": 0.27340475004166365,
+          "run_sample": 0.29166420828551054,
+          "total": 3.542957166209817,
+          "write_inputs": 0.0005724169313907623
+        },
+        "violation": null
+      },
+      "path": "models/stan_case_studies/binary-trials-hier-logit",
+      "protect_vars": [
+        "y"
+      ],
+      "reason": "Move protected-data summary statistics out of transformed data or pass them as separate data; model priors and likelihood are otherwise SafeStan-shaped.",
+      "rel_lp_diff": 0.0,
+      "safe": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc --sstanc --sstan-protect=y --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-ywbh4b0a/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-ywbh4b0a/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=safestan\n[cmdsafestan] STANCFLAGS=--sstanc --sstan-protect=y\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-ywbh4b0a/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -3488.4539,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-ywbh4b0a/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-ywbh4b0a/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 8.3e-05 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.83 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": true,
+        "timings_seconds": {
+          "compile_exe": 3.0442922078073025,
+          "compile_hpp": 0.31560750026255846,
+          "run_sample": 0.2934319591149688,
+          "total": 3.6578737078234553,
+          "write_inputs": 0.0007562087848782539
+        },
+        "violation": null
+      },
+      "safe_compile": {
+        "output": "",
+        "returncode": 0,
+        "status": "pass"
+      },
+      "safe_protect_vars": [
+        "y"
+      ],
+      "started_at": "2026-04-27T18:46:35+00:00",
+      "title": "Binary Trials Hierarchical Logit",
+      "transform_notes": [
+        "duplicated 1 protected data variable(s) for transformed data",
+        "no missing bounded [0,1] parameter priors"
+      ],
+      "validation_status": "same-lp"
+    },
+    {
+      "abs_lp_diff": 0.0,
+      "data_safe_exists": true,
+      "data_status": "upstream",
+      "id": "soil-incubation-ode",
+      "model_safe_exists": true,
+      "original": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc  --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-yv4trhy_/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-yv4trhy_/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=plain\n[cmdsafestan] STANCFLAGS=\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-yv4trhy_/model.hpp\nWarning in '/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-yv4trhy_/model.stan', line 90, column 12 to column 25:\n    integrate_ode is deprecated and will be removed in Stan 3.0. Use ode_rk45\n    instead. The new interface is slightly different, see:\n    https://mc-stan.org/users/documentation/case-studies/convert_odes.html\n",
+        "compile_returncode": 0,
+        "log_likelihood": -57701427000000.0,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-yv4trhy_/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-yv4trhy_/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 0.001078 seconds\n1000 transitions using 10 leapfrog steps per transition would take 10.78 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0.001 seconds (Sampling)\n               0.001 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": false,
+        "timings_seconds": {
+          "compile_exe": 2.668320500291884,
+          "compile_hpp": 0.23812691681087017,
+          "run_sample": 0.32795074954628944,
+          "total": 3.2397553334012628,
+          "write_inputs": 0.0006839996203780174
+        },
+        "violation": null
+      },
+      "path": "models/stan_case_studies/soil-incubation-ode",
+      "protect_vars": [
+        "eCO2mean"
+      ],
+      "reason": "Vectorize the indexed likelihood to a single `eCO2mean ~ normal(...)` statement.",
+      "rel_lp_diff": 0.0,
+      "safe": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc --sstanc --sstan-protect=eCO2mean --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4ibdsmdm/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4ibdsmdm/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=safestan\n[cmdsafestan] STANCFLAGS=--sstanc --sstan-protect=eCO2mean\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4ibdsmdm/model.hpp\nWarning in '/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4ibdsmdm/model.stan', line 90, column 12 to column 25:\n    integrate_ode is deprecated and will be removed in Stan 3.0. Use ode_rk45\n    instead. The new interface is slightly different, see:\n    https://mc-stan.org/users/documentation/case-studies/convert_odes.html\n",
+        "compile_returncode": 0,
+        "log_likelihood": -57701427000000.0,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4ibdsmdm/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-4ibdsmdm/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 0.001233 seconds\n1000 transitions using 10 leapfrog steps per transition would take 12.33 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0.001 seconds (Sampling)\n               0.001 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": true,
+        "timings_seconds": {
+          "compile_exe": 2.8220613757148385,
+          "compile_hpp": 0.36260258220136166,
+          "run_sample": 0.30428662430495024,
+          "total": 3.494953792542219,
+          "write_inputs": 0.001729542389512062
+        },
+        "violation": null
+      },
+      "safe_compile": {
+        "output": "Warning in '/var/folders/vl/v8kj6f6j1wd1h8qrtx2tv_gw0000gp/T/minor-candidate-hwcpvw3w/model_safe.stan', line 90, column 12 to column 25:\n    integrate_ode is deprecated and will be removed in Stan 3.0. Use ode_rk45\n    instead. The new interface is slightly different, see:\n    https://mc-stan.org/users/documentation/case-studies/convert_odes.html",
+        "returncode": 0,
+        "status": "pass"
+      },
+      "safe_protect_vars": [
+        "eCO2mean"
+      ],
+      "started_at": "2026-04-27T18:46:43+00:00",
+      "title": "Soil Incubation ODE",
+      "transform_notes": [
+        "vectorized 1 protected-data likelihood loop(s)",
+        "no missing bounded [0,1] parameter priors"
+      ],
+      "validation_status": "same-lp"
+    },
+    {
+      "abs_lp_diff": 0.0,
+      "data_safe_exists": true,
+      "data_status": "upstream",
+      "id": "rat-growth",
+      "model_safe_exists": true,
+      "original": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc  --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-i2ikej2y/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-i2ikej2y/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=plain\n[cmdsafestan] STANCFLAGS=\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-i2ikej2y/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -16221.913,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-i2ikej2y/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-i2ikej2y/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 7.3e-05 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.73 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": false,
+        "timings_seconds": {
+          "compile_exe": 2.799546708352864,
+          "compile_hpp": 0.2635077917948365,
+          "run_sample": 0.26285991724580526,
+          "total": 3.3292903751134872,
+          "write_inputs": 0.0007308749482035637
+        },
+        "violation": null
+      },
+      "path": "models/forestdb/rat-growth",
+      "protect_vars": [
+        "y"
+      ],
+      "reason": "Flatten the repeated-measures matrix into a protected vector and vectorize the likelihood.",
+      "rel_lp_diff": 0.0,
+      "safe": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc --sstanc --sstan-protect=y_flat --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-5r_m98e5/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-5r_m98e5/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=safestan\n[cmdsafestan] STANCFLAGS=--sstanc --sstan-protect=y_flat\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-5r_m98e5/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -16221.913,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-5r_m98e5/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-5r_m98e5/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 0.000105 seconds\n1000 transitions using 10 leapfrog steps per transition would take 1.05 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": true,
+        "timings_seconds": {
+          "compile_exe": 2.9064647499471903,
+          "compile_hpp": 0.24664354138076305,
+          "run_sample": 0.29081229120492935,
+          "total": 3.4473198745399714,
+          "write_inputs": 0.0006644586101174355
+        },
+        "violation": null
+      },
+      "safe_compile": {
+        "output": "",
+        "returncode": 0,
+        "status": "pass"
+      },
+      "safe_protect_vars": [
+        "y_flat"
+      ],
+      "started_at": "2026-04-27T18:46:49+00:00",
+      "title": "Rat Growth",
+      "transform_notes": [
+        "flattened matrix y into protected vector y_flat"
+      ],
+      "validation_status": "same-lp"
+    },
+    {
+      "abs_lp_diff": 0.0,
+      "data_safe_exists": true,
+      "data_status": "upstream",
+      "id": "geometric-distribution",
+      "model_safe_exists": true,
+      "original": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc  --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-lqzozfm6/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-lqzozfm6/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=plain\n[cmdsafestan] STANCFLAGS=\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-lqzozfm6/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -16.651134,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-lqzozfm6/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-lqzozfm6/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 2e-06 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.02 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": false,
+        "timings_seconds": {
+          "compile_exe": 1.9947542501613498,
+          "compile_hpp": 0.26074033230543137,
+          "run_sample": 0.29909404180943966,
+          "total": 2.5578405000269413,
+          "write_inputs": 0.0005846666172146797
+        },
+        "violation": null
+      },
+      "path": "models/forestdb/geometric-distribution",
+      "protect_vars": [
+        "y"
+      ],
+      "reason": "Pass zero-based failure counts as a top-level protected data variable instead of deriving them from protected data in transformed data.",
+      "rel_lp_diff": 0.0,
+      "safe": {
+        "compile_output": "\n--- Translating Stan model to C++ code ---\nbin/stanc --sstanc --sstan-protect=y_failures --o=/private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-f99m2m18/model.hpp /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-f99m2m18/model.stan\n[cmdsafestan] STANC3=safestan\n[cmdsafestan] MODE=safestan\n[cmdsafestan] STANCFLAGS=--sstanc --sstan-protect=y_failures\n[cmdsafestan] make -j2 /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-f99m2m18/model.hpp\n",
+        "compile_returncode": 0,
+        "log_likelihood": -16.651134,
+        "run_output": "method = sample (Default)\n  sample\n    num_samples = 1\n    num_warmup = 0\n    save_warmup = false (Default)\n    thin = 1 (Default)\n    adapt\n      engaged = false\n      gamma = 0.05 (Default)\n      delta = 0.8 (Default)\n      kappa = 0.75 (Default)\n      t0 = 10 (Default)\n      init_buffer = 75 (Default)\n      term_buffer = 50 (Default)\n      window = 25 (Default)\n      save_metric = false (Default)\n    algorithm = hmc (Default)\n      hmc\n        engine = nuts (Default)\n          nuts\n            max_depth = 10 (Default)\n        metric = diag_e (Default)\n        metric_file =  (Default)\n        stepsize = 1 (Default)\n        stepsize_jitter = 0 (Default)\n    num_chains = 1 (Default)\nid = 1 (Default)\ndata\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-f99m2m18/data.json\ninit = 2 (Default)\nrandom\n  seed = 12345\noutput\n  file = /private/tmp/cmdsafestan/.cmdsafestan-tmp/cmdsafestan-api-f99m2m18/output.csv\n  diagnostic_file =  (Default)\n  refresh = 0\n  sig_figs = 8 (Default)\n  profile_file = profile.csv (Default)\n  save_cmdstan_config = false (Default)\nnum_threads = 1 (Default)\n\n\nGradient evaluation took 2e-06 seconds\n1000 transitions using 10 leapfrog steps per transition would take 0.02 seconds.\nAdjust your expectations accordingly!\n\n\n\n Elapsed Time: 0 seconds (Warm-up)\n               0 seconds (Sampling)\n               0 seconds (Total)\n\n",
+        "run_returncode": 0,
+        "runtime_ready": true,
+        "safe": true,
+        "safety_enforced": true,
+        "timings_seconds": {
+          "compile_exe": 2.057439375668764,
+          "compile_hpp": 0.327865750528872,
+          "run_sample": 0.29411020781844854,
+          "total": 2.6831855829805136,
+          "write_inputs": 0.0006767082959413528
+        },
+        "violation": null
+      },
+      "safe_compile": {
+        "output": "",
+        "returncode": 0,
+        "status": "pass"
+      },
+      "safe_protect_vars": [
+        "y_failures"
+      ],
+      "started_at": "2026-04-27T18:46:56+00:00",
+      "title": "Geometric Distribution",
+      "transform_notes": [
+        "promoted zero-based failure counts to protected data y_failures"
+      ],
+      "validation_status": "same-lp"
+    }
+  ]
+}

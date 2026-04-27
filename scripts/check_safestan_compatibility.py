@@ -35,7 +35,7 @@ STATUS_MAJOR = "MAJOR"
 
 STATUS_LABELS = {
     STATUS_AS_IS: "compiles with SafeStan as written",
-    STATUS_MINOR: "expected same-result SafeStan transplant",
+    STATUS_MINOR: "candidate same-result SafeStan transplant requiring explicit validation",
     STATUS_MAJOR: "needs substantial or density-changing rewrite",
 }
 
@@ -326,7 +326,7 @@ def write_model_list(
         "SafeStan status markers:",
         "",
         "- `AS-IS`: original `model.stan` compiles with SafeStan using the inferred `--sstan-protect` variables.",
-        "- `MINOR`: expected same-result transplant, usually data reshaping, vectorization, or moving protected-data summaries.",
+        "- `MINOR`: candidate minor rewrite; confirm with `scripts/validate_minor_models.py` and a `same-lp` validation result.",
         "- `MAJOR`: requires substantial rewriting or a density-changing change such as replacing manual `target +=` scoring or adding improper-prior replacements.",
         "",
         "| Source | Difficulty | Model | Description | Upstream source | SafeStan status |",
@@ -369,8 +369,8 @@ def write_results_md(
         "",
         f"Generated: {metadata['generated_at']}",
         "",
-        "This is a compiler-level SafeStan audit of the original `model.stan` files plus a manual same-result transplant assessment for rejected models.",
-        "The `MINOR` class is not a completed equivalence run; it marks models where the required transplant is expected to preserve the posterior when reshaped/duplicated data are consistent.",
+        "This is a compiler-level SafeStan audit of the original `model.stan` files plus a candidate transplant assessment for rejected models.",
+        "The `MINOR` class is a candidate label unless a validation report shows a passing original-vs-safe run comparison.",
         "",
         "## Legend",
         "",
