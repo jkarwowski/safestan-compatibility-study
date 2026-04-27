@@ -1,0 +1,23 @@
+{
+  "id": "misc-gaussian-process-gp-fit-pois",
+  "title": "Gp Fit Pois",
+  "source_group": "stan_example_models_full",
+  "source_group_label": "Stan example-models full",
+  "difficulty": "advanced",
+  "description": "Stan example-models program `misc/gaussian-process/gp-fit-pois.stan`.",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/misc/gaussian-process/gp-fit-pois.stan",
+  "source_path": "misc/gaussian-process/gp-fit-pois.stan",
+  "data_source": "misc/gaussian-process/gp-fit-pois.data.json",
+  "data_status": "upstream",
+  "synthetic_data_error": null,
+  "path": "models_all/stan_example_models/misc/gaussian-process/gp-fit-pois",
+  "stan_file": "model.stan",
+  "data_file": "data.json",
+  "method": "sample",
+  "default_run": {
+    "chains": 4,
+    "iter_warmup": 250,
+    "iter_sampling": 250,
+    "seed": 12345
+  }
+}

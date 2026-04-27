@@ -163,6 +163,7 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     parser.add_argument("--make-command", default="make", help="Build command to run inside --cmdstan.")
     parser.add_argument("--no-compile", action="store_true", help="Skip compilation and run the existing executable.")
     parser.add_argument("--force-recompile", action="store_true", help="Rebuild even if the executable exists.")
+    parser.add_argument("--compile-only", action="store_true", help="Compile the model and skip inference.")
     parser.add_argument("--method", choices=("sample", "optimize"), help="Inference method. Defaults to metadata or sample.")
     parser.add_argument("--chains", type=int, help="Number of chains for sample.")
     parser.add_argument("--iter-warmup", type=int, help="Warmup iterations for sample.")
@@ -185,7 +186,11 @@ def main(argv: list[str] | None = None) -> int:
     stan_name = args.stan_file or metadata.get("stan_file", "model.stan")
     data_name = args.data or metadata.get("data_file", "data.json")
     stan_file = (model_dir / stan_name).resolve() if not Path(stan_name).is_absolute() else Path(stan_name)
-    data_file = (model_dir / data_name).resolve() if not Path(data_name).is_absolute() else Path(data_name)
+    data_file: Path | None
+    if data_name:
+        data_file = (model_dir / data_name).resolve() if not Path(data_name).is_absolute() else Path(data_name)
+    else:
+        data_file = None
 
     init_file: Path | None
     if args.init:
@@ -198,7 +203,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if not stan_file.exists():
         raise SystemExit(f"Stan file does not exist: {stan_file}")
-    if not data_file.exists():
+    if not args.compile_only and (data_file is None or not data_file.exists()):
         raise SystemExit(f"Data file does not exist: {data_file}")
 
     cmdstan = Path(args.cmdstan).expanduser().resolve() if args.cmdstan else default_cmdstan()
@@ -228,6 +233,24 @@ def main(argv: list[str] | None = None) -> int:
     elif not exe.exists() and not args.dry_run:
         raise SystemExit(f"Executable does not exist and --no-compile was passed: {exe}")
 
+    if args.compile_only:
+        run_record = {
+            "model_dir": str(model_dir),
+            "stan_file": str(stan_file),
+            "data_file": str(data_file) if data_file else None,
+            "init_file": str(init_file) if init_file else None,
+            "cmdstan": str(cmdstan) if cmdstan else None,
+            "method": "compile-only",
+            "compile_returncode": compile_returncode,
+            "commands": [],
+        }
+        if not args.dry_run:
+            with (output_dir / "run.json").open("w", encoding="utf-8") as handle:
+                json.dump(run_record, handle, indent=2)
+                handle.write("\n")
+        return compile_returncode
+
+    assert data_file is not None
     if method == "sample":
         commands = sample_commands(
             exe=exe,

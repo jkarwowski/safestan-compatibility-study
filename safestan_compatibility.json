@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-04-27T17:17:29+00:00",
+    "generated_at": "2026-04-27T17:56:10+00:00",
     "stanc": "/private/tmp/cmdsafestan/safestan/_build/default/src/stanc/stanc.exe",
     "cmdsafestan_revision": "1484306735d3994ab841bb997c987097e0066605",
     "safestan_revision": "12203ecc4294eb63a2c05170ca2bcfa3944bf574",
@@ -18,6 +18,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "basic_estimators/bernoulli.data.json",
       "protect_vars": [
         "y"
       ],
@@ -49,6 +52,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Observed values live in transformed data and the unbounded mean has no proper prior.",
@@ -72,6 +78,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "basic_estimators/normal_truncated.data.json",
       "protect_vars": [
         "y"
       ],
@@ -98,6 +107,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "basic_estimators/normal_censored.data.json",
       "protect_vars": [
         "y"
       ],
@@ -124,6 +136,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "basic_estimators/normal_multi.data.json",
       "protect_vars": [
         "y"
       ],
@@ -785,6 +800,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "basic_estimators/negative_binomial.data.json",
       "protect_vars": [
         "y"
       ],
@@ -821,6 +839,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "basic_estimators/negative_binomial2.data.json",
       "protect_vars": [
         "y"
       ],
@@ -847,6 +868,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "basic_estimators/normal_mixture.data.json",
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Core likelihood is a marginalized mixture implemented with `target += log_mix(...)`.",
@@ -875,6 +899,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "basic_estimators/normal_mixture_k.data.json",
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Core likelihood is a marginalized mixture implemented with `target += log_mix(...)`.",
@@ -898,6 +925,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "basic_estimators/normal_mixture_k_prop.data.json",
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Core likelihood is a marginalized mixture implemented with `target += log_mix(...)`.",
@@ -931,6 +961,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/chapter1/simplest-regression.data.json",
       "protect_vars": [
         "y"
       ],
@@ -957,6 +990,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/chapter1/vector-regression.data.json",
       "protect_vars": [
         "y"
       ],
@@ -983,6 +1019,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "education/tutorial_twopl/twopl.data.json",
       "protect_vars": [
         "y"
       ],
@@ -1024,6 +1063,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "education/tutorial_twopl/reg_centered.data.json",
       "protect_vars": [
         "y"
       ],
@@ -1065,6 +1107,9 @@
       "source_group": "stan_tutorials",
       "source_group_label": "Stan tutorials",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "education/tutorial_twopl/reg_noncentered.data.json",
       "protect_vars": [
         "y"
       ],
@@ -1106,6 +1151,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/golf/golf1.data.json",
       "protect_vars": [
         "y"
       ],
@@ -1132,6 +1180,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/world-cup/worldcup_first_try.data.json",
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Likelihood is derived from protected scores in transformed data and several parameters have implicit improper priors.",
@@ -1160,6 +1211,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/world-cup/worldcup_no_sqrt.data.json",
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Likelihood is derived from protected scores in transformed data and several parameters have implicit improper priors.",
@@ -1188,6 +1242,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/world-cup/worldcup_fixed.data.json",
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Likelihood is derived from protected scores in transformed data and several parameters have implicit improper priors.",
@@ -1216,6 +1273,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/world-cup/worldcup_with_replication.data.json",
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Likelihood is derived from protected scores in transformed data and several parameters have implicit improper priors.",
@@ -1244,6 +1304,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/world-cup/worldcup_first_try_noprior.data.json",
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Intentionally omits priors, which SafeStan strict parameter discipline rejects.",
@@ -1272,6 +1335,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/pool-binary-trials/no-pool.data.json",
       "protect_vars": [
         "y"
       ],
@@ -1298,6 +1364,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/pool-binary-trials/pool.data.json",
       "protect_vars": [
         "y"
       ],
@@ -1324,6 +1393,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/pool-binary-trials/hier.data.json",
       "protect_vars": [
         "y"
       ],
@@ -1360,6 +1432,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/pool-binary-trials/hier-logit.data.json",
       "protect_vars": [
         "y"
       ],
@@ -1401,6 +1476,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/pool-binary-trials/hier-logit-centered.data.json",
       "protect_vars": [
         "y"
       ],
@@ -1442,6 +1520,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/convert-odes/sir.data.json",
       "protect_vars": [
         "stoi",
         "B"
@@ -1494,6 +1575,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/convert-odes/one_comp_mm_elim_abs.data.json",
       "protect_vars": [
         "C"
       ],
@@ -1540,6 +1624,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/soil-carbon/AK_T25.data.json",
       "protect_vars": [
         "eCO2mean"
       ],
@@ -1596,6 +1683,9 @@
       "source_group": "stan_case_studies",
       "source_group_label": "Stan case studies",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": "knitr/car-iar-poisson/update_2021_02/scotland_connected.data.json",
       "protect_vars": [
         "y"
       ],
@@ -1652,6 +1742,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [
         "y"
       ],
@@ -1683,6 +1776,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [
         "y"
       ],
@@ -1719,6 +1815,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [
         "y"
       ],
@@ -1755,6 +1854,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [
         "y"
       ],
@@ -1791,6 +1893,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [
         "y"
       ],
@@ -1822,6 +1927,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Core likelihood is a marginalized mixture implemented with `target += log_mix(...)`.",
@@ -1850,6 +1958,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Core likelihood is a marginalized mixture implemented with `target += log_mix(...)`.",
@@ -1883,6 +1994,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Requires custom Dirichlet-multinomial mixture scoring via `target += log_sum_exp(...)`.",
@@ -1916,6 +2030,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Sequential likelihood is accumulated manually with protected observations in the recursion.",
@@ -1944,6 +2061,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Hidden-state forward algorithm requires manual `target += log_sum_exp(...)` scoring.",
@@ -1977,6 +2097,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [
         "y"
       ],
@@ -2038,6 +2161,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "easy",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [
         "y"
       ],
@@ -2069,6 +2195,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "medium",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Latent disease marginalization is implemented by manual `target += log_sum_exp(...)` scoring.",
@@ -2102,6 +2231,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Latent Bayes-net states are marginalized by manual `target += log_sum_exp(...)` scoring.",
@@ -2130,6 +2262,9 @@
       "source_group": "forestdb",
       "source_group_label": "ForestDB translations",
       "difficulty": "advanced",
+      "data_status": "upstream",
+      "data_file": "data.json",
+      "data_source": null,
       "protect_vars": [],
       "classification": "MAJOR",
       "reason": "Discrete model indicator is marginalized by manual `target += log_sum_exp(...)` scoring.",

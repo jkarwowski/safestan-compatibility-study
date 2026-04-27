@@ -1,0 +1,23 @@
+{
+  "id": "basic_estimators-bernoulli",
+  "title": "Bernoulli",
+  "source_group": "stan_example_models_full",
+  "source_group_label": "Stan example-models full",
+  "difficulty": "advanced",
+  "description": "Stan example-models program `basic_estimators/bernoulli.stan`.",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/bernoulli.stan",
+  "source_path": "basic_estimators/bernoulli.stan",
+  "data_source": "basic_estimators/bernoulli.data.json",
+  "data_status": "upstream",
+  "synthetic_data_error": null,
+  "path": "models_all/stan_example_models/basic_estimators/bernoulli",
+  "stan_file": "model.stan",
+  "data_file": "data.json",
+  "method": "sample",
+  "default_run": {
+    "chains": 4,
+    "iter_warmup": 250,
+    "iter_sampling": 250,
+    "seed": 12345
+  }
+}

@@ -59,6 +59,23 @@ python3 scripts/check_safestan_compatibility.py \
 
 This writes `safestan_compatibility.json`, refreshes `RESULTS.md`, and updates the SafeStan markers in `MODEL_LIST.md`.
 
+The full `stan-dev/example-models` snapshot can be materialized and audited separately:
+
+```sh
+python3 scripts/bootstrap_all_stan_examples.py \
+  --stanc /path/to/cmdsafestan/safestan/_build/default/src/stanc/stanc.exe \
+  --force
+python3 scripts/check_safestan_compatibility.py \
+  --manifest expanded_model_manifest.json \
+  --json-output safestan_compatibility_all.json \
+  --results-output ALL_RESULTS.md \
+  --model-list-output ALL_MODEL_LIST.md \
+  --stanc /path/to/cmdsafestan/safestan/_build/default/src/stanc/stanc.exe \
+  --write
+```
+
+The expanded bootstrap copies upstream same-stem JSON data when present and otherwise writes synthetic data from `stanc --debug-generate-data`.
+
 ## SafeStan Translation Workflow
 
 A simple workflow is to keep the original `model.stan`, add a translated SafeStan file such as `model_safe.stan` in the same directory, and run:

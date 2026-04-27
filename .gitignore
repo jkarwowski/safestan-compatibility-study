@@ -8,3 +8,9 @@ models/*/*/*.d
 models/*/*/*.hpp
 models/*/*/*.o
 models/*/*/*.csv
+models_all/**/runs/
+models_all/**/model
+models_all/**/*.d
+models_all/**/*.hpp
+models_all/**/*.o
+models_all/**/*.csv

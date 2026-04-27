@@ -1,0 +1,23 @@
+{
+  "id": "arm-ch.21-radon_vary_intercept_floor",
+  "title": "Radon Vary Intercept Floor",
+  "source_group": "stan_example_models_full",
+  "source_group_label": "Stan example-models full",
+  "difficulty": "advanced",
+  "description": "Stan example-models program `ARM/Ch.21/radon_vary_intercept_floor.stan`.",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/ARM/Ch.21/radon_vary_intercept_floor.stan",
+  "source_path": "ARM/Ch.21/radon_vary_intercept_floor.stan",
+  "data_source": "ARM/Ch.21/radon_vary_intercept_floor.data.json",
+  "data_status": "upstream",
+  "synthetic_data_error": null,
+  "path": "models_all/stan_example_models/arm/ch.21/radon_vary_intercept_floor",
+  "stan_file": "model.stan",
+  "data_file": "data.json",
+  "method": "sample",
+  "default_run": {
+    "chains": 4,
+    "iter_warmup": 250,
+    "iter_sampling": 250,
+    "seed": 12345
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "bpa-ch.05-ssm2",
+  "title": "Ssm2",
+  "source_group": "stan_example_models_full",
+  "source_group_label": "Stan example-models full",
+  "difficulty": "advanced",
+  "description": "Stan example-models program `BPA/Ch.05/ssm2.stan`.",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/BPA/Ch.05/ssm2.stan",
+  "source_path": "BPA/Ch.05/ssm2.stan",
+  "data_source": null,
+  "data_status": "synthetic",
+  "synthetic_data_error": null,
+  "path": "models_all/stan_example_models/bpa/ch.05/ssm2",
+  "stan_file": "model.stan",
+  "data_file": "data.json",
+  "method": "sample",
+  "default_run": {
+    "chains": 4,
+    "iter_warmup": 250,
+    "iter_sampling": 250,
+    "seed": 12345
+  }
+}

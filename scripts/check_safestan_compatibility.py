@@ -237,13 +237,51 @@ def extract_violation(output: str) -> str:
     return lines[-1] if lines else output.strip()
 
 
-def classify(model_id: str, safe_compile: dict[str, Any]) -> tuple[str, str]:
+def has_target_scoring(statements: list[dict[str, str]], source: str) -> bool:
+    clean = strip_comments(source)
+    return "target +=" in clean or "target(" in clean
+
+
+def parameter_prior_lhs(statements: list[dict[str, str]], parameter_names: set[str]) -> set[str]:
+    return {statement["lhs_base"] for statement in statements if statement["lhs_base"] in parameter_names}
+
+
+def classify(
+    model_id: str,
+    safe_compile: dict[str, Any],
+    *,
+    source: str,
+    statements: list[dict[str, str]],
+    parameter_names: set[str],
+) -> tuple[str, str]:
     if safe_compile["status"] == "pass":
         return STATUS_AS_IS, "Compiled with SafeStan using the inferred protected data variables."
     if model_id in MINOR_MODELS:
         return STATUS_MINOR, MINOR_MODELS[model_id]
     if model_id in MAJOR_MODELS:
         return STATUS_MAJOR, MAJOR_MODELS[model_id]
+    violation = safe_compile.get("violation") or ""
+    if has_target_scoring(statements, source):
+        return STATUS_MAJOR, "Uses manual scoring (`target +=` or `target()`), which SafeStan forbids."
+    if "user-defined distributions" in violation or "user-defined distribution" in violation:
+        return STATUS_MAJOR, "Uses a user-defined probability distribution in a sampling statement."
+    if "No top-level protected-data likelihood candidate" in violation:
+        return STATUS_MAJOR, "No protected-data likelihood could be inferred automatically."
+    if "parameter used before its unique prior statement" in violation:
+        priored = parameter_prior_lhs(statements, parameter_names)
+        if parameter_names and parameter_names.issubset(priored):
+            return STATUS_MINOR, "Parameter priors exist but need to be moved before parameter use."
+        return STATUS_MAJOR, "One or more parameters have implicit improper priors."
+    if "left-hand side must be a plain identifier" in violation:
+        return STATUS_MINOR, "Requires vectorizing or flattening an indexed/projection likelihood."
+    if "protected data referenced in transformed data" in violation:
+        return STATUS_MINOR, "Requires passing derived protected-data summaries separately or moving them after observation."
+    if "protected data used before observation" in violation:
+        return STATUS_MINOR, "Requires duplicated/reshaped protected history data so the likelihood observes protected data once."
+    if "appears inside loop control flow" in violation:
+        return STATUS_MINOR, "Requires vectorizing sampling statements out of loops."
+    if "observed more than once" in violation:
+        return STATUS_MAJOR, "Protected data are scored multiple times and need a substantive likelihood rewrite."
     return STATUS_MAJOR, "SafeStan rejected the original model and no same-result minor transplant is known."
 
 
@@ -269,7 +307,19 @@ def source_link(model: dict[str, Any]) -> str:
     return f"[source]({model['source_url']})"
 
 
-def write_model_list(manifest_models: list[dict[str, Any]], results_by_id: dict[str, dict[str, Any]]) -> None:
+def data_status(model: dict[str, Any]) -> str:
+    if model.get("data_status"):
+        return str(model["data_status"])
+    if model.get("data_file"):
+        return "upstream"
+    return "unavailable"
+
+
+def write_model_list(
+    manifest_models: list[dict[str, Any]],
+    results_by_id: dict[str, dict[str, Any]],
+    output_path: Path,
+) -> None:
     lines = [
         "# Model List",
         "",
@@ -298,7 +348,7 @@ def write_model_list(manifest_models: list[dict[str, Any]], results_by_id: dict[
             )
             + " |"
         )
-    (ROOT / "MODEL_LIST.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def write_results_md(
@@ -306,6 +356,7 @@ def write_results_md(
     results: list[dict[str, Any]],
     stanc: Path | None,
     metadata: dict[str, Any],
+    output_path: Path,
 ) -> None:
     by_id = {result["id"]: result for result in results}
     status_counts = Counter(result["classification"] for result in results)
@@ -356,8 +407,8 @@ def write_results_md(
             "",
             "## Model Results",
             "",
-            "| Source | Model | Protected data | Status | Compiler result | Reason / transplant note |",
-            "|---|---|---|---|---|---|",
+            "| Source | Model | Data | Protected data | Status | Compiler result | Reason / transplant note |",
+            "|---|---|---|---|---|---|---|",
         ]
     )
     for model in manifest_models:
@@ -373,6 +424,7 @@ def write_results_md(
                 [
                     escape_cell(model["source_group_label"]),
                     markdown_model_link(model),
+                    f"`{escape_cell(result['data_status'])}`",
                     f"`{escape_cell(protected)}`",
                     f"`{result['classification']}`",
                     f"`{compile_status}`",
@@ -392,7 +444,7 @@ def write_results_md(
             "",
         ]
     )
-    (ROOT / "RESULTS.md").write_text("\n".join(lines), encoding="utf-8")
+    output_path.write_text("\n".join(lines), encoding="utf-8")
 
 
 def parse_args() -> argparse.Namespace:
@@ -400,6 +452,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--manifest", default=str(ROOT / "model_manifest.json"))
     parser.add_argument("--stanc", help="Path to SafeStan stanc.exe.")
     parser.add_argument("--json-output", default=str(ROOT / "safestan_compatibility.json"))
+    parser.add_argument("--results-output", default=str(ROOT / "RESULTS.md"))
+    parser.add_argument("--model-list-output", default=str(ROOT / "MODEL_LIST.md"))
     parser.add_argument("--write", action="store_true", help="Write RESULTS.md and MODEL_LIST.md markers.")
     return parser.parse_args()
 
@@ -421,11 +475,19 @@ def main() -> int:
         statements = sampling_statements(source)
         if info is None:
             protect_vars: list[str] = []
+            parameter_names: set[str] = set()
             safe_compile = {"status": "plain-stan-fail", "returncode": 1, "violation": info_error}
         else:
+            parameter_names = set(info.get("parameters", {}))
             protect_vars = infer_protect_vars(model["id"], info, statements)
             safe_compile = compile_safestan(stanc, stan_file, protect_vars)
-        classification, reason = classify(model["id"], safe_compile)
+        classification, reason = classify(
+            model["id"],
+            safe_compile,
+            source=source,
+            statements=statements,
+            parameter_names=parameter_names,
+        )
         results.append(
             {
                 "id": model["id"],
@@ -434,6 +496,9 @@ def main() -> int:
                 "source_group": model["source_group"],
                 "source_group_label": model["source_group_label"],
                 "difficulty": model["difficulty"],
+                "data_status": data_status(model),
+                "data_file": model.get("data_file"),
+                "data_source": model.get("data_source"),
                 "protect_vars": protect_vars,
                 "classification": classification,
                 "reason": reason,
@@ -454,8 +519,8 @@ def main() -> int:
 
     results_by_id = {result["id"]: result for result in results}
     if args.write:
-        write_results_md(manifest["models"], results, stanc, metadata)
-        write_model_list(manifest["models"], results_by_id)
+        write_results_md(manifest["models"], results, stanc, metadata, Path(args.results_output).expanduser().resolve())
+        write_model_list(manifest["models"], results_by_id, Path(args.model_list_output).expanduser().resolve())
 
     counts = Counter(result["classification"] for result in results)
     print(f"AS-IS={counts[STATUS_AS_IS]} MINOR={counts[STATUS_MINOR]} MAJOR={counts[STATUS_MAJOR]}")
