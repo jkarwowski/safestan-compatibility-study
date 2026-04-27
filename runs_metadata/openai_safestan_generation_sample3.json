@@ -1,0 +1,81 @@
+{
+  "artifacts_root": "/Users/jacski/synthstats/stan-collection/openai_safestan_runs/sample3-high-20260427T194608Z",
+  "failures": 0,
+  "generated_at": "2026-04-27T19:47:19+00:00",
+  "model": "gpt-5.5",
+  "models_root": "/Users/jacski/synthstats/stan-collection/models",
+  "reasoning_effort": "high",
+  "results": [
+    {
+      "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/forestdb/binomial-inference",
+      "compatibility": "minor",
+      "completed_at": "2026-04-27T19:47:00+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/binomial-inference",
+      "reasoning_effort": "high",
+      "response_id": "resp_027063c9e359f2bc0069efbd00d580819f826ed43c5c0e7e55",
+      "started_at": "2026-04-27T19:46:08+00:00",
+      "usage": {
+        "input_tokens": 2098,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 2843,
+        "output_tokens_details": {
+          "reasoning_tokens": 2588
+        },
+        "total_tokens": 4941
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/forestdb/burglary-bayesnet",
+      "compatibility": "major",
+      "completed_at": "2026-04-27T19:47:12+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/burglary-bayesnet",
+      "reasoning_effort": "high",
+      "response_id": "resp_000015ae426159d60069efbd356fe8819d8939e4753738fc51",
+      "started_at": "2026-04-27T19:47:01+00:00",
+      "usage": {
+        "input_tokens": 2813,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 564,
+        "output_tokens_details": {
+          "reasoning_tokens": 425
+        },
+        "total_tokens": 3377
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/forestdb/dirichlet-multinomial-mixture",
+      "compatibility": "major",
+      "completed_at": "2026-04-27T19:47:19+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/dirichlet-multinomial-mixture",
+      "reasoning_effort": "high",
+      "response_id": "resp_09e223f8f51375e10069efbd410ed8819e960e8bf390a31d33",
+      "started_at": "2026-04-27T19:47:12+00:00",
+      "usage": {
+        "input_tokens": 2467,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 286,
+        "output_tokens_details": {
+          "reasoning_tokens": 135
+        },
+        "total_tokens": 2753
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    }
+  ],
+  "run_id": "sample3-high-20260427T194608Z",
+  "total": 3
+}

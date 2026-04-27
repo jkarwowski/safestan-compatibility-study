@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/forestdb/finite-gaussian-mixture",
+  "compatibility": "major",
+  "completed_at": "2026-04-27T20:35:39+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/finite-gaussian-mixture",
+  "reasoning_effort": "high",
+  "response_id": "resp_0e405e73b156425d0069efc895b7a081a19854fe48dd7e5a99",
+  "started_at": "2026-04-27T20:35:33+00:00",
+  "usage": {
+    "input_tokens": 2252,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 292,
+    "output_tokens_details": {
+      "reasoning_tokens": 143
+    },
+    "total_tokens": 2544
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

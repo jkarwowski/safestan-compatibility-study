@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/stan_tutorials/two-parameter-logistic-irt",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-27T20:59:36+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_tutorials/two-parameter-logistic-irt",
+  "reasoning_effort": "high",
+  "response_id": "resp_07a5bba971e3c7930069efcd9aaa04819c926f499a887586e3",
+  "started_at": "2026-04-27T20:56:58+00:00",
+  "usage": {
+    "input_tokens": 33950,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 8197,
+    "output_tokens_details": {
+      "reasoning_tokens": 7768
+    },
+    "total_tokens": 42147
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

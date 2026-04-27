@@ -1,0 +1,113 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777322908,
+  "created_at": 1777322866,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0c56dbe1951a9e960069efcb72f58c81959ecc833e13c82780",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0c56dbe1951a9e960069efcb7390dc8195aac79e81ba8d6d74",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the existing prior statements before the likelihood so that parameters are given priors before they are used in the protected-data observation. The protected outcome `y` remains a top-level data variable and is observed with the plain vectorized sampling statement `y ~ poisson_log(...)`. The custom ICAR density is used only as a prior for the latent parameter `phi`, not as a likelihood for protected observations. No data fields were added or changed.\\n\",\"model_safe_stan\":\"functions {\\n  /**\\n   * Return the log probability density for the vector of coefficients\\n   * under the ICAR model with unit variance, where the second two\\n   * arguments are parallel vectors of coefficients for adjacent\\n   * regions.  For example, a series of three coeffs phi[1:3] making\\n   * up a time series would have b1 = [phi[1], phi[2]]' and b2 =\\n   * [phi[2], phi[3]]'.\\n   * \\n   * @param phi vector of varying effects\\n   * @param b1 parallel vector of elements of phi\\n   * @param b2 second parallel vector of adjacent elemens of phi\\n   * @return ICAR log density\\n   * @reject if b1 and b2 are not the same size\\n   */\\n  real soft_ctr_std_icar_lpdf(vector phi, vector b1, vector b2) {\\n    return -0.5 * dot_self(b1 - b2)\\n           // equiv normal_lpdf(b1 | b2, 1)\\n           + normal_lpdf(sum(phi) | 0, 0.001 * rows(phi));\\n  }\\n  \\n  /**\\n   * Return the log probability density of the specified vector of\\n   * coefficients under the ICAR model with unit variance, where\\n   * adjacency is determined by the adjacency array. The adjacency\\n   * array contains two parallel arrays of adjacent element indexes.\\n   * For example, a series of four coefficients phi[1:4] making up a\\n   * time series would have adjacency array {{1, 2, 3}, {2, 3, 4}},\\n   * signaling that coefficient 1 is adjacent to coefficient 2, 2\\n   * adjacent to 3, and 3 adjacent to 4.\\n   *\\n   * @param phi vector of varying effects\\n   * @param adjacency parallel arrays of indexes of adjacent elements of phi\\n   * @return ICAR log probability density\\n   * @reject if the the adjacency matrix does not have two rows\\n   */\\n  real standard_icar_lpdf(vector phi, array[,] int adjacency) {\\n    if (size(adjacency) != 2) {\\n      reject(\\\"require 2rows for adjacency array;\\\", \\\" found rows = \\\",\\n             size(adjacency));\\n    }\\n    return soft_ctr_std_icar_lpdf(phi | phi[adjacency[1]], phi[adjacency[2]]);\\n  }\\n}\\ndata {\\n  // spatial structure\\n  int<lower=0> I; // number of nodes\\n  int<lower=0> J; // number of edges\\n  array[2, J] int<lower=1, upper=I> edges; // node[1, j] adjacent to node[2, j]\\n  \\n  real tau; // scaling factor\\n  \\n  array[I] int<lower=0> y; // count outcomes\\n  vector<lower=0>[I] E; // exposure\\n  vector[I] x; // predictor\\n}\\ntransformed data {\\n  vector[I] log_E = log(E);\\n}\\nparameters {\\n  real alpha; // intercept\\n  real beta; // covariate\\n  \\n  // spatial effects\\n  real<lower=0, upper=1> rho; // proportion of spatial effect that's spatially smoothed\\n  real<lower=0> sigma; // scale of spatial effects\\n  vector[I] theta; // standardized heterogeneous spatial effects\\n  vector[I] phi; // standardized spatially smoothed spatial effects\\n}\\ntransformed parameters {\\n  // spatial effects (combine heterogeneous and spatially smoothed)\\n  vector[I] gamma = sigma * (sqrt(1 - rho) * theta + sqrt(rho / tau) * phi);\\n}\\nmodel {\\n  alpha ~ normal(0, 1);\\n  beta ~ normal(0, 1);\\n  \\n  // spatial hyperpriors and priors\\n  sigma ~ normal(0, 1);\\n  rho ~ beta(0.5, 0.5);\\n  theta ~ normal(0, 1);\\n  phi ~ standard_icar(edges);\\n\\n  y ~ poisson_log(log_E + alpha + x * beta + gamma); // likelihood\\n}\\ngenerated quantities {\\n  vector[I] eta = log_E + alpha + x * beta + gamma;\\n  vector[I] y_est = exp(eta);\\n}\\n\",\"data_safe_json\":\"{\\\"I\\\":56,\\\"J\\\":132,\\\"edges\\\":[[1,1,1,1,2,2,3,3,4,4,4,5,5,5,5,6,7,7,7,7,9,9,9,9,9,10,10,11,13,13,14,14,14,15,15,15,16,16,16,16,17,17,18,18,18,18,18,20,21,21,23,23,23,23,23,24,24,24,24,24,24,24,24,25,25,26,26,26,27,27,27,28,28,29,29,29,30,30,30,30,30,31,31,31,31,32,33,33,34,34,34,34,34,34,34,35,35,36,36,36,37,37,38,38,38,38,38,39,39,40,40,40,41,41,41,42,42,44,44,45,46,46,47,47,47,48,49,49,49,51,52,55],[5,9,11,19,7,10,6,12,18,20,28,11,12,13,19,8,10,13,16,17,11,17,19,23,29,16,22,12,17,19,31,32,35,25,29,50,17,21,22,29,19,29,20,28,33,55,56,55,29,50,29,34,36,37,39,27,30,31,44,47,48,55,56,26,29,29,42,43,31,32,55,33,45,34,43,50,38,42,44,45,56,32,35,46,47,35,45,56,39,40,42,43,51,52,54,37,46,37,39,41,41,46,42,44,49,51,54,40,41,41,49,52,46,49,53,43,51,48,49,56,47,53,48,49,53,49,52,53,54,54,54,56]],\\\"tau\\\":0.4853,\\\"y\\\":[9,39,11,9,15,8,26,7,6,20,13,5,3,8,17,9,2,7,9,7,16,31,11,7,19,15,7,10,16,11,5,3,7,8,11,9,11,8,6,4,10,8,2,6,19,3,2,3,28,6,1,1,1,1,0,0],\\\"E\\\":[1.4,8.7,3,2.5,4.3,2.4,8.1,2.3,2,6.6,4.4,1.8,1.1,3.3,7.8,4.6,1.1,4.2,5.5,4.4,10.5,22.7,8.8,5.6,15.5,12.5,6,9,14.4,10.2,4.8,2.9,7,8.5,12.3,10.1,12.7,9.4,7.2,5.3,18.8,15.8,4.3,14.6,50.7,8.2,5.6,9.3,88.7,19.6,3.4,3.6,5.7,7,4.2,1.8],\\\"x\\\":[16,16,10,24,10,24,10,7,7,16,7,16,10,24,7,16,10,7,7,10,7,16,10,7,1,1,7,7,10,10,7,24,10,7,7,0,10,1,16,0,1,16,16,0,1,7,1,1,0,1,1,0,1,1,16,10]}\"}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0c56dbe1951a9e960069efcb8cbc148195b1b534227bf920e7",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4921,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 3696,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 8617
+  },
+  "user": null
+}

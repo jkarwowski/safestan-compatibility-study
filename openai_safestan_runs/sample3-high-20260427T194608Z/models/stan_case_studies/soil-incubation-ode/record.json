@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/stan_case_studies/soil-incubation-ode",
+  "compatibility": "minor",
+  "completed_at": "2026-04-27T20:52:34+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_case_studies/soil-incubation-ode",
+  "reasoning_effort": "high",
+  "response_id": "resp_0ee55a3117a0127e0069efcc27c03c8190b8568d430f5d7e69",
+  "started_at": "2026-04-27T20:50:47+00:00",
+  "usage": {
+    "input_tokens": 3998,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 7061,
+    "output_tokens_details": {
+      "reasoning_tokens": 5696
+    },
+    "total_tokens": 11059
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/stan_case_studies/binary-trials-no-pool",
+  "compatibility": "minor",
+  "completed_at": "2026-04-27T20:47:45+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_case_studies/binary-trials-no-pool",
+  "reasoning_effort": "high",
+  "response_id": "resp_0dda430ac138bb010069efcb1879c08193b4986b21efa31806",
+  "started_at": "2026-04-27T20:46:16+00:00",
+  "usage": {
+    "input_tokens": 3299,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 5563,
+    "output_tokens_details": {
+      "reasoning_tokens": 4142
+    },
+    "total_tokens": 8862
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/forestdb/medical-diagnosis",
+  "compatibility": "major",
+  "completed_at": "2026-04-27T20:40:46+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/medical-diagnosis",
+  "reasoning_effort": "high",
+  "response_id": "resp_03a25b918fe1f3b80069efc9c165488192a7ad724aec3bcbbe",
+  "started_at": "2026-04-27T20:40:33+00:00",
+  "usage": {
+    "input_tokens": 2341,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 573,
+    "output_tokens_details": {
+      "reasoning_tokens": 430
+    },
+    "total_tokens": 2914
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

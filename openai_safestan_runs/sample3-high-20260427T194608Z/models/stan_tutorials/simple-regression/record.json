@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/stan_tutorials/simple-regression",
+  "compatibility": "major",
+  "completed_at": "2026-04-27T20:56:47+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_tutorials/simple-regression",
+  "reasoning_effort": "high",
+  "response_id": "resp_02055072c759048c0069efcd85b7108197809d0337dd1d2887",
+  "started_at": "2026-04-27T20:56:37+00:00",
+  "usage": {
+    "input_tokens": 4150,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 489,
+    "output_tokens_details": {
+      "reasoning_tokens": 347
+    },
+    "total_tokens": 4639
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

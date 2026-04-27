@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/stan_case_studies/worldcup-no-sqrt",
+  "compatibility": "major",
+  "completed_at": "2026-04-27T20:54:15+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_case_studies/worldcup-no-sqrt",
+  "reasoning_effort": "high",
+  "response_id": "resp_0f9278e3a7e682920069efccd6a65c819e89fbc3ddab7cb20d",
+  "started_at": "2026-04-27T20:53:42+00:00",
+  "usage": {
+    "input_tokens": 3770,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1755,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5525
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/forestdb/gaussian-gamma",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-27T20:36:01+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/gaussian-gamma",
+  "reasoning_effort": "high",
+  "response_id": "resp_0c8695c27ed9c6940069efc8a31858819daa9e3f88f5cc5014",
+  "started_at": "2026-04-27T20:35:46+00:00",
+  "usage": {
+    "input_tokens": 2261,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 790,
+    "output_tokens_details": {
+      "reasoning_tokens": 396
+    },
+    "total_tokens": 3051
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

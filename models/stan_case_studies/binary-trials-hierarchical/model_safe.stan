@@ -2,11 +2,10 @@ data {
   int<lower=0> N; // items
   array[N] int<lower=0> K; // initial trials
   array[N] int<lower=0> y; // initial successes
+  array[N] int<lower=0> y_safestan_copy; // deterministic copy for transformed data
   
   array[N] int<lower=0> K_new; // new trials
   array[N] int<lower=0> y_new; // new successes
-  // SafeStan duplicate(s) for transformed-data summaries.
-  array[N] int<lower=0> y_safestan_copy;
 }
 transformed data {
   real min_y; // minimum successes
@@ -25,8 +24,7 @@ parameters {
   vector<lower=0, upper=1>[N] theta; // chance of success 
 }
 model {
-  phi ~ uniform(0, 1);
-
+  phi ~ uniform(0, 1); // density-neutral prior on constrained support
   kappa ~ pareto(1, 1.5); // hyperprior
   theta ~ beta(phi * kappa, (1 - phi) * kappa); // prior
   y ~ binomial(K, theta); // likelihood

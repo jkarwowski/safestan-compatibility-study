@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/forestdb/linear-regression",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-27T20:36:57+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/linear-regression",
+  "reasoning_effort": "high",
+  "response_id": "resp_061f01c1e0a57e820069efc8dc741c819f99473cf7422f9828",
+  "started_at": "2026-04-27T20:36:44+00:00",
+  "usage": {
+    "input_tokens": 2370,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 877,
+    "output_tokens_details": {
+      "reasoning_tokens": 475
+    },
+    "total_tokens": 3247
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

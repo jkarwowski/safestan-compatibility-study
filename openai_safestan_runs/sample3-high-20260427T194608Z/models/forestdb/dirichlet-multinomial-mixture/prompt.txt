@@ -1,0 +1,283 @@
+You are translating a single Stan model into SafeStan for a regression-test
+corpus. The goal is not to make the model "nicer"; the goal is to decide
+whether the original posterior/log density can be represented under SafeStan
+restrictions with no change or only a small mechanical rewrite. Return only the
+structured JSON requested by the caller.
+
+Work method:
+
+1. Identify the observed/protected data variable(s) scored by the likelihood.
+2. Check whether the model already satisfies SafeStan's syntactic discipline.
+3. If not, look for a same-density mechanical rewrite.
+4. If the rewrite would require changing the statistical model, replacing a
+   marginalized latent-state algorithm, inventing priors, or changing the
+   likelihood, classify the case as `major`.
+5. For `as-is` and `minor`, output complete files. Do not output patches.
+
+SafeStan rules to apply:
+
+- Protected observed data should appear as top-level data variables and be
+  observed by plain `name ~ distribution(...)` sampling statements.
+- Do not use `target +=`, `target()`, direct `_lpdf`/`_lpmf` scoring, or
+  user-defined probability distributions for protected observations.
+- Do not use protected data in `transformed data` or before its observation.
+  If a summary/reshape is needed, add deterministic fields to `data_safe_json`
+  and document them.
+- Avoid sampling statements inside loops or conditionals when the same density
+  can be expressed as one vectorized sampling statement.
+- Parameters should have explicit proper priors, and priors should appear
+  before parameter use. Do not add priors that change the posterior. Adding
+  `uniform(0, 1)` to a parameter already constrained to `<lower=0, upper=1>`
+  is acceptable because it is density-neutral on the support.
+
+Compatibility labels:
+
+- `as-is`: the original Stan program is already SafeStan-compatible. Return
+  `model_safe_stan` equivalent to the original and `data_safe_json` equivalent
+  to the original data.
+- `minor`: a same-posterior SafeStan version can be produced using only
+  mechanical changes such as moving existing priors earlier, vectorizing simple
+  likelihoods, adding deterministic data copies/reshapes, or adding
+  density-neutral bounded uniform priors.
+- `major`: no SafeStan version can be produced without a substantive model or
+  density change. In this case return empty strings for `model_safe_stan` and
+  `data_safe_json`.
+
+Requirements:
+
+- Never invent new observations or synthetic data.
+- `data_safe_json` must be a valid JSON object string. It may equal the original
+  data exactly, or be a deterministic augmentation/reshape of it.
+- If you add fields to `data_safe_json`, document the exact deterministic
+  relation in `safety_note_md`.
+- Preserve the intended posterior/log density for AS-IS and MINOR.
+- If the model relies on mixture marginalization, custom manual scoring,
+  censored/truncated target adjustments, hidden-state algorithms, or implicit
+  improper priors that cannot be represented without changing the density,
+  classify it as `major`.
+- `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
+  include: compatibility, protected data choice, generated files, and a concise
+  explanation of any change.
+
+Examples:
+
+Example 1: AS-IS input
+
+```stan
+data {
+  int<lower=0, upper=1> y;
+}
+parameters {
+  real<lower=0, upper=1> theta;
+}
+model {
+  theta ~ beta(1, 1);
+  y ~ bernoulli(theta);
+}
+```
+
+```json
+{"y": 1}
+```
+
+Example 1 output shape
+
+```json
+{
+  "compatibility": "as-is",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the model uses an explicit prior and observes top-level protected data with a plain sampling statement.\n",
+  "model_safe_stan": "data {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "data_safe_json": "{\"y\": 1}"
+}
+```
+
+Example 2: MINOR input
+
+```stan
+data {
+  int<lower=1> N;
+  array[N] int<lower=0> trials;
+  array[N] int<lower=0> y;
+}
+transformed data {
+  real mean_y = mean(to_vector(y));
+}
+parameters {
+  vector<lower=0, upper=1>[N] theta;
+}
+model {
+  y ~ binomial(trials, theta);
+}
+```
+
+```json
+{"N": 3, "trials": [10, 10, 10], "y": [4, 5, 6]}
+```
+
+Example 2 output shape
+
+```json
+{
+  "compatibility": "minor",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. Added `theta ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]`.\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ binomial(trials, theta);\n}\n",
+  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}"
+}
+```
+
+Example 3: MAJOR input
+
+```stan
+data {
+  int<lower=1> N;
+  vector[N] y;
+}
+parameters {
+  real mu1;
+  real mu2;
+}
+model {
+  for (n in 1:N) {
+    target += log_mix(0.5, normal_lpdf(y[n] | mu1, 1), normal_lpdf(y[n] | mu2, 1));
+  }
+}
+```
+
+```json
+{"N": 3, "y": [0.1, 1.2, -0.5]}
+```
+
+Example 3 output shape
+
+```json
+{
+  "compatibility": "major",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\n",
+  "model_safe_stan": "",
+  "data_safe_json": ""
+}
+```
+
+Model directory: models/forestdb/dirichlet-multinomial-mixture
+
+Metadata:
+
+```json
+{
+  "description": "Mixture of count vectors with Dirichlet-multinomial components.",
+  "difficulty": "advanced",
+  "id": "dirichlet-multinomial-mixture",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/dm-mixture.html",
+  "title": "Finite Dirichlet-Multinomial Mixture",
+  "translation_note": "Discrete document clusters are marginalized with log_sum_exp."
+}
+```
+
+Source note:
+
+```text
+# Finite Dirichlet-Multinomial Mixture
+
+- ForestDB source: [Finite Dirichlet-Multinomial Mixture](https://forestdb.org/models/dm-mixture.html)
+- Translation note: Discrete document clusters are marginalized with log_sum_exp.
+- License note: this Stan translation was written for this regression suite from the linked ForestDB model description.
+
+```
+
+Original `model.stan`:
+
+```stan
+functions {
+  real dm_lpmf(array[] int y, vector alpha) {
+    int total_count = 0;
+    real lp = lgamma(sum(alpha));
+    for (c in 1 : size(y)) {
+      total_count += y[c];
+      lp += lgamma(y[c] + alpha[c]) - lgamma(alpha[c]);
+    }
+    return lp - lgamma(sum(alpha) + total_count);
+  }
+}
+data {
+  int<lower=1> N;
+  int<lower=2> C;
+  int<lower=2> K;
+  array[N, C] int<lower=0> y;
+}
+parameters {
+  simplex[K] theta;
+  array[K] simplex[C] phi;
+  real<lower=0> concentration;
+}
+model {
+  theta ~ dirichlet(rep_vector(1.0, K));
+  concentration ~ lognormal(0, 0.5);
+  for (k in 1 : K) {
+    phi[k] ~ dirichlet(rep_vector(1.0, C));
+  }
+  for (n in 1 : N) {
+    vector[K] lp;
+    for (k in 1 : K) {
+      lp[k] = log(theta[k]) + dm_lpmf(y[n] | concentration * phi[k]);
+    }
+    target += log_sum_exp(lp);
+  }
+}
+
+```
+
+Original `data.json`:
+
+```json
+{
+  "N": 8,
+  "C": 3,
+  "K": 2,
+  "y": [
+    [
+      8,
+      1,
+      1
+    ],
+    [
+      7,
+      2,
+      1
+    ],
+    [
+      9,
+      1,
+      0
+    ],
+    [
+      6,
+      3,
+      1
+    ],
+    [
+      1,
+      7,
+      2
+    ],
+    [
+      2,
+      6,
+      2
+    ],
+    [
+      1,
+      8,
+      1
+    ],
+    [
+      2,
+      7,
+      1
+    ]
+  ]
+}
+
+```

@@ -1,0 +1,113 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777323417,
+  "created_at": 1777323408,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0bc4f9321f5dfb730069efcd9051488191907afbcfd5d5157b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0bc4f9321f5dfb730069efcd9176448191805c1dfe15346e07",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: `y` is scored with a truncated normal likelihood, `y[n] ~ normal(mu, sigma) T[ , U]`. The truncation contributes parameter-dependent normalization terms to the log density. SafeStan requires protected observations to be observed with plain top-level sampling statements and does not allow censored/truncated target adjustments or manual replacement with `target +=`. Replacing this with an untruncated normal likelihood would change the posterior. The model also has an implicit improper prior on `mu`, which cannot be fixed without inventing a prior.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\"}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0bc4f9321f5dfb730069efcd97b9f08191b5ff6f3cfa5a9f71",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 7195,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 521,
+    "output_tokens_details": {
+      "reasoning_tokens": 345
+    },
+    "total_tokens": 7716
+  },
+  "user": null
+}

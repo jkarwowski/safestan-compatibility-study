@@ -1,0 +1,52 @@
+{
+  "input": [
+    {
+      "content": "You are translating a single Stan model into SafeStan for a regression-test\ncorpus. The goal is not to make the model \"nicer\"; the goal is to decide\nwhether the original posterior/log density can be represented under SafeStan\nrestrictions with no change or only a small mechanical rewrite. Return only the\nstructured JSON requested by the caller.\n\nWork method:\n\n1. Identify the observed/protected data variable(s) scored by the likelihood.\n2. Check whether the model already satisfies SafeStan's syntactic discipline.\n3. If not, look for a same-density mechanical rewrite.\n4. If the rewrite would require changing the statistical model, replacing a\n   marginalized latent-state algorithm, inventing priors, or changing the\n   likelihood, classify the case as `major`.\n5. For `as-is` and `minor`, output complete files. Do not output patches.\n\nSafeStan rules to apply:\n\n- Protected observed data should appear as top-level data variables and be\n  observed by plain `name ~ distribution(...)` sampling statements.\n- Do not use `target +=`, `target()`, direct `_lpdf`/`_lpmf` scoring, or\n  user-defined probability distributions for protected observations.\n- Do not use protected data in `transformed data` or before its observation.\n  If a summary/reshape is needed, add deterministic fields to `data_safe_json`\n  and document them.\n- Avoid sampling statements inside loops or conditionals when the same density\n  can be expressed as one vectorized sampling statement.\n- Parameters should have explicit proper priors, and priors should appear\n  before parameter use. Do not add priors that change the posterior. Adding\n  `uniform(0, 1)` to a parameter already constrained to `<lower=0, upper=1>`\n  is acceptable because it is density-neutral on the support.\n\nCompatibility labels:\n\n- `as-is`: the original Stan program is already SafeStan-compatible. Return\n  `model_safe_stan` equivalent to the original and `data_safe_json` equivalent\n  to the original data.\n- `minor`: a same-posterior SafeStan version can be produced using only\n  mechanical changes such as moving existing priors earlier, vectorizing simple\n  likelihoods, adding deterministic data copies/reshapes, or adding\n  density-neutral bounded uniform priors.\n- `major`: no SafeStan version can be produced without a substantive model or\n  density change. In this case return empty strings for `model_safe_stan` and\n  `data_safe_json`.\n\nRequirements:\n\n- Never invent new observations or synthetic data.\n- `data_safe_json` must be a valid JSON object string. It may equal the original\n  data exactly, or be a deterministic augmentation/reshape of it.\n- If you add fields to `data_safe_json`, document the exact deterministic\n  relation in `safety_note_md`.\n- Preserve the intended posterior/log density for AS-IS and MINOR.\n- If the model relies on mixture marginalization, custom manual scoring,\n  censored/truncated target adjustments, hidden-state algorithms, or implicit\n  improper priors that cannot be represented without changing the density,\n  classify it as `major`.\n- `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and\n  include: compatibility, protected data choice, generated files, and a concise\n  explanation of any change.\n\nExamples:\n\nExample 1: AS-IS input\n\n```stan\ndata {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n```\n\n```json\n{\"y\": 1}\n```\n\nExample 1 output shape\n\n```json\n{\n  \"compatibility\": \"as-is\",\n  \"safety_note_md\": \"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required; the model uses an explicit prior and observes top-level protected data with a plain sampling statement.\\n\",\n  \"model_safe_stan\": \"data {\\n  int<lower=0, upper=1> y;\\n}\\nparameters {\\n  real<lower=0, upper=1> theta;\\n}\\nmodel {\\n  theta ~ beta(1, 1);\\n  y ~ bernoulli(theta);\\n}\\n\",\n  \"data_safe_json\": \"{\\\"y\\\": 1}\"\n}\n```\n\nExample 2: MINOR input\n\n```stan\ndata {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  y ~ binomial(trials, theta);\n}\n```\n\n```json\n{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6]}\n```\n\nExample 2 output shape\n\n```json\n{\n  \"compatibility\": \"minor\",\n  \"safety_note_md\": \"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. Added `theta ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]`.\\n\",\n  \"model_safe_stan\": \"data {\\n  int<lower=1> N;\\n  array[N] int<lower=0> trials;\\n  array[N] int<lower=0> y;\\n  array[N] int<lower=0> y_safestan_copy;\\n}\\ntransformed data {\\n  real mean_y = mean(to_vector(y_safestan_copy));\\n}\\nparameters {\\n  vector<lower=0, upper=1>[N] theta;\\n}\\nmodel {\\n  theta ~ uniform(0, 1);\\n  y ~ binomial(trials, theta);\\n}\\n\",\n  \"data_safe_json\": \"{\\\"N\\\": 3, \\\"trials\\\": [10, 10, 10], \\\"y\\\": [4, 5, 6], \\\"y_safestan_copy\\\": [4, 5, 6]}\"\n}\n```\n\nExample 3: MAJOR input\n\n```stan\ndata {\n  int<lower=1> N;\n  vector[N] y;\n}\nparameters {\n  real mu1;\n  real mu2;\n}\nmodel {\n  for (n in 1:N) {\n    target += log_mix(0.5, normal_lpdf(y[n] | mu1, 1), normal_lpdf(y[n] | mu2, 1));\n  }\n}\n```\n\n```json\n{\"N\": 3, \"y\": [0.1, 1.2, -0.5]}\n```\n\nExample 3 output shape\n\n```json\n{\n  \"compatibility\": \"major\",\n  \"safety_note_md\": \"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\\n\",\n  \"model_safe_stan\": \"\",\n  \"data_safe_json\": \"\"\n}\n```\n\nModel directory: models/forestdb/geometric-distribution\n\nMetadata:\n\n```json\n{\n  \"description\": \"Geometric likelihood for trials until first success.\",\n  \"difficulty\": \"easy\",\n  \"id\": \"geometric-distribution\",\n  \"method\": \"sample\",\n  \"source_group\": \"forestdb\",\n  \"source_group_label\": \"ForestDB translations\",\n  \"source_url\": \"https://forestdb.org/models/geometric.html\",\n  \"title\": \"Geometric Distribution\",\n  \"translation_note\": \"Stan's geometric distribution counts failures, so data are shifted by one.\"\n}\n```\n\nSource note:\n\n```text\n# Geometric Distribution\n\n- ForestDB source: [Geometric Distribution](https://forestdb.org/models/geometric.html)\n- Translation note: Stan's geometric distribution counts failures, so data are shifted by one.\n- License note: this Stan translation was written for this regression suite from the linked ForestDB model description.\n\n```\n\nOriginal `model.stan`:\n\n```stan\ndata {\n  int<lower=1> N;\n  array[N] int<lower=1> y;\n}\ntransformed data {\n  array[N] int<lower=0> y_failures;\n  for (n in 1 : N) {\n    y_failures[n] = y[n] - 1;\n  }\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y_failures ~ neg_binomial_2((1 - theta) / theta, 1);\n}\ngenerated quantities {\n  int y_rep = 1 + neg_binomial_2_rng((1 - theta) / theta, 1);\n}\n\n```\n\nOriginal `data.json`:\n\n```json\n{\n  \"N\": 10,\n  \"y\": [\n    1,\n    2,\n    1,\n    4,\n    3,\n    1,\n    2,\n    5,\n    2,\n    1\n  ]\n}\n\n```\n",
+      "role": "user"
+    }
+  ],
+  "max_output_tokens": 64000,
+  "model": "gpt-5.5",
+  "reasoning": {
+    "effort": "high"
+  },
+  "text": {
+    "format": {
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    }
+  }
+}

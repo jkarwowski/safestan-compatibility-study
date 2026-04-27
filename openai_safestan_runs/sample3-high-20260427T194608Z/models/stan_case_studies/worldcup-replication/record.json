@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/stan_case_studies/worldcup-replication",
+  "compatibility": "major",
+  "completed_at": "2026-04-27T20:54:37+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_case_studies/worldcup-replication",
+  "reasoning_effort": "high",
+  "response_id": "resp_0be3e02417ccec570069efccf8099c8194976151eb60739b82",
+  "started_at": "2026-04-27T20:54:15+00:00",
+  "usage": {
+    "input_tokens": 3844,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1207,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5051
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

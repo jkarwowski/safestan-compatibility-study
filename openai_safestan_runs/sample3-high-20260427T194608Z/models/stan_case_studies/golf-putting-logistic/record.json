@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/stan_case_studies/golf-putting-logistic",
+  "compatibility": "major",
+  "completed_at": "2026-04-27T20:48:40+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_case_studies/golf-putting-logistic",
+  "reasoning_effort": "high",
+  "response_id": "resp_0b34a6e89b8efaf90069efcb9d979081a0a6408a8b220e631e",
+  "started_at": "2026-04-27T20:48:29+00:00",
+  "usage": {
+    "input_tokens": 2477,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 608,
+    "output_tokens_details": {
+      "reasoning_tokens": 449
+    },
+    "total_tokens": 3085
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

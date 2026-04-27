@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/stan_case_studies/binary-trials-hier-logit-centered",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-27T20:44:58+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_case_studies/binary-trials-hier-logit-centered",
+  "reasoning_effort": "high",
+  "response_id": "resp_0e9bd2aeaa34afd60069efcaba13b881a18d613b82c6a1b802",
+  "started_at": "2026-04-27T20:44:41+00:00",
+  "usage": {
+    "input_tokens": 2635,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1033,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3668
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

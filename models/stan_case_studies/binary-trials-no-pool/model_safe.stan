@@ -2,11 +2,10 @@ data {
   int<lower=0> N; // items
   array[N] int<lower=0> K; // initial trials
   array[N] int<lower=0> y; // initial successes
+  array[N] int<lower=0> y_safestan_copy; // deterministic copy of initial successes
   
   array[N] int<lower=0> K_new; // new trials
   array[N] int<lower=0> y_new; // new successes
-  // SafeStan duplicate(s) for transformed-data summaries.
-  array[N] int<lower=0> y_safestan_copy;
 }
 transformed data {
   real min_y; // minimum successes
@@ -24,7 +23,6 @@ parameters {
 }
 model {
   theta ~ uniform(0, 1);
-
   y ~ binomial(K, theta); // likelihood
 }
 generated quantities {
@@ -62,7 +60,7 @@ generated quantities {
   
   some_ability_gt_350 = max(theta) > 0.35;
   for (n in 1 : N) {
-    avg_gt_400[n] = ((y[n] + z[n]) / (0.0 + K[n] + K_new[n])) > 0.400;
+    avg_gt_400[n] = ((y_safestan_copy[n] + z[n]) / (0.0 + K[n] + K_new[n])) > 0.400;
   }
   for (n in 1 : N) {
     ability_gt_400[n] = theta[n] > 0.400;

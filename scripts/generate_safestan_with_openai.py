@@ -5,6 +5,8 @@ The script iterates over model directories containing `model.stan` and
 `data.json`, prompts an OpenAI reasoning model with a shared template, and writes
 the returned `model_safe.stan`, `data_safe.json`, and `SAFETY_NOTE.md` beside the
 original files. For models classified as `major`, stale safe files are removed.
+Each API call is also saved under `openai_safestan_runs/<run_id>/` with the full
+prompt, request payload, raw response, parsed output, usage, and per-model record.
 
 The API key is read only from `OPENAI_API_KEY`.
 """
@@ -28,7 +30,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TEMPLATE = ROOT / "scripts" / "safestan_translation_prompt.md"
 DEFAULT_API_URL = "https://api.openai.com/v1/responses"
 DEFAULT_MODEL = "gpt-5.5"
-DEFAULT_REASONING_EFFORT = "xhigh"
+DEFAULT_REASONING_EFFORT = "high"
+DEFAULT_RUNS_ROOT = ROOT / "openai_safestan_runs"
 
 OUTPUT_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -66,13 +69,23 @@ def load_json(path: Path) -> Any:
 
 
 def write_json(path: Path, value: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as handle:
         json.dump(value, handle, indent=2, sort_keys=True)
         handle.write("\n")
 
 
+def write_text(path: Path, value: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(value, encoding="utf-8")
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def utc_run_id() -> str:
+    return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
 def model_dirs(models_root: Path) -> list[Path]:
@@ -191,6 +204,27 @@ def call_openai(
     raise AssertionError("unreachable")
 
 
+def artifact_dir_for(run_root: Path, model_dir: Path) -> Path:
+    rel = model_dir.relative_to(ROOT)
+    return run_root.joinpath(*rel.parts)
+
+
+def save_model_record(artifact_dir: Path | None, record: dict[str, Any]) -> None:
+    if artifact_dir is not None:
+        write_json(artifact_dir / "record.json", record)
+
+
+def artifacts_complete(artifact_dir: Path) -> bool:
+    required = ("response.json", "translation.json", "usage.json", "record.json")
+    if not all((artifact_dir / filename).is_file() for filename in required):
+        return False
+    try:
+        record = load_json(artifact_dir / "record.json")
+    except (OSError, json.JSONDecodeError):
+        return False
+    return "error" not in record
+
+
 def normalize_text(text: str) -> str:
     return text.rstrip() + "\n"
 
@@ -252,11 +286,22 @@ def write_translation(model_dir: Path, translation: dict[str, Any]) -> dict[str,
     }
 
 
+def clear_translation_outputs(model_dir: Path) -> None:
+    for filename in ("model_safe.stan", "data_safe.json", "SAFETY_NOTE.md"):
+        path = model_dir / filename
+        if path.exists():
+            path.unlink()
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--models-root", default=str(ROOT / "models"))
     parser.add_argument("--template", default=str(DEFAULT_TEMPLATE))
     parser.add_argument("--output", default=str(ROOT / "openai_safestan_generation.json"))
+    parser.add_argument("--runs-root", default=str(DEFAULT_RUNS_ROOT), help="Directory where reproducibility artifacts are saved.")
+    parser.add_argument("--run-id", help="Artifact run id. Defaults to current UTC timestamp.")
+    parser.add_argument("--no-save-artifacts", action="store_true", help="Disable prompt/request/response artifact saving.")
+    parser.add_argument("--rerun-existing-artifacts", action="store_true", help="Call the API even when complete artifacts already exist.")
     parser.add_argument("--api-url", default=DEFAULT_API_URL)
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--reasoning-effort", default=DEFAULT_REASONING_EFFORT)
@@ -298,20 +343,52 @@ def main() -> int:
     if not api_key:
         raise SystemExit("OPENAI_API_KEY is not set. Export it in the shell before running this script.")
 
+    run_id = args.run_id or utc_run_id()
+    run_root: Path | None = None
+    if not args.no_save_artifacts:
+        run_root = Path(args.runs_root).expanduser().resolve() / run_id
+        run_root.mkdir(parents=True, exist_ok=True)
+
     results: list[dict[str, Any]] = []
     failures = 0
     for index, path in enumerate(candidates, start=1):
         rel = str(path.relative_to(ROOT))
         print(f"[{index}/{len(candidates)}] {rel}", flush=True)
+        artifact_dir = artifact_dir_for(run_root, path) if run_root is not None else None
         record: dict[str, Any] = {
             "path": rel,
             "started_at": utc_now(),
             "model": args.model,
             "reasoning_effort": args.reasoning_effort,
         }
+        if artifact_dir is not None:
+            record["artifacts_dir"] = str(artifact_dir.relative_to(ROOT))
         try:
+            if (
+                artifact_dir is not None
+                and artifacts_complete(artifact_dir)
+                and not args.rerun_existing_artifacts
+            ):
+                previous_record = load_json(artifact_dir / "record.json")
+                translation = load_json(artifact_dir / "translation.json")
+                write_result = write_translation(path, translation)
+                record.update(write_result)
+                record["response_id"] = previous_record.get("response_id")
+                record["usage"] = load_json(artifact_dir / "usage.json")
+                record["skipped_existing_artifacts"] = True
+                record["completed_at"] = utc_now()
+                print(f"  -> {record['compatibility']} (skipped existing artifacts)", flush=True)
+                results.append(record)
+                if args.sleep_seconds and index < len(candidates):
+                    time.sleep(args.sleep_seconds)
+                continue
+
+            clear_translation_outputs(path)
             prompt = render_prompt(template, path, args.source_note_chars)
             payload = response_payload(args.model, args.reasoning_effort, prompt, args.max_output_tokens)
+            if artifact_dir is not None:
+                write_text(artifact_dir / "prompt.txt", prompt)
+                write_json(artifact_dir / "request.json", payload)
             response = call_openai(
                 api_key=api_key,
                 api_url=args.api_url,
@@ -319,17 +396,26 @@ def main() -> int:
                 timeout=args.timeout,
                 retries=args.retries,
             )
+            if artifact_dir is not None:
+                write_json(artifact_dir / "response.json", response)
+                write_json(artifact_dir / "usage.json", response.get("usage", {}))
             translation = parse_translation(response)
+            if artifact_dir is not None:
+                write_json(artifact_dir / "translation.json", translation)
             write_result = write_translation(path, translation)
             record.update(write_result)
             record["response_id"] = response.get("id")
+            record["usage"] = response.get("usage")
             record["completed_at"] = utc_now()
             print(f"  -> {record['compatibility']}", flush=True)
         except Exception as error:  # noqa: BLE001 - batch runner records and continues.
             failures += 1
             record["error"] = str(error)
             record["completed_at"] = utc_now()
+            if artifact_dir is not None:
+                write_text(artifact_dir / "error.txt", str(error))
             print(f"  !! {error}", file=sys.stderr, flush=True)
+        save_model_record(artifact_dir, record)
         results.append(record)
         if args.sleep_seconds and index < len(candidates):
             time.sleep(args.sleep_seconds)
@@ -339,6 +425,8 @@ def main() -> int:
         "models_root": str(models_root),
         "model": args.model,
         "reasoning_effort": args.reasoning_effort,
+        "run_id": run_id,
+        "artifacts_root": str(run_root) if run_root is not None else None,
         "total": len(results),
         "failures": failures,
         "results": results,

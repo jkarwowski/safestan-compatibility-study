@@ -1,0 +1,6 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":10,\"y\":[-0.3,0.1,0.4,0.2,-0.1,0.6,0.0,0.3,0.5,0.2],\"mu0\":0.0,\"lambda0\":1.0,\"alpha0\":2.0,\"beta0\":2.0}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] y;\n  real mu0;\n  real<lower=0> lambda0;\n  real<lower=0> alpha0;\n  real<lower=0> beta0;\n}\nparameters {\n  real mu;\n  real<lower=0> tau;\n}\ntransformed parameters {\n  real<lower=0> sigma = inv_sqrt(tau);\n}\nmodel {\n  tau ~ gamma(alpha0, beta0);\n  mu ~ normal(mu0, inv_sqrt(lambda0 * tau));\n  y ~ normal(mu, sigma);\n}\ngenerated quantities {\n  real y_rep = normal_rng(mu, sigma);\n}\n",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The observed data `y` is a top-level data variable and is scored by a plain vectorized sampling statement, `y ~ normal(mu, sigma)`. The parameters have explicit proper priors before the likelihood, and the model does not use manual `target +=` scoring, direct `_lpdf` calls, or protected-data transformations before observation.\n"
+}

@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/sample3-high-20260427T194608Z/models/forestdb/markov-model",
+  "compatibility": "minor",
+  "completed_at": "2026-04-27T20:40:32+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/markov-model",
+  "reasoning_effort": "high",
+  "response_id": "resp_06e6504b56b7f53b0069efc8f9105081a2b25406e2707f447f",
+  "started_at": "2026-04-27T20:37:12+00:00",
+  "usage": {
+    "input_tokens": 2207,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 10993,
+    "output_tokens_details": {
+      "reasoning_tokens": 10358
+    },
+    "total_tokens": 13200
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}
