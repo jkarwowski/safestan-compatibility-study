@@ -47,6 +47,18 @@ python3 scripts/compare_outputs.py runs/baseline runs/safestan --json-output run
 
 The comparison script summarizes common CmdStan CSV columns and checks mean and standard-deviation differences with configurable `--atol` and `--rtol`.
 
+## Checking SafeStan Compatibility
+
+With a built SafeStan compiler:
+
+```sh
+python3 scripts/check_safestan_compatibility.py \
+  --stanc /path/to/cmdsafestan/safestan/_build/default/src/stanc/stanc.exe \
+  --write
+```
+
+This writes `safestan_compatibility.json`, refreshes `RESULTS.md`, and updates the SafeStan markers in `MODEL_LIST.md`.
+
 ## SafeStan Translation Workflow
 
 A simple workflow is to keep the original `model.stan`, add a translated SafeStan file such as `model_safe.stan` in the same directory, and run:
