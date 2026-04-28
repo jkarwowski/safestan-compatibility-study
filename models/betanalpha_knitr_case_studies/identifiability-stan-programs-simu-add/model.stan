@@ -9,6 +9,6 @@ transformed data {
 
 generated quantities {
   real<lower=0> sigma = 0.75;
-  real y[N];
+  array[N] real y;
   for (n in 1:N) y[n] = normal_rng(a + b, sigma);
 }

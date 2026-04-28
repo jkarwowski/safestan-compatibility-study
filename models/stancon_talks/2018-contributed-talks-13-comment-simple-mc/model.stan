@@ -8,7 +8,7 @@ data {
   // observed treatment
   vector[N] A;
   // outcome
-  int<lower=0,upper=1> Y[N];
+  array[N] int<lower=0,upper=1> Y;
 }
 
 transformed data {
@@ -29,7 +29,7 @@ transformed parameters {
 model {
   // priors for regression coefficients
   alpha ~ normal(0, 2.5);
-  
+
   // likelihood
   Y ~ bernoulli_logit(X * alphaZ + A * alphaA);
 }
@@ -45,7 +45,7 @@ generated quantities {
   for (n in 1:N) {
     // sample baseline covariates
     row_i = categorical_rng(boot_probs);
-    
+
     // sample Ya where a = 1 and a = 0
     Y_a1[n] = bernoulli_logit_rng(X[row_i] * alphaZ + alphaA);
     Y_a0[n] = bernoulli_logit_rng(X[row_i] * alphaZ);

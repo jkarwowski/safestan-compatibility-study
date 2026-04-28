@@ -4,9 +4,9 @@ data {
   int<lower=1> I;
   int<lower=1> S;
   // data
-  int<lower=1,upper=I> item[R];
-  int<lower=1,upper=S> subject[R];
-  int<lower=0,upper=1> grade[R];
+  array[R] int<lower=1,upper=I> item;
+  array[R] int<lower=1,upper=S> subject;
+  array[R] int<lower=0,upper=1> grade;
 }
 parameters {
   // parameters

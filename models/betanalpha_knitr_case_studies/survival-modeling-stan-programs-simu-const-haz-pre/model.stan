@@ -12,8 +12,8 @@ data {
 }
 
 generated quantities {
-  real<lower=0> obs_times[N];
-  
+  array[N] real<lower=0> obs_times;
+
   for (n in 1:N) {
     // Simulate precursor event
     real u1 = uniform_rng(0, 1);

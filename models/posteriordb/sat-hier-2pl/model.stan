@@ -1,7 +1,7 @@
 data {
-  int<lower=1> I; // # items
-  int<lower=1> J; // # persons
-  int<lower=1> N; // # observations
+  int<lower=1> I; // // items
+  int<lower=1> J; // // persons
+  int<lower=1> N; // // observations
   array[N] int<lower=1, upper=I> ii; // item for n
   array[N] int<lower=1, upper=J> jj; // person for n
   array[N] int<lower=0, upper=1> y; // correctness for n

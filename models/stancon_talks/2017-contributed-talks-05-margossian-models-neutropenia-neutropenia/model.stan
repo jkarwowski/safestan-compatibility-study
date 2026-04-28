@@ -1,10 +1,10 @@
 functions{
 
-    real[] twoCptNeutModelODE(real t,
-			real[] x,
-			real[] parms,
-			real[] rdummy,
-			int[] idummy) {
+    array[] real twoCptNeutModelODE(real t,
+			array[] real x,
+			array[] real parms,
+			data array[] real rdummy,
+			data array[] int idummy) {
     real k10;
     real k12;
     real k21;
@@ -18,7 +18,7 @@ functions{
     real gamma;
     real alpha;
     real ktr;
-    real dxdt[8];
+    array[8] real dxdt;
     real conc;
     real EDrug;
     real transit1;
@@ -32,7 +32,7 @@ functions{
     V1 = parms[3];
     V2 = parms[4];
     ka = parms[5];
-    mtt = parms[6];	
+    mtt = parms[6];
     circ0 = parms[7];
     gamma = parms[8];
     alpha = parms[9];
@@ -42,7 +42,7 @@ functions{
     k21 = Q / V2;
 
     ktr = 4 / mtt;
-  
+
     dxdt[1] = -ka * x[1];
     dxdt[2] = ka * x[1] - (k10 + k12) * x[2] + k21 * x[3];
     dxdt[3] = k12 * x[2] - k21 * x[3];
@@ -64,14 +64,14 @@ functions{
 
   }
 
-  real[] twoCptNeutModel1(real t0, real[] t, real[] init, real amt, int cmt, int evid,
+  array[] real twoCptNeutModel1(real t0, array[] real t, array[] real init, real amt, int cmt, int evid,
 			  real CL, real Q, real V1, real V2, real ka,
 			  real mtt, real circ0, real gamma, real alpha,
-			  real[] rdummy, int[] idummy) {
+			  data array[] real rdummy, data array[] int idummy) {
     int nCmt = 8;
-    real x[nCmt];
-    real parms[9];
-    real temp[1, nCmt];
+    array[nCmt] real x;
+    array[9] real parms;
+    array[1, nCmt] real temp;
 
     parms[1]= CL;
     parms[2] = Q;
@@ -92,18 +92,18 @@ functions{
 				  1.0E-6, 1.0E-6, 1.0E8);
       x = to_array_1d(temp);
     }
-   
+
     if (evid == 1) x[cmt] = x[cmt] + amt;
 
     return x;
   }
 
-  matrix twoCptNeutModel(real[] time, real[] amt, int[] cmt, int[] evid, 
+  matrix twoCptNeutModel(array[] real time, array[] real amt, array[] int cmt, array[] int evid,
 		     real CL, real Q, real V1, real V2, real ka,
 		     real mtt, real circ0, real gamma, real alpha,
-		     real[] rdummy, int[] idummy) {
+		     data array[] real rdummy, data array[] int idummy) {
     int nCmt = 8;
-    real init[nCmt];
+    array[nCmt] real init;
     matrix[size(time), nCmt] result;
     int nt;
     real t0;
@@ -120,19 +120,19 @@ functions{
     }
     return result;
   }
-  
+
 }
 
 data {
   int<lower = 1> nt;
   int<lower = 1> nObsPK;
   int<lower = 1> nObsPD;
-  int<lower = 1> iObsPK[nObsPK];
-  int<lower = 1> iObsPD[nObsPD];
-  real<lower = 0> amt[nt];
-  int<lower = 1> cmt[nt];
-  int<lower = 0> evid[nt];
-  real<lower = 0> time[nt];
+  array[nObsPK] int<lower = 1> iObsPK;
+  array[nObsPD] int<lower = 1> iObsPD;
+  array[nt] real<lower = 0> amt;
+  array[nt] int<lower = 1> cmt;
+  array[nt] int<lower = 0> evid;
+  array[nt] real<lower = 0> time;
   vector<lower = 0>[nObsPK] cObs;
   vector<lower = 0>[nObsPD] neutObs;
   real<lower = 0> CLPrior;
@@ -158,8 +158,8 @@ data {
 transformed data {
   vector[nObsPK] logCObs;
   vector[nObsPD] logNeutObs;
-  int idummy[0];
-  real rdummy[0];
+  array[0] int idummy;
+  array[0] real rdummy;
   int nCmt = 8;
 
   logCObs = log(cObs);
@@ -198,12 +198,12 @@ transformed parameters {
   cHat = x[, 2] / V1;
   neutHat = x[, nCmt] + circ0;
 
-  cHatObs = cHat[iObsPK]; ## predictions for observed data records  }
-  neutHatObs = neutHat[iObsPD]; ## predictions for observed data records
+  cHatObs = cHat[iObsPK]; //# predictions for observed data records  }
+  neutHatObs = neutHat[iObsPD]; //# predictions for observed data records
 }
 
 model {
-  
+
   // CL ~ lognormal(log(CLPrior), CLPriorCV);
   // Q ~ lognormal(log(QPrior), QPriorCV);
   // V1 ~ lognormal(log(V1Prior), V1PriorCV);
@@ -221,14 +221,14 @@ model {
   gamma ~ lognormal(log(gammaPrior), gammaPriorCV);
   sigmaNeut ~ cauchy(0, 1);
 
-  logCObs ~ normal(log(cHatObs), sigma); ## observed data likelihood
+  logCObs ~ normal(log(cHatObs), sigma); //# observed data likelihood
 
   logNeutObs ~ normal(log(neutHatObs), sigmaNeut);
 }
 
 generated quantities {
-  real cPred[nt];
-  real neutPred[nt];
+  array[nt] real cPred;
+  array[nt] real neutPred;
 
   for (i in 1:nt) {
     if(time[i] == 0) {

@@ -9,8 +9,8 @@ functions {
  * A[Si[u] : Si[u+1]-1]
  * for the uth unit
  */
-int[] make_slice_index(int[] S) {
-  int Si[size(S)+1];
+array[] int make_slice_index(array[] int S) {
+  array[size(S)+1] int Si;
   int cv = 1;
   Si[1] = cv;
   for(i in 1:size(S)) {
@@ -41,7 +41,7 @@ real gamma2_overdisp_lpdf(vector y, vector mu, real sigma, real kappa) {
   return gamma_lpdf(y| muSq ./ sigmaSq, mu ./ sigmaSq);
 }
 
-real gamma2_overdisp_array_lpdf(real[] y, vector mu, real sigma, real kappa) {
+real gamma2_overdisp_array_lpdf(array[] real y, vector mu, real sigma, real kappa) {
   int N = size(y);
   vector[N] muSq = square(mu);
   vector[N] sigmaSq = square(sigma) + muSq / kappa;
@@ -51,7 +51,7 @@ real gamma2_overdisp_array_lpdf(real[] y, vector mu, real sigma, real kappa) {
 real gamma2_overdisp_cdf(real y, real mu, real sigma, real kappa) {
   real muSq = square(mu);
   real sigmaSq = square(sigma) + muSq / kappa;
-  return gamma_cdf(y, muSq ./ sigmaSq, mu ./ sigmaSq);
+  return gamma_cdf(y | muSq ./ sigmaSq, mu ./ sigmaSq);
 }
 
 real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
@@ -87,7 +87,7 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
 
     if(lag > tad[1])
       reject("Tlag must not exceed first observation");
- 
+
     return pk_1cmt_oral(tad - lag, ldose, lka, lCL, lV);
   }
 
@@ -98,7 +98,7 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
     int N = num_elements(tad);
     real lag = exp(llag);
     vector[N] pk;
- 
+
     // find out which elements have to be skipped due to lag
     while(tad[k+1] < lag && k+1 != N) {
       k = k + 1;
@@ -125,7 +125,7 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
     return pk_1cmt_oral_t(t-lag , ldose, lka, lCL, lV);
   }
 // End expanded include: models.stan
-  real[] turnover_kin_inhib_1(real t, real[] R, real[] theta, real[] x_r, int[] x_i) {
+  array[] real turnover_kin_inhib_1(real t, array[] real R, array[] real theta, array[] real x_r, array[] int x_i) {
     real ldose = x_r[1];
     real llag = x_r[2];
     real lka = x_r[3];
@@ -136,7 +136,7 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
     real lkin = theta[1] + lkout;
     real lEC50 = theta[3];
     real lS = log_inv_logit(lconc - lEC50);
-    
+
     // dRdt = kin * (1 - C/(C + EC50)) - R * kout
     return { exp(lkin + log1m_exp(lS)) - R[1] * exp(lkout) };
   }
@@ -144,17 +144,17 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
 data {
   int<lower=1> J;
   vector<lower=0>[J] dose;
-  int<lower=1> N[J];
+  array[J] int<lower=1> N;
   vector<lower=0>[sum(N)] dv;
-  real<lower=0> time[sum(N)];
+  array[sum(N)] real<lower=0> time;
   matrix[4,J] Eta_est;
   real<lower=0> ref;
 }
 transformed data {
   int Ndv = sum(N);
-  int x_i[J,0];
-  int sidx[J+1] = make_slice_index(N);
-  real x_r[J,5];
+  array[J, 0] int x_i;
+  array[J+1] int sidx = make_slice_index(N);
+  array[J, 5] real x_r;
   real t0 = -1E-4;
   real refSq = square(ref);
 
@@ -185,9 +185,9 @@ transformed parameters {
   for(j in 1:J) {
     int start = sidx[j];
     int end   = sidx[j+1]-1;
-    real theta_j[3] = to_array_1d(Eta_cov[j]);
-    real initial[1] = { exp(Eta_cov[j,1]) };
-    real mu_temp[N[j],1] = integrate_ode_rk45(turnover_kin_inhib_1,
+    array[3] real theta_j = to_array_1d(Eta_cov[j]);
+    array[1] real initial = { exp(Eta_cov[j,1]) };
+    array[N[j], 1] real mu_temp = integrate_ode_rk45(turnover_kin_inhib_1,
                                               initial, t0,
 					      time[start:end],
 					      theta_j,
@@ -201,7 +201,7 @@ model {
   theta[1] ~ normal(log(80),   log(10)/1.96);
   theta[2] ~ normal(log(30),   log(10)/1.96);
   theta[3] ~ normal(log( 2.5), log(10)/1.96);
-  
+
   sigma_eta ~ normal(0, 0.5);
   kappa ~ gamma(0.2, 0.2);
 
@@ -230,9 +230,9 @@ generated quantities {
   for(j in 1:J) {
     int start = sidx[j];
     int end   = sidx[j+1]-1;
-    real eta_cov_j[3] = to_array_1d(multi_normal_cholesky_rng(theta, diag_matrix(sigma_eta)));
-    real initial[1] = { exp(eta_cov_j[1]) };
-    real mu_temp[N[j],1] = integrate_ode_rk45(turnover_kin_inhib_1, initial, t0,
+    array[3] real eta_cov_j = to_array_1d(multi_normal_cholesky_rng(theta, diag_matrix(sigma_eta)));
+    array[1] real initial = { exp(eta_cov_j[1]) };
+    array[N[j], 1] real mu_temp = integrate_ode_rk45(turnover_kin_inhib_1, initial, t0,
 					      time[start:end],
 					      eta_cov_j,
 					      x_r[j], x_i[j],

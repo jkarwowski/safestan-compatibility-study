@@ -1,12 +1,12 @@
 functions {
-  real da(int winner, real RT, vector beta, real P_b, real mu_da, 
+  real da(int winner, real RT, vector beta, real P_b, real mu_da,
                real mu_b, real sigma, real psi){
     // theta = softmax(beta)
-    // log(P(w = 1 | theta, P_b)): 
+    // log(P(w = 1 | theta, P_b)):
     real log_P_w1;
-    // Prob of direct access given winner = 1 
+    // Prob of direct access given winner = 1
     real log_P_da_gw1;
-    // Prob of backtracking given winner = 1 
+    // Prob of backtracking given winner = 1
     real log_P_b_gw1;
     // Equation (10) in log:
     log_P_w1 = log_sum_exp(categorical_logit_lpmf(1 | beta),
@@ -22,16 +22,16 @@ functions {
             log_sum_exp(log_P_da_gw1 + lognormal_lpdf(RT - psi| mu_da, sigma),
             log_P_b_gw1 + lognormal_lpdf(RT - psi | mu_da + mu_b, sigma) ));
     } else {
-      return (log1m(P_b) + categorical_logit_lpmf(winner | beta) + 
+      return (log1m(P_b) + categorical_logit_lpmf(winner | beta) +
               // Increment on likelihood due to RT:
               lognormal_lpdf(RT - psi | mu_da, sigma));
     }
   }
 }
 data {
-  int<lower = 0> N_obs; 
-  int<lower = 1> N_choices; 
-  int<lower = 1, upper = N_choices> winner[N_obs];
+  int<lower = 0> N_obs;
+  int<lower = 1> N_choices;
+  array[N_obs] int<lower = 1, upper = N_choices> winner;
   vector<lower = 0>[N_obs] RT;
 }
 transformed data {
@@ -42,7 +42,7 @@ parameters{
   real<lower=0,upper=1> P_b;
   real<lower=0> mu_da;
   real<lower=0> mu_b;
-  vector[N_choices-2] beta_incorrect; 
+  vector[N_choices-2] beta_incorrect;
   real<lower=0> beta_added;
   real<lower=0> sigma;
   real<lower=0,upper=min_RT> psi;

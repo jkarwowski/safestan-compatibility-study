@@ -9,7 +9,7 @@ transformed data {
 }
 
 generated quantities {
-  int y[N] = rep_array(0, N);
+  array[N] int y = rep_array(0, N);
   for (n in 1:N) {
     if (!bernoulli_rng(theta)) {
       y[n] = U + 1;

@@ -4,23 +4,23 @@ functions {
     vector[K - 1] sigma = inv_logit(phi - c);
     vector[K] p;
     matrix[K, K] J = rep_matrix(0, K, K);
-    
+
     // Induced ordinal probabilities
     p[1] = 1 - sigma[1];
     for (k in 2:(K - 1))
       p[k] = sigma[k - 1] - sigma[k];
     p[K] = sigma[K - 1];
-    
+
     // Baseline column of Jacobian
     for (k in 1:K) J[k, 1] = 1;
-    
+
     // Diagonal entries of Jacobian
     for (k in 2:K) {
       real rho = sigma[k - 1] * (1 - sigma[k - 1]);
       J[k, k] = - rho;
       J[k - 1, k] = rho;
     }
-    
+
     return   dirichlet_lpdf(p | alpha)
            + log_determinant(J);
   }
@@ -29,7 +29,7 @@ functions {
 data {
   int<lower=1> N;             // Number of observations
   int<lower=1> K;             // Number of ordinal categories
-  int<lower=1, upper=K> y[N]; // Observed ordinals
+  array[N] int<lower=1, upper=K> y; // Observed ordinals
 }
 
 parameters {
@@ -47,7 +47,7 @@ model {
 }
 
 generated quantities {
-  int<lower=1, upper=K> y_ppc[N];
+  array[N] int<lower=1, upper=K> y_ppc;
   for (n in 1:N)
     y_ppc[n] = ordered_logistic_rng(gamma, c);
 }

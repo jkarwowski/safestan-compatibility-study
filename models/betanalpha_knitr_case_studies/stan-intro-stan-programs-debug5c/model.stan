@@ -1,5 +1,5 @@
 parameters {
-  real x[9];
+  array[9] real x;
 }
 
 model {

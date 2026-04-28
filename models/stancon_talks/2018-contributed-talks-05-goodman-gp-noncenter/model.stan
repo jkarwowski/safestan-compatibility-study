@@ -20,7 +20,7 @@ functions{
 
   // calculate the determinant of the a symmetric, tridiagonal matrix with
   // diagonal elements in m[1,1:n] and off diagonals in m[2,1:n-1]
-  real tridiag_det(real [,] m){
+  real tridiag_det(array[,] real m){
     real f0 = 1;
     real f1 = m[1,1];
     real ftemp;
@@ -34,10 +34,10 @@ functions{
 
   // calculate the precision matrix of an OU covariance kernel
   // with mean reversion parameter lambda and time intervals week_num
-  real [,] ou_precision(real []week_num,real lambda){
+  array[,] real ou_precision(array[] real week_num,real lambda){
     int n = size(week_num);
     vector [n] weeks = to_vector(week_num);
-    real  ou_p [2,n];
+    array[2, n] real ou_p;
     real min_diff = min(weeks[2:] - weeks[:n-1]);
     ou_p[1,1] = on_diagonal_diff(exp((week_num[1] - week_num[2])*lambda));
     ou_p[1,n] = on_diagonal_diff(exp((week_num[n-1] - week_num[n])*lambda));
@@ -48,7 +48,7 @@ functions{
       ou_p[2,k] = off_diag;
       if(k != 1){
         real back_difference = week_num[k] - week_num[k-1];
-        real exp_lambda_t0 = exp(lambda *(-back_difference));      
+        real exp_lambda_t0 = exp(lambda *(-back_difference));
         real on_diag = on_diagonal_middle_diff(exp_lambda_t0,exp_lambda_t);
         ou_p[1,k] = on_diag;
       }
@@ -59,8 +59,8 @@ functions{
 data{
   int <lower=0> NSMPL;
   int <lower=0> replicates;
-  int <lower=0> replicate_samples[replicates];
-  int <lower=0> value[NSMPL];
+  array[replicates] int<lower=0> replicate_samples;
+  array[NSMPL] int<lower=0> value;
   vector [NSMPL] time;
 }
 
@@ -68,7 +68,7 @@ transformed data{
   vector[NSMPL] value_vec = to_vector(value);
   vector[NSMPL] time_vec = to_vector(time);
   real mean_temporal_difference = (time[NSMPL] - time[1]) / (rows(time) - 1);
-  int sample_start[replicates];
+  array[replicates] int sample_start;
   sample_start[1] = 1;
   if(replicates > 1)
     for(i in 2:replicates)
@@ -100,12 +100,12 @@ model {
     int taxa_offset = 1;
     for(i in 1:replicates){
       int n = replicate_samples[i];
-      int offset = sample_start[i];
+      int offset_ = sample_start[i];
       real next_lv;
       real prev_lv;
       vector[n] tot;
-      real time_sample [n] = to_array_1d(segment(time,offset,n));
-      real ou_p [2,n] = ou_precision(time_sample,lambda);
+      array[n] real time_sample = to_array_1d(segment(time,offset_,n));
+      array[2, n] real ou_p = ou_precision(time_sample,lambda);
       for(k in 0:n){
         real normalized;
         real lv = next_lv;
@@ -117,7 +117,7 @@ model {
         }
         if(k < n){
           prev_lv = lv;
-          next_lv = latent_value_raw[offset+k];
+          next_lv = latent_value_raw[offset_+k];
           if(k > 0){
             normalized = normalized + next_lv * ou_p[2,k];
           }
@@ -126,7 +126,7 @@ model {
           tot[k] = normalized .* lv;
         }
       }
-      target += -0.5*(student_df + n) * log1p(sum(tot) / 
+      target += -0.5*(student_df + n) * log1p(sum(tot) /
                                                   (student_df - 2));
       target +=  -n * 0.5 * log(student_df - 2) +
                   lgamma(0.5*(student_df + n)) -
@@ -134,8 +134,8 @@ model {
       target += 0.5 * log(tridiag_det(ou_p));
     }
   }
-  
-  student_df ~ gamma(2,.1);  
+
+  student_df ~ gamma(2,.1);
   lambda ~ gamma(2,2);
   kappa ~ gamma(2,2);
   mu ~ normal(0,5);

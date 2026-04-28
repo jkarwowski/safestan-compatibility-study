@@ -12,7 +12,7 @@ generated quantities {
   real<lower=0, upper=1> theta = beta_rng(3, 3);
 
   // Simulate data from observational model
-  int y[N] = rep_array(0, N);
+  array[N] int y = rep_array(0, N);
   for (n in 1:N) {
     if (!bernoulli_rng(theta)) {
       real sum_p = 0;

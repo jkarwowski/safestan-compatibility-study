@@ -1,7 +1,7 @@
 data {
   int<lower=1> N;             // Number of observations
   int<lower=1> K;             // Number of ordinal categories
-  int<lower=1, upper=K> y[N]; // Observed ordinals
+  array[N] int<lower=1, upper=K> y; // Observed ordinals
 }
 
 parameters {
@@ -12,13 +12,13 @@ parameters {
 model {
   // Prior model
   gamma ~ normal(0, 1);
-  
+
   // Observational model
   y ~ ordered_logistic(rep_vector(gamma, N), c);
 }
 
 generated quantities {
-  int<lower=1, upper=K> y_ppc[N];
+  array[N] int<lower=1, upper=K> y_ppc;
   for (n in 1:N)
     y_ppc[n] = ordered_logistic_rng(gamma, c);
 }

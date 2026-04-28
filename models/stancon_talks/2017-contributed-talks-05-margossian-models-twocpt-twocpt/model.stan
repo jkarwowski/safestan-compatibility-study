@@ -31,7 +31,7 @@ functions {
       a[3] = -(a[1] + a[2]);
       x[3] = init[1] * sum(a .* exp(-alpha * dt));
     }
-    
+
     if (init[2] != 0) {
       a[1] = (k21 - alpha[1]) / (alpha[2] - alpha[1]);
       a[2] = (k21 - alpha[2]) / (alpha[1] - alpha[2]);
@@ -55,7 +55,7 @@ functions {
     return x;
   }
 
-  matrix twoCptModel(real[] time, real[] amt, int[] cmt, int[] evid, 
+  matrix twoCptModel(array[] real time, array[] real amt, array[] int cmt, array[] int evid,
 		     real CL, real Q, real V1, real V2, real ka) {
     int nCmt = 3;
     vector[nCmt] init;
@@ -77,17 +77,17 @@ functions {
     }
     return result;
   }
-  
+
 }
 
 data {
   int<lower = 1> nt;
   int<lower = 1> nObs;
-  int<lower = 1> iObs[nObs];
-  real<lower = 0> amt[nt];
-  int<lower = 1> cmt[nt];
-  int<lower = 0> evid[nt];
-  real<lower = 0> time[nt];
+  array[nObs] int<lower = 1> iObs;
+  array[nt] real<lower = 0> amt;
+  array[nt] int<lower = 1> cmt;
+  array[nt] int<lower = 0> evid;
+  array[nt] real<lower = 0> time;
   vector<lower = 0>[nObs] cObs;
 }
 
@@ -96,7 +96,7 @@ transformed data {
   int nCmt;
 
   logCObs = log(cObs);
-  nCmt = 3; ## Fixed. The code specifically handles models with 3 compartments.
+  nCmt = 3; //# Fixed. The code specifically handles models with 3 compartments.
 }
 
 parameters {
@@ -118,7 +118,7 @@ transformed parameters {
 
   cHat = col(x, 2) ./ V1;
 
-  cHatObs = cHat[iObs]; ## predictions for observed data records
+  cHatObs = cHat[iObs]; //# predictions for observed data records
 }
 
 model {
@@ -132,7 +132,7 @@ model {
 }
 
 generated quantities{
-    real cObsPred[nObs];
+    array[nObs] real cObsPred;
 
     for (i in 1:nObs){
       cObsPred[i] = exp(normal_rng(log(cHatObs[i]), sigma));

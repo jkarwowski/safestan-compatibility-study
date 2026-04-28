@@ -1,11 +1,11 @@
 data {
   int<lower=0> M; // Number of covariates
   int<lower=0> N; // Number of observations
-  
+
   vector[M] x0;   // Covariate baselines
   matrix[N, M] X; // Covariate design matrix
-  
-  int<lower=0, upper=1> y[N]; // Variates
+
+  array[N] int<lower=0, upper=1> y; // Variates
 }
 
 transformed data {
@@ -32,5 +32,5 @@ model {
 // Simulate a full observation from the current value of the parameters
 generated quantities {
   vector[N] logit_p = alpha + deltaX * beta;
-  int y_pred[N] = bernoulli_logit_rng(logit_p);
+  array[N] int y_pred = bernoulli_logit_rng(logit_p);
 }

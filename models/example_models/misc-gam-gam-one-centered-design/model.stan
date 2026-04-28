@@ -1,4 +1,4 @@
-////
+//#
 // Generalized Additive Model : y ~ s(X)
 // using cubic splines with negative binomial and log-link
 // The spline design matrix is centered and augmented with an intercept
@@ -7,7 +7,7 @@
 // - Generalized Additive Models: an introduction with R, Simon N. Wood, CRC press (2006)
 // - Eilers and Marx, Stat Sci, 1996
 // This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License
-////
+//#
 functions {
   vector range(int imin, int imax) {
     return cumulative_sum(rep_vector(1, imax - imin + 1)) - 1 + imin;
@@ -18,7 +18,7 @@ functions {
   int difforder() {
     return 2;
   } //set 2 for 2nd order difference penalty
-  
+
   // Evaluate b-spline basis functions of degree q at the values
   // in x within support [xmin,xmax] and with K basis functions.
   // Use q=3 for cubic spline.
@@ -50,11 +50,11 @@ functions {
     }
     return B;
   }
-  
+
   //collection of householder vectors to decompose A
   //if A is n x m then the function returns a n x 2m matrix [U : R]
   // U will be n x m and the vectors are stored in the lower triangle of U.
-  // Q is prod_i 1 - 2u_iu_iT 
+  // Q is prod_i 1 - 2u_iu_iT
   // R is upper triangular.
   matrix householder(matrix A) {
     int n;
@@ -88,7 +88,7 @@ functions {
       return append_col(U, R);
     }
   }
-  
+
   //compute householder vector of centering constraint X^T * 1
   vector centering_constraint(matrix X) {
     int N;
@@ -103,7 +103,7 @@ functions {
       return householder(sums)[ : , 1];
     }
   }
-  
+
   //apply centering constraint on X to a matrix D: D -> DZ
   // where Z is such that X^T 1 = QR with Q=[u:Z]
   // if D is LxK, and X is NxK, returns a Lx(K-1) matrix
@@ -112,7 +112,7 @@ functions {
     u = centering_constraint(X);
     return D[ : , 2 : ] - (2 * D * u) * u[2 : ]';
   }
-  
+
   //difference penalty for P-splines
   //K is the size of the parameter vector
   //d is the order of the difference
@@ -128,7 +128,7 @@ functions {
     }
     return P[1 : (K - d),  : ];
   }
-  
+
   // design matrix for 1D b-spline fit of degree q with K functions
   matrix design(vector x, int K, int q) {
     matrix[rows(x), K] X;
@@ -136,7 +136,7 @@ functions {
     //intercept and bspline basis: K params
     return append_col(rep_vector(1, rows(x)), center(X, X));
   }
-  
+
   // difference operator for that design matrix
   matrix difference_op(vector x, int K, int q, int d) {
     matrix[K - d, K - 1] diff;
@@ -144,7 +144,7 @@ functions {
     return append_col(rep_vector(0, K - d), diff); //intercept has no constraint
   }
 }
-////////////////////////////////////////////////////////////////
+//#//#//#//#//#//#//#//#//#//#//#//#//#//#//#//#
 data {
   int<lower=1> N; //number of data points
   int<lower=1> K; //number of parameters

@@ -10,7 +10,7 @@ transformed data {
 }
 model {}
 generated quantities {
-  real x[N];
+  array[N] real x;
   vector[N] y;
   vector[N] f;
   for (n in 1:N)
@@ -18,7 +18,7 @@ generated quantities {
   {
     matrix[N, N] cov;
     matrix[N, N] L_cov;
-    cov = cov_exp_quad(x, alpha, length_scale);
+    cov = gp_exp_quad_cov(x, alpha, length_scale);
     for (n in 1:N)
       cov[n, n] = cov[n, n] + 1e-12;
     L_cov = cholesky_decompose(cov);

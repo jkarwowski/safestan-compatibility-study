@@ -3,12 +3,12 @@ functions {
 }
 data {
   int<lower = 1> N;
-  real<lower = 0.0> y[N - 1];
+  array[N - 1] real<lower = 0.0> y;
   real m;
 }
 transformed data {
   matrix[N, N] K_unscaled = rep_matrix(0, N, N);
-  
+
   for(n in 1:N) {
     if(n == 1) {
       K_unscaled[n, n] = 1.0 / m;
@@ -29,16 +29,16 @@ parameters {
 }
 transformed parameters {
   vector[N - 1] eigs;
-  
+
   {
     matrix[N, N] K = k * K_unscaled;
-    
+
     eigs = eigenvalues_sym_external_gradients(K_unscaled, k)[2:N];
   }
 }
 model {
   k ~ normal(1.0, 1.0);
   sigma ~ normal(0.0, 1.0);
-  
+
   y ~ normal(sqrt(eigs), sigma);
 }

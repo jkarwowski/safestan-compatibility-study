@@ -56,9 +56,9 @@ functions {
 
     return x;
   }
-  
+
   // Functor to pass to the algebraic solver
-  vector f(vector y, vector theta, real[] x_r, int[] x_i) {
+  vector f(vector y, vector theta, array[] real x_r, array[] int x_i) {
     real ii = x_r[1];
     real amt = x_r[2];
     int cmt = x_i[1];
@@ -67,17 +67,17 @@ functions {
     // return the difference between evolved and initial state
     return twoCptModel1(ii, y, theta, amt, cmt, evid) - y;
   }
-  
+
   // Function to solve the ODEs within the event schedule of the clinical trial
-  matrix twoCptModel(vector init, real[] time, real[] amt, real[] ii,
-                     int[] cmt, int[] evid, vector theta) {
+  matrix twoCptModel(vector init, array[] real time, array[] real amt, array[] real ii,
+                     array[] int cmt, array[] int evid, vector theta) {
     int nCmt = 3;
     vector[nCmt] y;
     real dt;
     real t0;
     matrix[size(time), nCmt] result;
     int nt;
-    
+
     for (j in 1:nCmt) result[1, j] = init[j];
 
     nt = size(time);
@@ -97,13 +97,13 @@ functions {
 data {
   int<lower = 1> nt;
   int<lower = 1> nObs;
-  int<lower = 1> iObs[nObs];
+  array[nObs] int<lower = 1> iObs;
   vector<lower = 0>[nObs] cObs;
-  real<lower = 0> time[nt];
-  real<lower = 0> amt[nt];
-  real<lower = 0> ii[nt];
-  int<lower = 1> cmt[nt];
-  int<lower = 0> evid[nt];
+  array[nt] real<lower = 0> time;
+  array[nt] real<lower = 0> amt;
+  array[nt] real<lower = 0> ii;
+  array[nt] int<lower = 1> cmt;
+  array[nt] int<lower = 0> evid;
 }
 
 transformed data {
@@ -111,9 +111,9 @@ transformed data {
   int nCmt = 3;
   int nParms = 5;
   vector[nCmt] init_guess;
-  real x_r[2] = {ii[1], amt[1]};
-  int x_i[1] = {cmt[1]};
-  
+  array[2] real x_r = {ii[1], amt[1]};
+  array[1] int x_i = {cmt[1]};
+
   // guess for steady state. Use amt as a scale.
   init_guess[1] = amt[1];
   init_guess[2] = amt[1] * 0.5;
@@ -163,7 +163,7 @@ model {
 }
 
 generated quantities{
-    real cObsPred[nObs];
+    array[nObs] real cObsPred;
     for (i in 1:nObs){
       cObsPred[i] = exp(normal_rng(log(cHatObs[i]), sigma));
     }

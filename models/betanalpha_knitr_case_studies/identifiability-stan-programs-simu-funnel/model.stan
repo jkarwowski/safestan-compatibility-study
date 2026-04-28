@@ -9,6 +9,6 @@ transformed data {
 
 generated quantities {
   // Simulate data from observational model
-  real y[N];
+  array[N] real y;
   for (n in 1:N) y[n] = normal_rng(mu, sigma);
 }

@@ -4,15 +4,15 @@ data {
   int<lower=1> N_regions;
   int<lower=1> N_years_obs;
   int<lower=1> N_years;
-  int<lower=1> state_region_ind[N_states];
-  int<lower=1,upper=50> state_ind[N];
-  int<lower=1,upper=10> region_ind[N];
-  int<lower=1> year_ind[N];
+  array[N_states] int<lower=1> state_region_ind;
+  array[N] int<lower=1,upper=50> state_ind;
+  array[N] int<lower=1,upper=10> region_ind;
+  array[N] int<lower=1> year_ind;
   vector<lower=0>[N] turnout_weight;
   vector<lower=0,upper=1>[N] y;
 }
 transformed data {
-  real years[N_years];
+  array[N_years] real years;
   vector[17] counts;
 
   for (t in 1:N_years)
@@ -71,20 +71,20 @@ transformed parameters {
   region_re = sigma_region * region_std;
   year_re = sigma_year * year_std;
   state_re = sigma_state[state_region_ind] .* state_std;
-  
-  {
-    matrix[N_years, N_years] cov_region; 
-    matrix[N_years, N_years] cov_state; 
-    matrix[N_years, N_years] L_cov_region; 
-    matrix[N_years, N_years] L_cov_state; 
 
-    cov_region = cov_exp_quad(years, sigma_GP_region_long, 
+  {
+    matrix[N_years, N_years] cov_region;
+    matrix[N_years, N_years] cov_state;
+    matrix[N_years, N_years] L_cov_region;
+    matrix[N_years, N_years] L_cov_state;
+
+    cov_region = gp_exp_quad_cov(years, sigma_GP_region_long,
                                   length_GP_region_long)
-               + cov_exp_quad(years, sigma_GP_region_short, 
+               + gp_exp_quad_cov(years, sigma_GP_region_short,
                                   length_GP_region_short);
-    cov_state = cov_exp_quad(years, sigma_GP_state_long, 
+    cov_state = gp_exp_quad_cov(years, sigma_GP_state_long,
                                   length_GP_state_long)
-               + cov_exp_quad(years, sigma_GP_state_short, 
+               + gp_exp_quad_cov(years, sigma_GP_state_short,
                                   length_GP_state_short);
     for (year in 1:N_years) {
       cov_region[year, year] = cov_region[year, year] + 1e-6;
@@ -101,13 +101,13 @@ model {
   vector[N] obs_mu;
 
   for (n in 1:N) {
-    obs_mu[n] = mu + year_re[year_ind[n]] 
-              + state_re[state_ind[n]] 
+    obs_mu[n] = mu + year_re[year_ind[n]]
+              + state_re[state_ind[n]]
               + region_re[region_ind[n]]
               + GP_region[year_ind[n],region_ind[n]]
               + GP_state[year_ind[n],state_ind[n]];
   }
-  y ~ normal(obs_mu, sigma_error_state_2); #* turnout_weight);
+  y ~ normal(obs_mu, sigma_error_state_2); //* turnout_weight);
 
   to_vector(GP_region_std) ~ normal(0, 1);
   to_vector(GP_state_std) ~ normal(0, 1);
@@ -132,13 +132,13 @@ generated quantities {
     for (state in 1:N_states) {
       for (t in 1:N_years) {
         if (t < 12) {
-          y_new[t,state] = state_re[state] 
+          y_new[t,state] = state_re[state]
                          + region_re[state_region_ind[state]]
                          + GP_state[t,state]
                          + GP_region[t,state_region_ind[state]]
                          + (mu + year_re[t]);
         } else {
-          y_new[t,state] = state_re[state] 
+          y_new[t,state] = state_re[state]
                          + region_re[state_region_ind[state]]
                          + GP_state[t,state]
                          + GP_region[t,state_region_ind[state]]

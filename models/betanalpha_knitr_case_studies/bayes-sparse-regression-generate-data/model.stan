@@ -8,7 +8,7 @@ transformed data {
 
 generated quantities {
   matrix[M, N] X;
-  real y[N];
+  array[N] real y;
 
   vector[M] beta;
   for (m in 1:M) {

@@ -3,7 +3,7 @@ data {
 }
 
 parameters {
-  real y[N];  // Probabilistic variables y
+  array[N] real y;  // Probabilistic variables y
   real theta; // Probabilistic variable theta
 }
 
@@ -12,7 +12,7 @@ model {
   // given theta to the joint log probabilty density
   // using equivalent sampling statement
   y ~ normal(theta, 1);
-  
+
   // Add marginal probabiltiy density for theta
   // to the joint log probability density using
   // equivalent sampling statement

@@ -10,7 +10,7 @@ functions {
    * Dennis et al. (2015) Computational aspects of N-mixture models.
    *   Biometrics 71:237--246. DOI:10.1111/biom.12246
    * Stan users mailing list
-   *   https://groups.google.com/forum/#!topic/stan-users/9mMsp1oB69g
+   *   https://groups.google.com/forum///!topic/stan-users/9mMsp1oB69g
    *
    * @param n          Number of observed individuals
    * @param log_lambda Log of Poisson mean of population size
@@ -22,7 +22,7 @@ functions {
     array[min(n) + 1] real s;
     real log_theta_1 = log_lambda + log(p) + log1m(p);
     real log_theta_0 = log_lambda + log(p) * 2;
-    
+
     if (size(n) != 2) {
       reject("Size of n must be 2.");
     }
@@ -47,7 +47,7 @@ data {
 }
 transformed data {
   array[R, 7] int<lower=0> max_y;
-  
+
   for (i in 1 : R) {
     for (k in 1 : (first[i] - 1)) {
       max_y[i, k] = 0;
@@ -68,7 +68,7 @@ model {
   // Priors
   alpha_lam ~ normal(0, 10);
   // A flat prior Uniform(0, 1) is implicitly used on p.
-  
+
   // Likelihood
   for (i in 1 : R) {
     for (k in first[i] : last[i]) {
@@ -81,14 +81,14 @@ generated quantities {
   real fit = 0;
   real fit_new = 0;
   vector[7] mean_abundance;
-  
+
   {
     array[R, 7] int N; // Abundance
     array[R, 7] real eval; // Expected values
     array[R, T, 7] int y_new;
     array[R] matrix[T, 7] E;
     array[R] matrix[T, 7] E_new;
-    
+
     // Initialize N, E and E_new
     N = rep_array(0, R, 7);
     E[1] = rep_matrix(0, T, 7);
@@ -100,7 +100,7 @@ generated quantities {
     for (i in 1 : R) {
       for (k in first[i] : last[i]) {
         vector[K + 1] lp;
-        
+
         for (n in 0 : (max_y[i, k] - 1)) {
           lp[n + 1] = negative_infinity();
         }

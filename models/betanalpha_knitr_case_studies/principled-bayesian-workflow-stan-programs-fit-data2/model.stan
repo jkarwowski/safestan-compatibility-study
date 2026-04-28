@@ -1,6 +1,6 @@
 data {
   int N;    // Number of observations
-  int y[N]; // Count at each observation
+  array[N] int y; // Count at each observation
 }
 
 parameters {

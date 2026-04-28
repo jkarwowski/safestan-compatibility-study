@@ -3,7 +3,7 @@ data {
   int<lower=1> P; // number of covariates
   int<lower=1> N0; // number of days for which to impute infections
   array[M] int<lower=1> N; // days of observed data for country m. each entry must be <= N2
-  int<lower=1> N2; // days of observed data + # of days to forecast
+  int<lower=1> N2; // days of observed data + // of days to forecast
   array[N2, M] int cases; // reported cases
   array[N2, M] int deaths; // reported deaths -- the rows with i > N contain -1 and should be ignored
   matrix[N2, M] f; // h * s
@@ -15,11 +15,11 @@ data {
 transformed data {
   vector[N2] SI_rev; // SI in reverse order
   array[M] vector[N2] f_rev; // f in reversed order
-  
+
   for (i in 1 : N2) {
     SI_rev[i] = SI[N2 - i + 1];
   }
-  
+
   for (m in 1 : M) {
     for (i in 1 : N2) {
       f_rev[m, i] = f[N2 - i + 1, m];
@@ -43,7 +43,7 @@ transformed parameters {
   matrix[N2, M] E_deaths = rep_matrix(0, N2, M);
   matrix[N2, M] Rt = rep_matrix(0, N2, M);
   matrix[N2, M] Rt_adj = Rt;
-  
+
   {
     matrix[N2, M] cumm_sum = rep_matrix(0, N2, M);
     for (i in 1 : P) {
@@ -52,7 +52,7 @@ transformed parameters {
     for (m in 1 : M) {
       prediction[1 : N0, m] = rep_vector(y[m], N0); // learn the number of cases in the first N0 days
       cumm_sum[2 : N0, m] = cumulative_sum(prediction[2 : N0, m]);
-      
+
       Rt[ : , m] = mu[m] * exp(-X[m] * alpha - X[m][ : , 5] * lockdown[m]);
       Rt_adj[1 : N0, m] = Rt[1 : N0, m];
       for (i in (N0 + 1) : N2) {
@@ -91,7 +91,7 @@ model {
 generated quantities {
   matrix[N2, M] prediction0 = rep_matrix(0, N2, M);
   matrix[N2, M] E_deaths0 = rep_matrix(0, N2, M);
-  
+
   {
     matrix[N2, M] cumm_sum0 = rep_matrix(0, N2, M);
     for (m in 1 : M) {

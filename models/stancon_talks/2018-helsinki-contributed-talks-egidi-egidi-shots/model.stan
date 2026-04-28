@@ -1,21 +1,21 @@
 data {
   int N;                                  // number of matches
   int nseason;                            // number of seasons
-  int season[N];                          // season index
-  int score_home[N];                      // home scores
-  int score_away[N];                      // away scores
-  int Shots_home[N];                      // home shots on target
-  int Shots_away[N];                      // away total shots on target
-  int Tot_Shots_home[N];                  // home total shots  
-  int Tot_Shots_away[N];                  // away total shots
-  int nteams;                             // number of teams  
-  int teams_home[N];                      // team home index  
-  int teams_away[N];                      // team away index  
-  int N_prev;                             // number of predicted matches  
-  int teams_home_prev[N_prev];            // team home predicted index
-  int teams_away_prev[N_prev];            // team away predicted index
-  int season_prev[N_prev];                // season predicted index
-  int season_time[nseason];               
+  array[N] int season;                          // season index
+  array[N] int score_home;                      // home scores
+  array[N] int score_away;                      // away scores
+  array[N] int Shots_home;                      // home shots on target
+  array[N] int Shots_away;                      // away total shots on target
+  array[N] int Tot_Shots_home;                  // home total shots
+  array[N] int Tot_Shots_away;                  // away total shots
+  int nteams;                             // number of teams
+  array[N] int teams_home;                      // team home index
+  array[N] int teams_away;                      // team away index
+  int N_prev;                             // number of predicted matches
+  array[N_prev] int teams_home_prev;            // team home predicted index
+  array[N_prev] int teams_away_prev;            // team away predicted index
+  array[N_prev] int season_prev;                // season predicted index
+  array[nseason] int season_time;
   }
  parameters {
   real mu;                                // home effect parameter
@@ -38,11 +38,11 @@ data {
   matrix[nseason, nteams] mu_def;         // defense hyperparameter
   matrix<lower=0, upper=1>[nteams,nseason-1] p;   // conversion home probabilities
   matrix<lower=0, upper=1>[nteams,nseason-1] q;   // conversion away probabilities
-  
+
   p = rep_matrix(0.2, nteams, nseason-1);
   q = rep_matrix(0.2, nteams, nseason-1);
-  
-   
+
+
   // Gaussian process covariance functions
    for (i in 1:(nseason)){
      for (j in 1:(nseason)){
@@ -51,7 +51,7 @@ data {
        Sigma_def[i, j] = exp(-pow(season_time[i] - season_time[j], 2))
                    + (i == j ? 0.1 : 0.0);
      }}
-   
+
   // Sum-to-zero constraint for attack/defense parameters
   att[1]=att_raw[1]-mean(att_raw[1]);
   def[1]=def_raw[1]-mean(def_raw[1]);
@@ -59,8 +59,8 @@ data {
       att[t]=att_raw[t]-mean(att_raw[t]);
       def[t]=def_raw[t]-mean(def_raw[t]);
      }
- 
-  // Lagged prior mean for attack/defense parameters 
+
+  // Lagged prior mean for attack/defense parameters
    for (t in 2:(nseason)){
      mu_att[1]=rep_row_vector(0,nteams);
      mu_att[t]=rep_row_vector(0,nteams);
@@ -69,10 +69,10 @@ data {
      mu_def[t]=rep_row_vector(0,nteams);
      //def[t-1];
      }
- 
+
   // Conversion probabilities
    for (n in 1:N){
-     p[teams_home[n], season[n]]=inv_logit(mu+att[season[n], teams_home[n]]  
+     p[teams_home[n], season[n]]=inv_logit(mu+att[season[n], teams_home[n]]
                                     +def[season[n], teams_away[n]]);
      q[teams_away[n], season[n]]=inv_logit(att[season[n], teams_away[n]]
                                     +def[season[n], teams_home[n]]);
@@ -85,48 +85,48 @@ data {
   target+=normal_lpdf(beta |0,5);
   target+=normal_lpdf(delta |0,5);
   target+=normal_lpdf(epsilon |0,5);
-   
+
    for (h in 1:(nteams)){
      att_raw[,h]~multi_normal(mu_att[,h], Sigma_att);
      def_raw[,h]~multi_normal(mu_def[,h], Sigma_def);
    }
-  
+
   // Likelihood
    for (n in 1:N){
-     target+= binomial_lpmf(score_home[n] |  Shots_home[n],  
+     target+= binomial_lpmf(score_home[n] |  Shots_home[n],
                             p[teams_home[n],season[n]]);
-     target+= binomial_lpmf(score_away[n] |  Shots_away[n], 
+     target+= binomial_lpmf(score_away[n] |  Shots_away[n],
                             q[teams_away[n], season[n]]);
-     target+= beta_binomial_lpmf(Shots_home[n] |  Tot_Shots_home[n],     
+     target+= beta_binomial_lpmf(Shots_home[n] |  Tot_Shots_home[n],
                                  delta[teams_home[n]],epsilon[teams_home[n]]);
-     target+= beta_binomial_lpmf(Shots_away[n] |  Tot_Shots_away[n], 
+     target+= beta_binomial_lpmf(Shots_away[n] |  Tot_Shots_away[n],
                                  delta[teams_away[n]],epsilon[teams_away[n]]);
      target+=gamma_lpdf(theta_home[n]|alpha[teams_home[n]],beta[teams_home[n]]);
      target+=gamma_lpdf(theta_away[n]|alpha[teams_away[n]],beta[teams_away[n]]);
       }
- 
+
   target+= neg_binomial_2_lpmf(Tot_Shots_home|theta_home, phi );
   target+= neg_binomial_2_lpmf(Tot_Shots_away|theta_away, phi);
 }
  generated quantities{
   vector[N] log_lik;
-  int score_home_rep[N];        // in-sample replication for home scores
-  int score_away_rep[N];        // in-sample replications for away scores 
-  int Shots_home_rep[N];        // in-sample replications for home shots on t.
-  int Shots_away_rep[N];        // in-sample replications for away shots on t.
-  int Tot_Shots_home_rep[N];    // in-sample replications for home total shots
-  int Tot_Shots_away_rep[N];    // in-sample replications for away total shots
-  int score_home_prev[N_prev];  // out-of-sample replications for home scores 
-  int score_away_prev[N_prev];  // out-of-sample replications for away scores 
-  int Shots_home_prev[N_prev];  // out-of-sample replications for home shots on t. 
-  int Shots_away_prev[N_prev];  // out-of-sample replications for away shots on t.
-  int Tot_Shots_home_prev[N_prev];  // out-of-sample repl. for home total shots
-  int Tot_Shots_away_prev[N_prev];  // out-of-sample repl. for away total shots
-  vector<lower=0>[N_prev] theta_home_prev;   // predicted home shooting rate 
-  vector<lower=0>[N_prev] theta_away_prev;   // predicted away shooting rate 
+  array[N] int score_home_rep;        // in-sample replication for home scores
+  array[N] int score_away_rep;        // in-sample replications for away scores
+  array[N] int Shots_home_rep;        // in-sample replications for home shots on t.
+  array[N] int Shots_away_rep;        // in-sample replications for away shots on t.
+  array[N] int Tot_Shots_home_rep;    // in-sample replications for home total shots
+  array[N] int Tot_Shots_away_rep;    // in-sample replications for away total shots
+  array[N_prev] int score_home_prev;  // out-of-sample replications for home scores
+  array[N_prev] int score_away_prev;  // out-of-sample replications for away scores
+  array[N_prev] int Shots_home_prev;  // out-of-sample replications for home shots on t.
+  array[N_prev] int Shots_away_prev;  // out-of-sample replications for away shots on t.
+  array[N_prev] int Tot_Shots_home_prev;  // out-of-sample repl. for home total shots
+  array[N_prev] int Tot_Shots_away_prev;  // out-of-sample repl. for away total shots
+  vector<lower=0>[N_prev] theta_home_prev;   // predicted home shooting rate
+  vector<lower=0>[N_prev] theta_away_prev;   // predicted away shooting rate
   vector<lower=0, upper=1>[nteams] p_prev;   // pred. conversion home probabilities
   vector<lower=0, upper=1>[nteams] q_prev;   // pred. conversion away probabilities
-    
+
     for (n in 1:N){
       Tot_Shots_home_rep[n]=neg_binomial_2_rng(theta_home[n], phi);
       Tot_Shots_away_rep[n]=neg_binomial_2_rng(theta_away[n], phi);
@@ -138,9 +138,9 @@ data {
                                       p[teams_home[n], season[n]]);
       score_away_rep[n]=binomial_rng(Shots_away_rep[n],
                                       q[teams_away[n], season[n]]);
-      log_lik[n] =binomial_lpmf(score_home[n] |  Shots_home[n],  
+      log_lik[n] =binomial_lpmf(score_home[n] |  Shots_home[n],
                                 p[teams_home[n],season[n]])+
-                  binomial_lpmf(score_away[n] |  Shots_away[n], 
+                  binomial_lpmf(score_away[n] |  Shots_away[n],
                                 q[teams_away[n], season[n]]);
                   //               +
                   // beta_binomial_lpmf(Shots_home[n] |
@@ -152,11 +152,11 @@ data {
                   // neg_binomial_2_lpmf(Tot_Shots_home[n]| theta_home[n], phi )+
                   // neg_binomial_2_lpmf(Tot_Shots_away[n]| theta_away[n], phi);
       }
- 
+
   // p_prev initialization
    p_prev=p[,nseason-1];
    q_prev=q[,nseason-1];
- 
+
     for (n in 1:N_prev){
       p_prev[teams_home_prev[n]]=p[teams_home_prev[n], nseason-1];
       //inv_logit(mu+att[nseason,teams_home_prev[n]]+

@@ -1,18 +1,18 @@
 data {
   int<lower=1> nteams; // number of teams (20)
-  int<lower=1> ngames; // number of games 
-  int<lower=1> nweeks; // number of weeks 
-  int<lower=1> home_week[ngames]; // week number for the home team
-  int<lower=1> away_week[ngames]; // week number for the away team
-  int<lower=1, upper=nteams> home_team[ngames]; // home team ID (1, ..., 20)
-  int<lower=1, upper=nteams> away_team[ngames]; // away team ID (1, ..., 20)
+  int<lower=1> ngames; // number of games
+  int<lower=1> nweeks; // number of weeks
+  array[ngames] int<lower=1> home_week; // week number for the home team
+  array[ngames] int<lower=1> away_week; // week number for the away team
+  array[ngames] int<lower=1, upper=nteams> home_team; // home team ID (1, ..., 20)
+  array[ngames] int<lower=1, upper=nteams> away_team; // away team ID (1, ..., 20)
   vector[ngames] score_diff;    // home_goals - away_goals
   row_vector[nteams] prev_perf; // a score between -1 and +1
 }
 parameters {
   real b_home; // the effect of hosting the game in mean of score_diff dist.
   real b_prev;                         // regression coefficient of prev_perf
-  real<lower=0> sigma_a0;              // teams ability variation 
+  real<lower=0> sigma_a0;              // teams ability variation
   real<lower=0> tau_a;                 // hyper-param for game-to-game variation
   real<lower=1> nu;                    // t-dist degree of freedom
   real<lower=0> sigma_y;               // score_diff variation
@@ -31,7 +31,7 @@ transformed parameters {
 model {
   vector[ngames] a_diff;
   // Priors
-  nu ~ gamma(2,0.1);     
+  nu ~ gamma(2,0.1);
   b_prev ~ normal(0,1);
   sigma_a0 ~ normal(0,1);
   sigma_y ~ normal(0,5);
@@ -48,6 +48,6 @@ model {
 generated quantities {
   vector[ngames] score_diff_rep;
   for (g in 1:ngames)
-    score_diff_rep[g] = student_t_rng(nu, a[home_week[g],home_team[g]] - 
+    score_diff_rep[g] = student_t_rng(nu, a[home_week[g],home_team[g]] -
       a[away_week[g],away_team[g]]+b_home, sigma_y);
 }

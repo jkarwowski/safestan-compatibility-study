@@ -4,7 +4,7 @@ functions {
     real sigma2 = (t_right - t) * (t - t_left) / (t_right - t_left);
     return normal_lpdf(x | mu, sqrt(sigma2));
   }
-  
+
   real bridge_rng(real t, real t_left, real x_left, real t_right, real x_right) {
     real mu = x_left + (t - t_left) / (t_right - t_left) * (x_right - x_left);
     real sigma2 = (t_right - t) * (t - t_left) / (t_right - t_left);
@@ -14,22 +14,22 @@ functions {
 
 data {
   int<lower=1> N;
-  real ts[N];
-  
+  array[N] real ts;
+
   real x_left;
   real x_right;
-  
-  int left_idxs[N - 2];
-  int center_idxs[N - 2];
-  int right_idxs[N - 2];
+
+  array[N - 2] int left_idxs;
+  array[N - 2] int center_idxs;
+  array[N - 2] int right_idxs;
 }
 
 parameters {
-  real interior_xs[N - 2];
+  array[N - 2] real interior_xs;
 }
 
 transformed parameters {
-  real xs[N];
+  array[N] real xs;
   xs[1] = x_left;
   xs[2:(N - 1)] = interior_xs;
   xs[N] = x_right;
@@ -41,5 +41,5 @@ model {
                                                ts[left_idxs[n]],  xs[left_idxs[n]],
                                                ts[right_idxs[n]], xs[right_idxs[n]]);
   }
-  
+
 }

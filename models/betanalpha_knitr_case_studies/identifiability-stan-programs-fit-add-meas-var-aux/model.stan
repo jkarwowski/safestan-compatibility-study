@@ -1,9 +1,9 @@
 data {
   int<lower=1> N;  // Number of observations
-  real y[N];       // Observations
-  
+  array[N] real y;       // Observations
+
   int<lower=1> N_aux;  // Number of auxiliary observations
-  real y_aux[N_aux];   // Auxiliary observations
+  array[N_aux] real y_aux;   // Auxiliary observations
 }
 
 parameters {
@@ -19,10 +19,10 @@ model {
   b ~ normal(0, 1);
   sigma ~ normal(0, 1);
   sigma_aux ~ normal(0, 1);
-  
+
   // Auxiliary observational model
   y_aux ~ normal(a, sigma_aux);
-  
+
   // Observational model
   y ~ normal(a + b, sigma);
 }

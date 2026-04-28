@@ -3,8 +3,8 @@ functions {
     real denom = sqrt(sigma * x);
     return Phi((x - mu) / denom) + exp(2 * mu / sigma) * Phi(- (x + mu) / denom);
   }
-    
-  vector tail_condition(vector y, vector theta, real[] x_r, int[] x_i) {
+
+  vector tail_condition(vector y, vector theta, array[] real x_r, array[] int x_i) {
     vector[2] diff;
     if (!is_nan(y[1]) && !is_nan(y[2])) {
       diff[1] = cdf(theta[1], y[1], exp(y[2])) - 0.01;
@@ -25,14 +25,14 @@ data {
 
 transformed data {
   real mu_guess = 0.5 * (theta_l + theta_u);
-  real sigma_guess =   0.5 * (1 / square(delta)) * square(theta_u - theta_l) 
+  real sigma_guess =   0.5 * (1 / square(delta)) * square(theta_u - theta_l)
                      / (theta_l + theta_u);
   vector[2] y_guess = [mu_guess, log(sigma_guess)]';
   vector[2] theta = [theta_l, theta_u]';
-  real x_r[0];
-  int x_i[0];
-  
-  print("Guesses:")
+  array[0] real x_r;
+  array[0] int x_i;
+
+  print("Guesses:");
   print("  mu = ", mu_guess);
   print("  sigma = ", sigma_guess);
 }

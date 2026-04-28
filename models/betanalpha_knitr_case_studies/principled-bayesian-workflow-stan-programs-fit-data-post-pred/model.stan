@@ -1,6 +1,6 @@
 data {
   int N;    // Number of observations
-  int y[N]; // Count at each observation
+  array[N] int y; // Count at each observation
 }
 
 parameters {
@@ -14,7 +14,7 @@ model {
 
 // Simulate a full observation from the current value of the parameters
 generated quantities {
-  int y_post_pred[N];
+  array[N] int y_post_pred;
   for (n in 1:N)
     y_post_pred[n] = poisson_rng(lambda);
 }

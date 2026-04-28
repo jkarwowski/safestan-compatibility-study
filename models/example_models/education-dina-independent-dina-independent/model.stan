@@ -1,15 +1,15 @@
 data {
-  int<lower=1> I; // # of items
-  int<lower=1> J; // # of respondents		
-  int<lower=1> K; // # of attributes
-  int<lower=1> C; // # of attribute profiles (latent classes)	
+  int<lower=1> I; // // of items
+  int<lower=1> J; // // of respondents
+  int<lower=1> K; // // of attributes
+  int<lower=1> C; // // of attribute profiles (latent classes)
   matrix[J, I] y; // response matrix
   matrix[C, K] alpha; // attribute profile matrix
   matrix[I, C] xi; // the global attribute mastery indicator (product of alpha^q-element)
 }
 parameters {
   row_vector<lower=0, upper=1>[K] eta; // probabilities of each attribute mastery
-  array[I] real<lower=0, upper=1> slip; // slip parameter	
+  array[I] real<lower=0, upper=1> slip; // slip parameter
   array[I] real<lower=0, upper=1> guess; // guess parameter
 }
 transformed parameters {
@@ -46,8 +46,8 @@ model {
   }
 }
 generated quantities {
-  matrix[J, C] prob_resp_class; // posterior probabilities of respondent j being in latent class c 
-  matrix[J, K] prob_resp_attr; // posterior probabilities of respondent j being a master of attribute k 
+  matrix[J, C] prob_resp_class; // posterior probabilities of respondent j being in latent class c
+  matrix[J, K] prob_resp_attr; // posterior probabilities of respondent j being a master of attribute k
   matrix[I, C] pi;
   array[I] real log_items;
   row_vector[C] prob_joint;

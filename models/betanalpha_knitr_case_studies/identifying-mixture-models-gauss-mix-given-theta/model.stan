@@ -6,7 +6,7 @@ data {
 
 parameters {
   vector[2] mu;
-  real<lower=0> sigma[2];
+  array[2] real<lower=0> sigma;
 }
 
 model {

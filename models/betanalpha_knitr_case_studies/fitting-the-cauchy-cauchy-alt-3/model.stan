@@ -11,5 +11,5 @@ model {
 }
 
 generated quantities {
-  real I = fabs(x[1]) < 1 ? 1 : 0;
+  real I = abs(x[1]) < 1 ? 1 : 0;
 }

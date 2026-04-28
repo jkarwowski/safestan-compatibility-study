@@ -5,13 +5,13 @@ data {
   int<lower=1> R;  // responses
   int<lower=1> G;  // grades
   // training data
-  int<lower=1,upper=I> item[R];
-  int<lower=1,upper=S> subject[R];
-  int<lower=1,upper=G> grade[R];
+  array[R] int<lower=1,upper=I> item;
+  array[R] int<lower=1,upper=S> subject;
+  array[R] int<lower=1,upper=G> grade;
 }
 parameters {
   // parameters
-  ordered[G-1] difficulty[I];
+  array[I] ordered[G-1] difficulty;
   vector[S] ability;
   // hyperparameters
   real mu_first_difficulty;

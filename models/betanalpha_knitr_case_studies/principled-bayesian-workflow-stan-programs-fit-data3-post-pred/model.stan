@@ -1,6 +1,6 @@
 data {
   int N;    // Number of observations
-  int y[N]; // Count at each observation
+  array[N] int y; // Count at each observation
 }
 
 parameters {
@@ -25,7 +25,7 @@ model {
 
 // Simulate a full observation from the current value of the parameters
 generated quantities {
-  int y_post_pred[N] = rep_array(0, N);
+  array[N] int y_post_pred = rep_array(0, N);
 
   for (n in 1:N)
     if (!bernoulli_rng(theta))

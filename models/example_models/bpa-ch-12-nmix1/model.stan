@@ -10,7 +10,7 @@ functions {
    * Dennis et al. (2015) Computational aspects of N-mixture models.
    *   Biometrics 71:237--246. DOI:10.1111/biom.12246
    * Stan users mailing list
-   *   https://groups.google.com/forum/#!topic/stan-users/9mMsp1oB69g
+   *   https://groups.google.com/forum///!topic/stan-users/9mMsp1oB69g
    *
    * @param n          Number of observed individuals
    * @param log_lambda Log of Poisson mean of population size
@@ -22,7 +22,7 @@ functions {
     array[min(n) + 1] real s;
     real log_theta_1 = log_lambda + log(p) + log1m(p);
     real log_theta_0 = log_lambda + log(p) * 2;
-    
+
     if (size(n) != 2) {
       reject("Size of n must be 2.");
     }
@@ -36,7 +36,7 @@ functions {
     }
     return log_sum_exp(s);
   }
-  
+
   /**
    * Return log probability of Poisson Binomial Mixture
    *
@@ -65,7 +65,7 @@ data {
 transformed data {
   array[R, 7] int<lower=0> max_y;
   array[R] int<lower=0> max_y_site;
-  
+
   for (i in 1 : R) {
     for (k in 1 : (first[i] - 1)) {
       max_y[i, k] = 0;
@@ -88,12 +88,12 @@ model {
   // Priors
   // Implicit flat priors [0, 1] are used on omega and p.
   alpha_lam ~ normal(0, 10);
-  
+
   // Likelihood
   for (i in 1 : R) {
     if (max_y_site[i]) {
       real lp = bernoulli_lpmf(1 | omega);
-      
+
       for (k in first[i] : last[i]) {
         lp = lp
              + bivariate_poisson_log_lpmf(y[i, 1 : T, k] | alpha_lam[k], p[k]);
@@ -101,7 +101,7 @@ model {
       target += lp;
     } else {
       array[2] real lp;
-      
+
       lp[1] = bernoulli_lpmf(0 | omega);
       lp[2] = bernoulli_lpmf(1 | omega);
       for (k in first[i] : last[i]) {
@@ -117,14 +117,14 @@ generated quantities {
   real fit = 0;
   real fit_new = 0;
   vector[7] mean_abundance;
-  
+
   {
     array[R, 7] int N; // Latent abundance state
     array[R, 7] real eval; // Expected values
     array[R, T, 7] int y_new;
     array[R] matrix[T, 7] E;
     array[R] matrix[T, 7] E_new;
-    
+
     // Initialize N, E and E_new
     N = rep_array(0, R, 7);
     E[1] = rep_matrix(0, T, 7);
@@ -138,13 +138,13 @@ generated quantities {
       // but no indiv. observed.
       for (k in first[i] : last[i]) {
         vector[K + 1] lp;
-        
+
         for (n in 0 : K) {
           lp[n + 1] = poisbin_lpmf(y[i, 1 : T, k] | n, alpha_lam[k], p[k]);
         }
         N[i, k] = categorical_rng(softmax(lp)) - 1;
       }
-      
+
       if (max_y_site[i] == 0) {
         // Unobserved
         log_p_unobs = log(omega) + binomial_lpmf(0 | N[i], p) * T;
@@ -155,7 +155,7 @@ generated quantities {
           }
         }
       }
-      
+
       for (k in first[i] : last[i]) {
         eval[i, k] = p[k] * N[i, k];
         for (j in 1 : T) {

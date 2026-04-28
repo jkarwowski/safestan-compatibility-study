@@ -8,9 +8,9 @@ data {
   // observed treatment
   vector[N] A;
   // observed mediator
-  int<lower=0,upper=1> M[N];
+  array[N] int<lower=0,upper=1> M;
   // outcome
-  int<lower=0,upper=1> Y[N];
+  array[N] int<lower=0,upper=1> Y;
   // mean of regression priors
   vector[P + 2] alpha_m;
   vector[P + 1] beta_m;
@@ -39,7 +39,7 @@ transformed parameters {
   // partial M coefficient parameters
   vector[P] betaZ = head(beta, P);
   real betaA = beta[P + 1];
-  
+
   // partial Y coefficient parameters
   vector[P] alphaZ = head(alpha, P);
   real alphaA = alpha[P + 1];
@@ -68,12 +68,12 @@ generated quantities {
   for (n in 1:N) {
     // sample baseline covariates
     row_i = categorical_rng(boot_probs);
-    
+
     // sample Ma where a = 0
     M_a0[n] = bernoulli_logit_rng(X[row_i] * betaZ);
 
     // sample Y_(a=1, M=M_0) and Y_(a=0, M=M_0)
-    Y_a1Ma0[n] = bernoulli_logit_rng(X[row_i] * alphaZ + M_a0[n] * alphaM + 
+    Y_a1Ma0[n] = bernoulli_logit_rng(X[row_i] * alphaZ + M_a0[n] * alphaM +
                                      alphaA);
     Y_a0Ma0[n] = bernoulli_logit_rng(X[row_i] * alphaZ + M_a0[n] * alphaM);
 

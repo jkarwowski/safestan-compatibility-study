@@ -30,13 +30,13 @@ functions {
   }
 }
 data {
-  int<lower=1> I; // # questions
-  int<lower=1> J; // # persons
-  int<lower=1> N; // # observations
+  int<lower=1> I; // // questions
+  int<lower=1> J; // // persons
+  int<lower=1> N; // // observations
   array[N] int<lower=1, upper=I> ii; // question for n
   array[N] int<lower=1, upper=J> jj; // person for n
   array[N] int<lower=0, upper=1> y; // correctness for n
-  int<lower=1> K; // # person covariates
+  int<lower=1> K; // // person covariates
   matrix[J, K] W; // person covariate matrix
 }
 transformed data {

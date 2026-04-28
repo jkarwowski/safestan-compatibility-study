@@ -1,6 +1,6 @@
 data {
   int<lower=1> N_obs;
-  real x_obs[N_obs];
+  array[N_obs] real x_obs;
   vector[N_obs] y_obs;
 }
 
@@ -11,7 +11,7 @@ parameters {
 }
 
 model {
-  matrix[N_obs, N_obs] cov =   cov_exp_quad(x_obs, alpha, rho)
+  matrix[N_obs, N_obs] cov =   gp_exp_quad_cov(x_obs, alpha, rho)
                              + diag_matrix(rep_vector(square(sigma), N_obs));
   matrix[N_obs, N_obs] L_cov = cholesky_decompose(cov);
 

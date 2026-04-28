@@ -2,25 +2,25 @@ data {
   int<lower=1> N_train;// number of training data points
   int<lower=1> N;      // number of total data points
   int<lower=1> G;      // number of groupings
-  int<lower=3> J[G];   // group sizes
-  int COND[N];         // index for surface condition/inclement weather
-  int CITY[N];         // index for city
-  int SLIM[N];         // index for posted speed limit
-  int SIGN[N];         // index for signs and signals i.e. school zone/work zone
-  int LGHT[N];         // index for light and time
-  int BLTE[N];         // index for built environment
-  int CITYxSLIM[N];
-  int LGHTxSLIM[N];
-  int BLTExSLIM[N];
-  int CONDxSLIM[N];
-  int LGHTxCOND[N];
-  int LGHTxCONDxSLIM[N];
+  array[G] int<lower=3> J;   // group sizes
+  array[N] int COND;         // index for surface condition/inclement weather
+  array[N] int CITY;         // index for city
+  array[N] int SLIM;         // index for posted speed limit
+  array[N] int SIGN;         // index for signs and signals i.e. school zone/work zone
+  array[N] int LGHT;         // index for light and time
+  array[N] int BLTE;         // index for built environment
+  array[N] int CITYxSLIM;
+  array[N] int LGHTxSLIM;
+  array[N] int BLTExSLIM;
+  array[N] int CONDxSLIM;
+  array[N] int LGHTxCOND;
+  array[N] int LGHTxCONDxSLIM;
   vector[N] EXPR;      // population exposed
-  int count[N];        // number of pedestrian deaths
+  array[N] int count;        // number of pedestrian deaths
 }
 transformed data {
-  vector[N] offset;
-  offset = log(EXPR);
+  vector[N] offset_;
+  offset_ = log(EXPR);
 }
 parameters {
   real offset_e;
@@ -61,7 +61,7 @@ transformed parameters {
   SLIM_e           = sds[3]   * SLIM_eta;
   SIGN_e           = sds[4]   * SIGN_eta;
   LGHT_e           = sds[5]   * LGHT_eta;
-  BLTE_e           = sds[6]   * BLTE_eta; 
+  BLTE_e           = sds[6]   * BLTE_eta;
   CITYxSLIM_e      = sds[7]   * CITYxSLIM_eta;
   LGHTxSLIM_e      = sds[8]   * LGHTxSLIM_eta;
   BLTExSLIM_e      = sds[9]   * BLTExSLIM_eta;
@@ -71,7 +71,7 @@ transformed parameters {
   cell_e           = sds[G+1] * cell_eta;
 
   for(n in 1:N_train)
-  mu_indiv[n] = mu + offset_e * offset[n]
+  mu_indiv[n] = mu + offset_e * offset_[n]
                    + COND_e[COND[n]]
                    + CITY_e[CITY[n]]
                    + SLIM_e[SLIM[n]]
@@ -103,7 +103,7 @@ model {
   offset_e           ~ normal(0,1);
   sds                ~ normal(0,1);
   mu                 ~ normal(0,10);
-  
+
  for (n in 1:N_train){
     target += poisson_log_lpmf(count[n] | mu_indiv[n]);
     target += -log1m_exp(-exp(mu_indiv[n]));
@@ -139,10 +139,10 @@ generated quantities {
   LGHTxCOND_sd      = sd(LGHTxCOND_e);
   LGHTxCONDxSLIM_sd = sd(LGHTxCONDxSLIM_e);
   cell_sd           = sd(cell_e);
-  
+
   for (n in 1:(N - N_train)){
     cell_e_pred[n]     = normal_rng(0, sds[G+1]);
-    mu_indiv_pred[n] = mu + offset_e * offset[N_train + n] 
+    mu_indiv_pred[n] = mu + offset_e * offset_[N_train + n]
                           + COND_e[COND[N_train + n]]
                           + CITY_e[CITY[N_train + n]]
                           + SLIM_e[SLIM[N_train + n]]

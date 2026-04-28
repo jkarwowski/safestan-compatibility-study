@@ -1,7 +1,7 @@
 data {
   int<lower=1> N;
-  real t[N + 1];
-  
+  array[N + 1] real t;
+
   real x0;
 
   real mu;
@@ -10,7 +10,7 @@ data {
 }
 
 generated quantities {
-  real x[N + 1];
+  array[N + 1] real x;
   x[1] = x0;
   for (n in 1:N) {
     real decay = exp(-gamma * (t[n + 1] - t[n]));

@@ -1,11 +1,11 @@
 data {
   int<lower=0> M; // Number of covariates
   int<lower=0> N; // Number of observations
-  
+
   vector[M] x0;   // Covariate baselines
   matrix[N, M] X; // Covariate design matrix
-  
-  real y[N];      // Variates
+
+  array[N] real y;      // Variates
 }
 
 transformed data {
@@ -34,5 +34,5 @@ model {
 // Simulate a full observation from the current value of the parameters
 generated quantities {
   vector[N] mu = alpha + deltaX * beta;
-  real y_pred[N] = normal_rng(alpha + deltaX * beta, sigma);
+  array[N] real y_pred = normal_rng(alpha + deltaX * beta, sigma);
 }

@@ -4,7 +4,7 @@ data {
 }
 
 transformed data {
-  real<lower=0> sigma[2] = {0.75, 1.25};
+  array[2] real<lower=0> sigma = {0.75, 1.25};
 }
 
 parameters {

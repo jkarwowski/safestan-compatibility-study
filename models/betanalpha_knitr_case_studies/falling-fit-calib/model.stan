@@ -1,6 +1,6 @@
 data {
   int N_calibrations;
-  real obs_t_calib[N_calibrations]; // seconds
+  array[N_calibrations] real obs_t_calib; // seconds
 }
 
 parameters {

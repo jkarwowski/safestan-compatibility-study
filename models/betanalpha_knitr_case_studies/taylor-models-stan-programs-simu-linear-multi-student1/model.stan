@@ -5,18 +5,18 @@ data {
 transformed data {
   int<lower=0> M = 3;             // Number of covariates
   int<lower=0> N = 1000;          // Number of observations
-  
+
   vector[M] z0 = [2, -2, 1]';
   real gamma0 = 10;               // True intercept
   vector[M] gamma1 = [2, -3, 1]'; // True slopes
   real nu = 2;                    // True Student degrees of freedom
   real sigma = 2;                 // True measurement variability
-  
+
 }
 
 generated quantities {
   matrix[N, M] X; // Covariate design matrix
-  real y[N];      // Variates
+  array[N] real y;      // Variates
 
   for (n in 1:N) {
     X[n, 1] = normal_rng(x0[1], 0.25);

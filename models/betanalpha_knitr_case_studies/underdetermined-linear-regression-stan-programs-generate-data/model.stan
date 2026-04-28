@@ -7,7 +7,7 @@ transformed data {
 
 generated quantities {
   matrix[N, M] X;
-  real y[N];
+  array[N] real y;
 
   vector[M] beta;
   for (m in 1:M) beta[m] = normal_rng(0, 10);

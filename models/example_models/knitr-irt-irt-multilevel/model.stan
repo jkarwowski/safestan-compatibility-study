@@ -1,7 +1,7 @@
 data {
-  int<lower=1> I; // # items
-  int<lower=1> J; // # students
-  int<lower=1> K; // # schools
+  int<lower=1> I; // // items
+  int<lower=1> J; // // students
+  int<lower=1> K; // // schools
   int<lower=1> N; // data items
   array[N] int<lower=1, upper=I> ii; // item for n
   array[N] int<lower=1, upper=J> jj; // student for n
@@ -21,14 +21,14 @@ parameters {
 }
 model {
   vector[N] log_odds;
-  
+
   alpha ~ normal(0, 1); // priors
   beta ~ normal(0, sigma_beta);
   gamma ~ normal(0, sigma_gamma);
   delta ~ lognormal(mu_delta, sigma_delta);
   zeta ~ normal(0, 10);
   mu_delta ~ lognormal(0, 10);
-  
+
   for (n in 1 : N) {
     // likelihood
     log_odds[n] = delta[ii[n]]

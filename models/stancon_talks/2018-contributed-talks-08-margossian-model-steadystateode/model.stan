@@ -3,22 +3,22 @@
 
 functions {
   // Function specifying the ODE for a Two Cpt model
-  real[] twoCptModelODE(real t,
-			real[] x,
-			real[] parms,
-			real[] x_r,
-			int[] x_i){
+  array[] real twoCptModelODE(real t,
+			array[] real x,
+			array[] real parms,
+			data array[] real x_r,
+			data array[] int x_i){
     real CL = parms[1];
     real Q = parms[2];
     real V1 = parms[3];
     real V2 = parms[4];
     real ka = parms[5];
-    
+
     real k10 = CL / V1;
     real k12 = Q / V1;
     real k21 = Q / V2;
-    
-    real y[3];
+
+    array[3] real y;
 
     y[1] = -ka*x[1];
     y[2] = ka*x[1] - (k10 + k12)*x[2] + k21*x[3];
@@ -26,15 +26,15 @@ functions {
 
     return y;
   }
-  
+
   // Functor to pass to the algebraic solver
-  vector f(vector y, vector theta, real[] x_r, int[] x_i) {
+  vector f(vector y, vector theta, data array[] real x_r, data array[] int x_i) {
     real amt = x_r[2];
     int cmt = x_i[1];
-    real y_ii[3] = to_array_1d(y);
+    array[3] real y_ii = to_array_1d(y);
 
     y_ii[cmt] = y_ii[cmt] + amt;
-    y_ii = integrate_ode_rk45(twoCptModelODE, y_ii, 0, rep_array(x_r[1], 1), 
+    y_ii = integrate_ode_rk45(twoCptModelODE, y_ii, 0, rep_array(x_r[1], 1),
                               to_array_1d(theta), rep_array(0.0, 1),
                               rep_array(0, 1))[1];
 
@@ -42,11 +42,11 @@ functions {
     return to_vector(y_ii) - y;
   }
 
-  real[] twoCptModel1(real t0, real[] t, real[] init, real amt, int cmt, 
-                      int evid, vector theta, real[] x_r, int[] x_i) {
+  array[] real twoCptModel1(real t0, array[] real t, array[] real init, real amt, int cmt,
+                      int evid, vector theta, data array[] real x_r, data array[] int x_i) {
     int nCmt = 3;
-    real x[nCmt];
-    real temp[1, nCmt];
+    array[nCmt] real x;
+    array[1, nCmt] real temp;
     x = rep_array(0, nCmt);
 
     if (t0 == t[1]) {
@@ -61,16 +61,16 @@ functions {
 
     return x;
   }
-  
+
   // Function to solve the ODEs within the event schedule of the clinical trial
-  matrix twoCptModel(vector init, real[] time, real[] amt, real[] ii,
-                     int[] cmt, int[] evid, vector theta, real[] x_r,
-                     int[] x_i) {
+  matrix twoCptModel(vector init, array[] real time, array[] real amt, array[] real ii,
+                     array[] int cmt, array[] int evid, vector theta, data array[] real x_r,
+                     data array[] int x_i) {
     int nCmt = 3;
-    real y[nCmt];
+    array[nCmt] real y;
     matrix[size(time), nCmt] result;
     int nt;
-    
+
     for (j in 1:nCmt) result[1, j] = init[j];
 
     nt = size(time);
@@ -88,13 +88,13 @@ functions {
 data {
   int<lower = 1> nt;
   int<lower = 1> nObs;
-  int<lower = 1> iObs[nObs];
+  array[nObs] int<lower = 1> iObs;
   vector<lower = 0>[nObs] cObs;
-  real<lower = 0> time[nt];
-  real<lower = 0> amt[nt];
-  real<lower = 0> ii[nt];
-  int<lower = 1> cmt[nt];
-  int<lower = 0> evid[nt];
+  array[nt] real<lower = 0> time;
+  array[nt] real<lower = 0> amt;
+  array[nt] real<lower = 0> ii;
+  array[nt] int<lower = 1> cmt;
+  array[nt] int<lower = 0> evid;
 }
 
 transformed data {
@@ -102,14 +102,14 @@ transformed data {
   int nCmt = 3;
   int nParms = 5;
   vector[nCmt] init_guess;
-  real x_r[2] = {ii[1], amt[1]};
-  int x_i[1] = {cmt[1]};
-  real x_r2[0];
-  int x_i2[0];
+  array[2] real x_r = {ii[1], amt[1]};
+  array[1] int x_i = {cmt[1]};
+  array[0] real x_r2;
+  array[0] int x_i2;
   real rel_tol = 1e-10;  // default
   real f_tol = 1e-5;  // adjusted empirically
   int max_steps = 1000;  // default
-  
+
   // guess for steady state. Use amt as a scale.
   init_guess[1] = amt[1];
   init_guess[2] = amt[1] * 0.5;
@@ -139,7 +139,7 @@ transformed parameters {
   theta[5] = ka;
 
   // start the system at a steady state
-  init = algebra_solver(f, init_guess, theta, x_r, x_i, 
+  init = algebra_solver(f, init_guess, theta, x_r, x_i,
                         rel_tol, f_tol, max_steps);
   init[cmt[1]] = init[cmt[1]] + amt[1];
 
@@ -161,7 +161,7 @@ model {
 }
 
 generated quantities{
-    real cObsPred[nObs];
+    array[nObs] real cObsPred;
     for (i in 1:nObs){
       cObsPred[i] = exp(normal_rng(log(cHatObs[i]), sigma));
     }

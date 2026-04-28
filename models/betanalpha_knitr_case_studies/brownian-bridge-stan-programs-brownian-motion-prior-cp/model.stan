@@ -1,16 +1,16 @@
 data {
   int<lower=1> N;
-  real ts[N];
-  
+  array[N] real ts;
+
   real x_left;
 }
 
 parameters {
-  real xs_forward[N - 1];
+  array[N - 1] real xs_forward;
 }
 
 transformed parameters {
-  real xs[N] = append_array(rep_array(x_left, 1), xs_forward);
+  array[N] real xs = append_array(rep_array(x_left, 1), xs_forward);
 }
 
 model {

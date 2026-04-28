@@ -10,7 +10,7 @@ functions {
    * Dennis et al. (2015) Computational aspects of N-mixture models.
    *   Biometrics 71:237--246. DOI:10.1111/biom.12246
    * Stan users mailing list
-   *   https://groups.google.com/forum/#!topic/stan-users/9mMsp1oB69g
+   *   https://groups.google.com/forum///!topic/stan-users/9mMsp1oB69g
    *
    * @param n          Number of observed individuals
    * @param log_lambda Log of Poisson mean of population size
@@ -21,7 +21,7 @@ functions {
   real bivariate_poisson_log_lpmf(array[] int n, real log_lambda,
                                   array[] real p) {
     array[min(n) + 1] real s;
-    
+
     if (size(n) != 2) {
       reject("Size of n must be 2.");
     }
@@ -49,7 +49,7 @@ data {
 transformed data {
   array[R, 7] int<lower=0> max_y;
   array[7] int<lower=0, upper=R> num_obs_site;
-  
+
   for (i in 1 : R) {
     for (k in 1 : (first[i] - 1)) {
       max_y[i, k] = 0;
@@ -83,7 +83,7 @@ parameters {
 transformed parameters {
   vector[R] eps; // Abundance noise
   matrix[R, 7] log_lambda;
-  
+
   eps = sd_lam * eps_raw;
   for (k in 1 : 7) {
     for (i in 1 : R) {
@@ -96,18 +96,18 @@ model {
   alpha_lam ~ normal(0, sqrt(10));
   beta ~ normal(0, sqrt(10));
   eps_raw ~ normal(0, 1);
-  
+
   // Weakly informative priors are used on sd_lam and sd_p,
   // instead of uniform(0, 3) used in the book
   sd_lam ~ normal(1.5, 0.75);
   sd_p ~ normal(1.5, 0.75);
-  
+
   for (i in 1 : R) {
     for (j in 1 : T) {
       logit_p[i, j] ~ normal(beta, sd_p);
     }
   }
-  
+
   // Likelihood
   for (i in 1 : R) {
     for (k in first[i] : last[i]) {
@@ -123,7 +123,7 @@ generated quantities {
   vector[7] mean_detection;
   real fit = 0;
   real fit_new = 0;
-  
+
   {
     array[R, 7] int N; // Abundance
     array[R, T, 7] real eval; // Expected values
@@ -132,7 +132,7 @@ generated quantities {
     array[R] matrix[T, 7] E;
     array[R] matrix[T, 7] E_new;
     matrix[R, 7] ik_p;
-    
+
     // Initialize N and ik_p
     N = rep_array(0, R, 7);
     ik_p = rep_matrix(0, R, 7);
@@ -147,10 +147,10 @@ generated quantities {
       for (j in 1 : T) {
         p[i, j] = inv_logit(logit_p[i, j]);
       }
-      
+
       for (k in first[i] : last[i]) {
         vector[K + 1] lp;
-        
+
         for (n in 0 : (max_y[i, k] - 1)) {
           lp[n + 1] = negative_infinity();
         }
@@ -173,7 +173,7 @@ generated quantities {
         ik_p[i, k] = mean(p[i, 1 : T, k]);
       }
     }
-    
+
     for (k in 1 : 7) {
       totalN[k] = sum(N[ : , k]);
       mean_abundance[k] = mean(exp(log_lambda[ : , k]));

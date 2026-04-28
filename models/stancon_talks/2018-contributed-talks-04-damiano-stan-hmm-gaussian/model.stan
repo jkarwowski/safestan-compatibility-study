@@ -7,25 +7,25 @@ functions {
 data {
   int<lower=1> T;                   // number of observations (length)
   int<lower=1> K;                   // number of hidden states
-  real y[T];                        // observations
+  array[T] real y;                        // observations
 }
 
 parameters {
   // Discrete state model
   simplex[K] pi1;                   // initial state probabilities
-  simplex[K] A[K];                  // transition probabilities
+  array[K] simplex[K] A;                  // transition probabilities
                                     // A[i][j] = p(z_t = j | z_{t-1} = i)
 
   // Continuous observation model
   ordered[K] mu;                    // observation means
-  real<lower=0> sigma[K];           // observation standard deviations
+  array[K] real<lower=0> sigma;           // observation standard deviations
 }
 
 transformed parameters {
-  vector[K] logalpha[T];
+  array[T] vector[K] logalpha;
 
   { // Forward algorithm log p(z_t = j | x_{1:t})
-    real accumulator[K];
+    array[K] real accumulator;
 
     logalpha[1] = log(pi1) + normal_lpdf(y[1] | mu, sigma);
 
@@ -47,14 +47,14 @@ model {
 }
 
 generated quantities {
-  vector[K] logbeta[T];
-  vector[K] loggamma[T];
+  array[T] vector[K] logbeta;
+  array[T] vector[K] loggamma;
 
-  vector[K] alpha[T];
-  vector[K] beta[T];
-  vector[K] gamma[T];
+  array[T] vector[K] alpha;
+  array[T] vector[K] beta;
+  array[T] vector[K] gamma;
 
-  int<lower=1, upper=K> zstar[T];
+  array[T] int<lower=1, upper=K> zstar;
   real logp_zstar;
 
   { // Forward algortihm
@@ -63,7 +63,7 @@ generated quantities {
   } // Forward
 
   { // Backward algorithm log p(x_{t+1:T} | z_t = j)
-    real accumulator[K];
+    array[K] real accumulator;
 
     for (j in 1:K)
       logbeta[T, j] = 1;
@@ -96,8 +96,8 @@ generated quantities {
   } // Forwards-backwards
 
   { // Viterbi algorithm
-    int bpointer[T, K];             // backpointer to the most likely previous state on the most probable path
-    real delta[T, K];               // max prob for the seq up to t
+    array[T, K] int bpointer;             // backpointer to the most likely previous state on the most probable path
+    array[T, K] real delta;               // max prob for the seq up to t
                                     // with final output from state k for time t
 
     for (j in 1:K)

@@ -6,25 +6,25 @@ data {
   int<lower=0> M;  // number of months
   int<lower=0> H;  // number of holidays
   int<lower=0> P;  // number of periods
-  int day[N]; 
-  int officer[N]; 
-  int week[N]; 
-  int month[N];
-  int holiday[N];
-  int period[N];
-  int y[N];        // number of tickets written per officer per day
-  int z[D];        // number of crashes per day
+  array[N] int day;
+  array[N] int officer;
+  array[N] int week;
+  array[N] int month;
+  array[N] int holiday;
+  array[N] int period;
+  array[N] int y;        // number of tickets written per officer per day
+  array[D] int z;        // number of crashes per day
 }
 
 parameters {
   real beta_0;
-  real beta_1[O];
-  real beta_2[W];
-  real beta_3[M];
-  real beta_4[H];
-  real beta_5[P];
+  array[O] real beta_1;
+  array[W] real beta_2;
+  array[M] real beta_3;
+  array[H] real beta_4;
+  array[P] real beta_5;
   vector[D] epsilon;
-  
+
   real<lower=0> sigma;
   real<lower=0> sigma_0;
   real<lower=0> sigma_1;
@@ -36,12 +36,12 @@ parameters {
 
 model {
   vector[N] lambda;
-  for(n in 1:N) lambda[n] = sigma_1 * beta_1[officer[n]] + 
-                            sigma_2 * beta_2[week[n]] + 
+  for(n in 1:N) lambda[n] = sigma_1 * beta_1[officer[n]] +
+                            sigma_2 * beta_2[week[n]] +
                             sigma_3 * beta_3[month[n]] +
                             sigma_4 * beta_4[holiday[n]] +
                             sigma_5 * beta_5[period[n]];
-                            
+
 // Prior
   beta_0  ~ normal(0, 1);
   beta_1  ~ normal(0, 1);
@@ -50,7 +50,7 @@ model {
   beta_4  ~ normal(0, 1);
   beta_5  ~ normal(0, 1);
   epsilon ~ normal(0, 1);
-  
+
   sigma   ~ chi_square(1);
   sigma_0 ~ chi_square(1);
   sigma_1 ~ chi_square(1);

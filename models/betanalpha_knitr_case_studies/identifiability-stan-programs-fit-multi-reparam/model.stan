@@ -1,6 +1,6 @@
 data {
   int<lower=1> N;      // Number of observations
-  real y[N];           // Observations
+  array[N] real y;           // Observations
   real<lower=0> sigma; // Measurement variability
 }
 
@@ -11,7 +11,7 @@ parameters {
 model {
   // Prior model
   a_times_b ~ normal(0, 100);
-  
+
   // Observational model
   y ~ normal(a_times_b, sigma);
 }

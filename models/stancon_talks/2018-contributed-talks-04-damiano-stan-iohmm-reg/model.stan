@@ -9,28 +9,28 @@ data {
   int<lower=1> K;                   // number of hidden states
   int<lower=1> M;                   // size of the input vector
 
-  real y[T];                        // output (scalar)
-  vector[M] u[T];                   // input (vector)
+  array[T] real y;                        // output (scalar)
+  array[T] vector[M] u;                   // input (vector)
 }
 
 parameters {
   // Discrete state model
   simplex[K] pi1;                   // initial state probabilities
-  vector[M] w[K];                   // state regressors
+  array[K] vector[M] w;                   // state regressors
 
   // Continuous observation model
-  vector[M] b[K];                   // mean regressors
-  real<lower=0> sigma[K];           // residual standard deviations
+  array[K] vector[M] b;                   // mean regressors
+  array[K] real<lower=0> sigma;           // residual standard deviations
 }
 
 transformed parameters {
-  vector[K] logalpha[T];
+  array[T] vector[K] logalpha;
 
-  vector[K] unA[T];
-  vector[K] A[T];
-  vector[K] logA[T];
+  array[T] vector[K] unA;
+  array[T] vector[K] A;
+  array[T] vector[K] logA;
 
-  vector[K] logoblik[T];
+  array[T] vector[K] logoblik;
 
   { // Transition probability matrix p(z_t = j | z_{t-1} = i, u)
     unA[1] = pi1;           // Filler
@@ -55,7 +55,7 @@ transformed parameters {
   }
 
   { // Forward algorithm log p(z_t = j | x_{1:t})
-    real accumulator[K];
+    array[K] real accumulator;
 
     for(j in 1:K)
       logalpha[1][j] = log(pi1[j]) + logoblik[1][j];
@@ -84,18 +84,18 @@ model {
 }
 
 generated quantities {
-  vector[K] logbeta[T];
-  vector[K] loggamma[T];
+  array[T] vector[K] logbeta;
+  array[T] vector[K] loggamma;
 
-  vector[K] alpha[T];
-  vector[K] beta[T];
-  vector[K] gamma[T];
+  array[T] vector[K] alpha;
+  array[T] vector[K] beta;
+  array[T] vector[K] gamma;
 
-  vector[K] hatpi[T];
-  int<lower=1, upper=K> hatz[T];
-  real haty[T];
+  array[T] vector[K] hatpi;
+  array[T] int<lower=1, upper=K> hatz;
+  array[T] real haty;
 
-  int<lower=1, upper=K> zstar[T];
+  array[T] int<lower=1, upper=K> zstar;
   real logp_zstar;
 
   { // Forward algorithm log p(z_t = j | x_{1:t})
@@ -104,7 +104,7 @@ generated quantities {
   } // Forward
 
   { // Backward algorithm log p(x_{t+1:T} | z_t = j)
-    real accumulator[K];
+    array[K] real accumulator;
     int tbackwards;
 
     for (j in 1:K)
@@ -136,7 +136,7 @@ generated quantities {
   } // Forwards-backwards
 
   { // Fitted state
-    vector[K] reg[T];
+    array[T] vector[K] reg;
     for(t in 1:T) {
       for(j in 1:K) {
         reg[t, j] = u[t]' * to_vector(w[j]);
@@ -147,7 +147,7 @@ generated quantities {
   }
 
   { // Fitted output
-    real reg[T];
+    array[T] real reg;
     for(t in 1:T) {
       reg[t] = u[t]' * b[hatz[t]];
       haty[t] = normal_rng(reg[t], sigma[hatz[t]]);
@@ -155,8 +155,8 @@ generated quantities {
   }
 
   { // Viterbi decoding
-    int bpointer[T, K];             // backpointer to the source of the link
-    real delta[T, K];               // max prob for the seq up to t
+    array[T, K] int bpointer;             // backpointer to the source of the link
+    array[T, K] real delta;               // max prob for the seq up to t
                                     // with final output from state k for time t
 
     for (j in 1:K)

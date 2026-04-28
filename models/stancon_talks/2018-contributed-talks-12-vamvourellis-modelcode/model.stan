@@ -3,15 +3,15 @@ data{
  int<lower=0> K;
  int<lower=0> Kb;
  int<lower=0> Kc;
- int<lower=0, upper=1> yb[N,Kb];
- vector[Kc] yc[N];
+ array[N, Kb] int<lower=0, upper=1> yb;
+ array[N] vector[Kc] yc;
 }
 
 transformed data {
   matrix[Kc, Kc] I = diag_matrix(rep_vector(1, Kc));
 }
 parameters {
-  vector[Kb] zb[N];
+  array[N] vector[Kb] zb;
   cholesky_factor_corr[K] L_R;  // first continuous, then binary
   vector<lower=0>[Kc] sigma;
   vector[K] mu;
@@ -37,7 +37,7 @@ model{
   yc ~ multi_normal_cholesky(mu_c, diag_pre_multiply(sigma, L_R[1:Kc, 1:Kc]));
   for (n in 1:N) zb[n] ~ normal(0,1);
   for (k in 1:Kb) yb[,k] ~ bernoulli_logit(z[,k]);
-  
+
 }
 
 generated quantities{

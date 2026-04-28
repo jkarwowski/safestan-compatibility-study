@@ -1,6 +1,6 @@
 data {
   int num_measurements;
-  int<lower=1> measurement_times[num_measurements];
+  array[num_measurements] int<lower=1> measurement_times;
   vector<lower=0>[num_measurements] expression;
 
   real<lower=0> measurement_sigma_relative;
@@ -56,7 +56,7 @@ generated quantities {
     real sigma = measurement_sigma_absolute + measurement_sigma_relative * predicted_expression[m];
     //Draw from the truncated normal
     real lower_bound = 0;
-    real p = normal_cdf(lower_bound, predicted_expression[m], sigma);
+    real p = normal_cdf(lower_bound | predicted_expression[m], sigma);
     real u = uniform_rng(p, 1);
     expression_replicates[m] = inv_Phi(u) * sigma + predicted_expression[m];
 

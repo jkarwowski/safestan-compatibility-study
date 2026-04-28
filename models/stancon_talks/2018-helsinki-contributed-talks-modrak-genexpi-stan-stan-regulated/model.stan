@@ -6,19 +6,19 @@ data {
   int num_targets;
   int<lower=0,upper=1> regulators_measured;
 
-  int<lower=1,upper=num_time> measurement_times[num_measurements];
+  array[num_measurements] int<lower=1,upper=num_time> measurement_times;
 
   matrix<lower=0>[regulators_measured ? num_measurements : 0, num_regulators] regulator_expression;
   matrix<lower=0>[num_measurements, num_targets] expression;
-  int<lower=-1,upper=1> regulation_signs[num_regulators, num_targets];
+  array[num_regulators, num_targets] int<lower=-1,upper=1> regulation_signs;
 
   int num_spline_basis;
   matrix[num_time, num_spline_basis] spline_basis;  // matrix of B-splines
 
 
   int<lower=0,upper=1> coeffs_prior_given;
-  vector[num_spline_basis] coeffs_prior_mean[coeffs_prior_given ? num_regulators : 0];
-  cov_matrix[num_spline_basis] coeffs_prior_cov[coeffs_prior_given ? num_regulators : 0];
+  array[coeffs_prior_given ? num_regulators : 0] vector[num_spline_basis] coeffs_prior_mean;
+  array[coeffs_prior_given ? num_regulators : 0] cov_matrix[num_spline_basis] coeffs_prior_cov;
 
   real<lower = 0> initial_condition_prior_sigma;
   real<lower = 0> asymptotic_normalized_state_prior_sigma;
@@ -28,17 +28,17 @@ data {
   real<lower = 0> degradation_prior_sigma;
 
   //Intercept is only important when regulator is measured, otherwise, it is hidden in b
-  real<lower = 0> intercept_prior_sigma[regulators_measured ? 1 : 0];
+  array[regulators_measured ? 1 : 0] real<lower = 0> intercept_prior_sigma;
 
 
   int<lower=0,upper=1> sigma_given;
-  real<lower = 0> sigma_relative_prior_mean[sigma_given ? 0 : 1];
-  real<lower = 0> sigma_absolute_prior_mean[sigma_given ? 0 : 1];
-  real<lower = 0> sigma_relative_prior_sigma[sigma_given ? 0 : 1];
-  real<lower = 0> sigma_absolute_prior_sigma[sigma_given ? 0 : 1];
+  array[sigma_given ? 0 : 1] real<lower = 0> sigma_relative_prior_mean;
+  array[sigma_given ? 0 : 1] real<lower = 0> sigma_absolute_prior_mean;
+  array[sigma_given ? 0 : 1] real<lower = 0> sigma_relative_prior_sigma;
+  array[sigma_given ? 0 : 1] real<lower = 0> sigma_absolute_prior_sigma;
 
-  real<lower = 0> sigma_relative_data[sigma_given ? 1 : 0];
-  real<lower = 0> sigma_absolute_data[sigma_given ? 1 : 0];
+  array[sigma_given ? 1 : 0] real<lower = 0> sigma_relative_data;
+  array[sigma_given ? 1 : 0] real<lower = 0> sigma_absolute_data;
 
 
   real<lower=0> scale;
@@ -46,12 +46,12 @@ data {
 
 transformed data {
   matrix[num_time, num_spline_basis] spline_basis_scaled;  // matrix of B-splines
-  real time_real[num_time];
-  vector[num_targets] regulation_signs_real[num_regulators];
+  array[num_time] real time_real;
+  array[num_regulators] vector[num_targets] regulation_signs_real;
   vector[num_targets] max_target_expression;
   vector<lower=0>[num_targets] basal_transcription;
 
-  cholesky_factor_cov[num_spline_basis] coeffs_prior_chol_cov[coeffs_prior_given ? num_regulators : 0];
+  array[coeffs_prior_given ? num_regulators : 0] cholesky_factor_cov[num_spline_basis] coeffs_prior_chol_cov;
 
 
 
@@ -100,14 +100,14 @@ parameters {
   matrix[num_spline_basis, num_regulators] coeffs;
   vector<lower=0>[num_targets] initial_condition;
   vector<lower=0>[num_targets] asymptotic_normalized_state;
-  simplex[num_regulators] relative_weights[num_targets];
+  array[num_targets] simplex[num_regulators] relative_weights;
   vector[num_targets] mean_regulatory_input_raw;
   vector<lower=0>[num_targets] sd_regulatory_input_raw;
   vector<lower=0>[num_targets] degradation;
-  real<lower = 0> intercept_raw[regulators_measured ? num_regulators : 0];
+  array[regulators_measured ? num_regulators : 0] real<lower = 0> intercept_raw;
 
-  real<lower=0> sigma_relative_param[sigma_given ? 0 : 1];
-  real<lower=0> sigma_absolute_param[sigma_given ? 0 : 1];
+  array[sigma_given ? 0 : 1] real<lower=0> sigma_relative_param;
+  array[sigma_given ? 0 : 1] real<lower=0> sigma_absolute_param;
 }
 
 
@@ -240,7 +240,7 @@ generated quantities {
       for(t in 1:num_targets) {
         //Draw from the truncated normal
         real lower_bound = 0;
-        real p = normal_cdf(lower_bound, predicted_expression[measurement_times[m],t], sigma[t]);
+        real p = normal_cdf(lower_bound | predicted_expression[measurement_times[m],t], sigma[t]);
         real u = uniform_rng(p, 1);
         expression_replicates[m, t] = inv_Phi(u) * sigma[t] + predicted_expression[measurement_times[m],t];
 

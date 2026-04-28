@@ -1,10 +1,10 @@
 functions {
-  vector tail_condition(vector y, vector theta, real[] x_r, int[] x_i) {
+  vector tail_condition(vector y, vector theta, array[] real x_r, array[] int x_i) {
     vector[2] diff;
 
     if (!is_nan(y[1]) && !is_nan(y[2])) {
-      diff[1] = gamma_cdf(theta[1], exp(y[1]), exp(y[2])) - 0.01;
-      diff[2] = gamma_cdf(theta[2], exp(y[1]), exp(y[2])) - 0.99;
+      diff[1] = gamma_cdf(theta[1] | exp(y[1]), exp(y[2])) - 0.01;
+      diff[2] = gamma_cdf(theta[2] | exp(y[1]), exp(y[2])) - 0.99;
     } else {
       diff[1] = 0;
       diff[2] = 0;
@@ -21,14 +21,14 @@ data {
 
 transformed data {
   real alpha_guess = square(delta * (theta_l + theta_u) / (theta_u - theta_l));
-  real beta_guess =   2 * square(delta) * (theta_l + theta_u) 
+  real beta_guess =   2 * square(delta) * (theta_l + theta_u)
                     / square(theta_u - theta_l);
   vector[2] y_guess = [log(alpha_guess), log(beta_guess)]';
   vector[2] theta = [theta_l, theta_u]';
-  real x_r[0];
-  int x_i[0];
-  
-  print("Guesses:")
+  array[0] real x_r;
+  array[0] int x_i;
+
+  print("Guesses:");
   print("  alpha = ", alpha_guess);
   print("  beta = ", beta_guess);
 }

@@ -5,7 +5,7 @@ data {
 transformed data {
   int<lower=0> M = 3;           // Number of covariates
   int<lower=0> N = 100;         // Number of observations
-  
+
   vector[M] z0 = [-1, 3, 0]';
   real gamma0 = 10;               // True intercept
   vector[M] gamma1 = [2, -3, 1]'; // True slopes
@@ -14,7 +14,7 @@ transformed data {
 
 generated quantities {
   matrix[N, M] X; // Covariate design matrix
-  real y[N];      // Variates
+  array[N] real y;      // Variates
 
   for (n in 1:N) {
     X[n, 1] = normal_rng(x0[1], 2);

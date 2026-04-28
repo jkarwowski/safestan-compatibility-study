@@ -6,9 +6,9 @@ functions {
 
 data {
   int N_heights;
-  real<lower=0> heights[N_heights];    // meters
+  array[N_heights] real<lower=0> heights;    // meters
   int N_drops;
-  real obs_t_fall[N_drops, N_heights]; // seconds
+  array[N_drops, N_heights] real obs_t_fall; // seconds
 }
 
 parameters {
@@ -18,13 +18,13 @@ parameters {
 
 model {
   // Prior model
-  sigma_t ~ ???;
-  g ~ ???;
+  sigma_t ~ normal(0, 1);
+  g ~ normal(9.8, 1);
 
   // Observational model
   for (n in 1:N_drops) {
     for (h in 1:N_heights) {
-      real mu_t_fall = t_fall_naive(g, heights[h]);
+      real mu_t_fall = t_fall(g, heights[h]);
       obs_t_fall[n, h] ~ normal(mu_t_fall, sigma_t);
     }
   }
@@ -32,7 +32,7 @@ model {
 
 // Simulate a full observation from each value of the parameters
 generated quantities {
-  real obs_t_fall_post_pred[N_drops, N_heights];
+  array[N_drops, N_heights] real obs_t_fall_post_pred;
 
   for (n in 1:N_drops) {
     for (h in 1:N_heights) {

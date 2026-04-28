@@ -3,13 +3,13 @@ data {
 }
 
 transformed data {
-  real mu[N];
+  array[N] real mu;
   for (n in 1:N)
     mu[n] = n;
 }
 
 parameters {
-  real x[N];
+  array[N] real x;
 }
 
 model {

@@ -4,7 +4,7 @@ data {
 
 parameters {
   real<lower=0> tau;
-  real phi[K];
+  array[K] real phi;
 }
 
 model {

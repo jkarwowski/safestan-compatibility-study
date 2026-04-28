@@ -1,13 +1,13 @@
 functions{
 
-  real[] effCptModel1(real t0, real t, real[] init, real amt, int cmt, int evid,
+  array[] real effCptModel1(real t0, real t, array[] real init, real amt, int cmt, int evid,
 			  real CL, real Q, real V1, real V2, real ka, real ke0) {
     real k10;
     real k12;
     real k21;
     matrix[4, 4] K;
 
-    real x[4];
+    array[4] real x;
 
     x = rep_array(0, 4);
 
@@ -17,7 +17,7 @@ functions{
 
 
     K = rep_matrix(0, 4, 4);
-    
+
     K[1, 1] = -ka;
     K[2, 1] = ka;
     K[2, 2] = -(k10 + k12);
@@ -28,15 +28,15 @@ functions{
     K[4, 4] = -ke0;
 
     x = to_array_1d(matrix_exp((t - t0) * K) * to_vector(init));
-   
+
     if (evid == 1) x[cmt] = x[cmt] + amt;
 
     return x;
   }
 
-  matrix effCptModel(real[] time, real[] amt, int[] cmt, int[] evid, 
+  matrix effCptModel(array[] real time, array[] real amt, array[] int cmt, array[] int evid,
 		     real CL, real Q, real V1, real V2, real ka, real ke0) {
-    real init[4];
+    array[4] real init;
     matrix[size(time), 4] result;
     int nt;
     real t0;
@@ -53,17 +53,17 @@ functions{
     }
     return result;
   }
-  
+
 }
 
 data {
   int<lower = 1> nt;
   int<lower = 1> nObs;
-  int<lower = 1> iObs[nObs];
-  real<lower = 0> amt[nt];
-  int<lower = 1> cmt[nt];
-  int<lower = 0> evid[nt];
-  real<lower = 0> time[nt];
+  array[nObs] int<lower = 1> iObs;
+  array[nt] real<lower = 0> amt;
+  array[nt] int<lower = 1> cmt;
+  array[nt] int<lower = 0> evid;
+  array[nt] real<lower = 0> time;
   vector<lower = 0>[nObs] cObs;
   vector[nObs] respObs;
 }
@@ -95,14 +95,14 @@ transformed parameters {
 
   x = effCptModel(time, amt, cmt, evid,
                   CL, Q, V1, V2, ka, ke0);
-                  
+
   cHat = 1000 * x[ ,2] ./ V1;
   ceHat = 1000 * x[ ,4] ./ V1;
   respHat = 100 * ceHat ./ (EC50 + ceHat);
 
   cHatObs = cHat[iObs];
   respHatObs = respHat[iObs];
-  
+
   // for(i in 1:nObs){
   //   cHatObs[i] = cHat[iObs[i]];
   //   respHatObs[i] = respHat[iObs[i]];
@@ -121,14 +121,14 @@ model {
     sigma ~ cauchy(0, 2);
     sigmaResp ~ cauchy(0, 5);
 
-    logCObs ~ normal(log(cHatObs), sigma); 
-    respObs ~ normal(respHatObs, sigmaResp); 
+    logCObs ~ normal(log(cHatObs), sigma);
+    respObs ~ normal(respHatObs, sigmaResp);
 }
 
 generated quantities {
-  real cObsPred[nObs];
-  real respObsPred[nObs];
-  
+  array[nObs] real cObsPred;
+  array[nObs] real respObsPred;
+
   for(i in 1:nObs) {
     cObsPred[i] = exp(normal_rng(log(cHatObs[i]), sigma));
     respObsPred[i] = exp(normal_rng(log(respHatObs[i]), sigma));

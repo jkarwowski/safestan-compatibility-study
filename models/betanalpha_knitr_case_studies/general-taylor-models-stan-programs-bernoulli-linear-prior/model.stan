@@ -1,7 +1,7 @@
 data {
   int<lower=0> M; // Number of covariates
   int<lower=0> N; // Number of observations
-  
+
   vector[M] x0;   // Covariate baselines
   matrix[N, M] X; // Covariate design matrix
 }
@@ -22,7 +22,7 @@ model {
   // Prior model
   alpha ~ normal(0, 1);
   beta ~ normal(0, 1);
-  
+
   for (n in 1:N)
     if (alpha + deltaX[n,] * beta < 0 || alpha + deltaX[n,] * beta > 1)
       reject("");
@@ -31,5 +31,5 @@ model {
 // Simulate a full observation from the current value of the parameters
 generated quantities {
   vector[N] p = alpha + deltaX * beta;
-  int y_pred[N] = bernoulli_rng(p);
+  array[N] int y_pred = bernoulli_rng(p);
 }

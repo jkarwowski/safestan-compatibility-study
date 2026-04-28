@@ -2,10 +2,10 @@ data {
   int<lower=0> K;                       // Number of groups
   int<lower=0> N;                       // Number of observations
   vector[N] y;                          // Observations
-  int<lower=1, upper=K> context_idx[N]; // Context assignments
-  
+  array[N] int<lower=1, upper=K> context_idx; // Context assignments
+
   vector<lower=0, upper=1>[K] w;        // Partial centering parameters
-  
+
   real<lower=0> tau;                    // Base Population Scale
   real<lower=0> sigma;                  // Measurement variability
 }

@@ -1,7 +1,7 @@
 data {
   int<lower=0> M; // Number of covariates
   int<lower=0> N; // Number of observations
-  
+
   vector[M] x0;   // Covariate baselines
   matrix[N, M] X; // Covariate design matrix
 }
@@ -29,5 +29,5 @@ model {
 // Simulate a full observation from the current value of the parameters
 generated quantities {
   vector[N] mu = exp(alpha + deltaX * beta);
-  int y_pred[N] = neg_binomial_2_log_rng(alpha + deltaX * beta, inv(inv_phi));
+  array[N] int y_pred = neg_binomial_2_log_rng(alpha + deltaX * beta, inv(inv_phi));
 }

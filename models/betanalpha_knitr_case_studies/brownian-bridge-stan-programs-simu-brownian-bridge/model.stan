@@ -8,26 +8,26 @@ functions {
 
 data {
   int<lower=1> N;
-  real ts[N];
-  
+  array[N] real ts;
+
   real x_left;
   real x_right;
-  
-  int left_idxs[N - 2];
-  int center_idxs[N - 2];
-  int right_idxs[N - 2];
+
+  array[N - 2] int left_idxs;
+  array[N - 2] int center_idxs;
+  array[N - 2] int right_idxs;
 }
 
 generated quantities {
-  real xs[N];
-  
+  array[N] real xs;
+
   xs[1] = x_left;
   xs[N] = x_right;
-  
+
   for (n in 1:(N - 2)) {
     xs[center_idxs[n]] = bridge_rng(ts[center_idxs[n]],
                                     ts[left_idxs[n]],  xs[left_idxs[n]],
                                     ts[right_idxs[n]], xs[right_idxs[n]]);
   }
-  
+
 }

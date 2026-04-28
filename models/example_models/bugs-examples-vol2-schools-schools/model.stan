@@ -1,5 +1,5 @@
-// Schools: ranking school examination resutls using 
-// multivariate hierarcical models 
+// Schools: ranking school examination resutls using
+// multivariate hierarcical models
 //  http://www.openbugs.net/Examples/Schools.html
 
 data {
@@ -51,17 +51,17 @@ model {
   }
   Y ~ normal(Ymu, exp(-.5 * (theta + phi * LRT)));
   //  for(p in 1:N) {
-  //     Y[p] ~ normal(,  exp(-.5 * (theta + phi * LRT[p]))); 
+  //     Y[p] ~ normal(,  exp(-.5 * (theta + phi * LRT[p])));
   //  }
-  // min.var <- exp(-(theta + phi * (-34.6193))) # lowest LRT score = -34.6193
-  // max.var <- exp(-(theta + phi * (37.3807)))  # highest LRT score = 37.3807
-  
+  // min.var <- exp(-(theta + phi * (-34.6193))) // lowest LRT score = -34.6193
+  // max.var <- exp(-(theta + phi * (37.3807)))  // highest LRT score = 37.3807
+
   // Priors for fixed effects:
   beta ~ normal(0, 100);
-  // for (k in 1:8)  beta[k] ~ normal(0.0, 100); 
+  // for (k in 1:8)  beta[k] ~ normal(0.0, 100);
   theta ~ normal(0.0, 100);
   phi ~ normal(0.0, 100);
-  
+
   // Priors for random coefficients:
   for (m in 1 : M) {
     alpha[m] ~ multi_normal(gamma, Sigma);
@@ -71,10 +71,10 @@ model {
   Sigma ~ inv_wishart(3, invR);
 }
 generated quantities {
-  // real alpha1[M]; 
+  // real alpha1[M];
   array[M] real ranks;
-  // for (m in 1:M)  alpha1[m] <- alpha[m, 1]; 
-  //# compute ranks 
+  // for (m in 1:M)  alpha1[m] <- alpha[m, 1];
+  //# compute ranks
   for (j in 1 : M) {
     array[M] real greater_than;
     for (k in 1 : M) {

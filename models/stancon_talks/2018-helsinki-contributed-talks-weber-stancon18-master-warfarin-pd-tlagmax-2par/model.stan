@@ -9,8 +9,8 @@ functions {
  * A[Si[u] : Si[u+1]-1]
  * for the uth unit
  */
-int[] make_slice_index(int[] S) {
-  int Si[size(S)+1];
+array[] int make_slice_index(array[] int S) {
+  array[size(S)+1] int Si;
   int cv = 1;
   Si[1] = cv;
   for(i in 1:size(S)) {
@@ -41,7 +41,7 @@ real gamma2_overdisp_lpdf(vector y, vector mu, real sigma, real kappa) {
   return gamma_lpdf(y| muSq ./ sigmaSq, mu ./ sigmaSq);
 }
 
-real gamma2_overdisp_array_lpdf(real[] y, vector mu, real sigma, real kappa) {
+real gamma2_overdisp_array_lpdf(array[] real y, vector mu, real sigma, real kappa) {
   int N = size(y);
   vector[N] muSq = square(mu);
   vector[N] sigmaSq = square(sigma) + muSq / kappa;
@@ -51,7 +51,7 @@ real gamma2_overdisp_array_lpdf(real[] y, vector mu, real sigma, real kappa) {
 real gamma2_overdisp_cdf(real y, real mu, real sigma, real kappa) {
   real muSq = square(mu);
   real sigmaSq = square(sigma) + muSq / kappa;
-  return gamma_cdf(y, muSq ./ sigmaSq, mu ./ sigmaSq);
+  return gamma_cdf(y | muSq ./ sigmaSq, mu ./ sigmaSq);
 }
 
 real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
@@ -87,7 +87,7 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
 
     if(lag > tad[1])
       reject("Tlag must not exceed first observation");
- 
+
     return pk_1cmt_oral(tad - lag, ldose, lka, lCL, lV);
   }
 
@@ -98,7 +98,7 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
     int N = num_elements(tad);
     real lag = exp(llag);
     vector[N] pk;
- 
+
     // find out which elements have to be skipped due to lag
     while(tad[k+1] < lag && k+1 != N) {
       k = k + 1;
@@ -125,7 +125,7 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
     return pk_1cmt_oral_t(t-lag , ldose, lka, lCL, lV);
   }
 // End expanded include: models.stan
-  real[] turnover_kin_inhib_2(real t, real[] R, real[] theta, real[] x_r, int[] x_i) {
+  array[] real turnover_kin_inhib_2(real t, array[] real R, array[] real theta, data array[] real x_r, data array[] int x_i) {
     //real ldose = x_r[1];
     //real llag = x_r[2];
     //real lka = x_r[3];
@@ -138,18 +138,18 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
     real lS = log_inv_logit(lconc - lEC50);
     return { exp(lkin + log1m_exp(lS)) - R[1] * exp(lkout) };
   }
-  
-  vector lpdf_subject(vector phi, vector eta, real[] x_r, int[] x_i) {
+
+  vector lpdf_subject(vector phi, vector eta, data array[] real x_r, data array[] int x_i) {
     vector[3] theta = phi[1:3];
     vector[3] sigma_eta = phi[4:6];
     real sigma_y = phi[7];
     real kappa = phi[8];
-    real eta_cov[3] = to_array_1d(theta + eta .* sigma_eta);
+    array[3] real eta_cov = to_array_1d(theta + eta .* sigma_eta);
     int start = x_i[1];
     int end = x_i[2]-1;
     int Ndv = x_i[3];
     int N = end-start+1;
-    real mu_temp[N,1] = integrate_ode_rk45(turnover_kin_inhib_2,
+    array[N, 1] real mu_temp = integrate_ode_rk45(turnover_kin_inhib_2,
                                            { exp(eta_cov[1]) }, -1E-4,
                                            x_r[7+start-1 : 7+end-1], // time
                                            eta_cov,
@@ -164,17 +164,17 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
 data {
   int<lower=1> J;
   vector<lower=0>[J] dose;
-  int<lower=1> N[J];
+  array[J] int<lower=1> N;
   vector[sum(N)] dv;
-  real<lower=0> time[sum(N)];
+  array[sum(N)] real<lower=0> time;
   matrix[4,J] Eta_est;
   real<lower=0> ref;
 }
 transformed data {
   int Ndv = sum(N);
-  int sidx[J+1] = make_slice_index(N);
-  int x_i[J,3];
-  real x_r[J,6 + 2*Ndv];
+  array[J+1] int sidx = make_slice_index(N);
+  array[J, 3] int x_i;
+  array[J, 6 + 2*Ndv] real x_r;
   real t0 = -1E-4;
   real refSq = square(ref);
   vector[3] zero = rep_vector(0.0, 3);
@@ -186,7 +186,7 @@ transformed data {
     x_r[j,6] = refSq;
     x_r[j,7:7+Ndv-1] = to_array_1d(time);
     x_r[j,7+Ndv:7+2*Ndv-1] = to_array_1d(dv);
-    
+
     x_i[j,1] = sidx[j];
     x_i[j,2] = sidx[j+1];
     x_i[j,3] = Ndv;
@@ -197,7 +197,7 @@ parameters {
   vector[3] theta;
 
   //matrix[3,J] Eta;
-  vector[3] Eta[J];
+  array[J] vector[3] Eta;
   vector<lower=0>[3]  sigma_eta;
 
   real<lower=0> sigma_y;
@@ -211,11 +211,11 @@ model {
   phi[4:6] = sigma_eta;
   phi[7] = sigma_y;
   phi[8] = kappa;
-  
+
   theta[1] ~ normal(log(80),   log(10)/1.96);
   theta[2] ~ normal(log(30),   log(10)/1.96);
   theta[3] ~ normal(log( 2.5), log(10)/1.96);
-  
+
   sigma_eta ~ normal(0, 0.5);
   kappa ~ gamma(0.2, 0.2);
 

@@ -1,30 +1,30 @@
 data {
   int<lower=0> T;    // Length of series (number of observations)
-  real y[T];         // Return series
+  array[T] real y;         // Return series
 }
 
 parameters {
   // GARCH Parameters
   positive_ordered[2] alpha0; // Ordering prevents label switching
 
-  real<lower=0, upper=1> alpha1[2];
+  array[2] real<lower=0, upper=1> alpha1;
   real<lower=0, upper=1-alpha1[1]> beta1_1;
   real<lower=0, upper=1-alpha1[2]> beta1_2;
 
   // HMM Transition Probabilities =>
   // Parameterize by probability of staying in state
-  real<lower=0, upper=1> p_remain[2];
+  array[2] real<lower=0, upper=1> p_remain;
 }
 
 transformed parameters {
   // GARCH Parameters
-  real<lower=0> beta1[2];
+  array[2] real<lower=0> beta1;
 
   // Vector of instantaneous GARCH volatilities
-  vector[2] sigma_t[T];
+  array[T] vector[2] sigma_t;
 
   // HMM Parameters
-  vector[2] log_alpha[T]; // Accumulated (unnormalized) state probabilities
+  array[T] vector[2] log_alpha; // Accumulated (unnormalized) state probabilities
 
   // Transition probabilities
   matrix[2, 2] A;
@@ -59,7 +59,7 @@ transformed parameters {
   { // Calculate log p(state at t = j | history up to t) recursively
     // Markov property allows us to do one-step updates
 
-    real accumulator[2];
+    array[2] real accumulator;
 
     // Assume initial equal distribution among two states
     // Better model would be to weight by HMM stationary distribution
@@ -96,7 +96,7 @@ model {
 }
 
 generated quantities{
-  vector[2] alpha[T];
+  array[T] vector[2] alpha;
 
   for(t in 1:T){
     alpha[t] = softmax(log_alpha[t]);

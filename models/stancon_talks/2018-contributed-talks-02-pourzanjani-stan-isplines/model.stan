@@ -1,5 +1,5 @@
 functions {
-  real I1(real x) { 
+  real I1(real x) {
 	 real ret = 0;
 	 if(x < -20) return(0);
 
@@ -20,7 +20,7 @@ functions {
 	 return(ret);
 }
 
-real I2(real x) { 
+real I2(real x) {
 	 real ret = 0;
 	 if(x < -20) return(0);
 
@@ -41,7 +41,7 @@ real I2(real x) {
 	 return(ret);
 }
 
-real I3(real x) { 
+real I3(real x) {
 	 real ret = 0;
 	 if(x < -20) return(0);
 
@@ -62,7 +62,7 @@ real I3(real x) {
 	 return(ret);
 }
 
-real I4(real x) { 
+real I4(real x) {
 	 real ret = 0;
 	 if(x < -20) return(0);
 
@@ -83,7 +83,7 @@ real I4(real x) {
 	 return(ret);
 }
 
-real I5(real x) { 
+real I5(real x) {
 	 real ret = 0;
 	 if(x < -16) return(0);
 
@@ -104,7 +104,7 @@ real I5(real x) {
 	 return(ret);
 }
 
-real I6(real x) { 
+real I6(real x) {
 	 real ret = 0;
 	 if(x < -12) return(0);
 
@@ -125,7 +125,7 @@ real I6(real x) {
 	 return(ret);
 }
 
-real I7(real x) { 
+real I7(real x) {
 	 real ret = 0;
 	 if(x < -8) return(0);
 
@@ -146,7 +146,7 @@ real I7(real x) {
 	 return(ret);
 }
 
-real I8(real x) { 
+real I8(real x) {
 	 real ret = 0;
 	 if(x < -4) return(0);
 
@@ -167,7 +167,7 @@ real I8(real x) {
 	 return(ret);
 }
 
-real I9(real x) { 
+real I9(real x) {
 	 real ret = 0;
 	 if(x < 0) return(0);
 
@@ -188,7 +188,7 @@ real I9(real x) {
 	 return(ret);
 }
 
-real I10(real x) { 
+real I10(real x) {
 	 real ret = 0;
 	 if(x < 4) return(0);
 
@@ -209,7 +209,7 @@ real I10(real x) {
 	 return(ret);
 }
 
-real I11(real x) { 
+real I11(real x) {
 	 real ret = 0;
 	 if(x < 8) return(0);
 
@@ -230,7 +230,7 @@ real I11(real x) {
 	 return(ret);
 }
 
-real I12(real x) { 
+real I12(real x) {
 	 real ret = 0;
 	 if(x < 12) return(0);
 
@@ -251,7 +251,7 @@ real I12(real x) {
 	 return(ret);
 }
 
-real I13(real x) { 
+real I13(real x) {
 	 real ret = 0;
 	 if(x < 16) return(0);
 
@@ -272,10 +272,10 @@ real I13(real x) {
 	 return(ret);
 }
 
-real[] ispline(vector x, matrix c) {
+array[] real ispline(vector x, matrix c) {
 
 	 int N;
-	 real ret[dims(x)[1]];
+	 array[dims(x)[1]] real ret;
 	 N = dims(x)[1];
 
 	 for(n in 1:N) ret[n] = c[n][1]*I1(x[n]) + c[n][2]*I2(x[n]) + c[n][3]*I3(x[n]) + c[n][4]*I4(x[n]) + c[n][5]*I5(x[n]) + c[n][6]*I6(x[n]) + c[n][7]*I7(x[n]) + c[n][8]*I8(x[n]) + c[n][9]*I9(x[n]) + c[n][10]*I10(x[n]) + c[n][11]*I11(x[n]) + c[n][12]*I12(x[n]) + c[n][13]*I13(x[n]);
@@ -296,7 +296,7 @@ model {
 }
 generated quantities {
   vector[81] seq;
-  real fhat[81];
+  array[81] real fhat;
   for(n in 1:81) seq[n] = (n-1)*0.5 - 20;
   fhat = ispline(seq, rep_matrix(to_row_vector(c), 101));
 }

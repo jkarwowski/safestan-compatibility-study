@@ -10,23 +10,23 @@ functions {
     // 2. append alpha_shock, beta_shock
     {
       matrix[rows(z), cols(xi)] tmp;
-      
+
       tmp = rep_matrix((bigX*append_row(alpha, beta) + xi')', rows(z));
-      
+
       // replace the append_col wing single values (might speed things up)
       utilities[1:rows(z), 1:cols(xi)] = tmp + z * cholesky_decompose(Sigma)' * bigX';
-      utilities[1:rows(z),cols(utilities)] = rep_vector(0.0, rows(z));
-      
+      utilities[1:rows(z), cols(xi) + 1] = rep_vector(0.0, rows(z));
+
       for(i in 1:rows(z)) {
          probs[i] = softmax(utilities[i]')';
       }
-      
+
     }
-    
+
     for(j in 1:cols(probs)) {
       shares[j] = mean(col(probs, j));
     }
-    
+
     return(shares);
   }
 }
@@ -38,7 +38,7 @@ data {
   int P; // number of features
   matrix[NS, P+1] z; // normal(0,1) draws of the shocks
   matrix[T, J] price; // price for each unit
-  int sales[T, J+1]; // unit sales across T markets for J+1 products (inc outside good)
+  array[T, J+1] int sales; // unit sales across T markets for J+1 products (inc outside good)
   matrix[T*J, P] X_repeat; // T Xs stacked on top of each other. This format allows characteristics to vary across markets.
   real nu;
 }
@@ -49,7 +49,7 @@ transformed data {
 }
 // define parameters
 parameters {
-  real alpha; 
+  real alpha;
   vector[P] beta;
   vector[P] gamma;
   real gamma0;
@@ -76,14 +76,14 @@ model {
   to_vector(xi) ~ normal(0, 1);
   scales ~ normal(0, 1);
   Omega ~ lkj_corr(nu);
-  
+
   // model of price -- this helps pin down xi
   for (i in 1:rows(to_vector(price'))) {
     log(to_vector(price')[i]) ~ normal(gamma0 + X_repeat[i] * gamma + lambda * to_vector(xi')[i], price_scale);
   }
-  
-  
-  // model of sales 
+
+
+  // model of sales
   {
     matrix[T, J+1] pred_shares;
     for(t in 1:T) {
@@ -92,6 +92,6 @@ model {
       // sales are measured with multinomial measurement error
       sales[t] ~ multinomial(pred_shares[t]');
     }
-    
+
   }
 }

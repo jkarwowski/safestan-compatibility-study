@@ -1,7 +1,7 @@
 data {
   int<lower=1> N;             // Number of observations
   int<lower=1> K;             // Number of ordinal categories
-  int<lower=1, upper=K> y[N]; // Observed ordinals
+  array[N] int<lower=1, upper=K> y; // Observed ordinals
 }
 
 parameters {
@@ -12,7 +12,7 @@ parameters {
 model {
   // Prior model
   // Implicit uniform priors
-  
+
   // Observational model
   y ~ ordered_logistic(rep_vector(gamma, N), c);
 }

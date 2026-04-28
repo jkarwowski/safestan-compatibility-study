@@ -1,5 +1,5 @@
 data {
-  int<lower=0> T; // # time points (equally spaced)
+  int<lower=0> T; // // time points (equally spaced)
   vector[T] y; // mean corrected return at time t
 }
 parameters {

@@ -1,5 +1,5 @@
 functions {
-  vector group_means(vector y, int N, int[] indiv_idxs, int N_indiv) {
+  vector group_means(vector y, int N, array[] int indiv_idxs, int N_indiv) {
     vector[N_indiv] counts = rep_vector(0, N_indiv);
     vector[N_indiv] means = rep_vector(0, N_indiv);
     for (n in 1:N) {
@@ -10,13 +10,13 @@ functions {
     }
     return means;
   }
-  
-  real F_stat(vector y, int N, int[] indiv_idxs, int N_indiv) {
+
+  real F_stat(vector y, int N, array[] int indiv_idxs, int N_indiv) {
     real global_mean = 0;
     vector[N_indiv] counts = rep_vector(0, N_indiv);
     vector[N_indiv] means = rep_vector(0, N_indiv);
     vector[N_indiv] sum_squares = rep_vector(0, N_indiv);
-    
+
     real between = 0;
     real within = 0;
 
@@ -43,13 +43,13 @@ functions {
 
 data {
   int<lower=0> N;      // Number of observations
-  int y[N];            // Observed counts
-  
+  array[N] int y;            // Observed counts
+
   // Number of individual experiments
   int<lower=0> N_exp;
-  
+
   // Experiment from which each observation is generated
-  int<lower=1, upper=N_exp> exp_idx[N]; 
+  array[N] int<lower=1, upper=N_exp> exp_idx;
 
   // Nominal input for each experiment
   vector[N_exp] log_rho_I;

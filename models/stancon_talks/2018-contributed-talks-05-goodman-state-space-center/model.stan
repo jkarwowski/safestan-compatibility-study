@@ -2,16 +2,16 @@
 data{
   int <lower=0> NSMPL;
   int <lower=0> replicates;
-  int <lower=0> replicate_samples[replicates];
-  int <lower=0> value[NSMPL];
+  array[replicates] int<lower=0> replicate_samples;
+  array[NSMPL] int<lower=0> value;
   vector [NSMPL] time;
 }
 transformed data{
   vector[NSMPL] value_vec = to_vector(value);
   vector[NSMPL] time_vec = to_vector(time);
-  int sample_start[replicates];
+  array[replicates] int sample_start;
   vector [NSMPL - replicates] time_diffs;
-  
+
   sample_start[1] = 1;
   if(replicates > 1)
     for(i in 2:replicates)
@@ -41,25 +41,25 @@ transformed parameters{
   real kappa_inv = exp(-kappa_log);
   real kappa_sqrt = exp(0.5*kappa_log);
   vector[NSMPL] latent_value_raw;
-  
+
   for(i in 1:replicates){
     int n = replicate_samples[i];
-    int offset = sample_start[i];
-    vector [n-1] time_diff = segment(time_diffs, offset - (i-1), n - 1);
+    int offset_ = sample_start[i];
+    vector [n-1] time_diff = segment(time_diffs, offset_ - (i-1), n - 1);
     real cum_squares = 0;
     real last_t = -1;
     real lv_raw;
     for(k in 0:n-1){
-      real lv = latent_value[offset + k];
+      real lv = latent_value[offset_ + k];
       if(k == 0){
         lv_raw = (lv - mu)/kappa_sqrt;
       }else{
         real t = time_diff[k];
         real exp_neg_lambda_t = exp(-t*lambda);
         real sd_scale = kappa_sqrt .* sqrt(1-square(exp_neg_lambda_t));
-        lv_raw = (lv - mu - (latent_value[offset + k - 1] - mu) * exp_neg_lambda_t)/sd_scale;
+        lv_raw = (lv - mu - (latent_value[offset_ + k - 1] - mu) * exp_neg_lambda_t)/sd_scale;
       }
-      latent_value_raw[offset+k] = lv_raw;
+      latent_value_raw[offset_+k] = lv_raw;
     }
   }
 }
@@ -69,11 +69,11 @@ model {
   student_df ~ gamma(2,.1);
   for(i in 1:replicates){
     int n = replicate_samples[i];
-    int offset = sample_start[i];
-    vector [n] sq_lv = square(segment(latent_value_raw, offset, n));
+    int offset_ = sample_start[i];
+    vector [n] sq_lv = square(segment(latent_value_raw, offset_, n));
     vector [n] cum_squares = cumulative_sum(append_row(0, sq_lv[1:n-1]));
     for(k in 1:NSMPL){
-      target +=  (lgamma((student_df + k) * 0.5) - lgamma((student_df+ k - 1 )* 0.5));     
+      target +=  (lgamma((student_df + k) * 0.5) - lgamma((student_df+ k - 1 )* 0.5));
       target += -0.5 * (student_df + k) * log1p(sq_lv[k] / (student_df + cum_squares[k] - 2));
       target += -0.5 * log(student_df + cum_squares[k] - 2);
     }
@@ -82,7 +82,7 @@ model {
   //jacobian of the transformation
   target += -NSMPL * (0.5 * kappa_log);
   target += -0.5 * log1m_exp(-2*lambda*time_diffs);
-  
+
   value ~ poisson_log(latent_value);
   lambda ~ gamma(2,2);
   kappa ~ gamma(2,2);

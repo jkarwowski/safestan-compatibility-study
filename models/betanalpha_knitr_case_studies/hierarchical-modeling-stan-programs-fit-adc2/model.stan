@@ -1,5 +1,5 @@
 functions {
-  vector group_means(vector y, int N, int[] indiv_idxs, int N_indiv) {
+  vector group_means(vector y, int N, array[] int indiv_idxs, int N_indiv) {
     vector[N_indiv] counts = rep_vector(0, N_indiv);
     vector[N_indiv] means = rep_vector(0, N_indiv);
     for (n in 1:N) {
@@ -10,13 +10,13 @@ functions {
     }
     return means;
   }
-  
-  real F_stat(vector y, int N, int[] indiv_idxs, int N_indiv) {
+
+  real F_stat(vector y, int N, array[] int indiv_idxs, int N_indiv) {
     real global_mean = 0;
     vector[N_indiv] counts = rep_vector(0, N_indiv);
     vector[N_indiv] means = rep_vector(0, N_indiv);
     vector[N_indiv] sum_squares = rep_vector(0, N_indiv);
-    
+
     real between = 0;
     real within = 0;
 
@@ -43,19 +43,19 @@ functions {
 
 data {
   int<lower=0> N;      // Number of observations
-  int y[N];            // Observed counts
-  
+  array[N] int y;            // Observed counts
+
   // Number of individual experiments
   int<lower=0> N_exp;
   // Experiment from which each observation is generated
-  int<lower=1, upper=N_exp> exp_idx[N]; 
-  
+  array[N] int<lower=1, upper=N_exp> exp_idx;
+
   int<lower=0, upper=N_exp> K_ncp;          // Number of noncentered individuals
-  int<lower=1, upper=N_exp> ncp_idx[K_ncp]; // Index of noncentered individuals
-  
+  array[K_ncp] int<lower=1, upper=N_exp> ncp_idx; // Index of noncentered individuals
+
   int<lower=0, upper=N_exp> K_cp;           // Number of centered individuals
-  int<lower=1, upper=N_exp> cp_idx[K_cp];   // Index of noncentered individuals
-  
+  array[K_cp] int<lower=1, upper=N_exp> cp_idx;   // Index of noncentered individuals
+
   vector[N_exp] log_rho_I; // Nominal input for each experiment
 }
 
@@ -76,17 +76,17 @@ transformed parameters {
 model {
   mu_log_psi ~ normal(0, log(10));
   tau_log_psi ~ normal(0, 0.5 * log(10));
-  
+
   log_psi_ncp ~ normal(0, 1);                   // Non-centered hierarchical model
   log_psi_cp ~ normal(mu_log_psi, tau_log_psi); // Centered hierarchical model
-  
+
   y ~ poisson_log(log_psi[exp_idx] + log_rho_I[exp_idx]); // Observational model
 }
 
 generated quantities {
-  int y_post_pred[N] = poisson_log_rng(log_psi[exp_idx] + log_rho_I[exp_idx]);
-  vector[N_exp] norm_ave = group_means(to_vector(y_post_pred) ./ exp(log_rho_I[exp_idx]), 
+  array[N] int y_post_pred = poisson_log_rng(log_psi[exp_idx] + log_rho_I[exp_idx]);
+  vector[N_exp] norm_ave = group_means(to_vector(y_post_pred) ./ exp(log_rho_I[exp_idx]),
                                        N, exp_idx, N_exp);
-  real F_exp = F_stat(to_vector(y_post_pred) ./ exp(log_rho_I[exp_idx]), 
+  real F_exp = F_stat(to_vector(y_post_pred) ./ exp(log_rho_I[exp_idx]),
                       N, exp_idx, N_exp);
 }

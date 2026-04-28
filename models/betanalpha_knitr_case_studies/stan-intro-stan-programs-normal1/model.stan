@@ -3,7 +3,7 @@ data {
 }
 
 parameters {
-  real y[N];  // Probabilistic variables y
+  array[N] real y;  // Probabilistic variables y
   real theta; // Probabilistic variable theta
 }
 
@@ -13,7 +13,7 @@ model {
   // with incremental contributions in a loop
   for (n in 1:N)
     target += normal_lpdf(y[n] | theta, 1);
-    
+
   // Add marginal probabiltiy density for theta
   // to the joint log probability density
   target += normal_lpdf(theta | 0, 1);

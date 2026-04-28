@@ -2,14 +2,14 @@
 data{
   int <lower=0> NSMPL;
   int <lower=0> replicates;
-  int <lower=0> replicate_samples[replicates];
-  int <lower=0> value[NSMPL];
+  array[replicates] int<lower=0> replicate_samples;
+  array[NSMPL] int<lower=0> value;
   vector [NSMPL] time;
 }
 transformed data{
   vector[NSMPL] value_vec = to_vector(value);
   vector[NSMPL] time_vec = to_vector(time);
-  int sample_start[replicates];
+  array[replicates] int sample_start;
   sample_start[1] = 1;
   if(replicates > 1)
     for(i in 2:replicates)
@@ -37,14 +37,14 @@ transformed parameters{
   // conditional expression for the OU process.
   for(i in 1:replicates){
     int n = replicate_samples[i];
-    int offset = sample_start[i];
-    vector [n-1] time_diff = segment(time_vec, offset + 1, n - 1) -
-      segment(time_vec,offset,n-1);
+    int offset_ = sample_start[i];
+    vector [n-1] time_diff = segment(time_vec, offset_ + 1, n - 1) -
+      segment(time_vec,offset_,n-1);
     real cum_squares = 0;
     real last_t = -1;
     real lv;
     for(k in 0:n-1){
-      real lv_raw = latent_value_raw[offset + k];
+      real lv_raw = latent_value_raw[offset_ + k];
       if(k == 0){
         //For the first latent value use the stationary distribution.
         lv = mu + lv_raw * kappa_sqrt;
@@ -55,7 +55,7 @@ transformed parameters{
         lv = mu - (mu - lv) .* exp_neg_lambda_t + lv_raw .* sd_scale;
         last_t = t;
       }
-      latent_value[offset+k] = lv;
+      latent_value[offset_+k] = lv;
     }
   }
 }
@@ -68,11 +68,11 @@ model {
   // the unit multivariate t-distribution.
   for(i in 1:replicates){
     int n = replicate_samples[i];
-    int offset = sample_start[i];
-    vector [n] sq_lv = square(segment(latent_value_raw,offset,n));
-    vector [n] cum_squares = cumulative_sum(append_row(0,sq_lv[1:n-1]));    
+    int offset_ = sample_start[i];
+    vector [n] sq_lv = square(segment(latent_value_raw,offset_,n));
+    vector [n] cum_squares = cumulative_sum(append_row(0,sq_lv[1:n-1]));
     for(k in 1:NSMPL){
-      target +=  (lgamma((student_df + k) * 0.5) - lgamma((student_df+ k - 1 )* 0.5));     
+      target +=  (lgamma((student_df + k) * 0.5) - lgamma((student_df+ k - 1 )* 0.5));
       target += -0.5 * (student_df + k) * log1p(sq_lv[k] / (student_df + cum_squares[k] - 2));
       target += -0.5 * log(student_df + cum_squares[k] - 2);
     }

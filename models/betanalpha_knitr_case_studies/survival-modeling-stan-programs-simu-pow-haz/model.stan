@@ -12,8 +12,8 @@ data {
 }
 
 generated quantities {
-  real<lower=0> obs_times[N];
-  
+  array[N] real<lower=0> obs_times;
+
   for (n in 1:N) {
     real u = uniform_rng(0, 1);
     obs_times[n] = inv_survival(u, alpha, sigma);

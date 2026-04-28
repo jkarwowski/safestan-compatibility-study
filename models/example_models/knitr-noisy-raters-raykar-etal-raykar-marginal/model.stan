@@ -13,9 +13,9 @@
  *        in the N/R loops and the eltwise multiply and sum
  */
 data {
-  int<lower=0> N; // # items (reviews)
-  int<lower=0> R; // # raters (heuristics)
-  int<lower=0> D; // # of predictors for each item
+  int<lower=0> N; // // items (reviews)
+  int<lower=0> R; // // raters (heuristics)
+  int<lower=0> D; // // of predictors for each item
   matrix[N, D] x; // [n, d] predictors d for item n
   array[N, R] int<lower=0, upper=1> y; // outcome: 1 success, 0 failure
 }
@@ -29,18 +29,18 @@ model {
   vector[N] logit_z_hat = w0 + x * w;
   vector[N] log_z_hat = log_inv_logit(logit_z_hat);
   vector[N] log1m_z_hat = log1m_inv_logit(logit_z_hat);
-  
+
   vector[R] log_alpha = log(alpha);
   vector[R] log1m_alpha = log1m(alpha);
   vector[R] log_beta = log(beta);
   vector[R] log1m_beta = log1m(beta);
-  
+
   // prior
   w ~ normal(0, 2);
   w0 ~ normal(0, 5);
   alpha ~ beta(10, 1);
   beta ~ beta(10, 1);
-  
+
   // likelihood
   for (n in 1 : N) {
     real pos_sum = log_z_hat[n];
@@ -63,12 +63,12 @@ generated quantities {
     vector[N] logit_z_hat = w0 + x * w;
     vector[N] log_z_hat = log_inv_logit(logit_z_hat);
     vector[N] log1m_z_hat = log1m_inv_logit(logit_z_hat);
-    
+
     vector[R] log_alpha = log(alpha);
     vector[R] log1m_alpha = log1m(alpha);
     vector[R] log_beta = log(beta);
     vector[R] log1m_beta = log1m(beta);
-    
+
     for (n in 1 : N) {
       real pos_sum = log_z_hat[n];
       real neg_sum = log1m_z_hat[n];

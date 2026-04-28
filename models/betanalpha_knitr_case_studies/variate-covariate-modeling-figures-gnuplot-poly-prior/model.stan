@@ -4,8 +4,8 @@ data {
   vector[N] y;
 
   int<lower=1> N_predict;
-  real x_predict[N_predict];
-  
+  array[N_predict] real x_predict;
+
   real<lower=0> sigma;
 }
 

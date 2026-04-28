@@ -6,18 +6,18 @@ data {
   int<lower=1> G;  // grades
 
   // training data
-  int<lower=1,upper=I> item[R];
-  int<lower=1,upper=S> subject[R];
-  int<lower=1,upper=G> grade[R];
+  array[R] int<lower=1,upper=I> item;
+  array[R] int<lower=1,upper=S> subject;
+  array[R] int<lower=1,upper=G> grade;
 
   // test data
   int<lower=1> R_holdout;
-  int<lower=1,upper=I> item_holdout[R_holdout];
-  int<lower=1,upper=S> subject_holdout[R_holdout];
+  array[R_holdout] int<lower=1,upper=I> item_holdout;
+  array[R_holdout] int<lower=1,upper=S> subject_holdout;
 }
 parameters {
   // parameters
-  ordered[G-1] difficulty[I];
+  array[I] ordered[G-1] difficulty;
   vector[S] ability;
 
   // hyperparameters
@@ -42,7 +42,7 @@ model {
                                        difficulty[item[response]]);}
 }
 generated quantities {
-  int<lower=0,upper=G> predicted_grade[R_holdout];
+  array[R_holdout] int<lower=0,upper=G> predicted_grade;
   for (response in 1:R_holdout) {
     predicted_grade[response] = ordered_logistic_rng(ability[subject_holdout[response]],
                                                      difficulty[item_holdout[response]]);

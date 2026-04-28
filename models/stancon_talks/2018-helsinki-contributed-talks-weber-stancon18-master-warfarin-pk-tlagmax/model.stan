@@ -9,8 +9,8 @@ functions {
  * A[Si[u] : Si[u+1]-1]
  * for the uth unit
  */
-int[] make_slice_index(int[] S) {
-  int Si[size(S)+1];
+array[] int make_slice_index(array[] int S) {
+  array[size(S)+1] int Si;
   int cv = 1;
   Si[1] = cv;
   for(i in 1:size(S)) {
@@ -41,7 +41,7 @@ real gamma2_overdisp_lpdf(vector y, vector mu, real sigma, real kappa) {
   return gamma_lpdf(y| muSq ./ sigmaSq, mu ./ sigmaSq);
 }
 
-real gamma2_overdisp_array_lpdf(real[] y, vector mu, real sigma, real kappa) {
+real gamma2_overdisp_array_lpdf(array[] real y, vector mu, real sigma, real kappa) {
   int N = size(y);
   vector[N] muSq = square(mu);
   vector[N] sigmaSq = square(sigma) + muSq / kappa;
@@ -51,7 +51,7 @@ real gamma2_overdisp_array_lpdf(real[] y, vector mu, real sigma, real kappa) {
 real gamma2_overdisp_cdf(real y, real mu, real sigma, real kappa) {
   real muSq = square(mu);
   real sigmaSq = square(sigma) + muSq / kappa;
-  return gamma_cdf(y, muSq ./ sigmaSq, mu ./ sigmaSq);
+  return gamma_cdf(y | muSq ./ sigmaSq, mu ./ sigmaSq);
 }
 
 real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
@@ -87,7 +87,7 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
 
     if(lag > tad[1])
       reject("Tlag must not exceed first observation");
- 
+
     return pk_1cmt_oral(tad - lag, ldose, lka, lCL, lV);
   }
 
@@ -98,7 +98,7 @@ real gamma2_overdisp_rng(real mu, real sigma, real kappa) {
     int N = num_elements(tad);
     real lag = exp(llag);
     vector[N] pk;
- 
+
     // find out which elements have to be skipped due to lag
     while(tad[k+1] < lag && k+1 != N) {
       k = k + 1;
@@ -130,7 +130,7 @@ data {
   int J;
   real<lower=0> tlag_max;
   vector<lower=0>[J] dose;
-  int N[J];
+  array[J] int N;
   vector<lower=0>[sum(N)] dv;
   vector<lower=tlag_max>[sum(N)] time;
   vector<lower=0>[J] weight;
@@ -141,7 +141,7 @@ transformed data {
   row_vector[J] LSweight = to_row_vector(log(weight) - log(70.));
   vector[J] ldose = log(dose);
   real ltlag_max = log(tlag_max);
-  int sidx[J+1] = make_slice_index(N);
+  array[J+1] int sidx = make_slice_index(N);
   real refSq = square(ref);
 }
 parameters {
@@ -166,7 +166,7 @@ transformed parameters {
   // apply to CL and V the weight covariate effects
   Eta_cov[3] = theta[3] + sigma_eta[3] * Eta[3] +  0.75 * LSweight;
   Eta_cov[4] = theta[4] + sigma_eta[4] * Eta[4] +         LSweight;
-  
+
   // loop over each subject and evaluate PK model
   for(j in 1:J) {
     int start = sidx[j];
@@ -181,7 +181,7 @@ model {
   theta[4] ~ normal(log(10),  log(10)/1.96);
 
   sigma_eta ~ normal(0, 0.5);
- 
+
   to_vector(Eta) ~ normal(0, 1);
 
   sigma_y ~ normal(0, 2);

@@ -1,7 +1,7 @@
 data {
   int<lower=1> N;
-  real t[N + 1];
-  
+  array[N + 1] real t;
+
   real x0;
 
   real mu;
@@ -10,11 +10,11 @@ data {
 }
 
 parameters {
-  real x_free[N];
+  array[N] real x_free;
 }
 
 transformed parameters {
-  real x[N + 1] = append_array(rep_array(x0, 1), x_free);
+  array[N + 1] real x = append_array(rep_array(x0, 1), x_free);
 }
 
 model {

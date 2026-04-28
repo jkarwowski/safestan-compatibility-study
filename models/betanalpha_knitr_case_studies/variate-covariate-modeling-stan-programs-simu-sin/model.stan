@@ -11,19 +11,19 @@ transformed data {
 }
 
 generated quantities {
-  real x1[N1];
-  real y1[N1];
-  
-  real x2[N2];
-  real y2[N2];
+  array[N1] real x1;
+  array[N1] real y1;
+
+  array[N2] real x2;
+  array[N2] real y2;
 
   for (n in 1:N1) {
     x1[n] = uniform_rng(0, 10);
     y1[n] = normal_rng(A * sin(omega * x1[n] + phi), sigma);
   }
-  
+
   for (n in 1:N2) {
-    x2[n] = fabs(normal_rng(0, 3));
+    x2[n] = abs(normal_rng(0, 3));
     y2[n] = normal_rng(A * sin(omega * x2[n] + phi), sigma);
   }
 }

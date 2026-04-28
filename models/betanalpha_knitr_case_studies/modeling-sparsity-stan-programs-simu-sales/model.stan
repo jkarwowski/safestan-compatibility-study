@@ -1,11 +1,11 @@
 data {
   int<lower=0> N_obs; // Number of sales observations
-  
+
   int<lower=0> N_obs_days;                           // Number of days observed
-  int<lower=1, upper=N_obs_days> obs_day_idx[N_obs]; // Day of each observation
-  
+  array[N_obs] int<lower=1, upper=N_obs_days> obs_day_idx; // Day of each observation
+
   int<lower=0> N_pred_days;                        // Number of future days to predict
-  int<lower=N_obs_days> pred_day_idx[N_pred_days]; // Day of each prediction
+  array[N_pred_days] int<lower=N_obs_days> pred_day_idx; // Day of each prediction
 }
 
 transformed data {
@@ -19,18 +19,18 @@ transformed data {
 }
 
 generated quantities {
-  int y_obs[N_obs];
-  int y_pred[N_pred_days];
+  array[N_obs] int y_obs;
+  array[N_pred_days] int y_pred;
   vector[N_obs_days] delta_days;
 
   for (d in 1:N_obs_days) {
     if (bernoulli_rng(gamma))
       delta_days[d] = normal_rng(0, tau_day1);
-    else 
+    else
       delta_days[d] = normal_rng(0, tau_day2);
   }
 
-  y_obs 
+  y_obs
     = neg_binomial_2_log_rng(  alpha
                              + delta_season * sin(2 * pi() * to_vector(obs_day_idx) / 360 + phi)
                              + delta_days[obs_day_idx], 1 / inv_psi);
@@ -39,10 +39,10 @@ generated quantities {
     real delta_day = 0;
     if (bernoulli_rng(gamma))
       delta_day = normal_rng(0, tau_day1);
-    else 
+    else
       delta_day = normal_rng(0, tau_day2);
 
-    y_pred[d] 
+    y_pred[d]
       = neg_binomial_2_log_rng(  alpha
                                + delta_season * sin(2 * pi() * pred_day_idx[d] / 360 + phi)
                                + delta_day, 1 / inv_psi);
