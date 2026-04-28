@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's false-belief number guessing.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Reasoning about Reasoning",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "theory of mind",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/nested-guessing.md",
+  "forestdb_source_slug": "nested-guessing",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "nested-guessing",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/nested-guessing.html",
+  "stan_file": "model.stan",
+  "title": "Nested Number Guessing",
+  "translation_archetype": "game_softmax",
+  "translation_note": "Normal Stan translation using the `game_softmax` archetype for false-belief number guessing; discrete choices are marginalized or represented with finite continuous relaxations."
+}

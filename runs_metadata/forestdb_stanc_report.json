@@ -1,0 +1,714 @@
+{
+  "total": 101,
+  "ok": 101,
+  "fail": 0,
+  "results": [
+    {
+      "model": "models/forestdb/adjectives/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/arithmetic/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"C\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"counts\": { \"type\": \"int\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"rule_prob\": { \"type\": \"real\", \"dimensions\": 2 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"sampled_rule\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/binomial-inference/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 0 }\n  },\n  \"parameters\": { \"theta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"y_rep\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"log_lik\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"binomial_rng\" ],\n  \"distributions\": [ \"beta_lupdf\", \"binomial_lpmf\", \"binomial_lupmf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/birthday/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"theta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"expected_successes\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/blame/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"prior_concentration\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"log_lik\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"state_prob\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"latent_state\": { \"type\": \"int\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/blm/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/bn-structure/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"theta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"expected_successes\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/brightness-constancy/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"X\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"beta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"mu\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/burglary-bayesnet/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"calls\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"p_alarm\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"p_john_alarm\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"p_john_no_alarm\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"p_mary_alarm\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"p_mary_no_alarm\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"parameters\": {\n    \"p_burglary\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"p_earthquake\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"posterior_burglary_prob\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"exp\", \"log_sum_exp\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/causal-support/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"prior_concentration\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"log_lik\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"state_prob\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"latent_state\": { \"type\": \"int\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/citation-matching/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"cluster_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"cluster_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"cluster\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/costello-watts-2014/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"G\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"group\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"beta\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"theta\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"population_mean\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\", \"gamma_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/crosscat/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"cluster_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"cluster_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"cluster\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/curve-fitting/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"R\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"x\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"rule_pred\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"rule_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"map_rule\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\", \"lognormal_lupdf\", \"normal_lpdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/dirichlet-multinomial-mixture/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"C\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"theta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"phi\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"concentration\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {},\n  \"functions\": [\n    \"lgamma\", \"log\", \"log_sum_exp\", \"rep_vector\", \"size\", \"sum\"\n  ],\n  \"distributions\": [ \"dirichlet_lupdf\", \"lognormal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/dpmem/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"cluster_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"cluster_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"cluster\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/ellipsis/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/event-detection/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"T\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"counts\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"lambda_low\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"lambda_high\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"rate_ratio\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"log\", \"log_sum_exp\" ],\n  \"distributions\": [ \"gamma_lupdf\", \"poisson_lpmf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/exhaustivity/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/finite-gaussian-mixture/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"theta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"mu\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"z_rep\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y_rep\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log_mix\", \"normal_rng\", \"rep_vector\" ],\n  \"distributions\": [\n    \"dirichlet_lupdf\", \"lognormal_lupdf\", \"normal_lpdf\", \"normal_lupdf\"\n  ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/finite-mixture/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"theta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"logit_p\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": { \"p\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"generated quantities\": {\n    \"z_rep\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y_rep\": { \"type\": \"int\", \"dimensions\": 0 }\n  },\n  \"functions\": [\n    \"bernoulli_rng\", \"categorical_rng\", \"inv_logit\", \"log_mix\", \"rep_vector\"\n  ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"dirichlet_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/gaussian-gamma/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"mu0\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"lambda0\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"alpha0\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"beta0\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"parameters\": {\n    \"mu\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"tau\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": { \"sigma\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"generated quantities\": { \"y_rep\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"functions\": [ \"inv_sqrt\", \"normal_rng\" ],\n  \"distributions\": [ \"gamma_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/gaussian-inference/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"mu\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"y_rep\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"functions\": [ \"normal_rng\" ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/generics/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/genetic-linkage/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"theta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"expected_successes\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/geometric-distribution/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"theta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"y_rep\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"neg_binomial_2_rng\" ],\n  \"distributions\": [ \"beta_lupdf\", \"neg_binomial_2_lupmf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/gp-classifier/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"x\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"length_scale\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"sigma_f\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"eta\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": { \"f\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"generated quantities\": { \"p\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [ \"cholesky_decompose\", \"exp\", \"inv_logit\", \"square\" ],\n  \"distributions\": [\n    \"bernoulli_logit_lupmf\", \"lognormal_lupdf\", \"normal_lupdf\"\n  ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/gpa-discrete-continuous/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"theta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"mu\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"component\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [\n    \"dirichlet_lupdf\", \"lognormal_lupdf\", \"normal_lpdf\", \"normal_lupdf\"\n  ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/hdp/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"D\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"V\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"doc\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"global_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"local_weight\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"atom\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"group_cluster\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/hdp-lda/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"D\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"V\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"doc\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"global_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"local_weight\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"atom\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"group_cluster\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/hidden-markov-model/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"T\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"pi\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"A\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"omega\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {},\n  \"functions\": [ \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"categorical_lpmf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/hierarchical-flu/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"G\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"group\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"beta\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"theta\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"population_mean\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\", \"gamma_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/hierarchical-urn/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"G\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"group\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"beta\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"theta\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"population_mean\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\", \"gamma_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/hmm-ising/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"V\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"T\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"initial\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"transition\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"emission\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"y_rep\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"z\": { \"type\": \"int\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/hyperbole/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/hyperbolicmetaphor/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/ibp/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"cluster_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"cluster_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"cluster\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/incremental/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/inferring-teachers-skill/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"H\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"likelihood\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"hypothesis_weight\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"posterior_hypothesis\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/infinite-dm-mixture/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"cluster_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"cluster_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"cluster\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/infinite-gaussian-mixture/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"theta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"mu\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"component\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [\n    \"dirichlet_lupdf\", \"lognormal_lupdf\", \"normal_lpdf\", \"normal_lupdf\"\n  ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/infinite-hmm/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"D\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"V\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"doc\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"global_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"local_weight\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"atom\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"group_cluster\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/infinite-mixture/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"cluster_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"cluster_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"cluster\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/infinite-pcfg/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"C\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"counts\": { \"type\": \"int\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"rule_prob\": { \"type\": \"real\", \"dimensions\": 2 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"sampled_rule\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/intensifiers/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/inverse-physics/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"X\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"beta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"mu\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/inverse-statics/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"X\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"beta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"mu\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/irm/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"cluster_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"cluster_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"cluster\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/irony/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/ising/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"spin\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"field\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"coupling\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"aligned_pairs\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_logit_lupmf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/islanders/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"A\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"chosen_action\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"beta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"action_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"softmax\" ],\n  \"distributions\": [ \"categorical_logit_lupmf\", \"lognormal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/kalman-filter/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"T\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"phi\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"sigma_state\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"sigma_obs\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"x\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"y_rep\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [ \"normal_rng\" ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/layout/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"X\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"beta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"mu\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/lda/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"D\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"V\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"counts\": { \"type\": \"int\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"theta\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"phi\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"dominant_topic\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/learning-physics/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"X\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"beta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"mu\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/linear-regression/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"X\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"beta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"mu\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/little-trees/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"theta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"expected_successes\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/logistic-regression/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"X\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"beta\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"p\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [ \"inv_logit\" ],\n  \"distributions\": [ \"bernoulli_logit_lupmf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/markov-model/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"T\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"pi\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"A\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {},\n  \"functions\": [ \"rep_vector\" ],\n  \"distributions\": [ \"categorical_lpmf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/marsaglia/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"theta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"expected_successes\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/medical-diagnosis/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"T\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"test_pos\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"prevalence\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"sensitivity\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"specificity\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"posterior_disease_prob\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"exp\", \"log\", \"log1m\", \"log_sum_exp\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/metaphor/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/mln/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"spin\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"field\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"coupling\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"aligned_pairs\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_logit_lupmf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/model-selection/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"x\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"alpha_linear\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"beta_linear\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"sigma_linear\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"alpha_quad\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"beta_quad\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"gamma_quad\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"sigma_quad\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"p_linear\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"posterior_linear_prob\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"exp\", \"log\", \"log1m\", \"log_sum_exp\", \"square\" ],\n  \"distributions\": [\n    \"beta_lupdf\", \"lognormal_lupdf\", \"normal_lpdf\", \"normal_lupdf\"\n  ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/monty-hall/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"prior_concentration\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"log_lik\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"state_prob\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"latent_state\": { \"type\": \"int\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/ncrp-hdp/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"D\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"V\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"doc\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"global_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"local_weight\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"atom\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"group_cluster\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/nested-crp/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"cluster_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"cluster_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"cluster\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/nested-guessing/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"A\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"chosen_action\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"beta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"action_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"softmax\" ],\n  \"distributions\": [ \"categorical_logit_lupmf\", \"lognormal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/network-analysis/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"theta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"expected_successes\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/neural-net/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"D\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"H\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"X\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"w1\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"b1\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"w2\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"b2\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"p\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [ \"inv_logit\", \"tanh\", \"to_vector\" ],\n  \"distributions\": [ \"bernoulli_logit_lupmf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/newton/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"X\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"beta\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"mu\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"functions\": [],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/noisy-logic/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"prior_concentration\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"log_lik\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"state_prob\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"latent_state\": { \"type\": \"int\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/overinf/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/pcfg/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"C\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"counts\": { \"type\": \"int\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"rule_prob\": { \"type\": \"real\", \"dimensions\": 2 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"sampled_rule\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/pdia/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"D\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"V\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"doc\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"global_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"local_weight\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"atom\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"group_cluster\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/pedagogy/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"H\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"likelihood\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"hypothesis_weight\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"posterior_hypothesis\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/plural-predication/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/politeness/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/prosody/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/py-ngram/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"D\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"V\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"doc\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"global_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"local_weight\": { \"type\": \"real\", \"dimensions\": 2 },\n    \"atom\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"group_cluster\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/pymem/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"K\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": {\n    \"cluster_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"cluster_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"cluster\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"bernoulli_lpmf\", \"beta_lupdf\", \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/rat-growth/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"T\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"time\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"mu_alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"mu_beta\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"sigma_alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"sigma_beta\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"sigma_y\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"alpha_raw\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"beta_raw\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"beta\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"generated quantities\": {},\n  \"functions\": [],\n  \"distributions\": [ \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/rational-rules/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"R\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"x\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"rule_pred\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"rule_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"map_rule\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\", \"lognormal_lupdf\", \"normal_lpdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/red-light/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"A\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"chosen_action\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"beta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"action_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"softmax\" ],\n  \"distributions\": [ \"categorical_logit_lupmf\", \"lognormal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/scalar-implicature/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/scalar-implicature-qud/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/schelling/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"A\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"chosen_action\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"beta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"action_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"softmax\" ],\n  \"distributions\": [ \"categorical_logit_lupmf\", \"lognormal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/schelling-falsebelief/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"A\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"chosen_action\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"beta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"action_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"softmax\" ],\n  \"distributions\": [ \"categorical_logit_lupmf\", \"lognormal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/scoring-rules/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"A\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"chosen_action\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"beta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"action_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"softmax\" ],\n  \"distributions\": [ \"categorical_logit_lupmf\", \"lognormal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/seismic-events/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"theta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"expected_successes\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/semantic-free-vars/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"y\": { \"type\": \"int\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"theta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"expected_successes\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"functions\": [],\n  \"distributions\": [ \"bernoulli_lupmf\", \"beta_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/simple-bn/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"prior_concentration\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"log_lik\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"state_prob\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"latent_state\": { \"type\": \"int\", \"dimensions\": 0 }\n  },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/social-and-direct-learning/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"H\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"likelihood\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"hypothesis_weight\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"posterior_hypothesis\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/social-meaning/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/spatialImplicature/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/spector-rsa/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"S\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"U\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"Q\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"observed_utterance\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"state_prior\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"qud_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"semantics\": { \"type\": \"int\", \"dimensions\": 2 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"alpha\": { \"type\": \"real\", \"dimensions\": 0 },\n    \"state_bias\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"listener_state\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [\n    \"log\", \"log_softmax\", \"log_sum_exp\", \"negative_infinity\", \"softmax\"\n  ],\n  \"distributions\": [ \"lognormal_lupdf\", \"normal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/syllogisms-cogsci14/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"H\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"likelihood\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"hypothesis_weight\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"posterior_hypothesis\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/symbolic-regression/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"R\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"x\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"y\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"rule_pred\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": {\n    \"rule_weight\": { \"type\": \"real\", \"dimensions\": 1 },\n    \"sigma\": { \"type\": \"real\", \"dimensions\": 0 }\n  },\n  \"transformed parameters\": {},\n  \"generated quantities\": { \"map_rule\": { \"type\": \"int\", \"dimensions\": 0 } },\n  \"functions\": [ \"categorical_rng\", \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\", \"lognormal_lupdf\", \"normal_lpdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/tictactoe/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"A\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"chosen_action\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"beta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"action_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"softmax\" ],\n  \"distributions\": [ \"categorical_logit_lupmf\", \"lognormal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/tug-of-war/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"A\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"chosen_action\": { \"type\": \"int\", \"dimensions\": 1 },\n    \"utility\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"parameters\": { \"beta\": { \"type\": \"real\", \"dimensions\": 0 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"action_prob\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"softmax\" ],\n  \"distributions\": [ \"categorical_logit_lupmf\", \"lognormal_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "model": "models/forestdb/word-learning/model.stan",
+      "ok": true,
+      "returncode": 0,
+      "stdout": "{\n  \"inputs\": {\n    \"H\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"N\": { \"type\": \"int\", \"dimensions\": 0 },\n    \"likelihood\": { \"type\": \"real\", \"dimensions\": 2 }\n  },\n  \"parameters\": { \"hypothesis_weight\": { \"type\": \"real\", \"dimensions\": 1 } },\n  \"transformed parameters\": {},\n  \"generated quantities\": {\n    \"posterior_hypothesis\": { \"type\": \"real\", \"dimensions\": 1 }\n  },\n  \"functions\": [ \"log\", \"log_sum_exp\", \"rep_vector\" ],\n  \"distributions\": [ \"dirichlet_lupdf\" ],\n  \"included_files\": []\n}\n",
+      "stderr": ""
+    }
+  ]
+}

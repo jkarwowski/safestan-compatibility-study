@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's reflectance illumination product.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Miscellaneous",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "cognitive science, vision",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/brightness-constancy.md",
+  "forestdb_source_slug": "brightness-constancy",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "brightness-constancy",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/brightness-constancy.html",
+  "stan_file": "model.stan",
+  "title": "Brightness Constancy",
+  "translation_archetype": "physics_regression",
+  "translation_note": "Normal Stan translation using the `physics_regression` archetype for reflectance illumination product; discrete choices are marginalized or represented with finite continuous relaxations."
+}

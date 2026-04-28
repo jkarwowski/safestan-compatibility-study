@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's nonparametric grammar expansion.",
+  "difficulty": "advanced",
+  "forestdb_model_category": "Nonparametric Models",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "language, pcfg",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/infinite-pcfg.md",
+  "forestdb_source_slug": "infinite-pcfg",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "infinite-pcfg",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/infinite-pcfg.html",
+  "stan_file": "model.stan",
+  "title": "Infinite Probabilistic Context-Free Grammar",
+  "translation_archetype": "pcfg",
+  "translation_note": "Normal Stan translation using the `pcfg` archetype for nonparametric grammar expansion; discrete choices are marginalized or represented with finite continuous relaxations."
+}

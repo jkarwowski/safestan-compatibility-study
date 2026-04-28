@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's Poisson change point detection.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Miscellaneous",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "poisson",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/event-detection.md",
+  "forestdb_source_slug": "event-detection",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "event-detection",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/event-detection.html",
+  "stan_file": "model.stan",
+  "title": "Event Detection",
+  "translation_archetype": "state_space",
+  "translation_note": "Normal Stan translation using the `state_space` archetype for Poisson change point detection; discrete choices are marginalized or represented with finite continuous relaxations."
+}

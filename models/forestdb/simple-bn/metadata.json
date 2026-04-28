@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's canonical Bayesian network motifs.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Miscellaneous",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "bayesnet, simple",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/simple-bn.md",
+  "forestdb_source_slug": "simple-bn",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "simple-bn",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/simple-bn.html",
+  "stan_file": "model.stan",
+  "title": "Simple Bayesian Networks",
+  "translation_archetype": "bayes_net",
+  "translation_note": "Normal Stan translation using the `bayes_net` archetype for canonical Bayesian network motifs; discrete choices are marginalized or represented with finite continuous relaxations."
+}

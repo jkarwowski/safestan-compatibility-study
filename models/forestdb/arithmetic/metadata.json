@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's induced arithmetic expression grammar.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Concept Learning",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "concepts, program induction",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/arithmetic.md",
+  "forestdb_source_slug": "arithmetic",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "arithmetic",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/arithmetic.html",
+  "stan_file": "model.stan",
+  "title": "Inducing Arithmetic Functions",
+  "translation_archetype": "pcfg",
+  "translation_note": "Normal Stan translation using the `pcfg` archetype for induced arithmetic expression grammar; discrete choices are marginalized or represented with finite continuous relaxations."
+}

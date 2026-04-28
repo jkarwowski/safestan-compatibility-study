@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's false-belief coordination game.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Reasoning about Reasoning",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "theory of mind, game theory",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/schelling-falsebelief.md",
+  "forestdb_source_slug": "schelling-falsebelief",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "schelling-falsebelief",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/schelling-falsebelief.html",
+  "stan_file": "model.stan",
+  "title": "Schelling Coordination Game with False Belief",
+  "translation_archetype": "game_softmax",
+  "translation_note": "Normal Stan translation using the `game_softmax` archetype for false-belief coordination game; discrete choices are marginalized or represented with finite continuous relaxations."
+}

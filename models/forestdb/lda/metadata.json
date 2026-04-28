@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's finite topic model.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Machine Learning",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "language, hierarchical models, shred, benchmark, machine learning",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/lda.md",
+  "forestdb_source_slug": "lda",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "lda",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/lda.html",
+  "stan_file": "model.stan",
+  "title": "Latent Dirichlet Allocation",
+  "translation_archetype": "lda",
+  "translation_note": "Normal Stan translation using the `lda` archetype for finite topic model; discrete choices are marginalized or represented with finite continuous relaxations."
+}

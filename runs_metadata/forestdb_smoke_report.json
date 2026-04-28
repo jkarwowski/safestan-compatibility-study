@@ -1,0 +1,31 @@
+{
+  "cmdstan": "/Users/jacski/safe_stan/cmdstan",
+  "chains": 1,
+  "iter_sampling": 5,
+  "iter_warmup": 5,
+  "models": [
+    {"model": "models/forestdb/arithmetic", "returncode": 0},
+    {"model": "models/forestdb/word-learning", "returncode": 0},
+    {"model": "models/forestdb/scoring-rules", "returncode": 0},
+    {"model": "models/forestdb/causal-support", "returncode": 0},
+    {"model": "models/forestdb/hierarchical-flu", "returncode": 0},
+    {"model": "models/forestdb/hmm-ising", "returncode": 0},
+    {"model": "models/forestdb/infinite-mixture", "returncode": 0},
+    {"model": "models/forestdb/hdp", "returncode": 0},
+    {"model": "models/forestdb/lda", "returncode": 0},
+    {"model": "models/forestdb/gp-classifier", "returncode": 0},
+    {"model": "models/forestdb/neural-net", "returncode": 0},
+    {"model": "models/forestdb/event-detection", "returncode": 0},
+    {"model": "models/forestdb/kalman-filter", "returncode": 0},
+    {"model": "models/forestdb/ising", "returncode": 0},
+    {"model": "models/forestdb/brightness-constancy", "returncode": 0},
+    {"model": "models/forestdb/curve-fitting", "returncode": 0},
+    {"model": "models/forestdb/birthday", "returncode": 0}
+  ],
+  "output_root": "/tmp/stan-collection-smoke",
+  "summary": {
+    "fail": 0,
+    "ok": 17,
+    "total": 17
+  }
+}

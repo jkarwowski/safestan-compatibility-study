@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's DP Dirichlet-multinomial clusters.",
+  "difficulty": "advanced",
+  "forestdb_model_category": "Nonparametric Models",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code-fail",
+  "forestdb_model_tags": "mem, nonparametrics, mixture",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/infinite-dm-mixture.md",
+  "forestdb_source_slug": "infinite-dm-mixture",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "infinite-dm-mixture",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/infinite-dm-mixture.html",
+  "stan_file": "model.stan",
+  "title": "Infinite Dirichlet-Multinomial Mixture",
+  "translation_archetype": "dp_truncation",
+  "translation_note": "Normal Stan translation using the `dp_truncation` archetype for DP Dirichlet-multinomial clusters; discrete choices are marginalized or represented with finite continuous relaxations."
+}

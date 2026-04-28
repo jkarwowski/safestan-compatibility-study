@@ -1,5 +1,67 @@
 # Medical Diagnosis
 
 - ForestDB source: [Medical Diagnosis](https://forestdb.org/models/medical-bayesnet.html)
-- Translation note: The binary disease state is marginalized analytically.
-- License note: this Stan translation was written for this regression suite from the linked ForestDB model description.
+- Original markdown: [medical-bayesnet.md](https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/medical-bayesnet.md)
+- Upstream repository: `forestdb/forestdb.org`, branch `gh-pages`, commit `e5ac903422815b645acbae784c2e5645ba55fe70`
+- ForestDB status: `code`
+- ForestDB category: `PPAML Challenge Problems`
+- Translation note: Existing curated Stan translation retained; original ForestDB markdown is archived in source.md.
+
+## Original ForestDB Markdown
+
+``````markdown
+---
+layout: model
+title: Medical Diagnosis
+model-status: code
+model-category: PPAML Challenge Problems
+model-tags: bayesnet, medicine
+model-language: church
+---
+
+    (define samples
+      (mh-query 
+       1000 10
+       
+       (define lung-cancer (flip 0.01))
+       (define TB (flip 0.005))
+       (define cold (flip 0.2))
+       (define stomach-flu (flip 0.1))
+       (define other (flip 0.1))
+       
+       (define cough 
+         (or (and cold (flip 0.5)) 
+             (and lung-cancer (flip 0.3)) 
+             (and TB (flip 0.7)) 
+             (and other (flip 0.01))))
+       
+       (define fever 
+         (or (and cold (flip 0.3)) 
+             (and stomach-flu (flip 0.5)) 
+             (and TB (flip 0.2)) 
+             (and other (flip 0.01))))
+       
+       (define chest-pain 
+         (or (and lung-cancer (flip 0.4)) 
+             (and TB (flip 0.5)) 
+             (and other( flip 0.01))))
+       
+       (define shortness-of-breath 
+         (or (and lung-cancer (flip 0.4)) 
+             (and TB (flip 0.5)) 
+             (and other (flip 0.01))))
+       
+       (list lung-cancer TB)
+       
+       (and cough fever chest-pain shortness-of-breath)))
+    
+    (hist samples)
+
+See also:
+
+- [Hierarchical Flu/Cough Bayesnet](/models/hierarchical-flu.html)
+
+References:
+
+- Cite:ProbMods
+``````

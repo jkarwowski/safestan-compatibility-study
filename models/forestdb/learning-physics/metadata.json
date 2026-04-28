@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's learned physical theory dynamics.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Inverse Dynamics",
+  "forestdb_model_language": "",
+  "forestdb_model_status": "link",
+  "forestdb_model_tags": "dynamics",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/learning-physics.md",
+  "forestdb_source_slug": "learning-physics",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "learning-physics",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/learning-physics.html",
+  "stan_file": "model.stan",
+  "title": "Learning Physics from Dynamical Scenes",
+  "translation_archetype": "physics_regression",
+  "translation_note": "Normal Stan translation using the `physics_regression` archetype for learned physical theory dynamics; discrete choices are marginalized or represented with finite continuous relaxations."
+}

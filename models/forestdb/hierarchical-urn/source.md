@@ -1,0 +1,66 @@
+# Hierarchical Urn Model
+
+- ForestDB source: [Hierarchical Urn Model](https://forestdb.org/models/hierarchical-urn.html)
+- Original markdown: [hierarchical-urn.md](https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/hierarchical-urn.md)
+- Upstream repository: `forestdb/forestdb.org`, branch `gh-pages`, commit `e5ac903422815b645acbae784c2e5645ba55fe70`
+- ForestDB status: `code`
+- ForestDB category: `Miscellaneous`
+- Translation note: Normal Stan translation using the `beta_bernoulli` archetype for hierarchical beta urn proportions; discrete choices are marginalized or represented with finite continuous relaxations.
+
+## Original ForestDB Markdown
+
+``````markdown
+---
+layout: model
+title: Hierarchical Urn Model
+model-status: code
+model-category: Miscellaneous
+model-tags: hierarchical models
+model-language: church
+---
+
+This model first samples a bias, splits the bias into red and
+black, and then defines how the urns' proportions of red balls
+depend on the biases.
+
+    ;;;fold: factor-equal?
+    (define (factor-eq x y)
+      (factor (if (equal? x y) 0.0 -1000))
+      #t)
+          
+    (define (factor-equal? xs ys)
+      (if (and (null? xs) (null? ys))
+          #t
+          (and (factor-eq (first xs) (first ys))
+               (factor-equal? (rest xs) (rest ys)))))
+    ;;;
+    (define samples
+      (mh-query 3000 10
+                
+                ;; model
+                (define bias (uniform 0 10))
+                (define red-bias (uniform 0 bias))
+                (define black-bias (- bias red-bias))
+                (define urn->proportion-red
+                  (mem
+                   (lambda (urn)
+                     (beta (+ .4 red-bias) (+ .4 black-bias)))))
+                (define (sample-urn urn)
+                  (if (flip (urn->proportion-red urn))
+                      'red
+                      'black))
+                
+                ;; query expression
+                (urn->proportion-red 3)
+                
+                ;; condition
+                (factor-equal? (repeat 15 (lambda () (sample-urn 1)))
+                               '(red red red red red red red red
+                                     red red red red red red black))))
+    
+    (density samples "Proportion of red balls in urn 3" true)
+
+References:
+
+- Cite:Stuhlmueller2013aa
+``````

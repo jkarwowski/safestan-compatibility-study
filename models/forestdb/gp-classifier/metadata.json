@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's Gaussian-process binary classification.",
+  "difficulty": "advanced",
+  "forestdb_model_category": "Nonparametric Models",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "gp, nonparametrics, classifier",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/gp-classifier.md",
+  "forestdb_source_slug": "gp-classifier",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "gp-classifier",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/gp-classifier.html",
+  "stan_file": "model.stan",
+  "title": "Gaussian Process Classifier",
+  "translation_archetype": "gp_classifier",
+  "translation_note": "Normal Stan translation using the `gp_classifier` archetype for Gaussian-process binary classification; discrete choices are marginalized or represented with finite continuous relaxations."
+}

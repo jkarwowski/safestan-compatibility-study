@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's shared flu probability.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Miscellaneous",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "hierarchical, medicine, mem",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/hierarchical-flu.md",
+  "forestdb_source_slug": "hierarchical-flu",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "hierarchical-flu",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/hierarchical-flu.html",
+  "stan_file": "model.stan",
+  "title": "Hierarchical Flu/Cough Model",
+  "translation_archetype": "beta_bernoulli",
+  "translation_note": "Normal Stan translation using the `beta_bernoulli` archetype for shared flu probability; discrete choices are marginalized or represented with finite continuous relaxations."
+}

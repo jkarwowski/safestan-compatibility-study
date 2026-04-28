@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's stochastic Boolean gates.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Miscellaneous",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "logic, library",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/noisy-logic.md",
+  "forestdb_source_slug": "noisy-logic",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "noisy-logic",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/noisy-logic.html",
+  "stan_file": "model.stan",
+  "title": "Noisy Logic",
+  "translation_archetype": "bayes_net",
+  "translation_note": "Normal Stan translation using the `bayes_net` archetype for stochastic Boolean gates; discrete choices are marginalized or represented with finite continuous relaxations."
+}

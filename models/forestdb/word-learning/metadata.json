@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's hierarchical label category inference.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Concept Learning",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "concepts",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/word-learning.md",
+  "forestdb_source_slug": "word-learning",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "word-learning",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/word-learning.html",
+  "stan_file": "model.stan",
+  "title": "Word Learning as Bayesian Inference",
+  "translation_archetype": "categorical_reasoning",
+  "translation_note": "Normal Stan translation using the `categorical_reasoning` archetype for hierarchical label category inference; discrete choices are marginalized or represented with finite continuous relaxations."
+}

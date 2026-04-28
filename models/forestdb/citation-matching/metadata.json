@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's DP entity resolution model.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Machine Learning",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "shred, benchmark",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/citation-matching.md",
+  "forestdb_source_slug": "citation-matching",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "citation-matching",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/citation-matching.html",
+  "stan_file": "model.stan",
+  "title": "Citation Matching",
+  "translation_archetype": "dp_truncation",
+  "translation_note": "Normal Stan translation using the `dp_truncation` archetype for DP entity resolution model; discrete choices are marginalized or represented with finite continuous relaxations."
+}

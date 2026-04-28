@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's Bayesian neural network.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Machine Learning",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "neural net, continuous",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/neural-net.md",
+  "forestdb_source_slug": "neural-net",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "neural-net",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/neural-net.html",
+  "stan_file": "model.stan",
+  "title": "Bayesian Neural Network",
+  "translation_archetype": "neural_net",
+  "translation_note": "Normal Stan translation using the `neural_net` archetype for Bayesian neural network; discrete choices are marginalized or represented with finite continuous relaxations."
+}

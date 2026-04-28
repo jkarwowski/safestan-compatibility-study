@@ -1,0 +1,48 @@
+# Pitman-Yor Process
+
+- ForestDB source: [Pitman-Yor Process](https://forestdb.org/models/pymem.html)
+- Original markdown: [pymem.md](https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/pymem.md)
+- Upstream repository: `forestdb/forestdb.org`, branch `gh-pages`, commit `e5ac903422815b645acbae784c2e5645ba55fe70`
+- ForestDB status: `code-fail`
+- ForestDB category: `Nonparametric Models`
+- Translation note: Normal Stan translation using the `dp_truncation` archetype for Pitman-Yor memoized process; discrete choices are marginalized or represented with finite continuous relaxations.
+
+## Original ForestDB Markdown
+
+``````markdown
+---
+layout: model
+title: Pitman-Yor Process
+model-status: code-fail
+model-status-verbose: Doesn't halt with probability 1?
+model-category: Nonparametric Models
+model-tags: dp, nonparametrics
+model-language: church
+---
+
+    (define (pick-a-stick sticks J)
+      (if (flip (sticks J))
+          J
+          (pick-a-stick sticks (+ J 1))))
+    
+    (define (make-PYP a b)
+      (let ((sticks (mem (lambda (x) (beta (- 1.0 a) (+ b (* a x)))))))
+        (lambda () (pick-a-stick sticks 1))))
+    
+    (define (PYmem a b proc)
+      (let ((augmented-proc (mem (lambda (args part) (apply proc args))))
+            (crps (mem (lambda (args) (make-PYP a b)))))
+        (lambda argsin (augmented-proc argsin ((crps argsin))))))
+    
+    (define PY-gaussian (PYmem 0.5 1.0 gaussian))
+    
+    (hist (repeat 1000 (lambda () (PY-gaussian 0.0 1.0))) "PY-gaussian")
+
+See also:
+
+- [Dirichlet Process](/models/dpmem.html)
+
+References:
+
+- Cite:Goodman2008uq
+``````

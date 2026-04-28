@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's incremental referring expression production.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Reasoning about Reasoning",
+  "forestdb_model_language": "webppl",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "language, pragmatics, reference, incrementality",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/incremental.md",
+  "forestdb_source_slug": "incremental",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "incremental",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/incremental.html",
+  "stan_file": "model.stan",
+  "title": "Incremental pragmatics",
+  "translation_archetype": "rsa_listener",
+  "translation_note": "Normal Stan translation using the `rsa_listener` archetype for incremental referring expression production; discrete choices are marginalized or represented with finite continuous relaxations."
+}

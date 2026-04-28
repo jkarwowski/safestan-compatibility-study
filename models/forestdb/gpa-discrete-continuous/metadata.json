@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's mixed GPA origin classifier.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Miscellaneous",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "discrete, continuous",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/gpa-discrete-continuous.md",
+  "forestdb_source_slug": "gpa-discrete-continuous",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "gpa-discrete-continuous",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/gpa-discrete-continuous.html",
+  "stan_file": "model.stan",
+  "title": "Grade Inflation",
+  "translation_archetype": "gaussian_mixture",
+  "translation_note": "Normal Stan translation using the `gaussian_mixture` archetype for mixed GPA origin classifier; discrete choices are marginalized or represented with finite continuous relaxations."
+}

@@ -1,0 +1,936 @@
+{
+  "by_category": {
+    "Bayesian Data Analysis": 2,
+    "Concept Learning": 6,
+    "Inverse Dynamics": 4,
+    "Machine Learning": 7,
+    "Miscellaneous": 26,
+    "Nonparametric Models": 15,
+    "PPAML Challenge Problems": 8,
+    "Reasoning about Reasoning": 30,
+    "Undirected Constraints": 3
+  },
+  "by_status": {
+    "code": 81,
+    "code-fail": 12,
+    "link": 2,
+    "stub": 6
+  },
+  "generated_translations": 86,
+  "models": [
+    {
+      "archetype": "bayes_net",
+      "category": "Concept Learning",
+      "forestdb_slug": "causal-support",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/causal-support",
+      "title": "Causal Support"
+    },
+    {
+      "archetype": "pcfg",
+      "category": "Concept Learning",
+      "forestdb_slug": "arithmetic",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/arithmetic",
+      "title": "Inducing Arithmetic Functions"
+    },
+    {
+      "archetype": "rule_learning",
+      "category": "Concept Learning",
+      "forestdb_slug": "rational-rules",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/rational-rules",
+      "title": "Rational Rules"
+    },
+    {
+      "archetype": "categorical_reasoning",
+      "category": "Concept Learning",
+      "forestdb_slug": "word-learning",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/word-learning",
+      "title": "Word Learning as Bayesian Inference"
+    },
+    {
+      "archetype": "metadata_only",
+      "category": "Concept Learning",
+      "forestdb_slug": "bn-structure",
+      "preserved_curated_translation": false,
+      "status": "stub",
+      "target": "models/forestdb/bn-structure",
+      "title": "Bayes Net Structure Learning"
+    },
+    {
+      "archetype": "metadata_only",
+      "category": "Concept Learning",
+      "forestdb_slug": "little-trees",
+      "preserved_curated_translation": false,
+      "status": "stub",
+      "target": "models/forestdb/little-trees",
+      "title": "Little Trees"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "adjectives",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/adjectives",
+      "title": "Adjectives"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "blm",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/blm",
+      "title": "Black Lives Matter"
+    },
+    {
+      "archetype": "game_softmax",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "islanders",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/islanders",
+      "title": "Blue-eyed Islanders"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "ellipsis",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/ellipsis",
+      "title": "Ellipsis"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "exhaustivity",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/exhaustivity",
+      "title": "Exhaustivity"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "generics",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/generics",
+      "title": "Generics"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "spector-rsa",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/spector-rsa",
+      "title": "Homogeneity in Plural Definites"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "hyperbole",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/hyperbole",
+      "title": "Hyperbole"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "hyperbolicmetaphor",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/hyperbolicmetaphor",
+      "title": "Hyperbolic metaphor"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "incremental",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/incremental",
+      "title": "Incremental pragmatics"
+    },
+    {
+      "archetype": "categorical_reasoning",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "inferring-teachers-skill",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/inferring-teachers-skill",
+      "title": "Inferring Pedagogical Skill"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "intensifiers",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/intensifiers",
+      "title": "Intensifiers"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "irony",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/irony",
+      "title": "Irony"
+    },
+    {
+      "archetype": "categorical_reasoning",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "social-and-direct-learning",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/social-and-direct-learning",
+      "title": "Learning from Social and Direct Evidence"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "metaphor",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/metaphor",
+      "title": "Metaphor"
+    },
+    {
+      "archetype": "game_softmax",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "nested-guessing",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/nested-guessing",
+      "title": "Nested Number Guessing"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "overinf",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/overinf",
+      "title": "Overinformativeness"
+    },
+    {
+      "archetype": "categorical_reasoning",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "pedagogy",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/pedagogy",
+      "title": "Pedagogy"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "plural-predication",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/plural-predication",
+      "title": "Plural Predication"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "politeness",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/politeness",
+      "title": "Politeness"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "scalar-implicature",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/scalar-implicature",
+      "title": "Scalar Implicature"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "scalar-implicature-qud",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/scalar-implicature-qud",
+      "title": "Scalar Implicature with Varying QUD"
+    },
+    {
+      "archetype": "game_softmax",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "schelling",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/schelling",
+      "title": "Schelling Coordination Game"
+    },
+    {
+      "archetype": "game_softmax",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "schelling-falsebelief",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/schelling-falsebelief",
+      "title": "Schelling Coordination Game with False Belief"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "social-meaning",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/social-meaning",
+      "title": "Social meaning"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "spatialImplicature",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/spatialImplicature",
+      "title": "Spatial Implicature"
+    },
+    {
+      "archetype": "categorical_reasoning",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "syllogisms-cogsci14",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/syllogisms-cogsci14",
+      "title": "Syllogisms"
+    },
+    {
+      "archetype": "game_softmax",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "tictactoe",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/tictactoe",
+      "title": "Tic-Tac-Toe"
+    },
+    {
+      "archetype": "rsa_listener",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "prosody",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/prosody",
+      "title": "Prosody"
+    },
+    {
+      "archetype": "metadata_only",
+      "category": "Reasoning about Reasoning",
+      "forestdb_slug": "semantic-free-vars",
+      "preserved_curated_translation": false,
+      "status": "stub",
+      "target": "models/forestdb/semantic-free-vars",
+      "title": "Pragmatics with Semantic Free Variables"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Machine Learning",
+      "forestdb_slug": "logistic-regression",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/logistic-regression",
+      "title": "Bayesian Logistic Regression"
+    },
+    {
+      "archetype": "neural_net",
+      "category": "Machine Learning",
+      "forestdb_slug": "neural-net",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/neural-net",
+      "title": "Bayesian Neural Network"
+    },
+    {
+      "archetype": "dp_truncation",
+      "category": "Machine Learning",
+      "forestdb_slug": "citation-matching",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/citation-matching",
+      "title": "Citation Matching"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Machine Learning",
+      "forestdb_slug": "finite-mixture",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/finite-mixture",
+      "title": "Finite Mixture Model"
+    },
+    {
+      "archetype": "dp_truncation",
+      "category": "Machine Learning",
+      "forestdb_slug": "infinite-mixture",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/infinite-mixture",
+      "title": "Infinite Mixture Model"
+    },
+    {
+      "archetype": "lda",
+      "category": "Machine Learning",
+      "forestdb_slug": "lda",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/lda",
+      "title": "Latent Dirichlet Allocation"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Machine Learning",
+      "forestdb_slug": "markov",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/markov-model",
+      "title": "Markov Model"
+    },
+    {
+      "archetype": "dp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "crosscat",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/crosscat",
+      "title": "CrossCat"
+    },
+    {
+      "archetype": "dp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "dpmem",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/dpmem",
+      "title": "Dirichlet Process"
+    },
+    {
+      "archetype": "gp_classifier",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "gp-classifier",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/gp-classifier",
+      "title": "Gaussian Process Classifier"
+    },
+    {
+      "archetype": "hdp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "hdp",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/hdp",
+      "title": "Hierarchical Dirichlet Process"
+    },
+    {
+      "archetype": "gaussian_mixture",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "infinite-gaussian-mixture",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/infinite-gaussian-mixture",
+      "title": "Infinite Gaussian Mixture"
+    },
+    {
+      "archetype": "hdp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "infinite-hmm",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/infinite-hmm",
+      "title": "Infinite Hidden Markov Model"
+    },
+    {
+      "archetype": "pcfg",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "infinite-pcfg",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/infinite-pcfg",
+      "title": "Infinite Probabilistic Context-Free Grammar"
+    },
+    {
+      "archetype": "dp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "irm",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/irm",
+      "title": "Infinite Relational Model"
+    },
+    {
+      "archetype": "dp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "nested-crp",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/nested-crp",
+      "title": "Nested Chinese Restaurant Process"
+    },
+    {
+      "archetype": "hdp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "ncrp-hdp",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/ncrp-hdp",
+      "title": "Nested CRP + HDP"
+    },
+    {
+      "archetype": "hdp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "pdia",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/pdia",
+      "title": "Probabilistic Deterministic Infinite Automata"
+    },
+    {
+      "archetype": "dp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "ibp",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/ibp",
+      "title": "Indian Buffet Process"
+    },
+    {
+      "archetype": "dp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "infinite-dm-mixture",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/infinite-dm-mixture",
+      "title": "Infinite Dirichlet-Multinomial Mixture"
+    },
+    {
+      "archetype": "hdp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "py-ngram",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/py-ngram",
+      "title": "Pitman-Yor N-Gram"
+    },
+    {
+      "archetype": "dp_truncation",
+      "category": "Nonparametric Models",
+      "forestdb_slug": "pymem",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/pymem",
+      "title": "Pitman-Yor Process"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Bayesian Data Analysis",
+      "forestdb_slug": "binomial-inference",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/binomial-inference",
+      "title": "Inferences with Binomials"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Bayesian Data Analysis",
+      "forestdb_slug": "gaussian-inference",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/gaussian-inference",
+      "title": "Inferences with Gaussians"
+    },
+    {
+      "archetype": "ising",
+      "category": "Undirected Constraints",
+      "forestdb_slug": "ising",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/ising",
+      "title": "1D Ising"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Undirected Constraints",
+      "forestdb_slug": "rat-growth",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/rat-growth",
+      "title": "Rat Growth"
+    },
+    {
+      "archetype": "hmm",
+      "category": "Undirected Constraints",
+      "forestdb_slug": "hmm-ising",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/hmm-ising",
+      "title": "HMM-Ising"
+    },
+    {
+      "archetype": "physics_regression",
+      "category": "Inverse Dynamics",
+      "forestdb_slug": "inverse-physics",
+      "preserved_curated_translation": false,
+      "status": "link",
+      "target": "models/forestdb/inverse-physics",
+      "title": "Inverse Physics"
+    },
+    {
+      "archetype": "physics_regression",
+      "category": "Inverse Dynamics",
+      "forestdb_slug": "learning-physics",
+      "preserved_curated_translation": false,
+      "status": "link",
+      "target": "models/forestdb/learning-physics",
+      "title": "Learning Physics from Dynamical Scenes"
+    },
+    {
+      "archetype": "physics_regression",
+      "category": "Inverse Dynamics",
+      "forestdb_slug": "inverse-statics",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/inverse-statics",
+      "title": "Inverse Statics"
+    },
+    {
+      "archetype": "physics_regression",
+      "category": "Inverse Dynamics",
+      "forestdb_slug": "newton",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/newton",
+      "title": "Newtonian Dynamics"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "PPAML Challenge Problems",
+      "forestdb_slug": "linear-regression",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/linear-regression",
+      "title": "Bayesian Linear Regression"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "PPAML Challenge Problems",
+      "forestdb_slug": "hmm",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/hidden-markov-model",
+      "title": "Discrete-Time Hidden Markov Model"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "PPAML Challenge Problems",
+      "forestdb_slug": "medical-bayesnet",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/medical-diagnosis",
+      "title": "Medical Diagnosis"
+    },
+    {
+      "archetype": "pcfg",
+      "category": "PPAML Challenge Problems",
+      "forestdb_slug": "pcfg",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/pcfg",
+      "title": "Probabilistic Context-Free Grammar"
+    },
+    {
+      "archetype": "hdp_truncation",
+      "category": "PPAML Challenge Problems",
+      "forestdb_slug": "hdp-lda",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/hdp-lda",
+      "title": "Latent Dirichlet Allocation with Hierarchical Dirichlet Prior"
+    },
+    {
+      "archetype": "metadata_only",
+      "category": "PPAML Challenge Problems",
+      "forestdb_slug": "genetic-linkage",
+      "preserved_curated_translation": false,
+      "status": "stub",
+      "target": "models/forestdb/genetic-linkage",
+      "title": "Genetic Linkage Analysis"
+    },
+    {
+      "archetype": "metadata_only",
+      "category": "PPAML Challenge Problems",
+      "forestdb_slug": "network-analysis",
+      "preserved_curated_translation": false,
+      "status": "stub",
+      "target": "models/forestdb/network-analysis",
+      "title": "Network Analysis"
+    },
+    {
+      "archetype": "metadata_only",
+      "category": "PPAML Challenge Problems",
+      "forestdb_slug": "seismic-events",
+      "preserved_curated_translation": false,
+      "status": "stub",
+      "target": "models/forestdb/seismic-events",
+      "title": "Seismic Event Detection"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Miscellaneous",
+      "forestdb_slug": "gaussian-gamma",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/gaussian-gamma",
+      "title": "1D Gaussian with Gaussian/Gamma Hyperparameters"
+    },
+    {
+      "archetype": "beta_bernoulli",
+      "category": "Miscellaneous",
+      "forestdb_slug": "costello-watts-2014",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/costello-watts-2014",
+      "title": "Biases from Noise"
+    },
+    {
+      "archetype": "metadata_only",
+      "category": "Miscellaneous",
+      "forestdb_slug": "birthday",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/birthday",
+      "title": "Birthday Problem"
+    },
+    {
+      "archetype": "bayes_net",
+      "category": "Miscellaneous",
+      "forestdb_slug": "blame",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/blame",
+      "title": "Blame Attribution"
+    },
+    {
+      "archetype": "physics_regression",
+      "category": "Miscellaneous",
+      "forestdb_slug": "brightness-constancy",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/brightness-constancy",
+      "title": "Brightness Constancy"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Miscellaneous",
+      "forestdb_slug": "burglary",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/burglary-bayesnet",
+      "title": "Burglary Bayesnet"
+    },
+    {
+      "archetype": "state_space",
+      "category": "Miscellaneous",
+      "forestdb_slug": "event-detection",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/event-detection",
+      "title": "Event Detection"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Miscellaneous",
+      "forestdb_slug": "dm-mixture",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/dirichlet-multinomial-mixture",
+      "title": "Finite Dirichlet-Multinomial Mixture"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Miscellaneous",
+      "forestdb_slug": "finite-gaussian-mixture",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/finite-gaussian-mixture",
+      "title": "Finite Gaussian Mixture"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Miscellaneous",
+      "forestdb_slug": "geometric",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/geometric-distribution",
+      "title": "Geometric Distribution"
+    },
+    {
+      "archetype": "gaussian_mixture",
+      "category": "Miscellaneous",
+      "forestdb_slug": "gpa-discrete-continuous",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/gpa-discrete-continuous",
+      "title": "Grade Inflation"
+    },
+    {
+      "archetype": "beta_bernoulli",
+      "category": "Miscellaneous",
+      "forestdb_slug": "hierarchical-flu",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/hierarchical-flu",
+      "title": "Hierarchical Flu/Cough Model"
+    },
+    {
+      "archetype": "beta_bernoulli",
+      "category": "Miscellaneous",
+      "forestdb_slug": "hierarchical-urn",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/hierarchical-urn",
+      "title": "Hierarchical Urn Model"
+    },
+    {
+      "archetype": "ising",
+      "category": "Miscellaneous",
+      "forestdb_slug": "mln",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/mln",
+      "title": "Markov Logic Network"
+    },
+    {
+      "archetype": "metadata_only",
+      "category": "Miscellaneous",
+      "forestdb_slug": "marsaglia",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/marsaglia",
+      "title": "Marsaglia"
+    },
+    {
+      "archetype": "curated_existing",
+      "category": "Miscellaneous",
+      "forestdb_slug": "model-selection",
+      "preserved_curated_translation": true,
+      "status": "code",
+      "target": "models/forestdb/model-selection",
+      "title": "Model Selection"
+    },
+    {
+      "archetype": "bayes_net",
+      "category": "Miscellaneous",
+      "forestdb_slug": "monty-hall",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/monty-hall",
+      "title": "Monty Hall Problem"
+    },
+    {
+      "archetype": "bayes_net",
+      "category": "Miscellaneous",
+      "forestdb_slug": "noisy-logic",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/noisy-logic",
+      "title": "Noisy Logic"
+    },
+    {
+      "archetype": "game_softmax",
+      "category": "Miscellaneous",
+      "forestdb_slug": "red-light",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/red-light",
+      "title": "Red-light Game"
+    },
+    {
+      "archetype": "game_softmax",
+      "category": "Miscellaneous",
+      "forestdb_slug": "scoring-rules",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/scoring-rules",
+      "title": "Scoring Rules"
+    },
+    {
+      "archetype": "bayes_net",
+      "category": "Miscellaneous",
+      "forestdb_slug": "simple-bn",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/simple-bn",
+      "title": "Simple Bayesian Networks"
+    },
+    {
+      "archetype": "rule_learning",
+      "category": "Miscellaneous",
+      "forestdb_slug": "symbolic-regression",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/symbolic-regression",
+      "title": "Symbolic Regression"
+    },
+    {
+      "archetype": "game_softmax",
+      "category": "Miscellaneous",
+      "forestdb_slug": "tug-of-war",
+      "preserved_curated_translation": false,
+      "status": "code",
+      "target": "models/forestdb/tug-of-war",
+      "title": "Tug of War"
+    },
+    {
+      "archetype": "rule_learning",
+      "category": "Miscellaneous",
+      "forestdb_slug": "curve-fitting",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/curve-fitting",
+      "title": "Curve Fitting"
+    },
+    {
+      "archetype": "kalman_filter",
+      "category": "Miscellaneous",
+      "forestdb_slug": "kalman-filter",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/kalman-filter",
+      "title": "Kalman Filter"
+    },
+    {
+      "archetype": "physics_regression",
+      "category": "Miscellaneous",
+      "forestdb_slug": "layout",
+      "preserved_curated_translation": false,
+      "status": "code-fail",
+      "target": "models/forestdb/layout",
+      "title": "Layout of Tables and Plates"
+    }
+  ],
+  "preserved_curated_translations": 15,
+  "source_branch": "gh-pages",
+  "source_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "source_repo": "https://github.com/forestdb/forestdb.org.git",
+  "total_front_page_models": 101
+}

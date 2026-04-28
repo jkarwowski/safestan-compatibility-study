@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's goal-conditioned planning rollout.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Miscellaneous",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "planning",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/red-light.md",
+  "forestdb_source_slug": "red-light",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "red-light",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/red-light.html",
+  "stan_file": "model.stan",
+  "title": "Red-light Game",
+  "translation_archetype": "game_softmax",
+  "translation_note": "Normal Stan translation using the `game_softmax` archetype for goal-conditioned planning rollout; discrete choices are marginalized or represented with finite continuous relaxations."
+}

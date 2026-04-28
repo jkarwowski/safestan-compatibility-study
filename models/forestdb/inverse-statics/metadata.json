@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's static beam equilibrium inference.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Inverse Dynamics",
+  "forestdb_model_language": "terra",
+  "forestdb_model_status": "code-fail",
+  "forestdb_model_tags": "statics",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/inverse-statics.md",
+  "forestdb_source_slug": "inverse-statics",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "inverse-statics",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/inverse-statics.html",
+  "stan_file": "model.stan",
+  "title": "Inverse Statics",
+  "translation_archetype": "physics_regression",
+  "translation_note": "Normal Stan translation using the `physics_regression` archetype for static beam equilibrium inference; discrete choices are marginalized or represented with finite continuous relaxations."
+}

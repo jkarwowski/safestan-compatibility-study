@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's soft geometric placement constraints.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Miscellaneous",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code-fail",
+  "forestdb_model_tags": "layout, constraints",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/layout.md",
+  "forestdb_source_slug": "layout",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "layout",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/layout.html",
+  "stan_file": "model.stan",
+  "title": "Layout of Tables and Plates",
+  "translation_archetype": "physics_regression",
+  "translation_note": "Normal Stan translation using the `physics_regression` archetype for soft geometric placement constraints; discrete choices are marginalized or represented with finite continuous relaxations."
+}

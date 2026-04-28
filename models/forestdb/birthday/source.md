@@ -1,0 +1,50 @@
+# Birthday Problem
+
+- ForestDB source: [Birthday Problem](https://forestdb.org/models/birthday.html)
+- Original markdown: [birthday.md](https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/birthday.md)
+- Upstream repository: `forestdb/forestdb.org`, branch `gh-pages`, commit `e5ac903422815b645acbae784c2e5645ba55fe70`
+- ForestDB status: `code`
+- ForestDB category: `Miscellaneous`
+- Translation note: ForestDB entry has no runnable probabilistic program or is a generator-only example; represented as a small estimable Stan model with the original source archived.
+
+## Original ForestDB Markdown
+
+``````markdown
+---
+layout: model
+title: Birthday Problem
+model-status: code
+model-category: Miscellaneous
+model-tags: toy
+model-language: church
+---
+
+What is the probability that in a room filled with 23 people, at least one pair of people has the same birthday?
+
+    (define N 23)
+    
+    (define (two-birthdays-match?)
+      (rejection-query
+       
+       (define birthday 
+         (mem (lambda (i) (+ (sample-integer 365) 1))))
+       
+       (define (pair-equal i j)
+         (if (> i N) 
+             false
+             (if (> j N)
+                 (pair-equal (+ i 1) (+ i 2))
+                 (if (= (birthday i) (birthday j)) 
+                     true
+                     (pair-equal i (+ j 1))))))
+       
+       (pair-equal 1 2)
+       
+       #t))
+    
+    (hist (repeat 1000 two-birthdays-match?))
+    
+References:
+
+- [Birthday problem in Anglican](http://www.robots.ox.ac.uk/~fwood/anglican/examples/birthday/)
+``````

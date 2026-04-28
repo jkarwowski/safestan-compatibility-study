@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's learning from social evidence.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Reasoning about Reasoning",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "social reasoning, ToM",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/social-and-direct-learning.md",
+  "forestdb_source_slug": "social-and-direct-learning",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "social-and-direct-learning",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/social-and-direct-learning.html",
+  "stan_file": "model.stan",
+  "title": "Learning from Social and Direct Evidence",
+  "translation_archetype": "categorical_reasoning",
+  "translation_note": "Normal Stan translation using the `categorical_reasoning` archetype for learning from social evidence; discrete choices are marginalized or represented with finite continuous relaxations."
+}

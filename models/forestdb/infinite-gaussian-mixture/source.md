@@ -1,0 +1,45 @@
+# Infinite Gaussian Mixture
+
+- ForestDB source: [Infinite Gaussian Mixture](https://forestdb.org/models/infinite-gaussian-mixture.html)
+- Original markdown: [infinite-gaussian-mixture.md](https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/infinite-gaussian-mixture.md)
+- Upstream repository: `forestdb/forestdb.org`, branch `gh-pages`, commit `e5ac903422815b645acbae784c2e5645ba55fe70`
+- ForestDB status: `code`
+- ForestDB category: `Nonparametric Models`
+- Translation note: Normal Stan translation using the `gaussian_mixture` archetype for DP Gaussian mixture model; discrete choices are marginalized or represented with finite continuous relaxations.
+
+## Original ForestDB Markdown
+
+``````markdown
+---
+layout: model
+title: Infinite Gaussian Mixture
+model-status: code
+model-category: Nonparametric Models
+model-tags: mem, nonparametrics, mixture, gaussian
+model-language: church
+---
+
+Using [DPmem](/models/dpmem.html), we can create an infinite mixture model with arbitrary observation distributions. In the following model, the observation function is Gaussian:
+
+    (define class-distribution (DPmem 1.0 gensym))
+    
+    (define object->class
+      (mem (lambda (object) (class-distribution))))
+    
+    (define class->gaussian-parameters
+      (mem (lambda (c) (list  (gaussian 65 10) (uniform 0 8)))))
+    
+    (define (observe object)
+      (apply gaussian (class->gaussian-parameters (object->class object))))
+    
+    (map observe '(tom dick harry bill fred))
+
+See also:
+
+- [Finite Gaussian Mixture](/models/finite-gaussian-mixture.html)
+
+References:
+
+- Cite:Rasmussen1999infinite
+- Cite:ProbMods
+``````

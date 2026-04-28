@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's DP Gaussian mixture model.",
+  "difficulty": "advanced",
+  "forestdb_model_category": "Nonparametric Models",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "mem, nonparametrics, mixture, gaussian",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/infinite-gaussian-mixture.md",
+  "forestdb_source_slug": "infinite-gaussian-mixture",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "infinite-gaussian-mixture",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/infinite-gaussian-mixture.html",
+  "stan_file": "model.stan",
+  "title": "Infinite Gaussian Mixture",
+  "translation_archetype": "gaussian_mixture",
+  "translation_note": "Normal Stan translation using the `gaussian_mixture` archetype for DP Gaussian mixture model; discrete choices are marginalized or represented with finite continuous relaxations."
+}

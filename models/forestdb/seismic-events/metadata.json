@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's seismic benchmark stub only.",
+  "difficulty": "medium",
+  "forestdb_model_category": "PPAML Challenge Problems",
+  "forestdb_model_language": "",
+  "forestdb_model_status": "stub",
+  "forestdb_model_tags": "blog, benchmark",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/seismic-events.md",
+  "forestdb_source_slug": "seismic-events",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "seismic-events",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/seismic-events.html",
+  "stan_file": "model.stan",
+  "title": "Seismic Event Detection",
+  "translation_archetype": "metadata_only",
+  "translation_note": "ForestDB entry has no runnable probabilistic program or is a generator-only example; represented as a small estimable Stan model with the original source archived."
+}

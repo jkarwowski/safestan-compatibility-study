@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's HDP topic model sketch.",
+  "difficulty": "advanced",
+  "forestdb_model_category": "PPAML Challenge Problems",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code-fail",
+  "forestdb_model_tags": "benchmark, shred, machine learning",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/hdp-lda.md",
+  "forestdb_source_slug": "hdp-lda",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "hdp-lda",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/hdp-lda.html",
+  "stan_file": "model.stan",
+  "title": "Latent Dirichlet Allocation with Hierarchical Dirichlet Prior",
+  "translation_archetype": "hdp_truncation",
+  "translation_note": "Normal Stan translation using the `hdp_truncation` archetype for HDP topic model sketch; discrete choices are marginalized or represented with finite continuous relaxations."
+}

@@ -1,5 +1,67 @@
 # Model Selection
 
 - ForestDB source: [Model Selection](https://forestdb.org/models/model-selection.html)
-- Translation note: The discrete model indicator is marginalized over the whole data set.
-- License note: this Stan translation was written for this regression suite from the linked ForestDB model description.
+- Original markdown: [model-selection.md](https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/model-selection.md)
+- Upstream repository: `forestdb/forestdb.org`, branch `gh-pages`, commit `e5ac903422815b645acbae784c2e5645ba55fe70`
+- ForestDB status: `code`
+- ForestDB category: `Miscellaneous`
+- Translation note: Existing curated Stan translation retained; original ForestDB markdown is archived in source.md.
+
+## Original ForestDB Markdown
+
+``````markdown
+---
+layout: model
+title: Model Selection
+model-status: code
+model-category: Miscellaneous
+model-tags: shred, benchmark
+model-language: church
+---
+
+    (define (zip xs1 xs2) 
+      (if (or (is_null xs1) (is_null xs2)) '() 
+        (pair 
+          (pair (first xs1) (pair (first xs2) '()))
+          (zip (rest xs1) (rest xs2)))))
+    
+    (define my-pi 3.14159265358979323)
+    
+    (define (glp mean ssq smp)
+      (let ([diff (- smp mean)])
+        (- (- (/ (* diff diff) (* 2.0 ssq)))
+           (* 0.5 (+ (log 2) (log my-pi) (log ssq))))))
+    
+    (define (randint l h) (+ l (sample-integer (+ 1 (- h l)))))
+    
+    (define samples
+      (mh-query 10 100
+        (define which-model (randint 0 1))
+        (define (model1)
+          (let* ((x (uniform 1 3))
+                 (y (uniform 1 3)))
+            (pair x (pair y (pair (* x y) '())))))
+        (define model2
+          (lambda ()
+            (let* ((x (uniform 1 3))
+                   (y (uniform 1 3)))
+              (pair x (pair y (pair (+ x y) '()))))))
+        (define data '(2 2 4))
+        (define (soft-eq x y) (factor (glp x 0.1 y)))
+        (define obs
+          (if (= 0 which-model)
+            (pair 'm1 (model1))
+            (pair 'm2 (model2))))
+        (define pairtr
+          (map (lambda (xy) (soft-eq (first xy) (second xy)))
+               (zip (rest obs) data)))
+        (define sample (pair obs pairtr)) 
+        sample 
+        #t))
+    samples
+    
+References
+
+- Cite:shred2014
+- Source: [shred](https://github.com/LFY/shred/tree/master/benchmarks/model-selection.ss)
+``````

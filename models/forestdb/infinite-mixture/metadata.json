@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Stan translation of ForestDB's DP categorical mixture model.",
+  "difficulty": "medium",
+  "forestdb_model_category": "Machine Learning",
+  "forestdb_model_language": "church",
+  "forestdb_model_status": "code",
+  "forestdb_model_tags": "shred, benchmark, machine learning",
+  "forestdb_raw_url": "https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/infinite-mixture.md",
+  "forestdb_source_slug": "infinite-mixture",
+  "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
+  "id": "infinite-mixture",
+  "method": "sample",
+  "source_group": "forestdb",
+  "source_group_label": "ForestDB translations",
+  "source_url": "https://forestdb.org/models/infinite-mixture.html",
+  "stan_file": "model.stan",
+  "title": "Infinite Mixture Model",
+  "translation_archetype": "dp_truncation",
+  "translation_note": "Normal Stan translation using the `dp_truncation` archetype for DP categorical mixture model; discrete choices are marginalized or represented with finite continuous relaxations."
+}
