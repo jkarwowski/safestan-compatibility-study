@@ -1,0 +1,95 @@
+{
+  "cmdstan": "/Users/jacski/safe_stan/cmdstan",
+  "generated_at": "2026-04-28T01:39:19+00:00",
+  "results": [
+    {
+      "case_dir": "comparison_runs/rerun-irt-200x1/stan_tutorials/two-parameter-logistic-irt",
+      "comparison": {
+        "compared_columns": 666,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "as-is",
+      "path": "models/stan_tutorials/two-parameter-logistic-irt",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/rerun-irt-200x1/stan_tutorials/two-parameter-logistic-irt/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/rerun-irt-200x1/stan_tutorials/two-parameter-logistic-irt/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/rerun-irt-200x1/stan_tutorials/two-parameter-logistic-irt/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/rerun-irt-200x1/stan_tutorials/two-parameter-logistic-irt/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    }
+  ],
+  "run_id": "rerun-irt-200x1",
+  "settings": {
+    "chains": 1,
+    "include_lp": false,
+    "include_rep": false,
+    "iter_sampling": 200,
+    "iter_warmup": 200,
+    "mean_abs_tol": 0.05,
+    "mean_se_mult": 4.0,
+    "sd_abs_tol": 0.05,
+    "sd_rel_tol": 0.5,
+    "seed": 12345
+  },
+  "summary": "/Users/jacski/synthstats/stan-collection/runs_metadata/openai_safestan_generation_models_safe_full45.json"
+}

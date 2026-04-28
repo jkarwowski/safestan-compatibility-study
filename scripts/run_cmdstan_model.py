@@ -16,6 +16,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+ROOT = Path(__file__).resolve().parents[1]
+MODELS_ROOT = ROOT / "models"
+DEFAULT_SAFE_ROOT = ROOT / "models_safe"
+
 
 def load_json(path: Path) -> dict[str, Any]:
     if not path.exists():
@@ -50,6 +54,49 @@ def model_executable_for(stan_file: Path) -> Path:
     return stan_file.with_suffix("")
 
 
+def split_protected_variables(value: str) -> list[str]:
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def safe_dir_for_model(model_dir: Path, safe_root: Path) -> Path:
+    try:
+        relative = model_dir.relative_to(MODELS_ROOT)
+    except ValueError:
+        return model_dir
+    return (safe_root / relative).resolve()
+
+
+def load_protected_variables(safe_model_dir: Path, override: str | None) -> list[str]:
+    if override:
+        return split_protected_variables(override)
+
+    for path in (safe_model_dir / "api" / "translation.json", safe_model_dir / "api" / "record.json"):
+        payload = load_json(path)
+        protected = payload.get("protected_variables")
+        if isinstance(protected, list):
+            return [str(item) for item in protected if str(item)]
+
+    return []
+
+
+def cmdsafestan_command_for(cmdstan: Path | None, dry_run: bool) -> tuple[list[str], Path | None]:
+    if cmdstan is None:
+        if dry_run:
+            return ["cmdsafestan"], None
+        raise SystemExit(
+            "No cmdsafestan directory provided. Pass --cmdstan or set CMDSAFESTAN, "
+            "or use --no-compile with an existing executable."
+        )
+
+    if cmdstan.is_file():
+        return [str(cmdstan)], cmdstan.parent
+
+    command = cmdstan / "cmdsafestan"
+    if not dry_run and not command.exists():
+        raise SystemExit(f"cmdsafestan wrapper does not exist: {command}")
+    return [str(command)], cmdstan
+
+
 def compile_model(
     *,
     stan_file: Path,
@@ -71,6 +118,27 @@ def compile_model(
     if not dry_run and not cmdstan.exists():
         raise SystemExit(f"CmdStan-compatible directory does not exist: {cmdstan}")
     return exe, run_command([make_command, str(exe)], cwd=cmdstan, dry_run=dry_run)
+
+
+def compile_safestan_model(
+    *,
+    stan_file: Path,
+    cmdstan: Path | None,
+    protected_variables: list[str],
+    force_recompile: bool,
+    dry_run: bool,
+) -> tuple[Path, int]:
+    exe = model_executable_for(stan_file)
+    if exe.exists() and not force_recompile:
+        return exe, 0
+    if not protected_variables:
+        raise SystemExit(
+            "SafeStan compilation requires protected variables. Pass --sstan-protect "
+            "or ensure models_safe/<category>/<model>/api/translation.json contains them."
+        )
+    command, cwd = cmdsafestan_command_for(cmdstan, dry_run)
+    command.extend(["--sstan-protect", ",".join(protected_variables), str(stan_file)])
+    return exe, run_command(command, cwd=cwd, dry_run=dry_run)
 
 
 def sample_commands(
@@ -148,7 +216,9 @@ def optimize_command(
 def parse_args(argv: list[str] | None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model-dir", default=".", help="Directory containing model.stan and data.json.")
-    parser.add_argument("--safe", action="store_true", help="Use model_safe.stan and data_safe.json.")
+    parser.add_argument("--safe", action="store_true", help="Use model_safe.stan and data_safe.json from models_safe/.")
+    parser.add_argument("--safe-root", default=str(DEFAULT_SAFE_ROOT), help="Mirrored root containing SafeStan outputs.")
+    parser.add_argument("--sstan-protect", help="Comma-separated protected variables. Defaults to models_safe/.../api/translation.json.")
     parser.add_argument("--stan-file", help="Stan/SafeStan file name or path. Defaults to metadata stan_file or model.stan.")
     parser.add_argument("--data", help="Data JSON file name or path. Defaults to metadata data_file or data.json.")
     parser.add_argument("--init", help="Optional init file. Defaults to init.json if present.")
@@ -177,17 +247,23 @@ def resolve_model_file(model_dir: Path, name: str) -> Path:
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     model_dir = Path(args.model_dir).expanduser().resolve()
+    safe_root = Path(args.safe_root).expanduser().resolve()
+    safe_model_dir = safe_dir_for_model(model_dir, safe_root)
     metadata = load_json(model_dir / "metadata.json")
     defaults = metadata.get("default_run", {})
 
     if args.safe:
+        file_base_dir = safe_model_dir
         stan_name = args.stan_file or "model_safe.stan"
         data_name = args.data or "data_safe.json"
+        protected_variables = load_protected_variables(safe_model_dir, args.sstan_protect)
     else:
+        file_base_dir = model_dir
         stan_name = args.stan_file or metadata.get("stan_file", "model.stan")
         data_name = args.data or metadata.get("data_file", "data.json")
-    stan_file = resolve_model_file(model_dir, stan_name)
-    data_file = resolve_model_file(model_dir, data_name)
+        protected_variables = []
+    stan_file = resolve_model_file(file_base_dir, stan_name)
+    data_file = resolve_model_file(file_base_dir, data_name)
 
     if args.init:
         init_file = resolve_model_file(model_dir, args.init)
@@ -207,7 +283,8 @@ def main(argv: list[str] | None = None) -> int:
     iter_sampling = args.iter_sampling or int(defaults.get("iter_sampling", 250))
     seed = args.seed or int(defaults.get("seed", 12345))
 
-    output_dir = Path(args.output_dir).expanduser() if args.output_dir else model_dir / "runs" / timestamp()
+    output_base_dir = safe_model_dir if args.safe else model_dir
+    output_dir = Path(args.output_dir).expanduser() if args.output_dir else output_base_dir / "runs" / timestamp()
     output_dir = output_dir.resolve()
     if not args.dry_run:
         output_dir.mkdir(parents=True, exist_ok=True)
@@ -215,13 +292,22 @@ def main(argv: list[str] | None = None) -> int:
     compile_returncode = 0
     exe = model_executable_for(stan_file)
     if not args.no_compile:
-        exe, compile_returncode = compile_model(
-            stan_file=stan_file,
-            cmdstan=cmdstan,
-            make_command=args.make_command,
-            force_recompile=args.force_recompile,
-            dry_run=args.dry_run,
-        )
+        if args.safe:
+            exe, compile_returncode = compile_safestan_model(
+                stan_file=stan_file,
+                cmdstan=cmdstan,
+                protected_variables=protected_variables,
+                force_recompile=args.force_recompile,
+                dry_run=args.dry_run,
+            )
+        else:
+            exe, compile_returncode = compile_model(
+                stan_file=stan_file,
+                cmdstan=cmdstan,
+                make_command=args.make_command,
+                force_recompile=args.force_recompile,
+                dry_run=args.dry_run,
+            )
         if compile_returncode != 0:
             return compile_returncode
     elif not exe.exists() and not args.dry_run:
@@ -265,10 +351,12 @@ def main(argv: list[str] | None = None) -> int:
 
     run_record = {
         "model_dir": str(model_dir),
+        "safe_model_dir": str(safe_model_dir) if args.safe else None,
         "stan_file": str(stan_file),
         "data_file": str(data_file),
         "init_file": str(init_file) if init_file else None,
         "cmdstan": str(cmdstan) if cmdstan else None,
+        "protected_variables": protected_variables,
         "method": method,
         "compile_returncode": compile_returncode,
         "commands": command_results,

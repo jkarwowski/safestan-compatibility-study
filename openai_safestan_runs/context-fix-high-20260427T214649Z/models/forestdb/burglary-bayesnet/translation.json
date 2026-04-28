@@ -1,6 +1,0 @@
-{
-  "compatibility": "major",
-  "data_safe_json": "",
-  "model_safe_stan": "",
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `calls`.\n\nGenerated files: none.\n\nReason: the likelihood for the observed calls is implemented by manual `bernoulli_lpmf(...)` terms inside a marginalization over hidden burglary, earthquake, and alarm states, followed by `target += log_sum_exp(lp)`. Replacing this marginalized latent-state calculation with SafeStan plain sampling statements would require a substantive model/density rewrite rather than a small mechanical translation. The remaining data variables are fixed probability-table inputs and are not themselves scored as observations.\n"
-}

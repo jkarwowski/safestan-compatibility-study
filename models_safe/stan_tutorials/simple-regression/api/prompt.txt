@@ -1,0 +1,435 @@
+You are translating a single Stan model into SafeStan, a new version of Stan runtime. 
+
+## SafeStan
+
+SafeStan is a static (compile-time) restriction layer over Stan. Its purpose is to prevent likelihood hacking on a designated protected data interface, as described in "Likelihood hacking in probabilistic program synthesis".
+
+SafeStan is designed so that generated models report a normalized marginal log-likelihood for the interface being modelled. To do this, it assigns roles to top-level inputs and parameters. Variables named by --sstan-protect are modelled interface variables: each must be scored by a built-in distribution, exactly once, before any other use. They cannot be inspected in an if, used to compute helper values, or referenced in transformed blocks before that scoring statement. After a modelled interface variable has been scored, it is available as an ordinary model-block quantity and may be used in later computations or later likelihood terms. Other top-level data variables are context inputs: they may be used freely as predictors, constants, indices, or configuration, but they may not appear on the left side of a sampling statement. Parameters are latent variables: each parameter must have exactly one built-in prior sampling statement before it is used in the model block. SafeStan also rejects constructs that can directly inflate, edit, or gate the log-likelihood, such as target +=, target(), jacobian +=, reject(), fatal_error(), and _lp functions.
+
+### What SafeStan Enforces
+
+No arbitrary scoring:
+
+Forbids target += ...
+Forbids target()
+Forbids jacobian += ...
+Forbids reject() and fatal_error()
+Forbids _lp function definitions and calls
+Protected data single-use:
+
+Every protected variable must be a top-level data variable.
+Each protected variable must appear exactly once on the left side of ~.
+Left side must be a plain identifier (no indexing/projections/expressions).
+Protected variables cannot be used before they are observed.
+After observation, a protected variable is treated as a normal value.
+Protected variables cannot be referenced in transformed data/parameters.
+Proper distribution path only:
+
+Sampling statements must resolve to built-in Stan distributions.
+User-defined distributions are rejected in ~.
+Strict parameter discipline:
+
+Each parameter must appear in exactly one sampling statement.
+Parameters cannot be used in the model block before their sampling statement.
+Uses through transformed parameters are tracked: if phi depends on theta, then using phi before theta ~ ... counts as using theta before its prior.
+Control-flow safety:
+
+Protected observations and parameter-prior sampling statements cannot appear inside loops (for/while/foreach).
+Conditional (if/else) sampling is allowed only when both branches produce identical sampling effects for protected variables and parameters.
+Reserved identifier:
+
+sstan_trusted_loglik__ is reserved in SafeStan mode.
+
+## Goal
+
+The goal is not to make the model "nicer", rather, the goal is to decide whether the original posterior/log density can be represented under SafeStan restrictions with no or only a small rewrite, preserving the model. Return only the structured JSON requested by the caller.
+
+Work method:
+
+1. Identify the observed/protected data variable(s) scored by the likelihood.
+2. Check whether the protected data variables and parameters already satisfy SafeStan's
+   syntactic discipline. If it does, classify the models `as-is`.
+3. If not, look for a same-density mechanical rewrite.
+4. If the rewrite would require changing the statistical model, substantially replacing a marginalized latent-state algorithm, or changing the likelihood (e.g. by adding additional priors to parameters), classify the case as `major` and do not rewrite the model.
+5. Otherwise, classify the case as `minor`, rewrite the model (and potentially, data): e.g. you can vectorize simple likelihoods, add deterministic data copies/reshapes, switch order of computation preserving the semantics, use explicit priors for parameters that have implicit proper priors (e.g. are bounded), and so on. After that, output complete files. Do not output patches.
+
+Compatibility labels:
+
+- `as-is`: the original Stan program is already SafeStan-compatible. Return `model_safe_stan` equal to the original and `data_safe_json` equal to the original data.
+- `minor`: a same-posterior SafeStan version can be produced using only minor, mechanical, changes. Return new, rewritten `model_safe_stan` equivalent to the original and `data_safe_json` equivalent to the original data.
+- `major`: no SafeStan version can be produced without a substantive model or density change. In this case return empty strings for `model_safe_stan` and `data_safe_json`.
+
+Requirements:
+
+- Never invent new observations or synthetic data.
+- `data_safe_json` must be a valid JSON object string. It may equal the original
+  data exactly, or be a deterministic augmentation/reshape of it.
+- If you add fields to `data_safe_json`, document the exact deterministic
+  relation in `safety_note_md`.
+- Preserve the intended posterior/log density for AS-IS and MINOR.
+- `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
+  include: compatibility, protected data choice, generated files, and a concise
+  explanation of any change.
+
+Examples:
+
+Example 1: AS-IS input
+
+```stan
+data {
+  int<lower=0, upper=1> y;
+}
+parameters {
+  real<lower=0, upper=1> theta;
+}
+model {
+  theta ~ beta(1, 1);
+  y ~ bernoulli(theta);
+}
+```
+
+```json
+{"y": 1}
+```
+
+Example 1 output shape
+
+```json
+{
+  "compatibility": "as-is",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the protected observation is top-level data and is observed with a plain sampling statement.\n",
+  "model_safe_stan": "data {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "data_safe_json": "{\"y\": 1}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 2: MINOR input
+
+```stan
+data {
+  int<lower=1> N;
+  array[N] int<lower=0> trials;
+  array[N] int<lower=0> y;
+}
+transformed data {
+  real mean_y = mean(to_vector(y));
+}
+parameters {
+  vector<lower=0, upper=1>[N] theta;
+}
+model {
+  y ~ binomial(trials, theta);
+}
+```
+
+```json
+{"N": 3, "trials": [10, 10, 10], "y": [4, 5, 6]}
+```
+
+Example 2 output shape
+
+```json
+{
+  "compatibility": "minor",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. Added `theta ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]` and satisfies SafeStan's unique-prior requirement.\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ binomial(trials, theta);\n}\n",
+  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 3: MAJOR input
+
+```stan
+data {
+  int<lower=1> N;
+  vector[N] y;
+}
+parameters {
+  real mu1;
+  real mu2;
+}
+model {
+  for (n in 1:N) {
+    target += log_mix(0.5, normal_lpdf(y[n] | mu1, 1), normal_lpdf(y[n] | mu2, 1));
+  }
+}
+```
+
+```json
+{"N": 3, "y": [0.1, 1.2, -0.5]}
+```
+
+Example 3 output shape
+
+```json
+{
+  "compatibility": "major",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\n",
+  "model_safe_stan": "",
+  "data_safe_json": "",
+  "protected_variables": []
+}
+```
+
+Model directory: models/stan_tutorials/simple-regression
+
+Metadata:
+
+```json
+{
+  "description": "Introductory linear regression from the Stan chapter material.",
+  "difficulty": "easy",
+  "id": "simple-regression",
+  "method": "sample",
+  "source_group": "stan_tutorials",
+  "source_group_label": "Stan tutorials",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/chapter1/simplest-regression.stan",
+  "title": "Simple Regression"
+}
+```
+
+Source note:
+
+```text
+# Simple Regression
+
+- Upstream Stan file: [knitr/chapter1/simplest-regression.stan](https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/chapter1/simplest-regression.stan)
+- Upstream data: knitr/chapter1/simplest-regression.data.json
+- Source group: Stan tutorials
+- License note: copied from stan-dev/example-models; see the upstream directory for any model-specific terms.
+
+```
+
+Original `model.stan`:
+
+```stan
+data {
+  int<lower=0> N;
+  vector[N] x;
+  vector[N] y;
+}
+parameters {
+  real a;
+  real b;
+  real<lower=0> sigma;
+}
+model {
+  y ~ normal(a + b * x, sigma);
+}
+
+```
+
+Original `data.json`:
+
+```json
+{
+  "x": [
+    0.507328067906201,
+    1.53260154882446,
+    3.91292023472488,
+    8.07886009570211,
+    5.12549930950627,
+    9.0857648360543,
+    3.72509124688804,
+    5.95977402059361,
+    8.65114396205172,
+    9.69724742230028,
+    8.82765574846417,
+    8.0464987992309,
+    1.91117837559432,
+    5.97621644148603,
+    9.69551225891337,
+    9.40746597247198,
+    7.42127377772704,
+    4.46606757584959,
+    4.91346358787268,
+    5.20750917261466,
+    8.60888902796432,
+    7.89303531637415,
+    2.3096569837071,
+    6.31758658215404,
+    2.26071157725528,
+    0.708643249236047,
+    2.31518820859492,
+    4.82616354012862,
+    7.73621813859791,
+    7.39101707469672,
+    3.18168679485098,
+    7.61797866784036,
+    1.94191251182929,
+    1.08615981647745,
+    6.01567466277629,
+    8.80545222433284,
+    6.80963168852031,
+    1.12651099683717,
+    9.22755726147443,
+    4.82936889166012,
+    2.83023830736056,
+    3.06597816525027,
+    2.98667514929548,
+    2.29693892644718,
+    7.09124287823215,
+    7.1630224189721,
+    6.46266162861139,
+    7.16923107160255,
+    1.23017649631947,
+    9.85442902194336,
+    4.10298435948789,
+    9.44249524036422,
+    5.01679378096014,
+    3.50627436768264,
+    3.23523359140381,
+    8.11959446407855,
+    0.318629154935479,
+    8.19387938827276,
+    2.80205589719117,
+    7.90206669131294,
+    2.91444341884926,
+    0.501565947197378,
+    4.12775222444907,
+    1.25772389350459,
+    3.26489231549203,
+    8.03326084045693,
+    5.52027114434168,
+    9.49844204820693,
+    9.83832313679159,
+    6.06833420228213,
+    5.78228635713458,
+    0.159530621021986,
+    6.15989632671699,
+    0.565385406371206,
+    3.32634499762207,
+    5.99907119991258,
+    6.42221869435161,
+    7.78480920242146,
+    1.6154010198079,
+    6.40206620562822,
+    2.20054193399847,
+    3.67591219721362,
+    9.65326205827296,
+    4.24420014023781,
+    9.98306149151176,
+    8.26122796628624,
+    7.49002234777436,
+    6.38011312345043,
+    8.77622718457133,
+    4.10558220697567,
+    5.46563858631998,
+    2.48607469722629,
+    3.68429954629391,
+    3.36249730316922,
+    7.73126894375309,
+    1.9974720152095,
+    1.90315729007125,
+    5.13465406373143,
+    3.16930384142324,
+    2.34431644668803
+  ],
+  "y": [
+    7.56552006313076,
+    9.76939121749182,
+    24.2448359410629,
+    20.9821514358478,
+    24.9962784837968,
+    26.8915997662255,
+    13.5881436017663,
+    19.6545045571507,
+    19.1911128631036,
+    30.8837628430223,
+    34.8955632358237,
+    18.8870707062523,
+    10.6975736476306,
+    15.5098375621426,
+    26.7910429618714,
+    21.9293182116884,
+    29.9959641528661,
+    14.4336073380027,
+    10.1660540700647,
+    17.663470456751,
+    35.4119442930633,
+    22.404822512505,
+    -1.22042046262689,
+    23.4344635414683,
+    14.811312738173,
+    4.18069318567838,
+    12.5180973861314,
+    7.19119270574544,
+    24.1295396797915,
+    20.4869594668355,
+    13.213607838582,
+    29.777945592468,
+    12.2245266270612,
+    8.10797586076861,
+    19.8171814400653,
+    24.1081160733131,
+    22.9087287329155,
+    12.6086166985308,
+    32.0757649197201,
+    15.3861261517808,
+    8.61150222703634,
+    10.962062247365,
+    8.27427001372424,
+    11.508717141065,
+    35.5241284496367,
+    13.7909400941573,
+    18.6517195943646,
+    29.6273245188661,
+    2.04731665131452,
+    26.7040875860107,
+    11.4057023383477,
+    26.7880889846927,
+    20.0020738656452,
+    18.2364874544682,
+    7.44406620641143,
+    20.7642578817391,
+    2.05870239595777,
+    25.5704502520692,
+    16.6620364567942,
+    26.3144188598547,
+    10.8802999470338,
+    -4.30981317344027,
+    23.1527270482452,
+    -2.11294361574222,
+    9.16930389643637,
+    28.756143132455,
+    15.1350701685981,
+    26.7684106673939,
+    37.0069536323432,
+    29.3135092857704,
+    16.952588572893,
+    0.354036449175697,
+    16.330557176018,
+    -13.7571897636472,
+    10.1466768142457,
+    18.7250139648418,
+    27.3524614620177,
+    22.0018363467837,
+    13.0654884830186,
+    24.4052030316632,
+    7.67434195964745,
+    10.2971540250292,
+    32.1844941240187,
+    20.3158889108271,
+    32.2194118439009,
+    19.2800804786584,
+    24.3680263777705,
+    22.9323155709183,
+    27.7139321374481,
+    10.1573110372689,
+    18.701397759763,
+    8.0429159918026,
+    12.4139349424528,
+    9.39088662208607,
+    20.7470342090419,
+    12.365636243757,
+    12.1422242014525,
+    26.5921509715383,
+    8.36492785003775,
+    16.6142577646007
+  ],
+  "N": 100
+}
+
+```

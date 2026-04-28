@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777337814,
+  "created_at": 1777337559,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0da47a04036a7f4b0069f004d7df40819fa70673bc63238375",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0da47a04036a7f4b0069f004d87be0819f86eeb8a8f5169439",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_1`, `y_2`, `y_3`, `y_4`, `y_5`, `y_6`, `y_7`, `y_8`, `y_9`, `y_10`, `y_11`, `y_12`, `y_13`, and `y_14`, a scalar unrolling of the original observed sequence `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the manual `target += categorical_lpmf(...)` likelihood with built-in `categorical` sampling statements. Because SafeStan requires protected observations to be top-level plain identifiers and not be sampled inside loops, the length-14 observed array was deterministically reshaped into scalar fields with `y_k = y[k]`. The transition likelihood is unrolled in sequence, so each state is scored before it is used to select the next transition row. The prior loop for `A` was replaced by the equivalent vectorized statement `A ~ dirichlet(rep_vector(1.0, S))`. The resulting density for the supplied sequence is the same as the original Stan program.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=14, upper=14> T;\\n  int<lower=2> S;\\n  int<lower=1, upper=S> y_1;\\n  int<lower=1, upper=S> y_2;\\n  int<lower=1, upper=S> y_3;\\n  int<lower=1, upper=S> y_4;\\n  int<lower=1, upper=S> y_5;\\n  int<lower=1, upper=S> y_6;\\n  int<lower=1, upper=S> y_7;\\n  int<lower=1, upper=S> y_8;\\n  int<lower=1, upper=S> y_9;\\n  int<lower=1, upper=S> y_10;\\n  int<lower=1, upper=S> y_11;\\n  int<lower=1, upper=S> y_12;\\n  int<lower=1, upper=S> y_13;\\n  int<lower=1, upper=S> y_14;\\n}\\nparameters {\\n  simplex[S] pi;\\n  array[S] simplex[S] A;\\n}\\nmodel {\\n  pi ~ dirichlet(rep_vector(1.0, S));\\n  A ~ dirichlet(rep_vector(1.0, S));\\n  y_1 ~ categorical(pi);\\n  y_2 ~ categorical(A[y_1]);\\n  y_3 ~ categorical(A[y_2]);\\n  y_4 ~ categorical(A[y_3]);\\n  y_5 ~ categorical(A[y_4]);\\n  y_6 ~ categorical(A[y_5]);\\n  y_7 ~ categorical(A[y_6]);\\n  y_8 ~ categorical(A[y_7]);\\n  y_9 ~ categorical(A[y_8]);\\n  y_10 ~ categorical(A[y_9]);\\n  y_11 ~ categorical(A[y_10]);\\n  y_12 ~ categorical(A[y_11]);\\n  y_13 ~ categorical(A[y_12]);\\n  y_14 ~ categorical(A[y_13]);\\n}\\n\",\"data_safe_json\":\"{\\\"T\\\":14,\\\"S\\\":3,\\\"y_1\\\":1,\\\"y_2\\\":1,\\\"y_3\\\":2,\\\"y_4\\\":2,\\\"y_5\\\":3,\\\"y_6\\\":3,\\\"y_7\\\":2,\\\"y_8\\\":2,\\\"y_9\\\":1,\\\"y_10\\\":1,\\\"y_11\\\":2,\\\"y_12\\\":3,\\\"y_13\\\":3,\\\"y_14\\\":2}\",\"protected_variables\":[\"y_1\",\"y_2\",\"y_3\",\"y_4\",\"y_5\",\"y_6\",\"y_7\",\"y_8\",\"y_9\",\"y_10\",\"y_11\",\"y_12\",\"y_13\",\"y_14\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0da47a04036a7f4b0069f005d0a4c4819f8d7fd48c6fcb7006",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 2632,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 16463,
+    "output_tokens_details": {
+      "reasoning_tokens": 15538
+    },
+    "total_tokens": 19095
+  },
+  "user": null
+}

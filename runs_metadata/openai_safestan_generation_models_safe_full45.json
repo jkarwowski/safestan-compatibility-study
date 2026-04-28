@@ -1,0 +1,1204 @@
+{
+  "artifacts_root": "/Users/jacski/synthstats/stan-collection/models_safe",
+  "failures": 0,
+  "generated_at": "2026-04-28T01:19:25+00:00",
+  "model": "gpt-5.5",
+  "models_root": "/Users/jacski/synthstats/stan-collection/models",
+  "reasoning_effort": "high",
+  "results": [
+    {
+      "artifacts_dir": "models_safe/forestdb/binomial-inference/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-28T00:46:24+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/binomial-inference",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_07622a5a42227ec00069f00354d2e48196baba31fdb15797ed",
+      "safe_dir": "models_safe/forestdb/binomial-inference",
+      "started_at": "2026-04-28T00:46:12+00:00",
+      "usage": {
+        "input_tokens": 2523,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 795,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 3318
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/burglary-bayesnet/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T00:48:51+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/burglary-bayesnet",
+      "protected_variables": [
+        "calls_state"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0a2cadb6f18e65520069f00360c31c819d9ae416e99f72a65d",
+      "safe_dir": "models_safe/forestdb/burglary-bayesnet",
+      "started_at": "2026-04-28T00:46:24+00:00",
+      "usage": {
+        "input_tokens": 3238,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 10233,
+        "output_tokens_details": {
+          "reasoning_tokens": 8804
+        },
+        "total_tokens": 13471
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/dirichlet-multinomial-mixture/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T00:49:03+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/dirichlet-multinomial-mixture",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_043c9130f18077be0069f003f42938819384f90c5ce0a3d005",
+      "safe_dir": "models_safe/forestdb/dirichlet-multinomial-mixture",
+      "started_at": "2026-04-28T00:48:51+00:00",
+      "usage": {
+        "input_tokens": 2892,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 684,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 3576
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/finite-gaussian-mixture/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T00:49:12+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/finite-gaussian-mixture",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0d97c3090a8600f50069f003ffb98c819ea2edb7f256d25c68",
+      "safe_dir": "models_safe/forestdb/finite-gaussian-mixture",
+      "started_at": "2026-04-28T00:49:03+00:00",
+      "usage": {
+        "input_tokens": 2677,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 495,
+        "output_tokens_details": {
+          "reasoning_tokens": 350
+        },
+        "total_tokens": 3172
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/finite-mixture/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T00:50:00+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/finite-mixture",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_05871db0d9d326390069f00408fd7481909c028ec55efd62f6",
+      "safe_dir": "models_safe/forestdb/finite-mixture",
+      "started_at": "2026-04-28T00:49:12+00:00",
+      "usage": {
+        "input_tokens": 2676,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 3019,
+        "output_tokens_details": {
+          "reasoning_tokens": 2588
+        },
+        "total_tokens": 5695
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/gaussian-gamma/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-28T00:50:12+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/gaussian-gamma",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_00b57fd196d4fae30069f00438cf1081a0855c040f65a5d2a2",
+      "safe_dir": "models_safe/forestdb/gaussian-gamma",
+      "started_at": "2026-04-28T00:50:00+00:00",
+      "usage": {
+        "input_tokens": 2686,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 913,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 3599
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/gaussian-inference/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-28T00:50:21+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/gaussian-inference",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0132a56522d0a4d30069f004456a5081a192f0accc80db6a19",
+      "safe_dir": "models_safe/forestdb/gaussian-inference",
+      "started_at": "2026-04-28T00:50:13+00:00",
+      "usage": {
+        "input_tokens": 2559,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 533,
+        "output_tokens_details": {
+          "reasoning_tokens": 263
+        },
+        "total_tokens": 3092
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/geometric-distribution/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T00:52:01+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/geometric-distribution",
+      "protected_variables": [
+        "y_failures"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_02b190aec57f05a80069f0044e384c81a39446760362c72bad",
+      "safe_dir": "models_safe/forestdb/geometric-distribution",
+      "started_at": "2026-04-28T00:50:22+00:00",
+      "usage": {
+        "input_tokens": 2619,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 6575,
+        "output_tokens_details": {
+          "reasoning_tokens": 6214
+        },
+        "total_tokens": 9194
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/hidden-markov-model/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T00:52:13+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/hidden-markov-model",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0e68c28b9f251f680069f004b20e688192b1f2444fd736f0d7",
+      "safe_dir": "models_safe/forestdb/hidden-markov-model",
+      "started_at": "2026-04-28T00:52:01+00:00",
+      "usage": {
+        "input_tokens": 2814,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 689,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 3503
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/linear-regression/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-28T00:52:26+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/linear-regression",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_01a94d5ed47d0bee0069f004be19a081a388d6d0f40c7cd414",
+      "safe_dir": "models_safe/forestdb/linear-regression",
+      "started_at": "2026-04-28T00:52:13+00:00",
+      "usage": {
+        "input_tokens": 2795,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 937,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 3732
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/logistic-regression/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-28T00:52:39+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/logistic-regression",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0d814f311666516d0069f004caec28819cb6ff54cd5cd610f3",
+      "safe_dir": "models_safe/forestdb/logistic-regression",
+      "started_at": "2026-04-28T00:52:26+00:00",
+      "usage": {
+        "input_tokens": 2807,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 911,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 3718
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/markov-model/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T00:56:55+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/markov-model",
+      "protected_variables": [
+        "y_1",
+        "y_2",
+        "y_3",
+        "y_4",
+        "y_5",
+        "y_6",
+        "y_7",
+        "y_8",
+        "y_9",
+        "y_10",
+        "y_11",
+        "y_12",
+        "y_13",
+        "y_14"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0da47a04036a7f4b0069f004d7df40819fa70673bc63238375",
+      "safe_dir": "models_safe/forestdb/markov-model",
+      "started_at": "2026-04-28T00:52:39+00:00",
+      "usage": {
+        "input_tokens": 2632,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 16463,
+        "output_tokens_details": {
+          "reasoning_tokens": 15538
+        },
+        "total_tokens": 19095
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/medical-diagnosis/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T00:57:41+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/medical-diagnosis",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_096b83c72c300ed20069f005d81af8819e983b6d4f89f2f8c1",
+      "safe_dir": "models_safe/forestdb/medical-diagnosis",
+      "started_at": "2026-04-28T00:56:55+00:00",
+      "usage": {
+        "input_tokens": 2766,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2759,
+        "output_tokens_details": {
+          "reasoning_tokens": 2588
+        },
+        "total_tokens": 5525
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/model-selection/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T00:57:53+00:00",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/model-selection",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_07d6dae7d92452ce0069f00605f16c81929363598ba6ed4695",
+      "safe_dir": "models_safe/forestdb/model-selection",
+      "started_at": "2026-04-28T00:57:41+00:00",
+      "usage": {
+        "input_tokens": 2949,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 703,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 3652
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/rat-growth/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T00:58:51+00:00",
+      "manual_postprocess": "Replaced invalid matrix normal observation with row-major vector y_vec deterministic flattening.",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/rat-growth",
+      "protected_variables": [
+        "y_vec"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0911b5e7482ca9d50069f0061264c0819291a2a277ccbc83b0",
+      "safe_dir": "models_safe/forestdb/rat-growth",
+      "started_at": "2026-04-28T00:57:54+00:00",
+      "usage": {
+        "input_tokens": 2828,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 3571,
+        "output_tokens_details": {
+          "reasoning_tokens": 2980
+        },
+        "total_tokens": 6399
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/binary-trials-complete-pool/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T01:00:10+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/binary-trials-complete-pool",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0b9c1b30a7bb4c8e0069f0064c2e9481929f0bd2b0ff2850c0",
+      "safe_dir": "models_safe/stan_case_studies/binary-trials-complete-pool",
+      "started_at": "2026-04-28T00:58:52+00:00",
+      "usage": {
+        "input_tokens": 3651,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 5540,
+        "output_tokens_details": {
+          "reasoning_tokens": 4142
+        },
+        "total_tokens": 9191
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/binary-trials-hier-logit/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T01:01:28+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/binary-trials-hier-logit",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0f8bbf53334c97ce0069f0069c071c8196aad467c2fa4a1074",
+      "safe_dir": "models_safe/stan_case_studies/binary-trials-hier-logit",
+      "started_at": "2026-04-28T01:00:11+00:00",
+      "usage": {
+        "input_tokens": 3874,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 5743,
+        "output_tokens_details": {
+          "reasoning_tokens": 4142
+        },
+        "total_tokens": 9617
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/binary-trials-hier-logit-centered/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-28T01:01:43+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/binary-trials-hier-logit-centered",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0f16b808c2a382f30069f006e8e4408196ba2c47e32cc4ad68",
+      "safe_dir": "models_safe/stan_case_studies/binary-trials-hier-logit-centered",
+      "started_at": "2026-04-28T01:01:28+00:00",
+      "usage": {
+        "input_tokens": 3060,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1077,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 4137
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/binary-trials-hierarchical/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T01:02:41+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/binary-trials-hierarchical",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_023a15c8b9c96af40069f006f8564881a2891240fc91ab9286",
+      "safe_dir": "models_safe/stan_case_studies/binary-trials-hierarchical",
+      "started_at": "2026-04-28T01:01:44+00:00",
+      "usage": {
+        "input_tokens": 3817,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 4160,
+        "output_tokens_details": {
+          "reasoning_tokens": 2588
+        },
+        "total_tokens": 7977
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/binary-trials-no-pool/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T01:03:38+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/binary-trials-no-pool",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0b6127eb7e36367b0069f00731fff0819ea265aa1cfbe19b56",
+      "safe_dir": "models_safe/stan_case_studies/binary-trials-no-pool",
+      "started_at": "2026-04-28T01:02:41+00:00",
+      "usage": {
+        "input_tokens": 3724,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 4053,
+        "output_tokens_details": {
+          "reasoning_tokens": 2588
+        },
+        "total_tokens": 7777
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/bym2-spatial-poisson/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:04:33+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/bym2-spatial-poisson",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_015bc87e2a4ccb940069f0076b4eb48190812e95bfa8db2dfd",
+      "safe_dir": "models_safe/stan_case_studies/bym2-spatial-poisson",
+      "started_at": "2026-04-28T01:03:39+00:00",
+      "usage": {
+        "input_tokens": 5346,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2779,
+        "output_tokens_details": {
+          "reasoning_tokens": 2588
+        },
+        "total_tokens": 8125
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/golf-putting-logistic/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:05:04+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/golf-putting-logistic",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0eabf261ad04da0d0069f007a1cf90819c8279b2ab0eb37357",
+      "safe_dir": "models_safe/stan_case_studies/golf-putting-logistic",
+      "started_at": "2026-04-28T01:04:33+00:00",
+      "usage": {
+        "input_tokens": 2902,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1742,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 4644
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/one-compartment-mm-ode/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-28T01:05:30+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/one-compartment-mm-ode",
+      "protected_variables": [
+        "C"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0e030409496014420069f007c0c24c81a0afd5045d854e927b",
+      "safe_dir": "models_safe/stan_case_studies/one-compartment-mm-ode",
+      "started_at": "2026-04-28T01:05:04+00:00",
+      "usage": {
+        "input_tokens": 3426,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2015,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 5441
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/sir-ode/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T01:06:04+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/sir-ode",
+      "protected_variables": [
+        "stoi",
+        "B"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_097652363dbf78360069f007dad9fc819d90fd095f7d9389ab",
+      "safe_dir": "models_safe/stan_case_studies/sir-ode",
+      "started_at": "2026-04-28T01:05:30+00:00",
+      "usage": {
+        "input_tokens": 3383,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2525,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 5908
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/soil-incubation-ode/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-28T01:07:03+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/soil-incubation-ode",
+      "protected_variables": [
+        "eCO2mean"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0d4f874df2ed47c90069f007fcf87c81a185a6b00997805197",
+      "safe_dir": "models_safe/stan_case_studies/soil-incubation-ode",
+      "started_at": "2026-04-28T01:06:04+00:00",
+      "usage": {
+        "input_tokens": 4423,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 4492,
+        "output_tokens_details": {
+          "reasoning_tokens": 3106
+        },
+        "total_tokens": 8915
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/worldcup-first-try/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:07:41+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/worldcup-first-try",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0688b415d6a116660069f0083805e481978c79609354a2e5ee",
+      "safe_dir": "models_safe/stan_case_studies/worldcup-first-try",
+      "started_at": "2026-04-28T01:07:03+00:00",
+      "usage": {
+        "input_tokens": 4182,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2263,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 6445
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/worldcup-fixed/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:08:36+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/worldcup-fixed",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0a2b9690a353c2d20069f0085dc24c81958e26b727811fe8e6",
+      "safe_dir": "models_safe/stan_case_studies/worldcup-fixed",
+      "started_at": "2026-04-28T01:07:41+00:00",
+      "usage": {
+        "input_tokens": 4254,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 3429,
+        "output_tokens_details": {
+          "reasoning_tokens": 3202
+        },
+        "total_tokens": 7683
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/worldcup-no-prior/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:09:17+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/worldcup-no-prior",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_07ebb711d491bee50069f0089598708194a9f495e88b9668e3",
+      "safe_dir": "models_safe/stan_case_studies/worldcup-no-prior",
+      "started_at": "2026-04-28T01:08:37+00:00",
+      "usage": {
+        "input_tokens": 4216,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2265,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 6481
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/worldcup-no-sqrt/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:09:47+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/worldcup-no-sqrt",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0250cdcff9218e4f0069f008be152c819c89eda5bdcd553f10",
+      "safe_dir": "models_safe/stan_case_studies/worldcup-no-sqrt",
+      "started_at": "2026-04-28T01:09:17+00:00",
+      "usage": {
+        "input_tokens": 4195,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1762,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 5957
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/worldcup-replication/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:11:09+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/worldcup-replication",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_00907a9f737db70b0069f008dc346c81a19d8074cc5e04a8c4",
+      "safe_dir": "models_safe/stan_case_studies/worldcup-replication",
+      "started_at": "2026-04-28T01:09:48+00:00",
+      "usage": {
+        "input_tokens": 4269,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 4874,
+        "output_tokens_details": {
+          "reasoning_tokens": 4660
+        },
+        "total_tokens": 9143
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/bernoulli/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-28T01:11:20+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/bernoulli",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_02a18beb49eeddd00069f0092e2244819c8f4e5df3024279ca",
+      "safe_dir": "models_safe/stan_tutorials/bernoulli",
+      "started_at": "2026-04-28T01:11:09+00:00",
+      "usage": {
+        "input_tokens": 2619,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 671,
+        "output_tokens_details": {
+          "reasoning_tokens": 383
+        },
+        "total_tokens": 3290
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/censored-normal/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:12:41+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/censored-normal",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0e41778f650d07c20069f00938f040819c8a3c1ed207c169e8",
+      "safe_dir": "models_safe/stan_tutorials/censored-normal",
+      "started_at": "2026-04-28T01:11:20+00:00",
+      "usage": {
+        "input_tokens": 7807,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 4344,
+        "output_tokens_details": {
+          "reasoning_tokens": 4142
+        },
+        "total_tokens": 12151
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/k-component-normal-mixture/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:12:56+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/k-component-normal-mixture",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_02a08b8a646af9a20069f0098a95f4819294e6752b4c224ea8",
+      "safe_dir": "models_safe/stan_tutorials/k-component-normal-mixture",
+      "started_at": "2026-04-28T01:12:42+00:00",
+      "usage": {
+        "input_tokens": 12775,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 692,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 13467
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/k-component-normal-mixture-simplex/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:13:17+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/k-component-normal-mixture-simplex",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_090fc6781a7f7aac0069f0099994e8819297ef93bc3a31e0b6",
+      "safe_dir": "models_safe/stan_tutorials/k-component-normal-mixture-simplex",
+      "started_at": "2026-04-28T01:12:57+00:00",
+      "usage": {
+        "input_tokens": 12862,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1010,
+        "output_tokens_details": {
+          "reasoning_tokens": 826
+        },
+        "total_tokens": 13872
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/multivariate-normal/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:13:53+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/multivariate-normal",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0cae77f0e4a542070069f009ae3d0881968f99ddf1e7c5db24",
+      "safe_dir": "models_safe/stan_tutorials/multivariate-normal",
+      "started_at": "2026-04-28T01:13:18+00:00",
+      "usage": {
+        "input_tokens": 5381,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1796,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 7177
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/negative-binomial/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-28T01:14:03+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/negative-binomial",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0bbc4f402eb2d0ce0069f009d25bfc819581a2f5d32680af7c",
+      "safe_dir": "models_safe/stan_tutorials/negative-binomial",
+      "started_at": "2026-04-28T01:13:54+00:00",
+      "usage": {
+        "input_tokens": 2626,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 632,
+        "output_tokens_details": {
+          "reasoning_tokens": 324
+        },
+        "total_tokens": 3258
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/negative-binomial2/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:14:27+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/negative-binomial2",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_06d23f3e51f4d8470069f009dc48648197aeda642e860deb9c",
+      "safe_dir": "models_safe/stan_tutorials/negative-binomial2",
+      "started_at": "2026-04-28T01:14:04+00:00",
+      "usage": {
+        "input_tokens": 2644,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1179,
+        "output_tokens_details": {
+          "reasoning_tokens": 1024
+        },
+        "total_tokens": 3823
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/normal-location/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:14:48+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/normal-location",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0e161d5e5a274db00069f009f4244481a2bf6daae88bc812aa",
+      "safe_dir": "models_safe/stan_tutorials/normal-location",
+      "started_at": "2026-04-28T01:14:27+00:00",
+      "usage": {
+        "input_tokens": 2532,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1139,
+        "output_tokens_details": {
+          "reasoning_tokens": 954
+        },
+        "total_tokens": 3671
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/normal-mixture/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:15:02+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/normal-mixture",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_09625c2a12a8f16b0069f00a099504819e82a42cfd1b2efcd3",
+      "safe_dir": "models_safe/stan_tutorials/normal-mixture",
+      "started_at": "2026-04-28T01:14:49+00:00",
+      "usage": {
+        "input_tokens": 12659,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 685,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 13344
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/simple-regression/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:15:30+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/simple-regression",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0704ae7014508b860069f00a170a6c81949938260e27d7221b",
+      "safe_dir": "models_safe/stan_tutorials/simple-regression",
+      "started_at": "2026-04-28T01:15:02+00:00",
+      "usage": {
+        "input_tokens": 4575,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1489,
+        "output_tokens_details": {
+          "reasoning_tokens": 1279
+        },
+        "total_tokens": 6064
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/truncated-normal/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:16:21+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/truncated-normal",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0ab1e80b93a85bb70069f00a339108819eb1a0d6faa9a752be",
+      "safe_dir": "models_safe/stan_tutorials/truncated-normal",
+      "started_at": "2026-04-28T01:15:31+00:00",
+      "usage": {
+        "input_tokens": 7620,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2783,
+        "output_tokens_details": {
+          "reasoning_tokens": 2588
+        },
+        "total_tokens": 10403
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/two-parameter-logistic-irt/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-28T01:18:18+00:00",
+      "manual_postprocess": {
+        "files": [
+          "data_safe.json",
+          "api/translation.json",
+          "api/record.json",
+          "runs_metadata/openai_safestan_generation_models_safe_full45.json"
+        ],
+        "reason": "Corrected malformed as-is data_safe_json from the API response; safe data now exactly equals original data.json."
+      },
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/two-parameter-logistic-irt",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0fc9ee35a85804da0069f00a664610819484a0fc51b1ed362f",
+      "safe_dir": "models_safe/stan_tutorials/two-parameter-logistic-irt",
+      "started_at": "2026-04-28T01:16:22+00:00",
+      "usage": {
+        "input_tokens": 34375,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 10221,
+        "output_tokens_details": {
+          "reasoning_tokens": 3106
+        },
+        "total_tokens": 44596
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/two-pl-regression-centered/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:18:41+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/two-pl-regression-centered",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_013f259f962e6a860069f00adaf05c819da21c467a805d12cc",
+      "safe_dir": "models_safe/stan_tutorials/two-pl-regression-centered",
+      "started_at": "2026-04-28T01:18:18+00:00",
+      "usage": {
+        "input_tokens": 37049,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1225,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 38274
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/two-pl-regression-noncentered/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:19:04+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/two-pl-regression-noncentered",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0c614a4ee932650c0069f00af1e79c819c829e305c94ea8ba4",
+      "safe_dir": "models_safe/stan_tutorials/two-pl-regression-noncentered",
+      "started_at": "2026-04-28T01:18:41+00:00",
+      "usage": {
+        "input_tokens": 37086,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1188,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 38274
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_tutorials/vector-regression/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-28T01:19:25+00:00",
+      "model": "gpt-5.5",
+      "path": "models/stan_tutorials/vector-regression",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0be297cf607b14130069f00b0959e8819ca1a483c342488c52",
+      "safe_dir": "models_safe/stan_tutorials/vector-regression",
+      "started_at": "2026-04-28T01:19:05+00:00",
+      "usage": {
+        "input_tokens": 5380,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1224,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 6604
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    }
+  ],
+  "run_id": "models-safe-high-20260428T004612Z",
+  "safe_root": "/Users/jacski/synthstats/stan-collection/models_safe",
+  "total": 45
+}

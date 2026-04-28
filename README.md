@@ -11,17 +11,24 @@ models/<category>/<model>/
   metadata.json       # source, difficulty, and default run settings
   source.md           # source provenance
   run.py              # thin wrapper around scripts/run_cmdstan_model.py
+```
+
+SafeStan outputs mirror the model tree:
+
+```text
+models_safe/<category>/<model>/
   SAFETY_NOTE.md      # SafeStan compatibility note
   model_safe.stan     # generated only for as-is/minor models
   data_safe.json      # generated only for as-is/minor models
+  api/                # prompt, request, response, parsed JSON, usage, record
 ```
 
 ## Files
 
 - `MODEL_LIST.md` lists the 45 models, source links, data provenance, and descriptions.
 - `RESULTS.md` records the SafeStan compatibility labels, generated-file status, token usage, and notes.
-- `openai_safestan_runs/<run_id>/` stores reproducibility artifacts for each API translation call: prompt, request, raw response, parsed translation, usage, and record.
-- `runs_metadata/openai_safestan_generation_full45.json` is the full 45-model run summary.
+- `models_safe/<category>/<model>/api/` stores reproducibility artifacts for each API translation call: prompt, request, raw response, parsed translation, usage, and record.
+- `runs_metadata/openai_safestan_generation_models_safe_full45.json` is the full 45-model run summary.
 
 ## Requirements
 
@@ -53,13 +60,14 @@ export CMDSAFESTAN=/path/to/cmdsafestan
 python3 models/forestdb/gaussian-inference/run.py --safe
 ```
 
-To pass SafeStan-specific executable arguments, repeat `--extra-arg`:
+The runner reads `models_safe/<category>/<model>/api/translation.json` and passes the recorded protected variables to `cmdsafestan` at compile time. To override them manually:
 
 ```sh
-python3 models/forestdb/gaussian-inference/run.py --safe --extra-arg sstan-protect --extra-arg y
+python3 models/forestdb/gaussian-inference/run.py --safe --sstan-protect y
 ```
 
 For models without `model_safe.stan`/`data_safe.json`, the SafeStan translation was classified as `major` and intentionally not produced.
+SafeStan run outputs are written to `models_safe/<category>/<model>/runs/<UTC timestamp>/` unless `--output-dir` is passed.
 
 ## Useful Runner Options
 
@@ -77,19 +85,35 @@ python3 models/forestdb/gaussian-inference/run.py --force-recompile
 python3 models/forestdb/gaussian-inference/run.py --output-dir /tmp/gaussian-original
 ```
 
+## Compare Stan And SafeStan Results
+
+The comparison script runs original Stan and generated SafeStan versions in an isolated `comparison_runs/<run_id>/` tree, compares common posterior columns by summary statistics, and also spot-checks `log_prob`/gradient equality on draws from the original model.
+
+```sh
+export CMDSAFESTAN=/path/to/cmdsafestan
+python3 scripts/compare_safestan_results.py \
+  --chains 1 \
+  --iter-warmup 200 \
+  --iter-sampling 200 \
+  --log-prob-checks 3
+```
+
+Use `--only <model-id>` for a single model smoke test.
+
 ## Regenerate SafeStan Translations
 
-The generator uses `gpt-5.5` with reasoning effort `high` by default and saves full per-call artifacts. It skips models that already have complete artifacts for the selected run id unless `--rerun-existing-artifacts` is passed.
+The generator uses `gpt-5.5` with reasoning effort `high` by default and saves full per-call artifacts. It skips models that already have complete artifacts in `models_safe/<category>/<model>/api/` unless `--rerun-existing-artifacts` is passed.
 
 ```sh
 set -a; source .env; set +a
 python3 scripts/generate_safestan_with_openai.py \
-  --run-id sample3-high-20260427T194608Z \
+  --run-id models-safe-high-20260428T004612Z \
+  --safe-root models_safe \
   --reasoning-effort high \
   --max-output-tokens 64000 \
   --timeout 900 \
   --retries 2 \
-  --output runs_metadata/openai_safestan_generation_full45.json
+  --output runs_metadata/openai_safestan_generation_models_safe_full45.json
 ```
 
 Use `--only <suffix>` to translate a single model directory and `--dry-run` to inspect prompt sizes without calling the API.

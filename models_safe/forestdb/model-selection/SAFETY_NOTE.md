@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the likelihood for `y` is a whole-data marginalized mixture over the linear and quadratic regression models, implemented by accumulating `normal_lpdf(...)` terms and then using `target += log_sum_exp(lp_linear, lp_quad)`. SafeStan forbids arbitrary `target +=` scoring and requires each protected variable to be observed exactly once with a built-in sampling statement. Replacing this marginalized model-selection likelihood with SafeStan sampling statements would require a substantive model rewrite, such as introducing an unrepresentable discrete model indicator or changing the likelihood factorization, so no minor same-density translation is available.

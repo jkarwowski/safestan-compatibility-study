@@ -1,0 +1,25 @@
+{
+  "artifacts_dir": "models_safe/stan_tutorials/multivariate-normal/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-28T01:13:53+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_tutorials/multivariate-normal",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0cae77f0e4a542070069f009ae3d0881968f99ddf1e7c5db24",
+  "safe_dir": "models_safe/stan_tutorials/multivariate-normal",
+  "started_at": "2026-04-28T01:13:18+00:00",
+  "usage": {
+    "input_tokens": 5381,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1796,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 7177
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

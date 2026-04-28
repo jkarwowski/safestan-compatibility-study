@@ -1,0 +1,27 @@
+{
+  "artifacts_dir": "models_safe/forestdb/geometric-distribution/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-28T00:52:01+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/geometric-distribution",
+  "protected_variables": [
+    "y_failures"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_02b190aec57f05a80069f0044e384c81a39446760362c72bad",
+  "safe_dir": "models_safe/forestdb/geometric-distribution",
+  "started_at": "2026-04-28T00:50:22+00:00",
+  "usage": {
+    "input_tokens": 2619,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 6575,
+    "output_tokens_details": {
+      "reasoning_tokens": 6214
+    },
+    "total_tokens": 9194
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

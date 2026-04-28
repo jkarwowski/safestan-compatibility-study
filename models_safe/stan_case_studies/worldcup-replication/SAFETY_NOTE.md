@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data choice: the likelihood is applied to `sqrt_dif`, a deterministic transform of `score_1 - score_2`; a SafeStan rewrite would have to make that transformed vector a top-level protected data variable.
+
+Generated files: none.
+
+Reason: the original model has only `alpha ~ normal(0, 1)`. The parameters `b`, `sigma_a`, and `sigma_y` are used in the Student-t likelihood, directly or through `a`, without built-in prior sampling statements, relying on Stan's implicit improper flat priors. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors or fixing `b` from the data would change the posterior/log density, so this cannot be translated by a minor same-density rewrite.

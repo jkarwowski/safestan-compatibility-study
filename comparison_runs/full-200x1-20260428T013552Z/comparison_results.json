@@ -1,0 +1,1621 @@
+{
+  "cmdstan": "/Users/jacski/safe_stan/cmdstan",
+  "generated_at": "2026-04-28T01:38:17+00:00",
+  "results": [
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/forestdb/binomial-inference",
+      "comparison": {
+        "compared_columns": 2,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "as-is",
+      "path": "models/forestdb/binomial-inference",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/binomial-inference/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/binomial-inference/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/binomial-inference/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/binomial-inference/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/forestdb/burglary-bayesnet",
+      "comparison": {
+        "compared_columns": 3,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.021464410699999936,
+          "max_abs_sd_delta": 0.004823319733784609,
+          "max_mean_z": 2.474213571860694
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "minor",
+      "path": "models/forestdb/burglary-bayesnet",
+      "protected_variables": [
+        "calls_state"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/burglary-bayesnet/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/burglary-bayesnet/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "calls_state"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/burglary-bayesnet/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/burglary-bayesnet/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/forestdb/finite-mixture",
+      "comparison": {
+        "compared_columns": 6,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.450850684924,
+          "max_abs_sd_delta": 0.35874704071229035,
+          "max_mean_z": 3.501991878366674
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "minor",
+      "path": "models/forestdb/finite-mixture",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/finite-mixture/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/finite-mixture/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/finite-mixture/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/finite-mixture/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/forestdb/gaussian-gamma",
+      "comparison": {
+        "compared_columns": 3,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "as-is",
+      "path": "models/forestdb/gaussian-gamma",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/gaussian-gamma/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/gaussian-gamma/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/gaussian-gamma/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/gaussian-gamma/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/forestdb/gaussian-inference",
+      "comparison": {
+        "compared_columns": 2,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "as-is",
+      "path": "models/forestdb/gaussian-inference",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/gaussian-inference/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/gaussian-inference/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/gaussian-inference/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/gaussian-inference/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/forestdb/geometric-distribution",
+      "comparison": {
+        "compared_columns": 1,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "minor",
+      "path": "models/forestdb/geometric-distribution",
+      "protected_variables": [
+        "y_failures"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/geometric-distribution/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/geometric-distribution/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y_failures"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/geometric-distribution/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/geometric-distribution/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/forestdb/linear-regression",
+      "comparison": {
+        "compared_columns": 15,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "as-is",
+      "path": "models/forestdb/linear-regression",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/linear-regression/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/linear-regression/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/linear-regression/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/linear-regression/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/forestdb/logistic-regression",
+      "comparison": {
+        "compared_columns": 16,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "as-is",
+      "path": "models/forestdb/logistic-regression",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/logistic-regression/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/logistic-regression/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/logistic-regression/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/logistic-regression/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/forestdb/markov-model",
+      "comparison": {
+        "compared_columns": 12,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "minor",
+      "path": "models/forestdb/markov-model",
+      "protected_variables": [
+        "y_1",
+        "y_2",
+        "y_3",
+        "y_4",
+        "y_5",
+        "y_6",
+        "y_7",
+        "y_8",
+        "y_9",
+        "y_10",
+        "y_11",
+        "y_12",
+        "y_13",
+        "y_14"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/markov-model/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/markov-model/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y_1,y_2,y_3,y_4,y_5,y_6,y_7,y_8,y_9,y_10,y_11,y_12,y_13,y_14"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/markov-model/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/markov-model/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/forestdb/rat-growth",
+      "comparison": {
+        "compared_columns": 25,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.3482443050000015,
+          "max_abs_sd_delta": 0.3335552411694882,
+          "max_mean_z": 3.2953555306546916
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "minor",
+      "path": "models/forestdb/rat-growth",
+      "protected_variables": [
+        "y_vec"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/rat-growth/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/rat-growth/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y_vec"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/rat-growth/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/forestdb/rat-growth/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-complete-pool",
+      "comparison": {
+        "compared_columns": 79,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "minor",
+      "path": "models/stan_case_studies/binary-trials-complete-pool",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-complete-pool/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-complete-pool/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-complete-pool/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-complete-pool/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hier-logit",
+      "comparison": {
+        "compared_columns": 134,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "minor",
+      "path": "models/stan_case_studies/binary-trials-hier-logit",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hier-logit/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hier-logit/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hier-logit/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hier-logit/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hier-logit-centered",
+      "comparison": {
+        "compared_columns": 38,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "as-is",
+      "path": "models/stan_case_studies/binary-trials-hier-logit-centered",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hier-logit-centered/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hier-logit-centered/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hier-logit-centered/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hier-logit-centered/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hierarchical",
+      "comparison": {
+        "compared_columns": 116,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "minor",
+      "path": "models/stan_case_studies/binary-trials-hierarchical",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hierarchical/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hierarchical/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hierarchical/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-hierarchical/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-no-pool",
+      "comparison": {
+        "compared_columns": 114,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "minor",
+      "path": "models/stan_case_studies/binary-trials-no-pool",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-no-pool/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-no-pool/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-no-pool/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/binary-trials-no-pool/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/one-compartment-mm-ode",
+      "comparison": {
+        "compared_columns": 44,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "as-is",
+      "path": "models/stan_case_studies/one-compartment-mm-ode",
+      "protected_variables": [
+        "C"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/one-compartment-mm-ode/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/one-compartment-mm-ode/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "C"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/one-compartment-mm-ode/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/one-compartment-mm-ode/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/sir-ode",
+      "comparison": {
+        "compared_columns": 84,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "minor",
+      "path": "models/stan_case_studies/sir-ode",
+      "protected_variables": [
+        "stoi",
+        "B"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/sir-ode/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/sir-ode/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "stoi,B"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/sir-ode/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/sir-ode/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/soil-incubation-ode",
+      "comparison": {
+        "compared_columns": 31,
+        "extra_in_safe": [],
+        "failures": [
+          {
+            "column": "alpha12",
+            "mean_delta": 0.49704653668250004,
+            "mean_ok": false,
+            "mean_threshold": 0.20137755496451606,
+            "mean_z": 9.872928227181676,
+            "safe_mean": 0.840744433064,
+            "safe_sd": 0.6823436278773978,
+            "sd_delta": 0.47907368657102817,
+            "sd_ok": false,
+            "sd_threshold": 0.3911718139386989,
+            "stan_mean": 0.3436978963815,
+            "stan_sd": 0.2032699413063696
+          },
+          {
+            "column": "alpha21",
+            "mean_delta": -0.311619271897,
+            "mean_ok": false,
+            "mean_threshold": 0.14509013549227334,
+            "mean_z": 8.591053301858555,
+            "safe_mean": 0.652905478303,
+            "safe_sd": 0.4368507975632549,
+            "sd_delta": 0.1679628592266198,
+            "sd_ok": true,
+            "sd_threshold": 0.26842539878162747,
+            "stan_mean": 0.9645247502000001,
+            "stan_sd": 0.2688879383366351
+          }
+        ],
+        "metrics": {
+          "failed_columns": 2,
+          "max_abs_mean_delta": 0.49704653668250004,
+          "max_abs_sd_delta": 0.47907368657102817,
+          "max_mean_z": 9.872928227181676
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "different"
+      },
+      "compatibility": "minor",
+      "path": "models/stan_case_studies/soil-incubation-ode",
+      "protected_variables": [
+        "eCO2mean"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/soil-incubation-ode/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/soil-incubation-ode/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "eCO2mean"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/soil-incubation-ode/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_case_studies/soil-incubation-ode/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "different"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/bernoulli",
+      "comparison": {
+        "compared_columns": 1,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "as-is",
+      "path": "models/stan_tutorials/bernoulli",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/bernoulli/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/bernoulli/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/bernoulli/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/bernoulli/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/negative-binomial",
+      "comparison": {
+        "compared_columns": 2,
+        "extra_in_safe": [],
+        "failures": [],
+        "metrics": {
+          "failed_columns": 0,
+          "max_abs_mean_delta": 0.0,
+          "max_abs_sd_delta": 0.0,
+          "max_mean_z": 0.0
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "same"
+      },
+      "compatibility": "as-is",
+      "path": "models/stan_tutorials/negative-binomial",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/negative-binomial/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/negative-binomial/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/negative-binomial/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/negative-binomial/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same"
+    },
+    {
+      "case_dir": "comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/two-parameter-logistic-irt",
+      "compatibility": "as-is",
+      "failed_side": "safestan",
+      "path": "models/stan_tutorials/two-parameter-logistic-irt",
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/two-parameter-logistic-irt/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/two-parameter-logistic-irt/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y"
+        ],
+        "returncode": 1,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/two-parameter-logistic-irt/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/full-200x1-20260428T013552Z/stan_tutorials/two-parameter-logistic-irt/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "run-failed"
+    }
+  ],
+  "run_id": "full-200x1-20260428T013552Z",
+  "settings": {
+    "chains": 1,
+    "include_lp": false,
+    "include_rep": false,
+    "iter_sampling": 200,
+    "iter_warmup": 200,
+    "mean_abs_tol": 0.05,
+    "mean_se_mult": 4.0,
+    "sd_abs_tol": 0.05,
+    "sd_rel_tol": 0.5,
+    "seed": 12345
+  },
+  "summary": "/Users/jacski/synthstats/stan-collection/runs_metadata/openai_safestan_generation_models_safe_full45.json"
+}

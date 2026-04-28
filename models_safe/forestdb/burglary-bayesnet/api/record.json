@@ -1,0 +1,27 @@
+{
+  "artifacts_dir": "models_safe/forestdb/burglary-bayesnet/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-28T00:48:51+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/burglary-bayesnet",
+  "protected_variables": [
+    "calls_state"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a2cadb6f18e65520069f00360c31c819d9ae416e99f72a65d",
+  "safe_dir": "models_safe/forestdb/burglary-bayesnet",
+  "started_at": "2026-04-28T00:46:24+00:00",
+  "usage": {
+    "input_tokens": 3238,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 10233,
+    "output_tokens_details": {
+      "reasoning_tokens": 8804
+    },
+    "total_tokens": 13471
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

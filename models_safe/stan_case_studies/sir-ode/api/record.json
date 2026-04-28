@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/stan_case_studies/sir-ode/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-28T01:06:04+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_case_studies/sir-ode",
+  "protected_variables": [
+    "stoi",
+    "B"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_097652363dbf78360069f007dad9fc819d90fd095f7d9389ab",
+  "safe_dir": "models_safe/stan_case_studies/sir-ode",
+  "started_at": "2026-04-28T01:05:30+00:00",
+  "usage": {
+    "input_tokens": 3383,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2525,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5908
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

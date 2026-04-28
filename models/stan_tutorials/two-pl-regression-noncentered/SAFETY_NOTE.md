@@ -1,9 +1,0 @@
-# SafeStan Safety Note
-
-Compatibility: major.
-
-Protected data: `y`.
-
-Generated files: none.
-
-Reason: the protected outcome `y` is observed with a plain top-level `y ~ bernoulli_logit(eta)` sampling statement, but parameter `gamma` has only Stan's implicit improper flat prior on the real line. SafeStan requires explicit proper priors, and adding any proper prior for `gamma` would change the posterior/log density. Therefore this model cannot be translated to SafeStan by an as-is or minor same-density rewrite.

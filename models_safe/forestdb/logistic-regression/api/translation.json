@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":14,\"K\":2,\"X\":[[1.0,-2.0],[1.0,-1.5],[1.0,-1.2],[1.0,-0.8],[1.0,-0.5],[1.0,-0.2],[1.0,0.1],[1.0,0.3],[1.0,0.6],[1.0,0.9],[1.0,1.2],[1.0,1.5],[1.0,1.8],[1.0,2.0]],\"y\":[0,0,0,0,0,1,0,1,1,1,1,1,1,1]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  int<lower=1> K;\n  matrix[N, K] X;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  vector[K] beta;\n}\nmodel {\n  beta ~ normal(0, 3);\n  y ~ bernoulli_logit(X * beta);\n}\ngenerated quantities {\n  vector[N] p = inv_logit(X * beta);\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, after the parameter `beta` receives its built-in prior.\n"
+}

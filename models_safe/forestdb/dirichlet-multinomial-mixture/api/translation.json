@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood for `y` is a marginalized finite mixture. Each row is scored through a manually accumulated `target += log_sum_exp(...)` expression using a user-defined `dm_lpmf` component. SafeStan forbids arbitrary `target +=` scoring and requires each protected variable to be observed exactly once with a built-in distribution sampling statement. Replacing this marginalized mixture with SafeStan-compatible sampling statements would require a substantive model rewrite or a different likelihood representation, not a minor same-density translation.\n"
+}

@@ -1,0 +1,241 @@
+{
+  "cmdstan": "/Users/jacski/safe_stan/cmdstan",
+  "generated_at": "2026-04-28T01:42:27+00:00",
+  "results": [
+    {
+      "case_dir": "comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode",
+      "comparison": {
+        "compared_columns": 31,
+        "extra_in_safe": [],
+        "failures": [
+          {
+            "column": "alpha21",
+            "mean_delta": -0.1763704370000001,
+            "mean_ok": true,
+            "mean_threshold": 0.19530151844406624,
+            "mean_z": 3.6122696516670874,
+            "safe_mean": 1.0450878458,
+            "safe_sd": 0.07168561630228865,
+            "sd_delta": -0.26603772775813406,
+            "sd_ok": false,
+            "sd_threshold": 0.21886167203021134,
+            "stan_mean": 1.2214582828,
+            "stan_sd": 0.3377233440604227
+          }
+        ],
+        "metrics": {
+          "failed_columns": 1,
+          "max_abs_mean_delta": 0.27055280106,
+          "max_abs_sd_delta": 0.26603772775813406,
+          "max_mean_z": 3.6845149418997147
+        },
+        "missing_in_safe": [],
+        "safe_draws": 50,
+        "stan_draws": 50,
+        "status": "different"
+      },
+      "compatibility": "minor",
+      "log_prob": {
+        "artifact_dir": "comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob",
+        "checks": 3,
+        "details": [
+          {
+            "compared_columns": 7,
+            "failures": [],
+            "index": 1,
+            "safe_run": {
+              "command": [
+                "/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/safestan/model_safe",
+                "log_prob",
+                "constrained_params=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/params-1.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/safestan/data_safe.json",
+                "output",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/safestan-log-prob-1.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 0,
+              "timed_out": false
+            },
+            "stan_run": {
+              "command": [
+                "/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/stan/model",
+                "log_prob",
+                "constrained_params=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/params-1.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/stan/data.json",
+                "output",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/stan-log-prob-1.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 0,
+              "timed_out": false
+            },
+            "status": "same"
+          },
+          {
+            "compared_columns": 7,
+            "failures": [],
+            "index": 2,
+            "safe_run": {
+              "command": [
+                "/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/safestan/model_safe",
+                "log_prob",
+                "constrained_params=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/params-2.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/safestan/data_safe.json",
+                "output",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/safestan-log-prob-2.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 0,
+              "timed_out": false
+            },
+            "stan_run": {
+              "command": [
+                "/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/stan/model",
+                "log_prob",
+                "constrained_params=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/params-2.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/stan/data.json",
+                "output",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/stan-log-prob-2.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 0,
+              "timed_out": false
+            },
+            "status": "same"
+          },
+          {
+            "compared_columns": 7,
+            "failures": [],
+            "index": 3,
+            "safe_run": {
+              "command": [
+                "/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/safestan/model_safe",
+                "log_prob",
+                "constrained_params=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/params-3.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/safestan/data_safe.json",
+                "output",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/safestan-log-prob-3.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 0,
+              "timed_out": false
+            },
+            "stan_run": {
+              "command": [
+                "/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/stan/model",
+                "log_prob",
+                "constrained_params=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/params-3.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/stan/data.json",
+                "output",
+                "file=/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/log_prob/stan-log-prob-3.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 0,
+              "timed_out": false
+            },
+            "status": "same"
+          }
+        ],
+        "max_abs_delta": 5.329070518200751e-15,
+        "max_failed_columns": 0,
+        "status": "same"
+      },
+      "path": "models/stan_case_studies/soil-incubation-ode",
+      "protected_variables": [
+        "eCO2mean"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "50",
+          "--iter-sampling",
+          "50",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "eCO2mean"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/logprob-soil-check/stan_case_studies/soil-incubation-ode/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "50",
+          "--iter-sampling",
+          "50",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "same-density-mcmc-different"
+    }
+  ],
+  "run_id": "logprob-soil-check",
+  "settings": {
+    "chains": 1,
+    "include_lp": false,
+    "include_rep": false,
+    "iter_sampling": 50,
+    "iter_warmup": 50,
+    "log_prob_checks": 3,
+    "log_prob_tol": 1e-06,
+    "mean_abs_tol": 0.05,
+    "mean_se_mult": 4.0,
+    "sd_abs_tol": 0.05,
+    "sd_rel_tol": 0.5,
+    "seed": 12345
+  },
+  "summary": "/Users/jacski/synthstats/stan-collection/runs_metadata/openai_safestan_generation_models_safe_full45.json"
+}

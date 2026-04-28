@@ -15,3 +15,6 @@ models_all/**/*.d
 models_all/**/*.hpp
 models_all/**/*.o
 models_all/**/*.csv
+comparison_runs/**/stan/
+comparison_runs/**/safestan/
+comparison_runs/**/log_prob/

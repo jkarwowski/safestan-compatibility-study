@@ -1,0 +1,85 @@
+{
+  "cmdstan": "/Users/jacski/safe_stan/cmdstan",
+  "generated_at": "2026-04-28T01:35:23+00:00",
+  "results": [
+    {
+      "case_dir": "comparison_runs/dry-check/stan_tutorials/bernoulli",
+      "comparison": {
+        "status": "dry-run"
+      },
+      "compatibility": "as-is",
+      "path": "models/stan_tutorials/bernoulli",
+      "protected_variables": [
+        "y"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/dry-check/stan_tutorials/bernoulli/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/dry-check/stan_tutorials/bernoulli/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "5",
+          "--iter-sampling",
+          "5",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "y",
+          "--dry-run"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/dry-check/stan_tutorials/bernoulli/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/dry-check/stan_tutorials/bernoulli/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "5",
+          "--iter-sampling",
+          "5",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--dry-run"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "dry-run"
+    }
+  ],
+  "run_id": "dry-check",
+  "settings": {
+    "chains": 1,
+    "include_lp": false,
+    "include_rep": false,
+    "iter_sampling": 5,
+    "iter_warmup": 5,
+    "mean_abs_tol": 0.05,
+    "mean_se_mult": 4.0,
+    "sd_abs_tol": 0.05,
+    "sd_rel_tol": 0.5,
+    "seed": 12345
+  },
+  "summary": "/Users/jacski/synthstats/stan-collection/runs_metadata/openai_safestan_generation_models_safe_full45.json"
+}

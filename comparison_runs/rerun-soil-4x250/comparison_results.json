@@ -1,0 +1,124 @@
+{
+  "cmdstan": "/Users/jacski/safe_stan/cmdstan",
+  "generated_at": "2026-04-28T01:40:07+00:00",
+  "results": [
+    {
+      "case_dir": "comparison_runs/rerun-soil-4x250/stan_case_studies/soil-incubation-ode",
+      "comparison": {
+        "compared_columns": 31,
+        "extra_in_safe": [],
+        "failures": [
+          {
+            "column": "alpha12",
+            "mean_delta": -0.16182177016721006,
+            "mean_ok": false,
+            "mean_threshold": 0.08105818167596145,
+            "mean_z": 7.985462630489764,
+            "safe_mean": 0.42617146009324,
+            "safe_sd": 0.293572220546849,
+            "sd_delta": -0.2760479619971998,
+            "sd_ok": true,
+            "sd_threshold": 0.3348100912720244,
+            "stan_mean": 0.58799323026045,
+            "stan_sd": 0.5696201825440488
+          },
+          {
+            "column": "alpha21",
+            "mean_delta": 0.2083796044923999,
+            "mean_ok": false,
+            "mean_threshold": 0.06861251911340413,
+            "mean_z": 12.14819727857454,
+            "safe_mean": 1.028373352751,
+            "safe_sd": 0.32530637992182176,
+            "sd_delta": -0.10875078264448385,
+            "sd_ok": true,
+            "sd_threshold": 0.2670285812831528,
+            "stan_mean": 0.8199937482586,
+            "stan_sd": 0.4340571625663056
+          }
+        ],
+        "metrics": {
+          "failed_columns": 2,
+          "max_abs_mean_delta": 0.2083796044923999,
+          "max_abs_sd_delta": 0.2760479619971998,
+          "max_mean_z": 12.14819727857454
+        },
+        "missing_in_safe": [],
+        "safe_draws": 1000,
+        "stan_draws": 1000,
+        "status": "different"
+      },
+      "compatibility": "minor",
+      "path": "models/stan_case_studies/soil-incubation-ode",
+      "protected_variables": [
+        "eCO2mean"
+      ],
+      "safe_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/rerun-soil-4x250/stan_case_studies/soil-incubation-ode/safestan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/rerun-soil-4x250/stan_case_studies/soil-incubation-ode/safestan/run",
+          "--chains",
+          "4",
+          "--iter-warmup",
+          "250",
+          "--iter-sampling",
+          "250",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan",
+          "--safe",
+          "--sstan-protect",
+          "eCO2mean"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+          "/Users/jacski/synthstats/stan-collection/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/rerun-soil-4x250/stan_case_studies/soil-incubation-ode/stan",
+          "--output-dir",
+          "/Users/jacski/synthstats/stan-collection/comparison_runs/rerun-soil-4x250/stan_case_studies/soil-incubation-ode/stan/run",
+          "--chains",
+          "4",
+          "--iter-warmup",
+          "250",
+          "--iter-sampling",
+          "250",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/Users/jacski/safe_stan/cmdstan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "different"
+    }
+  ],
+  "run_id": "rerun-soil-4x250",
+  "settings": {
+    "chains": 4,
+    "include_lp": false,
+    "include_rep": false,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "mean_abs_tol": 0.05,
+    "mean_se_mult": 4.0,
+    "sd_abs_tol": 0.05,
+    "sd_rel_tol": 0.5,
+    "seed": 12345
+  },
+  "summary": "/Users/jacski/synthstats/stan-collection/runs_metadata/openai_safestan_generation_models_safe_full45.json"
+}

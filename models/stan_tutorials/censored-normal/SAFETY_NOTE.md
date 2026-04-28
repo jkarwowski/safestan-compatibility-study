@@ -1,9 +1,0 @@
-# SafeStan Safety Note
-
-Compatibility: major.
-
-Protected data: `y` and `N_censored`.
-
-Generated files: none.
-
-Reason: the model uses a censored/truncated likelihood: the observed values `y` are scored with a truncated normal sampling statement, and the censored count `N_censored` is scored manually with `target += N_censored * normal_lccdf(U | mu, 1)`. Representing this under SafeStan's plain protected-observation sampling discipline would require a substantive likelihood rewrite. In addition, `mu` has an implicit improper prior, and adding a proper prior would change the posterior.

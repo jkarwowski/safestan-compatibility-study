@@ -1,0 +1,25 @@
+{
+  "artifacts_dir": "models_safe/stan_tutorials/censored-normal/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-28T01:12:41+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_tutorials/censored-normal",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0e41778f650d07c20069f00938f040819c8a3c1ed207c169e8",
+  "safe_dir": "models_safe/stan_tutorials/censored-normal",
+  "started_at": "2026-04-28T01:11:20+00:00",
+  "usage": {
+    "input_tokens": 7807,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4344,
+    "output_tokens_details": {
+      "reasoning_tokens": 4142
+    },
+    "total_tokens": 12151
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,9 +1,0 @@
-# SafeStan Safety Note
-
-Compatibility: major.
-
-Protected data: the observed match scores `score_1` and `score_2`; the model scores their deterministic transform `sqrt_dif` in the likelihood.
-
-Generated files: none.
-
-Reason: although the transformed response could mechanically be supplied as a top-level data field and observed with `sqrt_dif ~ student_t(...)`, the model has implicit improper priors on `b`, `sigma_a`, and `sigma_y`. SafeStan requires explicit proper priors, and adding such priors would change the posterior/log density. Therefore no SafeStan version can be produced without a substantive density change.

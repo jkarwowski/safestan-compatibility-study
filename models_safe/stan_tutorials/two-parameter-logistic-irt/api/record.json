@@ -1,0 +1,36 @@
+{
+  "artifacts_dir": "models_safe/stan_tutorials/two-parameter-logistic-irt/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-28T01:18:18+00:00",
+  "manual_postprocess": {
+    "files": [
+      "data_safe.json",
+      "api/translation.json",
+      "api/record.json",
+      "runs_metadata/openai_safestan_generation_models_safe_full45.json"
+    ],
+    "reason": "Corrected malformed as-is data_safe_json from the API response; safe data now exactly equals original data.json."
+  },
+  "model": "gpt-5.5",
+  "path": "models/stan_tutorials/two-parameter-logistic-irt",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0fc9ee35a85804da0069f00a664610819484a0fc51b1ed362f",
+  "safe_dir": "models_safe/stan_tutorials/two-parameter-logistic-irt",
+  "started_at": "2026-04-28T01:16:22+00:00",
+  "usage": {
+    "input_tokens": 34375,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 10221,
+    "output_tokens_details": {
+      "reasoning_tokens": 3106
+    },
+    "total_tokens": 44596
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

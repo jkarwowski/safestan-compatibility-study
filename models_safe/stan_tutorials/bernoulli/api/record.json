@@ -1,0 +1,27 @@
+{
+  "artifacts_dir": "models_safe/stan_tutorials/bernoulli/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-28T01:11:20+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_tutorials/bernoulli",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_02a18beb49eeddd00069f0092e2244819c8f4e5df3024279ca",
+  "safe_dir": "models_safe/stan_tutorials/bernoulli",
+  "started_at": "2026-04-28T01:11:09+00:00",
+  "usage": {
+    "input_tokens": 2619,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 671,
+    "output_tokens_details": {
+      "reasoning_tokens": 383
+    },
+    "total_tokens": 3290
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

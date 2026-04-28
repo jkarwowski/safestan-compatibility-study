@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the observation model is a simple built-in likelihood, `y ~ normal(a + b * x, sigma)`, with `x` and `N` as context inputs. However, the parameters `a`, `b`, and `sigma` have no explicit priors in the original Stan program. SafeStan requires every parameter to have exactly one built-in prior sampling statement before it is used. Adding proper priors for `a`, `b`, or `sigma` would change the posterior/log density, while no density-neutral built-in prior exists for the unbounded `a`, `b`, or lower-bounded-only `sigma` parameters. Therefore a SafeStan translation would require a substantive density change.

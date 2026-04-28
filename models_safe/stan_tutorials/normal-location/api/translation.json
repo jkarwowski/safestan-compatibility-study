@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y` (the observed normal sample currently defined in `transformed data`).\n\nGenerated files: none.\n\nReason: the likelihood observation `y` is not a top-level data variable, which could be mechanically fixed by moving the inline constants to `data.json`. However, the parameter `mu` has no explicit prior and is an unconstrained real with an improper flat prior in the original Stan program. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding any proper built-in prior to `mu` would change the posterior/log density, so this model cannot be translated without a substantive density change.\n"
+}

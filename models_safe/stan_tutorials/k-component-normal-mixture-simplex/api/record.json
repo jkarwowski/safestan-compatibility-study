@@ -1,0 +1,25 @@
+{
+  "artifacts_dir": "models_safe/stan_tutorials/k-component-normal-mixture-simplex/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-28T01:13:17+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_tutorials/k-component-normal-mixture-simplex",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_090fc6781a7f7aac0069f0099994e8819297ef93bc3a31e0b6",
+  "safe_dir": "models_safe/stan_tutorials/k-component-normal-mixture-simplex",
+  "started_at": "2026-04-28T01:12:57+00:00",
+  "usage": {
+    "input_tokens": 12862,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1010,
+    "output_tokens_details": {
+      "reasoning_tokens": 826
+    },
+    "total_tokens": 13872
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

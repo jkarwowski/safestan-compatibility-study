@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777337399,
+  "created_at": 1777337353,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_05871db0d9d326390069f00408fd7481909c028ec55efd62f6",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_05871db0d9d326390069f0040a407481909adda0af34782840",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the looped manual `target += log_mix(...)` Bernoulli-mixture likelihood with one built-in vectorized Bernoulli sampling statement. This is density-preserving here because, for binary `y` and simplex `theta`,\\n\\n`log_mix(theta[1], bernoulli_lpmf(y | p[1]), bernoulli_lpmf(y | p[2])) = bernoulli_lpmf(y | theta[1] * p[1] + theta[2] * p[2])`.\\n\\nNo data fields were added or changed. The generated quantities were left unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  simplex[2] theta;\\n  ordered[2] logit_p;\\n}\\ntransformed parameters {\\n  vector<lower=0, upper=1>[2] p = inv_logit(logit_p);\\n}\\nmodel {\\n  theta ~ dirichlet(rep_vector(1.0, 2));\\n  logit_p ~ normal(0, 2);\\n  y ~ bernoulli(theta[1] * p[1] + theta[2] * p[2]);\\n}\\ngenerated quantities {\\n  int z_rep = categorical_rng(theta);\\n  int y_rep = bernoulli_rng(p[z_rep]);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":16,\\\"y\\\":[0,0,1,0,1,1,1,0,1,1,1,1,0,1,1,1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_05871db0d9d326390069f004340c6c81908c7b1d5b0693254f",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 2676,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3019,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 5695
+  },
+  "user": null
+}

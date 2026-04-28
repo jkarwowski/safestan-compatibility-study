@@ -1,6 +1,0 @@
-{
-  "compatibility": "as-is",
-  "data_safe_json": "{\"N\":8,\"y\":[1.2,0.7,1.9,1.4,1.1,0.8,1.6,1.3]}",
-  "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] y;\n}\nparameters {\n  real mu;\n  real<lower=0> sigma;\n}\nmodel {\n  mu ~ normal(0, 5);\n  sigma ~ lognormal(0, 1);\n  y ~ normal(mu, sigma);\n}\ngenerated quantities {\n  real y_rep = normal_rng(mu, sigma);\n}\n",
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the model has explicit proper priors for `mu` and `sigma`, and observes the top-level protected data `y` with a plain vectorized sampling statement.\n"
-}

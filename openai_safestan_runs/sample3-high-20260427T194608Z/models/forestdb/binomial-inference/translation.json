@@ -1,6 +1,0 @@
-{
-  "compatibility": "minor",
-  "data_safe_json": "{\"N\": 20, \"y\": 13}",
-  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0, upper=N> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ binomial(N, theta);\n}\ngenerated quantities {\n  int y_rep = binomial_rng(N, theta);\n}\n",
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: removed the generated quantity `log_lik = binomial_lpmf(y | N, theta)` because it directly evaluated an `_lpmf` on the protected observation. This generated quantity does not contribute to the Stan target density, so removing it preserves the posterior/log density. The prior, likelihood, posterior predictive draw `y_rep`, and data are otherwise unchanged.\n"
-}

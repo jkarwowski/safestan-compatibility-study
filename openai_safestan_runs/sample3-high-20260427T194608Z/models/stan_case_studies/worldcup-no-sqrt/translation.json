@@ -1,6 +1,0 @@
-{
-  "compatibility": "major",
-  "data_safe_json": "",
-  "model_safe_stan": "",
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `score_1` and `score_2`, which are scored only through the deterministic difference `dif = score_1 - score_2` in the Student-t likelihood.\n\nGenerated files: none.\n\nReason: the likelihood observation `dif` is computed from protected data in `transformed data` rather than supplied as a top-level observed variable. That part could be mechanically repaired by adding a deterministic `dif` field to the data, but the model also relies on implicit improper priors for `b`, `sigma_a`, and `sigma_y`. SafeStan requires explicit proper priors, and adding any proper priors for these parameters would change the posterior/log density. Therefore this case cannot be translated without a substantive density change.\n"
-}

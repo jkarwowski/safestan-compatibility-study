@@ -1,0 +1,27 @@
+{
+  "artifacts_dir": "models_safe/forestdb/linear-regression/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-28T00:52:26+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/linear-regression",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_01a94d5ed47d0bee0069f004be19a081a388d6d0f40c7cd414",
+  "safe_dir": "models_safe/forestdb/linear-regression",
+  "started_at": "2026-04-28T00:52:13+00:00",
+  "usage": {
+    "input_tokens": 2795,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 937,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3732
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

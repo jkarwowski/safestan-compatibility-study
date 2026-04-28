@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 20, \"y\": 13}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0, upper=N> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ binomial(N, theta);\n}\ngenerated quantities {\n  int y_rep = binomial_rng(N, theta);\n  real log_lik = binomial_lpmf(y | N, theta);\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with the built-in sampling statement `y ~ binomial(N, theta);`. The context input `N` is used only as binomial size/configuration, and the parameter `theta` has exactly one built-in prior sampling statement before it is used.\n"
+}

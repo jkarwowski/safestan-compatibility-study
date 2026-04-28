@@ -1,6 +1,0 @@
-{
-  "compatibility": "as-is",
-  "data_safe_json": "{\"y\":[0,1,0,0,0,0,0,0,0,1],\"N\":10}",
-  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observations are top-level data and are scored by the plain vectorized sampling statement `y ~ bernoulli(theta)`. The parameter `theta` has an explicit proper prior before the likelihood.\n"
-}

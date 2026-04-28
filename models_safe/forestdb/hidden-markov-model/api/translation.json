@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the observation sequence `y` is scored through a marginalized hidden Markov model forward algorithm using indexed `categorical_lpmf(...)` calls and a final `target += log_sum_exp(last)`. SafeStan requires each protected data variable to appear exactly once as a plain identifier on the left side of a built-in sampling statement. There is no built-in Stan distribution for this marginalized HMM sequence likelihood, and replacing the forward algorithm with SafeStan sampling statements would require a substantive model rewrite or a change to the likelihood.\n"
+}

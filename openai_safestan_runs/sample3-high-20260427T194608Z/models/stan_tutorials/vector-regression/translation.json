@@ -1,6 +1,0 @@
-{
-  "compatibility": "major",
-  "data_safe_json": "",
-  "model_safe_stan": "",
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: although `y` is observed with a plain vectorized sampling statement, the regression coefficients `b` and scale `sigma` have only Stan's implicit improper flat priors on their constrained supports. SafeStan requires explicit proper priors, and adding such priors would change the posterior/log density.\n"
-}

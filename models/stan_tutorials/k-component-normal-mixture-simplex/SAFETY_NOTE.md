@@ -1,9 +1,0 @@
-# SafeStan Safety Note
-
-Compatibility: major.
-
-Protected data: `y`.
-
-Generated files: none.
-
-Reason: the likelihood for `y` is a marginalized finite mixture implemented with manual log-density construction (`normal_lupdf`) and `target += log_mix(theta, ps)`. SafeStan requires protected observations to be scored by plain sampling statements, and replacing this marginalized mixture with SafeStan sampling statements would require a substantive model rewrite or a changed likelihood rather than a mechanical same-density translation.

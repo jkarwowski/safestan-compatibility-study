@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data choice: `y` is the observed interface variable being scored by the likelihood. `z`, `sigma`, `N`, and `J` are context inputs.
+
+Generated files: none.
+
+Reason: the original program cannot be translated to SafeStan without a substantive density change. The protected observation `y` is scored many times, including through indexed left-hand sides such as `y[1]`, and a transformed-data value `ry` deterministically derived from `y` is also scored many times. SafeStan requires each protected top-level data variable to appear exactly once on the left side of a sampling statement as a plain identifier, and protected data cannot be referenced in transformed data before observation. In addition, the unconstrained parameters `beta` and `rbeta` have only implicit improper flat priors; SafeStan requires each parameter to have exactly one built-in prior before use, and adding proper priors would change the posterior.

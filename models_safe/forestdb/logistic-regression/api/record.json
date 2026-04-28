@@ -1,0 +1,27 @@
+{
+  "artifacts_dir": "models_safe/forestdb/logistic-regression/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-28T00:52:39+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/logistic-regression",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0d814f311666516d0069f004caec28819cb6ff54cd5cd610f3",
+  "safe_dir": "models_safe/forestdb/logistic-regression",
+  "started_at": "2026-04-28T00:52:26+00:00",
+  "usage": {
+    "input_tokens": 2807,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 911,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3718
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

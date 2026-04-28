@@ -1,0 +1,25 @@
+{
+  "artifacts_dir": "models_safe/stan_tutorials/two-pl-regression-centered/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-28T01:18:41+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_tutorials/two-pl-regression-centered",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_013f259f962e6a860069f00adaf05c819da21c467a805d12cc",
+  "safe_dir": "models_safe/stan_tutorials/two-pl-regression-centered",
+  "started_at": "2026-04-28T01:18:18+00:00",
+  "usage": {
+    "input_tokens": 37049,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1225,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 38274
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

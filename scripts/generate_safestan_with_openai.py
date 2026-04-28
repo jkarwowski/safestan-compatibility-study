@@ -3,10 +3,10 @@
 
 The script iterates over model directories containing `model.stan` and
 `data.json`, prompts an OpenAI reasoning model with a shared template, and writes
-the returned `model_safe.stan`, `data_safe.json`, and `SAFETY_NOTE.md` beside the
-original files. For models classified as `major`, stale safe files are removed.
-Each API call is also saved under `openai_safestan_runs/<run_id>/` with the full
-prompt, request payload, raw response, parsed output, usage, and per-model record.
+the returned `model_safe.stan`, `data_safe.json`, and `SAFETY_NOTE.md` into a
+mirrored `models_safe/<source>/<model>/` tree. Each API call is saved beside the
+SafeStan output under `models_safe/<source>/<model>/api/` with the full prompt,
+request payload, raw response, parsed output, usage, and per-model record.
 
 The API key is read only from `OPENAI_API_KEY`.
 """
@@ -31,7 +31,7 @@ DEFAULT_TEMPLATE = ROOT / "scripts" / "safestan_translation_prompt.md"
 DEFAULT_API_URL = "https://api.openai.com/v1/responses"
 DEFAULT_MODEL = "gpt-5.5"
 DEFAULT_REASONING_EFFORT = "high"
-DEFAULT_RUNS_ROOT = ROOT / "openai_safestan_runs"
+DEFAULT_SAFE_ROOT = ROOT / "models_safe"
 
 OUTPUT_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -53,12 +53,18 @@ OUTPUT_SCHEMA: dict[str, Any] = {
             "type": "string",
             "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
         },
+        "protected_variables": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Top-level data variables to pass to --sstan-protect.",
+        },
     },
     "required": [
         "compatibility",
         "safety_note_md",
         "model_safe_stan",
         "data_safe_json",
+        "protected_variables",
     ],
 }
 
@@ -204,9 +210,15 @@ def call_openai(
     raise AssertionError("unreachable")
 
 
-def artifact_dir_for(run_root: Path, model_dir: Path) -> Path:
+def safe_dir_for(safe_root: Path, model_dir: Path) -> Path:
     rel = model_dir.relative_to(ROOT)
-    return run_root.joinpath(*rel.parts)
+    if rel.parts and rel.parts[0] == "models":
+        rel = Path(*rel.parts[1:])
+    return safe_root.joinpath(*rel.parts)
+
+
+def artifact_dir_for(safe_model_dir: Path) -> Path:
+    return safe_model_dir / "api"
 
 
 def save_model_record(artifact_dir: Path | None, record: dict[str, Any]) -> None:
@@ -245,14 +257,15 @@ def parse_translation(response: dict[str, Any]) -> dict[str, Any]:
     return parsed
 
 
-def write_translation(model_dir: Path, translation: dict[str, Any]) -> dict[str, Any]:
+def write_translation(output_dir: Path, translation: dict[str, Any]) -> dict[str, Any]:
+    output_dir.mkdir(parents=True, exist_ok=True)
     compatibility = translation["compatibility"]
     note = normalize_text(translation["safety_note_md"])
     model_safe = translation["model_safe_stan"].strip()
     data_safe = translation["data_safe_json"].strip()
-    note_path = model_dir / "SAFETY_NOTE.md"
-    model_safe_path = model_dir / "model_safe.stan"
-    data_safe_path = model_dir / "data_safe.json"
+    note_path = output_dir / "SAFETY_NOTE.md"
+    model_safe_path = output_dir / "model_safe.stan"
+    data_safe_path = output_dir / "data_safe.json"
 
     note_path.write_text(note, encoding="utf-8")
 
@@ -293,12 +306,20 @@ def clear_translation_outputs(model_dir: Path) -> None:
             path.unlink()
 
 
+def clear_api_artifacts(artifact_dir: Path) -> None:
+    for filename in ("prompt.txt", "request.json", "response.json", "translation.json", "usage.json", "record.json", "error.txt"):
+        path = artifact_dir / filename
+        if path.exists():
+            path.unlink()
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--models-root", default=str(ROOT / "models"))
     parser.add_argument("--template", default=str(DEFAULT_TEMPLATE))
     parser.add_argument("--output", default=str(ROOT / "openai_safestan_generation.json"))
-    parser.add_argument("--runs-root", default=str(DEFAULT_RUNS_ROOT), help="Directory where reproducibility artifacts are saved.")
+    parser.add_argument("--safe-root", default=str(DEFAULT_SAFE_ROOT), help="Mirrored output directory for SafeStan translations and API artifacts.")
+    parser.add_argument("--runs-root", help=argparse.SUPPRESS)
     parser.add_argument("--run-id", help="Artifact run id. Defaults to current UTC timestamp.")
     parser.add_argument("--no-save-artifacts", action="store_true", help="Disable prompt/request/response artifact saving.")
     parser.add_argument("--rerun-existing-artifacts", action="store_true", help="Call the API even when complete artifacts already exist.")
@@ -321,6 +342,7 @@ def main() -> int:
     models_root = Path(args.models_root).expanduser().resolve()
     template_path = Path(args.template).expanduser().resolve()
     template = Template(template_path.read_text(encoding="utf-8"))
+    safe_root = Path(args.safe_root).expanduser().resolve()
 
     candidates = model_dirs(models_root)
     if args.only:
@@ -344,19 +366,18 @@ def main() -> int:
         raise SystemExit("OPENAI_API_KEY is not set. Export it in the shell before running this script.")
 
     run_id = args.run_id or utc_run_id()
-    run_root: Path | None = None
-    if not args.no_save_artifacts:
-        run_root = Path(args.runs_root).expanduser().resolve() / run_id
-        run_root.mkdir(parents=True, exist_ok=True)
+    safe_root.mkdir(parents=True, exist_ok=True)
 
     results: list[dict[str, Any]] = []
     failures = 0
     for index, path in enumerate(candidates, start=1):
         rel = str(path.relative_to(ROOT))
         print(f"[{index}/{len(candidates)}] {rel}", flush=True)
-        artifact_dir = artifact_dir_for(run_root, path) if run_root is not None else None
+        safe_model_dir = safe_dir_for(safe_root, path)
+        artifact_dir = artifact_dir_for(safe_model_dir) if not args.no_save_artifacts else None
         record: dict[str, Any] = {
             "path": rel,
+            "safe_dir": str(safe_model_dir.relative_to(ROOT)),
             "started_at": utc_now(),
             "model": args.model,
             "reasoning_effort": args.reasoning_effort,
@@ -371,8 +392,9 @@ def main() -> int:
             ):
                 previous_record = load_json(artifact_dir / "record.json")
                 translation = load_json(artifact_dir / "translation.json")
-                write_result = write_translation(path, translation)
+                write_result = write_translation(safe_model_dir, translation)
                 record.update(write_result)
+                record["protected_variables"] = translation.get("protected_variables", [])
                 record["response_id"] = previous_record.get("response_id")
                 record["usage"] = load_json(artifact_dir / "usage.json")
                 record["skipped_existing_artifacts"] = True
@@ -383,7 +405,9 @@ def main() -> int:
                     time.sleep(args.sleep_seconds)
                 continue
 
-            clear_translation_outputs(path)
+            clear_translation_outputs(safe_model_dir)
+            if artifact_dir is not None:
+                clear_api_artifacts(artifact_dir)
             prompt = render_prompt(template, path, args.source_note_chars)
             payload = response_payload(args.model, args.reasoning_effort, prompt, args.max_output_tokens)
             if artifact_dir is not None:
@@ -402,8 +426,9 @@ def main() -> int:
             translation = parse_translation(response)
             if artifact_dir is not None:
                 write_json(artifact_dir / "translation.json", translation)
-            write_result = write_translation(path, translation)
+            write_result = write_translation(safe_model_dir, translation)
             record.update(write_result)
+            record["protected_variables"] = translation.get("protected_variables", [])
             record["response_id"] = response.get("id")
             record["usage"] = response.get("usage")
             record["completed_at"] = utc_now()
@@ -423,10 +448,11 @@ def main() -> int:
     summary = {
         "generated_at": utc_now(),
         "models_root": str(models_root),
+        "safe_root": str(safe_root),
         "model": args.model,
         "reasoning_effort": args.reasoning_effort,
         "run_id": run_id,
-        "artifacts_root": str(run_root) if run_root is not None else None,
+        "artifacts_root": str(safe_root),
         "total": len(results),
         "failures": failures,
         "results": results,

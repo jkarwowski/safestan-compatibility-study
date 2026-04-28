@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the observation model itself is a simple built-in likelihood, `y ~ binomial(n, p)`, with `y` as top-level data. However, the model has a positive parameter `sigma` with no explicit prior. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use in the model block. The original Stan program therefore represents an implicit improper flat prior on `sigma` over `(0, infinity)`. Adding any proper built-in prior would change the posterior/log density, and there is no density-preserving minor rewrite using SafeStan sampling statements for this improper prior.\n"
+}

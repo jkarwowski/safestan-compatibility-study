@@ -1,0 +1,25 @@
+{
+  "artifacts_dir": "models_safe/stan_tutorials/vector-regression/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-28T01:19:25+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stan_tutorials/vector-regression",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0be297cf607b14130069f00b0959e8819ca1a483c342488c52",
+  "safe_dir": "models_safe/stan_tutorials/vector-regression",
+  "started_at": "2026-04-28T01:19:05+00:00",
+  "usage": {
+    "input_tokens": 5380,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1224,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 6604
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

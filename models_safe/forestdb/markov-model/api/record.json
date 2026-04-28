@@ -1,0 +1,40 @@
+{
+  "artifacts_dir": "models_safe/forestdb/markov-model/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-28T00:56:55+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/markov-model",
+  "protected_variables": [
+    "y_1",
+    "y_2",
+    "y_3",
+    "y_4",
+    "y_5",
+    "y_6",
+    "y_7",
+    "y_8",
+    "y_9",
+    "y_10",
+    "y_11",
+    "y_12",
+    "y_13",
+    "y_14"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0da47a04036a7f4b0069f004d7df40819fa70673bc63238375",
+  "safe_dir": "models_safe/forestdb/markov-model",
+  "started_at": "2026-04-28T00:52:39+00:00",
+  "usage": {
+    "input_tokens": 2632,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 16463,
+    "output_tokens_details": {
+      "reasoning_tokens": 15538
+    },
+    "total_tokens": 19095
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

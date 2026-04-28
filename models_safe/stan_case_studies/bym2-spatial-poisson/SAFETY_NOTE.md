@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the likelihood itself is a built-in `poisson_log` observation of top-level data `y`, but the model also uses a user-defined ICAR prior via `phi ~ standard_icar(edges)`, implemented by custom `_lpdf` functions and `reject()`. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use, and rejects user-defined distributions and `reject()`. Replacing the ICAR prior with a built-in multivariate normal precision prior would change the prior normalization/log density relative to the original custom ICAR density, so this is not a minor same-density translation.

@@ -1,0 +1,25 @@
+{
+  "artifacts_dir": "models_safe/forestdb/medical-diagnosis/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-28T00:57:41+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/medical-diagnosis",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_096b83c72c300ed20069f005d81af8819e983b6d4f89f2f8c1",
+  "safe_dir": "models_safe/forestdb/medical-diagnosis",
+  "started_at": "2026-04-28T00:56:55+00:00",
+  "usage": {
+    "input_tokens": 2766,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2759,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 5525
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

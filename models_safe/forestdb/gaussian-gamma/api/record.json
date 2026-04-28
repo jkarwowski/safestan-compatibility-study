@@ -1,0 +1,27 @@
+{
+  "artifacts_dir": "models_safe/forestdb/gaussian-gamma/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-28T00:50:12+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/gaussian-gamma",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_00b57fd196d4fae30069f00438cf1081a0855c040f65a5d2a2",
+  "safe_dir": "models_safe/forestdb/gaussian-gamma",
+  "started_at": "2026-04-28T00:50:00+00:00",
+  "usage": {
+    "input_tokens": 2686,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 913,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3599
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

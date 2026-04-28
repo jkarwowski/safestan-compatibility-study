@@ -1,0 +1,17 @@
+{
+  "calls_state": 4,
+  "p_alarm": [
+    [
+      0.001,
+      0.29
+    ],
+    [
+      0.94,
+      0.95
+    ]
+  ],
+  "p_john_alarm": 0.9,
+  "p_john_no_alarm": 0.05,
+  "p_mary_alarm": 0.7,
+  "p_mary_no_alarm": 0.01
+}

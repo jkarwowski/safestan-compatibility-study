@@ -1,0 +1,27 @@
+{
+  "artifacts_dir": "models_safe/forestdb/binomial-inference/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-28T00:46:24+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/binomial-inference",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_07622a5a42227ec00069f00354d2e48196baba31fdb15797ed",
+  "safe_dir": "models_safe/forestdb/binomial-inference",
+  "started_at": "2026-04-28T00:46:12+00:00",
+  "usage": {
+    "input_tokens": 2523,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 795,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3318
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}
