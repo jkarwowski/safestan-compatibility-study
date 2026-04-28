@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/state_wide_presidential_votes.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Hierarchical Gaussian Process",
+  "difficulty": "unknown",
+  "id": "state-wide-presidential-votes-hierarchical-gp",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/state_wide_presidential_votes-hierarchical_gp.json",
+  "posterior_name": "state_wide_presidential_votes-hierarchical_gp",
+  "posteriordb_data_name": "state_wide_presidential_votes",
+  "posteriordb_data_title": "State-wide presidential votes",
+  "posteriordb_model_name": "hierarchical_gp",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/hierarchical_gp.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/hierarchical_gp.stan",
+  "stan_file": "model.stan",
+  "title": "Hierarchical Gaussian Process",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 16257,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

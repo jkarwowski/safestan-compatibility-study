@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "data_match": "top-level single data file",
+  "data_placeholder": false,
+  "data_source": "qr_regression/regr.data.R",
+  "data_status": "converted_rdump",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from Betancourt knitr case studies: qr_regression/qr_regr.stan.",
+  "difficulty": "unknown",
+  "id": "qr-regression-qr-regr",
+  "include_files": [],
+  "method": "sample",
+  "source_group": "betanalpha_knitr_case_studies",
+  "source_group_label": "Betancourt knitr case studies",
+  "source_path": "qr_regression/qr_regr.stan",
+  "source_url": "https://github.com/betanalpha/knitr_case_studies/blob/8c568575d8f4ca7700cf9b83faf73dc4a2089df2/qr_regression/qr_regr.stan",
+  "stan_file": "model.stan",
+  "title": "Qr Regression Qr Regr",
+  "upstream_commit": "8c568575d8f4ca7700cf9b83faf73dc4a2089df2",
+  "upstream_data_bytes": 273406,
+  "upstream_repository": "https://github.com/betanalpha/knitr_case_studies"
+}

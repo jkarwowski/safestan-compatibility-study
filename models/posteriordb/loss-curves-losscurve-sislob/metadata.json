@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/loss_curves.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Hierarchical Loss Curve Model",
+  "difficulty": "unknown",
+  "id": "loss-curves-losscurve-sislob",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/loss_curves-losscurve_sislob.json",
+  "posterior_name": "loss_curves-losscurve_sislob",
+  "posteriordb_data_name": "loss_curves",
+  "posteriordb_data_title": "loss_curves",
+  "posteriordb_model_name": "losscurve_sislob",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/losscurve_sislob.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/losscurve_sislob.stan",
+  "stan_file": "model.stan",
+  "title": "Hierarchical Loss Curve Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 974,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

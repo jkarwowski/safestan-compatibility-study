@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "data_match": "direct",
+  "data_placeholder": false,
+  "data_source": "ARM/Ch.5/separation.data.json",
+  "data_status": "copied_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from Stan example models: ARM/Ch.5/separation.stan.",
+  "difficulty": "unknown",
+  "id": "arm-ch-5-separation",
+  "include_files": [],
+  "method": "sample",
+  "source_group": "example_models",
+  "source_group_label": "Stan example models",
+  "source_path": "ARM/Ch.5/separation.stan",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/ARM/Ch.5/separation.stan",
+  "stan_file": "model.stan",
+  "title": "Arm Ch 5 Separation",
+  "upstream_commit": "e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b",
+  "upstream_data_bytes": 1325,
+  "upstream_repository": "https://github.com/stan-dev/example-models"
+}

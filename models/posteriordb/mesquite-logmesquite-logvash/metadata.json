@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/mesquite.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "log(weight) ~ log(canopy.volume) + log(canopy.area) + log(canopy.shape) + log(total.height) + group\ncanopy_volume <- diam1 * diam2 * canopy_height\ncanopy_area   <- diam1 * diam2\ncanopy_shape  <- diam1 / diam2",
+  "difficulty": "unknown",
+  "id": "mesquite-logmesquite-logvash",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/mesquite-logmesquite_logvash.json",
+  "posterior_name": "mesquite-logmesquite_logvash",
+  "posteriordb_data_name": "mesquite",
+  "posteriordb_data_title": "Total production (biomass) of mesquite leaves as function of easily measured parameters of the plant,\nbefore actual harvesting takes place. Two groups: 26 mesquite bushes and 20 mesquite bushes measured\nat a different time of year.",
+  "posteriordb_model_name": "logmesquite_logvash",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/logmesquite_logvash.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/logmesquite_logvash.stan",
+  "stan_file": "model.stan",
+  "title": "Log-Log Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 1618,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/seeds_data.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "The model is essentially a random effects logistic,\n          allowing for over-dispersion. Models the proportion of germination\n          of different seeds in different root extracts. 'Stanified' & centered:\n          tau replaced by sigma, direct estimation using \n          narrower semi-informative priors, coefficients are centered",
+  "difficulty": "unknown",
+  "id": "seeds-data-seeds-centered-model",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/seeds_data-seeds_centered_model.json",
+  "posterior_name": "seeds_data-seeds_centered_model",
+  "posteriordb_data_name": "seeds_data",
+  "posteriordb_data_title": "Seeds data of Crowder (1978)",
+  "posteriordb_model_name": "seeds_centered_model",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/seeds_centered_model.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/seeds_centered_model.stan",
+  "stan_file": "model.stan",
+  "title": "Normal Heirarchical Model to Model Rats' Weight Over Time",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 337,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

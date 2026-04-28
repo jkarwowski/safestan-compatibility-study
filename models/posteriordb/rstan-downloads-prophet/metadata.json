@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/rstan_downloads.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Structural Time Series Model",
+  "difficulty": "unknown",
+  "id": "rstan-downloads-prophet",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/rstan_downloads-prophet.json",
+  "posterior_name": "rstan_downloads-prophet",
+  "posteriordb_data_name": "rstan_downloads",
+  "posteriordb_data_title": "- T: number of time periods\n  - K: number of regressors\n  - t: time\n  - cap: capacities for logistic trend\n  - y: time series\n  - S: number of changepoints\n  - t_change: times of trend changepoints\n  - X: regressors\n  - sigmas: scale on seasonality prior\n  - tau: scale on changepoints prior\n  - trend_indicator: 0 for linear, 1 for logistic\n  - s_a: indicator of additive features\n  - s_m: indicator of multiplicative features",
+  "posteriordb_model_name": "prophet",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/prophet.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/prophet.stan",
+  "stan_file": "model.stan",
+  "title": "Structural Time Series Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 668597,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

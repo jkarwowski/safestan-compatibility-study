@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/sat.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Hierachical item response theory model that includes\nparameters for both the difficulty and discrimination of items.\nItem parameter pairs are modeled as correlated draws from a bivariate normal distribution",
+  "difficulty": "unknown",
+  "id": "sat-hier-2pl",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/sat-hier_2pl.json",
+  "posterior_name": "sat-hier_2pl",
+  "posteriordb_data_name": "sat",
+  "posteriordb_data_title": "Data from Wood et al. (2003)",
+  "posteriordb_model_name": "hier_2pl",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/hier_2pl.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/hier_2pl.stan",
+  "stan_file": "model.stan",
+  "title": "Hierarchical Two-Parameter Logistic Item Response Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 221613,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

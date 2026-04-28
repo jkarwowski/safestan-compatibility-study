@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "data_match": "top-level exact stem",
+  "data_placeholder": false,
+  "data_source": "2018/Contributed-Talks/08_margossian/script/SteadyState.data.R",
+  "data_status": "converted_rdump",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from StanCon talks: 2018/Contributed-Talks/08_margossian/model/SteadyState.stan.",
+  "difficulty": "unknown",
+  "id": "2018-contributed-talks-08-margossian-model-steadystate",
+  "include_files": [],
+  "method": "sample",
+  "source_group": "stancon_talks",
+  "source_group_label": "StanCon talks",
+  "source_path": "2018/Contributed-Talks/08_margossian/model/SteadyState.stan",
+  "source_url": "https://github.com/stan-dev/stancon_talks/blob/affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb/2018/Contributed-Talks/08_margossian/model/SteadyState.stan",
+  "stan_file": "model.stan",
+  "title": "2018 Contributed Talks 08 Margossian Model Steadystate",
+  "upstream_commit": "affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb",
+  "upstream_data_bytes": 2041,
+  "upstream_repository": "https://github.com/stan-dev/stancon_talks"
+}

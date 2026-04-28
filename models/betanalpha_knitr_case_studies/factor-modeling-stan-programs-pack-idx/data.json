@@ -1,0 +1,20 @@
+{
+  "N_inter1_factor_levels": [
+    3,
+    3,
+    3
+  ],
+  "N_inter1_factors": 3,
+  "N_inter2_factor_levels": [
+    3,
+    3,
+    3
+  ],
+  "N_inter2_factors": 3,
+  "N_main_factor_levels": [
+    3,
+    3,
+    3
+  ],
+  "N_main_factors": 3
+}

@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "data_match": "direct",
+  "data_placeholder": false,
+  "data_source": "bugs_examples/vol3/hepatitis/hepatitis.data.json",
+  "data_status": "copied_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from Stan example models: bugs_examples/vol3/hepatitis/hepatitis.stan.",
+  "difficulty": "unknown",
+  "id": "bugs-examples-vol3-hepatitis-hepatitis",
+  "include_files": [],
+  "method": "sample",
+  "source_group": "example_models",
+  "source_group_label": "Stan example models",
+  "source_path": "bugs_examples/vol3/hepatitis/hepatitis.stan",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/bugs_examples/vol3/hepatitis/hepatitis.stan",
+  "stan_file": "model.stan",
+  "title": "Bugs Examples Vol3 Hepatitis Hepatitis",
+  "upstream_commit": "e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b",
+  "upstream_data_bytes": 13281,
+  "upstream_repository": "https://github.com/stan-dev/example-models"
+}

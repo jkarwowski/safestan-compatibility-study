@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/ecdc0501.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "A Bayesian model for estimating intervetion effects in the 2020 covid-19 pandemic.",
+  "difficulty": "unknown",
+  "id": "ecdc0501-covid19imperial-v2",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/ecdc0501-covid19imperial_v2.json",
+  "posterior_name": "ecdc0501-covid19imperial_v2",
+  "posteriordb_data_name": "ecdc0501",
+  "posteriordb_data_title": "Data on covid-19 deaths from ECDC until 2020-04-01",
+  "posteriordb_model_name": "covid19imperial_v2",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/covid19imperial_v2.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/covid19imperial_v2.stan",
+  "stan_file": "model.stan",
+  "title": "Epidemic model v2 of Flaxman et al (2020)",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 83306,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

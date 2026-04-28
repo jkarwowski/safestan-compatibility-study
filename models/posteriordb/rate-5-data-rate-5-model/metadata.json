@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/Rate_5_data.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Inference of a common rate of success from two trials with posterior predictive for each trial for checking the adequacy of the model.",
+  "difficulty": "unknown",
+  "id": "rate-5-data-rate-5-model",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/Rate_5_data-Rate_5_model.json",
+  "posterior_name": "Rate_5_data-Rate_5_model",
+  "posteriordb_data_name": "Rate_5_data",
+  "posteriordb_data_title": "Success counts from two trials",
+  "posteriordb_model_name": "Rate_5_model",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/Rate_5_model.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/Rate_5_model.stan",
+  "stan_file": "model.stan",
+  "title": "Common Rate of Success From Two Trials with Posterior Predictives",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 56,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

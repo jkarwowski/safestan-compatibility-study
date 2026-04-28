@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/dogs.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Hierarchical Logistic Mixed Effects Model.",
+  "difficulty": "unknown",
+  "id": "dogs-dogs-hierarchical",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/dogs-dogs_hierarchical.json",
+  "posterior_name": "dogs-dogs_hierarchical",
+  "posteriordb_data_name": "dogs",
+  "posteriordb_data_title": "Dog Shock Behavioural study",
+  "posteriordb_model_name": "dogs_hierarchical",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/dogs_hierarchical.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/dogs_hierarchical.stan",
+  "stan_file": "model.stan",
+  "title": "Hierarchical Logistic Mixed Effects Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 2480,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/iohmm_reg_simulated.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Input Output HMM",
+  "difficulty": "unknown",
+  "id": "iohmm-reg-simulated-iohmm-reg",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/iohmm_reg_simulated-iohmm_reg.json",
+  "posterior_name": "iohmm_reg_simulated-iohmm_reg",
+  "posteriordb_data_name": "iohmm_reg_simulated",
+  "posteriordb_data_title": "Simulated data for iohmm_reg model",
+  "posteriordb_model_name": "iohmm_reg",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/iohmm_reg.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/iohmm_reg.stan",
+  "stan_file": "model.stan",
+  "title": "Input Output HMM",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 50629,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

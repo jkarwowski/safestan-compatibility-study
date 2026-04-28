@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/irt_2pl.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Hierarchical item response theory model.",
+  "difficulty": "unknown",
+  "id": "irt-2pl-irt-2pl",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/irt_2pl-irt_2pl.json",
+  "posterior_name": "irt_2pl-irt_2pl",
+  "posteriordb_data_name": "irt_2pl",
+  "posteriordb_data_title": "Simulated data from a IRT 2PL model",
+  "posteriordb_model_name": "irt_2pl",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/irt_2pl.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/irt_2pl.stan",
+  "stan_file": "model.stan",
+  "title": "Two Parameter Logistic Item Response Theory Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 6159,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

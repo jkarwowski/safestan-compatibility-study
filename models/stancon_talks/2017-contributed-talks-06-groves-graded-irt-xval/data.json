@@ -1,0 +1,22 @@
+{
+  "G": 1,
+  "I": 3,
+  "R": 1,
+  "R_holdout": 1,
+  "S": 1,
+  "grade": [
+    1
+  ],
+  "item": [
+    1
+  ],
+  "item_holdout": [
+    1
+  ],
+  "subject": [
+    1
+  ],
+  "subject_holdout": [
+    1
+  ]
+}

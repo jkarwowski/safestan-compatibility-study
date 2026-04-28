@@ -1,0 +1,37 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from Stan example models: knitr/pest-control/stan_programs/hier_NB_regression_ncp_slopes_mod_resid.stan.",
+  "difficulty": "unknown",
+  "id": "knitr-pest-control-stan-programs-hier-nb-regression-ncp-slopes-mod-resid",
+  "include_files": [],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "empty JSON object",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "example_models",
+  "source_group_label": "Stan example models",
+  "source_path": "knitr/pest-control/stan_programs/hier_NB_regression_ncp_slopes_mod_resid.stan",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/pest-control/stan_programs/hier_NB_regression_ncp_slopes_mod_resid.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 10,
+  "synthetic_data_generator": "synthetic_data_for_missing_v1",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "/Users/jacski/safe_stan/cmdstan/bin/stanc",
+  "title": "Knitr Pest Control Stan Programs Hier Nb Regression Ncp Slopes Mod Resid",
+  "upstream_commit": "e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b",
+  "upstream_repository": "https://github.com/stan-dev/example-models"
+}

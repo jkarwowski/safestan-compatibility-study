@@ -1,0 +1,120 @@
+{
+  "N": 4,
+  "N_check_obs": 4,
+  "N_checks": 4,
+  "N_factor_configs": 3,
+  "N_inter1_factor_levels": [
+    3,
+    3,
+    3
+  ],
+  "N_inter1_factors": 3,
+  "N_inter2_factor_levels": [
+    3,
+    3,
+    3
+  ],
+  "N_inter2_factors": 3,
+  "N_main_factor_levels": [
+    3,
+    3,
+    3
+  ],
+  "N_main_factors": 3,
+  "N_samples": 4,
+  "check_idx": [
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      1,
+      2,
+      3,
+      4
+    ]
+  ],
+  "factor_config_idx": [
+    1,
+    2,
+    3,
+    3
+  ],
+  "inter1_factor_level_idx": [
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "inter2_factor_level_idx": [
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "main_factor_level_idx": [
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "t": [
+    0.1,
+    0.2,
+    0.30000000000000004,
+    0.4
+  ],
+  "y": [
+    1,
+    2,
+    3,
+    4
+  ]
+}

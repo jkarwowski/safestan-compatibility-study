@@ -1,0 +1,29 @@
+{
+  "N": 4,
+  "N_main_factor_levels": [
+    3,
+    3,
+    3
+  ],
+  "N_main_factors": 3,
+  "main_factor_level_idx": [
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ]
+  ]
+}

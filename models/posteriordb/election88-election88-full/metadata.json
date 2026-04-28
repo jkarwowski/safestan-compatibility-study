@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/election88.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "y ~ logistic(black + female + v_prev_full + (1 | age) + (1 | age_edu) \n+ (1 | state) + (1 | region_full))",
+  "difficulty": "unknown",
+  "id": "election88-election88-full",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/election88-election88_full.json",
+  "posterior_name": "election88-election88_full",
+  "posteriordb_data_name": "election88",
+  "posteriordb_data_title": "Data from seven CBS News polls conducted during the week\nbefore the 1988 presidential election",
+  "posteriordb_model_name": "election88_full",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/election88_full.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/election88_full.stan",
+  "stan_file": "model.stan",
+  "title": "Generalized Linear Mixed Effects Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 402059,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

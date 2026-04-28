@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/radon_all.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "A linear model with a global intercept and different regression coefficients using an hiearchical prior. This model uses a centered parametrization.",
+  "difficulty": "unknown",
+  "id": "radon-all-radon-variable-slope-centered",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/radon_all-radon_variable_slope_centered.json",
+  "posterior_name": "radon_all-radon_variable_slope_centered",
+  "posteriordb_data_name": "radon_all",
+  "posteriordb_data_title": "The Radon contamination dataset of Gelman and Hill (2006)",
+  "posteriordb_model_name": "radon_variable_slope_centered",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/radon_variable_slope_centered.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/radon_variable_slope_centered.stan",
+  "stan_file": "model.stan",
+  "title": "Variable slope hiearchical Radon model (centered)",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 561694,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

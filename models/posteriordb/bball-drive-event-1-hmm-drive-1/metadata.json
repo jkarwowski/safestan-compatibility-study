@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/bball_drive_event_1.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "A Hidden Markov Model with normal distribution for emission probabilities",
+  "difficulty": "unknown",
+  "id": "bball-drive-event-1-hmm-drive-1",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/bball_drive_event_1-hmm_drive_1.json",
+  "posterior_name": "bball_drive_event_1-hmm_drive_1",
+  "posteriordb_data_name": "bball_drive_event_1",
+  "posteriordb_data_title": "SportVU movement tracking data",
+  "posteriordb_model_name": "hmm_drive_1",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/hmm_drive_1.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/hmm_drive_1.stan",
+  "stan_file": "model.stan",
+  "title": "Hidden Markov Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 15650,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/normal_2.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "a gaussian mixture with unknown proportion and means, known variance\np(y|mu,theta) = theta * Normal(y|mu[1],1) + (1-theta) * Normal(y|mu[2],1)",
+  "difficulty": "unknown",
+  "id": "normal-2-normal-mixture",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/normal_2-normal_mixture.json",
+  "posterior_name": "normal_2-normal_mixture",
+  "posteriordb_data_name": "normal_2",
+  "posteriordb_data_title": "Data from a bimodal gaussian",
+  "posteriordb_model_name": "normal_mixture",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/normal_mixture.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/normal_mixture.stan",
+  "stan_file": "model.stan",
+  "title": "Two Component Gaussian Mixture Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 18241,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

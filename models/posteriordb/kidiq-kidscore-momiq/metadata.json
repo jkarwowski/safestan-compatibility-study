@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/kidiq.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "kid_score ~ mom_iq",
+  "difficulty": "unknown",
+  "id": "kidiq-kidscore-momiq",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/kidiq-kidscore_momiq.json",
+  "posterior_name": "kidiq-kidscore_momiq",
+  "posteriordb_data_name": "kidiq",
+  "posteriordb_data_title": "Cognitive test scores of three- and four-year-old children",
+  "posteriordb_model_name": "kidscore_momiq",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/kidscore_momiq.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/kidscore_momiq.stan",
+  "stan_file": "model.stan",
+  "title": "One Predictor Linear Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 11036,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

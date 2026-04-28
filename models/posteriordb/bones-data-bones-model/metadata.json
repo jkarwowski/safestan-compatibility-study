@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/bones_data.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Model to predict skeletal age by calibrating 34 indicators of skeletal maturity.",
+  "difficulty": "unknown",
+  "id": "bones-data-bones-model",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/bones_data-bones_model.json",
+  "posterior_name": "bones_data-bones_model",
+  "posteriordb_data_name": "bones_data",
+  "posteriordb_data_title": "34 Indicators of Skeletal Age From 13 Boys of 6 Months to 18 Years of Chronological Age.",
+  "posteriordb_model_name": "bones_model",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/bones_model.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/bones_model.stan",
+  "stan_file": "model.stan",
+  "title": "Latent Trait Model for Multiple Ordered Categorical Responses ",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 2961,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

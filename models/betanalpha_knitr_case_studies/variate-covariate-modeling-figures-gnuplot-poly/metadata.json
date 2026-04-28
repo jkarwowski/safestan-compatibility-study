@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "data_match": "direct",
+  "data_placeholder": false,
+  "data_source": "variate_covariate_modeling/figures/gnuplot/poly.data.R",
+  "data_status": "converted_rdump",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from Betancourt knitr case studies: variate_covariate_modeling/figures/gnuplot/poly.stan.",
+  "difficulty": "unknown",
+  "id": "variate-covariate-modeling-figures-gnuplot-poly",
+  "include_files": [],
+  "method": "sample",
+  "source_group": "betanalpha_knitr_case_studies",
+  "source_group_label": "Betancourt knitr case studies",
+  "source_path": "variate_covariate_modeling/figures/gnuplot/poly.stan",
+  "source_url": "https://github.com/betanalpha/knitr_case_studies/blob/8c568575d8f4ca7700cf9b83faf73dc4a2089df2/variate_covariate_modeling/figures/gnuplot/poly.stan",
+  "stan_file": "model.stan",
+  "title": "Variate Covariate Modeling Figures Gnuplot Poly",
+  "upstream_commit": "8c568575d8f4ca7700cf9b83faf73dc4a2089df2",
+  "upstream_data_bytes": 4012,
+  "upstream_repository": "https://github.com/betanalpha/knitr_case_studies"
+}

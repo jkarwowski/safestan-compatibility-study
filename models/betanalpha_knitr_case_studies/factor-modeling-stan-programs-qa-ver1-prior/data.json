@@ -1,0 +1,61 @@
+{
+  "L_main_cp": 3,
+  "L_main_ncp": 3,
+  "N_all_main_factor_levels": 3,
+  "N_factor_configs": 3,
+  "N_fine_t": 4,
+  "N_main_factor_levels": [
+    3,
+    3,
+    3
+  ],
+  "N_main_factors": 3,
+  "fine_t": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "main_cp_idx": [
+    1,
+    2,
+    3
+  ],
+  "main_factor_end_idx": [
+    1,
+    2,
+    3
+  ],
+  "main_factor_level_idx": [
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "main_factor_start_idx": [
+    1,
+    2,
+    3
+  ],
+  "main_ncp_idx": [
+    1,
+    2,
+    3
+  ],
+  "packed_main_factor_idx": [
+    1,
+    2,
+    3
+  ]
+}

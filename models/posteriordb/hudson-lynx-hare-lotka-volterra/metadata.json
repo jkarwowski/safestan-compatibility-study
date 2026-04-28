@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/hudson_lynx_hare.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "A statistical model to account for measurement error and unexplained variation\nthat uses the deterministic solutions to the Lotka-Volterra equations as expected population sizes",
+  "difficulty": "unknown",
+  "id": "hudson-lynx-hare-lotka-volterra",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/hudson_lynx_hare-lotka_volterra.json",
+  "posterior_name": "hudson_lynx_hare-lotka_volterra",
+  "posteriordb_data_name": "hudson_lynx_hare",
+  "posteriordb_data_title": "Data from Howard (2009), originally from Hewitt (1921)",
+  "posteriordb_model_name": "lotka_volterra",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/lotka_volterra.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/lotka_volterra.stan",
+  "stan_file": "model.stan",
+  "title": "Lotka-Volterra Error Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 470,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

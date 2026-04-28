@@ -1,0 +1,9 @@
+# Generalized Linear Mixed Effects Model
+
+- Upstream Stan file: [posterior_database/models/stan/election88_full.stan](https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/election88_full.stan)
+- Upstream data: posterior_database/data/data/election88.json.zip
+- Data status: extracted_posteriordb_zip_json
+- Source group: PosteriorDB curated models
+- Upstream repository: https://github.com/stan-dev/posteriordb
+- Upstream commit: `28f8d3d6e975315f42aa274a8399f21e07a43b30`
+- Import note: Imported from PosteriorDB posterior `election88-election88_full` using data `election88`.

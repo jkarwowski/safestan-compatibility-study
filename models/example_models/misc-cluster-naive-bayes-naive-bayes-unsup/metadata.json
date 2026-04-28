@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "data_match": "direct",
+  "data_placeholder": false,
+  "data_source": "misc/cluster/naive-bayes/naive-bayes-unsup.data.json",
+  "data_status": "copied_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from Stan example models: misc/cluster/naive-bayes/naive-bayes-unsup.stan.",
+  "difficulty": "unknown",
+  "id": "misc-cluster-naive-bayes-naive-bayes-unsup",
+  "include_files": [],
+  "method": "sample",
+  "source_group": "example_models",
+  "source_group_label": "Stan example models",
+  "source_path": "misc/cluster/naive-bayes/naive-bayes-unsup.stan",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/misc/cluster/naive-bayes/naive-bayes-unsup.stan",
+  "stan_file": "model.stan",
+  "title": "Misc Cluster Naive Bayes Naive Bayes Unsup",
+  "upstream_commit": "e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b",
+  "upstream_data_bytes": 15379,
+  "upstream_repository": "https://github.com/stan-dev/example-models"
+}

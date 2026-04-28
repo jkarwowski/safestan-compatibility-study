@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/lsat_data.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "One-parameter 'Rasch Model' where the probability that a student\n          responds correctly to a question is assumed to follow a logistic\n          function parameterized by 'item difficulty' and a latent variable\n          representing the students underlying ability.",
+  "difficulty": "unknown",
+  "id": "lsat-data-lsat-model",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/lsat_data-lsat_model.json",
+  "posterior_name": "lsat_data-lsat_model",
+  "posteriordb_data_name": "lsat_data",
+  "posteriordb_data_title": "32 Possible LSAT Response Patterns & Their Cumulative Frequencies",
+  "posteriordb_model_name": "lsat_model",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/lsat_model.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/lsat_model.stan",
+  "stan_file": "model.stan",
+  "title": "Random Effects (Rasch) Model for True Difficulty of LSAT Questions",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 923,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

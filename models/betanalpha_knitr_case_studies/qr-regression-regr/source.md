@@ -1,0 +1,9 @@
+# Qr Regression Regr
+
+- Upstream Stan file: [qr_regression/regr.stan](https://github.com/betanalpha/knitr_case_studies/blob/8c568575d8f4ca7700cf9b83faf73dc4a2089df2/qr_regression/regr.stan)
+- Upstream data: qr_regression/regr.data.R
+- Data status: converted_rdump
+- Source group: Betancourt knitr case studies
+- Upstream repository: https://github.com/betanalpha/knitr_case_studies
+- Upstream commit: `8c568575d8f4ca7700cf9b83faf73dc4a2089df2`
+- Import note: Copied into the repository's standard model-directory layout.

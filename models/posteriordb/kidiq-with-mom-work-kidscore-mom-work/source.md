@@ -1,0 +1,9 @@
+# Multiple Factor Level Predictors Linear Model
+
+- Upstream Stan file: [posterior_database/models/stan/kidscore_mom_work.stan](https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/kidscore_mom_work.stan)
+- Upstream data: posterior_database/data/data/kidiq_with_mom_work.json.zip
+- Data status: extracted_posteriordb_zip_json
+- Source group: PosteriorDB curated models
+- Upstream repository: https://github.com/stan-dev/posteriordb
+- Upstream commit: `28f8d3d6e975315f42aa274a8399f21e07a43b30`
+- Import note: Imported from PosteriorDB posterior `kidiq_with_mom_work-kidscore_mom_work` using data `kidiq_with_mom_work`.

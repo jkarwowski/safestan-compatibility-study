@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/mesquite.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "weight ~ diam1 + diam2 + canopy.height + total.height + density + group",
+  "difficulty": "unknown",
+  "id": "mesquite-mesquite",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/mesquite-mesquite.json",
+  "posterior_name": "mesquite-mesquite",
+  "posteriordb_data_name": "mesquite",
+  "posteriordb_data_title": "Total production (biomass) of mesquite leaves as function of easily measured parameters of the plant,\nbefore actual harvesting takes place. Two groups: 26 mesquite bushes and 20 mesquite bushes measured\nat a different time of year.",
+  "posteriordb_model_name": "mesquite",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/mesquite.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/mesquite.stan",
+  "stan_file": "model.stan",
+  "title": "Multiple Predictors Linear Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 1618,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

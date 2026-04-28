@@ -1,0 +1,27 @@
+{
+  "data_file": "data.json",
+  "data_match": "direct",
+  "data_placeholder": false,
+  "data_source": "2017/Contributed-Talks/05_margossian/models/effCpt/effCpt.data.R",
+  "data_status": "converted_rdump",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from StanCon talks: 2017/Contributed-Talks/05_margossian/models/effCpt/effCpt.stan.",
+  "difficulty": "unknown",
+  "id": "2017-contributed-talks-05-margossian-models-effcpt-effcpt",
+  "include_files": [],
+  "method": "sample",
+  "source_group": "stancon_talks",
+  "source_group_label": "StanCon talks",
+  "source_path": "2017/Contributed-Talks/05_margossian/models/effCpt/effCpt.stan",
+  "source_url": "https://github.com/stan-dev/stancon_talks/blob/affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb/2017/Contributed-Talks/05_margossian/models/effCpt/effCpt.stan",
+  "stan_file": "model.stan",
+  "title": "2017 Contributed Talks 05 Margossian Models Effcpt Effcpt",
+  "upstream_commit": "affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb",
+  "upstream_data_bytes": 643,
+  "upstream_repository": "https://github.com/stan-dev/stancon_talks"
+}

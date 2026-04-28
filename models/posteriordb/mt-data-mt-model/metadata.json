@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/Mt_data.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "A capture-recapture sampling model where that assumes \n          detection probability p varies only by occasion, perhaps because of \n          weather conditions or because different traps or detection devices were used",
+  "difficulty": "unknown",
+  "id": "mt-data-mt-model",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/Mt_data-Mt_model.json",
+  "posterior_name": "Mt_data-Mt_model",
+  "posteriordb_data_name": "Mt_data",
+  "posteriordb_data_title": "Individuals detected or undetected in capture-recapture sampling",
+  "posteriordb_model_name": "Mt_model",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/Mt_model.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/Mt_model.stan",
+  "stan_file": "model.stan",
+  "title": "Capture-recapture model where detection probability varies by occasion",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 3836,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

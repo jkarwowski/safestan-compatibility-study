@@ -1,0 +1,43 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "A One Layer Restricted Boltzman Machine Neural Network with added bias and 100 hidden units. The implementation follows that of Lampainen and Vehtari (2001).",
+  "difficulty": "unknown",
+  "id": "mnist-nn-rbm1bj100",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/mnist-nn_rbm1bJ100.json",
+  "posterior_name": "mnist-nn_rbm1bJ100",
+  "posteriordb_data_name": "mnist",
+  "posteriordb_data_title": "The full MNIST dataset",
+  "posteriordb_model_name": "nn_rbm1bJ100",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "posterior_database/data/data/mnist.json.zip",
+    "data_status": "skipped_large_posteriordb_json:183242496",
+    "upstream_data_bytes": 183242496
+  },
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/nn_rbm1bJ100.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/nn_rbm1bJ100.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 5,
+  "synthetic_data_generator": "synthetic_data_for_missing_v1",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "/Users/jacski/safe_stan/cmdstan/bin/stanc",
+  "title": "A One Layer Restricted Boltzman Machine Neural Network (100 hidden units)",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 183242496,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

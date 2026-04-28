@@ -1,6 +1,6 @@
 # Model List
 
-This repository contains 45 Stan models grouped by source. Each model directory contains `model.stan`, `data.json`, `metadata.json`, `source.md`, and `run.py`. SafeStan translations, where produced, are mirrored in the same dir structure in `models_safe/`.
+This table lists the original 45 curated Stan models grouped by source. The repository also contains 1,117 external imports under `models/posteriordb`, `models/stancon_talks`, `models/bda_r_demos`, `models/betanalpha_knitr_case_studies`, and `models/example_models`; see `models/EXTERNAL_IMPORT_SUMMARY.md` for those source-level counts. Each model directory contains `model.stan`, `data.json`, `metadata.json`, `source.md`, and `run.py`. SafeStan translations, where produced, are mirrored in the same dir structure in `models_safe/`.
 
 | Category | Model | Difficulty | Source | Data | SafeStan | Description | Result same? |
 |---|---|---:|---|---|---:|---|---|

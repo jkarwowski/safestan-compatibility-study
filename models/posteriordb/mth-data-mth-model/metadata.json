@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/Mth_data.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "A capture-recapture sampling model where that assumes \n          detection probability p varies by an additive effect of the occasion\n          and heterogeneity of individuals in a capture-history matrix with\n          columns representing time, and rows representing individuals.",
+  "difficulty": "unknown",
+  "id": "mth-data-mth-model",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/Mth_data-Mth_model.json",
+  "posterior_name": "Mth_data-Mth_model",
+  "posteriordb_data_name": "Mth_data",
+  "posteriordb_data_title": "Individuals detected or undetected in capture-recapture sampling",
+  "posteriordb_model_name": "Mth_model",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/Mth_model.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/Mth_model.stan",
+  "stan_file": "model.stan",
+  "title": "Capture-recapture model where detection probability varies by occasion and heterogeneity",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 8558,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

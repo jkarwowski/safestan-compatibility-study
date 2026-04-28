@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/synthetic_grid_RBF_kernels.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Gaussian Process using Kronecker structure",
+  "difficulty": "unknown",
+  "id": "synthetic-grid-rbf-kernels-kronecker-gp",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/synthetic_grid_RBF_kernels-kronecker_gp.json",
+  "posterior_name": "synthetic_grid_RBF_kernels-kronecker_gp",
+  "posteriordb_data_name": "synthetic_grid_RBF_kernels",
+  "posteriordb_data_title": "Synthetic 2D grid data",
+  "posteriordb_model_name": "kronecker_gp",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/kronecker_gp.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/kronecker_gp.stan",
+  "stan_file": "model.stan",
+  "title": "Kronecker Gaussian Process",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 18561,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

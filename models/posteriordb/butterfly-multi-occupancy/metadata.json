@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/butterfly.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "a hierarchical occupancy model for estimating\nspecies richness and accumulation by forming these community-level\nattributes as functions of model-based estimators of species occurence\nwhile accounting for imperfect detection of individual species.",
+  "difficulty": "unknown",
+  "id": "butterfly-multi-occupancy",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/butterfly-multi_occupancy.json",
+  "posterior_name": "butterfly-multi_occupancy",
+  "posteriordb_data_name": "butterfly",
+  "posteriordb_data_title": "Data from Dorazio et al. (2006)",
+  "posteriordb_model_name": "multi_occupancy",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/multi_occupancy.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/multi_occupancy.stan",
+  "stan_file": "model.stan",
+  "title": "Multiple Species-Site Occupancy Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 1948,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

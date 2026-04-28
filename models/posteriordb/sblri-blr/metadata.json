@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/sblri.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "A Bayesian linear regression model with vague priors.",
+  "difficulty": "unknown",
+  "id": "sblri-blr",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/sblri-blr.json",
+  "posterior_name": "sblri-blr",
+  "posteriordb_data_name": "sblri",
+  "posteriordb_data_title": "Data for Bayesian Linear Regession with independent betas.",
+  "posteriordb_model_name": "blr",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/blr.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/blr.stan",
+  "stan_file": "model.stan",
+  "title": "A Bayesian linear regression model with vague priors",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 11691,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

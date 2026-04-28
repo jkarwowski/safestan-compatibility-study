@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/eight_schools.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "A centered hiearchical model for the 8 schools example of Rubin (1981)",
+  "difficulty": "unknown",
+  "id": "eight-schools-eight-schools-centered",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/eight_schools-eight_schools_centered.json",
+  "posterior_name": "eight_schools-eight_schools_centered",
+  "posteriordb_data_name": "eight_schools",
+  "posteriordb_data_title": "The 8 schools dataset of Rubin (1981)",
+  "posteriordb_model_name": "eight_schools_centered",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/eight_schools_centered.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/eight_schools_centered.stan",
+  "stan_file": "model.stan",
+  "title": "A centered hiearchical model for 8 schools",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 95,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

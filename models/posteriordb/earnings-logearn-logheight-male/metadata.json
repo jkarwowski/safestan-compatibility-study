@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/earnings.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "log(earn) ~ log(height) + male",
+  "difficulty": "unknown",
+  "id": "earnings-logearn-logheight-male",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/earnings-logearn_logheight_male.json",
+  "posterior_name": "earnings-logearn_logheight_male",
+  "posteriordb_data_name": "earnings",
+  "posteriordb_data_title": "Heights and earnings of men and women",
+  "posteriordb_model_name": "logearn_logheight_male",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/logearn_logheight_male.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/logearn_logheight_male.stan",
+  "stan_file": "model.stan",
+  "title": "Multiple Predictors Log-Log Model",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 16509,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

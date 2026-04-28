@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/science_irt.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "The rating scale model (Andrich 1978) is used for item response data that involves Likert scale responses. This model extends the RSM by including a discrimination term",
+  "difficulty": "unknown",
+  "id": "science-irt-grsm-latent-reg-irt",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/science_irt-grsm_latent_reg_irt.json",
+  "posterior_name": "science_irt-grsm_latent_reg_irt",
+  "posteriordb_data_name": "science_irt",
+  "posteriordb_data_title": "This data set comes from the Consumer Protection and Perceptions of Science and Technology section of the 1992 Euro-Barometer Survey (Karlheinz and Melich, 1992) based on a sample from Great Britain. T",
+  "posteriordb_model_name": "grsm_latent_reg_irt",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/grsm_latent_reg_irt.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/grsm_latent_reg_irt.stan",
+  "stan_file": "model.stan",
+  "title": "Rating scale and generalized rating scale models with latent regression",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 33046,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

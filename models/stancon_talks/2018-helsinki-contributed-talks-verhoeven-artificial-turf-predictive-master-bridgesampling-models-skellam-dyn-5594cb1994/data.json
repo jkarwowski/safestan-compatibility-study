@@ -1,0 +1,51 @@
+{
+  "away_team": [
+    1,
+    2,
+    3,
+    1
+  ],
+  "away_team_pred": [
+    1,
+    2,
+    3
+  ],
+  "away_week": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "goal_difference": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "home_team": [
+    1,
+    2,
+    3,
+    1
+  ],
+  "home_team_pred": [
+    1,
+    2,
+    3
+  ],
+  "home_week": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "n_games": 4,
+  "n_games_pred": 3,
+  "n_teams": 3,
+  "n_weeks": 4,
+  "prev_perf": [
+    0.1,
+    0.2,
+    0.30000000000000004
+  ]
+}

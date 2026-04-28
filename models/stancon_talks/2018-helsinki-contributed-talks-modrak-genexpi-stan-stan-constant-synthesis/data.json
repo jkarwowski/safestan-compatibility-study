@@ -1,0 +1,21 @@
+{
+  "asymptotic_normalized_state_prior_sigma": 1.0,
+  "degradation_prior_mean": 0.1,
+  "degradation_prior_sigma": 1.0,
+  "expression": [
+    0.1,
+    0.2,
+    0.30000000000000004,
+    0.4
+  ],
+  "initial_condition_prior_sigma": 1.0,
+  "measurement_sigma_absolute": 0.5,
+  "measurement_sigma_relative": 0.5,
+  "measurement_times": [
+    0.5,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "num_measurements": 4
+}

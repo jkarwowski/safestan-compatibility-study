@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/GLM_Poisson_Data.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Poisson Generalised Linear Model where the linear predictor is a cubic polynomial function of time.",
+  "difficulty": "unknown",
+  "id": "glm-poisson-data-glm-poisson-model",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/GLM_Poisson_Data-GLM_Poisson_model.json",
+  "posterior_name": "GLM_Poisson_Data-GLM_Poisson_model",
+  "posteriordb_data_name": "GLM_Poisson_Data",
+  "posteriordb_data_title": "Counts of a Population of Peregrines 1964-2003",
+  "posteriordb_model_name": "GLM_Poisson_model",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/GLM_Poisson_model.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/GLM_Poisson_model.stan",
+  "stan_file": "model.stan",
+  "title": "Poisson GLM for modeling a population of Peregrines",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 980,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}

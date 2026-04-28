@@ -1,0 +1,38 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from StanCon talks: 2018/Contributed-Talks/13_comment/mediation_unmeasured_mc.stan.",
+  "difficulty": "unknown",
+  "id": "2018-contributed-talks-13-comment-mediation-unmeasured-mc",
+  "include_files": [],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "empty JSON object",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "stancon_talks",
+  "source_group_label": "StanCon talks",
+  "source_path": "2018/Contributed-Talks/13_comment/mediation_unmeasured_mc.stan",
+  "source_url": "https://github.com/stan-dev/stancon_talks/blob/affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb/2018/Contributed-Talks/13_comment/mediation_unmeasured_mc.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 12,
+  "synthetic_data_generator": "synthetic_data_for_missing_v1",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "data_block_parser_fallback",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "/Users/jacski/safe_stan/cmdstan/bin/stanc",
+  "synthetic_data_stanc_error": "Syntax error in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-13-comment-mediation-unmeasured-mc/model.stan', line 11, column 25 to column 26, parsing error:",
+  "title": "2018 Contributed Talks 13 Comment Mediation Unmeasured Mc",
+  "upstream_commit": "affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb",
+  "upstream_repository": "https://github.com/stan-dev/stancon_talks"
+}

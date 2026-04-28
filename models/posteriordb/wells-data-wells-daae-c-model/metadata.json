@@ -1,0 +1,31 @@
+{
+  "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "posterior_database/data/data/wells_data.json.zip",
+  "data_status": "extracted_posteriordb_zip_json",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Performs logistic regression using four centered predictors:\n          distance from nearest safe well, arsenic levels, years in\n          education, and if the individual is associated with an active community project.\n          The association predictor is not actually predictive of switching.\n          ",
+  "difficulty": "unknown",
+  "id": "wells-data-wells-daae-c-model",
+  "include_files": [],
+  "method": "sample",
+  "posterior_info_path": "posterior_database/posteriors/wells_data-wells_daae_c_model.json",
+  "posterior_name": "wells_data-wells_daae_c_model",
+  "posteriordb_data_name": "wells_data",
+  "posteriordb_data_title": "Factors affecting the decision to switch wells",
+  "posteriordb_model_name": "wells_daae_c_model",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_path": "posterior_database/models/stan/wells_daae_c_model.stan",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/wells_daae_c_model.stan",
+  "stan_file": "model.stan",
+  "title": "4-Predictor logistic regression model with centered inputs for decision to switch wells",
+  "upstream_commit": "28f8d3d6e975315f42aa274a8399f21e07a43b30",
+  "upstream_data_bytes": 99358,
+  "upstream_repository": "https://github.com/stan-dev/posteriordb"
+}
