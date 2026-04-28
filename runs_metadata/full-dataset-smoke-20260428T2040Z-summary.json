@@ -1,0 +1,1541 @@
+{
+  "source_report": "runs_metadata/full-dataset-smoke-20260428T2040Z.json",
+  "run_id": "full-dataset-smoke-20260428T2040Z",
+  "models_root": "models",
+  "cmdstan": "/Users/jacski/safe_stan/cmdstan",
+  "planned_total": 1248,
+  "total": 1248,
+  "ok": 1080,
+  "fail": 168,
+  "elapsed_seconds": 3178.665,
+  "category_counts": {
+    "compile_or_stanc": 4,
+    "constraint_or_domain": 5,
+    "index_out_of_range": 9,
+    "initialization_failed": 37,
+    "invalid_binomial_counts": 11,
+    "nan_runtime": 5,
+    "other": 95,
+    "timeout": 2
+  },
+  "failure_counts_by_collection": {
+    "bda_r_demos": 3,
+    "betanalpha_knitr_case_studies": 52,
+    "example_models": 80,
+    "stancon_talks": 33
+  },
+  "failures": [
+    {
+      "model": "models/bda_r_demos/demos-rstan-binom",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.346,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__bda_r_demos__demos-rstan-binom.log",
+      "message": "Exception: binomial_lpmf: Successes variable is 3, but must be in the interval [0, 1] (in '/Users/jacski/synthstats/stan-collection/models/bda_r_demos/demos-rstan-binom/model.stan', line 12, column 2 to column 25)"
+    },
+    {
+      "model": "models/bda_r_demos/demos-rstan-binom2",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.428,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__bda_r_demos__demos-rstan-binom2.log",
+      "message": "Exception: binomial_lpmf: Successes variable is 2, but must be in the interval [0, 1] (in '/Users/jacski/synthstats/stan-collection/models/bda_r_demos/demos-rstan-binom2/model.stan', line 16, column 2 to column 28)"
+    },
+    {
+      "model": "models/bda_r_demos/demos-rstan-lin-std-t",
+      "category": "nan_runtime",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.25,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__bda_r_demos__demos-rstan-lin-std-t.log",
+      "message": "Exception: student_t_lpdf: Random variable[1] is nan, but must be not nan! (in '/Users/jacski/synthstats/stan-collection/models/bda_r_demos/demos-rstan-lin-std-t/model.stan', line 29, column 2 to column 43)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-bridge-post-cp",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.79,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__brownian-bridge-stan-programs-brownian-bridge-post-cp.log",
+      "message": "Exception: Exception: normal_lpdf: Location parameter is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-bridge-post-cp/model.stan', line 5, column 4 to column 45) (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-bridge-post-cp/model.stan', line 46, column 4 to line 48, column 85)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-bridge-post-ncp",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.973,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__brownian-bridge-stan-programs-brownian-bridge-post-ncp.log",
+      "message": "Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-bridge-post-ncp/model.stan', line 58, column 2 to column 37)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-bridge-prior-cp",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.575,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__brownian-bridge-stan-programs-brownian-bridge-prior-cp.log",
+      "message": "Exception: Exception: normal_lpdf: Location parameter is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-bridge-prior-cp/model.stan', line 5, column 4 to column 45) (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-bridge-prior-cp/model.stan', line 40, column 4 to line 42, column 85)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-bridge-prior-ncp",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.747,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__brownian-bridge-stan-programs-brownian-bridge-prior-ncp.log",
+      "message": "Gradient evaluated at the initial value is not finite."
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-fit-ou-analytic-all-t",
+      "category": "index_out_of_range",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.344,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__brownian-bridge-stan-programs-fit-ou-analytic-all-t.log",
+      "message": "Exception: array[uni, ...] index: accessing element out of range. index 0 out of range; expecting index to be between 1 and 5 (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-fit-ou-analytic-all-t/model.stan', line 44, column 4 to column 49)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-marginal-conditional-residual-mixed",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.306,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-marginal-conditional-residual-mixed.log",
+      "message": "Exception: normal_lpdf: Location parameter[2] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-marginal-conditional-residual-mixed/model.stan', line 70, column 2 to column 51)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-cp",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.133,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-overlapping-factors-cp.log",
+      "message": "Exception: vector assign rows: assigning variable delta_main (3) and right hand side rows (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-cp/model.stan', line 62, column 4 to line 63, column 75)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-mixed",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.345,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-overlapping-factors-mixed.log",
+      "message": "Exception: vector assign rows: assigning variable delta_main (3) and right hand side rows (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-mixed/model.stan', line 101, column 4 to line 102, column 75)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.177,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-overlapping-factors-ver1.log",
+      "message": "Exception: vector assign rows: assigning variable delta_main (3) and right hand side rows (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver1/model.stan', line 104, column 4 to line 105, column 75)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.848,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-overlapping-factors-ver2.log",
+      "message": "Exception: vector assign rows: assigning variable delta_main (3) and right hand side rows (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver2/model.stan', line 130, column 4 to line 131, column 75)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver2-pred",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.974,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-overlapping-factors-ver2-pred.log",
+      "message": "Exception: vector assign rows: assigning variable delta_main (3) and right hand side rows (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver2-pred/model.stan', line 80, column 4 to line 81, column 75)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver3",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.822,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-overlapping-factors-ver3.log",
+      "message": "Exception: vector assign rows: assigning variable delta_main (3) and right hand side rows (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver3/model.stan', line 151, column 4 to line 152, column 75)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.722,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-qa-ver1.log",
+      "message": "Exception: vector assign rows: assigning variable delta_main (3) and right hand side rows (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver1/model.stan', line 121, column 4 to line 122, column 75)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver1-prior",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.511,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-qa-ver1-prior.log",
+      "message": "Exception: vector assign rows: assigning variable delta_main (3) and right hand side rows (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver1-prior/model.stan', line 63, column 6 to line 64, column 77)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.633,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-qa-ver2.log",
+      "message": "Exception: vector assign rows: assigning variable delta_main (3) and right hand side rows (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver2/model.stan', line 147, column 4 to line 148, column 75)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver2-prior",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.025,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__factor-modeling-stan-programs-qa-ver2-prior.log",
+      "message": "Exception: vector assign rows: assigning variable delta_main (3) and right hand side rows (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver2-prior/model.stan', line 90, column 6 to line 91, column 77)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/falling-inv-gamma-tune",
+      "category": "constraint_or_domain",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.554,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__falling-inv-gamma-tune.log",
+      "message": "Exception: solve_powell: initial guess[1] is inf, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/falling-inv-gamma-tune/model.stan', line 34, column 2 to column 59)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-fit-adc2",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.722,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__hierarchical-modeling-stan-programs-fit-adc2.log",
+      "message": "Exception: poisson_log_lpmf: Log rate parameter[2] is nan, but must be not nan! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-fit-adc2/model.stan', line 83, column 2 to column 57)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-fit-adc3",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.84,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__hierarchical-modeling-stan-programs-fit-adc3.log",
+      "message": "Exception: poisson_log_lpmf: Log rate parameter[2] is nan, but must be not nan! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-fit-adc3/model.stan', line 91, column 2 to column 57)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-hierarchical-mix",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.171,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__hierarchical-modeling-stan-programs-hierarchical-mix.log",
+      "message": "Exception: normal_lpdf: Location parameter[2] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-hierarchical-mix/model.stan', line 39, column 2 to column 38)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-cauchy-narrow",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.86,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-cauchy-narrow.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-cauchy-narrow/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-cauchy-wide",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.85,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-cauchy-wide.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-cauchy-wide/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-cauchy",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.791,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-fit-sales-cauchy.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K_cp; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-cauchy/model.stan', line 11, column 2 to column 38)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-horseshoe",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.951,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-fit-sales-horseshoe.log",
+      "message": "Exception: mismatch in number dimensions declared and found in context; processing stage=data initialization; variable name=w; dims declared=(370); dims found=() (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-horseshoe/model.stan', line 11, column 2 to column 41)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-laplace",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.736,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-fit-sales-laplace.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K_cp; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-laplace/model.stan', line 11, column 2 to column 38)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-normal",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.727,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-fit-sales-normal.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K_cp; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-normal/model.stan', line 11, column 2 to column 38)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-normal-mixture",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.857,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-fit-sales-normal-mixture.log",
+      "message": "Exception: mismatch in number dimensions declared and found in context; processing stage=data initialization; variable name=w; dims declared=(370); dims found=() (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-normal-mixture/model.stan', line 11, column 2 to column 41)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-geldingshoe-cp",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.339,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-geldingshoe-cp.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-geldingshoe-cp/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-geldingshoe-mixed",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.785,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-geldingshoe-mixed.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-geldingshoe-mixed/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-geldingshoe-partial",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.299,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-geldingshoe-partial.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-geldingshoe-partial/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-cauchy-cp",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.962,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-hier-cauchy-cp.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-cauchy-cp/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-laplace-cp",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.861,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-hier-laplace-cp.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-laplace-cp/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-normal-cp",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.854,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-hier-normal-cp.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-normal-cp/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-normal-mixture-cp",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.911,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-hier-normal-mixture-cp.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-normal-mixture-cp/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-normal-mixture-partial",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.132,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-hier-normal-mixture-partial.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-normal-mixture-partial/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-horseshoe-mixed",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.931,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-horseshoe-mixed.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-horseshoe-mixed/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-horseshoe-partial",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.515,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-horseshoe-partial.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-horseshoe-partial/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-laplace-narrow",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.811,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-laplace-narrow.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-laplace-narrow/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-laplace-wide",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.798,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-laplace-wide.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-laplace-wide/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-normal-narrow",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.743,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-normal-narrow.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-normal-narrow/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-normal-wide",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.745,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__modeling-sparsity-stan-programs-normal-wide.log",
+      "message": "Exception: variable does not exist; processing stage=data initialization; variable name=K; base type=int (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-normal-wide/model.stan', line 2, column 2 to column 17)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug2a",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.157,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__stan-intro-stan-programs-debug2a.log",
+      "message": "Exception: normal_lpdf: Location parameter is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug2a/model.stan', line 11, column 2 to column 23)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug2b",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.163,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__stan-intro-stan-programs-debug2b.log",
+      "message": "Rejecting initial value:"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug3a",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.381,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__stan-intro-stan-programs-debug3a.log",
+      "message": "Exception: Found negative dimension size in variable declaration; variable=mu; dimension size expression=N; expression value=-2147483648 (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug3a/model.stan', line 3, column 8 to column 9)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug4a",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.381,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__stan-intro-stan-programs-debug4a.log",
+      "message": "Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug4a/model.stan', line 13, column 2 to column 20)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug4b",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.433,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__stan-intro-stan-programs-debug4b.log",
+      "message": "Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug4b/model.stan', line 14, column 2 to column 20)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/stochastic-differential-equations-stan-programs-fit-ou-analytic-all-t",
+      "category": "index_out_of_range",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.32,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__stochastic-differential-equations-stan-programs-fit-ou-analytic-all-t.log",
+      "message": "Exception: array[uni, ...] index: accessing element out of range. index 0 out of range; expecting index to be between 1 and 5 (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/stochastic-differential-equations-stan-programs-fit-ou-analytic-all-t/model.stan', line 44, column 4 to column 49)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/stochastic-differential-equations-stan-programs-fit-ou-em-all-t",
+      "category": "index_out_of_range",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.304,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__stochastic-differential-equations-stan-programs-fit-ou-em-all-t.log",
+      "message": "Exception: array[uni, ...] index: accessing element out of range. index 0 out of range; expecting index to be between 1 and 5 (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/stochastic-differential-equations-stan-programs-fit-ou-em-all-t/model.stan', line 45, column 4 to column 35)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/survival-modeling-stan-programs-fit-const-haz-cens",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.466,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__survival-modeling-stan-programs-fit-const-haz-cens.log",
+      "message": "Log probability evaluates to log(0), i.e. negative infinity."
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/survival-modeling-stan-programs-simu-const-haz-cens-cond1",
+      "category": "timeout",
+      "returncode": null,
+      "timed_out": true,
+      "elapsed_seconds": 600.013,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__survival-modeling-stan-programs-simu-const-haz-cens-cond1.log",
+      "message": "TIMEOUT after 599.999907665886 seconds"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/survival-modeling-stan-programs-simu-const-haz-cens-cond2",
+      "category": "constraint_or_domain",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.379,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__survival-modeling-stan-programs-simu-const-haz-cens-cond2.log",
+      "message": "Exception: neg_binomial_rng: Inverse scale parameter is 0, but must be positive finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/survival-modeling-stan-programs-simu-const-haz-cens-cond2/model.stan', line 29, column 2 to column 56)"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/taylor-models-stan-programs-linear-multi-prior-sales",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.495,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__betanalpha_knitr_case_studies__taylor-models-stan-programs-linear-multi-prior-sales.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 3 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/taylor-models-stan-programs-linear-multi-prior-sales/model.stan', line 27, column 2 to column 32)"
+    },
+    {
+      "model": "models/example_models/arm-ch-10-ideo-two-pred",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.936,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-10-ideo-two-pred.log",
+      "message": "Exception: mismatch in number dimensions declared and found in context; processing stage=data initialization; variable name=x; dims declared=(357); dims found=() (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-10-ideo-two-pred/model.stan', line 5, column 2 to column 14)"
+    },
+    {
+      "model": "models/example_models/arm-ch-16-radon-1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.886,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-16-radon-1.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-1/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-1/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-16-radon-1/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-16-radon-2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.527,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-16-radon-2.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-2/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-2/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-16-radon-2/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-16-radon-2a",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.587,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-16-radon-2a.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-2a/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-2a/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-16-radon-2a/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-16-radon-2b",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.651,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-16-radon-2b.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-2b/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-2b/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-16-radon-2b/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-16-radon-3",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.52,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-16-radon-3.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-3/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-3/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-16-radon-3/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-16-radon-nopooling",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.92,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-16-radon-nopooling.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-nopooling/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-nopooling/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-16-radon-nopooling/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-16-radon-pooling",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.696,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-16-radon-pooling.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-pooling/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-16-radon-pooling/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-16-radon-pooling/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-latent-glm-17-7",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.446,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-latent-glm-17-7.log",
+      "message": "Log probability evaluates to log(0), i.e. negative infinity."
+    },
+    {
+      "model": "models/example_models/arm-ch-17-multilevel-ordered-categorical-17-6",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.393,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-multilevel-ordered-categorical-17-6.log",
+      "message": "Exception: categorical_lpmf: Probabilities parameter is not a valid simplex. Probabilities parameter[2] = -0.376781, but should be greater than or equal to 0 (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-multilevel-ordered-categorical-17-6/model.stan', line 50, column 4 to column 45)"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-multilevel-poisson-17-5",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.573,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-multilevel-poisson-17-5.log",
+      "message": "Log probability evaluates to log(0), i.e. negative infinity."
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-correlation-17-1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.487,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-radon-correlation-17-1.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-correlation-17-1/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-correlation-17-1/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-17-radon-correlation-17-1/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-correlation-17-2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.555,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-radon-correlation-17-2.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-correlation-17-2/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-correlation-17-2/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-17-radon-correlation-17-2/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-multi-varying-coef-17-1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 6.928,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-radon-multi-varying-coef-17-1.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-multi-varying-coef-17-1/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-multi-varying-coef-17-1/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-17-radon-multi-varying-coef-17-1/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-multi-varying-coef-17-2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 7.625,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-radon-multi-varying-coef-17-2.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-multi-varying-coef-17-2/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-multi-varying-coef-17-2/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-17-radon-multi-varying-coef-17-2/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-vary-inter-slope-17-1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.035,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-radon-vary-inter-slope-17-1.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-vary-inter-slope-17-1/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-vary-inter-slope-17-1/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-17-radon-vary-inter-slope-17-1/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-vary-inter-slope-17-2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.294,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-radon-vary-inter-slope-17-2.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-vary-inter-slope-17-2/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-vary-inter-slope-17-2/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-17-radon-vary-inter-slope-17-2/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-wishart-17-1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 6.445,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-radon-wishart-17-1.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-wishart-17-1/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-wishart-17-1/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-17-radon-wishart-17-1/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-wishart-17-2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 6.44,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-radon-wishart-17-2.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-wishart-17-2/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-wishart-17-2/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-17-radon-wishart-17-2/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-wishart2-17-1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 6.393,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-radon-wishart2-17-1.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-wishart2-17-1/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-wishart2-17-1/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-17-radon-wishart2-17-1/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-robit-17-7",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.636,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-17-robit-17-7.log",
+      "message": "Exception: student_t_lpdf: Scale parameter is nan, but must be positive finite! (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-robit-17-7/model.stan', line 93, column 4 to column 64)"
+    },
+    {
+      "model": "models/example_models/arm-ch-18-radon-1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.589,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-18-radon-1.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-18-radon-1/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-18-radon-1/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-18-radon-1/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-18-radon-2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.435,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-18-radon-2.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-18-radon-2/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-18-radon-2/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-18-radon-2/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-18-radon-nopooling",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.374,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-18-radon-nopooling.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-18-radon-nopooling/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-18-radon-nopooling/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-18-radon-nopooling/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-18-radon-pooling",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.436,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-18-radon-pooling.log",
+      "message": "/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-18-radon-pooling/model id=1 sample num_warmup=20 num_samples=20 save_warmup=0 data file=/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-18-radon-pooling/data.json random seed=12345 output file=/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/models/example_models/arm-ch-18-radon-pooling/chain-1.csv refresh=0"
+    },
+    {
+      "model": "models/example_models/arm-ch-19-item-response",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.086,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-19-item-response.log",
+      "message": "Exception: vector assign rows: assigning variable b_hat_raw (2) and right hand side rows (3) must match in size (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-19-item-response/model.stan', line 35, column 2 to column 40)"
+    },
+    {
+      "model": "models/example_models/arm-ch-21-radon-vary-intercept-a",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.264,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-21-radon-vary-intercept-a.log",
+      "message": "Exception: mismatch in dimension declared and found in context; processing stage=data initialization; variable name=u; position=0; dims declared=(85); dims found=(919) (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-21-radon-vary-intercept-a/model.stan', line 5, column 2 to column 14)"
+    },
+    {
+      "model": "models/example_models/arm-ch-21-radon-vary-intercept-b",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.356,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-21-radon-vary-intercept-b.log",
+      "message": "Exception: mismatch in dimension declared and found in context; processing stage=data initialization; variable name=u; position=0; dims declared=(85); dims found=(919) (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-21-radon-vary-intercept-b/model.stan', line 5, column 2 to column 14)"
+    },
+    {
+      "model": "models/example_models/arm-ch-23-educational-subsidy",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.567,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-23-educational-subsidy.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 3 (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-23-educational-subsidy/model.stan', line 28, column 4 to line 29, column 76)"
+    },
+    {
+      "model": "models/example_models/arm-ch-23-sesame-street2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.065,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-23-sesame-street2.log",
+      "message": "Exception: mismatch in number dimensions declared and found in context; processing stage=data initialization; variable name=pretest; dims declared=(240); dims found=() (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-23-sesame-street2/model.stan', line 4, column 2 to column 20)"
+    },
+    {
+      "model": "models/example_models/arm-ch-5-separation",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.939,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-5-separation.log",
+      "message": "Exception: mismatch in number dimensions declared and found in context; processing stage=data initialization; variable name=x; dims declared=(60,1); dims found=(60) (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-5-separation/model.stan', line 4, column 2 to column 17)"
+    },
+    {
+      "model": "models/example_models/arm-ch-7-wells",
+      "category": "constraint_or_domain",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.389,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-7-wells.log",
+      "message": "Exception: bernoulli_logit_glm_lpmf: Weight vector has dimension = 2, expecting dimension = 1; a function was called with arguments of different scalar, array, vector, or matrix types, and they were not consistently sized;  all arguments must be scalars or multidimensional values of the same shape. (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-7-wells/model.stan', line 14, column 2 to column 46)"
+    },
+    {
+      "model": "models/example_models/arm-ch-8-y-x",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.006,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-8-y-x.log",
+      "message": "Exception: mismatch in number dimensions declared and found in context; processing stage=data initialization; variable name=x; dims declared=(919,1); dims found=(919) (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-8-y-x/model.stan', line 3, column 2 to column 17)"
+    },
+    {
+      "model": "models/example_models/arm-ch-9-electric-tr",
+      "category": "constraint_or_domain",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.952,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__arm-ch-9-electric-tr.log",
+      "message": "Exception: normal_id_glm_lpdf: Weight vector has dimension = 2, expecting dimension = 1; a function was called with arguments of different scalar, array, vector, or matrix types, and they were not consistently sized;  all arguments must be scalars or multidimensional values of the same shape. (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-9-electric-tr/model.stan', line 15, column 2 to column 51)"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glm0",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.784,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bpa-ch-04-glm0.log",
+      "message": "Exception: matrix[uni,uni] column indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 3 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glm0/model.stan', line 26, column 4 to column 61)"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glm1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.074,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bpa-ch-04-glm1.log",
+      "message": "Exception: matrix[uni,uni] column indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glm1/model.stan', line 32, column 4 to column 65)"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glm2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.539,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bpa-ch-04-glm2.log",
+      "message": "Exception: matrix[uni,uni] column indexing: accessing element out of range. index 3 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glm2/model.stan', line 31, column 4 to column 61)"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glmm3",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.539,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bpa-ch-04-glmm3.log",
+      "message": "Exception: matrix[uni,uni] column indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 3 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glmm3/model.stan', line 50, column 4 to column 65)"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glmm4",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.528,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bpa-ch-04-glmm4.log",
+      "message": "Exception: matrix[uni,uni] row indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glmm4/model.stan', line 47, column 4 to column 61)"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glmm5",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.649,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bpa-ch-04-glmm5.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glmm5/model.stan', line 32, column 6 to line 33, column 67)"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol1-dogs-dogs",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.685,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bugs-examples-vol1-dogs-dogs.log",
+      "message": "Exception: bernoulli_lpmf: Probability parameter is inf, but must be in the interval [0, 1] (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol1-dogs-dogs/model.stan', line 37, column 6 to line 38, column 62)"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol1-litter-litter-old-param",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.987,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bugs-examples-vol1-litter-litter-old-param.log",
+      "message": "Exception: binomial_lpmf: Successes variable is 2, but must be in the interval [0, 1] (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol1-litter-litter-old-param/model.stan', line 18, column 6 to column 43)"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol2-pines-pines-2",
+      "category": "nan_runtime",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.28,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bugs-examples-vol2-pines-pines-2.log",
+      "message": "Exception: normal_lpdf: Random variable[1] is nan, but must be not nan! (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol2-pines-pines-2/model.stan', line 26, column 2 to line 28, column 71)"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol2-pines-pines-3",
+      "category": "nan_runtime",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.459,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bugs-examples-vol2-pines-pines-3.log",
+      "message": "Exception: normal_lpdf: Random variable[1] is nan, but must be not nan! (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol2-pines-pines-3/model.stan', line 31, column 2 to column 49)"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol2-pines-pines-4",
+      "category": "nan_runtime",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.501,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bugs-examples-vol2-pines-pines-4.log",
+      "message": "Exception: normal_lpdf: Random variable[1] is nan, but must be not nan! (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol2-pines-pines-4/model.stan', line 34, column 2 to line 38, column 51)"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol2-pines-pines-independent",
+      "category": "nan_runtime",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.529,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bugs-examples-vol2-pines-pines-independent.log",
+      "message": "Exception: normal_lpdf: Random variable[1] is nan, but must be not nan! (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol2-pines-pines-independent/model.stan', line 38, column 2 to column 34)"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol2-schools-schools-1",
+      "category": "index_out_of_range",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 6.058,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bugs-examples-vol2-schools-schools-1.log",
+      "message": "Exception: array[uni, ...] index: accessing element out of range. index 6 out of range; expecting index to be between 1 and 4 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol2-schools-schools-1/model.stan', line 28, column 4 to line 33, column 44)"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol2-schools-schools-2",
+      "category": "index_out_of_range",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.988,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bugs-examples-vol2-schools-schools-2.log",
+      "message": "Exception: array[uni, ...] index: accessing element out of range. index 5 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol2-schools-schools-2/model.stan', line 29, column 4 to line 34, column 44)"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol2-schools-schools-3",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 6.472,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bugs-examples-vol2-schools-schools-3.log",
+      "message": "Exception: matrix[uni,uni] row indexing: accessing element out of range. index 5 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol2-schools-schools-3/model.stan', line 27, column 4 to line 32, column 44)"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol2-schools-schools-4",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.991,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__bugs-examples-vol2-schools-schools-4.log",
+      "message": "Exception: matrix[uni,uni] row indexing: accessing element out of range. index 5 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol2-schools-schools-4/model.stan', line 33, column 4 to line 38, column 44)"
+    },
+    {
+      "model": "models/example_models/education-causal-rct-model-04-independent-potential-outcomes-with-covariates-two-part-model",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.162,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__education-causal-rct-model-04-independent-potential-outcomes-with-covariates-two-part-model.log",
+      "message": "Exception: Exception: vector[uni] indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/example_models/education-causal-rct-model-04-independent-potential-outcomes-with-covariates-two-part-model/model.stan', line 17, column 4 to column 57) (in '/Users/jacski/synthstats/stan-collection/models/example_models/education-causal-rct-model-04-independent-potential-outcomes-with-covariates-two-part-model/model.stan', line 146, column 4 to line 147, column 61)"
+    },
+    {
+      "model": "models/example_models/jupyter-covid-inf-rate-stan-hier-sens-spec",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.395,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__jupyter-covid-inf-rate-stan-hier-sens-spec.log",
+      "message": "Exception: binomial_lpmf: Successes variable[1] is 5, but must be in the interval [0, 2] (in '/Users/jacski/synthstats/stan-collection/models/example_models/jupyter-covid-inf-rate-stan-hier-sens-spec/model.stan', line 35, column 2 to column 34)"
+    },
+    {
+      "model": "models/example_models/jupyter-covid-inf-rate-stan-hier-sens-spec-offset-mult",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.721,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__jupyter-covid-inf-rate-stan-hier-sens-spec-offset-mult.log",
+      "message": "Exception: binomial_lpmf: Successes variable is 5, but must be in the interval [0, 3] (in '/Users/jacski/synthstats/stan-collection/models/example_models/jupyter-covid-inf-rate-stan-hier-sens-spec-offset-mult/model.stan', line 30, column 2 to column 42)"
+    },
+    {
+      "model": "models/example_models/jupyter-covid-inf-rate-stan-pool-sens-spec",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.421,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__jupyter-covid-inf-rate-stan-pool-sens-spec.log",
+      "message": "Exception: binomial_lpmf: Successes variable is 5, but must be in the interval [0, 3] (in '/Users/jacski/synthstats/stan-collection/models/example_models/jupyter-covid-inf-rate-stan-pool-sens-spec/model.stan', line 22, column 2 to column 42)"
+    },
+    {
+      "model": "models/example_models/jupyter-sum-to-zero-stan-binomial-4preds-ozs",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.097,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__jupyter-sum-to-zero-stan-binomial-4preds-ozs.log",
+      "message": "Exception: binomial_lpmf: Successes variable[1] is 3, but must be in the interval [0, 2] (in '/Users/jacski/synthstats/stan-collection/models/example_models/jupyter-sum-to-zero-stan-binomial-4preds-ozs/model.stan', line 44, column 2 to column 40)"
+    },
+    {
+      "model": "models/example_models/jupyter-sum-to-zero-stan-binomial-4preds-ozs-ppc",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.964,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__jupyter-sum-to-zero-stan-binomial-4preds-ozs-ppc.log",
+      "message": "Log probability evaluates to log(0), i.e. negative infinity."
+    },
+    {
+      "model": "models/example_models/jupyter-sum-to-zero-stan-binomial-4preds-soft",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.282,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__jupyter-sum-to-zero-stan-binomial-4preds-soft.log",
+      "message": "Exception: binomial_lpmf: Successes variable[2] is 3, but must be in the interval [0, 1] (in '/Users/jacski/synthstats/stan-collection/models/example_models/jupyter-sum-to-zero-stan-binomial-4preds-soft/model.stan', line 38, column 2 to column 40)"
+    },
+    {
+      "model": "models/example_models/jupyter-sum-to-zero-stan-bym2-multicomp",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.76,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__jupyter-sum-to-zero-stan-bym2-multicomp.log",
+      "message": "Exception: Inconsistent inputs: sum(component_sizes) > N (in '/Users/jacski/synthstats/stan-collection/models/example_models/jupyter-sum-to-zero-stan-bym2-multicomp/model.stan', line 66, column 4 to column 60)"
+    },
+    {
+      "model": "models/example_models/jupyter-sum-to-zero-stan-bym2-multicomp-soft",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.77,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__jupyter-sum-to-zero-stan-bym2-multicomp-soft.log",
+      "message": "Exception: Inconsistent inputs: sum(component_sizes) > N (in '/Users/jacski/synthstats/stan-collection/models/example_models/jupyter-sum-to-zero-stan-bym2-multicomp-soft/model.stan', line 20, column 4 to column 60)"
+    },
+    {
+      "model": "models/example_models/knitr-bandits-bernoulli-ab",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.076,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-bandits-bernoulli-ab.log",
+      "message": "Exception: binomial_lpmf: Successes variable[3] is 4, but must be in the interval [0, 3] (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-bandits-bernoulli-ab/model.stan', line 10, column 2 to column 25)"
+    },
+    {
+      "model": "models/example_models/knitr-bandits-bernoulli-bandits-sufficient",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.181,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-bandits-bernoulli-bandits-sufficient.log",
+      "message": "Exception: assign array size: assigning variable successes (2) and right hand side (1) must match in size (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-bandits-bernoulli-bandits-sufficient/model.stan', line 13, column 2 to column 52)"
+    },
+    {
+      "model": "models/example_models/knitr-car-iar-poisson-bym2-islands",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.307,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-car-iar-poisson-bym2-islands.log",
+      "message": "Exception: vector[multi] indexing: accessing element out of range. index 1 out of range; container is empty and cannot be indexed (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-car-iar-poisson-bym2-islands/model.stan', line 63, column 2 to column 53)"
+    },
+    {
+      "model": "models/example_models/knitr-car-iar-poisson-update-2021-02-bym2-islands",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.3,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-car-iar-poisson-update-2021-02-bym2-islands.log",
+      "message": "Exception: poisson_log_lpmf: Log rate parameter[2] is nan, but must be not nan! (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-car-iar-poisson-update-2021-02-bym2-islands/model.stan', line 117, column 2 to column 52)"
+    },
+    {
+      "model": "models/example_models/knitr-chapter2-golf-logistic",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.751,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-chapter2-golf-logistic.log",
+      "message": "Exception: binomial_logit_lpmf: Successes variable[6] is 6, but must be in the interval [0, 4] (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-chapter2-golf-logistic/model.stan', line 12, column 2 to column 35)"
+    },
+    {
+      "model": "models/example_models/knitr-disease-transmission-sir-negbin",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.33,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-disease-transmission-sir-negbin.log",
+      "message": "Exception: integrate_ode_rk45: times is not a valid sorted vector. The element at 2 is 3.00745, but should be greater than or equal to the previous element, 5.85411 (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-disease-transmission-sir-negbin/model.stan', line 44, column 4 to column 61)"
+    },
+    {
+      "model": "models/example_models/knitr-disease-transmission-sir-prior",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.124,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-disease-transmission-sir-prior.log",
+      "message": "Exception: integrate_ode_rk45: times is not a valid sorted vector. The element at 2 is 2.19703, but should be greater than or equal to the previous element, 2.92812 (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-disease-transmission-sir-prior/model.stan', line 45, column 4 to column 61)"
+    },
+    {
+      "model": "models/example_models/knitr-dynamic-opinion-dynamic-crossnat-latent-opinion-model",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 8.499,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-dynamic-opinion-dynamic-crossnat-latent-opinion-model.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 3 (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-dynamic-opinion-dynamic-crossnat-latent-opinion-model/model.stan', line 38, column 4 to line 39, column 39)"
+    },
+    {
+      "model": "models/example_models/knitr-golf-golf-angle",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.808,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-golf-golf-angle.log",
+      "message": "Exception: binomial_lpmf: Successes variable[4] is 4, but must be in the interval [0, 2] (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-golf-golf-angle/model.stan', line 17, column 2 to column 21)"
+    },
+    {
+      "model": "models/example_models/knitr-golf-golf-logistic",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.763,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-golf-golf-logistic.log",
+      "message": "Exception: binomial_logit_lpmf: Successes variable[2] is 6, but must be in the interval [0, 3] (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-golf-golf-logistic/model.stan', line 12, column 2 to column 35)"
+    },
+    {
+      "model": "models/example_models/knitr-golf-golf2",
+      "category": "invalid_binomial_counts",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.119,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-golf-golf2.log",
+      "message": "Exception: binomial_lpmf: Successes variable[3] is 4, but must be in the interval [0, 2] (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-golf-golf2/model.stan', line 24, column 2 to column 21)"
+    },
+    {
+      "model": "models/example_models/knitr-irt-irt-1pl-unit",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.154,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-irt-irt-1pl-unit.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 3 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-irt-irt-1pl-unit/model.stan', line 15, column 4 to column 28)"
+    },
+    {
+      "model": "models/example_models/knitr-irt-irt-multilevel",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.862,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-irt-irt-multilevel.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-irt-irt-multilevel/model.stan', line 34, column 4 to line 35, column 71)"
+    },
+    {
+      "model": "models/example_models/knitr-lotka-volterra-lotka-volterra",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.004,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-lotka-volterra-lotka-volterra.log",
+      "message": "Exception: integrate_ode_rk45: times is not a valid sorted vector. The element at 2 is 3.60546, but should be greater than or equal to the previous element, 4.14356 (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-lotka-volterra-lotka-volterra/model.stan', line 33, column 2 to line 35, column 66)"
+    },
+    {
+      "model": "models/example_models/knitr-planetary-motion-model-planetary-motion-star",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.277,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-planetary-motion-model-planetary-motion-star.log",
+      "message": "Exception: integrate_ode_rk45: times is not a valid sorted vector. The element at 3 is 3.14446, but should be greater than or equal to the previous element, 6.01366 (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-planetary-motion-model-planetary-motion-star/model.stan', line 52, column 2 to line 54, column 72)"
+    },
+    {
+      "model": "models/example_models/knitr-reduce-sum-logistic0",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.787,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-reduce-sum-logistic0.log",
+      "message": "Exception: binomial_logit_lpmf: Successes variable[1] is 6, but must be in the interval [0, 5] (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-reduce-sum-logistic0/model.stan', line 14, column 2 to column 67)"
+    },
+    {
+      "model": "models/example_models/knitr-reduce-sum-logistic1",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.938,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-reduce-sum-logistic1.log",
+      "message": "Exception: Exception: binomial_logit_lpmf: Successes variable[2] is 3, but must be in the interval [0, 2] (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-reduce-sum-logistic1/model.stan', line 4, column 4 to line 6, column 91) (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-reduce-sum-logistic1/model.stan', line 23, column 2 to line 24, column 37)"
+    },
+    {
+      "model": "models/example_models/knitr-soil-carbon-soil-incubation-measurement-err",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.934,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__knitr-soil-carbon-soil-incubation-measurement-err.log",
+      "message": "Exception: Exception: integrate_ode_rk45: times is not a valid sorted vector. The element at 3 is 3.31438, but should be greater than or equal to the previous element, 5.00117 (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-soil-carbon-soil-incubation-measurement-err/model.stan', line 40, column 4 to column 76) (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-soil-carbon-soil-incubation-measurement-err/model.stan', line 77, column 2 to line 78, column 44)"
+    },
+    {
+      "model": "models/example_models/misc-gam-gam-one-centered-design",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.391,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__misc-gam-gam-one-centered-design.log",
+      "message": "Exception: neg_binomial_2_lpmf: Location parameter[1] is nan, but must be positive finite! (in '/Users/jacski/synthstats/stan-collection/models/example_models/misc-gam-gam-one-centered-design/model.stan', line 167, column 2 to column 43)"
+    },
+    {
+      "model": "models/example_models/misc-moving-avg-maq",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.177,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__misc-moving-avg-maq.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 3 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/misc-moving-avg-maq/model.stan', line 16, column 6 to column 58)"
+    },
+    {
+      "model": "models/example_models/misc-multivariate-probit-probit-multi-good",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.797,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__example_models__misc-multivariate-probit-probit-multi-good.log",
+      "message": "Exception: Phi: x is nan, but must be not nan! (in '/Users/jacski/synthstats/stan-collection/models/example_models/misc-multivariate-probit-probit-multi-good/model.stan', line 28, column 8 to column 53)"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-01-auerbach-model",
+      "category": "index_out_of_range",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.985,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2017-contributed-talks-01-auerbach-model.log",
+      "message": "Exception: array[uni, ...] index: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-01-auerbach-model/model.stan', line 24, column 9 to column 13)"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-01-auerbach-model-int",
+      "category": "index_out_of_range",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 7.455,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2017-contributed-talks-01-auerbach-model-int.log",
+      "message": "Exception: array[uni, ...] index: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-01-auerbach-model-int/model.stan', line 28, column 9 to column 13)"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-05-margossian-models-neutropenia-neutropenia",
+      "category": "timeout",
+      "returncode": null,
+      "timed_out": true,
+      "elapsed_seconds": 600.009,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2017-contributed-talks-05-margossian-models-neutropenia-neutropenia.log",
+      "message": "Rejecting initial value:"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-06-groves-graded-irt",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.75,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2017-contributed-talks-06-groves-graded-irt.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 1 out of range; container is empty and cannot be indexed (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-06-groves-graded-irt/model.stan', line 25, column 2 to line 26, column 54)"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-06-groves-graded-irt-xval",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.896,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2017-contributed-talks-06-groves-graded-irt-xval.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 1 out of range; container is empty and cannot be indexed (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-06-groves-graded-irt-xval/model.stan', line 32, column 2 to line 33, column 54)"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-07-nicenboim-activation-based-h",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 7.227,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2017-contributed-talks-07-nicenboim-activation-based-h.log",
+      "message": "Exception: Exception: lognormal_lpdf: Random variable is -0.0372335, but must be nonnegative! (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-07-nicenboim-activation-based-h/model.stan', line 34, column 10 to column 70) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-07-nicenboim-activation-based-h/model.stan', line 124, column 4 to column 62)"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 8.049,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2017-contributed-talks-07-nicenboim-direct-access-h.log",
+      "message": "Exception: model_model_namespace::log_prob: mu_da_0 is -3.90647, but must be greater than or equal to 0.000000 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h/model.stan', line 94, column 2 to column 24)"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h-kfold",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 7.983,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2017-contributed-talks-07-nicenboim-direct-access-h-kfold.log",
+      "message": "Exception: model_model_namespace::log_prob: mu_da_0 is -3.90647, but must be greater than or equal to 0.000000 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h-kfold/model.stan', line 95, column 2 to column 24)"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-gp-pres-forecast-hier",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 7.984,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2017-contributed-talks-08-trangucci-stan-models-gp-pres-forecast-hier.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 3 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-gp-pres-forecast-hier/model.stan', line 104, column 4 to line 108, column 51)"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-02-pourzanjani-stan-ispline-progression",
+      "category": "index_out_of_range",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.826,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-contributed-talks-02-pourzanjani-stan-ispline-progression.log",
+      "message": "Exception: array[uni,...] assign: accessing element out of range. index 4 out of range; expecting index to be between 1 and 3 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-02-pourzanjani-stan-ispline-progression/model.stan', line 361, column 2 to column 15)"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-02-pourzanjani-stan-linear-progression",
+      "category": "index_out_of_range",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.361,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-contributed-talks-02-pourzanjani-stan-linear-progression.log",
+      "message": "Exception: array[uni,...] assign: accessing element out of range. index 4 out of range; expecting index to be between 1 and 3 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-02-pourzanjani-stan-linear-progression/model.stan', line 72, column 2 to column 15)"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-03-brilleman-stan-jm",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 7.975,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-contributed-talks-03-brilleman-stan-jm.log",
+      "message": "Exception: Exception: matrix[uni,uni] column indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-03-brilleman-stan-jm/model.stan', line 32, column 8 to column 62) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-03-brilleman-stan-jm/model.stan', line 211, column 4 to column 82)"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-05-goodman-gp-center",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.172,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-contributed-talks-05-goodman-gp-center.log",
+      "message": "Exception: Exception: vector[min] indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-05-goodman-gp-center/model.stan', line 33, column 4 to column 49) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-05-goodman-gp-center/model.stan', line 109, column 6 to column 64)"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-05-goodman-gp-noncenter",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.12,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-contributed-talks-05-goodman-gp-noncenter.log",
+      "message": "Exception: Exception: vector[min] indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-05-goodman-gp-noncenter/model.stan', line 41, column 4 to column 49) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-05-goodman-gp-noncenter/model.stan', line 108, column 6 to column 63)"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-05-goodman-state-space-center",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.794,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-contributed-talks-05-goodman-state-space-center.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-05-goodman-state-space-center/model.stan', line 77, column 6 to column 94)"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-05-goodman-state-space-noncenter",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.702,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-contributed-talks-05-goodman-state-space-noncenter.log",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-05-goodman-state-space-noncenter/model.stan', line 76, column 6 to column 94)"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-09-bales-models-spring-example-external",
+      "category": "compile_or_stanc",
+      "returncode": 2,
+      "timed_out": false,
+      "elapsed_seconds": 0.293,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-contributed-talks-09-bales-models-spring-example-external.log",
+      "message": "Semantic error in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-09-bales-models-spring-example-external/model.stan', line 2, column 9 to column 33:"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-09-bales-models-spring-example-external-gradients",
+      "category": "compile_or_stanc",
+      "returncode": 2,
+      "timed_out": false,
+      "elapsed_seconds": 0.298,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-contributed-talks-09-bales-models-spring-example-external-gradients.log",
+      "message": "Semantic error in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-09-bales-models-spring-example-external-gradients/model.stan', line 2, column 9 to column 43:"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-12-vamvourellis-modelcode",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 6.402,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-contributed-talks-12-vamvourellis-modelcode.log",
+      "message": "Exception: multiply: Columns of m1 (3) and Rows of m2 (2) must match in size (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-12-vamvourellis-modelcode/model.stan', line 28, column 6 to column 73)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-arya-stan-fit-teg",
+      "category": "compile_or_stanc",
+      "returncode": 2,
+      "timed_out": false,
+      "elapsed_seconds": 0.304,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-arya-stan-fit-teg.log",
+      "message": "Semantic error in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-arya-stan-fit-teg/model.stan', line 4, column 7 to column 26:"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-arya-stan-fit-test-eq",
+      "category": "compile_or_stanc",
+      "returncode": 2,
+      "timed_out": false,
+      "elapsed_seconds": 0.301,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-arya-stan-fit-test-eq.log",
+      "message": "Semantic error in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-arya-stan-fit-test-eq/model.stan', line 4, column 7 to column 26:"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-auerbach-jones-winstanley-model1",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 3.588,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-auerbach-jones-winstanley-model1.log",
+      "message": "Exception: int variable contained non-int values; processing stage=data initialization; variable name=num_students; base type=int (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-auerbach-jones-winstanley-model1/model.stan', line 7, column 2 to column 28)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-auerbach-jones-winstanley-model2",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.263,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-auerbach-jones-winstanley-model2.log",
+      "message": "Exception: int variable contained non-int values; processing stage=data initialization; variable name=num_students; base type=int (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-auerbach-jones-winstanley-model2/model.stan', line 10, column 2 to column 28)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-egidi-egidi-double-poisson",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.492,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-egidi-egidi-double-poisson.log",
+      "message": "Exception: int variable contained non-int values; processing stage=data initialization; variable name=season_time; base type=int (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-egidi-egidi-double-poisson/model.stan', line 14, column 2 to column 33)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-egidi-egidi-shots",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 8.177,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-egidi-egidi-shots.log",
+      "message": "Exception: int variable contained non-int values; processing stage=data initialization; variable name=Shots_home; base type=int (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-egidi-egidi-shots/model.stan', line 7, column 2 to column 26)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-constant-synthesis",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 2.829,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-constant-synthesis.log",
+      "message": "Exception: int variable contained non-int values; processing stage=data initialization; variable name=measurement_times; base type=int (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-constant-synthesis/model.stan', line 3, column 2 to column 57)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-regulated",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 10.166,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-regulated.log",
+      "message": "Exception: int variable contained non-int values; processing stage=data initialization; variable name=measurement_times; base type=int (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-regulated/model.stan', line 9, column 2 to column 72)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-nicenboim-tlba-s",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.538,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-nicenboim-tlba-s.log",
+      "message": "Exception: Exception: Exception: Negative PDF!! (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-nicenboim-tlba-s/model.stan', line 41, column 21 to column 46) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-nicenboim-tlba-s/model.stan', line 114, column 8 to column 72) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-nicenboim-tlba-s/model.stan', line 180, column 5 to column 65)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-artificial",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.988,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-artificial.log",
+      "message": "Exception: Exception: Exception: Error in function boost::math::cyl_bessel_i<double>(double,double): numeric overflow (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-artificial/model.stan', line 9, column 4 to column 77) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-artificial/model.stan', line 19, column 4 to column 48) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-artificial/model.stan', line 139, column 4 to line 143, column 6)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-no-zif",
+      "category": "other",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 4.926,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-no-zif.log",
+      "message": "Exception: Exception: Error in function boost::math::cyl_bessel_i<double>(double,double): numeric overflow (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-no-zif/model.stan', line 9, column 4 to column 77) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-no-zif/model.stan', line 136, column 4 to line 139, column 6)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-1",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.713,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-1.log",
+      "message": "Exception: Exception: gamma_lpdf: Shape parameter[1] is nan, but must be positive finite! (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-1/model.stan', line 41, column 2 to column 55) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-1/model.stan', line 212, column 2 to column 51)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-2",
+      "category": "initialization_failed",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.579,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-2.log",
+      "message": "Exception: Exception: gamma_lpdf: Shape parameter[2] is nan, but must be positive finite! (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-2/model.stan', line 41, column 2 to column 55) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-2/model.stan', line 212, column 2 to column 51)"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pk-tlagmax",
+      "category": "constraint_or_domain",
+      "returncode": 1,
+      "timed_out": false,
+      "elapsed_seconds": 5.358,
+      "log_file": "/private/tmp/stan-collection-runs/full-dataset-smoke-20260428T2040Z/logs/models__stancon_talks__2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pk-tlagmax.log",
+      "message": "Exception: model_model_namespace::model_model: time[1] is 0.5, but must be greater than or equal to 1.000000 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pk-tlagmax/model.stan', line 135, column 2 to column 38)"
+    }
+  ]
+}
