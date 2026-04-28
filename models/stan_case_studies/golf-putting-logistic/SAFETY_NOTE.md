@@ -1,9 +1,9 @@
 # SafeStan Safety Note
 
-Compatibility: major.
+Compatibility: as-is.
 
 Protected data: `y`.
 
-Generated files: none.
+Generated files: `model_safe.stan`, `data_safe.json`.
 
-Reason: the protected observations are already used in a plain vectorized sampling statement, `y ~ binomial(n, p)`, and are not read before observation. However, the only parameter, `sigma`, has no explicit proper prior; the original model relies on an implicit improper uniform prior on `<lower=0>`. Adding a proper prior would change the posterior/log density, so this cannot be translated to SafeStan by an as-is or minor same-density rewrite.
+No changes were required. The protected observation `y` is a top-level data variable and is observed with the plain vectorized sampling statement `y ~ binomial(n, p);`. The variables `n`, `x`, `r`, and `R` are data inputs used as likelihood arguments or covariates and are not themselves protected observations scored by the likelihood.

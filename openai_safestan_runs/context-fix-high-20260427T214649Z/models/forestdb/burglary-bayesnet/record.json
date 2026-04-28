@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/context-fix-high-20260427T214649Z/models/forestdb/burglary-bayesnet",
+  "compatibility": "major",
+  "completed_at": "2026-04-27T21:47:04+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/burglary-bayesnet",
+  "reasoning_effort": "high",
+  "response_id": "resp_0c1dccf2b92318330069efd94ab9608193aa130513d451b682",
+  "started_at": "2026-04-27T21:46:50+00:00",
+  "usage": {
+    "input_tokens": 2858,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 673,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3531
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

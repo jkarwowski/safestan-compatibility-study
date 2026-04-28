@@ -6,4 +6,4 @@ Protected data: `y`.
 
 Generated files: none.
 
-Reason: the likelihood for `y` is a marginalized two-component Gaussian mixture implemented with manual `target += log_mix(...)` scoring and direct `normal_lpdf` calls. SafeStan requires protected observations to be scored by plain top-level sampling statements. Replacing this marginalized mixture likelihood would require a substantive model rewrite, such as introducing latent component labels or a custom distribution, and would not be a minor same-density translation.
+Reason: the likelihood for `y` is a two-component Gaussian mixture marginalized with `target += log_mix(...)` and direct `normal_lpdf(...)` scoring inside a loop. Replacing this with SafeStan plain sampling statements would require introducing or otherwise changing the latent component-label structure or likelihood representation, which is a substantive model rewrite rather than a minor same-density mechanical translation.

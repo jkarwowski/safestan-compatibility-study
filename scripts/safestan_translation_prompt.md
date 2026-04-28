@@ -1,47 +1,63 @@
-You are translating a single Stan model into SafeStan for a regression-test
-corpus. The goal is not to make the model "nicer"; the goal is to decide
-whether the original posterior/log density can be represented under SafeStan
-restrictions with no change or only a small mechanical rewrite. Return only the
-structured JSON requested by the caller.
+You are translating a single Stan model into SafeStan, a new version of Stan runtime. 
+
+## SafeStan
+
+SafeStan is a static (compile-time) restriction layer over Stan. Its purpose is to prevent likelihood hacking on a designated protected data interface, as described in "Likelihood hacking in probabilistic program synthesis".
+
+SafeStan is designed so that generated models report a normalized marginal log-likelihood for the interface being modelled. To do this, it assigns roles to top-level inputs and parameters. Variables named by --sstan-protect are modelled interface variables: each must be scored by a built-in distribution, exactly once, before any other use. They cannot be inspected in an if, used to compute helper values, or referenced in transformed blocks before that scoring statement. After a modelled interface variable has been scored, it is available as an ordinary model-block quantity and may be used in later computations or later likelihood terms. Other top-level data variables are context inputs: they may be used freely as predictors, constants, indices, or configuration, but they may not appear on the left side of a sampling statement. Parameters are latent variables: each parameter must have exactly one built-in prior sampling statement before it is used in the model block. SafeStan also rejects constructs that can directly inflate, edit, or gate the log-likelihood, such as target +=, target(), jacobian +=, reject(), fatal_error(), and _lp functions.
+
+### What SafeStan Enforces
+
+No arbitrary scoring:
+
+Forbids target += ...
+Forbids target()
+Forbids jacobian += ...
+Forbids reject() and fatal_error()
+Forbids _lp function definitions and calls
+Protected data single-use:
+
+Every protected variable must be a top-level data variable.
+Each protected variable must appear exactly once on the left side of ~.
+Left side must be a plain identifier (no indexing/projections/expressions).
+Protected variables cannot be used before they are observed.
+After observation, a protected variable is treated as a normal value.
+Protected variables cannot be referenced in transformed data/parameters.
+Proper distribution path only:
+
+Sampling statements must resolve to built-in Stan distributions.
+User-defined distributions are rejected in ~.
+Strict parameter discipline:
+
+Each parameter must appear in exactly one sampling statement.
+Parameters cannot be used in the model block before their sampling statement.
+Uses through transformed parameters are tracked: if phi depends on theta, then using phi before theta ~ ... counts as using theta before its prior.
+Control-flow safety:
+
+Protected observations and parameter-prior sampling statements cannot appear inside loops (for/while/foreach).
+Conditional (if/else) sampling is allowed only when both branches produce identical sampling effects for protected variables and parameters.
+Reserved identifier:
+
+sstan_trusted_loglik__ is reserved in SafeStan mode.
+
+## Goal
+
+The goal is not to make the model "nicer", rather, the goal is to decide whether the original posterior/log density can be represented under SafeStan restrictions with no or only a small rewrite, preserving the model. Return only the structured JSON requested by the caller.
 
 Work method:
 
 1. Identify the observed/protected data variable(s) scored by the likelihood.
-2. Check whether the model already satisfies SafeStan's syntactic discipline.
+2. Check whether the protected data variables and parameters already satisfy SafeStan's
+   syntactic discipline. If it does, classify the models `as-is`.
 3. If not, look for a same-density mechanical rewrite.
-4. If the rewrite would require changing the statistical model, replacing a
-   marginalized latent-state algorithm, inventing priors, or changing the
-   likelihood, classify the case as `major`.
-5. For `as-is` and `minor`, output complete files. Do not output patches.
-
-SafeStan rules to apply:
-
-- Protected observed data should appear as top-level data variables and be
-  observed by plain `name ~ distribution(...)` sampling statements.
-- Do not use `target +=`, `target()`, direct `_lpdf`/`_lpmf` scoring, or
-  user-defined probability distributions for protected observations.
-- Do not use protected data in `transformed data` or before its observation.
-  If a summary/reshape is needed, add deterministic fields to `data_safe_json`
-  and document them.
-- Avoid sampling statements inside loops or conditionals when the same density
-  can be expressed as one vectorized sampling statement.
-- Parameters should have explicit proper priors, and priors should appear
-  before parameter use. Do not add priors that change the posterior. Adding
-  `uniform(0, 1)` to a parameter already constrained to `<lower=0, upper=1>`
-  is acceptable because it is density-neutral on the support.
+4. If the rewrite would require changing the statistical model, substantially replacing a marginalized latent-state algorithm, or changing the likelihood (e.g. by adding additional priors to parameters), classify the case as `major` and do not rewrite the model.
+5. Otherwisea, classify the case as `minor`, rewrite the model (and potentially, data): e.g. you can vectorize simple likelihoods, add deterministic data copies/reshapes, switch order of computation preserving the semantics, use explicit priors for parameters that have implicit proper priors (e.g. are bounded), and so on. After that, output complete files. Do not output patches.
 
 Compatibility labels:
 
-- `as-is`: the original Stan program is already SafeStan-compatible. Return
-  `model_safe_stan` equivalent to the original and `data_safe_json` equivalent
-  to the original data.
-- `minor`: a same-posterior SafeStan version can be produced using only
-  mechanical changes such as moving existing priors earlier, vectorizing simple
-  likelihoods, adding deterministic data copies/reshapes, or adding
-  density-neutral bounded uniform priors.
-- `major`: no SafeStan version can be produced without a substantive model or
-  density change. In this case return empty strings for `model_safe_stan` and
-  `data_safe_json`.
+- `as-is`: the original Stan program is already SafeStan-compatible. Return `model_safe_stan` equal to the original and `data_safe_json` equal to the original data.
+- `minor`: a same-posterior SafeStan version can be produced using only minor, mechanical, changes. Return new, rewritten `model_safe_stan` equivalent to the original and `data_safe_json` equivalent to the original data.
+- `major`: no SafeStan version can be produced without a substantive model or density change. In this case return empty strings for `model_safe_stan` and `data_safe_json`.
 
 Requirements:
 
@@ -51,10 +67,6 @@ Requirements:
 - If you add fields to `data_safe_json`, document the exact deterministic
   relation in `safety_note_md`.
 - Preserve the intended posterior/log density for AS-IS and MINOR.
-- If the model relies on mixture marginalization, custom manual scoring,
-  censored/truncated target adjustments, hidden-state algorithms, or implicit
-  improper priors that cannot be represented without changing the density,
-  classify it as `major`.
 - `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
   include: compatibility, protected data choice, generated files, and a concise
   explanation of any change.
@@ -85,9 +97,10 @@ Example 1 output shape
 ```json
 {
   "compatibility": "as-is",
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the model uses an explicit prior and observes top-level protected data with a plain sampling statement.\n",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the protected observation is top-level data and is observed with a plain sampling statement.\n",
   "model_safe_stan": "data {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
-  "data_safe_json": "{\"y\": 1}"
+  "data_safe_json": "{\"y\": 1}",
+  "protected_variables": ["y"]
 }
 ```
 
@@ -119,9 +132,10 @@ Example 2 output shape
 ```json
 {
   "compatibility": "minor",
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. Added `theta ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]`.\n",
-  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ binomial(trials, theta);\n}\n",
-  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}"
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. No priors were added because parameters are value-context terms and implicit priors are not protected-data uses.\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  y ~ binomial(trials, theta);\n}\n",
+  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}",
+  "protected_variables": ["y"]
 }
 ```
 
@@ -154,7 +168,8 @@ Example 3 output shape
   "compatibility": "major",
   "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\n",
   "model_safe_stan": "",
-  "data_safe_json": ""
+  "data_safe_json": "",
+  "protected_variables": []
 }
 ```
 

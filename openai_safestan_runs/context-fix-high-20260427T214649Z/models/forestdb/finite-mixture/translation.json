@@ -1,0 +1,6 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the protected observations `y[n]` are scored through a marginalized two-component Bernoulli mixture using manual `target += log_mix(...)` with direct `bernoulli_lpmf` calls. Replacing this with SafeStan plain sampling statements would require a substantive change to the likelihood or latent-component representation rather than a small mechanical rewrite.\n"
+}

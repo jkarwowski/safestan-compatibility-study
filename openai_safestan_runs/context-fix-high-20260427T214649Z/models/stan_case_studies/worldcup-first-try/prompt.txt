@@ -1,0 +1,546 @@
+You are translating a single Stan model into SafeStan for a regression-test
+corpus. The goal is not to make the model "nicer"; the goal is to decide
+whether the original posterior/log density can be represented under SafeStan
+restrictions with no change or only a small mechanical rewrite. Return only the
+structured JSON requested by the caller.
+
+Work method:
+
+1. Identify the observed/protected data variable(s) scored by the likelihood.
+2. Separate protected data-context uses from value-context computations.
+   Parameters, transformed parameters, and deterministic parameter expressions
+   are value-context terms; they are not protected observations.
+3. Check whether the protected data variables already satisfy SafeStan's
+   syntactic discipline.
+4. If not, look for a same-density mechanical rewrite.
+5. If the rewrite would require changing the statistical model, replacing a
+   marginalized latent-state algorithm, or changing the likelihood, classify
+   the case as `major`.
+6. For `as-is` and `minor`, output complete files. Do not output patches.
+
+SafeStan rules to apply:
+
+- Only protected observed data are subject to SafeStan's data-context
+  restrictions. Parameters live in the value context. Missing explicit priors,
+  implicit Stan priors, or parameter use before a prior statement are not
+  SafeStan compatibility failures by themselves.
+- Protected observed data should appear as top-level data variables and be
+  observed by plain `name ~ distribution(...)` sampling statements.
+- Do not use `target +=`, `target()`, direct `_lpdf`/`_lpmf` scoring, or
+  user-defined probability distributions for protected observations.
+- Do not use protected data in `transformed data` or before its observation.
+  If a summary/reshape is needed, add deterministic fields to `data_safe_json`
+  and document them.
+- Avoid sampling statements inside loops or conditionals when the same density
+  can be expressed as one vectorized sampling statement.
+- Do not add priors solely to satisfy SafeStan. Adding priors changes the
+  posterior unless the original program already had the exact same density
+  contribution.
+
+Compatibility labels:
+
+- `as-is`: the original Stan program is already SafeStan-compatible. Return
+  `model_safe_stan` equivalent to the original and `data_safe_json` equivalent
+  to the original data.
+- `minor`: a same-posterior SafeStan version can be produced using only
+  mechanical changes such as vectorizing simple likelihoods or adding
+  deterministic data copies/reshapes.
+- `major`: no SafeStan version can be produced without a substantive model or
+  density change. In this case return empty strings for `model_safe_stan` and
+  `data_safe_json`.
+
+Requirements:
+
+- Never invent new observations or synthetic data.
+- `data_safe_json` must be a valid JSON object string. It may equal the original
+  data exactly, or be a deterministic augmentation/reshape of it.
+- If you add fields to `data_safe_json`, document the exact deterministic
+  relation in `safety_note_md`.
+- Preserve the intended posterior/log density for AS-IS and MINOR.
+- If the model relies on mixture marginalization, custom manual scoring,
+  censored/truncated target adjustments, or hidden-state algorithms for
+  protected observations, classify it as `major`.
+- Do not classify a model as `major` merely because parameters have implicit or
+  improper priors. That is a value-context issue, not a protected-data-context
+  issue for this compatibility task.
+- `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
+  include: compatibility, protected data choice, generated files, and a concise
+  explanation of any change.
+
+Examples:
+
+Example 1: AS-IS input
+
+```stan
+data {
+  int<lower=0, upper=1> y;
+}
+parameters {
+  real<lower=0, upper=1> theta;
+}
+model {
+  theta ~ beta(1, 1);
+  y ~ bernoulli(theta);
+}
+```
+
+```json
+{"y": 1}
+```
+
+Example 1 output shape
+
+```json
+{
+  "compatibility": "as-is",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the protected observation is top-level data and is observed with a plain sampling statement.\n",
+  "model_safe_stan": "data {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "data_safe_json": "{\"y\": 1}"
+}
+```
+
+Example 2: MINOR input
+
+```stan
+data {
+  int<lower=1> N;
+  array[N] int<lower=0> trials;
+  array[N] int<lower=0> y;
+}
+transformed data {
+  real mean_y = mean(to_vector(y));
+}
+parameters {
+  vector<lower=0, upper=1>[N] theta;
+}
+model {
+  y ~ binomial(trials, theta);
+}
+```
+
+```json
+{"N": 3, "trials": [10, 10, 10], "y": [4, 5, 6]}
+```
+
+Example 2 output shape
+
+```json
+{
+  "compatibility": "minor",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. No priors were added because parameters are value-context terms and implicit priors are not protected-data uses.\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  y ~ binomial(trials, theta);\n}\n",
+  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}"
+}
+```
+
+Example 3: MAJOR input
+
+```stan
+data {
+  int<lower=1> N;
+  vector[N] y;
+}
+parameters {
+  real mu1;
+  real mu2;
+}
+model {
+  for (n in 1:N) {
+    target += log_mix(0.5, normal_lpdf(y[n] | mu1, 1), normal_lpdf(y[n] | mu2, 1));
+  }
+}
+```
+
+```json
+{"N": 3, "y": [0.1, 1.2, -0.5]}
+```
+
+Example 3 output shape
+
+```json
+{
+  "compatibility": "major",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\n",
+  "model_safe_stan": "",
+  "data_safe_json": ""
+}
+```
+
+Model directory: models/stan_case_studies/worldcup-first-try
+
+Metadata:
+
+```json
+{
+  "description": "Initial World Cup scoring model.",
+  "difficulty": "medium",
+  "id": "worldcup-first-try",
+  "method": "sample",
+  "source_group": "stan_case_studies",
+  "source_group_label": "Stan case studies",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/world-cup/worldcup_first_try.stan",
+  "title": "World Cup First Try"
+}
+```
+
+Source note:
+
+```text
+# World Cup First Try
+
+- Upstream Stan file: [knitr/world-cup/worldcup_first_try.stan](https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/world-cup/worldcup_first_try.stan)
+- Upstream data: knitr/world-cup/worldcup_first_try.data.json
+- Source group: Stan case studies
+- License note: copied from stan-dev/example-models; see the upstream directory for any model-specific terms.
+
+```
+
+Original `model.stan`:
+
+```stan
+/* This program has a mistake in it, as will be explained later */
+
+data {
+  int N_teams;
+  int N_games;
+  vector[N_teams] prior_score;
+  array[N_games] int team_1;
+  array[N_games] int team_2;
+  vector[N_games] score_1;
+  vector[N_games] score_2;
+  real df;
+}
+transformed data {
+  vector[N_games] dif;
+  vector[N_games] sqrt_dif;
+  dif = score_1 - score_2;
+  for (i in 1 : N_games) {
+    sqrt_dif[i] = (step(dif[i]) - 0.5) * sqrt(abs(dif[i]));
+  }
+}
+parameters {
+  vector[N_teams] alpha;
+  real b;
+  real<lower=0> sigma_a;
+  real<lower=0> sigma_y;
+}
+transformed parameters {
+  vector[N_teams] a;
+  a = b * prior_score + sigma_a * alpha;
+}
+model {
+  alpha ~ normal(0, 1);
+  sqrt_dif ~ student_t(df, a[team_1] - a[team_2], sigma_y);
+}
+
+```
+
+Original `data.json`:
+
+```json
+{
+  "N_teams": 32,
+  "score_1": [
+    3,
+    1,
+    0,
+    0,
+    1,
+    1,
+    1,
+    3,
+    0,
+    2,
+    0,
+    2,
+    3,
+    2,
+    2,
+    0,
+    1,
+    2,
+    1,
+    1,
+    2,
+    0,
+    0,
+    0,
+    2,
+    3,
+    2,
+    1,
+    0,
+    0,
+    2,
+    0,
+    1,
+    1,
+    2,
+    3,
+    4,
+    1,
+    2,
+    2,
+    0,
+    2,
+    2,
+    1,
+    1,
+    2,
+    0,
+    1,
+    1,
+    2,
+    2,
+    1,
+    2,
+    2,
+    1,
+    2,
+    2,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    1
+  ],
+  "score_2": [
+    1,
+    0,
+    0,
+    4,
+    4,
+    3,
+    5,
+    1,
+    2,
+    3,
+    3,
+    0,
+    0,
+    1,
+    1,
+    0,
+    4,
+    1,
+    3,
+    2,
+    1,
+    1,
+    1,
+    0,
+    1,
+    0,
+    5,
+    2,
+    3,
+    0,
+    1,
+    0,
+    0,
+    0,
+    3,
+    1,
+    0,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    0,
+    4,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0,
+    1,
+    0,
+    1,
+    1,
+    1,
+    0,
+    0,
+    7,
+    0,
+    3,
+    0
+  ],
+  "b": 0,
+  "N_games": 64,
+  "prior_score": [
+    0.82615277587799,
+    0.772852596789088,
+    0.719552417700185,
+    0.666252238611283,
+    0.61295205952238,
+    0.559651880433477,
+    0.506351701344575,
+    0.453051522255672,
+    0.39975134316677,
+    0.346451164077867,
+    0.293150984988964,
+    0.239850805900062,
+    0.186550626811159,
+    0.133250447722257,
+    0.0799502686333539,
+    0.0266500895444513,
+    -0.0266500895444513,
+    -0.0799502686333539,
+    -0.133250447722257,
+    -0.186550626811159,
+    -0.239850805900062,
+    -0.293150984988964,
+    -0.346451164077867,
+    -0.39975134316677,
+    -0.453051522255672,
+    -0.506351701344575,
+    -0.559651880433477,
+    -0.61295205952238,
+    -0.666252238611283,
+    -0.719552417700185,
+    -0.772852596789088,
+    -0.82615277587799
+  ],
+  "df": 7,
+  "team_1": [
+    1,
+    20,
+    1,
+    28,
+    28,
+    23,
+    4,
+    5,
+    4,
+    32,
+    32,
+    11,
+    7,
+    15,
+    7,
+    27,
+    27,
+    22,
+    8,
+    9,
+    8,
+    17,
+    17,
+    26,
+    18,
+    6,
+    18,
+    30,
+    30,
+    13,
+    2,
+    29,
+    2,
+    24,
+    24,
+    12,
+    3,
+    21,
+    3,
+    19,
+    19,
+    14,
+    10,
+    16,
+    10,
+    25,
+    25,
+    31,
+    1,
+    7,
+    11,
+    26,
+    6,
+    3,
+    2,
+    10,
+    1,
+    6,
+    11,
+    2,
+    1,
+    11,
+    1,
+    3
+  ],
+  "team_2": [
+    23,
+    28,
+    20,
+    23,
+    1,
+    20,
+    11,
+    32,
+    5,
+    11,
+    4,
+    5,
+    22,
+    27,
+    15,
+    22,
+    7,
+    15,
+    26,
+    17,
+    9,
+    26,
+    8,
+    9,
+    13,
+    30,
+    6,
+    13,
+    18,
+    6,
+    12,
+    24,
+    29,
+    12,
+    2,
+    29,
+    14,
+    19,
+    21,
+    14,
+    3,
+    21,
+    31,
+    25,
+    16,
+    31,
+    10,
+    16,
+    5,
+    8,
+    20,
+    22,
+    24,
+    31,
+    18,
+    19,
+    7,
+    3,
+    26,
+    10,
+    3,
+    2,
+    11,
+    2
+  ]
+}
+
+```

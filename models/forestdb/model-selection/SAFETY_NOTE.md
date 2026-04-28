@@ -6,4 +6,4 @@ Protected data: `y`.
 
 Generated files: none.
 
-Reason: the likelihood for `y` is a marginalized mixture over a global linear-versus-quadratic model indicator, implemented with manual `normal_lpdf` accumulation and `target += log_sum_exp(...)`. Representing this same density under SafeStan plain sampling-statement rules would require a substantive rewrite such as introducing a latent model indicator or a custom/user-defined mixture distribution, which is not a minor same-density translation.
+Reason: `y` is scored through manual `normal_lpdf` terms accumulated into two whole-data model log densities and combined with `target += log_sum_exp(...)`, marginalizing a discrete linear-vs-quadratic model indicator over the data set. This is mixture/model-selection marginalization with custom manual scoring of the protected observations. Replacing it with SafeStan plain sampling statements would require a substantive likelihood/model rewrite, not a minor same-density translation. The covariate `x` is data used in the likelihood predictors but is not itself scored as a protected observation.

@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/context-fix-high-20260427T214649Z/models/forestdb/finite-mixture",
+  "compatibility": "major",
+  "completed_at": "2026-04-27T21:47:27+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/finite-mixture",
+  "reasoning_effort": "high",
+  "response_id": "resp_001f4992ef0fa1a80069efd968ce1481a0bc00ff406b2e63a0",
+  "started_at": "2026-04-27T21:47:20+00:00",
+  "usage": {
+    "input_tokens": 2296,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 219,
+    "output_tokens_details": {
+      "reasoning_tokens": 84
+    },
+    "total_tokens": 2515
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

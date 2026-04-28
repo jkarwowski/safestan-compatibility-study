@@ -1,0 +1,23 @@
+{
+  "artifacts_dir": "openai_safestan_runs/context-fix-high-20260427T214649Z/models/forestdb/dirichlet-multinomial-mixture",
+  "compatibility": "major",
+  "completed_at": "2026-04-27T21:47:13+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/dirichlet-multinomial-mixture",
+  "reasoning_effort": "high",
+  "response_id": "resp_039e81860de6716d0069efd95b1f40819eba288f6db3d92d49",
+  "started_at": "2026-04-27T21:47:04+00:00",
+  "usage": {
+    "input_tokens": 2512,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 290,
+    "output_tokens_details": {
+      "reasoning_tokens": 160
+    },
+    "total_tokens": 2802
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}
