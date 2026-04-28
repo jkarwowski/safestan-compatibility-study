@@ -1,52 +1,46 @@
 {
-  "L_inter1_cp": 3,
-  "L_inter1_ncp": 3,
-  "L_main_cp": 3,
-  "L_main_ncp": 3,
-  "N_all_inter1_factor_levels": 3,
-  "N_all_main_factor_levels": 3,
-  "N_factor_configs": 3,
-  "N_fine_t": 4,
+  "L_inter1_cp": 2,
+  "L_inter1_ncp": 1,
+  "L_main_cp": 0,
+  "L_main_ncp": 0,
+  "N_all_inter1_factor_levels": 4,
+  "N_all_main_factor_levels": 10,
+  "N_factor_configs": 4,
+  "N_fine_t": 3,
   "N_inter1_factor_levels": [
     3,
-    3,
-    3
+    1
   ],
-  "N_inter1_factors": 3,
+  "N_inter1_factors": 2,
   "N_main_factor_levels": [
-    3,
-    3,
-    3
+    4,
+    1,
+    1,
+    4
   ],
-  "N_main_factors": 3,
+  "N_main_factors": 4,
   "fine_t": [
-    1.0,
-    1.0,
-    1.0,
-    1.0
+    3.097424010022448,
+    2.4144960438296583,
+    4.169856789172988
   ],
   "inter1_cp_idx": [
-    1,
     2,
-    3
+    2
   ],
   "inter1_factor_end_idx": [
-    1,
-    2,
-    3
+    3,
+    4
   ],
   "inter1_factor_level_idx": [
     [
       1,
       1,
-      1
-    ],
-    [
-      1,
       1,
       1
     ],
     [
+      1,
       1,
       1,
       1
@@ -54,36 +48,39 @@
   ],
   "inter1_factor_start_idx": [
     1,
-    2,
-    3
+    4
   ],
   "inter1_ncp_idx": [
-    1,
-    2,
-    3
+    2
   ],
-  "main_cp_idx": [
-    1,
-    2,
-    3
-  ],
+  "main_cp_idx": [],
   "main_factor_end_idx": [
-    1,
-    2,
-    3
+    4,
+    5,
+    6,
+    10
   ],
   "main_factor_level_idx": [
     [
       1,
       1,
+      1,
       1
     ],
     [
       1,
       1,
+      1,
       1
     ],
     [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
       1,
       1,
       1
@@ -91,22 +88,27 @@
   ],
   "main_factor_start_idx": [
     1,
-    2,
-    3
+    5,
+    6,
+    7
   ],
-  "main_ncp_idx": [
-    1,
-    2,
-    3
-  ],
+  "main_ncp_idx": [],
   "packed_inter1_factor_idx": [
     1,
-    2,
-    3
+    1,
+    1,
+    2
   ],
   "packed_main_factor_idx": [
     1,
+    1,
+    1,
+    1,
     2,
-    3
+    3,
+    4,
+    4,
+    4,
+    4
   ]
 }

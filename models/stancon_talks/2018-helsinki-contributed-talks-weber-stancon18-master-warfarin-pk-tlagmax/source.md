@@ -15,4 +15,4 @@
 - Generation method: data_block_parser_fallback.
 - Parsed data declarations: 8.
 - Data block present: true.
-- stanc fallback reason: Syntax error in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pk-tlagmax/model.stan', line 12, column 3 to column 5, parsing error:.
+- stanc fallback reason: Error in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pk-tlagmax/model.stan', line 134, column 18 to column 24:.

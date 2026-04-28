@@ -1,23 +1,12 @@
 {
-  "N": 4,
-  "center_idxs": [
-    1,
-    1
-  ],
-  "left_idxs": [
-    1,
-    1
-  ],
-  "right_idxs": [
-    1,
-    1
-  ],
+  "N": 2,
+  "center_idxs": [],
+  "left_idxs": [],
+  "right_idxs": [],
   "ts": [
     0.5,
-    1.0,
-    1.5,
-    2.0
+    1.0
   ],
-  "x_left": 0.0,
-  "x_right": 1.0
+  "x_left": 6.693135955715684,
+  "x_right": 4.341277090905978
 }

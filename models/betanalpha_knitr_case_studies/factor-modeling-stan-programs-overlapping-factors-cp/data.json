@@ -1,77 +1,56 @@
 {
-  "N": 4,
-  "N_all_inter1_factor_levels": 3,
-  "N_all_inter2_factor_levels": 3,
-  "N_all_main_factor_levels": 3,
+  "N": 2,
+  "N_all_inter1_factor_levels": 1,
+  "N_all_inter2_factor_levels": 11,
+  "N_all_main_factor_levels": 5,
   "N_inter1_factor_levels": [
-    3,
-    3,
-    3
+    1
   ],
-  "N_inter1_factors": 3,
+  "N_inter1_factors": 1,
   "N_inter2_factor_levels": [
-    3,
-    3,
-    3
-  ],
-  "N_inter2_factors": 3,
-  "N_main_factor_levels": [
-    3,
-    3,
-    3
-  ],
-  "N_main_factors": 3,
-  "inter1_factor_end_idx": [
     1,
-    2,
+    3,
+    4,
     3
+  ],
+  "N_inter2_factors": 4,
+  "N_main_factor_levels": [
+    1,
+    4
+  ],
+  "N_main_factors": 2,
+  "inter1_factor_end_idx": [
+    1
   ],
   "inter1_factor_level_idx": [
     [
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
       1,
       1
     ]
   ],
   "inter1_factor_start_idx": [
-    1,
-    2,
-    3
+    1
   ],
   "inter2_factor_end_idx": [
     1,
-    2,
-    3
+    4,
+    8,
+    11
   ],
   "inter2_factor_level_idx": [
     [
       1,
-      1,
+      1
+    ],
+    [
       1,
       1
     ],
     [
       1,
-      1,
-      1,
       1
     ],
     [
-      1,
-      1,
       1,
       1
     ]
@@ -79,58 +58,53 @@
   "inter2_factor_start_idx": [
     1,
     2,
-    3
+    5,
+    9
   ],
   "main_factor_end_idx": [
     1,
-    2,
-    3
+    5
   ],
   "main_factor_level_idx": [
     [
       1,
-      1,
-      1,
       1
     ],
     [
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
       1,
       1
     ]
   ],
   "main_factor_start_idx": [
     1,
-    2,
-    3
+    2
   ],
   "packed_inter1_factor_idx": [
-    1,
-    2,
-    3
+    1
   ],
   "packed_inter2_factor_idx": [
     1,
     2,
-    3
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4
   ],
   "packed_main_factor_idx": [
     1,
     2,
-    3
+    2,
+    2,
+    2
   ],
-  "sigma": 1.0,
+  "sigma": 2.8765494966888245,
   "y": [
-    0.1,
-    0.2,
-    0.30000000000000004,
-    0.4
+    2.0,
+    2.0
   ]
 }

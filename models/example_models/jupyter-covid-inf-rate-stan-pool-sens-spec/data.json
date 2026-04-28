@@ -1,8 +1,8 @@
 {
   "n_sample": 3,
-  "n_sens": 4,
-  "n_spec": 6,
-  "y_sample": 5,
-  "y_sens": 5,
+  "n_sens": 3,
+  "n_spec": 4,
+  "y_sample": 3,
+  "y_sens": 2,
   "y_spec": 4
 }

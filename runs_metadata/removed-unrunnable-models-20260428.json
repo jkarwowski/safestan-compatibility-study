@@ -1,0 +1,283 @@
+{
+  "removed_after_run_id": "repaired-failures-smoke-3-20260428T2335Z",
+  "count": 46,
+  "note": "Removed from the runnable corpus after stanc-based data regeneration and targeted smoke-test repair passes still could not make these models compile and sample under the standard smoke settings.",
+  "models": [
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-marginal-conditional-residual-mixed",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-marginal-conditional-residual-mixed/model.stan', line 70, column 2 to column 51)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-mixed",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-mixed/model.stan', line 144, column 2 to column 27)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver1",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver1/model.stan', line 114, column 2 to column 27)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver2",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver2/model.stan', line 151, column 2 to column 27)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver2-pred",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver2-pred/model.stan', line 101, column 2 to column 27)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver3",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: normal_lpdf: Location parameter[1] is nan, but must be finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-ver3/model.stan', line 183, column 2 to column 27)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver1",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: binomial_lpmf: Probability parameter[1] is nan, but must be in the interval [0, 1] (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver1/model.stan', line 133, column 2 to column 84)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver2",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: binomial_lpmf: Probability parameter[1] is nan, but must be in the interval [0, 1] (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-qa-ver2/model.stan', line 170, column 2 to column 84)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/betanalpha_knitr_case_studies/falling-inv-gamma-tune",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: Exception: inv_gamma_cdf: Shape parameter is nan, but must be positive finite! (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/falling-inv-gamma-tune/model.stan', line 5, column 4 to column 70) (in '/Users/jacski/synthstats/stan-collection/models/betanalpha_knitr_case_studies/falling-inv-gamma-tune/model.stan', line 34, column 2 to column 59)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-latent-glm-17-7",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 0 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-latent-glm-17-7/model.stan', line 75, column 4 to line 78, column 35)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-multilevel-ordered-categorical-17-6",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Rejecting initial value:",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-multi-varying-coef-17-2",
+      "reason": "upstream_model_uses_unconstrained_matrix_as_wishart_scale",
+      "message": "Exception: wishart_lpdf: scale parameter is not symmetric. scale parameter[1,2] = 0.983624, but scale parameter[2,1] = 0.726828 (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-multi-varying-coef-17-2/model.stan', line 31, column 2 to column 32)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-radon-wishart-17-2",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-radon-wishart-17-2/model.stan', line 52, column 4 to column 43)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/arm-ch-17-robit-17-7",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-17-robit-17-7/model.stan', line 71, column 4 to column 64)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/arm-ch-19-item-response",
+      "reason": "upstream_model_shape_or_dimension_issue",
+      "message": "Exception: vector assign rows: assigning variable b_hat_raw (1) and right hand side rows (4) must match in size (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-19-item-response/model.stan', line 35, column 2 to column 40)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/arm-ch-7-wells",
+      "reason": "upstream_model_shape_or_dimension_issue",
+      "message": "Exception: bernoulli_logit_glm_lpmf: Weight vector has dimension = 2, expecting dimension = 1; a function was called with arguments of different scalar, array, vector, or matrix types, and they were not consistently sized;  all arguments must be scalars or multidimensional values of the same shape. (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-7-wells/model.stan', line 14, column 2 to column 46)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/arm-ch-9-electric-tr",
+      "reason": "upstream_model_shape_or_dimension_issue",
+      "message": "Exception: normal_id_glm_lpdf: Weight vector has dimension = 2, expecting dimension = 1; a function was called with arguments of different scalar, array, vector, or matrix types, and they were not consistently sized;  all arguments must be scalars or multidimensional values of the same shape. (in '/Users/jacski/synthstats/stan-collection/models/example_models/arm-ch-9-electric-tr/model.stan', line 15, column 2 to column 51)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glm0",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: matrix[uni,uni] row indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glm0/model.stan', line 26, column 4 to column 61)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glm1",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: matrix[uni,uni] row indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glm1/model.stan', line 25, column 4 to column 61)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glm2",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: matrix[uni,uni] row indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glm2/model.stan', line 31, column 4 to column 61)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glmm3",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: matrix[uni,uni] column indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glmm3/model.stan', line 43, column 4 to column 61)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/bpa-ch-04-glmm5",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 3 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bpa-ch-04-glmm5/model.stan', line 32, column 6 to line 33, column 67)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/bugs-examples-vol2-schools-schools-1",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: array[uni, ...] index: accessing element out of range. index 3 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/example_models/bugs-examples-vol2-schools-schools-1/model.stan', line 28, column 4 to line 33, column 44)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/jupyter-sum-to-zero-stan-binomial-4preds-ozs",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Log probability evaluates to log(0), i.e. negative infinity.",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/jupyter-sum-to-zero-stan-binomial-4preds-ozs-ppc",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Log probability evaluates to log(0), i.e. negative infinity.",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/knitr-car-iar-poisson-bym2-islands",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: vector[multi] indexing: accessing element out of range. index 1 out of range; container is empty and cannot be indexed (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-car-iar-poisson-bym2-islands/model.stan', line 63, column 2 to column 53)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/knitr-car-iar-poisson-update-2021-02-bym2-islands",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: poisson_log_lpmf: Log rate parameter[1] is nan, but must be not nan! (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-car-iar-poisson-update-2021-02-bym2-islands/model.stan', line 117, column 2 to column 52)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/knitr-dynamic-opinion-dynamic-crossnat-latent-opinion-model",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 5 out of range; expecting index to be between 1 and 4 (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-dynamic-opinion-dynamic-crossnat-latent-opinion-model/model.stan', line 38, column 4 to line 39, column 39)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/example_models/knitr-irt-irt-1pl-unit",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 3 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/example_models/knitr-irt-irt-1pl-unit/model.stan', line 15, column 4 to column 28)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-01-auerbach-model-int",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: vector[uni] indexing: accessing element out of range. index 4 out of range; expecting index to be between 1 and 3 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-01-auerbach-model-int/model.stan', line 74, column 2 to line 87, column 31)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-05-margossian-models-neutropenia-neutropenia",
+      "reason": "timeout_under_smoke_test",
+      "message": "TIMEOUT after 600.0 seconds",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-07-nicenboim-activation-based-h",
+      "reason": "upstream_model_shape_or_dimension_issue",
+      "message": "Exception: vector assign rows: assigning variable logmean_RT_w (3) and right hand side rows (2) must match in size (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-07-nicenboim-activation-based-h/model.stan', line 76, column 2 to column 49)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h-kfold",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: Exception: vector[uni] indexing: accessing element out of range. index 3 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h-kfold/model.stan', line 6, column 9 to column 62) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h-kfold/model.stan', line 92, column 2 to column 63)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-03-brilleman-stan-jm",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: Exception: matrix[uni,uni] column indexing: accessing element out of range. index 2 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-03-brilleman-stan-jm/model.stan', line 32, column 8 to column 62) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-03-brilleman-stan-jm/model.stan', line 211, column 4 to column 82)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-05-goodman-gp-center",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: segment: n is 2, but must be less than or equal to 1.000000 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-05-goodman-gp-center/model.stan', line 108, column 6 to column 73)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-05-goodman-gp-noncenter",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: segment: n is 3, but must be less than or equal to 1.000000 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-05-goodman-gp-noncenter/model.stan', line 107, column 6 to column 71)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-05-goodman-state-space-center",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: vector[min_max] min assign: accessing element out of range. index 1 out of range; container is empty and cannot be indexed (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-05-goodman-state-space-center/model.stan', line 23, column 4 to line 24, column 41)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-contributed-talks-05-goodman-state-space-noncenter",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: segment: n is 6, but must be less than or equal to 4.000000 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-contributed-talks-05-goodman-state-space-noncenter/model.stan', line 41, column 4 to line 42, column 36)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-auerbach-jones-winstanley-model2",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: gamma_lpdf: Inverse scale parameter is 0, but must be positive finite! (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-auerbach-jones-winstanley-model2/model.stan', line 83, column 0 to column 40)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-egidi-egidi-double-poisson",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: matrix[uni,uni] row indexing: accessing element out of range. index 6 out of range; expecting index to be between 1 and 2 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-egidi-egidi-double-poisson/model.stan', line 63, column 2 to column 121)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-egidi-egidi-shots",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: matrix[uni,uni] row indexing: accessing element out of range. index 5 out of range; expecting index to be between 1 and 4 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-egidi-egidi-shots/model.stan', line 75, column 5 to line 76, column 68)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-regulated",
+      "reason": "upstream_model_shape_or_dimension_issue",
+      "message": "Exception: mismatch in dimension declared and found in context; processing stage=data initialization; variable name=regulator_expression; position=0; dims declared=(5,4); dims found=(2,4) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-regulated/model.stan', line 11, column 2 to column 99)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-artificial",
+      "reason": "numeric_overflow_under_synthetic_data",
+      "message": "Exception: Exception: Exception: Error in function boost::math::asymptotic_bessel_i_large_x<long double>(long double,long double): Overflow Error (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-artificial/model.stan', line 9, column 4 to column 77) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-artificial/model.stan', line 19, column 4 to column 48) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-artificial/model.stan', line 139, column 4 to line 143, column 6)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-no-zif",
+      "reason": "requires_upstream_specific_structured_data",
+      "message": "Exception: matrix[uni,uni] row indexing: accessing element out of range. index 3 out of range; expecting index to be between 1 and 1 (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-no-zif/model.stan', line 124, column 4 to line 128, column 6)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-1",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: Exception: gamma_lpdf: Shape parameter[1] is nan, but must be positive finite! (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-1/model.stan', line 41, column 2 to column 55) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-1/model.stan', line 212, column 2 to column 51)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    },
+    {
+      "model": "models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-2",
+      "reason": "numeric_or_initialization_pathology_under_synthetic_data",
+      "message": "Exception: Exception: gamma_lpdf: Shape parameter[1] is nan, but must be positive finite! (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-2/model.stan', line 41, column 2 to column 55) (in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pd-tlagmax-2/model.stan', line 212, column 2 to column 51)",
+      "source_report": "runs_metadata/repaired-failures-smoke-3-20260428T2335Z.json"
+    }
+  ]
+}

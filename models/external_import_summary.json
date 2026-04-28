@@ -4,7 +4,7 @@
     {
       "copied_or_converted_data": 143,
       "models": 147,
-      "placeholder_data": 4,
+      "placeholder_data": 0,
       "posteriordb_granularity": "posterior instances",
       "remaining_placeholder_data": 0,
       "skipped_support_files": 0,
@@ -15,21 +15,21 @@
       "upstream_repository": "https://github.com/stan-dev/posteriordb"
     },
     {
-      "copied_or_converted_data": 5,
-      "models": 82,
-      "placeholder_data": 77,
+      "copied_or_converted_data": 4,
+      "models": 61,
+      "placeholder_data": 0,
       "remaining_placeholder_data": 0,
       "skipped_support_files": 3,
       "source_group": "stancon_talks",
       "source_group_label": "StanCon talks",
-      "synthetic_data": 77,
+      "synthetic_data": 57,
       "upstream_commit": "affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb",
       "upstream_repository": "https://github.com/stan-dev/stancon_talks"
     },
     {
       "copied_or_converted_data": 0,
       "models": 14,
-      "placeholder_data": 14,
+      "placeholder_data": 0,
       "remaining_placeholder_data": 0,
       "skipped_support_files": 0,
       "source_group": "bda_r_demos",
@@ -39,37 +39,37 @@
       "upstream_repository": "https://github.com/avehtari/BDA_R_demos"
     },
     {
-      "copied_or_converted_data": 57,
-      "models": 316,
-      "placeholder_data": 259,
+      "copied_or_converted_data": 36,
+      "models": 302,
+      "placeholder_data": 0,
       "remaining_placeholder_data": 0,
       "skipped_support_files": 0,
       "source_group": "betanalpha_knitr_case_studies",
       "source_group_label": "Betancourt knitr case studies",
-      "synthetic_data": 259,
+      "synthetic_data": 266,
       "upstream_commit": "8c568575d8f4ca7700cf9b83faf73dc4a2089df2",
       "upstream_repository": "https://github.com/betanalpha/knitr_case_studies"
     },
     {
-      "copied_or_converted_data": 360,
-      "models": 558,
-      "placeholder_data": 198,
+      "copied_or_converted_data": 325,
+      "models": 538,
+      "placeholder_data": 0,
       "remaining_placeholder_data": 0,
       "skipped_support_files": 3,
       "source_group": "example_models",
       "source_group_label": "Stan example models",
-      "synthetic_data": 198,
+      "synthetic_data": 213,
       "upstream_commit": "e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b",
       "upstream_repository": "https://github.com/stan-dev/example-models"
     }
   ],
   "synthetic_data_methods": {
-    "data_block_parser_fallback": 312,
-    "stanc_debug_generate_data": 240
+    "data_block_parser_fallback": 253,
+    "stanc_debug_generate_data": 301
   },
-  "total_imported_model_directories": 1117,
+  "total_imported_model_directories": 1062,
   "total_remaining_placeholder_data": 0,
-  "total_with_copied_or_converted_data": 565,
-  "total_with_placeholder_data": 552,
-  "total_with_synthetic_data": 552
+  "total_with_copied_or_converted_data": 508,
+  "total_with_placeholder_data": 0,
+  "total_with_synthetic_data": 554
 }

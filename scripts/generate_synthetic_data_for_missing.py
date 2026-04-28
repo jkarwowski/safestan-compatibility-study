@@ -24,7 +24,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MODELS_ROOT = ROOT / "models"
-GENERATOR_ID = "synthetic_data_for_missing_v1"
+GENERATOR_ID = "synthetic_data_for_missing_v2"
 
 COMMENT_BLOCK_RE = re.compile(r"/\*.*?\*/", re.DOTALL)
 COMMENT_LINE_RE = re.compile(r"//.*?$", re.MULTILINE)
@@ -537,13 +537,389 @@ def declaration_value(decl: Declaration, env: dict[str, Any]) -> Any:
     return nested_array(outer_shape, lambda offset: base_value(decl, env, offset))
 
 
-def postprocess_payload(payload: dict[str, Any]) -> None:
+def declaration_shape(decl: Declaration, env: dict[str, Any]) -> list[int]:
+    shape = [eval_dim(expr, env) for expr in decl.array_dims]
+    if decl.base_type in {"vector", "row_vector", "simplex", "unit_vector", "ordered", "positive_ordered"}:
+        shape.append(eval_dim(decl.base_dims[0], env) if decl.base_dims else 1)
+    elif decl.base_type in {"matrix", "cov_matrix", "corr_matrix", "cholesky_factor_cov", "cholesky_factor_corr"}:
+        rows = eval_dim(decl.base_dims[0], env) if decl.base_dims else 1
+        cols = eval_dim(decl.base_dims[1], env) if len(decl.base_dims) > 1 else rows
+        shape.extend([rows, cols])
+    return shape
+
+
+def coerce_leaf(value: Any, decl: Declaration, env: dict[str, Any], index: int) -> Any:
+    if decl.base_type == "int":
+        lower = int(math.ceil(eval_expr(decl.lower, env, 0))) if decl.lower is not None else None
+        upper = int(math.floor(eval_expr(decl.upper, env, 0))) if decl.upper is not None else None
+        try:
+            coerced = int(round(float(value)))
+        except (TypeError, ValueError):
+            coerced = integer_value(decl.name, decl.lower, decl.upper, env, index)
+        if lower is not None:
+            coerced = max(coerced, lower)
+        if upper is not None:
+            coerced = min(coerced, upper)
+        return coerced
+    try:
+        coerced_real = float(value)
+    except (TypeError, ValueError):
+        coerced_real = real_value(decl.name, decl.lower, decl.upper, env, index)
+    lower = eval_expr(decl.lower, env, 0.0) if decl.lower is not None else None
+    upper = eval_expr(decl.upper, env, 0.0) if decl.upper is not None else None
+    if lower is not None:
+        coerced_real = max(coerced_real, lower)
+    if upper is not None:
+        coerced_real = min(coerced_real, upper)
+    return coerced_real
+
+
+def coerce_shape(value: Any, shape: list[int], decl: Declaration, env: dict[str, Any], offset: int = 0) -> Any:
+    if not shape:
+        return coerce_leaf(value, decl, env, offset)
+    existing = value if isinstance(value, list) else []
+    size = max(shape[0], 0)
+    return [
+        coerce_shape(
+            existing[index] if index < len(existing) else None,
+            shape[1:],
+            decl,
+            env,
+            offset * max(size, 1) + index,
+        )
+        for index in range(size)
+    ]
+
+
+def map_nested(value: Any, func: Any) -> Any:
+    if isinstance(value, list):
+        return [map_nested(item, func) for item in value]
+    return func(value)
+
+
+def clamp_nested(value: Any, lower: int, upper: int) -> Any:
+    return map_nested(value, lambda item: max(lower, min(upper, int(round(float(item)))) if isinstance(item, (int, float)) else lower))
+
+
+def clamp_successes(successes: Any, trials: Any) -> Any:
+    if isinstance(successes, list):
+        if isinstance(trials, list):
+            return [
+                clamp_successes(item, trials[index] if index < len(trials) else trials[-1] if trials else 0)
+                for index, item in enumerate(successes)
+            ]
+        return [clamp_successes(item, trials) for item in successes]
+    try:
+        n = int(round(float(trials[0] if isinstance(trials, list) and trials else trials)))
+        y = int(round(float(successes)))
+    except (TypeError, ValueError):
+        return 0
+    return max(0, min(y, max(n, 0)))
+
+
+def max_indexed_position(stan_text: str, name: str) -> int | None:
+    positions = [int(match.group(1)) for match in re.finditer(rf"\b{re.escape(name)}\s*\[\s*(\d+)\s*\]", stan_text)]
+    return max(positions) if positions else None
+
+
+def parse_data_declarations(model_dir: Path) -> list[Declaration]:
+    text = (model_dir / "model.stan").read_text(encoding="utf-8", errors="replace")
+    block = extract_data_block(text)
+    if block is None:
+        return []
+    declarations: list[Declaration] = []
+    for statement in split_statements(block):
+        decl = parse_declaration(statement)
+        if decl is not None:
+            declarations.append(decl)
+    return declarations
+
+
+def fit_payload_to_declarations(payload: dict[str, Any], declarations: list[Declaration]) -> None:
+    env: dict[str, Any] = dict(payload)
+    for decl in declarations:
+        if decl.name not in payload:
+            payload[decl.name] = declaration_value(decl, env)
+        shape = declaration_shape(decl, env)
+        if shape:
+            payload[decl.name] = coerce_shape(payload[decl.name], shape, decl, env)
+        elif decl.base_type in {"int", "real"}:
+            payload[decl.name] = coerce_leaf(payload[decl.name], decl, env, 0)
+        env[decl.name] = payload[decl.name]
+
+
+def repair_dimension_payload(payload: dict[str, Any], declarations: list[Declaration], stan_text: str) -> None:
+    declared = {decl.name: decl for decl in declarations}
+    stripped = strip_comments(stan_text)
+    sized_patterns = [
+        re.compile(r"\barray\s*\[\s*([A-Za-z_]\w*)\s*\]\s+[A-Za-z_]\w*(?:\s*<[^>]*>)?(?:\s*\[[^\]]+\])?\s+([A-Za-z_]\w*)"),
+        re.compile(r"\b(?:vector|row_vector)\s*\[\s*([A-Za-z_]\w*)\s*\]\s+([A-Za-z_]\w*)"),
+        re.compile(r"\bmatrix\s*\[\s*([A-Za-z_]\w*)\s*,\s*([A-Za-z_]\w*)\s*\]\s+([A-Za-z_]\w*)"),
+    ]
+    for pattern in sized_patterns:
+        for match in pattern.finditer(stripped):
+            groups = match.groups()
+            if len(groups) == 2:
+                dim_names = [groups[0]]
+                var_name = groups[1]
+            else:
+                dim_names = [groups[0], groups[1]]
+                var_name = groups[2]
+            max_position = max_indexed_position(stan_text, var_name)
+            if max_position is None:
+                continue
+            for dim_name in dim_names:
+                if dim_name in payload and isinstance(payload[dim_name], (int, float)):
+                    payload[dim_name] = max(int(payload[dim_name]), max_position)
+    for decl in declarations:
+        max_position = max_indexed_position(stan_text, decl.name)
+        if max_position is None:
+            continue
+        for dim_expr in decl.array_dims:
+            dim_name = dim_expr.strip()
+            if re.fullmatch(r"[A-Za-z_]\w*", dim_name) and dim_name in payload:
+                try:
+                    payload[dim_name] = max(int(payload[dim_name]), max_position)
+                except (TypeError, ValueError):
+                    payload[dim_name] = max_position
+    for name in ("J", "K", "G", "M"):
+        max_position = max_indexed_position(stan_text, name)
+        if max_position is None:
+            continue
+        if name in payload and isinstance(payload[name], (int, float)):
+            payload[name] = max(int(payload[name]), max_position)
+        elif name in declared:
+            payload[name] = max_position
+    if "N" in payload and "N_obs" in payload:
+        try:
+            payload["N"] = max(int(payload["N"]), int(payload["N_obs"]) + 1)
+        except (TypeError, ValueError):
+            pass
+    if "N" in payload and "N_train" in payload:
+        try:
+            payload["N_train"] = min(int(payload["N_train"]), int(payload["N"]))
+        except (TypeError, ValueError):
+            pass
+
+
+def repair_index_payload(payload: dict[str, Any], declarations: list[Declaration]) -> None:
+    env = dict(payload)
+    for decl in declarations:
+        if decl.base_type != "int" or decl.name not in payload:
+            continue
+        lowered = decl.name.lower()
+        if "start_idx" in lowered or "end_idx" in lowered or lowered.startswith("packed_"):
+            continue
+        looks_like_index = bool(
+            lowered.endswith("idx")
+            or lowered.endswith("idxs")
+            or lowered.endswith("_ind")
+            or "index" in lowered
+            or lowered
+            in {
+                "county",
+                "village",
+                "city",
+                "year",
+                "site",
+                "state",
+                "team",
+                "person",
+                "cond",
+                "slim",
+                "sign",
+                "lght",
+                "blte",
+                "tffc",
+                "ind",
+            }
+        )
+        if not looks_like_index:
+            continue
+        lower = int(math.ceil(eval_expr(decl.lower, env, 1))) if decl.lower is not None else 1
+        upper = int(math.floor(eval_expr(decl.upper, env, lower))) if decl.upper is not None else lower
+        if upper < lower:
+            upper = lower
+        preferred = 2 if "idx" in lowered and upper >= max(lower, 2) else lower
+        payload[decl.name] = clamp_nested(payload[decl.name], lower, upper)
+        payload[decl.name] = map_nested(payload[decl.name], lambda _: preferred)
+
+    if {"N", "N_obs", "obs_idx", "unobs_idx"}.issubset(payload):
+        try:
+            n = int(payload["N"])
+            n_obs = min(max(1, int(payload["N_obs"])), max(n - 1, 1))
+        except (TypeError, ValueError):
+            return
+        payload["N_obs"] = n_obs
+        payload["obs_idx"] = list(range(2, 2 + n_obs))
+        payload["unobs_idx"] = list(range(2 + n_obs, n + 2))
+    if {"N", "left_idxs", "center_idxs", "right_idxs"}.issubset(payload):
+        try:
+            n = max(3, int(payload["N"]))
+        except (TypeError, ValueError):
+            n = 3
+        count = max(n - 2, 1)
+        payload["N"] = n
+        payload["left_idxs"] = [1 for _ in range(count)]
+        payload["center_idxs"] = [min(n - 1, 2 + index) for index in range(count)]
+        payload["right_idxs"] = [n for _ in range(count)]
+    if "obs_idxs" in payload and "N" in payload:
+        try:
+            n = max(1, int(payload["N"]))
+        except (TypeError, ValueError):
+            n = 1
+        value = payload["obs_idxs"]
+        if isinstance(value, list):
+            payload["obs_idxs"] = [min(n, max(1, 1 + (index % n))) for index, _ in enumerate(value)]
+
+
+def repair_factor_payload(payload: dict[str, Any]) -> None:
+    for prefix in ("main", "inter1", "inter2"):
+        factors_key = f"N_{prefix}_factors"
+        levels_key = f"N_{prefix}_factor_levels"
+        all_levels_key = f"N_all_{prefix}_factor_levels"
+        start_key = f"{prefix}_factor_start_idx"
+        end_key = f"{prefix}_factor_end_idx"
+        packed_key = f"packed_{prefix}_factor_idx"
+        level_idx_key = f"{prefix}_factor_level_idx"
+        if factors_key not in payload or levels_key not in payload:
+            continue
+        try:
+            n_factors = max(1, int(payload[factors_key]))
+        except (TypeError, ValueError):
+            n_factors = 1
+        levels_raw = payload.get(levels_key)
+        levels = levels_raw if isinstance(levels_raw, list) else []
+        levels = [max(1, int(round(float(levels[index])))) if index < len(levels) else 1 for index in range(n_factors)]
+        total = sum(levels)
+        starts: list[int] = []
+        ends: list[int] = []
+        packed: list[int] = []
+        cursor = 1
+        for factor, count in enumerate(levels, 1):
+            starts.append(cursor)
+            ends.append(cursor + count - 1)
+            packed.extend([factor] * count)
+            cursor += count
+        n = max(0, int(payload.get("N", 0) or 0))
+        payload[factors_key] = n_factors
+        payload[levels_key] = levels
+        payload[all_levels_key] = total
+        payload[start_key] = starts
+        payload[end_key] = ends
+        payload[packed_key] = packed
+        if level_idx_key in payload:
+            payload[level_idx_key] = [[1 for _ in range(n)] for _ in range(n_factors)]
+
+
+def repair_threshold_payload(payload: dict[str, Any]) -> None:
+    if {"t1", "t2", "t3"}.issubset(payload):
+        payload["t1"] = 1.0
+        payload["t2"] = 2.0
+        payload["t3"] = 3.0
+
+
+def repair_square_matrix_payload(payload: dict[str, Any]) -> None:
+    for key, value in list(payload.items()):
+        if not isinstance(value, list) or not value or not all(isinstance(row, list) for row in value):
+            continue
+        rows = len(value)
+        cols = len(value[0]) if value and value[0] else 0
+        if rows != cols:
+            continue
+        lowered = key.lower()
+        if lowered in {"w", "sigma", "omega", "cov", "corr", "r"} or any(
+            token in lowered for token in ("cov", "corr", "omega", "wishart")
+        ):
+            payload[key] = identity_matrix(rows)
+
+
+def repair_component_sizes(payload: dict[str, Any]) -> None:
+    if "component_sizes" not in payload or "N" not in payload:
+        return
+    sizes = payload["component_sizes"]
+    if not isinstance(sizes, list) or not sizes:
+        return
+    try:
+        n = max(1, int(payload["N"]))
+    except (TypeError, ValueError):
+        return
+    sizes = [max(1, int(round(float(item)))) for item in sizes]
+    if sum(sizes) > n:
+        payload["N"] = sum(sizes)
+    payload["component_sizes"] = sizes
+
+
+def repair_binomial_payload(payload: dict[str, Any], stan_text: str) -> None:
+    pairs: set[tuple[str, str]] = set()
+    sampling_pattern = re.compile(r"\b([A-Za-z_]\w*)\s*(?:\[[^\]]+\])?\s*~\s*binomial(?:_logit)?\s*\(\s*([A-Za-z_]\w*)")
+    lpmf_pattern = re.compile(r"\bbinomial(?:_logit)?_lu?pmf\s*\(\s*([A-Za-z_]\w*)\s*(?:\[[^\]]+\])?\s*\|\s*([A-Za-z_]\w*)")
+    pairs.update((match.group(1), match.group(2)) for match in sampling_pattern.finditer(stan_text))
+    pairs.update((match.group(1), match.group(2)) for match in lpmf_pattern.finditer(stan_text))
+    for key in payload:
+        if not key.startswith("y"):
+            continue
+        suffix = key[1:]
+        for trial_key in (f"n{suffix}", f"N{suffix}", f"trials{suffix}"):
+            if trial_key in payload:
+                pairs.add((key, trial_key))
+    for key in payload:
+        lowered = key.lower()
+        if any(token in lowered for token in ("success", "pos_", "positive")):
+            for trial_key in ("n", "N", "trials", "tests", f"n_{key}", f"n{key}"):
+                if trial_key in payload:
+                    pairs.add((key, trial_key))
+        if any(token in lowered for token in ("redcard", "success", "positive")) and "n_games" in payload:
+            pairs.add((key, "n_games"))
+    if "y" in payload and "N" in payload and "binomial" in stan_text:
+        pairs.add(("y", "N"))
+    for successes, trials in pairs:
+        if successes in payload and trials in payload:
+            payload[successes] = clamp_successes(payload[successes], payload[trials])
+
+
+def repair_time_payload(payload: dict[str, Any]) -> None:
+    if "t0" in payload and any(key.lower() in {"t", "ts", "time", "times"} for key in payload):
+        payload["t0"] = 0.0
+    for key, value in list(payload.items()):
+        lowered = key.lower()
+        if isinstance(value, list) and all(isinstance(item, (int, float)) for item in value):
+            if lowered in {"t", "time", "times", "ts"} or any(
+                token in lowered for token in ("time", "times", "grid", "x_grid", "x_predict")
+            ):
+                payload[key] = [1.0 + index for index in range(len(value))]
+
+
+def postprocess_payload(payload: dict[str, Any], model_dir: Path | None = None) -> None:
+    stan_text = (model_dir / "model.stan").read_text(encoding="utf-8", errors="replace") if model_dir else ""
+    declarations = parse_data_declarations(model_dir) if model_dir else []
+    allowed = {decl.name for decl in declarations}
+    if allowed:
+        for key in list(payload):
+            if key not in allowed:
+                del payload[key]
+        fit_payload_to_declarations(payload, declarations)
+        repair_dimension_payload(payload, declarations, stan_text)
+        fit_payload_to_declarations(payload, declarations)
+        repair_factor_payload(payload)
+        repair_component_sizes(payload)
+        repair_threshold_payload(payload)
+        repair_square_matrix_payload(payload)
+        fit_payload_to_declarations(payload, declarations)
+        repair_index_payload(payload, declarations)
+        fit_payload_to_declarations(payload, declarations)
+        repair_binomial_payload(payload, stan_text)
+        repair_time_payload(payload)
+        fit_payload_to_declarations(payload, declarations)
     for key in list(payload):
         lowered = key.lower()
         value = payload[key]
-        if isinstance(value, list) and any(token in lowered for token in ("time", "times", "ts", "grid", "x_grid", "x_predict")):
+        if isinstance(value, list) and (
+            lowered in {"t", "time", "times", "ts"}
+            or any(token in lowered for token in ("time", "times", "grid", "x_grid", "x_predict"))
+        ):
             if value and all(isinstance(item, (int, float)) for item in value):
-                payload[key] = [0.5 + 0.5 * index for index in range(len(value))]
+                payload[key] = [1.0 + index for index in range(len(value))]
         if lowered in {"node1", "node2"} and isinstance(value, list):
             n = int(payload.get("N", payload.get("n", 3)) or 3)
             if lowered == "node1":
@@ -558,6 +934,8 @@ def postprocess_payload(payload: dict[str, Any]) -> None:
                     for index, y in enumerate(value)
                     if isinstance(y, (int, float))
                 ]
+    if declarations:
+        fit_payload_to_declarations(payload, declarations)
 
 
 def generated_data_with_stanc(model_dir: Path, stanc: Path | None) -> tuple[dict[str, Any] | None, dict[str, Any]]:
@@ -586,6 +964,7 @@ def generated_data_with_stanc(model_dir: Path, stanc: Path | None) -> tuple[dict
     if not isinstance(payload, dict):
         stats["stanc_error"] = "stanc_generated_non_object_json"
         return None, stats
+    postprocess_payload(payload, model_dir)
     stats["declarations"] = len(payload)
     stats["had_data_block"] = bool(payload)
     stats["unparsed_statements"] = []
@@ -610,7 +989,7 @@ def generate_with_fallback_parser(model_dir: Path) -> tuple[dict[str, Any], dict
             value = declaration_value(decl, payload)
             payload[decl.name] = value
             stats["declarations"] += 1
-    postprocess_payload(payload)
+    postprocess_payload(payload, model_dir)
     return payload, stats
 
 
@@ -687,29 +1066,70 @@ def placeholder_model_dirs(models_root: Path) -> list[Path]:
     return sorted(dirs)
 
 
+def all_model_dirs(models_root: Path) -> list[Path]:
+    return sorted(path.parent for path in models_root.glob("*/*/model.stan"))
+
+
+def failed_model_dirs_from_report(report_path: Path) -> list[Path]:
+    report = load_json(report_path)
+    dirs: list[Path] = []
+    for item in report.get("results", []):
+        if item.get("ok"):
+            continue
+        model = ROOT / str(item.get("model", ""))
+        if (model / "model.stan").exists():
+            dirs.append(model.resolve())
+    return sorted(set(dirs))
+
+
+def explicit_model_dirs(values: list[str], models_root: Path) -> list[Path]:
+    dirs: list[Path] = []
+    for value in values:
+        path = Path(value).expanduser()
+        if not path.is_absolute():
+            path = ROOT / path if value.startswith("models/") else models_root / value
+        path = path.resolve()
+        if not (path / "model.stan").exists():
+            raise SystemExit(f"Model directory does not contain model.stan: {path}")
+        dirs.append(path)
+    return sorted(set(dirs))
+
+
 def update_external_summary(models_root: Path) -> None:
     summary_path = models_root / "external_import_summary.json"
     if not summary_path.exists():
         return
     summary = load_json(summary_path)
+    models_by_group: dict[str, int] = {}
+    copied_by_group: dict[str, int] = {}
     synthetic_by_group: dict[str, int] = {}
     placeholders_by_group: dict[str, int] = {}
     methods: dict[str, int] = {}
+    summary_groups = {item.get("source_group") for item in summary.get("sources", [])}
     for metadata_path in models_root.glob("*/*/metadata.json"):
         metadata = load_json(metadata_path)
         group = metadata.get("source_group")
-        if not group:
+        if not group or group not in summary_groups:
             continue
-        if metadata.get("synthetic_data_generator") == GENERATOR_ID:
+        models_by_group[group] = models_by_group.get(group, 0) + 1
+        if metadata.get("synthetic_data_generator"):
             synthetic_by_group[group] = synthetic_by_group.get(group, 0) + 1
             method = metadata.get("synthetic_data_method", "unknown")
             methods[method] = methods.get(method, 0) + 1
-        if metadata.get("data_placeholder") is True:
+        elif metadata.get("data_placeholder") is True:
             placeholders_by_group[group] = placeholders_by_group.get(group, 0) + 1
+        else:
+            copied_by_group[group] = copied_by_group.get(group, 0) + 1
     for item in summary.get("sources", []):
         group = item.get("source_group")
+        item["models"] = models_by_group.get(group, 0)
+        item["copied_or_converted_data"] = copied_by_group.get(group, 0)
+        item["placeholder_data"] = placeholders_by_group.get(group, 0)
         item["synthetic_data"] = synthetic_by_group.get(group, 0)
         item["remaining_placeholder_data"] = placeholders_by_group.get(group, 0)
+    summary["total_imported_model_directories"] = sum(models_by_group.values())
+    summary["total_with_copied_or_converted_data"] = sum(copied_by_group.values())
+    summary["total_with_placeholder_data"] = sum(placeholders_by_group.values())
     summary["total_with_synthetic_data"] = sum(synthetic_by_group.values())
     summary["synthetic_data_methods"] = methods
     summary["total_remaining_placeholder_data"] = sum(placeholders_by_group.values())
@@ -781,6 +1201,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--models-root", default=str(DEFAULT_MODELS_ROOT))
     parser.add_argument("--stanc", help="Path to stanc. Defaults to the cmdsafestan/CmdStan checkout if found.")
+    parser.add_argument("--all", action="store_true", help="Regenerate data for every model directory.")
+    parser.add_argument("--model-dir", action="append", default=[], help="Specific model directory to regenerate; repeatable.")
+    parser.add_argument("--from-smoke-report", help="Regenerate failed model directories from a smoke-test JSON report.")
     parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
 
@@ -789,7 +1212,16 @@ def main() -> int:
     args = parse_args()
     models_root = Path(args.models_root).expanduser().resolve()
     stanc = find_stanc(args.stanc)
-    targets = placeholder_model_dirs(models_root)
+    targets: list[Path] = []
+    if args.all:
+        targets.extend(all_model_dirs(models_root))
+    if args.from_smoke_report:
+        targets.extend(failed_model_dirs_from_report(Path(args.from_smoke_report).expanduser().resolve()))
+    if args.model_dir:
+        targets.extend(explicit_model_dirs(args.model_dir, models_root))
+    if not targets:
+        targets = placeholder_model_dirs(models_root)
+    targets = sorted(set(targets))
     generated = 0
     unparsed_total = 0
     stanc_total = 0

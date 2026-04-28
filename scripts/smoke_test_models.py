@@ -60,6 +60,31 @@ def load_existing(path: Path) -> dict[str, Any] | None:
         return json.load(handle)
 
 
+def explicit_model_dirs(values: list[str], models_root: Path) -> list[Path]:
+    dirs: list[Path] = []
+    for value in values:
+        path = Path(value).expanduser()
+        if not path.is_absolute():
+            path = ROOT / path if value.startswith("models/") else models_root / value
+        path = path.resolve()
+        if not (path / "run.py").exists() or not (path / "model.stan").exists():
+            raise SystemExit(f"Model directory does not contain run.py and model.stan: {path}")
+        dirs.append(path)
+    return sorted(set(dirs))
+
+
+def failed_model_dirs_from_report(report_path: Path) -> list[Path]:
+    report = load_existing(report_path) or {}
+    dirs: list[Path] = []
+    for item in report.get("results", []):
+        if item.get("ok"):
+            continue
+        model = ROOT / str(item.get("model", ""))
+        if (model / "run.py").exists() and (model / "model.stan").exists():
+            dirs.append(model.resolve())
+    return sorted(set(dirs))
+
+
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as handle:
@@ -212,6 +237,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-root", type=Path, help="Defaults to /tmp/stan-collection-runs/<run-id>.")
     parser.add_argument("--report", type=Path, help="Defaults to runs_metadata/<run-id>.json.")
     parser.add_argument("--latest-report", type=Path, default=ROOT / "runs_metadata" / "smoke_test_latest.json")
+    parser.add_argument("--model-dir", action="append", default=[], help="Specific model directory to test; repeatable.")
+    parser.add_argument("--from-smoke-report", type=Path, help="Test failed model directories from a previous smoke report.")
     parser.add_argument("--jobs", type=int, default=1)
     parser.add_argument("--timeout", type=float, default=300.0)
     parser.add_argument("--chains", type=int, default=1)
@@ -236,7 +263,15 @@ def main() -> int:
     latest_report = args.latest_report.expanduser().resolve()
     jobs = max(1, args.jobs)
 
-    models = discover_models(models_root)
+    if args.model_dir or args.from_smoke_report:
+        selected: list[Path] = []
+        if args.from_smoke_report:
+            selected.extend(failed_model_dirs_from_report(args.from_smoke_report.expanduser().resolve()))
+        if args.model_dir:
+            selected.extend(explicit_model_dirs(args.model_dir, models_root))
+        models = sorted(set(selected))
+    else:
+        models = discover_models(models_root)
     existing_results: list[SmokeResult] = []
     completed_ok: set[str] = set()
     if args.resume:
