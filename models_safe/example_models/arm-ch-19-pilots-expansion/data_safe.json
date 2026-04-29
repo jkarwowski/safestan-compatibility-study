@@ -1,0 +1,17 @@
+{
+  "N": 2,
+  "airport": [
+    1,
+    1
+  ],
+  "n_airport": 1,
+  "n_treatment": 4,
+  "treatment": [
+    3,
+    4
+  ],
+  "y": [
+    2.0,
+    2.0
+  ]
+}

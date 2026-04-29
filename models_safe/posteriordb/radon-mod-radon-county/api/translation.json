@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"N\":3,\"county\":[1,1,1],\"y\":[3.0,3.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> J;\n  array[N] int<lower=1, upper=J> county;\n  vector[N] y;\n}\nparameters {\n  vector[J] a;\n  real mu_a;\n  real<lower=0, upper=100> sigma_a;\n  real<lower=0, upper=100> sigma_y;\n}\nmodel {\n  vector[N] y_hat;\n\n  mu_a ~ normal(0, 1);\n  sigma_a ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  a ~ normal(mu_a, sigma_a);\n\n  for (i in 1 : N) {\n    y_hat[i] = a[county[i]];\n  }\n\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that all parameters receive their priors before being used in computations or likelihood terms. Added explicit `uniform(0, 100)` priors for `sigma_a` and `sigma_y`, matching their finite bounded parameter declarations and making the implicit bounded-support priors explicit for SafeStan. The data are unchanged.\n"
+}

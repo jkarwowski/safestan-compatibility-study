@@ -1,0 +1,24 @@
+{
+  "L_factor1_cp": 1,
+  "L_factor1_ncp": 0,
+  "N": 2,
+  "N_factor1_levels": 1,
+  "N_factor2_levels": 2,
+  "N_factor3_levels": 2,
+  "factor1_cp_idx": [
+    1
+  ],
+  "factor1_ncp_idx": [],
+  "factor2_to_factor1": [
+    1,
+    1
+  ],
+  "factor3_to_factor2": [
+    2,
+    1
+  ],
+  "obs_to_factor3": [
+    1,
+    1
+  ]
+}

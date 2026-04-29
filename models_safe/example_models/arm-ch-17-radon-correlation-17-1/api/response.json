@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425289,
+  "created_at": 1777425272,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_06b15802543f9b0f0069f15b7885fc819489c3000899bf1a87",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_06b15802543f9b0f0069f15b79a4a48194a9296f91f84b8d54",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observed likelihood is `y ~ normal(y_hat, sigma)`, so `y` is the protected interface variable. However, the model is not SafeStan-compatible because several parameters (`sigma`, `sigma_a`, and `sigma_b`) have no explicit proper built-in prior, and adding such priors would change the posterior density. In addition, `B_temp` is sampled repeatedly inside a loop with `B_temp ~ multi_normal(...)`, which violates SafeStan's requirement that each parameter have exactly one prior sampling statement outside loops. Replacing this repeated prior structure would require a substantive density/model rewrite rather than a minor mechanical translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_06b15802543f9b0f0069f15b8837bc8194851d6499f68a9894",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3421,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1230,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4651
+  },
+  "user": null
+}

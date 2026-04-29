@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429216,
+  "created_at": 1777429063,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_07d2c6945d8e1eb40069f16a478978819eae386289b04c3a27",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_07d2c6945d8e1eb40069f16a481148819eb48b7bb4bf6dfc12",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_obs`, a deterministic top-level copy of the originally scored response values `y[2:T]`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the original likelihood used indexed observations inside a loop (`y[t] ~ normal(...)`), which is not SafeStan-compatible for protected data. The likelihood was rewritten as one vectorized built-in sampling statement on the top-level protected variable `y_obs`. The rewritten data fields are deterministic reshapes of the original data: `T_lik = max(T - 1, 0)` and, for `i = 1, ..., T_lik`, `y_obs[i] = y[i + 1]`, `y_lag[i] = y[i]`, and `x_lik[i] = x[i + 1]`. For the supplied data, `T = 1`, so these length-`T_lik` fields are empty, matching the original empty likelihood loop. The parameter priors were already built-in and remain before any parameter use.\\n\",\"model_safe_stan\":\"// geometric lag time-series (Koyck 1951)\\n//\\n// http://en.wikipedia.org/wiki/Distributed_lag\\n\\ndata {\\n  int<lower=0> T; // original number of time points\\n  int<lower=0> T_lik; // number of modelled observations, max(T - 1, 0)\\n  vector[T_lik] y_obs; // original y[2:T]\\n  vector[T_lik] y_lag; // original y[1:(T - 1)]\\n  vector[T_lik] x_lik; // original x[2:T]\\n}\\nparameters {\\n  real alpha; // intercept\\n  real beta; // slope\\n  real<lower=0, upper=1> lambda; // lag\\n  real<lower=0> sigma; // noise scale\\n}\\nmodel {\\n  alpha ~ cauchy(0, 5);\\n  beta ~ cauchy(0, 5);\\n  lambda ~ uniform(0, 1);\\n  sigma ~ cauchy(0, 5);\\n  {\\n    vector[T_lik] mu;\\n    mu = alpha + beta * x_lik + lambda * y_lag;\\n    y_obs ~ normal(mu, sigma);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"T\\\":1,\\\"T_lik\\\":0,\\\"y_obs\\\":[],\\\"y_lag\\\":[],\\\"x_lik\\\":[]}\",\"protected_variables\":[\"y_obs\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_07d2c6945d8e1eb40069f16adccc4c819ea4ec086a937f0c31",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3051,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 13537,
+    "output_tokens_details": {
+      "reasoning_tokens": 12948
+    },
+    "total_tokens": 16588
+  },
+  "user": null
+}

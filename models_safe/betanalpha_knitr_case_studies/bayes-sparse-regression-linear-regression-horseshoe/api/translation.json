@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"M\":1,\"N\":4,\"X\":[[4.208767332384621,5.6530697974134805,3.518634550133586,5.166755245084225]],\"y\":[4.0,4.0,4.0,4.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N; // Number of data\n  int<lower=1> M; // Number of covariates\n  matrix[M, N] X;\n  array[N] real y;\n}\n\nparameters {\n  vector[M] beta_tilde;\n  vector<lower=0>[M] lambda;\n  real<lower=0> tau_tilde;\n  real alpha;\n  real<lower=0> sigma;\n}\n\nmodel {\n  beta_tilde ~ normal(0, 1);\n  lambda ~ cauchy(0, 1);\n  tau_tilde ~ cauchy(0, 1);\n\n  alpha ~ normal(0, 2);\n  sigma ~ normal(0, 2);\n\n  {\n    // tau ~ cauchy(0, sigma)\n    // beta ~ normal(0, tau * lambda)\n    vector[M] beta = beta_tilde .* lambda * sigma * tau_tilde;\n\n    y ~ normal(X' * beta + alpha, sigma);\n  }\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so each parameter receives its unique built-in prior before it is used in the derived coefficient calculation or likelihood. The local `beta` calculation is placed in a nested block after the priors. No data changes were required; `data_safe.json` is the supplied data unchanged.\n"
+}

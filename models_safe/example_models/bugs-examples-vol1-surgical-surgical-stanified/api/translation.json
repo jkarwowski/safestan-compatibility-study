@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":4,\"n\":[6,5,6,6],\"r\":[3,3,2,6]}",
+  "model_safe_stan": "// http://openbugs.net/Examples/Surgical.html\n// random effects model\n// Stanified: use sigma instead of squared, move p to generated quantitites\n// Narrower priors on mu and sigma\ndata {\n  int<lower=0> N;\n  array[N] int r;\n  array[N] int n;\n}\nparameters {\n  real mu;\n  array[N] real b;\n  real<lower=0> sigma;\n}\nmodel {\n  mu ~ normal(0.0, 20);\n  sigma ~ cauchy(0, 1); // remove sigma-squared\n  b ~ normal(mu, sigma);\n  r ~ binomial_logit(n, b);\n}\ngenerated quantities {\n  array[N] real<lower=0, upper=1> p;\n  array[N] real<lower=0> ranks;\n  real pop_mean;\n  pop_mean = inv_logit(mu);\n  for (i in 1 : N) {\n    p[i] = inv_logit(b[i]);\n    ranks[i] = rank(b, i);\n  }\n}\n",
+  "protected_variables": [
+    "r"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `r`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `r` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `r ~ binomial_logit(n, b);`. Context data `N` and `n` are not scored. Each parameter has exactly one built-in prior before later use in the model block.\n"
+}

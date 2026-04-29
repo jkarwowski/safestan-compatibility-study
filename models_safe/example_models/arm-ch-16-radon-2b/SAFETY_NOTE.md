@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the observed likelihood is for `y`, but the model cannot be translated to SafeStan with only minor same-density changes. The original program leaves several parameters (`b`, `g_0`, `g_1`, `sigma_y`, and `sigma_a`) with implicit improper flat priors, while SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding proper priors would change the posterior/log density. The indexed loop sampling statements for `a[j]` and `y[n]` could be mechanically vectorized, but the missing proper parameter priors are a substantive incompatibility.

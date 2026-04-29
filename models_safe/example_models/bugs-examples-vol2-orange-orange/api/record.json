@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-orange-orange/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:49:11+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol2-orange-orange",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "Y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_026d1b7d1eb00b310069f163744c888197b4081f0731285566",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol2-orange-orange",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:48:35+00:00",
+  "usage": {
+    "input_tokens": 3254,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3324,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6578
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

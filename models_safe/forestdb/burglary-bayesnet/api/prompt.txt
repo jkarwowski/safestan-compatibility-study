@@ -1,10 +1,12 @@
-You are translating a single Stan model into SafeStan, a new version of Stan runtime. 
+You are translating a single Stan model into the SafeStan-compatible Stan subset.
 
 ## SafeStan
 
 SafeStan is a static (compile-time) restriction layer over Stan. Its purpose is to prevent likelihood hacking on a designated protected data interface, as described in "Likelihood hacking in probabilistic program synthesis".
 
 SafeStan is designed so that generated models report a normalized marginal log-likelihood for the interface being modelled. To do this, it assigns roles to top-level inputs and parameters. Variables named by --sstan-protect are modelled interface variables: each must be scored by a built-in distribution, exactly once, before any other use. They cannot be inspected in an if, used to compute helper values, or referenced in transformed blocks before that scoring statement. After a modelled interface variable has been scored, it is available as an ordinary model-block quantity and may be used in later computations or later likelihood terms. Other top-level data variables are context inputs: they may be used freely as predictors, constants, indices, or configuration, but they may not appear on the left side of a sampling statement. Parameters are latent variables: each parameter must have exactly one built-in prior sampling statement before it is used in the model block. SafeStan also rejects constructs that can directly inflate, edit, or gate the log-likelihood, such as target +=, target(), jacobian +=, reject(), fatal_error(), and _lp functions.
+
+For this corpus run, `data.json` may be small synthetic data generated only to satisfy the Stan data schema. Use it to produce a valid `data_safe_json` and to preserve deterministic reshapes/copies, but infer the protected interface and compatibility label from `model.stan`, not from the particular synthetic values.
 
 ### What SafeStan Enforces
 
@@ -18,6 +20,8 @@ Forbids _lp function definitions and calls
 Protected data single-use:
 
 Every protected variable must be a top-level data variable.
+Every top-level data variable that the model conditions on with a sampling statement is part of the protected interface, unless a same-density rewrite replaces it by a deterministic top-level protected copy/reshape.
+Do not protect ordinary predictors, covariates, sizes, indices, or constants unless the model itself observes/scores them as data.
 Each protected variable must appear exactly once on the left side of ~.
 Left side must be a plain identifier (no indexing/projections/expressions).
 Protected variables cannot be used before they are observed.
@@ -25,6 +29,7 @@ After observation, a protected variable is treated as a normal value.
 Protected variables cannot be referenced in transformed data/parameters.
 Proper distribution path only:
 
+Sampling statements may target only protected top-level data variables or top-level parameter variables.
 Sampling statements must resolve to built-in Stan distributions.
 User-defined distributions are rejected in ~.
 Strict parameter discipline:
@@ -47,23 +52,26 @@ The goal is not to make the model "nicer", rather, the goal is to decide whether
 Work method:
 
 1. Identify the observed/protected data variable(s) scored by the likelihood.
+   Use the Stan program structure for this; do not infer modelling intent from
+   the particular values in `data.json`.
 2. Check whether the protected data variables and parameters already satisfy SafeStan's
    syntactic discipline. If it does, classify the models `as-is`.
 3. If not, look for a same-density mechanical rewrite.
 4. If the rewrite would require changing the statistical model, substantially replacing a marginalized latent-state algorithm, or changing the likelihood (e.g. by adding additional priors to parameters), classify the case as `major` and do not rewrite the model.
-5. Otherwise, classify the case as `minor`, rewrite the model (and potentially, data): e.g. you can vectorize simple likelihoods, add deterministic data copies/reshapes, switch order of computation preserving the semantics, use explicit priors for parameters that have implicit proper priors (e.g. are bounded), and so on. After that, output complete files. Do not output patches.
+5. Otherwise, classify the case as `minor`, rewrite the model (and potentially, data): e.g. you can vectorize simple likelihoods, add deterministic data copies/reshapes, switch order of computation preserving the semantics, and add explicit priors only for parameters that already have implicit proper priors with exactly matching built-in distributions (for example, `uniform(lower, upper)` for finite bounded real parameters). After that, output complete files. Do not output patches.
 
 Compatibility labels:
 
-- `as-is`: the original Stan program is already SafeStan-compatible. Return `model_safe_stan` equal to the original and `data_safe_json` equal to the original data.
-- `minor`: a same-posterior SafeStan version can be produced using only minor, mechanical, changes. Return new, rewritten `model_safe_stan` equivalent to the original and `data_safe_json` equivalent to the original data.
+- `as-is`: the original Stan program is already SafeStan-compatible. Return `model_safe_stan` equal to the original and `data_safe_json` equal to the supplied data.
+- `minor`: a same-posterior SafeStan version can be produced using only minor, mechanical, changes. Return new, rewritten `model_safe_stan` equivalent to the original and `data_safe_json` equivalent to the supplied data.
 - `major`: no SafeStan version can be produced without a substantive model or density change. In this case return empty strings for `model_safe_stan` and `data_safe_json`.
 
 Requirements:
 
-- Never invent new observations or synthetic data.
-- `data_safe_json` must be a valid JSON object string. It may equal the original
-  data exactly, or be a deterministic augmentation/reshape of it.
+- Never invent new observations or new data values beyond deterministic
+  copies/reshapes of the supplied `data.json`.
+- `data_safe_json` must be a valid JSON object string. It may equal the supplied
+  `data.json` exactly, or be a deterministic augmentation/reshape of it.
 - If you add fields to `data_safe_json`, document the exact deterministic
   relation in `safety_note_md`.
 - Preserve the intended posterior/log density for AS-IS and MINOR.
@@ -197,9 +205,47 @@ Source note:
 # Burglary Bayesnet
 
 - ForestDB source: [Burglary Bayesnet](https://forestdb.org/models/burglary.html)
-- Translation note: Binary burglary, earthquake, and alarm nodes are marginalized.
-- License note: this Stan translation was written for this regression suite from the linked ForestDB model description.
+- Original markdown: [burglary.md](https://raw.githubusercontent.com/forestdb/forestdb.org/gh-pages/models/burglary.md)
+- Upstream repository: `forestdb/forestdb.org`, branch `gh-pages`, commit `e5ac903422815b645acbae784c2e5645ba55fe70`
+- ForestDB status: `code`
+- ForestDB category: `Miscellaneous`
+- Translation note: Existing curated Stan translation retained; original ForestDB markdown is archived in source.md.
 
+## Original ForestDB Markdown
+
+``````markdown
+---
+layout: model
+title: Burglary Bayesnet
+model-status: code
+model-category: Miscellaneous
+model-tags: bayesnet, simple
+model-language: church
+---
+
+The Burglary Bayes net is a simple network that illustrates nodes with multiple incoming and outgoing causal links. Burglary and earthquake both cause the alarm to go off. The alarm can cause either or both of Mary and John to call.
+
+    (define burglary-dist
+      (enumeration-query
+       (define burglary (flip .1))
+       (define earthquake (flip .2))
+       (define alarm (flip (if burglary
+                               (if earthquake .95 .94)
+                               (if earthquake .29 .001))))
+       (define john-calls (flip (if alarm .9 .05)))
+       (define mary-calls (flip (if alarm .7 .01)))
+       (if burglary 'burglary 'no-burglary)
+       john-calls))
+    
+    (barplot burglary-dist)
+``````
+
+## Synthetic Data
+
+- Data status: synthetic/local generated by `generate_synthetic_data_for_missing.py`.
+- Generation method: stanc_debug_generate_data.
+- Parsed da
+[truncated]
 ```
 
 Original `model.stan`:
@@ -267,28 +313,28 @@ generated quantities {
 
 ```
 
-Original `data.json`:
+Input `data.json` for this run:
 
 ```json
 {
   "calls": [
-    1,
-    1
+    0,
+    0
   ],
   "p_alarm": [
     [
-      0.001,
-      0.29
+      0.638062530775189,
+      0.4082028395551863
     ],
     [
-      0.94,
-      0.95
+      0.06475584379575418,
+      0.031304821282197075
     ]
   ],
-  "p_john_alarm": 0.9,
-  "p_john_no_alarm": 0.05,
-  "p_mary_alarm": 0.7,
-  "p_mary_no_alarm": 0.01
+  "p_john_alarm": 0.20614317091975712,
+  "p_john_no_alarm": 0.09803531336692622,
+  "p_mary_alarm": 0.24079061314440584,
+  "p_mary_no_alarm": 0.8489608951777188
 }
 
 ```

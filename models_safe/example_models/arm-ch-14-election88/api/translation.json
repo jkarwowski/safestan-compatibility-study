@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":3,\"black\":[0.9367015335034838,0.43505034952583455,0.8064622159990286],\"female\":[0.3889547507502962,0.30292686348057035,0.9402065557507667],\"n_state\":1,\"state\":[1,1,1],\"y\":[0,0,0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> n_state;\n  vector<lower=0, upper=1>[N] black;\n  vector<lower=0, upper=1>[N] female;\n  array[N] int<lower=1, upper=n_state> state;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  vector[n_state] a;\n  vector[2] b;\n  real<lower=0, upper=100> sigma_a;\n  real mu_a;\n}\ntransformed parameters {\n  vector[N] y_hat;\n  \n  for (i in 1 : N) {\n    y_hat[i] = b[1] * black[i] + b[2] * female[i] + a[state[i]];\n  }\n}\nmodel {\n  mu_a ~ normal(0, 1);\n  sigma_a ~ uniform(0, 100);\n  a ~ normal(mu_a, sigma_a);\n  b ~ normal(0, 100);\n  y ~ bernoulli_logit(y_hat);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added an explicit `sigma_a ~ uniform(0, 100)` prior for the already bounded parameter `sigma_a`. This is density-neutral for the original model because `sigma_a` was constrained to `[0, 100]` and otherwise had the corresponding implicit flat density. The prior is placed before `sigma_a` is used in the prior for `a`, satisfying SafeStan's parameter-use ordering rule. No data changes were required.\n"
+}

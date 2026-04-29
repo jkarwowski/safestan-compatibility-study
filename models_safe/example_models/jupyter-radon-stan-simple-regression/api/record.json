@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/jupyter-radon-stan-simple-regression/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:55:40+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/jupyter-radon-stan-simple-regression",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0d575788d163b75a0069f165126cd481a2a241e15f34becfce",
+  "safe_dir": "models_safe/example_models/jupyter-radon-stan-simple-regression",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:55:30+00:00",
+  "usage": {
+    "input_tokens": 2926,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 674,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3600
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/general-taylor-models-stan-programs-bernoulli-linear-prior/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T00:55:29+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/general-taylor-models-stan-programs-bernoulli-linear-prior",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_00a54501f69dcaba0069f156b50d2081939d09191a465749e2",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/general-taylor-models-stan-programs-bernoulli-linear-prior",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:54:12+00:00",
+  "usage": {
+    "input_tokens": 3175,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 6666,
+    "output_tokens_details": {
+      "reasoning_tokens": 6189
+    },
+    "total_tokens": 9841
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

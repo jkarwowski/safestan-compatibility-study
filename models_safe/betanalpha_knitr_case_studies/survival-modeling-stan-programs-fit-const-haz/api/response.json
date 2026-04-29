@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424677,
+  "created_at": 1777424662,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_038f9c2ee752eae50069f1591601dc8197aba4098e1ba652f9",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_038f9c2ee752eae50069f15916ac1c8197a052a45459247daa",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `obs_times`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the manual `target += log_survival(obs_times[n], gamma) + log_hazard(obs_times[n], gamma)` loop with the equivalent built-in vectorized sampling statement `obs_times ~ exponential(gamma)`. This preserves the same log density for nonnegative observation times because the original contribution is `log(gamma) - gamma * obs_times[n]`. No data fields were added or changed.\\n\",\"model_safe_stan\":\"functions {\\n  // Survival function\\n  real log_survival(real t, real gamma) {\\n    return -gamma * t;\\n  }\\n\\n  // Inverse survival function\\n  real inv_survival(real u, real gamma) {\\n    return - log(u) / gamma;\\n  }\\n}\\n\\ndata {\\n  int<lower=1> N;             // Number of observations\\n  array[N] real<lower=0> obs_times; // Observation times\\n\\n  int<lower=1> N_display;                 // Number of display times\\n  array[N_display] real<lower=0> display_times; // Display times\\n}\\n\\nparameters {\\n  real<lower=0> gamma;\\n}\\n\\nmodel {\\n  gamma ~ normal(0, 5);\\n  obs_times ~ exponential(gamma);\\n}\\n\\ngenerated quantities {\\n  array[N_display] real display_survival;\\n  array[N] real<lower=0> pred_obs_times;\\n\\n  for (n in 1:N_display)\\n    display_survival[n] = exp(log_survival(display_times[n], gamma));\\n\\n  for (n in 1:N)\\n    pred_obs_times[n] = inv_survival(uniform_rng(0, 1), gamma);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":3,\\\"N_display\\\":2,\\\"display_times\\\":[1.0,2.0],\\\"obs_times\\\":[1.0,2.0,3.0]}\",\"protected_variables\":[\"obs_times\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_038f9c2ee752eae50069f159228fd881978fd02ec92597e4f7",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3227,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1521,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4748
+  },
+  "user": null
+}

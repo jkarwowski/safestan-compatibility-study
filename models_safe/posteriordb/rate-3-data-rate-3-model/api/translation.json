@@ -1,0 +1,10 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"k1\":4,\"k2\":2,\"n1\":5,\"n2\":2}",
+  "model_safe_stan": "// // Inferring a Common Rate\ndata {\n  int<lower=1> n1;\n  int<lower=1> n2;\n  int<lower=0> k1;\n  int<lower=0> k2;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  // Prior on Single Rate Theta\n  theta ~ beta(1, 1);\n  // Observed Counts\n  k1 ~ binomial(n1, theta);\n  k2 ~ binomial(n2, theta);\n}\n",
+  "protected_variables": [
+    "k1",
+    "k2"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `k1`, `k2`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observations `k1` and `k2` are top-level data variables, each is observed exactly once with a plain built-in `binomial` sampling statement, and neither is used before observation. The parameter `theta` has a single built-in prior before it is used in the likelihood. Context data `n1` and `n2` are used only as binomial trial counts and are not protected.\n"
+}

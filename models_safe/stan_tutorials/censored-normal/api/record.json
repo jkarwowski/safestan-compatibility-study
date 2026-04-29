@@ -1,24 +1,27 @@
 {
   "artifacts_dir": "models_safe/stan_tutorials/censored-normal/api",
   "compatibility": "major",
-  "completed_at": "2026-04-28T01:12:41+00:00",
+  "completed_at": "2026-04-29T03:01:55+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_tutorials/censored-normal",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0e41778f650d07c20069f00938f040819c8a3c1ed207c169e8",
+  "response_id": "resp_0b3f3d37afecdb460069f1747c8e64819e897c0992a40df0ff",
   "safe_dir": "models_safe/stan_tutorials/censored-normal",
-  "started_at": "2026-04-28T01:11:20+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:01:16+00:00",
   "usage": {
-    "input_tokens": 7807,
+    "input_tokens": 2891,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 4344,
+    "output_tokens": 2801,
     "output_tokens_details": {
-      "reasoning_tokens": 4142
+      "reasoning_tokens": 2588
     },
-    "total_tokens": 12151
+    "total_tokens": 5692
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

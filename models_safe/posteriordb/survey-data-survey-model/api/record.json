@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/survey-data-survey-model/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:55:01+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/survey-data-survey-model",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_00c7fd466d4166b70069f172fc12d48194a3a4c4b1851b1199",
+  "safe_dir": "models_safe/posteriordb/survey-data-survey-model",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:54:51+00:00",
+  "usage": {
+    "input_tokens": 3271,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 717,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3988
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

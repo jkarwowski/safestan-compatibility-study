@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423977,
+  "created_at": 1777423888,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b21170145eeb7f50069f1561034e881908db1e88f9aba0222",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0b21170145eeb7f50069f15610d4008190a741baa73aa0d97e",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `obs_t_calib`, `obs_t_fall`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the original likelihood for `obs_t_fall` was written as indexed sampling statements inside nested loops. SafeStan requires a protected observation to be scored exactly once as a plain top-level identifier outside loops, so `obs_t_fall` is represented in `model_safe.stan` as a length `N_drops * N_heights` vector and scored once with a vectorized `normal` statement. `data_safe.json` deterministically flattens the supplied nested `obs_t_fall` array in drop-major order: Stan element `(n - 1) * N_heights + h` is the original `obs_t_fall[n][h]`. The mean vector is filled with the same indexing, preserving the original product likelihood. Priors and generated quantities are otherwise unchanged.\\n\",\"model_safe_stan\":\"functions {\\n  real t_fall(real g, real h) {\\n    return sqrt(2 * h / g);\\n  }\\n}\\n\\ndata {\\n  // Detector calibration data\\n  int N_calibrations;\\n  array[N_calibrations] real obs_t_calib;    // seconds\\n\\n  // Falling data\\n  int N_heights;\\n  array[N_heights] real<lower=0> heights;    // meters\\n  int N_drops;\\n  vector[N_drops * N_heights] obs_t_fall;    // seconds, flattened by drop then height\\n}\\n\\nparameters {\\n  real<lower=0> sigma_t; // seconds\\n  real g;                // meters per second squared\\n}\\n\\nmodel {\\n  // Prior model\\n  sigma_t ~ normal(0, 0.5);\\n  g ~ inv_gamma(1.49, 2.83);\\n\\n  // Observational model\\n  obs_t_calib ~ normal(rep_vector(0, N_calibrations), sigma_t);\\n\\n  {\\n    vector[N_drops * N_heights] mu_t_fall;\\n\\n    for (n in 1:N_drops) {\\n      for (h in 1:N_heights) {\\n        int i = (n - 1) * N_heights + h;\\n        mu_t_fall[i] = t_fall(g, heights[h]);\\n      }\\n    }\\n\\n    obs_t_fall ~ normal(mu_t_fall, sigma_t);\\n  }\\n}\\n\\n// Simulate a full observation from each value of the parameters\\ngenerated quantities {\\n  array[N_drops, N_heights] real obs_t_fall_post_pred;\\n\\n  for (n in 1:N_drops) {\\n    for (h in 1:N_heights) {\\n      real mu_t_fall = t_fall(g, heights[h]);\\n      obs_t_fall_post_pred[n, h] = normal_rng(mu_t_fall, sigma_t);\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N_calibrations\\\":5,\\\"N_drops\\\":4,\\\"N_heights\\\":4,\\\"heights\\\":[4.891605648942426,2.9362801354835817,1.5276427502517163,3.7671934124504625],\\\"obs_t_calib\\\":[3.761744189889257,5.337046904278988,3.3498188490098095,4.989589398691535,3.2200065608075974],\\\"obs_t_fall\\\":[3.778998125890678,2.26427201257695,5.342637135606233,5.202932533769969,4.789582885216099,6.741904855265559,4.102684980328395,6.597147663203968,3.810818653213096,4.927818104315119,3.868191920691163,3.625772357314011,3.6388903381748015,2.6835259560843294,6.411545002590077,6.462864259052324]}\",\"protected_variables\":[\"obs_t_calib\",\"obs_t_fall\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b21170145eeb7f50069f156649150819096fdfd8ae4c5ef93",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3501,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 9599,
+    "output_tokens_details": {
+      "reasoning_tokens": 8642
+    },
+    "total_tokens": 13100
+  },
+  "user": null
+}

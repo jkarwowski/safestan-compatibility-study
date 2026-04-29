@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the observed likelihood is `y ~ normal(...)`, so `y` is the protected interface variable. Although that likelihood is a built-in sampling statement on a top-level data variable, the model is not SafeStan-compatible because several parameters (`sigma_abeta`, `sigma_hippo`, `sigma_mmse`, and `sigma_tau`) are used in the likelihood through the transformed parameter `sigma` but have no explicit prior sampling statement. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors for these scale parameters would change the posterior/log density, and their existing half-line constraints only imply an improper uniform density that cannot be represented as a density-neutral built-in prior. Reordering the existing priors before the likelihood would be minor, but the missing scale priors require a substantive density change.

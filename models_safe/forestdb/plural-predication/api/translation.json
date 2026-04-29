@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `observed_utterance`.\n\nGenerated files: none.\n\nReason: the observation likelihood for `observed_utterance` is implemented by manually accumulating `target += log_sum_exp(listener_lp)`, where `listener_lp` contains a marginalized latent-state calculation and indexes `log_softmax(speaker_logits)` by the observed utterance. SafeStan forbids `target +=`, and replacing this expression with a built-in sampling statement would require a substantive likelihood rewrite. In particular, a categorical rewrite would introduce a parameter-dependent normalization over utterances that is not present in the original target contribution. Therefore no minor same-density SafeStan translation is available.\n"
+}

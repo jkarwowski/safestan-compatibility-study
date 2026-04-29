@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":1,\"N\":2,\"county\":[1,1],\"u\":[5.3406067274867635,4.728868607808346],\"y\":[2.0,2.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county;\n  vector[N] u;\n  vector[N] y;\n}\nparameters {\n  vector[J] a;\n  real b;\n  real mu_a;\n  real<lower=0, upper=100> sigma_a;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[N] y_hat;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a[county[i]] + u[i] * b * 0.1;\n  }\n}\nmodel {\n  mu_a ~ normal(0, 1);\n  sigma_a ~ uniform(0, 100);\n  a ~ normal(mu_a, sigma_a);\n  b ~ normal(0, 1);\n  sigma_y ~ uniform(0, 100);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `sigma_a ~ uniform(0, 100)` and `sigma_y ~ uniform(0, 100)` statements so the finite bounded scale parameters have exactly one built-in SafeStan prior before use. These make the original implicit proper uniform priors from `real<lower=0, upper=100>` explicit. No data fields were added or changed; `J`, `N`, `county`, and `u` are unprotected context inputs.\n"
+}

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-laplace/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T00:58:56+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-laplace",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_obs"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0545b469beb7b3e50069f157a8879081968568f0ee9215b38b",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-laplace",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:58:16+00:00",
+  "usage": {
+    "input_tokens": 3847,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 4243,
+    "output_tokens_details": {
+      "reasoning_tokens": 3106
+    },
+    "total_tokens": 8090
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

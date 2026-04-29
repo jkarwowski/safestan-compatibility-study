@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429713,
+  "created_at": 1777429578,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_02d55be54f17e8ad0069f16c4ad734819dab21679edcf641bd",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_02d55be54f17e8ad0069f16c4b7620819d884ad0aef80e5a17",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `obs_rule`, a deterministic expansion of the original `counts` table. `C`, `K`, `N_obs`, and `obs_context` are context inputs.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the manual `target += counts[c, k] * log(rule_prob[c, k])` loop with one vectorized built-in likelihood statement, `obs_rule ~ categorical(rule_prob[obs_context])`. The original `counts` field is replaced by deterministic arrays computed as follows: `N_obs = sum(counts)`, and for each `c = 1..C` and `k = 1..K` in row-major order, append `counts[c, k]` copies of `c` to `obs_context` and `k` to `obs_rule`. This gives exactly the same log density as the original target increments. The Dirichlet prior loop was vectorized to `rule_prob ~ dirichlet(rep_vector(1.0, K))` so the top-level parameter is sampled once outside loops.\\n\",\"model_safe_stan\":\"// ForestDB translation: Inducing Arithmetic Functions\\n// SafeStan rewrite: count table expanded to categorical observations.\\ndata {\\n  int<lower=1> C;\\n  int<lower=1> K;\\n  int<lower=0> N_obs;\\n  array[N_obs] int<lower=1, upper=C> obs_context;\\n  array[N_obs] int<lower=1, upper=K> obs_rule;\\n}\\nparameters {\\n  array[C] simplex[K] rule_prob;\\n}\\nmodel {\\n  rule_prob ~ dirichlet(rep_vector(1.0, K));\\n  obs_rule ~ categorical(rule_prob[obs_context]);\\n}\\ngenerated quantities {\\n  array[C] int<lower=1, upper=K> sampled_rule;\\n  for (c in 1:C) {\\n    sampled_rule[c] = categorical_rng(rule_prob[c]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"C\\\":4,\\\"K\\\":3,\\\"N_obs\\\":25,\\\"obs_context\\\":[1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4],\\\"obs_rule\\\":[1,1,2,2,3,3,1,1,2,2,3,3,3,1,1,2,2,2,3,1,1,2,2,2,3]}\",\"protected_variables\":[\"obs_rule\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_02d55be54f17e8ad0069f16cce7e28819dae3205265224db57",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3223,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 12517,
+    "output_tokens_details": {
+      "reasoning_tokens": 11912
+    },
+    "total_tokens": 15740
+  },
+  "user": null
+}

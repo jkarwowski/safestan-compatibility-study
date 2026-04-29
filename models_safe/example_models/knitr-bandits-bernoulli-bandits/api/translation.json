@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":4,\"N\":1,\"y\":[0],\"z\":[3]}",
+  "model_safe_stan": "/**\n * Straightforward Bernoulli formulation.\n */\ndata {\n  int<lower=1> K; // num arms\n  int<lower=0> N; // num trials\n  array[N] int<lower=1, upper=K> z; // arm on trial n\n  array[N] int<lower=0, upper=1> y; // reward on trial n\n}\nparameters {\n  vector<lower=0, upper=1>[K] theta; // arm return prob\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ bernoulli(theta[z]); // i.i.d. by arm\n}\ngenerated quantities {\n  simplex[K] is_best; // one hot or uniform with ties\n  {\n    real best_prob = max(theta);\n    for (k in 1 : K) {\n      is_best[k] = theta[k] >= best_prob;\n    }\n    is_best /= sum(is_best); // uniform for ties\n  }\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added an explicit `theta ~ uniform(0, 1)` prior before the likelihood. This is density-neutral for `theta`, which is already constrained to `[0, 1]`, and satisfies SafeStan's requirement that each parameter have exactly one built-in prior before use. The likelihood remains `y ~ bernoulli(theta[z])`; `z`, `K`, and `N` are context data, not protected observations. No data changes were required.\n"
+}

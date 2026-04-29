@@ -1,0 +1,10 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":2,\"n0\":[4,1],\"n1\":[2,4],\"r0\":[4,1],\"r1\":[2,4],\"year\":[4.240974931676864,2.1499331775085975]}",
+  "model_safe_stan": "// http://www.mrc-bsu.cam.ac.uk/bugs/winbugs/Vol1.pdf\n// Page 34: Oxford: smooth fit to log-odds ratios\n\ndata {\n  int<lower=0> K;\n  array[K] int<lower=0> n0;\n  array[K] int<lower=0> n1;\n  array[K] int<lower=0> r0;\n  array[K] int<lower=0> r1;\n  vector[K] year;\n}\ntransformed data {\n  vector[K] yearsq;\n  yearsq = year .* year;\n}\nparameters {\n  vector[K] mu;\n  real alpha;\n  real beta1;\n  real beta2;\n  real<lower=0> sigma_sq;\n  vector[K] b;\n}\ntransformed parameters {\n  real<lower=0> sigma;\n  sigma = sqrt(sigma_sq);\n}\nmodel {\n  b ~ normal(0, 1);\n  mu ~ normal(0, 1000);\n  alpha ~ normal(0.0, 1000);\n  beta1 ~ normal(0.0, 1000);\n  beta2 ~ normal(0.0, 1000);\n  sigma_sq ~ inv_gamma(0.001, 0.001);\n\n  r0 ~ binomial_logit(n0, mu);\n  r1 ~ binomial_logit(n1,\n                      alpha + mu + beta1 * year + beta2 * (yearsq - 22)\n                      + b * sigma);\n}\n",
+  "protected_variables": [
+    "r0",
+    "r1"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `r0`, `r1`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so all top-level parameters (`b`, `mu`, `alpha`, `beta1`, `beta2`, and `sigma_sq`) receive their built-in prior sampling statements before they are used in likelihood terms. This preserves the same posterior/log density because Stan sampling statements add commutative log-density contributions. No data changes were required.\n"
+}

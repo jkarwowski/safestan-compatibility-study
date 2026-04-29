@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"N\":3,\"county\":[1,1,1],\"y\":[3.0,3.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county;\n  vector[N] y;\n}\nparameters {\n  vector[J] et;\n  real mu_eta;\n  real<lower=0, upper=100> sigma_eta;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[J] eta;\n  vector[N] y_hat;\n  \n  eta = 0.1 * mu_eta + sigma_eta * et;\n  \n  for (i in 1 : N) {\n    y_hat[i] = eta[county[i]];\n  }\n}\nmodel {\n  et ~ normal(0, 1);\n  mu_eta ~ normal(0, 1);\n  sigma_eta ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 100)` priors for `sigma_eta` and `sigma_y`. These parameters already have finite bounds `<lower=0, upper=100>`, so the added priors make the implicit proper uniform priors explicit and satisfy SafeStan's unique-prior requirement. No data changes were made; `J`, `N`, and `county` are unprotected context inputs.\n"
+}

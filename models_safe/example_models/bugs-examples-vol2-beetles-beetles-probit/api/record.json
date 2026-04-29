@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-beetles-beetles-probit/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:45:22+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol2-beetles-beetles-probit",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "r"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_060eb3209db484200069f1629d26d0819ca2925ae84baaab5b",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol2-beetles-beetles-probit",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:45:01+00:00",
+  "usage": {
+    "input_tokens": 3198,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2080,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5278
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

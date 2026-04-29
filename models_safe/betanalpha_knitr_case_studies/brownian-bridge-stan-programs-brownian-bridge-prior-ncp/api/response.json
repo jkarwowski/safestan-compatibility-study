@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423631,
+  "created_at": 1777423615,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_003f34b391c54d970069f154ff6344819daaad59642d598fcf",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_003f34b391c54d970069f1550035e8819d85c25a0366258f1a",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The program does not score any top-level data variable with a sampling statement; all data variables (`N`, `ts`, `x_left`, `x_right`, `left_idxs`, `center_idxs`, and `right_idxs`) are context inputs.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The only sampling statement is the built-in prior `interior_x_tildes ~ normal(0, 1)` for the top-level parameter, and there is no protected likelihood interface in this prior-only program.\\n\",\"model_safe_stan\":\"functions {\\n  real bridge_lpdf(real x, real t, real t_left, real x_left, real t_right, real x_right) {\\n    real mu = x_left + (t - t_left) / (t_right - t_left) * (x_right - x_left);\\n    real sigma2 = (t_right - t) * (t - t_left) / (t_right - t_left);\\n    return normal_lpdf(x | mu, sqrt(sigma2));\\n  }\\n\\n  real bridge_rng(real t, real t_left, real x_left, real t_right, real x_right) {\\n    real mu = x_left + (t - t_left) / (t_right - t_left) * (x_right - x_left);\\n    real sigma2 = (t_right - t) * (t - t_left) / (t_right - t_left);\\n    return normal_rng(mu, sqrt(sigma2));\\n  }\\n}\\n\\ndata {\\n  int<lower=1> N;\\n  array[N] real ts;\\n\\n  real x_left;\\n  real x_right;\\n\\n  array[N - 2] int left_idxs;\\n  array[N - 2] int center_idxs;\\n  array[N - 2] int right_idxs;\\n}\\n\\nparameters {\\n  array[N - 2] real interior_x_tildes;\\n}\\n\\ntransformed parameters {\\n  array[N] real xs;\\n\\n  xs[1] = x_left;\\n  xs[N] = x_right;\\n\\n  for (n in 1:(N - 2)) {\\n    real t = ts[center_idxs[n]];\\n    real t_l = ts[left_idxs[n]];\\n    real x_l = xs[left_idxs[n]];\\n    real t_r = ts[right_idxs[n]];\\n    real x_r =  xs[right_idxs[n]];\\n\\n    real mu = x_l + (t - t_l) / (t_r - t_l) * (x_r - x_l);\\n    real sigma2 = (t_r - t) * (t - t_l) / (t_r - t_l);\\n\\n    xs[center_idxs[n]] = mu + sqrt(sigma2) * interior_x_tildes[n];\\n  }\\n}\\n\\nmodel {\\n  interior_x_tildes ~ normal(0, 1);\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"N\\\": 3,\\n  \\\"center_idxs\\\": [\\n    2\\n  ],\\n  \\\"left_idxs\\\": [\\n    1\\n  ],\\n  \\\"right_idxs\\\": [\\n    3\\n  ],\\n  \\\"ts\\\": [\\n    1.0,\\n    2.0,\\n    3.0\\n  ],\\n  \\\"x_left\\\": 4.983665862096623,\\n  \\\"x_right\\\": 2.6383922615522746\\n}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_003f34b391c54d970069f1550b36d8819d808d71f9fe456c44",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3451,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1855,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5306
+  },
+  "user": null
+}

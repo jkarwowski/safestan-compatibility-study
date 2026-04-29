@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423839,
+  "created_at": 1777423814,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_07b5aa89df28ada40069f155c6ed2881a3ba8a9974db67abc1",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_07b5aa89df28ada40069f155c7db9481a390c0cf4ccac83b73",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the deterministic construction of the local model-block variable `theta` until after the prior statement `baseline ~ normal(0, 8)`. This preserves the same posterior density while satisfying SafeStan's requirement that the parameter `baseline` receive its unique built-in prior before being used in the model block. No data fields were added or changed; the supplied JSON data is retained as-is.\\n\",\"model_safe_stan\":\"functions {\\n  real F_stat(vector y, int N, array[] int indiv_idxs, int N_indiv) {\\n    real global_mean = 0;\\n    vector[N_indiv] total_counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] running_counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] means = rep_vector(0, N_indiv);\\n    vector[N_indiv] sum_squares = rep_vector(0, N_indiv);\\n\\n    int N_min_occupunacy = 2; // Minimum occupuancy for included contexts\\n    real N_occupied = 0;      // Number of contexts with at least two counts\\n    real between = 0; // Empirical variance of empirical means in occupied contexts\\n    real within = 0;  // Empirical mean of emperical variances in occupied contexts\\n\\n    for (n in 1:N)\\n      total_counts[indiv_idxs[n]] += 1;\\n\\n    for (n in 1:N) {\\n      int idx = indiv_idxs[n];\\n      real delta;\\n\\n      // Skip (nearly) unoccupied contexts\\n      if (total_counts[idx] < N_min_occupunacy) continue;\\n\\n      delta = y[n] - global_mean;\\n      global_mean += delta / n;\\n\\n      running_counts[idx] += 1;\\n      delta = y[n] - means[idx];\\n      means[idx] += delta / running_counts[idx];\\n      sum_squares[idx] += (y[n] - means[idx]) * delta;\\n    }\\n\\n    for (l in 1:N_indiv) {\\n      // Skip (nearly) unoccupied contexts\\n      if (total_counts[l] < N_min_occupunacy) continue;\\n\\n      N_occupied += 1;\\n      between += total_counts[l] * square(means[l] - global_mean);\\n      within += (sum_squares[l] - within) / N_occupied;\\n    }\\n\\n    // Return zero if not enough minimally occupied contexts\\n    if (N_occupied < 2) return 0;\\n\\n    between = between / (N_occupied - 1);\\n    within /= (N - N_occupied);\\n    return between / within;\\n  }\\n}\\n\\ndata {\\n  int<lower=0> N;      // Number of observations\\n  vector[N] y;         // Observations\\n  real<lower=0> sigma; // Measurement variability\\n\\n  // Main factor contributions logistics\\n  int<lower=0> N_main_factors;\\n  array[N_main_factors] int<lower=0> N_main_factor_levels;\\n  array[N_main_factors, N] int<lower=1> main_factor_level_idx;\\n}\\n\\nparameters {\\n  // Zeroth-order contribution (Baseline)\\n  real baseline;\\n}\\n\\nmodel {\\n  // Baseline contribution\\n  vector[N] theta;\\n\\n  baseline ~ normal(0, 8);\\n\\n  theta = rep_vector(baseline, N);\\n\\n  // Observational model\\n  y ~ normal(theta, sigma);\\n}\\n\\ngenerated quantities {\\n  array[N] real y_post_pred = normal_rng(rep_vector(baseline, N), sigma);\\n\\n  array[N_main_factors] real F_main_post_pred;\\n\\n  for (f in 1:N_main_factors) {\\n    F_main_post_pred[f] = F_stat(to_vector(y_post_pred), N,\\n                                 main_factor_level_idx[f],\\n                                 N_main_factor_levels[f]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":3,\\\"N_all_main_factor_levels\\\":7,\\\"N_main_factor_levels\\\":[2,3,2],\\\"N_main_factors\\\":3,\\\"main_factor_end_idx\\\":[2,5,7],\\\"main_factor_level_idx\\\":[[1,1,1],[1,1,1],[1,1,1]],\\\"main_factor_start_idx\\\":[1,3,6],\\\"packed_main_factor_idx\\\":[1,1,2,2,2,3,3],\\\"sigma\\\":1.3248708116010062,\\\"y\\\":[3.0,3.0,3.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_07b5aa89df28ada40069f155d8d5e881a3b5c32a9818e3ca4a",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3818,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2641,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 6459
+  },
+  "user": null
+}

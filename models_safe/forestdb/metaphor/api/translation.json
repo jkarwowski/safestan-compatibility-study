@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `observed_utterance`.\n\nGenerated files: none.\n\nReason: the observation is scored only through a manual `target += log_sum_exp(listener_lp)` marginalized likelihood. SafeStan forbids arbitrary `target +=` scoring, and replacing this term with a built-in categorical sampling statement would require adding a parameter-dependent normalization term, changing the posterior/log density. Therefore this model cannot be translated with only a minor same-density rewrite.\n"
+}

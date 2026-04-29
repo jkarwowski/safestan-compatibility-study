@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the observation matrix `y` is scored only through a custom `target +=` Kronecker Gaussian-process marginal likelihood involving eigendecompositions and user-defined matrix operations. SafeStan forbids arbitrary `target +=` scoring, and replacing this expression with a built-in distribution would require a substantive likelihood-algorithm rewrite, including deriving a dense multivariate-normal covariance and reshaping the protected observation. That is not a minor mechanical SafeStan translation.\n"
+}

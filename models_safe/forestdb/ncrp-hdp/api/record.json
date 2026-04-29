@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/ncrp-hdp/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:34:25+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/ncrp-hdp",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_04ee87eb955002e00069f16df3def081a2b44c5066778b6db1",
+  "safe_dir": "models_safe/forestdb/ncrp-hdp",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:33:23+00:00",
+  "usage": {
+    "input_tokens": 3386,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 5236,
+    "output_tokens_details": {
+      "reasoning_tokens": 4660
+    },
+    "total_tokens": 8622
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

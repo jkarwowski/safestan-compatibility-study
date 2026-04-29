@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426385,
+  "created_at": 1777426353,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0f2bba3c6097354a0069f15fb1cc40819ca5acddec1e6c45bf",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0f2bba3c6097354a0069f15fb26580819cb1714094e14dcdf0",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `y` is the observed capture-history variable scored by the likelihood. `m`, `nind`, and `n_occasions` are context inputs, not protected observations.\\n\\nGenerated files: none.\\n\\nReason: the likelihood is not expressible as a minor SafeStan rewrite. The model scores indexed elements `y[i, t]` inside loops, uses `y` in `transformed data` to compute `first` and `last` before any observation statement, and also adds parameter-dependent likelihood factors through constant sampling statements such as `1 ~ bernoulli(phi[i, t - 1])` and `1 ~ bernoulli(chi[i, last[i]])`. SafeStan requires each protected top-level data variable to be observed exactly once with a plain built-in sampling statement, and sampling statements may not target constants or indexed projections. Preserving this Cormack-Jolly-Seber capture-history likelihood would require a substantive re-expression or augmentation of the marginalized latent-state likelihood, not a mechanical same-density SafeStan translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0f2bba3c6097354a0069f15fcf5ef4819c95cd44e36a901f9f",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3909,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2855,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6764
+  },
+  "user": null
+}

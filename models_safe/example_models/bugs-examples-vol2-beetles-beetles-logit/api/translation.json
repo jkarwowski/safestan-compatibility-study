@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":2,\"n\":[3,1],\"r\":[1,1],\"x\":[4.444330837769128,2.2443673020802235]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=0> n;\n  array[N] int<lower=0> r;\n  vector[N] x;\n}\ntransformed data {\n  vector[N] centered_x;\n  real mean_x;\n  mean_x = mean(x);\n  centered_x = x - mean_x;\n}\nparameters {\n  real alpha_star;\n  real beta;\n}\ntransformed parameters {\n  vector[N] m;\n  m = alpha_star + beta * centered_x;\n}\nmodel {\n  alpha_star ~ normal(0.0, 1.0E4);\n  beta ~ normal(0.0, 1.0E4);\n  r ~ binomial_logit(n, m);\n}\ngenerated quantities {\n  real alpha;\n  array[N] real p;\n  array[N] real llike;\n  array[N] real rhat;\n  for (i in 1 : N) {\n    p[i] = inv_logit(m[i]);\n    llike[i] = r[i] * log(p[i]) + (n[i] - r[i]) * log(1 - p[i]);\n    rhat[i] = p[i] * n[i]; // fitted values\n  }\n  alpha = alpha_star - beta * mean_x;\n}\n\n",
+  "protected_variables": [
+    "r"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `r`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `r` is a top-level data variable and is observed exactly once with the built-in sampling statement `r ~ binomial_logit(n, m);`. Context data `N`, `n`, and `x` are not protected: `n` supplies binomial trial counts, `x` is used as a predictor, and `N` is a size. Parameters `alpha_star` and `beta` each have exactly one built-in prior before the likelihood uses the transformed parameter `m` that depends on them.\n"
+}

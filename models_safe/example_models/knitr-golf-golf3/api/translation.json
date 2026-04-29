@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":2,\"n\":[5,6],\"x\":[6.116808687937838,5.250070477444627],\"y\":[5,5],\"y_proportion\":[1.0,0.8333333333333334],\"r\":2.3538227950041963,\"R\":6.21284185283342,\"overshot\":5.3638245974666034,\"distance_tolerance\":6.520044599062147}",
+  "model_safe_stan": "data {\n  int J;\n  array[J] int n;\n  vector[J] x;\n  array[J] int y;\n  vector[J] y_proportion;\n  real r;\n  real R;\n  real overshot;\n  real distance_tolerance;\n}\nparameters {\n  real<lower=0> sigma_theta;\n  real<lower=0> sigma_distance;\n  real<lower=0> sigma_y;\n}\nmodel {\n  vector[J] p_angle;\n  vector[J] p_distance;\n  vector[J] p;\n\n  sigma_theta ~ normal(0, 1);\n  sigma_distance ~ normal(0, 1);\n  sigma_y ~ normal(0, 1);\n\n  p_angle = 2 * Phi(asin((R - r) ./ x) / sigma_theta) - 1;\n  p_distance = Phi((distance_tolerance - overshot)\n                   ./ ((x + overshot) * sigma_distance))\n               - Phi((-overshot) ./ ((x + overshot) * sigma_distance));\n  p = p_angle .* p_distance;\n  y_proportion ~ normal(p,\n                        sqrt(p .* (1 - p) ./ to_vector(n)\n                             + sigma_y ^ 2));\n}\ngenerated quantities {\n  real sigma_degrees;\n  sigma_degrees = (180 / pi()) * sigma_theta;\n}\n",
+  "protected_variables": [
+    "y_proportion"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y_proportion`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_proportion`, with deterministic relation `y_proportion[j] = y[j] / n[j]`, because the original likelihood scored the expression `to_vector(y) ./ to_vector(n)` and SafeStan requires a protected observation to be a plain top-level data identifier. The likelihood is otherwise unchanged. The three parameter priors were moved before the first model-block use of their parameters to satisfy SafeStan's prior-before-use rule.\n"
+}

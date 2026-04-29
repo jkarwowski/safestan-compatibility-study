@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/glm-poisson-data-glm-poisson-model/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:44:37+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/glm-poisson-data-glm-poisson-model",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "C"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0826073a77718ac90069f17085ef80819689a7493b1b5c01ce",
+  "safe_dir": "models_safe/posteriordb/glm-poisson-data-glm-poisson-model",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:44:21+00:00",
+  "usage": {
+    "input_tokens": 3178,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1538,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4716
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

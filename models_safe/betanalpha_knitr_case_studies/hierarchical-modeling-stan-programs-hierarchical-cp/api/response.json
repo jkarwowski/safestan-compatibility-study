@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424167,
+  "created_at": 1777424153,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_01495b26c793165a0069f15719e95c819e8c36acac391a0c47",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_01495b26c793165a0069f1571ad93c819ea69d2b74f983ca3f",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `y ~ normal(theta[indiv_idx], sigma)`, after all parameters have received built-in priors. The remaining data variables (`N`, `K`, `sigma`, and `indiv_idx`) are context inputs and are not scored as observations.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;      // Number of observations\\n  vector[N] y;         // Observations\\n  real<lower=0> sigma; // Measurement variability\\n\\n  // Number of individual contexts in hierarchy\\n  int<lower=0> K;\\n  // Individual context from which each observation is generated\\n  array[N] int<lower=1, upper=K> indiv_idx;\\n}\\n\\nparameters {\\n  real mu;           // Population location\\n  real<lower=0> tau; // Population scale\\n  vector[K] theta;   // Centered individual parameters\\n}\\n\\nmodel {\\n  mu ~ normal(0, 5);                   // Prior model\\n  tau ~ normal(0, 5);                  // Prior model\\n  theta ~ normal(mu, tau);             // Centered hierarchical model\\n  y ~ normal(theta[indiv_idx], sigma); // Observational model\\n}\\n\\n// Simulate a full observation from the current value of the parameters\\ngenerated quantities {\\n  array[N] real y_post_pred = normal_rng(theta[indiv_idx], sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":3,\\\"N\\\":4,\\\"indiv_idx\\\":[2,2,2,2],\\\"sigma\\\":2.2646562598176914,\\\"y\\\":[4.0,4.0,3.0,4.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_01495b26c793165a0069f1572548f0819eaab8c5053cbbe583",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3175,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1493,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4668
+  },
+  "user": null
+}

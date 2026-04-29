@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-epil-epil/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:38:25+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol1-epil-epil",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0d29462edc4a6a200069f1608935d48193891af5787c394b0b",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol1-epil-epil",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:36:09+00:00",
+  "usage": {
+    "input_tokens": 3834,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 12184,
+    "output_tokens_details": {
+      "reasoning_tokens": 10876
+    },
+    "total_tokens": 16018
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

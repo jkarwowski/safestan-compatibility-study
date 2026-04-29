@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `w` (the observed word indices). `doc`, `V`, `M`, `N`, `alpha`, and `beta` are context/configuration inputs.
+
+Generated files: none.
+
+Reason: the word likelihood is the LDA topic-indicator-marginalized likelihood implemented with manual `target += log_sum_exp(gamma)` scoring inside the token loop. SafeStan forbids arbitrary `target +=` scoring and requires protected observations to be scored exactly once by a built-in distribution with a plain top-level left-hand side. Replacing this marginalized mixture with SafeStan sampling statements would require a substantive model rewrite, such as introducing latent topic indicators or another custom/marginal distribution, rather than a minor same-density transformation.

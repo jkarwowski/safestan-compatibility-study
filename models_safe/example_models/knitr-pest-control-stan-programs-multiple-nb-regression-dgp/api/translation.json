@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 4}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n}\nmodel {\n  \n}\ngenerated quantities {\n  vector[N] log_sq_foot;\n  array[N] int live_in_super;\n  array[N] int traps;\n  array[N] int complaints;\n  real alpha = normal_rng(log(4), 0.1);\n  real beta = normal_rng(-0.25, 0.1);\n  real beta_super = normal_rng(-0.5, 0.1);\n  real inv_phi = abs(normal_rng(0, 1));\n  \n  for (n in 1 : N) {\n    log_sq_foot[n] = normal_rng(1.5, 0.1);\n    live_in_super[n] = bernoulli_rng(0.5);\n    traps[n] = poisson_rng(8);\n    complaints[n] = neg_binomial_2_log_rng(alpha + log_sq_foot[n]\n                                           + beta * traps[n]\n                                           + beta_super * live_in_super[n],\n                                           inv(inv_phi));\n  }\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The only top-level data variable, `N`, is a context/configuration input used to size generated quantities and is not scored by a likelihood.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The model block is empty, there are no parameters requiring priors, and the generated-quantities RNG code does not condition on protected observations.\n"
+}

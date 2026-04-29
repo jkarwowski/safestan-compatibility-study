@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `kid_score`.
+
+Generated files: none.
+
+Reason: `kid_score` is the observed likelihood variable and is scored by a built-in `normal` sampling statement, but parameter `beta` has no explicit prior. SafeStan requires every parameter to have exactly one built-in prior before use. Adding a prior for the unconstrained `beta` vector would replace Stan's implicit improper flat prior with a different density and would change the posterior, so this is not a minor same-density translation.

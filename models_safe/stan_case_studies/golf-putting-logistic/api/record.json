@@ -1,24 +1,27 @@
 {
   "artifacts_dir": "models_safe/stan_case_studies/golf-putting-logistic/api",
   "compatibility": "major",
-  "completed_at": "2026-04-28T01:05:04+00:00",
+  "completed_at": "2026-04-29T02:59:57+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_case_studies/golf-putting-logistic",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0eabf261ad04da0d0069f007a1cf90819c8279b2ab0eb37357",
+  "response_id": "resp_0911ed373de209860069f17420c7d4819d8019bf9078c0ce86",
   "safe_dir": "models_safe/stan_case_studies/golf-putting-logistic",
-  "started_at": "2026-04-28T01:04:33+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:59:44+00:00",
   "usage": {
-    "input_tokens": 2902,
+    "input_tokens": 2998,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1742,
+    "output_tokens": 1005,
     "output_tokens_details": {
-      "reasoning_tokens": 1552
+      "reasoning_tokens": 790
     },
-    "total_tokens": 4644
+    "total_tokens": 4003
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

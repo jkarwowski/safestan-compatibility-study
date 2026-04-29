@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-4-logearn-height/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:21:48+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-4-logearn-height",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0c0f05e4fc65f69c0069f15d12800c8194bba3b2451c4d23d9",
+  "safe_dir": "models_safe/example_models/arm-ch-4-logearn-height",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:21:22+00:00",
+  "usage": {
+    "input_tokens": 3029,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2282,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 5311
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

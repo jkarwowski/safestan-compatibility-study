@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":2,\"N\":3,\"county\":[1,1,1],\"u\":[2.9504286523099696,4.666149480542591,5.56586822489556],\"x\":[3.644521590299676,3.191366529992676,3.7511701254782737],\"y\":[3.0,3.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county;\n  vector[N] u;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  vector[J] a;\n  vector[2] b;\n  real mu_a;\n  real<lower=0, upper=100> sigma_a;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[N] y_hat;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a[county[i]] + u[i] * b[1] + x[i] * b[2];\n  }\n}\nmodel {\n  sigma_a ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  mu_a ~ normal(0, 1);\n  a ~ normal(mu_a, sigma_a);\n  b ~ normal(0, 1);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 100)` prior sampling statements for `sigma_a` and `sigma_y`, which were already finite-bounded parameters and therefore had implicit proper uniform priors on `[0, 100]`. These priors are placed before any model-block use of the corresponding parameters. The observation model remains `y ~ normal(y_hat, sigma_y)`, with `y` scored exactly once as a top-level protected data variable. No data changes were required.\n"
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":5,\"x\":[3.420576691812567,5.114022731447653,4.049133957156945,4.785791139561434,4.628591313590204],\"y\":[2,2,3,4,3]}",
+  "model_safe_stan": "// Fit the hyperparameters of a latent-variable Gaussian process with an\n// exponentiated quadratic kernel and a Poisson likelihood\n\ndata {\n  int<lower=1> N;\n  array[N] real x;\n  array[N] int<lower=0> y;\n}\ntransformed data {\n  real delta = 1e-9;\n}\nparameters {\n  real<lower=0> rho;\n  real<lower=0> alpha;\n  real a;\n  vector[N] eta;\n}\nmodel {\n  vector[N] f;\n\n  rho ~ inv_gamma(5, 5);\n  alpha ~ normal(0, 1);\n  a ~ normal(0, 1);\n  eta ~ normal(0, 1);\n\n  {\n    matrix[N, N] L_K;\n    matrix[N, N] K = gp_exp_quad_cov(x, alpha, rho);\n    \n    // diagonal elements\n    for (n in 1 : N) {\n      K[n, n] = K[n, n] + delta;\n    }\n    \n    L_K = cholesky_decompose(K);\n    f = L_K * eta;\n  }\n  \n  y ~ poisson_log(a + f);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the parameter prior sampling statements so that `rho`, `alpha`, `a`, and `eta` are each sampled exactly once before they are used to construct the Gaussian-process covariance and latent function. This preserves the same posterior density because the Stan model block log-density contributions are additive. No data changes were required.\n"
+}

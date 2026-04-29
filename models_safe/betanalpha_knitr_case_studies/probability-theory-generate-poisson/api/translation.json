@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"l\": 5.0739647973100865}",
+  "model_safe_stan": "// Values provided externally\ndata {\n  real l;\n}\n\ngenerated quantities {\n  // Generate an exact sample from a distribution\n  // specified by a Poisson probabilty mass function\n  int x = poisson_rng(l);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program does not condition on any top-level data variable with a sampling statement; `l` is a context input used only to generate a posterior predictive/generated quantity with `poisson_rng`.\n"
+}

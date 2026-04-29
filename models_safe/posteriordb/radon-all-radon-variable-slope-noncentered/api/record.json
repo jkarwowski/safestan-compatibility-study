@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/radon-all-radon-variable-slope-noncentered/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:52:15+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/radon-all-radon-variable-slope-noncentered",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0ef2c874dfc4ea840069f1723a9de88193b528830eaceae63d",
+  "safe_dir": "models_safe/posteriordb/radon-all-radon-variable-slope-noncentered",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:51:38+00:00",
+  "usage": {
+    "input_tokens": 3262,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3124,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6386
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

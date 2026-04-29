@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/bda_r_demos/demos-rstan-gpareto-functions-gpareto/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T00:44:17+00:00",
+  "model": "gpt-5.5",
+  "path": "models/bda_r_demos/demos-rstan-gpareto-functions-gpareto",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_03d80db52b8ea0060069f1544e633481a187b0f38374534a21",
+  "safe_dir": "models_safe/bda_r_demos/demos-rstan-gpareto-functions-gpareto",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:43:58+00:00",
+  "usage": {
+    "input_tokens": 3991,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1496,
+    "output_tokens_details": {
+      "reasoning_tokens": 1259
+    },
+    "total_tokens": 5487
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

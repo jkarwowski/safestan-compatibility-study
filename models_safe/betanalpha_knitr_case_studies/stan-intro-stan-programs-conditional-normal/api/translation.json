@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":1,\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N; // Number of ys, supplied by interface\n  array[N] real y; // Observed values of the ys, supplied by the interface\n}\n\nparameters {\n  real theta; // Probabilistic variable theta\n}\n\nmodel {\n  // Add marginal probabiltiy density for theta\n  // to the joint log probability density using\n  // equivalent sampling statement\n  theta ~ normal(0, 1);\n\n  // Add conditional probability density for the ys\n  // given theta to the joint log probabilty density\n  // using equivalent sampling statement\n  y ~ normal(theta, 1);\n}\n\ngenerated quantities {\n  // Save the exponential of theta for analysis\n  real exp_theta = exp(theta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that the parameter prior `theta ~ normal(0, 1)` appears before `theta` is used in the protected-data likelihood `y ~ normal(theta, 1)`. This preserves the same posterior/log density because the two unconditional sampling statements commute. No data changes were made; `N` remains an unprotected context input.\n"
+}

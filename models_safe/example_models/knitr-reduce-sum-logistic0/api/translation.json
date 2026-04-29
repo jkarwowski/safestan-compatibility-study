@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":3,\"n_games\":[4,5,4],\"n_redcards\":[4,4,2],\"rating\":[2.254623436875526,2.258026770030493,3.856995666164553]}",
+  "model_safe_stan": "data {\n  int N;\n  array[N] int n_redcards;\n  array[N] int n_games;\n  vector[N] rating;\n}\ntransformed data {\n  vector[2] beta_mu;\n  vector<lower=0>[2] beta_sigma;\n  beta_mu[1] = 0;\n  beta_mu[2] = 0;\n  beta_sigma[1] = 10;\n  beta_sigma[2] = 1;\n}\nparameters {\n  vector[2] beta;\n}\nmodel {\n  beta ~ normal(beta_mu, beta_sigma);\n  \n  n_redcards ~ binomial_logit(n_games, beta[1] + beta[2] * rating);\n}\n",
+  "protected_variables": [
+    "n_redcards"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `n_redcards`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the two indexed parameter prior statements `beta[1] ~ normal(0, 10)` and `beta[2] ~ normal(0, 1)` with a single vectorized built-in prior `beta ~ normal(beta_mu, beta_sigma)`. This preserves the same independent normal prior density while satisfying SafeStan's requirement that each top-level parameter be sampled exactly once using a plain identifier. No data changes were required.\n"
+}

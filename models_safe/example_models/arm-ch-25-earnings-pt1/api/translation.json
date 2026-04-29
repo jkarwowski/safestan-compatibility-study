@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `earnings`.\n\nGenerated files: none.\n\nReason: the observed likelihood is `earnings ~ bernoulli_logit(...)`, so `earnings` is the protected data variable. However, the parameter `beta` has no explicit prior in the original Stan program. SafeStan requires each parameter to have exactly one built-in prior sampling statement before it is used. Adding a proper prior to unconstrained `beta` would change the posterior/log density, and there is no same-density built-in prior corresponding to the original improper flat prior. Therefore this cannot be translated without a substantive density change.\n"
+}

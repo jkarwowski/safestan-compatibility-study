@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424743,
+  "created_at": 1777424733,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_04af0209893d5e550069f1595df044819c94f0fbeb6c90b676",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_04af0209893d5e550069f1595ed354819cba0b9e6cc9e88f65",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The program contains no model block, no parameters, and no likelihood sampling statements conditioning on data.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. All top-level data variables are context inputs used only by generated-quantities simulation code; there is no protected observed interface to score.\\n\",\"model_safe_stan\":\"functions {\\n  // Inverse survival function\\n  real inv_survival(real u, real gamma) {\\n    return - log(u) / gamma;\\n  }\\n}\\n\\ndata {\\n  int<lower=1> N2;\\n  real<lower=0> gamma;\\n\\n  real t1; // Left-censoring threshold\\n  real t2; // Interval-censoring left threshold\\n  real t3; // Interval-censoring right threshold/Right-censoring threshold\\n}\\n\\ngenerated quantities {\\n  int<lower=0> N1 = 0;\\n  array[N2] real<lower=0> obs_times = rep_array(0.0, N2);\\n  int<lower=0> N3 = 0;\\n  int<lower=0> N4 = 0;\\n  {\\n    int n = 1;\\n    while (1) {\\n      real u = uniform_rng(0, 1);\\n      real time = inv_survival(u, gamma);\\n\\n      if (time < t1) {\\n        N1 += 1;\\n      } else if (time < t2) {\\n        obs_times[n] = time;\\n        n += 1;\\n      } else if (time < t3) {\\n        N3 += 1;\\n      } else {\\n        N4 += 1;\\n      }\\n\\n      if (n > N2) break;\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"N2\\\": 2,\\n  \\\"gamma\\\": 3.076938513739364,\\n  \\\"t1\\\": 1.0,\\n  \\\"t2\\\": 2.0,\\n  \\\"t3\\\": 3.0\\n}\\n\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_04af0209893d5e550069f159648b98819c88e6282a69429cb6",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3246,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1034,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4280
+  },
+  "user": null
+}

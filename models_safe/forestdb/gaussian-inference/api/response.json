@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337421,
-  "created_at": 1777337413,
+  "completed_at": 1777429705,
+  "created_at": 1777429697,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0132a56522d0a4d30069f004456a5081a192f0accc80db6a19",
+  "id": "resp_03bb0ef0a7b6376a0069f16cc116448190b5e63fe4a39ba7d8",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0132a56522d0a4d30069f0044681cc81a1818bac38f31c4a60",
+      "id": "rs_03bb0ef0a7b6376a0069f16cc2cec08190aa1dfc230c897f99",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement after both parameters have received their priors. Context input `N` is used only as a dimension.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  vector[N] y;\\n}\\nparameters {\\n  real mu;\\n  real<lower=0> sigma;\\n}\\nmodel {\\n  mu ~ normal(0, 5);\\n  sigma ~ lognormal(0, 1);\\n  y ~ normal(mu, sigma);\\n}\\ngenerated quantities {\\n  real y_rep = normal_rng(mu, sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":8,\\\"y\\\":[1.2,0.7,1.9,1.4,1.1,0.8,1.6,1.3]}\",\"protected_variables\":[\"y\"]}",
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. Parameters `mu` and `sigma` each have one built-in prior sampling statement before being used in the likelihood.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  vector[N] y;\\n}\\nparameters {\\n  real mu;\\n  real<lower=0> sigma;\\n}\\nmodel {\\n  mu ~ normal(0, 5);\\n  sigma ~ lognormal(0, 1);\\n  y ~ normal(mu, sigma);\\n}\\ngenerated quantities {\\n  real y_rep = normal_rng(mu, sigma);\\n}\\n\\n\",\"data_safe_json\":\"{\\n  \\\"N\\\": 2,\\n  \\\"y\\\": [\\n    2.0,\\n    2.0\\n  ]\\n}\\n\",\"protected_variables\":[\"y\"]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0132a56522d0a4d30069f0044b1f6c81a1a1cbf38b271127c1",
+      "id": "msg_03bb0ef0a7b6376a0069f16cc84c1081908b8567a6de47f5a6",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2559,
+    "input_tokens": 3103,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 533,
+    "output_tokens": 743,
     "output_tokens_details": {
-      "reasoning_tokens": 263
+      "reasoning_tokens": 473
     },
-    "total_tokens": 3092
+    "total_tokens": 3846
   },
   "user": null
 }

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/stochastic-differential-equations-stan-programs-fit-ou-analytic-obs-t/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:04:02+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/stochastic-differential-equations-stan-programs-fit-ou-analytic-obs-t",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_obs"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_02a51b793f5a52ae0069f158c4ca7081a3b1c438ea2760b056",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/stochastic-differential-equations-stan-programs-fit-ou-analytic-obs-t",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:03:00+00:00",
+  "usage": {
+    "input_tokens": 3296,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 5965,
+    "output_tokens_details": {
+      "reasoning_tokens": 5178
+    },
+    "total_tokens": 9261
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-6-wells-logit/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:23:46+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-6-wells-logit",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0cfd6858c37c74740069f15d98a86c819fb24d22ac0742b3a1",
+  "safe_dir": "models_safe/example_models/arm-ch-6-wells-logit",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:23:36+00:00",
+  "usage": {
+    "input_tokens": 3002,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 894,
+    "output_tokens_details": {
+      "reasoning_tokens": 716
+    },
+    "total_tokens": 3896
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

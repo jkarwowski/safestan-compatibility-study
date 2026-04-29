@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data choice: `y` is the observed capture count vector scored by the likelihood. `M` and `T` are context inputs.\n\nGenerated files: none.\n\nReason: the likelihood for `y` is implemented with manual `target +=` terms, including a marginalized latent inclusion mixture for zero counts via `log_sum_exp(...)` and branching on `y[i]`. SafeStan forbids arbitrary `target +=` scoring, and replacing this marginalized capture-recapture likelihood with built-in sampling statements would require a substantive model rewrite rather than a minor same-density translation. The model also reads `y` in `transformed data` before any possible SafeStan observation statement.\n"
+}

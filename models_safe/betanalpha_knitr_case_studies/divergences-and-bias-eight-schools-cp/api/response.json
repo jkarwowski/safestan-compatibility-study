@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423655,
+  "created_at": 1777423647,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_06fec592178fb2400069f1551ef59881959b13af2e36955601",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_06fec592178fb2400069f1552000d881959d0a19ee09ed7672",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement after all parameter priors. The remaining data variables `J` and `sigma` are context inputs only.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> J;\\n  array[J] real y;\\n  array[J] real<lower=0> sigma;\\n}\\n\\nparameters {\\n  real mu;\\n  real<lower=0> tau;\\n  array[J] real theta;\\n}\\n\\nmodel {\\n  mu ~ normal(0, 5);\\n  tau ~ cauchy(0, 5);\\n  theta ~ normal(mu, tau);\\n  y ~ normal(theta, sigma);\\n}\\n\\n\",\"data_safe_json\":\"{\\n  \\\"J\\\": 2,\\n  \\\"sigma\\\": [\\n    1.770268571456641,\\n    2.068573880445703\\n  ],\\n  \\\"y\\\": [\\n    3.4701004342452446,\\n    5.801561047695437\\n  ]\\n}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_06fec592178fb2400069f155254ee08195801806d648a5b2b7",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3020,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 840,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3860
+  },
+  "user": null
+}

@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"x0\": [\n    2.0596131310299297,\n    6.721180215252119,\n    4.2474822971586725\n  ]\n}",
+  "model_safe_stan": "data {\n  vector[3] x0;\n}\n\ntransformed data {\n  int<lower=0> M = 3;             // Number of covariates\n  int<lower=0> N = 1000;          // Number of observations\n\n  vector[M] z0 = [2, -2, 1]';\n  real gamma0 = 10;               // True intercept\n  vector[M] gamma1 = [2, -3, 1]'; // True slopes\n  real nu = 2;                    // True Student degrees of freedom\n  real sigma = 2;                 // True measurement variability\n\n}\n\ngenerated quantities {\n  matrix[N, M] X; // Covariate design matrix\n  array[N] real y;      // Variates\n\n  for (n in 1:N) {\n    X[n, 1] = normal_rng(x0[1], 0.25);\n    X[n, 2] = normal_rng(x0[2], 0.25);\n    X[n, 3] = normal_rng(x0[3], 0.25);\n    y[n] = student_t_rng(nu, gamma0 + (X[n] - z0') * gamma1, sigma);\n  }\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no `model` block, no sampling statements, no parameters, and no observed/scored top-level data variables. The sole data input `x0` is an unprotected context input used only for simulation in `generated quantities`.\n"
+}

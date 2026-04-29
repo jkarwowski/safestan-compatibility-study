@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425913,
+  "created_at": 1777425874,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_021774be509f948d0069f15dd24c6881a2a37e921ffc1b9d23",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_021774be509f948d0069f15dd2c44881a2ab70f9809b41821e",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: none.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added explicit built-in uniform prior sampling statements for `a` and `b` so that each parameter is sampled exactly once as required by SafeStan. The bounds `L` and `H` are transformed-data constants, and both parameters are already constrained to lie within `[L, H]` with the additional ordering constraint `a <= b`; these uniform statements are density-neutral on the original constrained support under Stan's sampling-statement semantics and preserve the original posterior/log density. No data fields were added or changed.\\n\",\"model_safe_stan\":\"transformed data {\\n  real L = -5;\\n  real H = 5;\\n}\\nparameters {\\n  real<lower=L, upper=H> a;\\n  real<lower=a, upper=H> b;\\n}\\nmodel {\\n  a ~ uniform(L, H);\\n  b ~ uniform(L, H);\\n}\\n\",\"data_safe_json\":\"{}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_021774be509f948d0069f15df7415881a2b1d5f87b8203e9da",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 2872,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3366,
+    "output_tokens_details": {
+      "reasoning_tokens": 3106
+    },
+    "total_tokens": 6238
+  },
+  "user": null
+}

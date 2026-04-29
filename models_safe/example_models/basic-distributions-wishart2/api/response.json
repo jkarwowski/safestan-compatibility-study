@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425889,
+  "created_at": 1777425883,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0fcb3fc8a6ce73960069f15ddbea00819eb8ff773128b66202",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0fcb3fc8a6ce73960069f15ddc6cf4819e9e4fc862fe432294",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The program has no data block and no observed data sampling statements.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The only sampling statement is the built-in Wishart prior for the top-level parameter `W`, and there are no protected interface variables.\\n\",\"model_safe_stan\":\"transformed data {\\n  cov_matrix[4] S;\\n  \\n  S[1, 1] = 2.9983662;\\n  S[2, 1] = 0.2898776;\\n  S[3, 1] = -2.650523;\\n  S[4, 1] = 0.1055911;\\n  S[2, 2] = 11.4803610;\\n  S[3, 2] = 7.157993;\\n  S[4, 2] = -3.1129955;\\n  S[3, 3] = 11.676181;\\n  S[4, 3] = -3.5866852;\\n  S[4, 4] = 1.4482736;\\n  \\n  S = symmetrize_from_lower_tri(S);\\n}\\nparameters {\\n  cov_matrix[4] W;\\n}\\nmodel {\\n  W ~ wishart(10, S);\\n}\\n\",\"data_safe_json\":\"{}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0fcb3fc8a6ce73960069f15ddf99c4819eaf4b7f30d4e646b2",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3016,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 646,
+    "output_tokens_details": {
+      "reasoning_tokens": 290
+    },
+    "total_tokens": 3662
+  },
+  "user": null
+}

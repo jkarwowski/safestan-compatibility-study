@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/qr-regression-qr-regr/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:02:14+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/qr-regression-qr-regr",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_06217a6219f46c490069f15840b6b081959973f693aec5664b",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/qr-regression-qr-regr",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:00:48+00:00",
+  "usage": {
+    "input_tokens": 3141,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 8297,
+    "output_tokens_details": {
+      "reasoning_tokens": 7768
+    },
+    "total_tokens": 11438
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

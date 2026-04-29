@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/falling-simu-fall-data/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:53:10+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/falling-simu-fall-data",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_01bfed80e03dd3860069f1566b0e1c81a3a3fdb933c41b8ba1",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/falling-simu-fall-data",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:52:58+00:00",
+  "usage": {
+    "input_tokens": 3480,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1357,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4837
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

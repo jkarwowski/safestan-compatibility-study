@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"C\":[3,4,3],\"n\":3,\"year\":[3.6549660887897897,2.950246914286584,6.331321813022065]}",
+  "model_safe_stan": "data {\n  int<lower=0> n; // Number of years\n  array[n] int<lower=0> C; // Count\n  vector[n] year; // Year\n}\ntransformed data {\n  vector[n] year_squared;\n  vector[n] year_cubed;\n  \n  year_squared = year .* year;\n  year_cubed = year .* year .* year;\n}\nparameters {\n  real<lower=-20, upper=20> alpha;\n  real<lower=-10, upper=10> beta1;\n  real<lower=-10, upper=10> beta2;\n  real<lower=-10, upper=10> beta3;\n}\ntransformed parameters {\n  vector[n] log_lambda;\n  \n  log_lambda = alpha + beta1 * year + beta2 * year_squared\n               + beta3 * year_cubed;\n}\nmodel {\n  alpha ~ uniform(-20, 20);\n  beta1 ~ uniform(-10, 10);\n  beta2 ~ uniform(-10, 10);\n  beta3 ~ uniform(-10, 10);\n  \n  // Likelihood\n  C ~ poisson_log(log_lambda);\n}\ngenerated quantities {\n  vector[n] lambda;\n  \n  lambda = exp(log_lambda);\n}\n",
+  "protected_variables": [
+    "C"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `C`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit built-in uniform prior sampling statements for `alpha`, `beta1`, `beta2`, and `beta3`. These match the existing finite parameter bounds and preserve the original posterior density up to the same implicit bounded-support uniform priors. No data changes were required; `year` and `n` remain context inputs, and `C` is observed exactly once with the built-in `poisson_log` likelihood.\n"
+}

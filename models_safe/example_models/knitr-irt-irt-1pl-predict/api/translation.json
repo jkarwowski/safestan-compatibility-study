@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"I\":2,\"J\":3,\"y\":[0,1,0,0,0,1]}",
+  "model_safe_stan": "//# ---- irt-1pl-stan ----\ndata {\n  int<lower=0> I;\n  int<lower=0> J;\n  array[I * J] int<lower=0, upper=1> y;\n}\nparameters {\n  vector[I] b;\n  vector[J] theta;\n}\nmodel {\n  vector[I * J] eta;\n  theta ~ normal(0, 1);\n  b ~ normal(-1, 2);\n  for (i in 1 : I) {\n    for (j in 1 : J) {\n      eta[(i - 1) * J + j] = theta[j] - b[i];\n    }\n  }\n  y ~ bernoulli_logit(eta);\n}\ngenerated quantities {\n  array[100] int<lower=0, upper=I> z_sim;\n  array[40] real theta_sim;\n  for (j in 1 : 40) {\n    theta_sim[j] = (j - 20) / 4.0;\n    z_sim[j] = 0;\n    for (i in 1 : I) {\n      if (bernoulli_logit_rng(theta_sim[j] - b[i])) {\n        z_sim[j] = z_sim[j] + 1;\n      }\n    }\n  }\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the original model scored indexed rows `y[i]` inside a loop, which SafeStan does not allow for protected observations. The safe model deterministically reshapes `y` to a length `I * J` array in row-major order, constructs the matching vector of logits after the parameter priors, and scores `y` exactly once with `y ~ bernoulli_logit(eta)`. For the supplied data, the original `[[0, 1, 0], [0, 0, 1]]` becomes `[0, 1, 0, 0, 0, 1]`; in general, new `y[(i - 1) * J + j]` equals original `y[i, j]`. This preserves the same summed Bernoulli-logit likelihood, and the priors for `theta` and `b` were already explicit built-in distributions.\n"
+}

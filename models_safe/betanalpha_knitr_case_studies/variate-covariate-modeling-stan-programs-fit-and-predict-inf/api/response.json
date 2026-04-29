@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424951,
+  "created_at": 1777424918,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_04e7796b4d3321910069f15a167c50819f806e922dcea55304",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_04e7796b4d3321910069f15a17205c819f976b37e65b404fb3",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y1`, `y2`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observations are top-level data variables and each is observed exactly once with a plain built-in sampling statement. The covariates, sizes, and prediction grid are context inputs and are not protected.\\n\",\"model_safe_stan\":\"functions {\\n  // Infection probability as a function of susceptibilty and exposure\\n  real inf_prob(real alpha, real x) {\\n    return -expm1(-alpha * x); // 1 - exp(-alpha * x)\\n  }\\n\\n  vector inf_probs(real alpha, vector x) {\\n    int N = num_elements(x);\\n    vector[N] p;\\n    for (n in 1:N) p[n] = inf_prob(alpha, x[n]);\\n    return p;\\n  }\\n}\\n\\ndata {\\n  int<lower=1> N1; // Number of observations at first comapny\\n  vector[N1] x1;   // Covariate observations at first company\\n  array[N1] int y1;      // Variate observations at first company\\n\\n  int<lower=1> N2; // Number of observations at second comapny\\n  vector[N2] x2;   // Covariate observations at second company\\n  array[N2] int y2;      // Variate observations at second company\\n\\n  int<lower=1> N_grid; // Number of grid points for quantifying functional behavior\\n  vector[N_grid] x_grid; // Grid points for quantifying functional behavior\\n}\\n\\nparameters {\\n  real<lower=0> alpha;     // Susceptibilty, units of inverse exposure\\n  real<lower=-alpha> zeta; // Treatment effect, units of inverse exposure\\n}\\n\\nmodel {\\n  alpha ~ normal(0, 1);\\n  zeta ~ normal(0, 1);\\n\\n  y1 ~ bernoulli(inf_probs(alpha, x1));\\n  y2 ~ bernoulli(inf_probs(alpha + zeta, x2));\\n}\\n\\ngenerated quantities {\\n  array[N1] real y1_pred; // Conditional variate retrodiction for first company\\n  array[N2] real y2_pred; // Conditional variate retrodiction for second company\\n\\n  array[N_grid] real p_nt_grid; // Inferred probability verses exposure with no treatment\\n  array[N_grid] real p_t_grid;  // Inferred probability verses exposure with treatment\\n\\n  for (n in 1:N1) {\\n    y1_pred[n] = bernoulli_rng(inf_prob(alpha, x1[n]));\\n  }\\n\\n  for (n in 1:N2) {\\n    y2_pred[n] = bernoulli_rng(inf_prob(alpha + zeta, x2[n]));\\n  }\\n\\n  for (n in 1:N_grid) {\\n    p_nt_grid[n] = inf_prob(alpha, x_grid[n]);\\n    p_t_grid[n] = inf_prob(alpha + zeta, x_grid[n]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N1\\\":1,\\\"N2\\\":3,\\\"N_grid\\\":4,\\\"x1\\\":[5.207996381536213],\\\"x2\\\":[4.018536327146501,6.369662439255411,2.830244894721743],\\\"x_grid\\\":[1.0,2.0,3.0,4.0],\\\"y1\\\":[1],\\\"y2\\\":[2,3,3]}\",\"protected_variables\":[\"y1\",\"y2\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_04e7796b4d3321910069f15a335478819f84bdaeb6629f322d",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3599,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3432,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 7031
+  },
+  "user": null
+}

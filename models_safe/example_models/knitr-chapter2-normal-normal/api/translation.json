@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"mu_0\": 6.371994570257164, \"sigma_0\": 3.6162152128800873, \"sigma_y\": 1.0642724464629276, \"y\": 2.138215469252598}",
+  "model_safe_stan": "data {\n  real y;\n  real<lower=0> sigma_y;\n  real mu_0;\n  real<lower=0> sigma_0;\n}\nparameters {\n  real theta;\n}\nmodel {\n  theta ~ normal(mu_0, sigma_0);\n  y ~ normal(theta, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the two model-block sampling statements so that the parameter `theta` receives its built-in prior before it is used in the likelihood for protected data `y`. This preserves the posterior/log density because Stan sampling statements add to the log density commutatively. No data changes were required.\n"
+}

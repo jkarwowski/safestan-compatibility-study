@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337342,
-  "created_at": 1777337332,
+  "completed_at": 1777429659,
+  "created_at": 1777429652,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_043c9130f18077be0069f003f42938819384f90c5ce0a3d005",
+  "id": "resp_0c6a3c68d16175030069f16c94d7f08196969cd6ca2070572f",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_043c9130f18077be0069f003f4fb0c81939b0046761ec0b77e",
+      "id": "rs_0c6a3c68d16175030069f16c958a4c81968f6488d3d37c4927",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `y` is a marginalized finite mixture. Each row is scored through a manually accumulated `target += log_sum_exp(...)` expression using a user-defined `dm_lpmf` component. SafeStan forbids arbitrary `target +=` scoring and requires each protected variable to be observed exactly once with a built-in distribution sampling statement. Replacing this marginalized mixture with SafeStan-compatible sampling statements would require a substantive model rewrite or a different likelihood representation, not a minor same-density translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `y` is a marginalized finite mixture implemented with manual `target += log_sum_exp(...)` scoring and a user-defined Dirichlet-multinomial log PMF. SafeStan forbids arbitrary `target +=` likelihood construction and requires protected observations to be scored exactly once by a built-in sampling statement. Replacing this marginalized mixture with SafeStan sampling statements would require a substantive model rewrite or a change to the likelihood representation, so no minor same-density translation is provided.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_043c9130f18077be0069f003fced888193adbfedff273e0052",
+      "id": "msg_0c6a3c68d16175030069f16c9a6ddc8196ad5c766cf0866b44",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2892,
+    "input_tokens": 3414,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 684,
+    "output_tokens": 683,
     "output_tokens_details": {
       "reasoning_tokens": 516
     },
-    "total_tokens": 3576
+    "total_tokens": 4097
   },
   "user": null
 }

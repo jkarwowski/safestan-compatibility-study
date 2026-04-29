@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427556,
+  "created_at": 1777427536,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0c91ba70aaf5f5310069f16450241881918055555da853b7b7",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0c91ba70aaf5f5310069f16450a0788191a7f123dc9ed3e2ad",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `Yvec1`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the model block so that every parameter prior is applied before any model-block use of that parameter, including uses through transformed parameters such as `sigma_y`, `sigma_alpha`, and `sigma_beta`. The protected observation `Yvec1` remains a top-level data variable and is observed exactly once with the built-in `normal` distribution. No data changes were made.\\n\",\"model_safe_stan\":\"// Hepatitis: a normal hierarchical model with measurement \\n// error\\n//  http://openbugs.net/Examples/Hepatitis.html\\n\\n// In this version the measurement errors are not modeled.  \\n// See hepatisisME for the version with measurement errors. \\n\\n//# note that we have missing data in the orignal data Y[N, T]; \\n//# here, we turn Y[N, T] into Yvec with the missing\\n//# data removed.  \\n\\ndata {\\n  int<lower=0> N1; //# N1 is the length of the vector, Yvec1, that is \\n  int<lower=0> N; //# created from concatenate columns of matrix Y[N, T] \\n  array[N1] real Yvec1; //# with NA's removed. \\n  array[N1] real tvec1; //# N is the nrow of original matrix Y[N, T] \\n  array[N1] int<lower=0> idxn1; //# idxn1 maps Yvec to its orignal n index \\n  array[N] real y0;\\n}\\ntransformed data {\\n  real y0_mean;\\n  y0_mean = mean(y0);\\n}\\nparameters {\\n  real<lower=0> sigmasq_y;\\n  real<lower=0> sigmasq_alpha;\\n  real<lower=0> sigmasq_beta;\\n  array[N] real alpha;\\n  array[N] real beta;\\n  real gamma;\\n  real alpha0;\\n  real beta0;\\n}\\ntransformed parameters {\\n  real sigma_y;\\n  real sigma_alpha;\\n  real sigma_beta;\\n  sigma_y = sqrt(sigmasq_y);\\n  sigma_alpha = sqrt(sigmasq_alpha);\\n  sigma_beta = sqrt(sigmasq_beta);\\n}\\nmodel {\\n  int oldn;\\n  array[N1] real m;\\n\\n  sigmasq_y ~ inv_gamma(.001, .001);\\n  sigmasq_alpha ~ inv_gamma(.001, .001);\\n  sigmasq_beta ~ inv_gamma(.001, .001);\\n  alpha0 ~ normal(0, 1000);\\n  beta0 ~ normal(0, 1000);\\n  gamma ~ normal(0, 1000);\\n  alpha ~ normal(alpha0, sigma_alpha);\\n  beta ~ normal(beta0, sigma_beta);\\n\\n  for (n in 1 : N1) {\\n    oldn = idxn1[n];\\n    m[n] = alpha[oldn] + beta[oldn] * (tvec1[n] - 6.5)\\n           + gamma * (y0[oldn] - y0_mean);\\n  }\\n  Yvec1 ~ normal(m, sigma_y);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":4,\\\"N1\\\":3,\\\"Yvec1\\\":[3.1744282551389373,5.227233887018189,6.803653559593164],\\\"idxn1\\\":[3,2,4],\\\"tvec1\\\":[6.112691763630013,2.8552354180041846,2.2159699614474873],\\\"y0\\\":[5.97878095978192,6.262919931646461,4.411653714185422,2.4757412486097032]}\",\"protected_variables\":[\"Yvec1\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0c91ba70aaf5f5310069f1645ff1fc81918982b4e9d4f60da2",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3572,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2450,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 6022
+  },
+  "user": null
+}

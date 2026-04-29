@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-bradley-terry-individual-uniform/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:58:28+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-bradley-terry-individual-uniform",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_082692ac45042c470069f165b4508081a096436b20f110616e",
+  "safe_dir": "models_safe/example_models/knitr-bradley-terry-individual-uniform",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:58:12+00:00",
+  "usage": {
+    "input_tokens": 3120,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1234,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4354
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

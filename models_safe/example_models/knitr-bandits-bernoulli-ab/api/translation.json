@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":5,\"N\":[2,4,2,3,3],\"y\":[2,3,2,3,3]}",
+  "model_safe_stan": "data {\n  int<lower=1> K;\n  array[K] int<lower=0> N;\n  array[K] int<lower=0> y;\n}\nparameters {\n  vector<lower=0, upper=1>[K] theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ binomial(N, theta);\n}\ngenerated quantities {\n  array[K] int<lower=0, upper=1> is_best;\n  {\n    real best_prob = max(theta);\n    for (k in 1 : K) {\n      is_best[k] = theta[k] >= best_prob;\n    }\n  }\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added an explicit `theta ~ uniform(0, 1);` prior before the likelihood. This is density-neutral for `theta`, which is already constrained to `[0, 1]`, and satisfies SafeStan's requirement that each parameter have exactly one built-in prior sampling statement before use. `K` and `N` remain context data. No data changes were required.\n"
+}

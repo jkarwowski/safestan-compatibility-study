@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the observed likelihood is `y ~ normal(y_hat, sigma)`, so `y` is the protected interface variable. However, the model is not SafeStan-compatible without substantive density changes. Parameters `sigma`, `sigma_a`, and `sigma_b` have no explicit proper built-in priors; adding priors for these lower-bounded scale parameters would change the posterior. In addition, the top-level parameter `B_temp` is sampled inside a loop with `B_temp ~ multi_normal(...)`, producing repeated prior/latent-density contributions for the same parameter and violating SafeStan's exactly-one-prior and no-priors-in-loops requirements. Replacing this construction would require a non-mechanical model rewrite.

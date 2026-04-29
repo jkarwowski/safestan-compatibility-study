@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"K\":2,\"N\":4,\"context_idx\":[2,2,2,2],\"sigma\":0.5340062102243004,\"y\":[4.0,3.0,4.0,4.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> K;                       // Number of contexts\n  int<lower=0> N;                       // Number of observations\n  vector[N] y;                          // Observations\n  array[N] int<lower=1, upper=K> context_idx; // Context assignments\n  real<lower=0> sigma;                  // Measurement variability\n}\n\nparameters {\n  // Horseshoe parameters\n  vector[K] theta;\n}\n\nmodel {\n  // Horseshoe prior model\n  theta ~ double_exponential(0, 0.1);\n\n  // Observational model\n  y ~ normal(theta[context_idx], sigma);\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. Context inputs `K`, `N`, `context_idx`, and `sigma` are not protected because they are used only as sizes, indices, or known predictors/constants. Parameter `theta` has exactly one built-in prior before it is used in the likelihood.\n"
+}

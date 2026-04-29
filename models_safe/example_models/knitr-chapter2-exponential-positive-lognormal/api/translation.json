@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":6,\"x\":[4.552316017791849,2.6843484495313894,6.6523665321817145,4.874270756968872,6.289040368147003,2.3200669581081237],\"y\":[6.0,5.0,6.0,5.0,6.0,4.0]}",
+  "model_safe_stan": "data {\n  int N;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  real<lower=0> a;\n  real<lower=0> b;\n  real<lower=0> sigma;\n}\nmodel {\n  vector[N] y_pred;\n  a ~ normal(0, 10);\n  b ~ normal(0, 10);\n  sigma ~ normal(0, 10);\n  y_pred = a * exp(-b * x);\n  y ~ lognormal(log(y_pred), sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the existing built-in prior sampling statements for `a`, `b`, and `sigma` so that each parameter is given its prior before being used to compute `y_pred` or in the protected-data likelihood. This preserves the same posterior/log density because the sampling statements are the same and only their order changed. No data changes were required.\n"
+}

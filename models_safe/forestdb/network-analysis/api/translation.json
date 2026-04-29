@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 4,\n  \"y\": [\n    0,\n    1,\n    1,\n    0\n  ]\n}",
+  "model_safe_stan": "// ForestDB translation: Network Analysis\ndata {\n  int<lower=1> N;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\ngenerated quantities {\n  real expected_successes = N * theta;\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The context input `N` is not scored, and the parameter `theta` has a built-in prior before it is used in the likelihood.\n"
+}

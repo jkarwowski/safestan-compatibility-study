@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":2,\"spin\":[1,1],\"spin_safestan_copy\":[1,1]}",
+  "model_safe_stan": "// ForestDB translation: 1D Ising\ndata {\n  int<lower=1> N;\n  array[N] int<lower=0, upper=1> spin;\n  array[N] int<lower=0, upper=1> spin_safestan_copy;\n}\nparameters {\n  real field;\n  real coupling;\n}\nmodel {\n  vector[N] spin_logit;\n  field ~ normal(0, 1);\n  coupling ~ normal(0, 1);\n  for (n in 1:N) {\n    real neighbor_sum = 0;\n    if (n > 1) {\n      neighbor_sum += 2 * spin_safestan_copy[n - 1] - 1;\n    }\n    if (n < N) {\n      neighbor_sum += 2 * spin_safestan_copy[n + 1] - 1;\n    }\n    spin_logit[n] = field + coupling * neighbor_sum;\n  }\n  spin ~ bernoulli_logit(spin_logit);\n}\ngenerated quantities {\n  real aligned_pairs = 0;\n  for (n in 2:N) {\n    aligned_pairs += spin[n] == spin[n - 1];\n  }\n}\n",
+  "protected_variables": [
+    "spin"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `spin`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: vectorized the elementwise likelihood so the protected top-level data variable `spin` is observed exactly once with a plain sampling statement. Added `spin_safestan_copy`, a deterministic copy of `spin`, to compute the neighbor-dependent logits without reading the protected variable before its observation. The copy in `data_safe.json` is exactly `spin_safestan_copy = spin`.\n"
+}

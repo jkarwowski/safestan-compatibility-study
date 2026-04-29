@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-fit-normal-anal/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:53:52+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-fit-normal-anal",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_03a2cd7c37eb4f6d0069f15696213881a1bbb4efa00fbab095",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-fit-normal-anal",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:53:42+00:00",
+  "usage": {
+    "input_tokens": 3474,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1286,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4760
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

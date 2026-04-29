@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: `y` is the count outcome and is the only top-level data variable scored by a likelihood statement. However, the model also contains a manual `target += -0.5 * dot_self(phi[node1] - phi[node2])` contribution for the spatial prior and a sampling statement on the expression `sum(phi)`, rather than a single built-in prior on the top-level parameter `phi`. SafeStan forbids `target +=` and requires each parameter to have exactly one built-in prior sampling statement targeting the parameter itself before use. Making this compatible would require combining the ICAR edge potential and soft sum-to-zero constraint into a different joint prior representation, changing normalizing constants/log density and constituting a substantive prior rewrite rather than a minor mechanical translation.

@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N_predict\": 4,\n  \"f\": [\n    4.206406683048407,\n    2.243924403184383,\n    6.5172822222007305,\n    4.623278775661831\n  ],\n  \"sigma\": 0.035447795917960837\n}",
+  "model_safe_stan": "data {\n  int<lower=1> N_predict;\n  array[N_predict] real f;\n  real<lower=0> sigma;\n}\n\nparameters {}\nmodel {}\n\ngenerated quantities {\n  array[N_predict] real y_predict = normal_rng(f, sigma);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no model-block sampling statements and no parameters, so no top-level data variable is conditioned on as an observation. `N_predict`, `f`, and `sigma` are context inputs used only to generate posterior/predictive quantities.\n"
+}

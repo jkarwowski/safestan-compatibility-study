@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":4,\"spin\":[0,1,0,1],\"spin_safestan_copy\":[0,1,0,1]}",
+  "model_safe_stan": "// ForestDB translation: Markov Logic Network\ndata {\n  int<lower=1> N;\n  array[N] int<lower=0, upper=1> spin;\n  array[N] int<lower=0, upper=1> spin_safestan_copy;\n}\nparameters {\n  real field;\n  real coupling;\n}\nmodel {\n  vector[N] eta;\n\n  field ~ normal(0, 1);\n  coupling ~ normal(0, 1);\n\n  for (n in 1:N) {\n    real neighbor_sum = 0;\n    if (n > 1) {\n      neighbor_sum += 2 * spin_safestan_copy[n - 1] - 1;\n    }\n    if (n < N) {\n      neighbor_sum += 2 * spin_safestan_copy[n + 1] - 1;\n    }\n    eta[n] = field + coupling * neighbor_sum;\n  }\n\n  spin ~ bernoulli_logit(eta);\n}\ngenerated quantities {\n  real aligned_pairs = 0;\n  for (n in 2:N) {\n    aligned_pairs += spin[n] == spin[n - 1];\n  }\n}\n",
+  "protected_variables": [
+    "spin"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `spin`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: vectorized the observation of `spin` so the protected top-level data variable appears exactly once on the left side of a sampling statement. Added `spin_safestan_copy`, a deterministic copy of `spin`, to supply the neighbor values that the original model read while constructing the Bernoulli-logit predictors before scoring each element. In `data_safe.json`, `spin_safestan_copy[i] = spin[i]` for all `i`. Parameter priors were already explicit built-in distributions and were kept unchanged.\n"
+}

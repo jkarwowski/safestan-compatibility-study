@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337860,
-  "created_at": 1777337816,
+  "completed_at": 1777429964,
+  "created_at": 1777429954,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_096b83c72c300ed20069f005d81af8819e983b6d4f89f2f8c1",
+  "id": "resp_05b9be3f00350b1a0069f16dc25dd0819d9d77ec9a1ad42e9d",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_096b83c72c300ed20069f005d8c4bc819ea188e8b4479ff1a6",
+      "id": "rs_05b9be3f00350b1a0069f16dc30730819dac4f5bdaf9f46511",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `test_pos`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `test_pos` is a marginalized binary-disease mixture implemented with manual `bernoulli_lpmf` accumulation and `target += log_sum_exp(...)`. SafeStan requires each protected variable to be scored exactly once as a plain left-hand side of a built-in sampling statement, and forbids manual target scoring and `_lpmf` likelihood construction. Replacing this with SafeStan-compatible sampling would require a substantive rewrite of the marginalized latent-state algorithm, not a minor same-density translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `test_pos`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `test_pos` is a marginalized latent-disease model implemented by manually accumulating Bernoulli log probabilities and adding `target += log_sum_exp(lp_disease, lp_no_disease)`. SafeStan forbids `target +=` and `_lpmf` calls, and there is no equivalent single built-in sampling statement for the induced correlated mixture distribution over the whole test-result vector. Introducing an explicit disease state would require a substantive model rewrite with a discrete latent variable, which Stan cannot sample directly, or would change the likelihood. Therefore this model cannot be translated with only minor same-density changes.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_096b83c72c300ed20069f0060318e0819e933bbbc904f52763",
+      "id": "msg_05b9be3f00350b1a0069f16dca128c819daffd1c6e5f890888",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2766,
+    "input_tokens": 3359,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2759,
+    "output_tokens": 708,
     "output_tokens_details": {
-      "reasoning_tokens": 2588
+      "reasoning_tokens": 516
     },
-    "total_tokens": 5525
+    "total_tokens": 4067
   },
   "user": null
 }

@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `grade` is the observed response interface scored by the model.\n\nGenerated files: none.\n\nReason: the likelihood for `grade` is implemented with manual `target += log(p[i, j, grade[i, j]])` inside nested loops and is gated by `if (grade[i, j] != -1)` for missing values. SafeStan forbids direct `target +=` scoring, and protected observations cannot be inspected in conditionals or used as indices before being observed. Replacing this varying-dimension, missing-value categorical likelihood with top-level built-in sampling statements would require a substantive likelihood/data restructuring rather than a minor mechanical rewrite.\n"
+}

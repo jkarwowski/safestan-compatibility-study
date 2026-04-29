@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `log_lik` is the data object entering the likelihood contribution.\n\nGenerated files: none.\n\nReason: the model uses manual `target += log_sum_exp(...)` scoring to add a marginalized finite-state likelihood from the precomputed `log_lik` matrix. SafeStan forbids arbitrary `target +=` scoring, and there is no same-density mechanical rewrite to a single built-in sampling statement for the protected data without substantially changing the model/interface or introducing a different likelihood representation.\n"
+}

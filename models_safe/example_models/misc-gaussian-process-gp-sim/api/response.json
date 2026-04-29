@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429170,
+  "created_at": 1777429160,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0529f91aec383b2a0069f16aa8a2e081979fc38dc65e383f75",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0529f91aec383b2a0069f16aa9bfcc8197b2553317d6b102d1",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The data variables `N` and `x` are context inputs only; no top-level data variable appears on the left side of a sampling statement.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The only sampling statement is the built-in `multi_normal` prior for the top-level parameter `y`, and the transformed data block uses only unprotected context data.\\n\",\"model_safe_stan\":\"// Sample from a Gaussian process using Stan's built in exponentiated quadratic\\n// covariance function.\\n// Fixed kernel hyperparameters: rho=1, alpha=1, sigma=sqrt(0.1)\\n\\ndata {\\n  int<lower=1> N;\\n  array[N] real x;\\n}\\ntransformed data {\\n  matrix[N, N] K = gp_exp_quad_cov(x, 1.0, 1.0);\\n  vector[N] mu = rep_vector(0, N);\\n  for (n in 1 : N) {\\n    K[n, n] = K[n, n] + 0.1;\\n  }\\n}\\nparameters {\\n  vector[N] y;\\n}\\nmodel {\\n  y ~ multi_normal(mu, K);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\": 4, \\\"x\\\": [2.9977875972504613, 4.469420415516511, 4.323171487249729, 5.751314237719623]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0529f91aec383b2a0069f16aaf94208197a0d8ad9354d4cf10",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3036,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 884,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3920
+  },
+  "user": null
+}

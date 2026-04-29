@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":4,\"N_predict\":4,\"sigma\":3.0928358872783783,\"x\":[2.043069235415712,4.374814670254719,2.983427288492626,3.495385885067546],\"x_predict\":[1.0,2.0,3.0,4.0],\"y\":[4.0,3.0,4.0,4.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] x;\n  vector[N] y;\n\n  int<lower=1> N_predict;\n  array[N_predict] real x_predict;\n\n  real<lower=0> sigma;\n}\n\nparameters {\n  real c0;\n  real c1;\n  real c2;\n  real c3;\n}\n\nmodel {\n  vector[N] mu;\n\n  c0 ~ normal(0, 10);\n  c1 ~ normal(0, 2);\n  c2 ~ normal(0, 0.01);\n  c3 ~ normal(0, 0.01);\n\n  for (n in 1:N) {\n    mu[n] =   c0\n            + c1 * x[n]\n            + c2 * x[n] * x[n]\n            + c3 * x[n] * x[n] * x[n];\n  }\n\n  y ~ normal(mu, sigma);\n}\n\ngenerated quantities {\n  vector[N_predict] f;\n  for (n in 1:N_predict) {\n    f[n] =   c0\n           + c1 * x_predict[n]\n           + c2 * x_predict[n] * x_predict[n]\n           + c3 * x_predict[n] * x_predict[n] * x_predict[n];\n  }\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: rewrote the elementwise likelihood loop `y[n] ~ normal(...)` as a single vectorized sampling statement `y ~ normal(mu, sigma)` with `mu` computed deterministically in the model block after all parameter priors. This preserves the same product normal likelihood while making the protected observation a top-level plain identifier observed exactly once and outside any loop. No data changes were required.\n"
+}

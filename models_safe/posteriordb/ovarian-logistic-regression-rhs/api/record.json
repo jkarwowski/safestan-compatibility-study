@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/ovarian-logistic-regression-rhs/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:50:05+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/ovarian-logistic-regression-rhs",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_00b311389aa575600069f171cb410481a09c4079f5e2461943",
+  "safe_dir": "models_safe/posteriordb/ovarian-logistic-regression-rhs",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:49:47+00:00",
+  "usage": {
+    "input_tokens": 3638,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1952,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5590
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

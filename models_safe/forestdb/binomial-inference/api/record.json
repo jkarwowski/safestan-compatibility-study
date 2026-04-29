@@ -1,26 +1,29 @@
 {
   "artifacts_dir": "models_safe/forestdb/binomial-inference/api",
   "compatibility": "as-is",
-  "completed_at": "2026-04-28T00:46:24+00:00",
+  "completed_at": "2026-04-29T02:26:37+00:00",
   "model": "gpt-5.5",
   "path": "models/forestdb/binomial-inference",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [
     "y"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_07622a5a42227ec00069f00354d2e48196baba31fdb15797ed",
+  "response_id": "resp_05fef5f89ceb0b230069f16c4e8ce08193878a2ef60813f56f",
   "safe_dir": "models_safe/forestdb/binomial-inference",
-  "started_at": "2026-04-28T00:46:12+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:26:22+00:00",
   "usage": {
-    "input_tokens": 2523,
+    "input_tokens": 3102,
     "input_tokens_details": {
-      "cached_tokens": 0
+      "cached_tokens": 1792
     },
-    "output_tokens": 795,
+    "output_tokens": 1303,
     "output_tokens_details": {
-      "reasoning_tokens": 516
+      "reasoning_tokens": 1034
     },
-    "total_tokens": 3318
+    "total_tokens": 4405
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

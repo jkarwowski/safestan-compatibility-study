@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429359,
+  "created_at": 1777429216,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_03300ab0806865e60069f16ae08c74819ea950c73516c46c57",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_03300ab0806865e60069f16ae11bf0819ead1ece29b7a38c37",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `w`, `z_tail`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added `Tm1 = max(T - 1, 0)` and `z_tail = z[2:T]` as deterministic data augmentation for this supplied data. The original transition observations `z[t]` for `t >= 2` are protected through `z_tail`; `z[1]` and the original `z` array are retained as context for deterministic lag/state design matrices.\\n\\nThe looped/indexed categorical likelihoods were rewritten as single top-level sampling statements using built-in `categorical_logit_glm` distributions with one-hot design matrices and log simplex probabilities. This preserves the same likelihood because `softmax(log(theta[k])) = theta[k]` and `softmax(log(phi[k])) = phi[k]`. The looped Dirichlet priors over the arrays of simplexes were vectorized as top-level prior statements. No manual `target +=` scoring or user-defined distributions were introduced.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> K; // num categories\\n  int<lower=1> V; // num words\\n  int<lower=0> T; // num instances\\n  int<lower=0, upper=T> Tm1; // max(T - 1, 0)\\n  array[T] int<lower=1, upper=V> w; // words\\n  array[T] int<lower=1, upper=K> z; // categories, retained as context\\n  array[Tm1] int<lower=1, upper=K> z_tail; // deterministic copy of z[2:T]\\n  vector<lower=0>[K] alpha; // transit prior\\n  vector<lower=0>[V] beta; // emit prior\\n}\\ntransformed data {\\n  matrix[T, K] X_w = rep_matrix(0, T, K);\\n  matrix[Tm1, K] X_z = rep_matrix(0, Tm1, K);\\n  vector[V] zero_w_logits = rep_vector(0, V);\\n  vector[K] zero_z_logits = rep_vector(0, K);\\n\\n  for (t in 1 : T) {\\n    X_w[t, z[t]] = 1;\\n  }\\n  for (t in 1 : Tm1) {\\n    X_z[t, z[t]] = 1;\\n  }\\n}\\nparameters {\\n  array[K] simplex[K] theta; // transit probs\\n  array[K] simplex[V] phi; // emit probs\\n}\\ntransformed parameters {\\n  matrix[K, K] log_theta;\\n  matrix[K, V] log_phi;\\n\\n  for (k in 1 : K) {\\n    for (j in 1 : K) {\\n      log_theta[k, j] = log(theta[k, j]);\\n    }\\n  }\\n  for (k in 1 : K) {\\n    for (v in 1 : V) {\\n      log_phi[k, v] = log(phi[k, v]);\\n    }\\n  }\\n}\\nmodel {\\n  theta ~ dirichlet(alpha);\\n  phi ~ dirichlet(beta);\\n  z_tail ~ categorical_logit_glm(X_z, zero_z_logits, log_theta);\\n  w ~ categorical_logit_glm(X_w, zero_w_logits, log_phi);\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":4,\\\"T\\\":3,\\\"V\\\":4,\\\"Tm1\\\":2,\\\"alpha\\\":[2.7113566974904133,1.0979146312195553,3.8407090044759205,0.6342442788137826],\\\"beta\\\":[4.612389873805508,3.430610931556626,3.337897979449834,4.913821504337941],\\\"w\\\":[3,3,3],\\\"z\\\":[4,4,2],\\\"z_tail\\\":[4,2]}\",\"protected_variables\":[\"w\",\"z_tail\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_03300ab0806865e60069f16b6a89a8819eb1729db1e12eedce",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3191,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 12836,
+    "output_tokens_details": {
+      "reasoning_tokens": 11912
+    },
+    "total_tokens": 16027
+  },
+  "user": null
+}

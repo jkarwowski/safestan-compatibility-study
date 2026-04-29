@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: `y` is the observed data variable scored by the likelihood. The looped indexed likelihood and the indexed prior for `a` would require mechanical vectorization for SafeStan. However, several parameters (`b`, `g_0`, `g_1`, `sigma_y`, and `sigma_a`) have only Stan's implicit improper priors in the original model. SafeStan requires every parameter to have exactly one built-in prior before use, and adding proper priors here would change the posterior/log density. Therefore this model cannot be translated without a substantive density change.

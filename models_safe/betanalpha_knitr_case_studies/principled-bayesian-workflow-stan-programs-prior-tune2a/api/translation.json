@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "functions {\n  // Differences between inverse Gamma tail probabilities and target probabilities\n  vector tail_delta(vector y, vector theta, array[] real x_r, array[] int x_i) {\n    vector[2] deltas;\n    deltas[1] = inv_gamma_cdf(theta[1] | exp(y[1]), exp(y[2])) - 0.01;\n    deltas[2] = 1 - inv_gamma_cdf(theta[2] | exp(y[1]), exp(y[2])) - 0.01;\n    return deltas;\n  }\n}\n\ntransformed data {\n  // Initial guess at inverse Gamma parameters\n  vector[2] y_guess = [log(2), log(5)]';\n  // Target quantile\n  vector[2] theta = [1, 15]';\n  vector[2] y;\n  array[0] real x_r;\n  array[0] int x_i;\n\n  // Find inverse Gamma density parameters that ensure\n  // 1% probabilty below 1 and 1% probabilty above 15\n  y = algebra_solver(tail_delta, y_guess, theta, x_r, x_i);\n\n  print(\"alpha = \", exp(y[1]));\n  print(\"beta = \", exp(y[2]));\n}\n\ngenerated quantities {\n  real alpha = exp(y[1]);\n  real beta = exp(y[2]);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The program has no top-level data variables and no observed data sampling statements.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the program contains no protected observations, no parameters requiring priors, and no arbitrary log-density manipulation.\n"
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429419,
+  "created_at": 1777429360,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_00eb7e306a56235c0069f16b7051c4819e810eec0d466d6bac",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_00eb7e306a56235c0069f16b70daec819ebac421874c332fa4",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: rewrote the ARMA(1,1) innovation likelihood from repeated sampling of the model-local residual `err` into a single equivalent built-in `multi_normal_cholesky` observation statement for the top-level protected variable `y`. The Cholesky factor is the deterministic lower-triangular map from independent innovations to observations, so the Jacobian determinant is 1 and the log density is the same as the original product of normal innovation densities. The data declaration for `y` was changed from `array[T] real` to `vector[T]` so it can be observed directly by `multi_normal_cholesky`; the supplied JSON array is unchanged and no new data fields were added.\\n\",\"model_safe_stan\":\"// ARMA(1,1) with Wayne Folta-style err encoding\\n// SafeStan-compatible equivalent using a single multivariate-normal observation\\n\\ndata {\\n  int<lower=1> T; // number of observations\\n  vector[T] y; // observed outputs\\n}\\nparameters {\\n  real mu; // mean term\\n  real phi; // autoregression coeff\\n  real theta; // moving avg coeff\\n  real<lower=0> sigma; // noise scale\\n}\\nmodel {\\n  vector[T] y_mean;\\n  matrix[T, T] L;\\n\\n  mu ~ normal(0, 10);\\n  phi ~ normal(0, 2);\\n  theta ~ normal(0, 2);\\n  sigma ~ cauchy(0, 5);\\n\\n  y_mean[1] = mu - phi * mu;\\n  L = rep_matrix(0, T, T);\\n  L[1, 1] = 1;\\n\\n  if (T > 1) {\\n    for (t in 2 : T) {\\n      y_mean[t] = mu + phi * y_mean[t - 1];\\n      for (j in 1 : (t - 1)) {\\n        L[t, j] = phi * L[t - 1, j];\\n      }\\n      L[t, t - 1] = L[t, t - 1] + theta;\\n      L[t, t] = 1;\\n    }\\n  }\\n\\n  y ~ multi_normal_cholesky(y_mean, sigma * L);\\n}\\n\",\"data_safe_json\":\"{\\\"T\\\":5,\\\"y\\\":[2.576046463888429,5.065424354802669,2.467645538717212,6.10198614052329,5.916180454126447]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_00eb7e306a56235c0069f16ba74fb8819e80bf4496a3019b04",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3098,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 5280,
+    "output_tokens_details": {
+      "reasoning_tokens": 4660
+    },
+    "total_tokens": 8378
+  },
+  "user": null
+}

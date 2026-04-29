@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/stochastic-differential-equations-stan-programs-simu-ou-analytic-full-latent/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:04:21+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/stochastic-differential-equations-stan-programs-simu-ou-analytic-full-latent",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0027b71a1f14cde30069f1590c71f08197b6b7084c6afcecde",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/stochastic-differential-equations-stan-programs-simu-ou-analytic-full-latent",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:04:12+00:00",
+  "usage": {
+    "input_tokens": 3145,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 915,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4060
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,33 @@
+{
+  "K_cp": 4,
+  "K_ncp": 2,
+  "N_obs": 3,
+  "N_obs_days": 4,
+  "N_pred_days": 4,
+  "cp_idx": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "ncp_idx": [
+    2,
+    2
+  ],
+  "obs_day_idx": [
+    2,
+    2,
+    2
+  ],
+  "pred_day_idx": [
+    4,
+    4,
+    4,
+    4
+  ],
+  "y_obs": [
+    2,
+    2,
+    2
+  ]
+}

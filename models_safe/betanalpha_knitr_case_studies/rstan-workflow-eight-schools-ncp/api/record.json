@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/rstan-workflow-eight-schools-ncp/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:01:14+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/rstan-workflow-eight-schools-ncp",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0221a6e04e17025d0069f15851b2b481958fa8a00d6c9bb58d",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/rstan-workflow-eight-schools-ncp",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:01:05+00:00",
+  "usage": {
+    "input_tokens": 3058,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 874,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3932
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

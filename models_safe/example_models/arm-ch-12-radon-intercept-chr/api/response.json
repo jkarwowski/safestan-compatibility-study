@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425099,
+  "created_at": 1777425067,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0c5fb3d58c010da90069f15aab16b0819482dac0014f573905",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0c5fb3d58c010da90069f15aabb5508194ac4a466f0c498a04",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the parameter prior statements so that `sigma_a` is observed with its prior before being used as the scale in the prior for `alpha`. This preserves the same posterior density because the order of independent log-density additions in the model block is immaterial. No data changes were required; `N`, `J`, and `county` remain context inputs, and `y` is the only protected observed variable.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  int<lower=1> J; // number of counties\\n  array[N] int<lower=1, upper=J> county;\\n  vector[N] y;\\n}\\nparameters {\\n  real mu_a;\\n  real<lower=0> sigma_a;\\n  real<lower=0> sigma_y;\\n  vector<offset=(10 * mu_a), multiplier=sigma_a>[J] alpha;\\n}\\nmodel {\\n  mu_a ~ std_normal();\\n  sigma_a ~ cauchy(0, 2.5);\\n  sigma_y ~ cauchy(0, 2.5);\\n  alpha ~ normal(10 * mu_a, sigma_a);\\n  \\n  y ~ normal(alpha[county], sigma_y);\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":1,\\\"N\\\":1,\\\"county\\\":[1],\\\"y\\\":[1.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0c5fb3d58c010da90069f15ac8e134819487ef7d3a932d5e41",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3042,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2956,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 5998
+  },
+  "user": null
+}

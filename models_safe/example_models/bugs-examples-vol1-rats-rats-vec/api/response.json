@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426985,
+  "created_at": 1777426950,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0c148d18037971ef0069f16206efd081a083ce35634cda2328",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0c148d18037971ef0069f16207f8d481a0b7c82040c91c20d9",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_linear`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: promoted `y_linear` from a `transformed data` reshaping of `y` to a top-level data variable so it can be the protected observation on the left side of the likelihood. In `data_safe.json`, `y_linear` is deterministically constructed from `y` in the original loop order: `y_linear[(n - 1) * T + t] = y[n, t]`. Reordered the model block so all parameter priors occur before any model-block use of those parameters. The likelihood and posterior density are otherwise unchanged.\\n\",\"model_safe_stan\":\"// http://www.mrc-bsu.cam.ac.uk/bugs/winbugs/Vol1.pdf\\n// Page 3: Rats\\ndata {\\n  int<lower=0> N;\\n  int<lower=0> T;\\n  array[T] real x;\\n  array[N, T] real y;\\n  array[N * T] real y_linear;\\n  real xbar;\\n}\\ntransformed data {\\n  array[T] real x_minus_xbar;\\n  \\n  for (t in 1 : T) {\\n    x_minus_xbar[t] = x[t] - xbar;\\n  }\\n}\\nparameters {\\n  array[N] real alpha;\\n  array[N] real beta;\\n  \\n  real mu_alpha;\\n  real mu_beta;\\n  \\n  real<lower=0> sigmasq_y;\\n  real<lower=0> sigmasq_alpha;\\n  real<lower=0> sigmasq_beta;\\n}\\ntransformed parameters {\\n  real<lower=0> sigma_y;\\n  real<lower=0> sigma_alpha;\\n  real<lower=0> sigma_beta;\\n  \\n  sigma_y = sqrt(sigmasq_y);\\n  sigma_alpha = sqrt(sigmasq_alpha);\\n  sigma_beta = sqrt(sigmasq_beta);\\n}\\nmodel {\\n  array[N * T] real pred;\\n  \\n  mu_alpha ~ normal(0, 100);\\n  mu_beta ~ normal(0, 100);\\n  sigmasq_y ~ inv_gamma(0.001, 0.001);\\n  sigmasq_alpha ~ inv_gamma(0.001, 0.001);\\n  sigmasq_beta ~ inv_gamma(0.001, 0.001);\\n  alpha ~ normal(mu_alpha, sigma_alpha); // vectorized\\n  beta ~ normal(mu_beta, sigma_beta); // vectorized\\n  \\n  for (n in 1 : N) {\\n    for (t in 1 : T) {\\n      pred[(n - 1) * T + t] = fma(beta[n], x_minus_xbar[t], alpha[n]);\\n    }\\n  }\\n  \\n  y_linear ~ normal(pred, sigma_y); // vectorized\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":4,\\\"T\\\":3,\\\"x\\\":[6.368362945655125,4.487994740074521,6.678982198392992],\\\"xbar\\\":4.075979752406532,\\\"y\\\":[[4.0,4.0,2.0],[4.0,2.0,3.0],[3.0,3.0,4.0],[2.0,3.0,3.0]],\\\"y_linear\\\":[4.0,4.0,2.0,4.0,2.0,3.0,3.0,3.0,4.0,2.0,3.0,3.0]}\",\"protected_variables\":[\"y_linear\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0c148d18037971ef0069f1622523f081a0948348d61250cae4",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3484,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3440,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6924
+  },
+  "user": null
+}

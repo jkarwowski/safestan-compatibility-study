@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/probability-theory-generate-poisson/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:00:56+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/probability-theory-generate-poisson",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_00ccfaa8e152f58d0069f1583ef2008197849d177c0a7a8918",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/probability-theory-generate-poisson",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:00:46+00:00",
+  "usage": {
+    "input_tokens": 2894,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 707,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3601
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

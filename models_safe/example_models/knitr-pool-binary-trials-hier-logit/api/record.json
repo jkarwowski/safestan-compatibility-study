@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-pool-binary-trials-hier-logit/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:11:33+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-pool-binary-trials-hier-logit",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_00ce332e836beaa20069f16893b4cc8190b39085a6f0adc71d",
+  "safe_dir": "models_safe/example_models/knitr-pool-binary-trials-hier-logit",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:10:27+00:00",
+  "usage": {
+    "input_tokens": 3926,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 6567,
+    "output_tokens_details": {
+      "reasoning_tokens": 5166
+    },
+    "total_tokens": 10493
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

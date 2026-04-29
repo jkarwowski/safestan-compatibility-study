@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 4,\n  \"mean_traps\": 1.92778517240175\n}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  real<lower=0> mean_traps;\n}\nmodel {\n  \n}\ngenerated quantities {\n  array[N] int traps;\n  array[N] int complaints;\n  real alpha = normal_rng(log(4), 0.1);\n  real beta = normal_rng(-0.25, 0.1);\n  \n  for (n in 1 : N) {\n    traps[n] = poisson_rng(mean_traps);\n    complaints[n] = poisson_log_rng(alpha + beta * traps[n]);\n  }\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The model block is empty and no top-level data variable is observed with a sampling statement; `N` and `mean_traps` are context inputs used only for generated quantities.\n"
+}

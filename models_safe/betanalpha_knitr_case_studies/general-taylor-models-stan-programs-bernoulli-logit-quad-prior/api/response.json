@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424078,
+  "created_at": 1777424065,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0267b9fccad54d3e0069f156c1bc8481a28418590253eb11a9",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0267b9fccad54d3e0069f156c262ec81a29483c4cd8e1c15fe",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The data variables `M`, `N`, `x0`, and `X` are context inputs only; no top-level data variable is conditioned on with a sampling statement in the model block.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The model contains only built-in prior sampling statements for the top-level parameters, each parameter is sampled exactly once before any model-block use, and there is no arbitrary `target +=` scoring or protected observation to rewrite.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> M; // Number of covariates\\n  int<lower=0> N; // Number of observations\\n\\n  vector[M] x0;   // Covariate baselines\\n  matrix[N, M] X; // Covariate design matrix\\n}\\n\\ntransformed data {\\n  matrix[N, M * (M + 3) / 2 + 1] deltaX;\\n  for (n in 1:N) {\\n    deltaX[n, 1] = 1;\\n\\n    for (m1 in 1:M) {\\n      // Linear pertrubations\\n      deltaX[n, m1 + 1] = X[n, m1] - x0[m1];\\n    }\\n\\n    for (m1 in 1:M) {\\n      // On-diagional quadratic pertrubations\\n      deltaX[n, M + m1 + 1]\\n        = deltaX[n, m1 + 1] * deltaX[n, m1 + 1];\\n\\n      for (m2 in (m1 + 1):M) {\\n        int m3 = (2 * M - m1) * (m1 - 1) / 2 + m2 - m1;\\n\\n        // Off-diagonal quadratic pertrubations\\n        // Factor of 2 ensures that beta parameters have the\\n        // same intepretation as the expanded implementation\\n        deltaX[n, 2 * M + m3 + 1]\\n          = 2 * deltaX[n, m1 + 1] * deltaX[n, m2 + 1];\\n      }\\n    }\\n  }\\n}\\n\\nparameters {\\n  real alpha;                      // Intercept\\n  vector[M] beta1;                 // Linear slopes\\n  vector[M] beta2_d;               // On-diagonal quadratic slopes\\n  vector[M * (M - 1) / 2] beta2_o; // Off-diagonal quadratic slopes\\n}\\n\\nmodel {\\n  // Prior model\\n  alpha ~ normal(0, 1);\\n  beta1 ~ normal(0, 1);\\n  beta2_d ~ normal(0, 0.5);\\n  beta2_o ~ normal(0, 0.5);\\n}\\n\\n// Simulate a full observation from the current value of the parameters\\ngenerated quantities {\\n  vector[N] logit_p;\\n  array[N] int y_pred;\\n  {\\n    vector[M * (M + 3) / 2 + 1] beta\\n      = append_row(\\n          append_row(\\n            append_row(alpha, beta1),\\n          beta2_d),\\n        beta2_o);\\n    logit_p = deltaX * beta;\\n    y_pred = bernoulli_logit_rng(logit_p);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"M\\\":2,\\\"N\\\":1,\\\"X\\\":[[5.63086157755275,6.69399809918404]],\\\"x0\\\":[2.555003270255204,5.245342212332715]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0267b9fccad54d3e0069f156c8c0a481a2bfb1c3c1a5ec7f0f",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3548,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1364,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4912
+  },
+  "user": null
+}

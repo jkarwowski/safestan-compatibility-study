@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bpa-ch-04-glmm-poisson/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:26:44+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bpa-ch-04-glmm-poisson",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "C"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0347c67f514ec7050069f15e36a8d48193b34ec7eb3162ed35",
+  "safe_dir": "models_safe/example_models/bpa-ch-04-glmm-poisson",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:26:14+00:00",
+  "usage": {
+    "input_tokens": 3248,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3089,
+    "output_tokens_details": {
+      "reasoning_tokens": 2517
+    },
+    "total_tokens": 6337
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

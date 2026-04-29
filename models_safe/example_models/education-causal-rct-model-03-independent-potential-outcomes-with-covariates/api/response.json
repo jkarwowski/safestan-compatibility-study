@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427619,
+  "created_at": 1777427602,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_06aac3ff950d905c0069f1649242a881a389f1ac55f4fe8ac2",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_06aac3ff950d905c0069f16492c26c81a3b4542aec40bb93b8",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. All parameters have one built-in prior sampling statement before their use in the likelihood. Other data variables (`N`, `N_cov`, `w`, `x`, and `xw_inter`) are context inputs used as dimensions or predictors and are not protected.\\n\",\"model_safe_stan\":\"functions {\\n  real quantile_user_defined(vector x, real p) {\\n    int n; // length of vector x\\n    real index; // integer index of p\\n    int lo; // lower integer cap of the index\\n    int hi; // higher integer cap of the index\\n    real h; // generated weight between the lo and hi\\n    real qs; // weighted average of x[lo] and x[hi]\\n    n = num_elements(x);\\n    index = 1 + (n - 1) * p;\\n    lo = 1;\\n    while ((lo + 1) < index) {\\n      lo = lo + 1;\\n    }\\n    hi = lo + 1;\\n    h = index - lo;\\n    qs = (1 - h) * sort_asc(x)[lo] + h * sort_asc(x)[hi];\\n    return qs;\\n  }\\n}\\ndata {\\n  int<lower=0> N; // sample size\\n  int<lower=0> N_cov; // number of covariates\\n  vector[N] y; // observed outcome\\n  vector[N] w; // treatment assigned\\n  matrix[N, N_cov] x; // covariates\\n  matrix[N, N_cov] xw_inter; // interaction terms\\n}\\nparameters {\\n  real alpha; // intercept\\n  vector[N_cov] beta; // coefficients for x[N]\\n  vector[N_cov] beta_inter; // coefficients for x_inter[N] \\n  real tau; // super-population average treatment effect\\n  real<lower=0> sigma_t; // residual SD for the treated\\n  real<lower=0> sigma_c; // residual SD for the control\\n}\\nmodel {\\n  // PRIORS\\n  alpha ~ normal(0, 100);\\n  beta ~ normal(0, 100);\\n  beta_inter ~ normal(0, 100);\\n  tau ~ normal(0, 100);\\n  sigma_c ~ normal(0, 100);\\n  sigma_t ~ normal(0, 100);\\n  // sigma_c ~ inv_gamma(1, 0.01);          \\n  // sigma_t ~ inv_gamma(1, 0.01);\\n  \\n  // LIKELIHOOD\\n  y ~ normal(alpha + x * beta + xw_inter * beta_inter + tau * w,\\n             sigma_t * w + sigma_c * (1 - w));\\n}\\ngenerated quantities {\\n  real tau_fs; // finite-sample average treatment effect\\n  real tau_qte25; // quantile treatment effect at p = 0.25\\n  real tau_qte50; // quantile treatment effect at p = 0.50\\n  real tau_qte75; // quantile treatment effect at p = 0.75\\n  array[N] real y0; // potential outcome if W = 0\\n  array[N] real y1; // potential outcome if W = 1\\n  array[N] real tau_unit; // unit-level treatment effect\\n  for (n in 1 : N) {\\n    real mu_t = alpha + x[n,  : ] * beta + x[n,  : ] * beta_inter + tau;\\n    real mu_c = alpha + x[n,  : ] * beta;\\n    if (w[n] == 1) {\\n      y0[n] = normal_rng(mu_c, sigma_c);\\n      y1[n] = y[n];\\n    } else {\\n      y0[n] = y[n];\\n      y1[n] = normal_rng(mu_t, sigma_t);\\n    }\\n    tau_unit[n] = y1[n] - y0[n];\\n  }\\n  tau_fs = mean(tau_unit);\\n  tau_qte25 = quantile_user_defined(to_vector(y1), 0.25)\\n              - quantile_user_defined(to_vector(y0), 0.25);\\n  tau_qte50 = quantile_user_defined(to_vector(y1), 0.50)\\n              - quantile_user_defined(to_vector(y0), 0.50);\\n  tau_qte75 = quantile_user_defined(to_vector(y1), 0.75)\\n              - quantile_user_defined(to_vector(y0), 0.75);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":2,\\\"N_cov\\\":2,\\\"w\\\":[2.9707514267432824,4.088473459997975],\\\"x\\\":[[5.152751311236577,3.1881871900922705],[6.398292338724908,6.186789933189873]],\\\"xw_inter\\\":[[2.1061034980733373,3.5997119291425403],[4.128753723860417,3.745397314861743]],\\\"y\\\":[2.0,2.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_06aac3ff950d905c0069f1649dadc881a3b942a062d3d80de1",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3964,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2258,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 6222
+  },
+  "user": null
+}

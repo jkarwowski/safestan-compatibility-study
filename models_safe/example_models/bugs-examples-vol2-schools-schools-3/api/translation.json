@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `Y`.\n\nGenerated files: none.\n\nReason: the observed response `Y` is scored by the likelihood `Y ~ normal(...)`, but the model also contains a manual `target += ...` term for the random-coefficient prior involving `alpha` and `gamma`. SafeStan forbids arbitrary `target +=` scoring, and `alpha` has no built-in prior sampling statement. Replacing this determinant-based potential with SafeStan-compatible built-in sampling statements would require a substantive model/density rewrite rather than a minor mechanical translation.\n"
+}

@@ -1,0 +1,19 @@
+{
+  "L_cp": 1,
+  "L_ncp": 1,
+  "N": 1,
+  "N_factor_levels": 1,
+  "factor_cp_idx": [
+    1
+  ],
+  "factor_ncp_idx": [
+    1
+  ],
+  "obs_to_level": [
+    1
+  ],
+  "sigma": 1.6770124135272124,
+  "y": [
+    1.0
+  ]
+}

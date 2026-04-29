@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"M\":1,\"N\":4,\"X\":[[5.1498862782378865],[6.785537181497295],[3.0358115641343284],[6.818040088838336]],\"x0\":[4.494897321230459]}",
+  "model_safe_stan": "data {\n  int<lower=0> M; // Number of covariates\n  int<lower=0> N; // Number of observations\n  \n  vector[M] x0;   // Covariate baselines\n  matrix[N, M] X; // Covariate design matrix\n}\n\ntransformed data {\n  matrix[N, M] deltaX;\n  for (n in 1:N) {\n    deltaX[n,] = X[n] - x0';\n  }\n}\n\nparameters {\n  real alpha;          // Intercept\n  vector[M] beta;      // Slopes\n  real<lower=0> sigma; // Measurement Variability\n}\n\nmodel {\n  // Prior model\n  alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  sigma ~ normal(0, 5);\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  vector[N] f = alpha + deltaX * beta;\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program does not score any top-level data variables; `M`, `N`, `x0`, and `X` are context inputs only. Each parameter is given exactly one built-in prior sampling statement in the model block before any model-block use, and no forbidden direct log-density manipulation is present.\n"
+}

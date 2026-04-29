@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/seeds-data-seeds-centered-model/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:53:42+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/seeds-data-seeds-centered-model",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "n"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_02c25ae46cdc08650069f172ab66fc81969e7cce368750fae1",
+  "safe_dir": "models_safe/posteriordb/seeds-data-seeds-centered-model",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:53:31+00:00",
+  "usage": {
+    "input_tokens": 3263,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1052,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4315
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

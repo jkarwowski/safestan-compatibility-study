@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol3-funshapes-circle/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:52:37+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol3-funshapes-circle",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0e15cbb900da57620069f1641b77808193a53e144ca393fb60",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol3-funshapes-circle",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:51:23+00:00",
+  "usage": {
+    "input_tokens": 2917,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 7058,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 9975
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

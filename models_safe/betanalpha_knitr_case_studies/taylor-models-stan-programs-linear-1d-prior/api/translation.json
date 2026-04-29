@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N_grid\":5,\"x0\":5.743181166663394,\"x_grid\":[1.0,2.0,3.0,4.0,5.0]}",
+  "model_safe_stan": "data {\n  real x0; // Baseline input\n\n  int<lower=1> N_grid; // Number of grid points\n  array[N_grid] real x_grid;  // Input grid\n}\n\nparameters {\n  real alpha; // Intercept\n  real beta;  // Slope\n  real<lower=0> sigma; // Measurement Variability\n}\n\nmodel {\n  alpha ~ normal(0, 3);\n  beta ~ normal(0, 1);\n  sigma ~ normal(0, 1);\n}\n\ngenerated quantities {\n  array[N_grid] real mu_grid;\n  for (n in 1:N_grid) {\n    mu_grid[n] = alpha + beta * (x_grid[n] - x0);\n  }\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The model does not observe or score any top-level data variable; `x0`, `N_grid`, and `x_grid` are context inputs used only for generated quantities.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. All parameters have exactly one built-in prior sampling statement in the model block, and there are no protected observations or arbitrary `target +=` likelihood terms.\n"
+}

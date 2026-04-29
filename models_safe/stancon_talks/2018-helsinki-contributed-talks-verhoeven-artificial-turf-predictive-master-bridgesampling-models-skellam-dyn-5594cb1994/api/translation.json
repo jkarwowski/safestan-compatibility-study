@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `goal_difference`.\n\nGenerated files: none.\n\nReason: the likelihood for `goal_difference` is implemented with `target += skellam_lpmf(goal_difference[g] | ...)` inside a loop, using a user-defined `skellam_lpmf`. SafeStan forbids arbitrary `target +=` scoring and rejects user-defined distributions for sampling statements. Replacing this with SafeStan-compatible built-in observation statements would require a substantive likelihood/model rewrite rather than a minor same-density translation.\n"
+}

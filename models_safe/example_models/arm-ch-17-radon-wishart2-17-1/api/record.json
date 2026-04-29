@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-17-radon-wishart2-17-1/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:15:27+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-17-radon-wishart2-17-1",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0af5c545f20f3be50069f15b95be2c8191af4c16fe2acee2e7",
+  "safe_dir": "models_safe/example_models/arm-ch-17-radon-wishart2-17-1",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:15:01+00:00",
+  "usage": {
+    "input_tokens": 3544,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2266,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 5810
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/bpa-ch-07-cjs-group/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:30:02+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bpa-ch-07-cjs-group",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_04bfa6f210396e690069f15eef24b08193a6947216503143ba",
+  "safe_dir": "models_safe/example_models/bpa-ch-07-cjs-group",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:29:17+00:00",
+  "usage": {
+    "input_tokens": 3923,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3839,
+    "output_tokens_details": {
+      "reasoning_tokens": 3624
+    },
+    "total_tokens": 7762
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423760,
+  "created_at": 1777423736,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_046653d7f460ec2b0069f15578430081918ce47ed504e88555",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_046653d7f460ec2b0069f15578d40c8191842f2f539df91f7d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: none.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: no top-level data variable is observed with a sampling statement, so all data variables are context inputs and the protected interface is empty. The model block was reordered so that hierarchical scale parameters (`delta_factor1_tau` and `delta_factor2_tau`) receive their built-in priors before being used as scales in other parameter priors. This is a same-density mechanical change; no data values or likelihood terms were changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;      // Number of observations\\n\\n  // First factor information\\n  int<lower=0> N_factor1_levels;\\n\\n  int<lower=0, upper=N_factor1_levels> L_factor1_ncp;\\n  array[L_factor1_ncp] int<lower=1, upper=N_factor1_levels> factor1_ncp_idx;\\n\\n  int<lower=0, upper=N_factor1_levels> L_factor1_cp;\\n  array[L_factor1_cp] int<lower=1, upper=N_factor1_levels> factor1_cp_idx;\\n\\n  // Second factor information\\n  int<lower=0> N_factor2_levels;\\n\\n  int<lower=0, upper=N_factor2_levels> L_factor2_ncp;\\n  array[L_factor2_ncp] int<lower=1, upper=N_factor2_levels> factor2_ncp_idx;\\n\\n  int<lower=0, upper=N_factor2_levels> L_factor2_cp;\\n  array[L_factor2_cp] int<lower=1, upper=N_factor2_levels> factor2_cp_idx;\\n\\n  // Third factor information\\n  int<lower=0> N_factor3_levels;\\n\\n  // Nesting configuration\\n  array[N] int<lower=1, upper=N_factor3_levels> obs_to_factor3;\\n  array[N_factor3_levels] int<lower=1, upper=N_factor2_levels> factor3_to_factor2;\\n  array[N_factor2_levels] int<lower=1, upper=N_factor1_levels> factor2_to_factor1;\\n}\\n\\nparameters {\\n  // Baseline\\n  real baseline;\\n\\n  // Hierarchical model for the first factor residuals\\n  vector[L_factor1_ncp] delta_factor1_ncp;\\n  vector[L_factor1_cp] delta_factor1_cp;\\n  real<lower=0> delta_factor1_tau;\\n\\n  // Hierarchical models for the second factor residuals\\n  vector[L_factor2_ncp] delta_factor2_ncp;\\n  vector[L_factor2_cp]  delta_factor2_cp;\\n  vector<lower=0>[N_factor1_levels] delta_factor2_tau;\\n}\\n\\ntransformed parameters {\\n  vector[N_factor1_levels] delta_factor1;\\n  vector[N_factor2_levels] delta_factor2;\\n\\n  vector[N_factor3_levels] log_psi;\\n\\n  // Reconstruct first factor residuals\\n  delta_factor1[factor1_ncp_idx] = delta_factor1_tau * delta_factor1_ncp;\\n  delta_factor1[factor1_cp_idx] = delta_factor1_cp;\\n\\n  // Reconstruct second factor residuals\\n  delta_factor2[factor2_ncp_idx]\\n    =   delta_factor2_tau[factor2_to_factor1[factor2_ncp_idx]] .* delta_factor2_ncp;\\n  delta_factor2[factor2_cp_idx] = delta_factor2_cp;\\n\\n  log_psi =  baseline\\n           + delta_factor1[factor2_to_factor1[factor3_to_factor2]]\\n           + delta_factor2[factor3_to_factor2];\\n}\\n\\nmodel {\\n  baseline ~ normal(0, 1);\\n\\n  delta_factor1_tau ~ normal(0, 1);\\n  delta_factor1_ncp ~ normal(0, 1);\\n  delta_factor1_cp ~ normal(0, delta_factor1_tau);\\n\\n  delta_factor2_tau ~ normal(0, 0.5);\\n  delta_factor2_ncp ~ normal(0, 1);\\n  delta_factor2_cp ~ normal(0, delta_factor2_tau[factor2_to_factor1[factor2_cp_idx]]);\\n}\\n\",\"data_safe_json\":\"{\\\"L_factor1_cp\\\":2,\\\"L_factor1_ncp\\\":2,\\\"L_factor2_cp\\\":3,\\\"L_factor2_ncp\\\":1,\\\"N\\\":1,\\\"N_factor1_levels\\\":4,\\\"N_factor2_levels\\\":4,\\\"N_factor3_levels\\\":4,\\\"factor1_cp_idx\\\":[2,2],\\\"factor1_ncp_idx\\\":[2,2],\\\"factor2_cp_idx\\\":[2,2,2],\\\"factor2_ncp_idx\\\":[2],\\\"factor2_to_factor1\\\":[1,4,2,3],\\\"factor3_to_factor2\\\":[2,4,2,4],\\\"obs_to_factor3\\\":[1]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_046653d7f460ec2b0069f15588c3708191a8bdee92ea124701",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3826,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2662,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 6488
+  },
+  "user": null
+}

@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338888,
-  "created_at": 1777338868,
+  "completed_at": 1777431729,
+  "created_at": 1777431714,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0e161d5e5a274db00069f009f4244481a2bf6daae88bc812aa",
+  "id": "resp_03c9c0ebdad870f80069f174a2cb2c8194b98bcc621c820ffd",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0e161d5e5a274db00069f009f56ec481a2b2cd6cc4d9ccbcb3",
+      "id": "rs_03c9c0ebdad870f80069f174a418448194918a4798ab9942a4",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y` (the observed normal sample currently defined in `transformed data`).\\n\\nGenerated files: none.\\n\\nReason: the likelihood observation `y` is not a top-level data variable, which could be mechanically fixed by moving the inline constants to `data.json`. However, the parameter `mu` has no explicit prior and is an unconstrained real with an improper flat prior in the original Stan program. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding any proper built-in prior to `mu` would change the posterior/log density, so this model cannot be translated without a substantive density change.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: the model scores `y`, but `y` is defined in `transformed data` rather than as a top-level data variable; no valid SafeStan protected interface is generated.\\n\\nGenerated files: none.\\n\\nReason: SafeStan requires scored observations to be top-level protected data variables and requires every parameter to have exactly one built-in prior before use. Although the fixed vector `y` could in principle be moved mechanically to a data block, the parameter `mu` has only Stan's implicit improper flat prior. Adding a proper built-in prior for `mu` would change the posterior/log density, so this model cannot be translated to SafeStan with only a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0e161d5e5a274db00069f00a0650f481a2861eaf0f64331820",
+      "id": "msg_03c9c0ebdad870f80069f174b003b88194b1dc9ca8a382f33b",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2532,
+    "input_tokens": 2779,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1139,
+    "output_tokens": 1198,
     "output_tokens_details": {
-      "reasoning_tokens": 954
+      "reasoning_tokens": 1005
     },
-    "total_tokens": 3671
+    "total_tokens": 3977
   },
   "user": null
 }

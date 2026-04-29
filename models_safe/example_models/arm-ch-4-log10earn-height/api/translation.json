@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: none in generated files. The source model scores `log10_earn`, a transformed-data quantity computed as `log10(earn)`, rather than a top-level data variable.\n\nGenerated files: none.\n\nReason: the likelihood is written for a transformed-data variable, so there is no top-level protected observation that can be passed directly to SafeStan without changing the data interface or adding a new transformed observation. In addition, the parameters `alpha`, `beta`, and `sigma` have no explicit priors; adding proper priors would change the posterior, while SafeStan requires each parameter to have exactly one built-in prior sampling statement. Therefore this model cannot be translated with only minor same-density changes.\n"
+}

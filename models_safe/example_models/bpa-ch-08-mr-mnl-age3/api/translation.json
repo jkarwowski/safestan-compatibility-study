@@ -1,0 +1,10 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"marr_a\":[3,6,2,3,2,2],\"marr_j\":[4,6,2,2,2,6],\"n_age\":5}",
+  "model_safe_stan": "data {\n  int n_age;\n  array[n_age + 1] int marr_j;\n  array[n_age + 1] int marr_a;\n}\nparameters {\n  real<lower=0, upper=1> sjuv; // Juv. survival\n  real<lower=0, upper=1> ssub; // Subad. survival\n  real<lower=0, upper=1> sad; // Ad. survival\n  real<lower=0, upper=1> rjuv; // Juv. recovery\n  real<lower=0, upper=1> rad; // Ad. recovery\n}\ntransformed parameters {\n  simplex[n_age + 1] pr_a;\n  simplex[n_age + 1] pr_j;\n  \n  // Define the cell probabilities of the juvenile m-array\n  // First element\n  pr_j[1] = (1 - sjuv) * rjuv;\n  \n  // Second element\n  pr_j[2] = sjuv * (1 - ssub) * rad;\n  \n  // Third and further elements\n  for (t in 3 : n_age) {\n    pr_j[t] = sjuv * ssub * pow(sad, t - 3) * (1 - sad) * rad;\n  }\n  \n  // Probability of non-recovery\n  pr_j[n_age + 1] = 1 - sum(pr_j[ : n_age]);\n  \n  // Define the cell probabilities of the adult m-array\n  // All elements\n  for (t in 1 : n_age) {\n    pr_a[t] = pow(sad, t - 1) * (1 - sad) * rad;\n  }\n  \n  // Probability of non-recovery\n  pr_a[n_age + 1] = 1 - sum(pr_a[ : n_age]);\n}\nmodel {\n  // Priors\n  sjuv ~ beta(4.2, 2.8); // Informative prior for juv. survival: Analysis A\n  ssub ~ uniform(0, 1);\n  sad ~ uniform(0, 1);\n  rjuv ~ uniform(0, 1);\n  rad ~ uniform(0, 1);\n  \n  // Define the multinomial likelihood\n  marr_j ~ multinomial(pr_j);\n  marr_a ~ multinomial(pr_a);\n}\n",
+  "protected_variables": [
+    "marr_j",
+    "marr_a"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `marr_j`, `marr_a`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 1)` prior sampling statements for `ssub`, `sad`, `rjuv`, and `rad`. These parameters are already constrained to `[0, 1]`, so these priors are density-neutral relative to the original implicit uniform priors and satisfy SafeStan's requirement that each parameter have exactly one built-in prior before likelihood use. The data file is unchanged.\n"
+}

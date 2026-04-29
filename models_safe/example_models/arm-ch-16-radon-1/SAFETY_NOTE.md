@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the observed likelihood is for `y`, currently written as indexed sampling statements inside a loop. That part could be mechanically vectorized, but the model also has parameters without explicit proper priors (`b`, `mu_a`, `sigma_y`, and `sigma_a`). SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors for these parameters would change the posterior density, and their current implicit improper priors cannot be represented as SafeStan-compatible sampling statements. Therefore a same-posterior SafeStan translation would require a substantive density change.

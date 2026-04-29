@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 2,\n  \"sigma\": 3.956309237134501,\n  \"y\": [\n    2.0,\n    2.0\n  ]\n}\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;      // Number of observations\n  array[N] real y;           // Observations\n  real<lower=0> sigma; // Measurement variability\n}\n\nparameters {\n  real a;\n  real b;\n}\n\nmodel {\n  // Prior model\n  a ~ normal(0, 100);\n  b ~ normal(0, 100);\n\n  // Observational model\n  y ~ normal(a + b, sigma);\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The context inputs `N` and `sigma` are not protected. Parameters `a` and `b` each have exactly one built-in prior before they are used in the observational model.\n"
+}

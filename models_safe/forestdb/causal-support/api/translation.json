@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: the original likelihood is driven by `log_lik` as a precomputed log-likelihood table; `prior_concentration`, `N`, and `S` are context inputs.\n\nGenerated files: none.\n\nReason: the model uses `target += log_sum_exp(...)` inside a marginalized latent-state likelihood. SafeStan forbids arbitrary `target +=` scoring, and replacing this table-based marginalized likelihood with built-in sampling statements over a top-level protected observation would require a substantive model rewrite and additional modelling assumptions. Therefore no same-density minor SafeStan translation is available.\n"
+}

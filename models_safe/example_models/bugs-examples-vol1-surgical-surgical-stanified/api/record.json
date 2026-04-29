@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-surgical-surgical-stanified/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:44:45+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol1-surgical-surgical-stanified",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "r"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0e60e776af2297790069f1628405648190b3a0782fd8b5a2e8",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol1-surgical-surgical-stanified",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:44:35+00:00",
+  "usage": {
+    "input_tokens": 3126,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 949,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4075
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

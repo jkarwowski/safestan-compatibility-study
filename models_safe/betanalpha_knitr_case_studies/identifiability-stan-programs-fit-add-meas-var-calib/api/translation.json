@@ -1,0 +1,10 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":5,\"N_calib\":1,\"y\":[5.0,5.0,5.0,4.0,3.0],\"y_calib\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;  // Number of observations\n  array[N] real y;       // Observations\n\n  int<lower=1> N_calib;  // Number of calibration observations\n  array[N_calib] real y_calib; // Calibration observations\n}\n\nparameters {\n  real a;\n  real b;\n  real<lower=0> sigma;\n}\n\nmodel {\n  // Prior model\n  a ~ normal(0, 1);\n  b ~ normal(0, 1);\n  sigma ~ normal(0, 1);\n\n  // Calibration observational model\n  y_calib ~ normal(0, sigma);\n\n  // Observational model\n  y ~ normal(a + b, sigma);\n}\n",
+  "protected_variables": [
+    "y_calib",
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y_calib`, `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. Both protected observations are top-level data variables and are each observed exactly once with a plain built-in sampling statement. The parameters `a`, `b`, and `sigma` each have exactly one built-in prior sampling statement before later use.\n"
+}

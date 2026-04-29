@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":4,\"N\":3,\"county\":[1,1,1],\"u\":[6.8047718459683955,6.517974586272288,4.092786616976351],\"x\":[2.6500289313002243,3.215598354224198,4.819112710186972],\"y\":[3.0,3.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  int<lower=1> J; // number of counties\n  array[N] int<lower=1, upper=J> county;\n  vector[N] u;\n  vector[N] x;\n  vector[N] y;\n}\ntransformed data {\n  matrix[N, 2] cov = [x', u']';\n}\nparameters {\n  real mu_alpha;\n  real mu_beta;\n  real<lower=0> sigma;\n  real<lower=0> sigma_alpha;\n  real<lower=0> sigma_beta;\n  vector<offset=mu_alpha, multiplier=sigma_alpha>[J] alpha;\n  vector<offset=mu_beta, multiplier=sigma_beta>[2] beta;\n}\nmodel {\n  mu_alpha ~ std_normal();\n  sigma_alpha ~ cauchy(0, 2.5);\n  mu_beta ~ std_normal();\n  sigma_beta ~ cauchy(0, 2.5);\n  sigma ~ cauchy(0, 2.5);\n  alpha ~ normal(mu_alpha, sigma_alpha);\n  beta ~ normal(mu_beta, sigma_beta);\n  \n  y ~ normal_id_glm(cov, alpha[county], beta, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model-block sampling statements so that hyperparameters (`mu_alpha`, `sigma_alpha`, `mu_beta`, `sigma_beta`) receive their priors before they are used in the priors for `alpha` and `beta`. This preserves the same posterior/log density because Stan sampling statements add commutatively to the log density. The data file is unchanged.\n"
+}

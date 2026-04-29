@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427977,
+  "created_at": 1777427867,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0888bb2fc0e26ff70069f1659ba46c81a0bab937ad4d059b3c",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0888bb2fc0e26ff70069f1659c373081a0abb8959fb9a77f46",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `successes`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the sufficient-statistic observation from `transformed data` to top-level data, because SafeStan only permits top-level protected data on the left side of a sampling statement. In `data_safe.json`, `trials[k]` is computed as the number of trials with `z[n] == k`, and `successes[k]` is computed as the sum of `y[n]` over those trials; for the supplied data this gives `trials = [0, 1, 0]` and `successes = [0, 0, 0]`. The per-arm sufficient-statistic arrays are declared with length `K`. Added `theta ~ uniform(0, 1)`, which is density-neutral for the existing `[0, 1]` constraint and satisfies SafeStan's unique-prior requirement.\\n\",\"model_safe_stan\":\"/**\\n *\\n * Same model as bernoulli-bandits.stan with sufficient stats rather\\n * than Bernoulli.\\n */\\ndata {\\n  int<lower=1> K; // num arms\\n  int<lower=0> N; // num trials\\n  array[N] int<lower=1, upper=K> z; // arm on trial n\\n  array[N] int<lower=0, upper=1> y; // reward on trial n\\n  array[K] int<lower=0> successes; // successes per arm\\n  array[K] int<lower=0> trials; // trials per arm\\n}\\nparameters {\\n  vector<lower=0, upper=1>[K] theta; // arm return prob\\n}\\nmodel {\\n  theta ~ uniform(0, 1);\\n  successes ~ binomial(trials, theta);\\n}\\ngenerated quantities {\\n  simplex[K] is_best; // uniform over max\\n  {\\n    real best_prob = max(theta);\\n    for (k in 1 : K) {\\n      is_best[k] = theta[k] >= best_prob;\\n    }\\n    is_best /= sum(is_best); // uniform for ties\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":3,\\\"N\\\":1,\\\"y\\\":[0],\\\"z\\\":[2],\\\"successes\\\":[0,0,0],\\\"trials\\\":[0,1,0]}\",\"protected_variables\":[\"successes\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0888bb2fc0e26ff70069f1660681f481a0aadfd35c16cc8c5a",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3170,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 9876,
+    "output_tokens_details": {
+      "reasoning_tokens": 9311
+    },
+    "total_tokens": 13046
+  },
+  "user": null
+}

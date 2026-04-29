@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":5,\"gamma1\":4.703681265613705,\"gamma2\":0.9217195724805683}",
+  "model_safe_stan": "functions {\n  // Inverse survival function\n  real inv_survival(real u, real gamma) {\n    return - log(u) / gamma;\n  }\n}\n\ndata {\n  int<lower=1> N;\n  real<lower=0> gamma1;\n  real<lower=0> gamma2;\n}\n\ngenerated quantities {\n  array[N] real<lower=0> obs_times;\n\n  for (n in 1:N) {\n    // Simulate precursor event\n    real u1 = uniform_rng(0, 1);\n    real t1 = inv_survival(u1, gamma1);\n    // Simulate subsequent event conditional on precursor event\n    real u2 = uniform_rng(0, 1);\n    obs_times[n] = inv_survival(u2, gamma2) + t1;\n  }\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no model block, no parameters, and no sampling statements or manual log-density adjustments; `N`, `gamma1`, and `gamma2` are context inputs used only to generate simulated quantities.\n"
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777431300,
+  "created_at": 1777431272,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_00dd9d7036a8a7380069f172e897a881969033bbd80ec70f49",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_00dd9d7036a8a7380069f172e9b4b08196ace7d53f46906a33",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `eCO2mean`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the indexed likelihood loop `eCO2mean[t] ~ normal(eCO2_hat[t], sigma)` with the equivalent vectorized built-in sampling statement `eCO2mean ~ normal(eCO2_hat, sigma)`. This makes the protected observation appear exactly once on the left side as a plain top-level identifier and avoids observing it inside a loop. The data file is unchanged.\\n\",\"model_safe_stan\":\"functions {\\n  /**\\n   * ODE system for two pool model with feedback and no inputs.\\n   *\\n   * This is the version that does not deal with measurement error.\\n   *\\n   * System State C is two dimensional with C[1] and C[2]\\n   * being carbon in pools 1 and 2.\\n   *\\n   * The system has parameters\\n   *\\n   *   theta = (k1, k2, alpha21, alpha12)\\n   *\\n   * where\\n   *\\n   *   k1:       pool 1 decomposition rate\\n   *   k2:       pool 2 decomposition rate\\n   *   alpha21:  transfer coefficient from pool 2 to pool 1\\n   *   alpha12:  transfer coefficient from pool 1 to 2\\n   *\\n   * The system time derivatives are\\n   *\\n   *   d.C[1] / d.t  =  -k1 * C[1]  +  alpha12 * k2 * C[2]\\n   *\\n   *   d.C[2] / d.t  =  alpha21 * k1 * C[1]  -  k2 * C[2]\\n   *\\n   * @param t time at which derivatives are evaluated.\\n   * @param C system state at which derivatives are evaluated.\\n   * @param theta parameters for system.\\n   * @param x_r real constants for system (empty).\\n   * @param x_i integer constants for system (empty).\\n   */\\n  array[] real two_pool_feedback(real t, array[] real C, array[] real theta,\\n                                 array[] real x_r, array[] int x_i) {\\n    real k1;\\n    real k2;\\n    real alpha21;\\n    real alpha12;\\n    \\n    array[2] real dC_dt;\\n    \\n    k1 = theta[1];\\n    k2 = theta[2];\\n    alpha21 = theta[3];\\n    alpha12 = theta[4];\\n    \\n    dC_dt[1] = -k1 * C[1] + alpha12 * k2 * C[2];\\n    dC_dt[2] = -k2 * C[2] + alpha21 * k1 * C[1];\\n    \\n    return dC_dt;\\n  }\\n  \\n  /**\\n   * Compute total evolved CO2 from the system given the specified\\n   * parameters and times.  This is done by simulating the system\\n   * defined by the ODE function two_pool_feedback and then\\n   * subtracting the sum of the CO2 estimated in each pool from the\\n   * initial CO2.\\n   *\\n   * @param T number of times.\\n   * @param t0 initial time.\\n   * @param ts observation times.\\n   * @param gamma partitioning coefficient.\\n   * @param k1 decomposition rate for pool 1\\n   * @param k2 decomposition rate for pool 2\\n   * @param alpha21 transfer coefficient from pool 2 to 1\\n   * @param alpha12 transfer coefficient from pool 1 to 2\\n   * @param x_r real data (empty)\\n   * @param x_i integer data (empty)\\n   * @return evolved CO2 for times ts\\n   */\\n  array[] real evolved_CO2(int N_t, real t0, array[] real ts, real gamma,\\n                           real totalC_t0, real k1, real k2, real alpha21,\\n                           real alpha12, data array[] real x_r,\\n                           data array[] int x_i) {\\n    array[2] real C_t0; // initial state\\n    array[4] real theta; // ODE parameters\\n    array[N_t, 2] real C_hat; // predicted pool content\\n    \\n    array[N_t] real eCO2_hat;\\n    \\n    C_t0[1] = gamma * totalC_t0;\\n    C_t0[2] = (1 - gamma) * totalC_t0;\\n    \\n    theta[1] = k1;\\n    theta[2] = k2;\\n    theta[3] = alpha21;\\n    theta[4] = alpha12;\\n    \\n    C_hat = integrate_ode_rk45(two_pool_feedback, C_t0, t0, ts, theta, x_r,\\n                               x_i);\\n    \\n    for (t in 1 : N_t) {\\n      eCO2_hat[t] = totalC_t0 - sum(C_hat[t]);\\n    }\\n    return eCO2_hat;\\n  }\\n}\\ndata {\\n  real<lower=0> totalC_t0; // initial total carbon\\n  \\n  real t0; // initial time\\n  int<lower=0> N_t; // number of measurement times\\n  array[N_t] real<lower=t0> ts; // measurement times\\n  \\n  array[N_t] real<lower=0> eCO2mean; // measured cumulative evolved carbon\\n}\\ntransformed data {\\n  array[0] real x_r; // no real data for ODE system\\n  array[0] int x_i; // no integer data for ODE system\\n}\\nparameters {\\n  real<lower=0> k1; // pool 1 decomposition rate\\n  real<lower=0> k2; // pool 2 decomposition rate\\n  \\n  real<lower=0> alpha21; // transfer coeff from pool 2 to 1\\n  real<lower=0> alpha12; // transfer coeff from pool 1 to 2\\n  \\n  real<lower=0, upper=1> gamma; // partitioning coefficient\\n  \\n  real<lower=0> sigma; // observation std dev\\n}\\ntransformed parameters {\\n  array[N_t] real eCO2_hat;\\n  eCO2_hat = evolved_CO2(N_t, t0, ts, gamma, totalC_t0, k1, k2, alpha21,\\n                         alpha12, x_r, x_i);\\n}\\nmodel {\\n  // priors\\n  gamma ~ beta(10, 1); // identifies pools\\n  k1 ~ normal(0, 1); // weakly informative\\n  k2 ~ normal(0, 1);\\n  alpha21 ~ normal(0, 1);\\n  alpha12 ~ normal(0, 1);\\n  sigma ~ cauchy(0, 1);\\n  \\n  // likelihood\\n  eCO2mean ~ normal(eCO2_hat, sigma); // normal error\\n}\\n\",\"data_safe_json\":\"{\\\"N_t\\\":2,\\\"eCO2mean\\\":[3.1931250228960617,2.426662754207519],\\\"t0\\\":0.0,\\\"totalC_t0\\\":3.073264352150688,\\\"ts\\\":[1.0,2.0]}\",\"protected_variables\":[\"eCO2mean\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_00dd9d7036a8a7380069f172fbebb88196b2724378c1b2bdbb",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4291,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3266,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 7557
+  },
+  "user": null
+}

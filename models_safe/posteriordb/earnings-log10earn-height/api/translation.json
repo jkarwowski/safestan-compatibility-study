@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: the likelihood is for `log10_earn`, a transformed-data vector computed deterministically as `log10(earn)`.\n\nGenerated files: none.\n\nReason: the observed quantity is not a top-level data variable, which could only be fixed by adding a deterministic top-level `log10_earn` data field. More importantly, the parameters `beta` and `sigma` have no prior sampling statements. SafeStan requires every parameter to have exactly one built-in prior before use; adding priors here would change the posterior/log density because the original model uses implicit improper flat priors. Therefore this model cannot be translated to SafeStan with only a minor same-density rewrite.\n"
+}

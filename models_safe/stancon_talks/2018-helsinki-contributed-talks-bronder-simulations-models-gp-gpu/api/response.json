@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777432110,
+  "created_at": 1777432070,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_000f7d8db27f5fb10069f176061fc881919e9e1b3798212578",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_000f7d8db27f5fb10069f17606a42481918ee06836cbc7459f",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the parameter prior sampling statements for `rho`, `alpha`, and `sigma` before the covariance construction that uses those parameters. The covariance construction and likelihood are wrapped in a local block, preserving the same posterior density while satisfying SafeStan's requirement that parameters be given their unique built-in prior before model-block use. No data fields were added or changed. The protected variable `y` remains top-level data and is scored exactly once with a built-in distribution.\\n\",\"model_safe_stan\":\"functions {\\n  vector gp_pred_rng(array[] real x2,\\n                     vector y1, array[] real x1,\\n                     real alpha, real rho, real sigma, real delta) {\\n    int N1 = rows(y1);\\n    int N2 = size(x2);\\n    vector[N2] f2;\\n    {\\n      matrix[N1, N1] K =   gp_exp_quad_cov(x1, alpha, rho)\\n                         + diag_matrix(rep_vector(square(sigma), N1));\\n      matrix[N1, N1] L_K = cholesky_decompose(K);\\n\\n      vector[N1] L_K_div_y1 = mdivide_left_tri_low(L_K, y1);\\n      vector[N1] K_div_y1 = mdivide_right_tri_low(L_K_div_y1', L_K)';\\n      matrix[N1, N2] k_x1_x2 = gp_exp_quad_cov(x1, x2, alpha, rho);\\n      vector[N2] f2_mu = (k_x1_x2' * K_div_y1);\\n      matrix[N1, N2] v_pred = mdivide_left_tri_low(L_K, k_x1_x2);\\n      matrix[N2, N2] cov_f2 =   gp_exp_quad_cov(x2, alpha, rho) - v_pred' * v_pred\\n                              + diag_matrix(rep_vector(delta, N2));\\n      f2 = multi_normal_rng(f2_mu, cov_f2);\\n    }\\n    return f2;\\n  }\\n}\\n\\ndata {\\n  int<lower=1> N;\\n  array[N] real x;\\n  vector[N] y;\\n\\n  int<lower=1> N_predict;\\n  array[N_predict] real x_predict;\\n}\\n\\nparameters {\\n  real<lower=0> rho;\\n  real<lower=0> alpha;\\n  real<lower=0> sigma;\\n}\\n\\nmodel {\\n  // P[rho < 2.0] = 0.01\\n  // P[rho > 10] = 0.01\\n  rho ~ inv_gamma(8.91924, 34.5805);\\n  alpha ~ normal(0, 2);\\n  sigma ~ normal(0, 1);\\n\\n  {\\n    matrix[N, N] cov =   gp_exp_quad_cov(x, alpha, rho)\\n                       + diag_matrix(rep_vector(square(sigma), N));\\n    matrix[N, N] L_cov = cholesky_decompose(cov);\\n\\n    y ~ multi_normal_cholesky(rep_vector(0, N), L_cov);\\n  }\\n}\\n\\ngenerated quantities {\\n  vector[N_predict] f_predict = gp_pred_rng(x_predict, y, x, alpha, rho, sigma, 1e-10);\\n  vector[N_predict] y_predict;\\n  for (n in 1:N_predict)\\n    y_predict[n] = normal_rng(f_predict[n], sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":5,\\\"N_predict\\\":3,\\\"x\\\":[4.172481806696578,4.096212779190235,2.7315136574646353,2.4118824123225364,2.5552127687662036],\\\"x_predict\\\":[1.0,2.0,3.0],\\\"y\\\":[5.0,5.0,5.0,5.0,4.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_000f7d8db27f5fb10069f17628dc1881918bc9aaffdd97e945",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3641,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3515,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 7156
+  },
+  "user": null
+}

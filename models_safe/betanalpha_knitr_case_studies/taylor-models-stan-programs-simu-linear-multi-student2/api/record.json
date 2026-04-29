@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-simu-linear-multi-student2/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:08:00+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/taylor-models-stan-programs-simu-linear-multi-student2",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0f98ed6a58c7378e0069f159e7d3a881a082ddf31bd187de5c",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-simu-linear-multi-student2",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:07:51+00:00",
+  "usage": {
+    "input_tokens": 3177,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 972,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4149
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

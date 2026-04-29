@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-fit-forward-conditional/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:09:19+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-fit-forward-conditional",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y1"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0440c0a528769ab70069f15a37181c819fbc139519bd39c7d8",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-fit-forward-conditional",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:09:10+00:00",
+  "usage": {
+    "input_tokens": 3076,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 840,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3916
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

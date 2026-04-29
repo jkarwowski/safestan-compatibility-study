@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `vote`.
+
+Generated files: none.
+
+Reason: the likelihood observes the top-level data variable `vote` with `bernoulli_logit_glm`, using `income` only as a predictor via the transformed-data matrix `x`. However, the parameters `alpha` and `beta` have no explicit priors in the original Stan program. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding proper priors would change the posterior/log density, and the existing implicit priors are improper flat priors on unconstrained parameters, not proper bounded uniforms that can be made explicit density-neutrally. Therefore this model cannot be translated to SafeStan with only a minor same-density rewrite.

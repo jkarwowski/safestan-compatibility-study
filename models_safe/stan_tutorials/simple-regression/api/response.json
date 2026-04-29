@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338930,
-  "created_at": 1777338903,
+  "completed_at": 1777431731,
+  "created_at": 1777431722,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0704ae7014508b860069f00a170a6c81949938260e27d7221b",
+  "id": "resp_0b341e95ce94e7010069f174aa3908819f92dafe63ddfcec12",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0704ae7014508b860069f00a18eb508194ae24814171d152da",
+      "id": "rs_0b341e95ce94e7010069f174aad928819fadb3c9740b4fcec0",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observation model is a simple built-in likelihood, `y ~ normal(a + b * x, sigma)`, with `x` and `N` as context inputs. However, the parameters `a`, `b`, and `sigma` have no explicit priors in the original Stan program. SafeStan requires every parameter to have exactly one built-in prior sampling statement before it is used. Adding proper priors for `a`, `b`, or `sigma` would change the posterior/log density, while no density-neutral built-in prior exists for the unbounded `a`, `b`, or lower-bounded-only `sigma` parameters. Therefore a SafeStan translation would require a substantive density change.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood observes the top-level data variable `y` with `y ~ normal(a + b * x, sigma)`, so `y` is the protected interface and `x`/`N` are context inputs. However, the parameters `a`, `b`, and `sigma` have no explicit prior sampling statements. SafeStan requires every parameter to be sampled exactly once from a built-in prior before use. Adding priors for these unconstrained or half-line-constrained parameters would change the original posterior/log density, so this cannot be translated by a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0704ae7014508b860069f00a30285c81949efa0255054a450b",
+      "id": "msg_0b341e95ce94e7010069f174b1c860819f9e5afd31514cfcc5",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 4575,
+    "input_tokens": 2866,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1489,
+    "output_tokens": 702,
     "output_tokens_details": {
-      "reasoning_tokens": 1279
+      "reasoning_tokens": 516
     },
-    "total_tokens": 6064
+    "total_tokens": 3568
   },
   "user": null
 }

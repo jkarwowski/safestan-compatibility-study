@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428474,
+  "created_at": 1777428394,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_02837e0db2f23ca40069f167aab0b0819e8b9fb41a13d41952",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_02837e0db2f23ca40069f167ab42a8819e91f61534e9649de3",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_init`, `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: rewrote the two indexed observation loops into one top-level sampling statement for `y_init` and one top-level sampling statement for `y`, using model-local deterministic helper arrays for the log means and repeated scales. Rewrote the two indexed subset priors for `theta` as one vectorized built-in normal prior with element-specific means and standard deviations. No data fields were added or changed; `data_safe.json` is the supplied data.\\n\",\"model_safe_stan\":\"functions {\\n  array[] real dz_dt(real t, // time\\n                     array[] real z,\\n                     // system state {prey, predator}\\n                     array[] real theta, // parameters\\n                     array[] real x_r, // unused data\\n                     array[] int x_i) {\\n    real u = z[1];\\n    real v = z[2];\\n    \\n    real alpha = theta[1];\\n    real beta = theta[2];\\n    real gamma = theta[3];\\n    real delta = theta[4];\\n    \\n    real du_dt = (alpha - beta * v) * u;\\n    real dv_dt = (-gamma + delta * u) * v;\\n    return {du_dt, dv_dt};\\n  }\\n}\\ndata {\\n  int<lower=0> N; // number of measurement times\\n  array[N] real ts; // measurement times > 0\\n  array[2] real y_init; // initial measured populations\\n  array[N, 2] real<lower=0> y; // measured populations\\n}\\ntransformed data {\\n  array[4] real theta_mean = {1.0, 0.05, 1.0, 0.05};\\n  array[4] real theta_sd = {0.5, 0.05, 0.5, 0.05};\\n}\\nparameters {\\n  array[4] real<lower=0> theta; // { alpha, beta, gamma, delta }\\n  array[2] real<lower=0> z_init; // initial population\\n  array[2] real<lower=0> sigma; // measurement errors\\n}\\ntransformed parameters {\\n  array[N, 2] real z = integrate_ode_rk45(dz_dt, z_init, 0, ts, theta,\\n                                          rep_array(0.0, 0), rep_array(\\n                                          0, 0), 1e-5, 1e-3, 5e2);\\n}\\nmodel {\\n  array[2] real log_z_init;\\n  array[N, 2] real log_z;\\n  array[N, 2] real sigma_y;\\n  \\n  theta ~ normal(theta_mean, theta_sd);\\n  sigma ~ lognormal(-1, 1);\\n  z_init ~ lognormal(log(10), 1);\\n  for (k in 1 : 2) {\\n    log_z_init[k] = log(z_init[k]);\\n    for (n in 1 : N) {\\n      log_z[n, k] = log(z[n, k]);\\n      sigma_y[n, k] = sigma[k];\\n    }\\n  }\\n  y_init ~ lognormal(log_z_init, sigma);\\n  y ~ lognormal(log_z, sigma_y);\\n}\\ngenerated quantities {\\n  array[2] real y_init_rep;\\n  array[N, 2] real y_rep;\\n  for (k in 1 : 2) {\\n    y_init_rep[k] = lognormal_rng(log(z_init[k]), sigma[k]);\\n    for (n in 1 : N) {\\n      y_rep[n, k] = lognormal_rng(log(z[n, k]), sigma[k]);\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":3,\\\"ts\\\":[1.0,2.0,3.0],\\\"y\\\":[[2.0,3.0],[3.0,3.0],[3.0,1.0]],\\\"y_init\\\":[5.533775713904997,6.896492677778824]}\",\"protected_variables\":[\"y_init\",\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_02837e0db2f23ca40069f167f4da6c819ebeca68661b11fe90",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3520,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7715,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 11235
+  },
+  "user": null
+}

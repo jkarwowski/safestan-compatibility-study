@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: the original likelihood scores `y` and `m` as observed data. `nyears` is context/configuration data.
+
+Generated files: none.
+
+Reason: the model cannot be translated to SafeStan by a minor same-density rewrite. It defines and uses user-defined `_lpdf` distributions (`real_poisson_lpdf` and `real_binomial_lpdf`) with `reject()` checks, and applies them as process densities to real-valued latent state parameters. SafeStan permits only built-in distributions for sampling statements, and Stan has no built-in same-density replacement for these continuous real-valued extensions of Poisson/binomial mass functions. In addition, the capture-recapture data `m` are scored row-by-row inside a loop rather than by a single top-level protected-data sampling statement, and several parameters rely on implicit improper flat priors. Preserving the posterior/log density would require a substantive model rewrite or density change, so no SafeStan-compatible files are generated.

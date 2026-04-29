@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338669,
-  "created_at": 1777338588,
+  "completed_at": 1777431694,
+  "created_at": 1777431669,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_00907a9f737db70b0069f008dc346c81a19d8074cc5e04a8c4",
+  "id": "resp_0ddb63f7b96a07d60069f1747575a4819582e268942a7d8e92",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_00907a9f737db70b0069f008dcb50481a1b9bc85e5c86e9b25",
+      "id": "rs_0ddb63f7b96a07d60069f1747614f081959785d05fe15cd1ab",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: the likelihood is applied to `sqrt_dif`, a deterministic transform of `score_1 - score_2`; a SafeStan rewrite would have to make that transformed vector a top-level protected data variable.\\n\\nGenerated files: none.\\n\\nReason: the original model has only `alpha ~ normal(0, 1)`. The parameters `b`, `sigma_a`, and `sigma_y` are used in the Student-t likelihood, directly or through `a`, without built-in prior sampling statements, relying on Stan's implicit improper flat priors. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors or fixing `b` from the data would change the posterior/log density, so this cannot be translated by a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: the model scores `sqrt_dif`, a transformed-data quantity computed deterministically from `score_1 - score_2`. A SafeStan-compatible minor rewrite would have to expose that scored quantity as a top-level protected data variable.\\n\\nGenerated files: none.\\n\\nReason: the parameters `b`, `sigma_a`, and `sigma_y` have no explicit priors in the original model, but they are used in the likelihood through `a` and `sigma_y`. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding proper priors for these parameters would change the posterior/log density, so this cannot be represented as a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_00907a9f737db70b0069f0092b70c881a1a03e30c23453cece",
+      "id": "msg_0ddb63f7b96a07d60069f1748ce5e081958006bdbe2857d6ef",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 4269,
+    "input_tokens": 3401,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 4874,
+    "output_tokens": 2152,
     "output_tokens_details": {
-      "reasoning_tokens": 4660
+      "reasoning_tokens": 1958
     },
-    "total_tokens": 9143
+    "total_tokens": 5553
   },
   "user": null
 }

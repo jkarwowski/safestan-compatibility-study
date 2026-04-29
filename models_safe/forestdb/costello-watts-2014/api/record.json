@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/costello-watts-2014/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:27:32+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/costello-watts-2014",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0146ac4145bf1f710069f16c85010081a2891dc556576e62ca",
+  "safe_dir": "models_safe/forestdb/costello-watts-2014",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:27:16+00:00",
+  "usage": {
+    "input_tokens": 3263,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1391,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4654
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

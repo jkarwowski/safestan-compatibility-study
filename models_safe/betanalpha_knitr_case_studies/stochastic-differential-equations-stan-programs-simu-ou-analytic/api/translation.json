@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":1,\"gamma\":3.474947360474734,\"mu\":3.415902697801133,\"t\":[1.0,2.0],\"tau\":2.039249044130223,\"x0\":6.860894094291081}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N + 1] real t;\n\n  real x0;\n\n  real mu;\n  real<lower=0> gamma;\n  real<lower=0> tau;\n}\n\ngenerated quantities {\n  array[N + 1] real x;\n  x[1] = x0;\n  for (n in 1:N) {\n    real decay = exp(-gamma * (t[n + 1] - t[n]));\n    x[n + 1] = normal_rng(mu + (x[n] - mu) * decay, 0.7071 * tau * sqrt( (1 - decay) / gamma ) );\n  }\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The program contains no model-block sampling statements and no observed data likelihood.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; all top-level data are context inputs used only to generate simulated quantities, and the program contains no parameters, no protected observations, and no arbitrary log-density manipulation.\n"
+}

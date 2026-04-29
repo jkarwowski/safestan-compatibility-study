@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "transformed data {\n  row_vector[3] a = [1.0, 2.0, 3.0];\n  vector[3] b = [1.0, 2.0, 3.0]';\n}\n\nparameters {\n  real x;\n}\n\nmodel {\n  x ~ normal(a * b, 1);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The program has no top-level data variables and no observed-data likelihood; the only sampling statement is the prior for parameter `x`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The parameter `x` has exactly one built-in prior sampling statement before any use, and there are no protected observations to score.\n"
+}

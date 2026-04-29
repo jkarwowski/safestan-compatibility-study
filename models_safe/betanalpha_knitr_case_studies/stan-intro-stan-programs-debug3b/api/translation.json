@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "transformed data {\n  int<lower=1> N = 10;\n  array[N] real mu;\n  for (n in 1:N)\n    mu[n] = n;\n}\n\nparameters {\n  array[N] real x;\n}\n\nmodel {\n  x ~ normal(mu, 1);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none; the program has no top-level data variables and does not score any observed data.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The only sampling statement is the built-in prior `x ~ normal(mu, 1)` for the top-level parameter `x`, and there is no protected data interface for this model.\n"
+}

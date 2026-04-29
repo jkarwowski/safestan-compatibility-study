@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777431098,
+  "created_at": 1777431078,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_084542c39670e3490069f1722649bc81a09de0812e757d9d4c",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_084542c39670e3490069f17226e47481a087f692e622521581",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `log_radon`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the manual likelihood accumulation `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` inside the loop with a single built-in sampling statement `log_radon ~ normal(mu, sigma_y)` after the deterministic computation of `mu`. This preserves the same density because the vectorized normal likelihood is the sum of the elementwise normal log densities. No data fields were added or changed; `N`, `J`, `county_idx`, and `floor_measure` remain unprotected context inputs.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  int<lower=0> J;\\n  array[N] int<lower=1, upper=J> county_idx;\\n  vector[N] floor_measure;\\n  vector[N] log_radon;\\n}\\nparameters {\\n  real<lower=0> sigma_y;\\n  real<lower=0> sigma_alpha;\\n  real<lower=0> sigma_beta;\\n  vector[J] alpha;\\n  vector[J] beta;\\n  real mu_alpha;\\n  real mu_beta;\\n}\\nmodel {\\n  vector[N] mu;\\n  // Prior\\n  sigma_y ~ normal(0, 1);\\n  sigma_beta ~ normal(0, 1);\\n  sigma_alpha ~ normal(0, 1);\\n  mu_alpha ~ normal(0, 10);\\n  mu_beta ~ normal(0, 10);\\n  \\n  alpha ~ normal(mu_alpha, sigma_alpha);\\n  beta ~ normal(mu_beta, sigma_beta);\\n  for (n in 1 : N) {\\n    mu[n] = alpha[county_idx[n]] + floor_measure[n] * beta[county_idx[n]];\\n  }\\n  log_radon ~ normal(mu, sigma_y);\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":3,\\\"N\\\":1,\\\"county_idx\\\":[2],\\\"floor_measure\\\":[5.286317667942319],\\\"log_radon\\\":[6.707169920643034]}\",\"protected_variables\":[\"log_radon\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_084542c39670e3490069f17237c22081a09843e626d4c707d2",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3196,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2061,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5257
+  },
+  "user": null
+}

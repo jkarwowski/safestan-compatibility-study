@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-turkia-mebn-blmm-rhs/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T03:10:10+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2018-helsinki-contributed-talks-turkia-mebn-blmm-rhs",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0b6338102dc455790069f17675134081949f9ec1c186e15e00",
+  "safe_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-turkia-mebn-blmm-rhs",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:09:40+00:00",
+  "usage": {
+    "input_tokens": 4396,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2268,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 6664
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: `y` is the only top-level data variable scored by the model; `x`, `county`, `u`, `N`, and `J` are context inputs. The elementwise likelihood for `y[n]` and the elementwise prior for `a[j]` would need SafeStan vectorization, but more importantly the parameters `b`, `g_0`, and `g_1` have no explicit proper built-in priors in the original model. SafeStan requires every parameter to have exactly one prior sampling statement before use. Adding priors for these unconstrained parameters would change the posterior/log density rather than being a same-density mechanical rewrite.

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/semantic-free-vars/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:36:59+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/semantic-free-vars",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0975ffabb46a4c6c0069f16ec4891881a1ae6bc9c5613faf66",
+  "safe_dir": "models_safe/forestdb/semantic-free-vars",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:36:52+00:00",
+  "usage": {
+    "input_tokens": 2954,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 631,
+    "output_tokens_details": {
+      "reasoning_tokens": 366
+    },
+    "total_tokens": 3585
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

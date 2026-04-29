@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{}",
+  "model_safe_stan": "transformed data {\n  real L = -5;\n  real H = 5;\n}\nparameters {\n  real<lower=L, upper=H> a;\n  real<lower=a, upper=H> b;\n}\nmodel {\n  a ~ uniform(L, H);\n  b ~ uniform(L, H);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit built-in uniform prior sampling statements for `a` and `b` so that each parameter is sampled exactly once as required by SafeStan. The bounds `L` and `H` are transformed-data constants, and both parameters are already constrained to lie within `[L, H]` with the additional ordering constraint `a <= b`; these uniform statements are density-neutral on the original constrained support under Stan's sampling-statement semantics and preserve the original posterior/log density. No data fields were added or changed.\n"
+}

@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":5,\"x\":[3.4677596182990706,5.958461491947396,2.79021467355712,3.155655005927675,3.0755572703480403]}",
+  "model_safe_stan": "// Sample from Gaussian process with a manually-built covariance matrix K\n// parameterized with an exponentiated quadratic kernel.  \n// Fixed kernel hyperparameters: rho=1, alpha=1, sigma=sqrt(0.1)\n\ndata {\n  int<lower=1> N;\n  array[N] real x;\n}\ntransformed data {\n  matrix[N, N] K;\n  vector[N] mu = rep_vector(0, N);\n  for (i in 1 : (N - 1)) {\n    K[i, i] = 1 + 0.1;\n    for (j in (i + 1) : N) {\n      K[i, j] = exp(-0.5 * pow(x[i] - x[j], 2));\n      K[j, i] = K[i, j];\n    }\n  }\n  K[N, N] = 1 + 0.1;\n}\nparameters {\n  vector[N] y;\n}\nmodel {\n  y ~ multi_normal(mu, K);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The model has no observed data likelihood: `N` and `x` are context inputs used to construct the Gaussian-process covariance, and the only sampling statement is the built-in prior `y ~ multi_normal(mu, K)` for the top-level parameter `y`.\n"
+}

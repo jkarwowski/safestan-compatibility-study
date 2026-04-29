@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/eight-schools-eight-schools-centered/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:43:28+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/eight-schools-eight-schools-centered",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0f881ff6067d51330069f170482858819d9ddc14a9a436a65c",
+  "safe_dir": "models_safe/posteriordb/eight-schools-eight-schools-centered",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:43:20+00:00",
+  "usage": {
+    "input_tokens": 3060,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 860,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3920
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423455,
+  "created_at": 1777423446,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_01bfa8558cc619d80069f154564ea081909047845e63494236",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_01bfa8558cc619d80069f15457893081909d973f4bd6624b0d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. Other data variables (`N`, `K`, and `x`) are context inputs used as sizes/indices/predictors and are not scored as observations. Each parameter has exactly one built-in prior before later use.\\n\",\"model_safe_stan\":\"// Comparison of k groups with unequal variance and\\n// hierarchical priors for the mean and the variance\\ndata {\\n  int<lower=0> N; // number of data points\\n  int<lower=0> K; // number of groups\\n  array[N] int<lower=1, upper=K> x; // group indicator\\n  vector[N] y; //\\n}\\nparameters {\\n  real mu0; // prior mean\\n  real<lower=0> musigma0; // prior std\\n  vector[K] mu; // group means\\n  real lsigma0; // prior mean\\n  real<lower=0> lsigma0s; // prior std\\n  vector<lower=0>[K] sigma; // group stds\\n}\\nmodel {\\n  mu0 ~ normal(10, 10); // weakly informative prior\\n  musigma0 ~ normal(0, 10); // weakly informative prior\\n  mu ~ normal(mu0, musigma0); // population prior with unknown parameters\\n  // lsigma0 is prior mean in log scale\\n  lsigma0 ~ normal(0, 1); // weakly informative prior\\n  // log-normal prior sets normal prior on logarithm of the paremeter,\\n  // which is useful for positive parameters that shouldn't be very\\n  // close to 0. BDA3 Chapter 5 uses scaled inverse Chi^2 prior, but\\n  // as these don't need to be (semi-)conjugate thinking in terms of\\n  // log-normal can be easier.\\n  lsigma0s ~ lognormal(log(0.1), .5); // weakly informative prior\\n  sigma ~ lognormal(lsigma0, lsigma0s); // population prior with unknown parameters\\n  y ~ normal(mu[x], sigma[x]); // observation model / likelihood\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":4,\\\"N\\\":1,\\\"x\\\":[4],\\\"y\\\":[1.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_01bfa8558cc619d80069f1545d079c8190b2987792cc2b8d14",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3246,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1088,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4334
+  },
+  "user": null
+}

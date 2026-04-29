@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-23-electric-one-pred/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:18:54+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-23-electric-one-pred",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0496be33026337520069f15c7768bc8195a83637387b4c455a",
+  "safe_dir": "models_safe/example_models/arm-ch-23-electric-one-pred",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:18:47+00:00",
+  "usage": {
+    "input_tokens": 2981,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 638,
+    "output_tokens_details": {
+      "reasoning_tokens": 457
+    },
+    "total_tokens": 3619
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

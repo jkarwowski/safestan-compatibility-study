@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426003,
+  "created_at": 1777425974,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0347c67f514ec7050069f15e36a8d48193b34ec7eb3162ed35",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0347c67f514ec7050069f15e373a4c8193bcb1f05784304447",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `C`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved `eps ~ normal(0, sigma)` before `C ~ poisson_log(log_lambda)`. Since `log_lambda` depends on `eps`, SafeStan requires the `eps` prior before the likelihood uses `log_lambda`; reordering additive Stan sampling statements preserves the posterior/log density. No data changes; `n` and `year` remain context inputs.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> n; // Number of years\\n  array[n] int<lower=0> C; // Counts\\n  vector[n] year; // Year\\n}\\ntransformed data {\\n  vector[n] year_squared;\\n  vector[n] year_cubed;\\n  \\n  year_squared = year .* year;\\n  year_cubed = year .* year .* year;\\n}\\nparameters {\\n  real<lower=-20, upper=20> alpha;\\n  real<lower=-10, upper=10> beta1;\\n  real<lower=-10, upper=20> beta2;\\n  real<lower=-10, upper=10> beta3;\\n  vector[n] eps; // Year effects\\n  real<lower=0, upper=5> sigma;\\n}\\ntransformed parameters {\\n  vector[n] log_lambda;\\n  \\n  // Linear predictor incl. random year effect\\n  log_lambda = alpha + beta1 * year + beta2 * year_squared\\n               + beta3 * year_cubed + eps;\\n}\\nmodel {\\n  // Priors\\n  alpha ~ uniform(-20, 20);\\n  beta1 ~ uniform(-10, 10);\\n  beta2 ~ uniform(-10, 10);\\n  beta3 ~ uniform(-10, 10);\\n  sigma ~ uniform(0, 5);\\n  eps ~ normal(0, sigma);\\n  \\n  // Likelihood\\n  C ~ poisson_log(log_lambda);\\n}\\ngenerated quantities {\\n  vector<lower=0>[n] lambda;\\n  \\n  lambda = exp(log_lambda);\\n}\\n\",\"data_safe_json\":\"{\\\"C\\\":[3,1,1,3],\\\"n\\\":4,\\\"year\\\":[3.1611596955702272,3.68465852415462,2.630825100777653,5.955968590442289]}\",\"protected_variables\":[\"C\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0347c67f514ec7050069f15e5110f081939d7e9759e09c7f69",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3248,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3089,
+    "output_tokens_details": {
+      "reasoning_tokens": 2517
+    },
+    "total_tokens": 6337
+  },
+  "user": null
+}

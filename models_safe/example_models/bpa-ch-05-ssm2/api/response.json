@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426087,
+  "created_at": 1777426057,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_00c48a42594fef810069f15e893300819e8034a14bf8b066eb",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_00c48a42594fef810069f15e89c064819e87f1a05b93cdf77a",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added explicit `uniform(0, 1)` prior sampling statements for `sigma_proc` and `sigma_obs`. These are density-neutral because both parameters are already constrained to `[0, 1]`, and they satisfy SafeStan's requirement that every parameter have exactly one built-in prior sampling statement before use. The data file is unchanged. `T` and `pyears` are context/configuration inputs, not protected observations.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> T;\\n  vector[T] y;\\n  int<lower=0> pyears; // Number of years for prediction\\n}\\nparameters {\\n  real logN_est1; // Initial log population size\\n  real mean_r; // Mean growth rate\\n  real<lower=0, upper=1> sigma_proc; // SD of state procesdatas\\n  real<lower=0, upper=1> sigma_obs; // SD of observation process\\n  vector[T - 1] r;\\n}\\ntransformed parameters {\\n  vector[T] logN_est; // Log population size\\n  \\n  // State process\\n  logN_est[1] = logN_est1;\\n  for (t in 1 : (T - 1)) {\\n    logN_est[t + 1] = logN_est[t] + r[t];\\n  }\\n}\\nmodel {\\n  // Priors and constraints\\n  logN_est1 ~ normal(5.6, 10);\\n  mean_r ~ normal(1, sqrt(1000));\\n  sigma_proc ~ uniform(0, 1);\\n  sigma_obs ~ uniform(0, 1);\\n  \\n  // Likelihood\\n  r ~ normal(mean_r, sigma_proc);\\n  \\n  // Observation process\\n  y ~ normal(logN_est, sigma_obs);\\n}\\ngenerated quantities {\\n  // Population sizes on real scale\\n  real sigma2_proc;\\n  real sigma2_obs;\\n  vector[pyears] pr;\\n  vector[pyears] plogN_est; // Predicted log population size\\n  vector<lower=0>[T + pyears] N_est; // Population size\\n  \\n  sigma2_proc = square(sigma_proc);\\n  sigma2_obs = square(sigma_obs);\\n  \\n  pr[1] = normal_rng(mean_r, sigma_proc);\\n  plogN_est[1] = logN_est[T] + pr[1];\\n  for (t in 2 : pyears) {\\n    pr[t] = normal_rng(mean_r, sigma_proc);\\n    plogN_est[t] = plogN_est[t - 1] + pr[t];\\n  }\\n  for (t in 1 : T) {\\n    N_est[t] = exp(logN_est[t]);\\n  }\\n  for (t in 1 : pyears) {\\n    N_est[T + t] = exp(plogN_est[t]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"T\\\":3,\\\"pyears\\\":2,\\\"y\\\":[3.793392326657892,6.012280897822645,2.319140502998858]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_00c48a42594fef810069f15ea42054819ebbdc7161ab558dca",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3384,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3351,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6735
+  },
+  "user": null
+}

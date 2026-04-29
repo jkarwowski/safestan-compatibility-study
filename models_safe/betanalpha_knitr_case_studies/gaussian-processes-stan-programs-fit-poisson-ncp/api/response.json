@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424046,
+  "created_at": 1777424031,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0580ffce8c7888e70069f1569fb7f08193b4cee03787344341",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0580ffce8c7888e70069f156a08dd881938d1bf8bfff94eb19",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y_obs`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The only observed data variable scored by a sampling statement is the top-level data variable `y_obs`, which is observed exactly once with the built-in `poisson_log` distribution. The parameter `f_tilde` is given exactly one built-in prior before its transformed-parameter-dependent value `f_predict` is used in the likelihood. Other data variables are context inputs used only for dimensions, indexing, and covariance construction.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N_predict;\\n  array[N_predict] real x_predict;\\n\\n  int<lower=1> N_obs;\\n  array[N_obs] int y_obs;\\n  array[N_obs] int<lower=1, upper=N_predict> observed_idx;\\n\\n  real<lower=0> rho;\\n  real<lower=0> alpha;\\n}\\n\\ntransformed data {\\n  matrix[N_predict, N_predict] cov =   gp_exp_quad_cov(x_predict, alpha, rho)\\n                                     + diag_matrix(rep_vector(1e-10, N_predict));\\n  matrix[N_predict, N_predict] L_cov = cholesky_decompose(cov);\\n}\\n\\nparameters {\\n  vector[N_predict] f_tilde;\\n}\\n\\ntransformed parameters {\\n  vector[N_predict] f_predict = L_cov * f_tilde;\\n}\\n\\nmodel {\\n  f_tilde ~ normal(0, 1);\\n  y_obs ~ poisson_log(f_predict[observed_idx]);\\n}\\n\\ngenerated quantities {\\n  array[N_predict] int y_predict = poisson_log_rng(f_predict);\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"N_obs\\\": 1,\\n  \\\"N_predict\\\": 3,\\n  \\\"alpha\\\": 4.95377431668197,\\n  \\\"observed_idx\\\": [\\n    2\\n  ],\\n  \\\"rho\\\": 0.5284448743787199,\\n  \\\"x_predict\\\": [\\n    1.0,\\n    2.0,\\n    3.0\\n  ],\\n  \\\"y_obs\\\": [\\n    1\\n  ]\\n}\",\"protected_variables\":[\"y_obs\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0580ffce8c7888e70069f156abdb208193ae9dbf3838dee5cb",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3187,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1577,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4764
+  },
+  "user": null
+}

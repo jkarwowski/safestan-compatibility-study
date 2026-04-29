@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424065,
+  "created_at": 1777424054,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0abad1e8a478e99c0069f156b6d4508190bb8e55cb2066ed42",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0abad1e8a478e99c0069f156b80630819092ca71119538bf3b",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, after all parameter priors have been declared. Other data variables are used only as context inputs for deterministic predictor construction.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> M; // Number of covariates\\n  int<lower=0> N; // Number of observations\\n\\n  vector[M] x0;   // Covariate baselines\\n  matrix[N, M] X; // Covariate design matrix\\n\\n  array[N] int<lower=0, upper=1> y; // Variates\\n}\\n\\ntransformed data {\\n  matrix[N, M] deltaX;\\n  for (n in 1:N) {\\n    deltaX[n,] = X[n] - x0';\\n  }\\n}\\n\\nparameters {\\n  real alpha;      // Intercept\\n  vector[M] beta;  // Linear slopes\\n}\\n\\nmodel {\\n  // Prior model\\n  alpha ~ normal(0, 1);\\n  beta ~ normal(0, 1);\\n\\n  // Vectorized observation model\\n  y ~ bernoulli_logit(alpha + deltaX * beta);\\n}\\n\\n// Simulate a full observation from the current value of the parameters\\ngenerated quantities {\\n  vector[N] logit_p = alpha + deltaX * beta;\\n  array[N] int y_pred = bernoulli_logit_rng(logit_p);\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"M\\\": 4,\\n  \\\"N\\\": 2,\\n  \\\"X\\\": [\\n    [\\n      6.100884288076674,\\n      2.869092073712355,\\n      3.788734609107931,\\n      3.7859912044477966\\n    ],\\n    [\\n      6.332936609529877,\\n      6.295917011920137,\\n      3.9903795193404177,\\n      2.563445411857953\\n    ]\\n  ],\\n  \\\"x0\\\": [\\n    6.464447845078732,\\n    2.6594825172495744,\\n    4.763633748843766,\\n    5.29383530080646\\n  ],\\n  \\\"y\\\": [\\n    0,\\n    0\\n  ]\\n}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0abad1e8a478e99c0069f156bdc5b88190b8da50744a35c7bf",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3309,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1132,
+    "output_tokens_details": {
+      "reasoning_tokens": 511
+    },
+    "total_tokens": 4441
+  },
+  "user": null
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"K\": 1,\n  \"N\": 3,\n  \"x\": [\n    1,\n    1,\n    1\n  ],\n  \"y\": [\n    3.0,\n    3.0,\n    3.0\n  ]\n}",
+  "model_safe_stan": "// Comparison of k groups with common variance and\n// hierarchical prior for the mean\ndata {\n  int<lower=0> N; // number of observations\n  int<lower=0> K; // number of groups\n  array[N] int<lower=1, upper=K> x; // discrete group indicators\n  vector[N] y; // real valued observations\n}\nparameters {\n  real mu0; // prior mean\n  real<lower=0> sigma0; // prior std constrained to be positive\n  vector[K] mu; // group means\n  real<lower=0> sigma; // common std constrained to be positive\n}\nmodel {\n  mu0 ~ normal(10, 10); // weakly informative prior\n  sigma0 ~ normal(0, 10); // weakly informative prior\n  mu ~ normal(mu0, sigma0); // population prior with unknown parameters\n  // log-normal prior sets normal prior on logarithm of the paremeter,\n  // which is useful for positive parameters that shouldn't be very\n  // close to 0. BDA3 Chapter 5 uses scaled inverse Chi^2 prior, but\n  // as these don't need to be (semi-)conjugate, thinking in terms of\n  // log-normal can be easier.\n  sigma ~ lognormal(0, .5); // weakly informative prior\n  y ~ normal(mu[x], sigma); // observation model / likelihood\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `y ~ normal(mu[x], sigma)`. The other data variables `N`, `K`, and `x` are context inputs only. All parameters have exactly one built-in prior before later use in the model block.\n"
+}

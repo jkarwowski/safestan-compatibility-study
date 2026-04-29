@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y` is the directly observed continuous variable in the original sampling statement. The censored contribution is encoded through `N_censored` and `U` in a manual CCDF target increment rather than as a SafeStan protected sampling statement.\n\nGenerated files: none.\n\nReason: the model uses `target += N_censored * normal_lccdf(U | mu, 1)`, which SafeStan forbids. In addition, the parameter `mu` has no explicit built-in prior; adding one would change the posterior because the original uses an improper flat prior. A same-density SafeStan translation would require a substantive rewrite of the censored likelihood and/or a change to the parameter prior discipline, so no minor-compatible rewrite is emitted.\n"
+}

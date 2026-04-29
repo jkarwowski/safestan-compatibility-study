@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":5,\"x\":[6.463203362306652,2.578415155741577,4.954398777864877,3.1201487026486343,2.0168833097814156],\"y\":[5.0,3.0,5.0,4.0,4.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] x; // Rainfall in cm\n  vector[N] y; // Income in k$\n}\n\nparameters {\n  real alpha;          // k$\n  real beta;           // k$ / cm\n  real<lower=0> sigma; // k$\n}\n\nmodel {\n  alpha ~ normal(0, 1);\n  beta ~ normal(0, 1);\n  sigma ~ normal(0, 1);\n  y ~ normal(beta * x + alpha, sigma);\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement. The context input `x` is used only as a predictor, and all parameters have built-in priors before they are used in the likelihood.\n"
+}

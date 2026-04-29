@@ -6,4 +6,4 @@ Protected data: `y`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: added `y_safestan_copy`, a deterministic elementwise copy of `y`, because protected data cannot be read in `transformed data` before its likelihood statement. The copy is also used for generated-quantities summaries that originally referenced `y` outside the likelihood. The protected variable `y` is now used exactly once, as the plain left-hand side of `y ~ binomial_logit(K, mu + sigma * alpha_std);`. Parameter priors were already explicit and ordered before parameter use. The posterior/log density is unchanged when `y_safestan_copy[i] = y[i]` for all `i = 1, ..., N`.
+Changes: added `y_safestan_copy`, a deterministic top-level data copy of `y` with `y_safestan_copy[n] = y[n]` for all `n`. The copy is used for transformed-data summaries and the generated-quantity season-average check so the protected observation `y` is only observed by the single built-in likelihood statement `y ~ binomial_logit(...)`. The priors for `mu`, `sigma`, and `alpha_std` were already explicit built-in sampling statements and are left unchanged.

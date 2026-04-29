@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":1,\"N\":1,\"county\":[1],\"u\":[6.951264832519053],\"x\":[6.162520723711106],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N; // observations\n  int<lower=1> J; // counties\n  array[N] int<lower=1, upper=J> county;\n  vector[N] y; // radon\n  vector[N] x; // floor\n  vector[N] u; // uranium\n}\ntransformed data {\n  matrix[N, 2] xs = [x', u']';\n}\nparameters {\n  vector[J] alpha;\n  vector[2] beta;\n  real<lower=0> sigma;\n}\ntransformed parameters {\n  vector[N] alphas = alpha[county];\n}\nmodel {\n  alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  sigma ~ normal(0, 10);\n  y ~ normal_id_glm(xs, alphas, beta, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that the parameter priors for `alpha`, `beta`, and `sigma` appear before the likelihood statement. This preserves the same posterior/log density because Stan sampling statements add commutative log-density terms. No data fields were added or changed. Context data `N`, `J`, `county`, `x`, and `u` are not protected; they are used only as sizes, indices, or predictors.\n"
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/markov-chain-monte-carlo-figures-estimated-autocorrelation-funnel-long/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T00:58:11+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/markov-chain-monte-carlo-figures-estimated-autocorrelation-funnel-long",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_01a65927826c53540069f1579b18bc819f9a12a2a961d3356c",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/markov-chain-monte-carlo-figures-estimated-autocorrelation-funnel-long",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:58:02+00:00",
+  "usage": {
+    "input_tokens": 2946,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 704,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3650
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

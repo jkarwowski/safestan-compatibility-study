@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"M\":2,\"N\":1,\"X\":[[3.9968559915454813,6.07636295779796]],\"x0\":[4.885581873375633,5.478083544935815],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> M; // Number of covariates\n  int<lower=0> N; // Number of observations\n\n  vector[M] x0;   // Covariate baselines\n  matrix[N, M] X; // Covariate design matrix\n\n  array[N] real y;      // Variates\n}\n\ntransformed data {\n  matrix[N, M] deltaX;\n  for (n in 1:N) {\n    deltaX[n,] = X[n] - x0';\n  }\n}\n\nparameters {\n  real alpha;          // Intercept\n  vector[M] beta;      // Slopes\n  real<lower=0> sigma; // Measurement Variability\n}\n\nmodel {\n  // Prior model\n  alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  sigma ~ normal(0, 5);\n\n  // Vectorized observation model\n  y ~ normal(alpha + deltaX * beta, sigma);\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  array[N] real y_pred = normal_rng(alpha + deltaX * beta, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. `y` is the only top-level data variable scored by a sampling statement; it is observed exactly once with a plain built-in `normal` sampling statement. The remaining data variables are context inputs, and all parameters have built-in priors before later use.\n"
+}

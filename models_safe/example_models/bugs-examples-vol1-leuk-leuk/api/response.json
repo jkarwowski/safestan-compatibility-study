@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426862,
+  "created_at": 1777426706,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0320a0d7cb010f620069f161120c348195b916e94c69d99a4b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0320a0d7cb010f620069f16112c71c8195898c031ca7743762",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `dN_safestan`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the manual `target += poisson_lpmf(...)` counting-process likelihood with one vectorized built-in Poisson sampling statement on a top-level protected data vector. Added deterministic data fields `N_risk`, `risk_i`, `risk_j`, and `dN_safestan`: these are the at-risk `(i, j)` cells from the original transformed-data construction, in row-major loop order, and the corresponding `dN[i, j]` values. The original data fields are retained. Vectorized the `dL0` gamma prior so the top-level parameter is sampled exactly once outside loops. The posterior density is otherwise unchanged.\\n\",\"model_safe_stan\":\"/*\\n * Leuk: Cox regression \\n * URL of OpenBugs' implementation: \\n *   http://www.openbugs.net/Examples/Leuk.html\\n */\\n\\ndata {\\n  int<lower=0> N;\\n  int<lower=0> NT;\\n  array[N] int<lower=0> obs_t;\\n  array[NT + 1] int<lower=0> t;\\n  array[N] int<lower=0> fail;\\n  array[N] real Z;\\n  int<lower=0> N_risk;\\n  array[N_risk] int<lower=1> risk_i;\\n  array[N_risk] int<lower=1> risk_j;\\n  array[N_risk] int<lower=0> dN_safestan;\\n}\\ntransformed data {\\n  real c;\\n  real r;\\n  vector[NT] dL0_shape;\\n  c = 0.001;\\n  r = 0.1;\\n  for (j in 1 : NT) {\\n    dL0_shape[j] = r * (t[j + 1] - t[j]) * c;\\n  }\\n}\\nparameters {\\n  real beta;\\n  vector<lower=0>[NT] dL0;\\n}\\nmodel {\\n  vector[N_risk] lambda;\\n  beta ~ normal(0, 1000);\\n  dL0 ~ gamma(dL0_shape, c);\\n  for (m in 1 : N_risk) {\\n    lambda[m] = exp(beta * Z[risk_i[m]]) * dL0[risk_j[m]];\\n  }\\n  dN_safestan ~ poisson(lambda);\\n}\\ngenerated quantities {\\n  array[NT] real S_placebo;\\n  array[NT] real S_treat;\\n  \\n  for (j in 1 : NT) {\\n    // Survivor function = exp(-Integral{l0(u)du})^exp(beta*z)\\n    real s;\\n    s = 0;\\n    for (i in 1 : j) {\\n      s = s + dL0[i];\\n    }\\n    S_treat[j] = pow(exp(-s), exp(beta * -0.5));\\n    S_placebo[j] = pow(exp(-s), exp(beta * 0.5));\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":4,\\\"NT\\\":3,\\\"Z\\\":[5.541529080958504,4.002824644682594,2.9899021824826484,2.538146047599578],\\\"fail\\\":[4,3,2,2],\\\"obs_t\\\":[4,3,4,4],\\\"t\\\":[1,2,3,4],\\\"N_risk\\\":12,\\\"risk_i\\\":[1,1,1,2,2,2,3,3,3,4,4,4],\\\"risk_j\\\":[1,2,3,1,2,3,1,2,3,1,2,3],\\\"dN_safestan\\\":[0,0,0,0,0,3,0,0,0,0,0,0]}\",\"protected_variables\":[\"dN_safestan\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0320a0d7cb010f620069f161a8e58c819597283c487f6599c7",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3467,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 14399,
+    "output_tokens_details": {
+      "reasoning_tokens": 13466
+    },
+    "total_tokens": 17866
+  },
+  "user": null
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-simu-cubic-2d/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:07:41+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/taylor-models-stan-programs-simu-cubic-2d",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0035a0ab4ce190d20069f159d4d61c81908b3141a556f28533",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-simu-cubic-2d",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:07:32+00:00",
+  "usage": {
+    "input_tokens": 3247,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1022,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4269
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

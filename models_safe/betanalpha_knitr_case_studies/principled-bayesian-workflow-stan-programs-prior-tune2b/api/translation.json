@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "functions {\n  // Differences between Beta tail probabilities and target probabilities\n  vector tail_delta(vector y, vector theta, array[] real x_r, array[] int x_i) {\n    vector[2] deltas;\n    deltas[1] = beta_cdf(theta[1] | exp(y[1]), exp(y[2])) - 0.01;\n    deltas[2] = 1 - beta_cdf(theta[2] | exp(y[1]), exp(y[2])) - 0.01;\n    return deltas;\n  }\n}\n\ntransformed data {\n  vector[2] y_guess = [log(5), log(5)]'; // Initial guess at Beta parameters\n  vector[2] theta = [0.1, 0.9]';  // Target quantile\n  vector[2] y;\n  array[0] real x_r;\n  array[0] int x_i;\n\n  // Find Beta density parameters that ensure\n  // 1% probabilty below 0.1 and 1% probabilty above 0.99\n  y = algebra_solver(tail_delta, y_guess, theta, x_r, x_i);\n\n  print(\"alpha = \", exp(y[1]));\n  print(\"beta = \", exp(y[2]));\n}\n\ngenerated quantities {\n  real alpha = exp(y[1]);\n  real beta = exp(y[2]);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The program has no `data` block and no observed data variables scored by a likelihood.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program contains deterministic transformed-data calculations and generated quantities only; there are no protected observations, parameters, sampling statements, or direct target manipulations.\n"
+}

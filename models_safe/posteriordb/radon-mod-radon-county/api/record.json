@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/radon-mod-radon-county/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:53:04+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/radon-mod-radon-county",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0ec97edc48bb34c50069f1728253588196942ad11637976dd8",
+  "safe_dir": "models_safe/posteriordb/radon-mod-radon-county",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:52:50+00:00",
+  "usage": {
+    "input_tokens": 3028,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1417,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4445
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

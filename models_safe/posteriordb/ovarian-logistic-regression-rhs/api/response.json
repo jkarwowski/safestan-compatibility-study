@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777431004,
+  "created_at": 1777430987,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_00b311389aa575600069f171cb410481a09c4079f5e2461943",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_00b311389aa575600069f171cbd03881a09021929533d20851",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with the built-in `bernoulli_logit_glm` sampling statement after all parameters have received built-in priors. The remaining data variables (`n`, `d`, `x`, and prior hyperparameters) are context inputs and are not observed with sampling statements.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> n; // number of observations\\n  int<lower=0> d; // number of predictors\\n  array[n] int<lower=0, upper=1> y; // outputs\\n  matrix[n, d] x; // inputs\\n  real<lower=0> scale_icept; // prior std for the intercept\\n  real<lower=0> scale_global; // scale for the half-t prior for tau\\n  real<lower=1> nu_global; // degrees of freedom for the half-t priors for tau\\n  real<lower=1> nu_local; // degrees of freedom for the half-t priors for lambdas\\n  // (nu_local = 1 corresponds to the horseshoe)\\n  real<lower=0> slab_scale; // for the regularized horseshoe\\n  real<lower=0> slab_df;\\n}\\nparameters {\\n  real beta0;\\n  vector[d] z; // for non-centered parameterization\\n  real<lower=0> tau; // global shrinkage parameter\\n  vector<lower=0>[d] lambda; // local shrinkage parameter\\n  real<lower=0> caux;\\n}\\ntransformed parameters {\\n  vector[d] beta; // regression coefficients\\n  {\\n    vector[d] lambda_tilde; // 'truncated' local shrinkage parameter\\n    real c = slab_scale * sqrt(caux); // slab scale\\n    lambda_tilde = sqrt(c ^ 2 * square(lambda)\\n                        ./ (c ^ 2 + tau ^ 2 * square(lambda)));\\n    beta = z .* lambda_tilde * tau;\\n  }\\n}\\nmodel {\\n  // half-t priors for lambdas and tau, and inverse-gamma for c^2\\n  z ~ std_normal();\\n  lambda ~ student_t(nu_local, 0, 1);\\n  tau ~ student_t(nu_global, 0, scale_global * 2);\\n  caux ~ inv_gamma(0.5 * slab_df, 0.5 * slab_df);\\n  beta0 ~ normal(0, scale_icept);\\n  \\n  y ~ bernoulli_logit_glm(x, beta0, beta);\\n}\\ngenerated quantities {\\n  vector[n] f = beta0 + x * beta;\\n  vector[n] log_lik;\\n  for (i in 1 : n) {\\n    log_lik[i] = bernoulli_logit_glm_lpmf({y[i]} | [x[i]], beta0, beta);\\n  }\\n}\\n\\n\",\"data_safe_json\":\"{\\\"d\\\":3,\\\"n\\\":4,\\\"nu_global\\\":2.602837730151192,\\\"nu_local\\\":5.104230450736804,\\\"scale_global\\\":4.806505718948833,\\\"scale_icept\\\":2.1286618126549737,\\\"slab_df\\\":4.449664513713842,\\\"slab_scale\\\":4.840689170696501,\\\"x\\\":[[4.176970602055562,6.86882873777366,6.451941403568173],[5.671400696947341,6.4000091252074185,5.789315442950599],[5.707946636195942,5.288690611633378,5.439361167277741],[5.51312205932188,6.154322611145245,3.7598444994298426]],\\\"y\\\":[1,0,0,0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_00b311389aa575600069f171d79ed081a0917408e4d30970d5",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3638,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1952,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5590
+  },
+  "user": null
+}

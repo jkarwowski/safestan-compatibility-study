@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 6}",
+  "model_safe_stan": "data {\n  int N;\n}\n\ntransformed data {\n  real lambda = 9;\n  real theta = 0.3;\n  int U = 14;\n}\n\ngenerated quantities {\n  array[N] int y = rep_array(0, N);\n  for (n in 1:N) {\n    if (!bernoulli_rng(theta)) {\n      y[n] = U + 1;\n      while (y[n] > U)\n        y[n] = poisson_rng(lambda);\n    }\n  }\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. `N` is a context/configuration input and is not scored by any likelihood statement.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program contains no model-block likelihood or parameter priors; it only uses `N` to size generated quantities and simulates data in `generated quantities`.\n"
+}

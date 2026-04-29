@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 5}",
+  "model_safe_stan": "data {\n  int N;\n}\n\ntransformed data {\n  int U = 14;\n}\n\ngenerated quantities {\n  // Simulate model configuration from prior model\n  real<lower=0> lambda = inv_gamma_rng(3.5, 9);\n  real<lower=0, upper=1> theta = beta_rng(3, 3);\n\n  // Simulate data from observational model\n  array[N] int y = rep_array(0, N);\n  for (n in 1:N) {\n    if (!bernoulli_rng(theta)) {\n      real sum_p = 0;\n      real u = uniform_rng(0, 1);\n\n      for (b in 0:U) {\n        sum_p = sum_p + exp(poisson_lpmf(b | lambda) - poisson_lcdf(U | lambda));\n        if (sum_p >= u) {\n          y[n] = b;\n          break;\n        }\n      }\n    }\n  }\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no `parameters` or `model` block and does not condition on any top-level data with a sampling statement. The only data variable, `N`, is a context/configuration input used to size generated quantities. The generated-quantities RNG simulation does not introduce protected observations.\n"
+}

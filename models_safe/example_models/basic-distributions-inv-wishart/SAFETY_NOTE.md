@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: as-is.
+
+Protected data: none.
+
+Generated files: `model_safe.stan`, `data_safe.json`.
+
+No changes were required. The model has no top-level data variables and no observed likelihood; the single parameter `W` has exactly one built-in prior sampling statement before any use.

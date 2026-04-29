@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429855,
+  "created_at": 1777429821,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_06f637ea9acb151b0069f16d3d27b881938a74b9dfea2d21b3",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_06f637ea9acb151b0069f16d3dff3081938f4bd9c5584de285",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the manual `target += log_sum_exp(...)` word likelihood with an equivalent built-in `categorical` sampling statement for the top-level protected variable `y`. The categorical probabilities are computed as the same mixture over `atom[k]` weighted by `local_weight[doc[n], k]`. The Dirichlet priors over `local_weight` and `atom` were written as vectorized top-level sampling statements rather than looped indexed sampling statements. No data values were changed or added. `doc` is treated as a context index, not as protected observed data.\\n\",\"model_safe_stan\":\"// ForestDB translation: Infinite Hidden Markov Model\\ndata {\\n  int<lower=1> D;\\n  int<lower=1> K;\\n  int<lower=1> V;\\n  int<lower=1> N;\\n  array[N] int<lower=1, upper=D> doc;\\n  array[N] int<lower=1, upper=V> y;\\n}\\nparameters {\\n  simplex[K] global_weight;\\n  array[D] simplex[K] local_weight;\\n  array[K] simplex[V] atom;\\n}\\nmodel {\\n  global_weight ~ dirichlet(rep_vector(1.0, K));\\n  local_weight ~ dirichlet(5 * global_weight);\\n  atom ~ dirichlet(rep_vector(1.0, V));\\n\\n  {\\n    array[N] vector[V] obs_prob;\\n    for (n in 1:N) {\\n      obs_prob[n] = rep_vector(0.0, V);\\n      for (k in 1:K) {\\n        obs_prob[n] += local_weight[doc[n], k] * atom[k];\\n      }\\n    }\\n    y ~ categorical(obs_prob);\\n  }\\n}\\ngenerated quantities {\\n  array[D] int<lower=1, upper=K> group_cluster;\\n  for (d in 1:D) {\\n    group_cluster[d] = categorical_rng(local_weight[d]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"D\\\":2,\\\"K\\\":1,\\\"N\\\":3,\\\"V\\\":5,\\\"doc\\\":[2,1,1],\\\"y\\\":[3,1,1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_06f637ea9acb151b0069f16d5bf2a4819380c93d33aac69c41",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3349,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3143,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6492
+  },
+  "user": null
+}

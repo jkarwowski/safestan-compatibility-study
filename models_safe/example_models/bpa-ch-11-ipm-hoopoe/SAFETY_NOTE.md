@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: the model conditions on `y`, `marray_j`, `marray_a`, and `J` as observed data. `nyears` and `R` are context inputs.
+
+Generated files: none.
+
+Reason: this integrated population model cannot be translated to SafeStan by a minor same-density rewrite. The state process scores continuous latent abundance parameters with user-defined `real_poisson_lpdf` and `real_binomial_lpdf` distributions, including `reject()` checks, rather than built-in Stan distributions. Replacing those terms with SafeStan-compatible sampling statements would require changing the latent-state likelihood/density. In addition, several parameters have implicit improper flat priors on unbounded positive scales, and adding proper built-in priors would change the posterior. The capture-recapture likelihood is also applied row-by-row to indexed observations, which would require restructuring, but the user-defined continuous Poisson/binomial state process and improper priors are already substantive incompatibilities.

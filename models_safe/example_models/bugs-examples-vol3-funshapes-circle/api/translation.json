@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{}",
+  "model_safe_stan": "/*\n * BUGS volume 3, fun shapes, circle\n * http://www.openbugs.net/Examples/Funshapes.html\n */\nparameters {\n  real<lower=-1, upper=1> x;\n  real<lower=-sqrt(1 - square(x)), upper=sqrt(1 - square(x))> y;\n}\nmodel {\n  /* uniform within constraints */\n  x ~ uniform(-1, 1);\n  y ~ uniform(-1, 1);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none. The model has no data block and no observed likelihood terms.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added one built-in sampling statement for each top-level parameter to satisfy SafeStan's parameter-prior discipline. The added priors are density-neutral on the existing constrained parameter support: `x ~ uniform(-1, 1)` is constant over `x`'s declared bounds, and `y ~ uniform(-1, 1)` is constant over the declared circle slice because the existing bound on `y` is always contained in `[-1, 1]`. This preserves the original uniform-within-constraints log density while avoiding a parameter-dependent uniform prior for `y`, which would change the density.\n"
+}

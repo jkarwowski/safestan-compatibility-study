@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-ecology-occupancy-occupancy/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:17:04+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-ecology-occupancy-occupancy",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_01868c83c65e288c0069f169fdb040819c845629f585a65ee2",
+  "safe_dir": "models_safe/example_models/misc-ecology-occupancy-occupancy",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:16:29+00:00",
+  "usage": {
+    "input_tokens": 3284,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2475,
+    "output_tokens_details": {
+      "reasoning_tokens": 2305
+    },
+    "total_tokens": 5759
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777432484,
+  "created_at": 1777432292,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0eec3fecb15584150069f176e4eafc8196b45b0ff8272a9c19",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0eec3fecb15584150069f176e63ea081969ff50cd87e77dbc1",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `dv`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: `dv` remains the only protected observation. The user-defined `gamma2_overdisp` sampling statement was expanded to the equivalent built-in `gamma` likelihood with shape `mu^2 / (sigma_y^2 + mu^2 / (kappa * refSq))` and rate `mu / (sigma_y^2 + mu^2 / (kappa * refSq))`. The matrix random effect was represented by a vector parameter `Eta_vec` with a deterministic `to_matrix` transformed parameter `Eta`, so the prior has a top-level left-hand side. The componentwise prior on `theta` was rewritten as one vectorized top-level prior. The unreachable `reject()` in the lag helper was removed; for all calls in this model the lag is `inv_logit(...) * tlag_max`, while `time` is constrained to be at least `tlag_max`. Generated-quantities likelihood/RNG calculations were rewritten with built-in gamma functions. No data fields were added or changed.\\n\",\"model_safe_stan\":\"functions {\\n  array[] int make_slice_index(array[] int S) {\\n    array[size(S)+1] int Si;\\n    int cv = 1;\\n    Si[1] = cv;\\n    for(i in 1:size(S)) {\\n      cv = cv + S[i];\\n      Si[i+1] = cv;\\n    }\\n    return(Si);\\n  }\\n\\n  real log_diff_exp_abs(real la, real lb) {\\n    return(0.5 * log_diff_exp(log_sum_exp(2*la, 2*lb), log(2) + la + lb));\\n  }\\n\\n  vector pk_1cmt_oral(vector tad, real ldose, real lka, real lCL, real lV) {\\n    real lk = lCL - lV;\\n    real k = exp(lk);\\n    real ka = exp(lka);\\n    real lkdelta = log_diff_exp_abs(lka, lk);\\n    real lscale = ldose - lV + lka - lkdelta;\\n    int N = num_elements(tad);\\n    vector[N] pk;\\n\\n    for(i in 1:N) {\\n      pk[i] = lscale + log_diff_exp_abs(-k * tad[i], -ka * tad[i]);\\n    }\\n\\n    return(pk);\\n  }\\n\\n  vector pk_1cmt_oral_tlagMax(vector tad, real ldose, real llag, real lka, real lCL, real lV) {\\n    real lag = exp(llag);\\n    return pk_1cmt_oral(tad - lag, ldose, lka, lCL, lV);\\n  }\\n}\\ndata {\\n  int J;\\n  real<lower=0> tlag_max;\\n  vector<lower=0>[J] dose;\\n  array[J] int N;\\n  vector<lower=0>[sum(N)] dv;\\n  vector<lower=tlag_max>[sum(N)] time;\\n  vector<lower=0>[J] weight;\\n  real<lower=0> ref;\\n}\\ntransformed data {\\n  int Ndv = sum(N);\\n  row_vector[J] LSweight = to_row_vector(log(weight) - log(70.));\\n  vector[J] ldose = log(dose);\\n  real ltlag_max = log(tlag_max);\\n  array[J+1] int sidx = make_slice_index(N);\\n  real refSq = square(ref);\\n  vector[4] theta_prior_mean;\\n  vector[4] theta_prior_sd;\\n\\n  theta_prior_mean[1] = 0;\\n  theta_prior_mean[2] = log(1);\\n  theta_prior_mean[3] = log(0.1);\\n  theta_prior_mean[4] = log(10);\\n\\n  theta_prior_sd[1] = 2;\\n  theta_prior_sd[2] = log(2) / 1.96;\\n  theta_prior_sd[3] = log(10) / 1.96;\\n  theta_prior_sd[4] = log(10) / 1.96;\\n}\\nparameters {\\n  vector[4] theta;\\n  vector[4 * J] Eta_vec;\\n  vector<lower=0>[4] sigma_eta;\\n  real<lower=0> sigma_y;\\n  real<lower=0> kappa;\\n}\\ntransformed parameters {\\n  vector[Ndv] mu;\\n  matrix[4,J] Eta;\\n  matrix[4,J] Eta_cov;\\n\\n  Eta = to_matrix(Eta_vec, 4, J);\\n\\n  Eta_cov[1] = log_inv_logit(theta[1] + sigma_eta[1] * Eta[1]) + ltlag_max;\\n  Eta_cov[2] = theta[2] + sigma_eta[2] * Eta[2];\\n  Eta_cov[3] = theta[3] + sigma_eta[3] * Eta[3] + 0.75 * LSweight;\\n  Eta_cov[4] = theta[4] + sigma_eta[4] * Eta[4] + LSweight;\\n\\n  for(j in 1:J) {\\n    int start = sidx[j];\\n    int end = sidx[j+1]-1;\\n    mu[start:end] = exp(pk_1cmt_oral_tlagMax(time[start:end], ldose[j], Eta_cov[1,j], Eta_cov[2,j], Eta_cov[3,j], Eta_cov[4,j])) + 1E-5;\\n  }\\n}\\nmodel {\\n  vector[Ndv] muSq;\\n  vector[Ndv] sigmaSq;\\n\\n  theta ~ normal(theta_prior_mean, theta_prior_sd);\\n  sigma_eta ~ normal(0, 0.5);\\n  Eta_vec ~ normal(0, 1);\\n  sigma_y ~ normal(0, 2);\\n  kappa ~ gamma(0.2, 0.2);\\n\\n  muSq = square(mu);\\n  sigmaSq = square(sigma_y) + muSq / (kappa * refSq);\\n  dv ~ gamma(muSq ./ sigmaSq, mu ./ sigmaSq);\\n}\\ngenerated quantities {\\n  real tlag = inv_logit(theta[1]) * tlag_max;\\n  real ka = exp(theta[2]);\\n  real CL = exp(theta[3]);\\n  real V = exp(theta[4]);\\n  vector[Ndv] log_lik;\\n  vector[Ndv] ypred;\\n  vector[Ndv] ypred_cond;\\n  vector[J] log_lik_patient;\\n  real sigma_y_ref = sqrt(square(sigma_y) + 1.0/kappa);\\n  vector[Ndv] muSq = square(mu);\\n  vector[Ndv] sigmaSq = square(sigma_y) + muSq / (kappa * refSq);\\n  vector[Ndv] gamma_shape = muSq ./ sigmaSq;\\n  vector[Ndv] gamma_rate = mu ./ sigmaSq;\\n\\n  for(o in 1:Ndv) {\\n    log_lik[o] = gamma_lpdf(dv[o] | gamma_shape[o], gamma_rate[o]);\\n    ypred_cond[o] = gamma_rng(gamma_shape[o], gamma_rate[o]);\\n  }\\n\\n  for(j in 1:J) {\\n    int start = sidx[j];\\n    int end = sidx[j+1]-1;\\n    vector[4] eta = multi_normal_cholesky_rng(theta, diag_matrix(sigma_eta));\\n    vector[4] eta_cov;\\n    vector[N[j]] mu_pred;\\n    vector[N[j]] muSq_pred;\\n    vector[N[j]] sigmaSq_pred;\\n    vector[N[j]] gamma_shape_pred;\\n    vector[N[j]] gamma_rate_pred;\\n\\n    eta_cov[1] = log_inv_logit(eta[1]) + ltlag_max;\\n    eta_cov[2] = eta[2];\\n    eta_cov[3] = eta[3] + 0.75 * LSweight[j];\\n    eta_cov[4] = eta[4] + LSweight[j];\\n\\n    mu_pred = exp(pk_1cmt_oral_tlagMax(time[start:end], ldose[j], eta_cov[1], eta_cov[2], eta_cov[3], eta_cov[4])) + 1E-5;\\n    muSq_pred = square(mu_pred);\\n    sigmaSq_pred = square(sigma_y) + muSq_pred / (kappa * refSq);\\n    gamma_shape_pred = muSq_pred ./ sigmaSq_pred;\\n    gamma_rate_pred = mu_pred ./ sigmaSq_pred;\\n\\n    log_lik_patient[j] = gamma_lpdf(dv[start:end] | gamma_shape_pred, gamma_rate_pred);\\n    for(k in 1:N[j]) {\\n      ypred[start + k - 1] = gamma_rng(gamma_shape_pred[k], gamma_rate_pred[k]);\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":3,\\\"N\\\":[4,4,4],\\\"dose\\\":[0.1,0.2,0.30000000000000004],\\\"dv\\\":[0.1,0.2,0.30000000000000004,0.4,0.5,0.6000000000000001,0.7000000000000001,0.1,0.2,0.30000000000000004,0.4,0.5],\\\"ref\\\":0.1,\\\"time\\\":[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0],\\\"tlag_max\\\":1.0,\\\"weight\\\":[0.1,0.2,0.30000000000000004]}\",\"protected_variables\":[\"dv\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0eec3fecb15584150069f177985c488196a966aef0998db6bb",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 5809,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 17203,
+    "output_tokens_details": {
+      "reasoning_tokens": 14939
+    },
+    "total_tokens": 23012
+  },
+  "user": null
+}

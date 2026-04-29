@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-4-mesquite-vas/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:22:48+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-4-mesquite-vas",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0d54f7ae9f16b0e90069f15d551f4881a1b088b210db148089",
+  "safe_dir": "models_safe/example_models/arm-ch-4-mesquite-vas",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:22:29+00:00",
+  "usage": {
+    "input_tokens": 3343,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1741,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5084
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

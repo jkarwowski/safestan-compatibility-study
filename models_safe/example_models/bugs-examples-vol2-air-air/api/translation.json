@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"J\":1,\"Z\":[6.342314060320869],\"alpha\":3.1968552990092487,\"beta\":3.765086101578322,\"n\":[3],\"sigma2\":2.4215087130045374,\"y\":[3]}",
+  "model_safe_stan": "data {\n  real alpha;\n  real beta;\n  real<lower=0> sigma2;\n  int<lower=0> J;\n  array[J] int y;\n  vector[J] Z;\n  array[J] int n;\n}\ntransformed data {\n  real<lower=0> sigma;\n  sigma = sqrt(sigma2);\n}\nparameters {\n  real theta1;\n  real theta2;\n  vector[J] X;\n}\nmodel {\n  array[J] real p;\n  theta1 ~ normal(0, 32); // 32^2 = 1024 \n  theta2 ~ normal(0, 32);\n  X ~ normal(alpha + beta * Z, sigma);\n  y ~ binomial_logit(n, theta1 + theta2 * X);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `y ~ binomial_logit(...)`, after all parameters used by that likelihood have received their priors. The remaining data variables are context inputs.\n"
+}

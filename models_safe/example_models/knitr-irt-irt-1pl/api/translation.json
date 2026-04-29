@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"I\":4,\"J\":4,\"y_safestan_flat\":[1,0,0,1,0,0,0,0,1,1,0,0,1,0,1,0]}",
+  "model_safe_stan": "//# ---- irt-1pl-stan ----\ndata {\n  int<lower=0> I;\n  int<lower=0> J;\n  array[I * J] int<lower=0, upper=1> y_safestan_flat;\n}\nparameters {\n  vector[I] b;\n  vector[J] theta;\n}\nmodel {\n  vector[I * J] eta;\n\n  theta ~ normal(0, 1);\n  b ~ normal(-1, 2);\n\n  for (i in 1 : I) {\n    for (j in 1 : J) {\n      eta[(i - 1) * J + j] = theta[j] - b[i];\n    }\n  }\n\n  y_safestan_flat ~ bernoulli_logit(eta);\n}\n",
+  "protected_variables": [
+    "y_safestan_flat"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y_safestan_flat`, a deterministic row-major flattening of the original response array `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the indexed-in-a-loop likelihood `y[i] ~ bernoulli_logit(theta - b[i])` by a single protected sampling statement `y_safestan_flat ~ bernoulli_logit(eta)` outside loops. The model computes `eta[(i - 1) * J + j] = theta[j] - b[i]`, so the summed Bernoulli-logit likelihood is the same as the original. `data_safe.json` replaces the original `y` with `y_safestan_flat = [y[1,1], ..., y[1,J], y[2,1], ..., y[I,J]]`. Parameter priors were already explicit and unchanged.\n"
+}

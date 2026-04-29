@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y` is the observed capture-history array modelled by the likelihood.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized latent-state/forward-algorithm computation implemented with `target += log(sum(gamma[n_occasions]))`, with observation values also inspected through indexing and in `transformed data` to compute first-capture occasions. SafeStan forbids arbitrary `target +=` scoring and requires protected observations to be scored exactly once by a built-in sampling statement. Replacing this forward algorithm with SafeStan-compatible sampling statements would require a substantive model rewrite or a different likelihood representation, not a minor same-density translation.\n"
+}

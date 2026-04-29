@@ -6,4 +6,4 @@ Protected data: `y`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-No changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement (`y ~ normal(mu, sigma)`) before any other use. Both parameters have exactly one built-in prior sampling statement before subsequent model-block use (`tau ~ gamma(...)`, then `mu ~ normal(...)`).
+No changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement, `y ~ normal(mu, sigma)`, after both parameters have their built-in priors. The remaining data variables (`N`, `mu0`, `lambda0`, `alpha0`, `beta0`) are context inputs used as sizes or hyperparameters and are not protected.

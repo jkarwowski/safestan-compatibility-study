@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `switched`.\n\nGenerated files: none.\n\nReason: `switched` is the modelled observation, but the model has unconstrained parameters `alpha` and `beta` with no prior sampling statements before they are used in the likelihood. SafeStan requires every parameter to have exactly one built-in prior sampling statement. Adding proper priors would change the posterior/log density, and the original implicit improper flat priors on unbounded parameters are not a minor SafeStan-compatible rewrite.\n"
+}

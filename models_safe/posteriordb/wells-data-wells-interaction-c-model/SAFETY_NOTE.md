@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `switched`.
+
+Generated files: none.
+
+Reason: the observed likelihood is a built-in Bernoulli-logit GLM sampling statement for the top-level data variable `switched`, with `dist` and `arsenic` used only as context predictors through transformed data. However, the parameters `alpha` and `beta` have no explicit priors in the original Stan program, corresponding to Stan's implicit improper flat priors. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding proper priors such as normal priors would change the posterior/log density, and there is no minor same-density built-in prior statement for the original improper unbounded priors. Therefore a SafeStan-compatible translation would require a substantive density change.

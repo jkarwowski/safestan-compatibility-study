@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/mesquite-logmesquite-logvas/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:48:14+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/mesquite-logmesquite-logvas",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0f8341b84f8addcd0069f17152026c819fac715fdc61302dd9",
+  "safe_dir": "models_safe/posteriordb/mesquite-logmesquite-logvas",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:47:45+00:00",
+  "usage": {
+    "input_tokens": 3296,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2261,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 5557
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

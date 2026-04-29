@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":3,\"P\":3,\"Y\":[[5.591945911114927,4.292374584870995,4.004443373239518],[5.518842083819339,3.338906674185578,3.1232816310605562],[5.2913443033259995,6.880085717409131,4.064281889699659]],\"group\":[4,2,4],\"sign\":[1,1]}",
+  "model_safe_stan": "// Equiv: bioequivalence in a cross-over trial\n//  http://www.openbugs.net/Examples/Equiv.html\n\ndata {\n  int<lower=0> P;\n  int<lower=0> N;\n  array[N] int group;\n  array[N, P] real Y;\n  array[2] int sign;\n}\ntransformed data {\n  array[N, P] int T;\n  for (n in 1 : N) {\n    for (p in 1 : P) {\n      T[n, p] = (group[n] * (2 * p - 3) + 3) %/% 2;\n    }\n  }\n}\nparameters {\n  real mu;\n  real phi;\n  real pi;\n  real<lower=0> sigmasq1;\n  real<lower=0> sigmasq2;\n  array[N] real delta;\n}\ntransformed parameters {\n  real sigma1;\n  real sigma2;\n  sigma1 = sqrt(sigmasq1);\n  sigma2 = sqrt(sigmasq2);\n}\nmodel {\n  array[N, P] real m;\n\n  sigmasq1 ~ inv_gamma(.001, .001);\n  sigmasq2 ~ inv_gamma(.001, .001);\n  mu ~ normal(0.0, 1000);\n  phi ~ normal(0.0, 1000);\n  pi ~ normal(0.0, 1000);\n  delta ~ normal(0, sigma2);\n\n  for (n in 1 : N) {\n    for (p in 1 : P) {\n      m[n, p] = mu + sign[T[n, p]] * phi / 2 + sign[p] * pi / 2 + delta[n];\n    }\n  }\n  Y ~ normal(m, sigma1);\n}\ngenerated quantities {\n  real equiv;\n  real theta;\n  \n  theta = exp(phi);\n  equiv = step(theta - 0.8) - step(theta - 1.2);\n}\n",
+  "protected_variables": [
+    "Y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `Y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the row-wise likelihood `Y[n] ~ normal(...)` was rewritten as one vectorized built-in sampling statement `Y ~ normal(m, sigma1)` with a full `array[N, P] real m` computed in the model block. Parameter prior statements were moved before any model-block use of those parameters. The supplied data were not changed.\n"
+}

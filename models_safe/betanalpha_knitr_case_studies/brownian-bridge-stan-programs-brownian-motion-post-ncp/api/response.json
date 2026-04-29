@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423629,
+  "created_at": 1777423616,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0de0cf44ced568420069f15500ec24819dba4025873ed7427f",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0de0cf44ced568420069f1550177e8819d86e5778f8dadde94",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `x_obs`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `x_obs` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, after the parameter prior for `xs_forward_ncp`.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  array[N] real ts;\\n\\n  real x_left;\\n\\n  int<lower=1> N_obs;\\n  array[N_obs] int<lower=1, upper=N + 1> obs_idx;\\n  array[N_obs] real x_obs;\\n  real<lower=0> sigma;\\n}\\n\\nparameters {\\n  array[N - 1] real xs_forward_ncp;\\n}\\n\\ntransformed parameters {\\n  array[N] real xs;\\n\\n  xs[1] = x_left;\\n\\n  for (n in 2:N) {\\n    xs[n]\\n      = xs[n - 1] + sqrt(ts[n] - ts[n - 1]) * xs_forward_ncp[n - 1];\\n  }\\n}\\n\\nmodel {\\n  xs_forward_ncp ~ normal(0, 1);\\n  x_obs ~ normal(xs[obs_idx], sigma);\\n}\\n\\n\",\"data_safe_json\":\"{\\\"N\\\":4,\\\"N_obs\\\":3,\\\"obs_idx\\\":[2,2,2],\\\"sigma\\\":4.560513833795347,\\\"ts\\\":[1.0,2.0,3.0,4.0],\\\"x_left\\\":5.961827147871776,\\\"x_obs\\\":[5.617073794401917,4.5741048050095205,2.270674850683239]}\",\"protected_variables\":[\"x_obs\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0de0cf44ced568420069f1550afa24819d82d3e6dea5945e24",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3200,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1469,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4669
+  },
+  "user": null
+}

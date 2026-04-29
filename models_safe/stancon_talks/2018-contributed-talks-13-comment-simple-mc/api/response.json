@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777432061,
+  "created_at": 1777432045,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0fe9032e1464d7530069f175ed3c1081a086393d36ed53c0b2",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0fe9032e1464d7530069f175edd26881a08776698ef53e0541",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `Y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. `Y` is the only top-level data variable observed with a sampling statement, it is scored exactly once with the built-in `bernoulli_logit` distribution, and it is not used before observation. `X`, `A`, `N`, and `P` are context inputs. The parameter `alpha` has a single built-in prior before its transformed-parameter dependents are used in the likelihood.\\n\",\"model_safe_stan\":\"data {\\n  // number of observations\\n  int<lower=0> N;\\n  // number of columns in design matrix excluding A\\n  int<lower=0> P;\\n  // design matrix, excluding treatment A\\n  matrix[N, P] X;\\n  // observed treatment\\n  vector[N] A;\\n  // outcome\\n  array[N] int<lower=0,upper=1> Y;\\n}\\n\\ntransformed data {\\n  // make vector of 1/N for (classical) bootstrapping\\n  vector[N] boot_probs = rep_vector(1.0/N, N);\\n}\\n\\nparameters {\\n  // regression coefficients\\n  vector[P + 1] alpha;\\n}\\n\\ntransformed parameters {\\n  vector[P] alphaZ = head(alpha, P);\\n  real alphaA = alpha[P + 1];\\n}\\n\\nmodel {\\n  // priors for regression coefficients\\n  alpha ~ normal(0, 2.5);\\n\\n  // likelihood\\n  Y ~ bernoulli_logit(X * alphaZ + A * alphaA);\\n}\\n\\ngenerated quantities {\\n  // row index to be sampled for bootstrap\\n  int row_i;\\n\\n  // calculate ATE in the bootstrapped sample\\n  real ATE = 0;\\n  vector[N] Y_a1;\\n  vector[N] Y_a0;\\n  for (n in 1:N) {\\n    // sample baseline covariates\\n    row_i = categorical_rng(boot_probs);\\n\\n    // sample Ya where a = 1 and a = 0\\n    Y_a1[n] = bernoulli_logit_rng(X[row_i] * alphaZ + alphaA);\\n    Y_a0[n] = bernoulli_logit_rng(X[row_i] * alphaZ);\\n\\n    // add contribution of this observation to the bootstrapped ATE\\n    ATE = ATE + (Y_a1[n] - Y_a0[n])/N;\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"A\\\":[4.450729112434142],\\\"N\\\":1,\\\"P\\\":3,\\\"X\\\":[[3.259993148250032,5.295552698324861,4.422963406303781]],\\\"Y\\\":[0]}\",\"protected_variables\":[\"Y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0fe9032e1464d7530069f175f9ab3081a08f5f899f9a0f6388",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3336,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1700,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5036
+  },
+  "user": null
+}

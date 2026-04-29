@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "//#  simulate samples from student t distribution \n//# \n// http://www.openbugs.net/Examples/t-df.html\n\ntransformed data {\n  int d;\n  d = 4;\n}\nparameters {\n  array[1000] real y;\n}\nmodel {\n  y ~ student_t(d, 0, 1);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The program has no data block and no observed data variables; `y` is a parameter with a built-in prior, not protected data.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The sole parameter `y` is sampled exactly once with the built-in `student_t` distribution before any other model-block use, and there are no protected observations to score.\n"
+}

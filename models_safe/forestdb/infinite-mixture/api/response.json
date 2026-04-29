@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429845,
+  "created_at": 1777429824,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_029c0665b93cc5db0069f16d402dc481a1bcaf3454b2bdc617",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_029c0665b93cc5db0069f16d411b2c81a1a9ec5f0ca8c18407",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the manual marginalized mixture likelihood implemented with `target += log_sum_exp(...)` by an equivalent built-in Bernoulli sampling statement. Because `y` is binary, the finite mixture likelihood satisfies\\n`sum_k cluster_weight[k] * Bernoulli(y | cluster_prob[k]) = Bernoulli(y | dot_product(cluster_weight, cluster_prob))`.\\nThe protected variable `y` is now observed exactly once as a top-level data variable with a plain sampling statement. Parameter priors were already explicit and unchanged. No data fields were added or changed.\\n\",\"model_safe_stan\":\"// ForestDB translation: Infinite Mixture Model\\ndata {\\n  int<lower=1> K;\\n  int<lower=1> N;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  simplex[K] cluster_weight;\\n  vector<lower=0, upper=1>[K] cluster_prob;\\n}\\nmodel {\\n  cluster_weight ~ dirichlet(rep_vector(1.0 / K, K));\\n  cluster_prob ~ beta(1, 1);\\n  y ~ bernoulli(dot_product(cluster_weight, cluster_prob));\\n}\\ngenerated quantities {\\n  int<lower=1, upper=K> cluster = categorical_rng(cluster_weight);\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":2,\\\"N\\\":1,\\\"y\\\":[0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_029c0665b93cc5db0069f16d5327e481a181a0e203b5048168",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3237,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1923,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5160
+  },
+  "user": null
+}

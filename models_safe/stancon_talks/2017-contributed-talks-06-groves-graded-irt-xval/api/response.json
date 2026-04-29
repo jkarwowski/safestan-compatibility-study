@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777431907,
+  "created_at": 1777431841,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_03ba112d716e336f0069f1752139e481948ab7ede07a76af18",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_03ba112d716e336f0069f17522b1688194b6649527b5d2e0e0",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `grade`.\\n\\nGenerated files: none.\\n\\nReason: the training responses `grade` are the only data scored by sampling statements; `item` and `subject` are predictors, and the holdout variables are context for generated predictions. The original model observes `grade[response]` inside a loop rather than observing the top-level protected variable with one plain sampling statement. In addition, several latent hyperparameters (`mu_first_difficulty`, `sigma_ability`, `sigma_first_difficulty`, and `sigma_step`) have only implicit improper flat/constrained priors, while SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors would change the posterior/log density. The `difficulty` prior is also expressed on slices and differences rather than as a single built-in prior for a top-level parameter. An equivalent SafeStan translation would therefore require substantive reparameterization and prior/density changes, not a minor mechanical rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_03ba112d716e336f0069f1756001988194a6369d90c8def6a0",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3512,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4825,
+    "output_tokens_details": {
+      "reasoning_tokens": 4577
+    },
+    "total_tokens": 8337
+  },
+  "user": null
+}

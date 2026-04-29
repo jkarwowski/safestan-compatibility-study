@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424510,
+  "created_at": 1777424454,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0945f35cc6be12290069f158466e0481a0aea2426f21c2a979",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0945f35cc6be12290069f1584722b481a0894ce9b1bef05a98",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the original model placed the prior `beta ~ normal(0, 10)` on `beta`, a transformed parameter derived from the top-level parameter `beta_tilde`. SafeStan requires priors to be sampling statements on top-level parameters. The safe version uses the equivalent QR parameterization with `beta` as the top-level parameter and defines `beta_tilde = R * beta` as a transformed parameter. This preserves the regression likelihood and the intended prior on `beta` while satisfying SafeStan's parameter-prior discipline. The data file is unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  int<lower=1> M;\\n  matrix[M, N] X;\\n  vector[N] y;\\n}\\n\\ntransformed data {\\n  matrix[M, N] X_centered;\\n  matrix[N, M] Q;\\n  matrix[M, M] R;\\n  matrix[M, M] R_inv;\\n\\n  for (m in 1:M)\\n    X_centered[m] = X[m] - mean(X[m]);\\n\\n  // Compute, thin, and then scale QR decomposition\\n   Q = qr_Q(X_centered')[, 1:M] * N;\\n   R = qr_R(X_centered')[1:M, ] / N;\\n   R_inv = inverse(R);\\n}\\n\\nparameters {\\n  vector[M] beta;\\n  real alpha;\\n  real<lower=0> sigma;\\n}\\n\\ntransformed parameters {\\n  vector[M] beta_tilde = R * beta;\\n}\\n\\nmodel {\\n  beta ~ normal(0, 10);\\n  alpha ~ normal(0, 100);\\n  sigma ~ cauchy(0, 10);\\n\\n  y ~ normal(Q * beta_tilde + alpha, sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"M\\\":2,\\\"N\\\":5,\\\"X\\\":[[5.000676996225948,3.9256877078012855,6.445197845839144,5.318541143019176,6.5951363454539775],[2.244419124054609,4.412062664082077,3.749487532973278,5.9393290782594965,3.7071123667327446]],\\\"y\\\":[4.0,3.0,5.0,5.0,4.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0945f35cc6be12290069f1587babe081a08760043befdc6eed",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3261,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 5253,
+    "output_tokens_details": {
+      "reasoning_tokens": 4660
+    },
+    "total_tokens": 8514
+  },
+  "user": null
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777432036,
+  "created_at": 1777432004,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_07c109219529e5500069f175c4d8a48197bd8ae6d3e27dbcd5",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_07c109219529e5500069f175c5929881979163506b58c93e60",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `s`, `h`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observations are top-level data variables and are each observed exactly once with built-in sampling statements. `s` is observed before it is later used as the trial count in the likelihood for `h`; all other data variables are context inputs.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N; // number of observations\\n  int<lower=1> R; // number of suspect races\\n  int<lower=1> D; // number of counties\\n\\n  array[N] int<lower=1,upper=R> r; // race of suspect\\n  array[N] int<lower=1,upper=D> d; // county where stop occurred\\n\\n  array[N] int<lower=1> n; // // of stops\\n    array[N] int<lower=0> s; // // of searches\\n    array[N] int<lower=0> h; // // of successful searches (hits)\\n}\\n\\nparameters {\\n  // hyperparameters\\n  real<lower=0> sigma_t; //standard deviation for the normal the thresholds are drawn from.\\n\\n  // search thresholds\\n  vector[R] t_r;\\n  vector[N] t_i_raw;\\n\\n  // parameters for signal distribution\\n  vector[R] phi_r;\\n  vector[D-1] phi_d_raw;\\n  real mu_phi;\\n\\n  vector[R] delta_r;\\n  vector[D-1] delta_d_raw;\\n  real mu_delta;\\n}\\n\\ntransformed parameters {\\n  vector[D] phi_d;\\n  vector[D] delta_d;\\n  vector[N] phi;\\n  vector[N] delta;\\n  vector[N] t_i;\\n  vector<lower=0, upper=1>[N] search_rate;\\n  vector<lower=0, upper=1>[N] hit_rate;\\n  real successful_search_rate;\\n  real unsuccessful_search_rate;\\n\\n  phi_d[1]      = 0;\\n  phi_d[2:D]    = phi_d_raw;\\n  delta_d[1]   = 0;\\n  delta_d[2:D] = delta_d_raw;\\n\\n  t_i = t_r[r] + t_i_raw * sigma_t;\\n\\n  for (i in 1:N) {\\n\\n    // phi is the fraction of people of race r, d who are guilty (ie, carrying contraband)\\n    phi[i]    = inv_logit(phi_r[r[i]] + phi_d[d[i]]);\\n\\n    // mu is the center of the guilty distribution.\\n    delta[i] = exp(delta_r[r[i]] + delta_d[d[i]]);\\n\\n    successful_search_rate = phi[i] * (1 - normal_cdf(t_i[i] | delta[i], 1));\\n    unsuccessful_search_rate = (1 - phi[i]) * (1 - normal_cdf(t_i[i] | 0, 1));\\n    search_rate[i] = (successful_search_rate + unsuccessful_search_rate);\\n    hit_rate[i] = successful_search_rate / search_rate[i];\\n   }\\n}\\n\\nmodel {\\n  // Draw threshold hyperparameters\\n  sigma_t ~ normal(0, 1);\\n\\n  // Draw race parameters. Each is centered at a mu, and we allow for inter-race heterogeneity.\\n  mu_phi ~ normal(0, 1);\\n  mu_delta ~ normal(0, 1);\\n\\n  phi_r    ~ normal(mu_phi, .1);\\n  delta_r ~ normal(mu_delta, .1);\\n  t_r ~ normal(0, 1);\\n\\n  // Draw department parameters (for un-pinned departments)\\n  phi_d_raw    ~ normal(0, .1);\\n  delta_d_raw ~ normal(0, .1);\\n  //thresholds\\n  t_i_raw ~ normal(0, 1);\\n\\n  s ~ binomial(n, search_rate);\\n  h ~ binomial(s, hit_rate);\\n}\\n\",\"data_safe_json\":\"{\\\"D\\\":3,\\\"N\\\":2,\\\"R\\\":2,\\\"d\\\":[3,1],\\\"h\\\":[1,1],\\\"n\\\":[1,5],\\\"r\\\":[1,1],\\\"s\\\":[1,4]}\",\"protected_variables\":[\"s\",\"h\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_07c109219529e5500069f175e033b48197b0224cbf4d773ab0",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3706,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3071,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 6777
+  },
+  "user": null
+}

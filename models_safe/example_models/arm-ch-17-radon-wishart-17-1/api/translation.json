@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the observed likelihood is `y ~ normal(y_hat, sigma)`, so `y` is the protected interface variable. However, the model cannot be translated to SafeStan with only a minor same-density rewrite. The parameter `sigma` has no explicit built-in prior sampling statement; adding a proper prior would change the posterior, while the implicit improper flat prior on a lower-bounded parameter cannot be represented as a SafeStan prior. In addition, `B_raw_temp` is sampled inside a loop, so the same top-level parameter receives a repeated prior factor, which violates SafeStan's one-prior-per-parameter and no-priors-in-loops rules. Repairing these issues would require a substantive model/density change rather than a mechanical SafeStan translation.\n"
+}

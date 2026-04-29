@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":1}",
+  "model_safe_stan": "data {\n  int<lower=1> N; // Number of ys, supplied by interface\n}\n\nparameters {\n  array[N] real y;  // Probabilistic variables y\n  real theta; // Probabilistic variable theta\n}\n\nmodel {\n  // Add marginal probabiltiy density for theta\n  // to the joint log probability density\n  theta ~ normal(0, 1);\n\n  // Add conditional probability density for the ys\n  // given theta to the joint log probabilty density\n  // using the vectorized log probabilty density\n  y ~ normal(theta, 1);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none. The only top-level data variable, `N`, is a size/configuration input and is not scored by the model.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the two manual `target += normal_lpdf(...)` statements with equivalent built-in sampling statements. The prior for `theta` is placed before `y ~ normal(theta, 1)` so that `theta` is not used before its SafeStan prior. No data changes were required.\n"
+}

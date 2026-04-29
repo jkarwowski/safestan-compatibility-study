@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"sigma\":[1.2507321128332225,1.184967336363049,0.02755570894717583],\"y\":[4.729959607315234,3.358296910689676,3.3417570793018965]}",
+  "model_safe_stan": "data {\n  int<lower=0> J; // number of schools\n  array[J] real y; // estimated treatment\n  array[J] real<lower=0> sigma; // std of estimated effect\n}\nparameters {\n  vector[J] theta_trans; // transformation of theta\n  real mu; // hyper-parameter of mean\n  real<lower=0> tau; // hyper-parameter of sd\n}\ntransformed parameters {\n  vector[J] theta;\n  // original theta\n  theta = theta_trans * tau + mu;\n}\nmodel {\n  theta_trans ~ normal(0, 1);\n  mu ~ normal(0, 5); // a non-informative prior\n  tau ~ cauchy(0, 5);\n  y ~ normal(theta, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model-block sampling statements so that all parameters (`theta_trans`, `mu`, and `tau`) receive their built-in prior sampling statements before the protected observation `y` is scored. This is a same-density mechanical change because Stan sampling statement contributions are additive and commutative. No data changes were made; `sigma` and `J` remain context inputs.\n"
+}

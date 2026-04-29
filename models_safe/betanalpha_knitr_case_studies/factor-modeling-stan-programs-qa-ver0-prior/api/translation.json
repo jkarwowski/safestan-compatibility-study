@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N_fine_t\":2,\"fine_t\":[3.0919706408039707,5.70579348244406]}",
+  "model_safe_stan": "data {\n  int<lower=0> N_fine_t;\n  vector[N_fine_t] fine_t;\n}\n\nparameters {    \n  // Zeroth-order contribution (Baseline)\n  real baseline;\n  \n  // Logit probability at time zero\n  real alpha;\n}\n\nmodel {\n  baseline ~ normal(-3, 2);\n  alpha ~ normal(4, 2);\n}\n\ngenerated quantities {\n  vector[N_fine_t] p = inv_logit(alpha + baseline * fine_t / 365.0);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The top-level data variables `N_fine_t` and `fine_t` are context inputs used only to configure and compute generated quantities; no data variable is scored by a sampling statement.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. Both parameters have exactly one built-in prior sampling statement in the model block, and the program contains no arbitrary target manipulation or protected-data likelihood to rewrite.\n"
+}

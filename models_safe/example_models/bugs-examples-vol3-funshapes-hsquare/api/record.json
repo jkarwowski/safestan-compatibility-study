@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol3-funshapes-hsquare/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:51:46+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol3-funshapes-hsquare",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_06679abd60583e8b0069f16421d7248190a05252f3f738b7c7",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol3-funshapes-hsquare",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:51:29+00:00",
+  "usage": {
+    "input_tokens": 3228,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1622,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4850
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

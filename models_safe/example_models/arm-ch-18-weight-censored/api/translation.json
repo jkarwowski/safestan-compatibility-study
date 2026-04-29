@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: the observed uncensored weights derived as `weight_obs` from the top-level data variable `weight`. No `--sstan-protect` list is emitted because no compatible SafeStan rewrite is generated.\n\nGenerated files: none.\n\nReason: the model scores `weight_obs`, a transformed-data value, rather than a top-level protected data variable. More importantly, parameters `a`, `b`, and `sigma` have implicit improper priors and are used in likelihood/prior expressions without any built-in prior sampling statements. Adding proper priors would change the posterior/log density, so this cannot be translated to SafeStan by a minor same-density rewrite.\n"
+}

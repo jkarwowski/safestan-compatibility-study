@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data choice: the modeled observation is `log_weight`, a transformed-data value computed as `log(weight)` from the top-level response `weight`. The predictor/context inputs are `N`, `diam1`, `diam2`, `canopy_height`, and `group`.\n\nGenerated files: none.\n\nReason: the likelihood is written for a transformed-data variable (`log_weight ~ normal(...)`) rather than for a protected top-level data variable. More importantly, the parameters `beta` and `sigma` have no explicit built-in prior sampling statements. SafeStan requires every parameter to be sampled exactly once before use, and adding proper priors for these unconstrained/half-constrained parameters would change the posterior/log density. Therefore this model cannot be translated with only a minor same-density rewrite.\n"
+}

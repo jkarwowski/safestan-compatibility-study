@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/forestdb/scalar-implicature-qud/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:36:49+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/scalar-implicature-qud",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a16c5a10feb885e0069f16ea7770081a28742d7a4c62c5a89",
+  "safe_dir": "models_safe/forestdb/scalar-implicature-qud",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:36:23+00:00",
+  "usage": {
+    "input_tokens": 3961,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2069,
+    "output_tokens_details": {
+      "reasoning_tokens": 1868
+    },
+    "total_tokens": 6030
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

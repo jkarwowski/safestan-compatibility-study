@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"M\":3,\"N\":3,\"X\":[[4.825661053843875,4.028726977496449,3.3779828865379464],[2.2491969482340206,6.534123406327962,3.9098423160730444],[5.067115327230816,3.289220528460048,3.8257682948464735]],\"x0\":[3.7334970974478274,3.1258363305416497,6.407929268416068],\"y\":[1,1,1]}",
+  "model_safe_stan": "data {\n  int<lower=0> M; // Number of covariates\n  int<lower=0> N; // Number of observations\n\n  vector[M] x0;   // Covariate baselines\n  matrix[N, M] X; // Covariate design matrix\n\n  array[N] int<lower=0, upper=1> y; // Variates\n}\n\ntransformed data {\n  matrix[N, M] deltaX;\n  for (n in 1:N) {\n    deltaX[n,] = X[n] - x0';\n  }\n}\n\nparameters {\n  real alpha;      // Intercept\n  vector[M] beta;  // Linear slopes\n}\n\nmodel {\n  // Prior model\n  alpha ~ normal(0, 1);\n  beta ~ normal(0, 1);\n\n  // Vectorized observation model\n  y ~ bernoulli(alpha + deltaX * beta);\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  vector[N] p = alpha + deltaX * beta;\n  array[N] int y_pred = bernoulli_rng(p);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement. The remaining data variables (`M`, `N`, `x0`, and `X`) are context inputs used only for dimensions and predictors. Parameters `alpha` and `beta` each have one built-in prior before being used in the observation model.\n"
+}

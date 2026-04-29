@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":2,\"R\":1,\"T\":3,\"culm\":[2],\"response\":[[2,4,4]],\"r_safestan\":[2,2,4,4,4,4]}",
+  "model_safe_stan": "// LSAT: item response\n// http://www.openbugs.net/Examples/Lsat.html\n\ndata {\n  int<lower=0> N; // 1000, number of students\n  int<lower=0> R; // 32, number of patterns of results: 2^T\n  int<lower=0> T; // 5, number of questions\n  array[R] int<lower=0> culm;\n  array[R, T] int<lower=0> response;\n  array[T * N] int<lower=0> r_safestan;\n}\nparameters {\n  array[T] real alpha;\n  vector[N] theta;\n  real<lower=0> beta;\n}\nmodel {\n  vector[T * N] eta;\n\n  alpha ~ normal(0, 100.);\n  theta ~ normal(0, 1);\n  beta ~ normal(0.0, 100.);\n\n  for (k in 1 : T) {\n    for (j in 1 : N) {\n      eta[(k - 1) * N + j] = beta * theta[j] - alpha[k];\n    }\n  }\n  r_safestan ~ bernoulli_logit(eta);\n}\ngenerated quantities {\n  real mean_alpha;\n  array[T] real a;\n  mean_alpha = mean(alpha);\n  for (t in 1 : T) {\n    a[t] = alpha[t] - mean_alpha;\n  }\n}\n",
+  "protected_variables": [
+    "r_safestan"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `r_safestan`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `r_safestan`, a deterministic flattened copy of the expanded response array that the original `transformed data` block constructed as `r`. For pattern index `i` and respondent index `j` in the cumulative range encoded by `culm`, `r_safestan[(k - 1) * N + j] = response[i, k]`. For the supplied data this gives `[2, 2, 4, 4, 4, 4]`.\n\nThe likelihood was rewritten from a loop over indexed transformed data (`r[k] ~ bernoulli_logit(...)`) to a single built-in sampling statement with a plain top-level protected data variable: `r_safestan ~ bernoulli_logit(eta)`. The linear predictor `eta` is built after the parameter priors, preserving the same product of Bernoulli-logit factors as the original model.\n"
+}

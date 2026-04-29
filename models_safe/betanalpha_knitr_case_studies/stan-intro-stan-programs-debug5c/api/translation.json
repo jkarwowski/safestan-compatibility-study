@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  array[9] real x;\n}\n\nmodel {\n  x ~ normal(0, 1);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The program has no data block and no observed data variables scored by sampling statements.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the only sampling statement is a built-in prior for the top-level parameter `x`, and there are no protected observations.\n"
+}

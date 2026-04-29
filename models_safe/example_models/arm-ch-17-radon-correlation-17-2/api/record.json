@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-17-radon-correlation-17-2/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:14:52+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-17-radon-correlation-17-2",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0fdf75dbda06ecc40069f15b7a703481a2b5107fa8493740e6",
+  "safe_dir": "models_safe/example_models/arm-ch-17-radon-correlation-17-2",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:14:34+00:00",
+  "usage": {
+    "input_tokens": 3429,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1245,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4674
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

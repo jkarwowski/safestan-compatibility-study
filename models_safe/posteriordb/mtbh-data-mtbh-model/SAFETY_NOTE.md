@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y` (the capture-history matrix scored by the likelihood); `M` and `T` are context/size inputs.
+
+Generated files: none.
+
+Reason: the likelihood for `y` is a marginalized capture-recapture/occupancy mixture implemented with manual `target +=` scoring inside a loop, including an `if` branch on `s[i]` derived from `y` and a `log_sum_exp(...)` term for all-zero histories. SafeStan forbids `target +=`, and replacing this marginalized latent-state likelihood with built-in sampling statements would require a substantive model rewrite rather than a minor same-density translation. The model also uses `y` in transformed data/parameters before any possible observation; deterministic copies and explicit uniform priors for bounded parameters would not resolve the manual mixture likelihood.

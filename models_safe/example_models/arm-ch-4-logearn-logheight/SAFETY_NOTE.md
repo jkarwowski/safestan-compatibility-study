@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: the original likelihood scores `log_earn = log(earn)`, a transformed-data value derived deterministically from top-level data `earn`. A SafeStan rewrite would need a top-level protected deterministic copy such as `log_earn_safe = log(earn)`.
+
+Generated files: none.
+
+Reason: although the transformed response could be made top-level by a deterministic data augmentation, the parameters `alpha`, `beta`, and `sigma` have no explicit built-in priors. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors would change the posterior/log density, and the existing implicit flat/improper priors are not finite bounded uniforms that can be made explicit without changing the model. Therefore this cannot be translated by only a minor same-density rewrite.

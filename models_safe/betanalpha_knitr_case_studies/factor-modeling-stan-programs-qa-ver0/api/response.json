@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423876,
+  "created_at": 1777423839,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b29f8b612c7dd810069f155df3440819db3bbf94ea034d36d",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0b29f8b612c7dd810069f155dfcbb0819d8f86756f48bb8c92",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the deterministic construction of the local model-block variable `kappa` until after the priors for `baseline` and `alpha`. In the original program, `kappa` used the parameter `baseline` before its prior sampling statement, which violates SafeStan's parameter-use ordering discipline. The rewrite preserves the same posterior density. No data fields were added or changed; `data_safe.json` is the supplied data unchanged.\\n\",\"model_safe_stan\":\"functions {\\n  real F_stat(vector y, int N, array[] int indiv_idxs, int N_indiv) {\\n    real global_mean = 0;\\n    vector[N_indiv] total_counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] running_counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] means = rep_vector(0, N_indiv);\\n    vector[N_indiv] sum_squares = rep_vector(0, N_indiv);\\n\\n    int N_min_occupunacy = 2; // Minimum occupuancy for included contexts\\n    real N_occupied = 0;      // Number of contexts with at least two counts\\n    real between = 0; // Empirical variance of empirical means in occupied contexts\\n    real within = 0;  // Empirical mean of emperical variances in occupied contexts\\n\\n    for (n in 1:N)\\n      total_counts[indiv_idxs[n]] += 1;\\n\\n    for (n in 1:N) {\\n      int idx = indiv_idxs[n];\\n      real delta;\\n\\n      // Skip (nearly) unoccupied contexts\\n      if (total_counts[idx] < N_min_occupunacy) continue;\\n\\n      delta = y[n] - global_mean;\\n      global_mean += delta / n;\\n\\n      running_counts[idx] += 1;\\n      delta = y[n] - means[idx];\\n      means[idx] += delta / running_counts[idx];\\n      sum_squares[idx] += (y[n] - means[idx]) * delta;\\n    }\\n\\n    for (l in 1:N_indiv) {\\n      // Skip (nearly) unoccupied contexts\\n      if (total_counts[l] < N_min_occupunacy) continue;\\n\\n      N_occupied += 1;\\n      between += total_counts[l] * square(means[l] - global_mean);\\n      within += (sum_squares[l] - within) / N_occupied;\\n    }\\n\\n    // Return zero if not enough minimally occupied contexts\\n    if (N_occupied < 2) return 0;\\n\\n    between = between / (N_occupied - 1);\\n    within /= (N - N_occupied);\\n    return between / within;\\n  }\\n}\\n\\ndata {\\n  int<lower=0> N;                     // Number of observations\\n  int<lower=0> N_samples;             // Number of items sampled at each observation\\n  array[N] int<lower=0, upper=N_samples> y; // Number of passing items at each observation\\n  vector[N] t;                        // Observation times (days)\\n\\n  // Days for conditional retrodictive checks\\n  int<lower=0> N_checks;\\n  int<lower=0> N_check_obs;\\n  array[N_checks, N_check_obs] int<lower=1, upper=N> check_idx;\\n\\n  // Timing for probability time evolution inferences\\n  int<lower=0> N_fine_t;\\n  vector[N_fine_t] fine_t;\\n\\n  // Total factor configuration information\\n  int<lower=0> N_factor_configs;\\n  array[N] int<lower=0, upper=N_factor_configs> factor_config_idx;\\n\\n  // Main factor contributions logistics\\n  int<lower=0> N_main_factors;\\n  array[N_main_factors] int<lower=0> N_main_factor_levels;\\n  array[N_main_factors, N_factor_configs] int<lower=1> main_factor_level_idx;\\n}\\n\\nparameters {\\n  // Zeroth-order contribution (Baseline)\\n  real baseline;\\n\\n  // Logit probability at time zero\\n  real alpha;\\n}\\n\\nmodel {\\n  baseline ~ normal(-3, 2);\\n\\n  alpha ~ normal(4, 2);\\n\\n  {\\n    // Baseline contribution\\n    vector[N_factor_configs] kappa = rep_vector(baseline, N_factor_configs);\\n\\n    // Observational model -- slice across times for optimal vectorization\\n    y ~ binomial(N_samples, inv_logit(alpha + kappa[factor_config_idx] .* t / 365.0));\\n  }\\n}\\n\\ngenerated quantities {\\n  array[N_factor_configs] vector[N_fine_t] p;\\n  array[N_main_factors, N_checks] real F_main_post_pred;\\n  {\\n    array[N] int y_post_pred;\\n    vector[N_factor_configs] kappa =  rep_vector(baseline, N_factor_configs);\\n\\n    for (c in 1:N_factor_configs)\\n      p[c] = inv_logit(alpha + kappa[c] * fine_t / 365.0);\\n\\n    y_post_pred = binomial_rng(N_samples,\\n                               inv_logit(alpha + kappa[factor_config_idx] .* t / 365.0));\\n\\n    for (c in 1:N_checks) {\\n      array[N_check_obs] int check_to_factor = factor_config_idx[check_idx[c]];\\n\\n      for (f in 1:N_main_factors)\\n        F_main_post_pred[f, c] = F_stat(to_vector(y_post_pred[check_idx[c]]),\\n                                        N_check_obs,\\n                                        main_factor_level_idx[f][check_to_factor],\\n                                        N_main_factor_levels[f]);\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":2,\\\"N_all_main_factor_levels\\\":1,\\\"N_check_obs\\\":1,\\\"N_checks\\\":2,\\\"N_factor_configs\\\":2,\\\"N_fine_t\\\":3,\\\"N_main_factor_levels\\\":[1],\\\"N_main_factors\\\":1,\\\"N_samples\\\":1,\\\"check_idx\\\":[[2],[2]],\\\"factor_config_idx\\\":[2,2],\\\"fine_t\\\":[3.8053323251285485,3.6396357406366215,2.1578119364495336],\\\"main_factor_end_idx\\\":[1],\\\"main_factor_level_idx\\\":[[1,1]],\\\"main_factor_start_idx\\\":[1],\\\"packed_main_factor_idx\\\":[1],\\\"t\\\":[1.0,2.0],\\\"y\\\":[1,1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b29f8b612c7dd810069f155fca6bc819dbac5127e21fa75da",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4186,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4104,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 8290
+  },
+  "user": null
+}

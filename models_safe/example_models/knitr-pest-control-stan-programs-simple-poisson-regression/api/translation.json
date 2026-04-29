@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":5,\"complaints\":[4,4,1,1,3],\"traps\":[3.415296778712651,1.8931695480738306,4.990930406358569,2.0410088264029005,1.2269675045622543]}",
+  "model_safe_stan": "functions {\n  /*\n  * Alternative to poisson_log_rng() that \n  * avoids potential numerical problems during warmup\n  */\n  int poisson_log_safe_rng(real eta) {\n    real pois_rate = exp(eta);\n    if (pois_rate >= exp(20.79)) {\n      return -9;\n    }\n    return poisson_rng(pois_rate);\n  }\n}\ndata {\n  int<lower=1> N;\n  array[N] int<lower=0> complaints;\n  vector<lower=0>[N] traps;\n}\nparameters {\n  real alpha;\n  real beta;\n}\nmodel {\n  // weakly informative priors:\n  // we expect negative slope on traps and a positive intercept,\n  // but we will allow ourselves to be wrong\n  beta ~ normal(-0.25, 1);\n  alpha ~ normal(log(4), 1);\n  \n  // poisson_log(eta) is more efficient and stable alternative to poisson(exp(eta))\n  complaints ~ poisson_log(alpha + beta * traps);\n}\ngenerated quantities {\n  array[N] int y_rep;\n  for (n in 1 : N) {\n    y_rep[n] = poisson_log_safe_rng(alpha + beta * traps[n]);\n  }\n}\n",
+  "protected_variables": [
+    "complaints"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `complaints`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `complaints` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `complaints ~ poisson_log(...)`, after both parameters have received their priors. `N` and `traps` are context inputs used only as size/predictor data.\n"
+}

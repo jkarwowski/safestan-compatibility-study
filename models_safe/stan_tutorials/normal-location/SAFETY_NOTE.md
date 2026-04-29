@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: `y` (the observed normal sample currently defined in `transformed data`).
+Protected data: the model scores `y`, but `y` is defined in `transformed data` rather than as a top-level data variable; no valid SafeStan protected interface is generated.
 
 Generated files: none.
 
-Reason: the likelihood observation `y` is not a top-level data variable, which could be mechanically fixed by moving the inline constants to `data.json`. However, the parameter `mu` has no explicit prior and is an unconstrained real with an improper flat prior in the original Stan program. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding any proper built-in prior to `mu` would change the posterior/log density, so this model cannot be translated without a substantive density change.
+Reason: SafeStan requires scored observations to be top-level protected data variables and requires every parameter to have exactly one built-in prior before use. Although the fixed vector `y` could in principle be moved mechanically to a data block, the parameter `mu` has only Stan's implicit improper flat prior. Adding a proper built-in prior for `mu` would change the posterior/log density, so this model cannot be translated to SafeStan with only a minor same-density rewrite.

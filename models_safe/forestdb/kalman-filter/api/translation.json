@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"T\":1,\"y\":[4.139881842997316]}",
+  "model_safe_stan": "// ForestDB translation: Kalman Filter\ndata {\n  int<lower=1> T;\n  vector[T] y;\n}\nparameters {\n  real<lower=-1, upper=1> phi;\n  real<lower=0> sigma_state;\n  real<lower=0> sigma_obs;\n  vector[T] x;\n}\nmodel {\n  phi ~ normal(0.8, 0.3);\n  sigma_state ~ lognormal(-1, 0.5);\n  sigma_obs ~ lognormal(-1, 0.5);\n\n  {\n    vector[T] zero;\n    matrix[T, T] Sigma;\n    zero = rep_vector(0, T);\n    Sigma[1, 1] = 4;\n    if (T > 1) {\n      for (t in 2:T) {\n        for (j in 1:(t - 1)) {\n          Sigma[t, j] = phi * Sigma[t - 1, j];\n          Sigma[j, t] = Sigma[t, j];\n        }\n        Sigma[t, t] = square(phi) * Sigma[t - 1, t - 1] + square(sigma_state);\n      }\n    }\n    x ~ multi_normal(zero, Sigma);\n  }\n\n  y ~ normal(x, sigma_obs);\n}\ngenerated quantities {\n  vector[T] y_rep;\n  for (t in 1:T) {\n    y_rep[t] = normal_rng(x[t], sigma_obs);\n  }\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: rewrote the latent state prior for `x` from elementwise/loop sampling statements (`x[1] ~ ...`, `x[t] ~ ...`) to one top-level built-in multivariate normal prior, `x ~ multi_normal(...)`. The covariance matrix is the deterministic AR(1) covariance implied by the original Gaussian state evolution, so the joint density for `x` conditional on `phi` and `sigma_state` is unchanged. The protected observation `y` remains a top-level data variable scored exactly once by `y ~ normal(x, sigma_obs)`. No data fields were added or changed.\n"
+}

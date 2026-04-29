@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"M\":4,\"N\":3,\"X\":[[4.000012447252628,5.734675152206905,2.1908205376427454,2.175799869466511],[6.465681503090691,2.1398978934919364,2.6303285825029774,3.6171010250642355],[3.5255510568851944,4.082976932826936,6.070723949897798,2.188425672871507]],\"x0\":[6.403553664188608,5.4524320860568345,5.238081083933803,2.3337249737583883],\"y\":[3.0,3.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> M; // Number of covariates\n  int<lower=0> N; // Number of observations\n\n  vector[M] x0;   // Covariate baselines\n  matrix[N, M] X; // Covariate design matrix\n\n  array[N] real y;      // Variates\n}\n\ntransformed data {\n  matrix[N, M] deltaX;\n  for (n in 1:N) {\n    deltaX[n,] = X[n] - x0';\n  }\n}\n\nparameters {\n  real alpha;          // Intercept\n  vector[M] beta;      // Slopes\n  real<lower=0> sigma; // Measurement Variability\n}\n\nmodel {\n  // Prior model\n  alpha ~ normal(25, 5);\n  beta ~ normal(0, 3);\n  sigma ~ normal(0, 5);\n\n  // Vectorized observation model\n  y ~ normal(alpha + deltaX * beta, sigma);\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  vector[N] mu = alpha + deltaX * beta;\n  array[N] real y_pred = normal_rng(alpha + deltaX * beta, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The only observed data variable scored by a sampling statement is the top-level data variable `y`, and it is observed exactly once with the built-in distribution `normal`. The context inputs `M`, `N`, `x0`, and `X` are not protected; they are used only as sizes, baselines, and predictors. All parameters have built-in prior sampling statements before their later use, and the model does not use forbidden direct log-density manipulation.\n"
+}

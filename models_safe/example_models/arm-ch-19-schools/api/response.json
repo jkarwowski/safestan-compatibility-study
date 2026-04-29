@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425384,
+  "created_at": 1777425370,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d6557771a7300050069f15bda546481a38de61774a2555e6b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0d6557771a7300050069f15bdaec5481a3a5919623f28eadd3",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The remaining data variables, `N` and `sigma_y`, are context inputs. Each top-level parameter has exactly one built-in prior sampling statement before the protected likelihood is evaluated.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  vector[N] y;\\n  vector[N] sigma_y;\\n}\\nparameters {\\n  vector[N] eta;\\n  real mu_theta;\\n  real<lower=0, upper=100> sigma_eta;\\n  real xi;\\n}\\ntransformed parameters {\\n  real<lower=0> sigma_theta;\\n  vector[N] theta;\\n  \\n  theta = mu_theta + xi * eta;\\n  sigma_theta = abs(xi) / sigma_eta;\\n}\\nmodel {\\n  mu_theta ~ normal(0, 100);\\n  sigma_eta ~ inv_gamma(1, 1); //prior distribution can be changed to uniform\\n  \\n  eta ~ normal(0, sigma_eta);\\n  xi ~ normal(0, 5);\\n  y ~ normal(theta, sigma_y);\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"N\\\": 3,\\n  \\\"sigma_y\\\": [\\n    5.828528951944753,\\n    3.478529016954954,\\n    6.314138205180247\\n  ],\\n  \\\"y\\\": [\\n    3.0,\\n    3.0,\\n    3.0\\n  ]\\n}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d6557771a7300050069f15be5e8d881a3bda2032dfbc1f287",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3053,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1462,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4515
+  },
+  "user": null
+}

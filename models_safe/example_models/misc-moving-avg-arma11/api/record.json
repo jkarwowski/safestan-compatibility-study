@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-moving-avg-arma11/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:24:21+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-moving-avg-arma11",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_011e51a78bf2cc2a0069f16b536e6c8196b768843e205e390a",
+  "safe_dir": "models_safe/example_models/misc-moving-avg-arma11",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:22:11+00:00",
+  "usage": {
+    "input_tokens": 3161,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 10935,
+    "output_tokens_details": {
+      "reasoning_tokens": 10358
+    },
+    "total_tokens": 14096
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

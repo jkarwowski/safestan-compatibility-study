@@ -1,0 +1,11 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":5,\"x1\":[4.899633584092978,4.260443230229773,6.942836717143587,6.0712256521531085,5.368229403351474],\"x2\":[6.382500892115183,5.34586655540696,2.69467564311633,2.4295699507325557,3.059045264078409],\"y1\":[6.421213907424972,2.1482733226398527,2.8887978763411675,4.769030876537471,2.2923947581479176]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] x1; // Complete observation\n  vector[N] y1; // Complete observation\n  vector[N] x2; // Incomplete observation\n}\n\nparameters {\n  real mu1;\n  real<lower=0> tau1;\n\n  real mu2;\n  real<lower=0> tau2;\n\n  real<lower=0> sigma;\n}\n\nmodel {\n  mu1 ~ normal(0, 3);\n  tau1 ~ normal(0, 1);\n\n  mu2 ~ normal(0, 3);\n  tau2 ~ normal(0, 1);\n\n  sigma ~ normal(0, 1);\n\n  x1 ~ normal(mu1, tau1);\n  y1 ~ normal(x1, sigma);\n\n  x2 ~ normal(mu2, tau2);\n}\n\ngenerated quantities {\n  // Predict completion of second observation\n  array[N] real y2_pred = normal_rng(x2, sigma);\n}\n",
+  "protected_variables": [
+    "x1",
+    "y1",
+    "x2"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `x1`, `y1`, and `x2`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. Each protected observation is a top-level data variable and is observed exactly once with a plain built-in sampling statement. Parameter priors are built-in sampling statements and occur before parameter use. The context input `N` is not protected.\n"
+}

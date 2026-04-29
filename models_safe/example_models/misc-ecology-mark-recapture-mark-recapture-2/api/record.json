@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-ecology-mark-recapture-mark-recapture-2/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:17:24+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-ecology-mark-recapture-mark-recapture-2",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "R"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0281010ce11130f00069f169e7134881a0850aee98b4f71187",
+  "safe_dir": "models_safe/example_models/misc-ecology-mark-recapture-mark-recapture-2",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:16:06+00:00",
+  "usage": {
+    "input_tokens": 3064,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 6123,
+    "output_tokens_details": {
+      "reasoning_tokens": 5696
+    },
+    "total_tokens": 9187
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

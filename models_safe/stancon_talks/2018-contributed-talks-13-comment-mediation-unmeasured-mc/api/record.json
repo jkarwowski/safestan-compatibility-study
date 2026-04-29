@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2018-contributed-talks-13-comment-mediation-unmeasured-mc/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T03:07:26+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2018-contributed-talks-13-comment-mediation-unmeasured-mc",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_04c4d8ce93a193f00069f175e5304881a0bf390e8bd38f9ce4",
+  "safe_dir": "models_safe/stancon_talks/2018-contributed-talks-13-comment-mediation-unmeasured-mc",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:07:16+00:00",
+  "usage": {
+    "input_tokens": 5177,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 689,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5866
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

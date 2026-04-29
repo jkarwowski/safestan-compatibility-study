@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423978,
+  "created_at": 1777423886,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_04afa491a17140fd0069f1560e508481a09ee67d53c3b70f4b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_04afa491a17140fd0069f1560eefec81a09d3a4f8d3fe93fe1",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `obs_t_fall_flat` (a deterministic flattening of the original `obs_t_fall` observation).\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the loop-indexed observation statements `obs_t_fall[n, h] ~ normal(...)` with one vectorized sampling statement on the top-level protected variable `obs_t_fall_flat`. The safe data field is defined by `obs_t_fall_flat[(n - 1) * N_heights + h] = obs_t_fall[n][h]` for the supplied JSON values, matching the original nested-loop order. The local mean array is filled in the same order before the single observation statement. Priors on `sigma_t` and `g` were unchanged.\\n\",\"model_safe_stan\":\"functions {\\n  real t_fall(real g, real h) {\\n    return sqrt(2 * h / g);\\n  }\\n}\\n\\ndata {\\n  int N_heights;\\n  array[N_heights] real<lower=0> heights;    // meters\\n  int N_drops;\\n  array[N_drops * N_heights] real obs_t_fall_flat; // seconds\\n}\\n\\nparameters {\\n  real<lower=0> sigma_t; // seconds\\n  real g;                // meters per second squared\\n}\\n\\nmodel {\\n  array[N_drops * N_heights] real mu_t_fall;\\n  int i;\\n\\n  // Prior model\\n  sigma_t ~ normal(0, 1);\\n  g ~ normal(9.8, 1);\\n\\n  // Observational model\\n  i = 1;\\n  for (n in 1:N_drops) {\\n    for (h in 1:N_heights) {\\n      mu_t_fall[i] = t_fall(g, heights[h]);\\n      i = i + 1;\\n    }\\n  }\\n  obs_t_fall_flat ~ normal(mu_t_fall, sigma_t);\\n}\\n\\n// Simulate a full observation from each value of the parameters\\ngenerated quantities {\\n  array[N_drops, N_heights] real obs_t_fall_post_pred;\\n\\n  for (n in 1:N_drops) {\\n    for (h in 1:N_heights) {\\n      real mu_t_fall = t_fall(g, heights[h]);\\n      obs_t_fall_post_pred[n, h] = normal_rng(mu_t_fall, sigma_t);\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N_drops\\\":3,\\\"N_heights\\\":2,\\\"heights\\\":[3.0092040787693892,2.254070938992681],\\\"obs_t_fall_flat\\\":[4.902314604315115,2.6610715674776704,5.594215574584169,2.070902129839508,6.978670641864306,4.890601531738733]}\",\"protected_variables\":[\"obs_t_fall_flat\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_04afa491a17140fd0069f15666cc3c81a09d81c1b767d8d60a",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3252,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 9195,
+    "output_tokens_details": {
+      "reasoning_tokens": 8498
+    },
+    "total_tokens": 12447
+  },
+  "user": null
+}

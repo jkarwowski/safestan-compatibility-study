@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/genetic-linkage/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:28:35+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/genetic-linkage",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0d7fd8aa75f643900069f16cca5ab48197a06ad55549f8a70f",
+  "safe_dir": "models_safe/forestdb/genetic-linkage",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:28:26+00:00",
+  "usage": {
+    "input_tokens": 2950,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 694,
+    "output_tokens_details": {
+      "reasoning_tokens": 414
+    },
+    "total_tokens": 3644
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

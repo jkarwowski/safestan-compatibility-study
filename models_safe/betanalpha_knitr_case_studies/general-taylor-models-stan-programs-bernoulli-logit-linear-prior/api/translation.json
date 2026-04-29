@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"M\":2,\"N\":4,\"X\":[[2.516431166333685,2.8859802297352544],[3.551916523608611,2.233088677064625],[3.044619971553508,5.921318211755027],[2.808868857384643,3.791070856591232]],\"x0\":[3.258758100238251,6.572981132666561]}",
+  "model_safe_stan": "data {\n  int<lower=0> M; // Number of covariates\n  int<lower=0> N; // Number of observations\n\n  vector[M] x0;   // Covariate baselines\n  matrix[N, M] X; // Covariate design matrix\n}\n\ntransformed data {\n  matrix[N, M] deltaX;\n  for (n in 1:N) {\n    deltaX[n,] = X[n] - x0';\n  }\n}\n\nparameters {\n  real alpha;      // Intercept\n  vector[M] beta;  // Linear slopes\n}\n\nmodel {\n  // Prior model\n  alpha ~ normal(0, 1);\n  beta ~ normal(0, 1);\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  vector[N] logit_p = alpha + deltaX * beta;\n  array[N] int y_pred = bernoulli_logit_rng(logit_p);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no observed data likelihood: `M`, `N`, `x0`, and `X` are context inputs used for deterministic transformed data and posterior predictive simulation only. The parameters `alpha` and `beta` each have exactly one built-in prior sampling statement before any model-block use.\n"
+}

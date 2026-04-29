@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"J\":3,\"N\":1,\"county\":[1],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county;\n  vector[N] y;\n}\nparameters {\n  vector[J] et;\n  real mu_eta;\n  real<lower=0, upper=100> sigma_eta;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[J] eta;\n  vector[J] eta_adj;\n  real mean_eta;\n  real mu_adj;\n  vector[N] y_hat;\n  \n  eta = 100 * mu_eta + sigma_eta * et;\n  \n  mean_eta = mean(eta);\n  mu_adj = mean_eta;\n  eta_adj = eta - mean_eta;\n  for (i in 1 : N) {\n    y_hat[i] = eta[county[i]];\n  }\n}\nmodel {\n  mu_eta ~ normal(0, 1);\n  sigma_eta ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  et ~ normal(0, 1);\n  \n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement. Context data variables `J`, `N`, and `county` are used only as sizes/indices/predictors. All parameters have explicit built-in prior sampling statements before the likelihood uses transformed quantities depending on them.\n"
+}

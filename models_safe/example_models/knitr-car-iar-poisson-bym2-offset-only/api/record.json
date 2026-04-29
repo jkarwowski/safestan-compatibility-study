@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-car-iar-poisson-bym2-offset-only/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:59:10+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-car-iar-poisson-bym2-offset-only",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_064f9f45df9789160069f165d9219081a2a89d9974ce29f4d4",
+  "safe_dir": "models_safe/example_models/knitr-car-iar-poisson-bym2-offset-only",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:58:48+00:00",
+  "usage": {
+    "input_tokens": 3433,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1616,
+    "output_tokens_details": {
+      "reasoning_tokens": 1401
+    },
+    "total_tokens": 5049
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

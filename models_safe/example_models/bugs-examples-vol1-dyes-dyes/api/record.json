@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-dyes-dyes/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:37:42+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol1-dyes-dyes",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_safestan_flat"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0e18f63cf3028ca50069f16088e6308196a480d4bb6d3a89ff",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol1-dyes-dyes",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:36:08+00:00",
+  "usage": {
+    "input_tokens": 3457,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 8630,
+    "output_tokens_details": {
+      "reasoning_tokens": 7768
+    },
+    "total_tokens": 12087
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

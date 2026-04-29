@@ -1,9 +1,9 @@
 # SafeStan Safety Note
 
-Compatibility: minor.
+Compatibility: major.
 
-Protected data: `calls_state`.
+Protected data: `calls`.
 
-Generated files: `model_safe.stan`, `data_safe.json`.
+Generated files: none.
 
-Changes: replaced the original binary array observation `calls` with the deterministic categorical encoding `calls_state = 1 + 2 * calls[1] + calls[2]`, so `[0, 0] -> 1`, `[0, 1] -> 2`, `[1, 0] -> 3`, and `[1, 1] -> 4`. For the supplied data `[1, 1]`, this gives `calls_state = 4`. The manual marginalized likelihood implemented with `target += log_sum_exp(...)` and `_lpmf` calls was rewritten as the equivalent normalized built-in statement `calls_state ~ categorical(probs)`, where `probs` is computed from the same burglary/earthquake/alarm network. Generated quantities were rewritten with equivalent probability arithmetic and no `_lpmf` calls. Parameter priors are unchanged.
+Reason: the observed call vector is scored only through manual `bernoulli_lpmf(...)` terms inside a marginalized finite-state calculation and a final `target += log_sum_exp(lp)`. SafeStan forbids arbitrary `target +=` scoring and requires protected observations to appear exactly once on the left side of a built-in sampling statement. A same-density SafeStan version would require substantially replacing the marginalized burglary/earthquake/alarm likelihood, for example by recoding the call vector as a categorical observation with an explicitly computed marginal probability vector, which is beyond a minor mechanical rewrite.

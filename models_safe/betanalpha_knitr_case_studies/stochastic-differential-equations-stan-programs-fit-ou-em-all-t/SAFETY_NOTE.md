@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y_obs`.
+
+Generated files: none.
+
+Reason: the observed data likelihood is `y_obs ~ normal(x[obs_idx], sigma)`, so `y_obs` is the protected interface. However, the latent state parameter `x_cp` is assigned transition densities element-by-element inside a loop (`x_cp[n] ~ normal(...)`), and those transition locations depend on the transformed latent path `x`, which itself depends on `x_cp` and `x_ncp`. SafeStan requires each top-level parameter to have exactly one built-in prior sampling statement outside loops before it is used. Converting this autoregressive latent-state prior into a SafeStan-compatible single top-level prior would require a substantive reparameterization or joint multivariate rewrite of the latent process, not a minor mechanical translation.

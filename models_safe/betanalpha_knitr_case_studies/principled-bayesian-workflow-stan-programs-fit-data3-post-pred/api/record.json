@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/principled-bayesian-workflow-stan-programs-fit-data3-post-pred/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:01:00+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/principled-bayesian-workflow-stan-programs-fit-data3-post-pred",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0ca4d191eea142e80069f158194cec819db3855a3edd8bf044",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/principled-bayesian-workflow-stan-programs-fit-data3-post-pred",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:00:09+00:00",
+  "usage": {
+    "input_tokens": 3169,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 4839,
+    "output_tokens_details": {
+      "reasoning_tokens": 4645
+    },
+    "total_tokens": 8008
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

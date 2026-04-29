@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"M\":1,\"N\":2,\"S\":[[0.4790700842463583]],\"Y\":[[2.204946012137057],[6.305335890082061]],\"age\":[4.527045001520915]}",
+  "model_safe_stan": "// Jaws: repeated measures analysis of variance\n//  http://www.openbugs.net/Examples/Jaws.html\n\ndata {\n  int<lower=0> N;\n  int<lower=0> M;\n  array[N] vector[M] Y;\n  array[M] real age;\n  cov_matrix[M] S;\n}\ntransformed data {\n  real mean_age;\n  mean_age = mean(age);\n}\nparameters {\n  real beta0;\n  real beta1;\n  cov_matrix[M] Sigma;\n}\ntransformed parameters {\n  vector[M] mu;\n  // for (m in 1:M) mu[m] <- beta0 + beta1 * (age[m] - mean_age); \n  \n  for (m in 1 : M) {\n    mu[m] = beta0 + beta1 * age[m];\n  }\n}\nmodel {\n  beta0 ~ normal(0, 32);\n  beta1 ~ normal(0, 32);\n  Sigma ~ inv_wishart(4, S);\n  Y ~ multi_normal(mu, Sigma);\n}\n",
+  "protected_variables": [
+    "Y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `Y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: rewrote the repeated likelihood from a loop with indexed left-hand side `Y[n] ~ multi_normal(mu, Sigma)` to the equivalent vectorized statement `Y ~ multi_normal(mu, Sigma)`. This preserves the same summed multivariate-normal likelihood while making the protected observation a top-level plain identifier observed exactly once and outside control flow. No data changes were required.\n"
+}

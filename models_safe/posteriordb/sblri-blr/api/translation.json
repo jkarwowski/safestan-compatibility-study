@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"D\":1,\"N\":1,\"X\":[[6.72426679745489]],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> D;\n  matrix[N, D] X;\n  vector[N] y;\n}\nparameters {\n  vector[D] beta;\n  real<lower=0> sigma;\n}\nmodel {\n  // prior\n  beta ~ normal(0, 10);\n  sigma ~ normal(0, 10);\n  // likelihood\n  y ~ normal(X * beta, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the three manual `target += normal_lpdf(...)` terms with equivalent built-in sampling statements. The parameter priors are now written as `beta ~ normal(0, 10)` and `sigma ~ normal(0, 10)`, and the likelihood is written as `y ~ normal(X * beta, sigma)`. This preserves the Stan log density while satisfying SafeStan's restrictions against arbitrary `target +=` scoring. The data file is unchanged.\n"
+}

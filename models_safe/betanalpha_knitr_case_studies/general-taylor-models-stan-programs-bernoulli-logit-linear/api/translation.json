@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"M\": 4,\n  \"N\": 2,\n  \"X\": [\n    [\n      6.100884288076674,\n      2.869092073712355,\n      3.788734609107931,\n      3.7859912044477966\n    ],\n    [\n      6.332936609529877,\n      6.295917011920137,\n      3.9903795193404177,\n      2.563445411857953\n    ]\n  ],\n  \"x0\": [\n    6.464447845078732,\n    2.6594825172495744,\n    4.763633748843766,\n    5.29383530080646\n  ],\n  \"y\": [\n    0,\n    0\n  ]\n}",
+  "model_safe_stan": "data {\n  int<lower=0> M; // Number of covariates\n  int<lower=0> N; // Number of observations\n\n  vector[M] x0;   // Covariate baselines\n  matrix[N, M] X; // Covariate design matrix\n\n  array[N] int<lower=0, upper=1> y; // Variates\n}\n\ntransformed data {\n  matrix[N, M] deltaX;\n  for (n in 1:N) {\n    deltaX[n,] = X[n] - x0';\n  }\n}\n\nparameters {\n  real alpha;      // Intercept\n  vector[M] beta;  // Linear slopes\n}\n\nmodel {\n  // Prior model\n  alpha ~ normal(0, 1);\n  beta ~ normal(0, 1);\n\n  // Vectorized observation model\n  y ~ bernoulli_logit(alpha + deltaX * beta);\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  vector[N] logit_p = alpha + deltaX * beta;\n  array[N] int y_pred = bernoulli_logit_rng(logit_p);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, after all parameter priors have been declared. Other data variables are used only as context inputs for deterministic predictor construction.\n"
+}

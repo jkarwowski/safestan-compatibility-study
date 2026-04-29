@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":4,\"grade\":[1,1,2,2],\"grade_pair\":[1,1],\"n_grade\":2,\"n_grade_pair\":1,\"n_pair\":2,\"pair\":[1,1,1,2],\"treatment\":[3.3734620496586984,3.4207898221781243,4.308819400320084,6.522402372375893],\"y\":[4.0,3.0,4.0,2.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> n_grade;\n  int<lower=0> n_grade_pair;\n  int<lower=0> n_pair;\n  array[N] int<lower=1, upper=n_grade> grade;\n  array[n_pair] int<lower=1, upper=n_grade_pair> grade_pair;\n  array[N] int<lower=1, upper=n_pair> pair;\n  vector[N] treatment;\n  vector[N] y;\n}\nparameters {\n  vector[n_pair] eta_a;\n  vector<lower=0, upper=100>[n_grade_pair] sigma_a;\n  vector<lower=0, upper=100>[n_grade] sigma_y;\n  vector[n_grade_pair] mu_a;\n  vector[n_grade] b;\n}\ntransformed parameters {\n  vector[n_pair] a;\n  vector<lower=0>[N] sigma_y_hat;\n  vector[N] y_hat;\n  \n  for (i in 1 : n_pair) {\n    a[i] = 100 * mu_a[grade_pair[i]] + sigma_a[grade_pair[i]] * eta_a[i];\n  }\n  \n  for (i in 1 : N) {\n    y_hat[i] = a[pair[i]] + b[grade[i]] * treatment[i];\n    sigma_y_hat[i] = sigma_y[grade[i]];\n  }\n}\nmodel {\n  mu_a ~ normal(0, 1);\n  eta_a ~ normal(0, 1);\n  sigma_a ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  b ~ normal(0, 100);\n  y ~ normal(y_hat, sigma_y_hat);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit built-in priors `sigma_a ~ uniform(0, 100)` and `sigma_y ~ uniform(0, 100)` for parameters that were already finitely constrained to `[0, 100]`. This makes the implicit bounded flat priors explicit so every parameter has exactly one SafeStan prior sampling statement before the protected likelihood. No data fields were added or changed.\n"
+}

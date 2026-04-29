@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":1,\"N\":3,\"y\":[0,0,0]}",
+  "model_safe_stan": "// ForestDB translation: Infinite Dirichlet-Multinomial Mixture\ndata {\n  int<lower=1> K;\n  int<lower=1> N;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  simplex[K] cluster_weight;\n  vector<lower=0, upper=1>[K] cluster_prob;\n}\nmodel {\n  real mix_prob;\n  cluster_weight ~ dirichlet(rep_vector(1.0 / K, K));\n  cluster_prob ~ beta(1, 1);\n  mix_prob = dot_product(cluster_weight, cluster_prob);\n  y ~ bernoulli(mix_prob);\n}\ngenerated quantities {\n  int<lower=1, upper=K> cluster = categorical_rng(cluster_weight);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual marginalized mixture likelihood implemented with `target += log_sum_exp(...)` by the algebraically equivalent built-in observation statement `y ~ bernoulli(mix_prob)`, where `mix_prob = dot_product(cluster_weight, cluster_prob)`. This preserves the density because a finite mixture of Bernoulli distributions is Bernoulli with success probability equal to the mixture-weighted mean of the component probabilities. No data fields were added or changed.\n"
+}

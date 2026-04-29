@@ -1,0 +1,31 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-lotka-volterra-lotka-volterra/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:07:54+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-lotka-volterra-lotka-volterra",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_init",
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_02837e0db2f23ca40069f167aab0b0819e8b9fb41a13d41952",
+  "safe_dir": "models_safe/example_models/knitr-lotka-volterra-lotka-volterra",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:06:34+00:00",
+  "usage": {
+    "input_tokens": 3520,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7715,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 11235
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

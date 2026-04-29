@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 2,\n  \"n\": [\n    4,\n    1\n  ],\n  \"r\": [\n    3,\n    1\n  ],\n  \"x\": [\n    4.6239113962064184,\n    3.0879357348401033\n  ]\n}\n",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=0> n;\n  array[N] int<lower=0> r;\n  vector[N] x;\n}\ntransformed data {\n  vector[N] centered_x;\n  real mean_x;\n  mean_x = mean(x);\n  centered_x = x - mean_x;\n}\nparameters {\n  real alpha_star;\n  real beta;\n}\ntransformed parameters {\n  array[N] real p;\n  for (i in 1 : N) {\n    p[i] = Phi(alpha_star + beta * centered_x[i]);\n  }\n}\nmodel {\n  alpha_star ~ normal(0.0, 1.0);\n  beta ~ normal(0.0, 1.0E4);\n  r ~ binomial(n, p);\n}\ngenerated quantities {\n  real alpha;\n  array[N] real llike;\n  array[N] real rhat;\n  \n  alpha = alpha_star - beta * mean_x;\n  \n  for (i in 1 : N) {\n    llike[i] = r[i] * log(p[i]) + (n[i] - r[i]) * log(1 - p[i]);\n    rhat[i] = p[i] * n[i];\n  }\n}\n\n",
+  "protected_variables": [
+    "r"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `r`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. `r` is top-level data and is observed exactly once with the built-in statement `r ~ binomial(n, p);`. The other data variables (`N`, `n`, and `x`) are context inputs.\n"
+}

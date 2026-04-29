@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424772,
+  "created_at": 1777424764,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_010afe9e705881b30069f1597c3df881969bf6a1fc39a93431",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_010afe9e705881b30069f1597cf16c8196908e767a33985f81",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The model does not observe or score any top-level data variable; `x0`, `N_grid`, and `x_grid` are context inputs used only for generated quantities.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. All parameters have exactly one built-in prior sampling statement in the model block, and there are no protected observations or arbitrary `target +=` likelihood terms.\\n\",\"model_safe_stan\":\"data {\\n  real x0; // Baseline input\\n\\n  int<lower=1> N_grid; // Number of grid points\\n  array[N_grid] real x_grid;  // Input grid\\n}\\n\\nparameters {\\n  real alpha; // Intercept\\n  real beta;  // Slope\\n  real<lower=0> sigma; // Measurement Variability\\n}\\n\\nmodel {\\n  alpha ~ normal(0, 3);\\n  beta ~ normal(0, 1);\\n  sigma ~ normal(0, 1);\\n}\\n\\ngenerated quantities {\\n  array[N_grid] real mu_grid;\\n  for (n in 1:N_grid) {\\n    mu_grid[n] = alpha + beta * (x_grid[n] - x0);\\n  }\\n}\\n\\n\",\"data_safe_json\":\"{\\\"N_grid\\\":5,\\\"x0\\\":5.743181166663394,\\\"x_grid\\\":[1.0,2.0,3.0,4.0,5.0]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_010afe9e705881b30069f1598284a08196a7edcf4c194c688c",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3087,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 882,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3969
+  },
+  "user": null
+}

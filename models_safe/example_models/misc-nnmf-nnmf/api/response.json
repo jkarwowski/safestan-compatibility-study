@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429583,
+  "created_at": 1777429493,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b5086b27eadcca00069f16bf5f8d48195abe984361a6fd527",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0b5086b27eadcca00069f16bf68eec8195b0f44fa4ebd50032",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `X`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added `X_safestan_copy`, a deterministic copy of `X`, because the original program reads `X` in `transformed data` before observing it. The transformed-data calculations now use this copy. The parameter priors and the elementwise truncated normal likelihood were vectorized so that top-level parameters and the protected top-level data variable are each sampled once with built-in distributions and outside loops. The added data field satisfies `X_safestan_copy = X` elementwise.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> T;\\n  int<lower=0> I;\\n  int<lower=0> K;\\n  matrix[T, I] X;\\n  matrix[T, I] X_safestan_copy;\\n  array[I] real<lower=0> sigma;\\n}\\ntransformed data {\\n  real<lower=0> g_bar;\\n  real<lower=0> g_sigma;\\n  vector<lower=0>[I] alpha;\\n  vector[T] temp;\\n  matrix[T, I] sigma_matrix;\\n  for (t in 1 : T) {\\n    temp[t] = log(sum(X_safestan_copy[t]));\\n  }\\n  g_bar = mean(temp);\\n  g_sigma = sd(temp);\\n  for (i in 1 : I) {\\n    alpha[i] = 10.0;\\n    for (t in 1 : T) {\\n      sigma_matrix[t, i] = sigma[i];\\n    }\\n  }\\n}\\nparameters {\\n  matrix<lower=0>[T, K] G;\\n  array[K] simplex[I] F; // implicit unif prior on simplexes\\n}\\nmodel {\\n  G ~ lognormal(g_bar, g_sigma);\\n  F ~ dirichlet(alpha);\\n  \\n  {\\n    matrix[K, I] F_matrix;\\n    matrix[T, I] mu;\\n    for (k in 1 : K) {\\n      for (i in 1 : I) {\\n        F_matrix[k, i] = F[k, i];\\n      }\\n    }\\n    mu = G * F_matrix;\\n    X ~ normal(mu, sigma_matrix) T[0, ];\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"I\\\":2,\\\"K\\\":1,\\\"T\\\":3,\\\"X\\\":[[3.7059822293673372,3.2582031554646496],[5.09754716418028,2.9830632508313797],[6.653902184193958,6.441608964463227]],\\\"sigma\\\":[3.5385391362795398,2.313380979667952],\\\"X_safestan_copy\\\":[[3.7059822293673372,3.2582031554646496],[5.09754716418028,2.9830632508313797],[6.653902184193958,6.441608964463227]]}\",\"protected_variables\":[\"X\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b5086b27eadcca00069f16c4ae5048195bd0c97afe1196611",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3272,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 7971,
+    "output_tokens_details": {
+      "reasoning_tokens": 7250
+    },
+    "total_tokens": 11243
+  },
+  "user": null
+}

@@ -1,0 +1,21 @@
+{
+  "N": 1,
+  "grade": [
+    1
+  ],
+  "grade_pair": [
+    3
+  ],
+  "n_grade": 2,
+  "n_grade_pair": 4,
+  "n_pair": 1,
+  "pair": [
+    1
+  ],
+  "treatment": [
+    0.4053219278710321
+  ],
+  "y": [
+    1.0
+  ]
+}

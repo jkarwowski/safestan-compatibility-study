@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T03:04:47+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0cb39ae2391f7cb70069f175455f4081a0a15ab4baf95445d9",
+  "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:04:37+00:00",
+  "usage": {
+    "input_tokens": 5136,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 676,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5812
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

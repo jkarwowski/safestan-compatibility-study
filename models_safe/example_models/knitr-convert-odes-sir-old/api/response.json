@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428185,
+  "created_at": 1777428120,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_03f1c04da801ba6b0069f166986e548195bca6558e5e446046",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_03f1c04da801ba6b0069f166991008819581972c81fae01723",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `stoi_hat` and `B_hat`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: rewrote the elementwise Poisson likelihood for `stoi_hat` as one vectorized sampling statement on the top-level protected data variable. Added `stoi_lambda` in `transformed parameters` as the deterministic vector of Poisson rates, with `stoi_lambda[1] = y0[1] - y[1, 1]` and `stoi_lambda[n] = y[n - 1, 1] - y[n, 1]` for `n = 2, ..., N_t`. This preserves the same summed Poisson log likelihood while satisfying SafeStan's requirement that protected observations appear exactly once on the left side of a plain sampling statement. The `B_hat` likelihood was already a single top-level built-in sampling statement. The data file is unchanged.\\n\",\"model_safe_stan\":\"// Simple SIR model inspired by the presentation in\\n// http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3380087/pdf/nihms372789.pdf\\n\\nfunctions {\\n  // theta[1] = beta, water contact rate\\n  // theta[2] = kappa, C_{50}\\n  // theta[3] = gamma, recovery rate\\n  // theta[4] = xi, bacteria production rate\\n  // theta[5] = delta, bacteria removal rate\\n  array[] real simple_SIR(real t, array[] real y, array[] real theta,\\n                          array[] real x_r, array[] int x_i) {\\n    array[4] real dydt;\\n    \\n    dydt[1] = -theta[1] * y[4] / (y[4] + theta[2]) * y[1];\\n    dydt[2] = theta[1] * y[4] / (y[4] + theta[2]) * y[1] - theta[3] * y[2];\\n    dydt[3] = theta[3] * y[2];\\n    dydt[4] = theta[4] * y[2] - theta[5] * y[4];\\n    \\n    return dydt;\\n  }\\n}\\ndata {\\n  int<lower=0> N_t;\\n  array[N_t] real t;\\n  array[4] real y0;\\n  array[N_t] int stoi_hat;\\n  array[N_t] real B_hat;\\n}\\ntransformed data {\\n  real t0 = 0;\\n  real<lower=0> kappa = 1000000;\\n  \\n  array[0] real x_r;\\n  array[0] int x_i;\\n}\\nparameters {\\n  real<lower=0> beta;\\n  real<lower=0> gamma;\\n  real<lower=0> xi;\\n  real<lower=0> delta;\\n}\\ntransformed parameters {\\n  array[N_t, 4] real<lower=0> y;\\n  array[N_t] real stoi_lambda;\\n  {\\n    array[5] real theta = {beta, kappa, gamma, xi, delta};\\n    y = integrate_ode_rk45(simple_SIR, y0, t0, t, theta, x_r, x_i);\\n  }\\n  stoi_lambda[1] = y0[1] - y[1, 1];\\n  for (n in 2 : N_t) {\\n    stoi_lambda[n] = y[n - 1, 1] - y[n, 1];\\n  }\\n}\\nmodel {\\n  beta ~ cauchy(0, 2.5);\\n  gamma ~ cauchy(0, 1);\\n  xi ~ cauchy(0, 25);\\n  delta ~ cauchy(0, 1);\\n  \\n  stoi_hat ~ poisson(stoi_lambda);\\n  B_hat ~ lognormal(log(col(to_matrix(y), 4)), 0.15);\\n}\\n\",\"data_safe_json\":\"{\\\"B_hat\\\":[4.63124730728124,3.014525616742297,4.902411404590975,5.639987047714424],\\\"N_t\\\":4,\\\"stoi_hat\\\":[6,6,3,2],\\\"t\\\":[1.0,2.0,3.0,4.0],\\\"y0\\\":[3.763214104128558,4.106499448651194,4.94996662572856,4.556874074546511]}\",\"protected_variables\":[\"stoi_hat\",\"B_hat\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_03f1c04da801ba6b0069f166d4aa74819585e6977482f37a8f",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3608,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 6238,
+    "output_tokens_details": {
+      "reasoning_tokens": 5178
+    },
+    "total_tokens": 9846
+  },
+  "user": null
+}

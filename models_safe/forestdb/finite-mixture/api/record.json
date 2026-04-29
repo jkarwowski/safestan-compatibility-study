@@ -1,26 +1,29 @@
 {
   "artifacts_dir": "models_safe/forestdb/finite-mixture/api",
   "compatibility": "minor",
-  "completed_at": "2026-04-28T00:50:00+00:00",
+  "completed_at": "2026-04-29T02:28:34+00:00",
   "model": "gpt-5.5",
   "path": "models/forestdb/finite-mixture",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [
     "y"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_05871db0d9d326390069f00408fd7481909c028ec55efd62f6",
+  "response_id": "resp_0c758c0319b4090d0069f16cb90aec81a29d841a895e903ff5",
   "safe_dir": "models_safe/forestdb/finite-mixture",
-  "started_at": "2026-04-28T00:49:12+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:28:08+00:00",
   "usage": {
-    "input_tokens": 2676,
+    "input_tokens": 3211,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 3019,
+    "output_tokens": 2466,
     "output_tokens_details": {
-      "reasoning_tokens": 2588
+      "reasoning_tokens": 2070
     },
-    "total_tokens": 5695
+    "total_tokens": 5677
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

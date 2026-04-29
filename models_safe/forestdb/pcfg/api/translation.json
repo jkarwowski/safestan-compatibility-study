@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"C\":4,\"K\":2,\"counts\":[[3,4],[3,4],[3,1],[4,3]]}",
+  "model_safe_stan": "// ForestDB translation: Probabilistic Context-Free Grammar\ndata {\n  int<lower=1> C;\n  int<lower=1> K;\n  array[C, K] int<lower=0> counts;\n}\nparameters {\n  array[C] simplex[K] rule_prob;\n}\nmodel {\n  rule_prob ~ dirichlet(rep_vector(1.0, K));\n  counts ~ multinomial(rule_prob);\n}\ngenerated quantities {\n  array[C] int<lower=1, upper=K> sampled_rule;\n  for (c in 1:C) {\n    sampled_rule[c] = categorical_rng(rule_prob[c]);\n  }\n}\n",
+  "protected_variables": [
+    "counts"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `counts`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual `target += counts[c, k] * log(rule_prob[c, k])` likelihood with a single built-in `multinomial` sampling statement for the top-level protected count table. This is the normalized built-in count likelihood corresponding to the same categorical-count log probability. The Dirichlet prior on `rule_prob` was vectorized so the top-level parameter is sampled exactly once and not inside a loop. The data file is unchanged.\n"
+}

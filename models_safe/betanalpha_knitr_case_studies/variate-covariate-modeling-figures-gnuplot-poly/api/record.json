@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/variate-covariate-modeling-figures-gnuplot-poly/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:08:41+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/variate-covariate-modeling-figures-gnuplot-poly",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_08d45e134ca1eb0b0069f15a048d3481a19e046aa5c97d949e",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/variate-covariate-modeling-figures-gnuplot-poly",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:08:20+00:00",
+  "usage": {
+    "input_tokens": 3298,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2128,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5426
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

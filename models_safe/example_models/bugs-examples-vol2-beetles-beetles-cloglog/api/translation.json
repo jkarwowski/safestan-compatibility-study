@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":3,\"n\":[3,1,1],\"r\":[3,1,1],\"x\":[3.717979405039409,2.3741058608647214,4.971097669542868]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=0> n;\n  array[N] int<lower=0> r;\n  vector[N] x;\n}\ntransformed data {\n  vector[N] centered_x;\n  real mean_x;\n  mean_x = mean(x);\n  centered_x = x - mean_x;\n}\nparameters {\n  real alpha_star;\n  real beta;\n}\ntransformed parameters {\n  array[N] real p;\n  for (i in 1 : N) {\n    p[i] = inv_cloglog(alpha_star + beta * centered_x[i]);\n  }\n}\nmodel {\n  alpha_star ~ normal(0.0, 1.0E4);\n  beta ~ normal(0.0, 1.0E4);\n  r ~ binomial(n, p);\n}\ngenerated quantities {\n  real alpha;\n  array[N] real llike;\n  array[N] real rhat;\n  alpha = alpha_star - beta * mean_x;\n  for (i in 1 : N) {\n    llike[i] = r[i] * log(p[i]) + (n[i] - r[i]) * log(1 - p[i]);\n    rhat[i] = p[i] * n[i]; // fitted values\n  }\n}\n",
+  "protected_variables": [
+    "r"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `r`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `r` is a top-level data variable and is scored exactly once with the built-in sampling statement `r ~ binomial(n, p);`. The other data variables (`N`, `n`, and `x`) are context inputs used as sizes, trial counts, and predictors. Parameters `alpha_star` and `beta` each have exactly one built-in prior before the protected observation is scored.\n"
+}

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/lda/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:34:27+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/lda",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "word_safestan"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_05dcfee6f450f1090069f16d926f1481949e73e0e9b1f92c90",
+  "safe_dir": "models_safe/forestdb/lda",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:31:46+00:00",
+  "usage": {
+    "input_tokens": 3298,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 13667,
+    "output_tokens_details": {
+      "reasoning_tokens": 12959
+    },
+    "total_tokens": 16965
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337533,
-  "created_at": 1777337522,
+  "completed_at": 1777429737,
+  "created_at": 1777429727,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0e68c28b9f251f680069f004b20e688192b1f2444fd736f0d7",
+  "id": "resp_0c871734dc5f7d5e0069f16cdf8f0c8193b25d3c642d5a30f6",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0e68c28b9f251f680069f004b2b2a08192bdc44d6685da956a",
+      "id": "rs_0c871734dc5f7d5e0069f16ce025a0819399e3de9b25942ff1",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observation sequence `y` is scored through a marginalized hidden Markov model forward algorithm using indexed `categorical_lpmf(...)` calls and a final `target += log_sum_exp(last)`. SafeStan requires each protected data variable to appear exactly once as a plain identifier on the left side of a built-in sampling statement. There is no built-in Stan distribution for this marginalized HMM sequence likelihood, and replacing the forward algorithm with SafeStan sampling statements would require a substantive model rewrite or a change to the likelihood.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `y` is the observed sequence/modelled interface in the original HMM.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `y` is computed by a marginalized hidden-state forward algorithm using `categorical_lpmf(...)` terms and a final `target += log_sum_exp(...)`. SafeStan forbids direct `target +=` scoring and cannot express this HMM marginal likelihood as a single built-in sampling statement for the top-level protected data. Rewriting it would require a substantive change to the model or likelihood rather than a minor same-density translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0e68c28b9f251f680069f004bb6b8481928d3f96575ec63305",
+      "id": "msg_0c871734dc5f7d5e0069f16ce6c51881939a9784e90e5dd7cd",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2814,
+    "input_tokens": 3380,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 689,
+    "output_tokens": 687,
     "output_tokens_details": {
       "reasoning_tokens": 516
     },
-    "total_tokens": 3503
+    "total_tokens": 4067
   },
   "user": null
 }

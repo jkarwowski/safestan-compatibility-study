@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y_obs`.
+
+Generated files: none.
+
+Reason: `y_obs` is the only top-level data variable observed with a sampling statement, and it is scored once by the built-in `normal` likelihood. However, the latent OU transition prior for parameter `x_cp` is implemented as indexed sampling statements inside a loop, with transition locations depending on the transformed parameter `x`. That transformed parameter also depends on latent parameters such as `x_cp` and `x_ncp`, creating parameter-use ordering issues under SafeStan's strict prior discipline. SafeStan requires each top-level parameter to have exactly one built-in prior sampling statement, outside loops, before any use. Producing an equivalent SafeStan model would require a substantive reparameterization or replacement of the latent-state transition construction, such as deriving a joint Gaussian prior or fully non-centering the latent process, which is beyond a minor mechanical rewrite.

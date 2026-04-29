@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":5,\"gamma\":1.0482038621207401,\"mu\":3.3545097711584164,\"t\":[1.0,2.0,3.0,4.0,5.0,6.0],\"tau\":4.652263993545196,\"x0\":3.4588614188636724}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N + 1] real t;\n\n  real x0;\n\n  real mu;\n  real<lower=0> gamma;\n  real<lower=0> tau;\n}\n\ngenerated quantities {\n  array[N + 1] real x;\n  x[1] = x0;\n  for (n in 1:N) {\n    real epsilon = t[n + 1] - t[n];\n    x[n + 1] = normal_rng(x[n] + gamma * (mu - x[n]) * epsilon, tau * sqrt(epsilon) );\n  }\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The program contains no model block and no sampling statement that scores top-level data.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. All top-level data variables are context inputs used only to simulate generated quantities, and there are no parameters or likelihood terms requiring SafeStan protection.\n"
+}

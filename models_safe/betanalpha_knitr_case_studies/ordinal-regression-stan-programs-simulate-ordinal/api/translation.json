@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "functions {\n  vector induced_dirichlet_rng(int K, real phi) {\n    vector[K - 1] c;\n    vector[K] p = dirichlet_rng(rep_vector(1, K));\n\n    c[1] = phi - logit(1 - p[1]);\n    for (k in 2:(K - 1))\n      c[k] = phi - logit(inv_logit(phi - c[k - 1]) - p[k]);\n\n    return c;\n  }\n}\n\ntransformed data {\n  int<lower=1> N = 50; // Number of observations\n  int<lower=1> K = 5;  // Number of ordinal categories\n}\n\ngenerated quantities {\n  real gamma = normal_rng(0, 1);                  // Latent effect\n  ordered[K - 1] c = induced_dirichlet_rng(K, 0); // (Internal) cut points\n  array[N] int<lower=1, upper=K> y;                     // Simulated ordinals\n\n  for (n in 1:N)\n    y[n] = ordered_logistic_rng(gamma, c);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no data block, no model block sampling statements, and no parameters requiring priors. The generated quantities simulate ordinal data but do not condition on any protected interface variable.\n"
+}

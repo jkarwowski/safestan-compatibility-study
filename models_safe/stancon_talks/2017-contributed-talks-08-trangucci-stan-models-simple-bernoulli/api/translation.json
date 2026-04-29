@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 5, \"y\": [0, 0, 1, 1, 1]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0,upper=1> y;\n}\nparameters {\n  real<lower=0,upper=1> theta;\n}\nmodel {\n  theta ~ beta(4,4);\n  y ~ bernoulli(theta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. `y` is a top-level data variable observed exactly once with the built-in `bernoulli` distribution, and it is not used before that observation. `N` is a context input. The parameter `theta` has exactly one built-in prior, `beta(4, 4)`, before it is used in the likelihood.\n"
+}

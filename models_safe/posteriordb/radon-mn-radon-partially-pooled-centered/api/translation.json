@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":1,\"N\":4,\"county_idx\":[1,1,1,1],\"log_radon\":[4.753614664331634,6.042913719239785,4.426753740362937,6.648768108982189]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> J;\n  array[N] int<lower=1, upper=J> county_idx;\n  vector[N] log_radon;\n}\nparameters {\n  vector[J] alpha;\n  real mu_alpha;\n  real<lower=0> sigma_alpha;\n  real<lower=0> sigma_y;\n}\nmodel {\n  vector[N] mu;\n  \n  // priors\n  sigma_y ~ normal(0, 1);\n  sigma_alpha ~ normal(0, 1);\n  mu_alpha ~ normal(0, 10);\n  alpha ~ normal(mu_alpha, sigma_alpha);\n  \n  // deterministic linear predictor\n  for (n in 1 : N) {\n    mu[n] = alpha[county_idx[n]];\n  }\n  \n  // likelihood\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual likelihood accumulation `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` inside the loop with a single built-in sampling statement `log_radon ~ normal(mu, sigma_y);` after constructing the deterministic predictor vector `mu`. This preserves the normal likelihood while satisfying SafeStan's requirement that the protected top-level data variable be observed exactly once with a plain sampling statement. The priors are unchanged and appear before the corresponding parameters are used. `N`, `J`, and `county_idx` remain unprotected context inputs. No data fields were added or changed.\n"
+}

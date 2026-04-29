@@ -1,9 +1,9 @@
 {
   "compatibility": "as-is",
-  "data_safe_json": "{\"N\":8,\"y\":[1.2,0.7,1.9,1.4,1.1,0.8,1.6,1.3]}",
-  "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] y;\n}\nparameters {\n  real mu;\n  real<lower=0> sigma;\n}\nmodel {\n  mu ~ normal(0, 5);\n  sigma ~ lognormal(0, 1);\n  y ~ normal(mu, sigma);\n}\ngenerated quantities {\n  real y_rep = normal_rng(mu, sigma);\n}\n",
+  "data_safe_json": "{\n  \"N\": 2,\n  \"y\": [\n    2.0,\n    2.0\n  ]\n}\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] y;\n}\nparameters {\n  real mu;\n  real<lower=0> sigma;\n}\nmodel {\n  mu ~ normal(0, 5);\n  sigma ~ lognormal(0, 1);\n  y ~ normal(mu, sigma);\n}\ngenerated quantities {\n  real y_rep = normal_rng(mu, sigma);\n}\n\n",
   "protected_variables": [
     "y"
   ],
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement after both parameters have received their priors. Context input `N` is used only as a dimension.\n"
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. Parameters `mu` and `sigma` each have one built-in prior sampling statement before being used in the likelihood.\n"
 }

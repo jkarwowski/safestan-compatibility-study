@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"Q\":1,\"T\":6,\"y\":[3.4298418875568037,3.2828066162435148,6.929902029995733,3.7566920884257873,2.0422900454555952,6.761627777291836],\"y_safestan_copy\":[3.4298418875568037,3.2828066162435148,6.929902029995733,3.7566920884257873,2.0422900454555952,6.761627777291836]}",
+  "model_safe_stan": "data {\n  int<lower=0> Q; // num previous noise terms\n  int<lower=3> T; // num observations\n  vector[T] y; // observation at time t\n  vector[T] y_safestan_copy; // deterministic copy of y for pre-observation MA recursion\n}\nparameters {\n  real mu; // mean\n  real<lower=0> sigma; // error scale\n  vector[2] theta; // error coeff, lag -t\n}\ntransformed parameters {\n  vector[T] epsilon; // error term at time t\n  for (t in 1 : T) {\n    epsilon[t] = y_safestan_copy[t] - mu;\n    for (q in 1 : min(t - 1, Q)) {\n      epsilon[t] = epsilon[t] - theta[q] * epsilon[t - q];\n    }\n  }\n}\nmodel {\n  vector[T] eta;\n  mu ~ cauchy(0, 2.5);\n  theta ~ cauchy(0, 2.5);\n  sigma ~ cauchy(0, 2.5);\n  for (t in 1 : T) {\n    eta[t] = mu;\n    for (q in 1 : min(t - 1, Q)) {\n      eta[t] = eta[t] + theta[q] * epsilon[t - q];\n    }\n  }\n  y ~ normal(eta, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because the original model computes the moving-average residual recursion in `transformed parameters` using `y` before the likelihood statement. SafeStan protected data cannot be referenced before being observed, nor in transformed blocks. The recursion now uses `y_safestan_copy` as a context input, while the protected variable `y` is scored exactly once with the original built-in normal likelihood. The added data field satisfies `y_safestan_copy = y` elementwise.\n"
+}

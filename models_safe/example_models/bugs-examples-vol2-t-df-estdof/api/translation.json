@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":2,\"y\":[2.0,2.0]}",
+  "model_safe_stan": "//# estimated the degree of freedom (dof) from \n//# samples by sim.stan\n// http://www.openbugs.net/Examples/t-df.html\n\n//# estimate dof using continuous priors \n\ndata {\n  int<lower=0> N;\n  array[N] real y;\n}\nparameters {\n  // learning about the dof as a continuous quantity\n  real<lower=2, upper=100> d;\n}\nmodel {\n  d ~ uniform(2, 100);\n  y ~ student_t(d, 0, 1);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added the explicit prior `d ~ uniform(2, 100);` before the likelihood. This matches the parameter's existing finite bounds and is density-neutral up to a constant for the original constrained parameter, while satisfying SafeStan's requirement that each parameter have exactly one built-in prior sampling statement before use. The data file is unchanged.\n"
+}

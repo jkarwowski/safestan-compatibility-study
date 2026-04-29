@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":5,\"N_grid\":5,\"x\":[6.520203345710167,2.615030260429509,4.804636512172149,6.435080291594295,2.690065034428421],\"x0\":4.781943946772099,\"x_grid\":[1.0,2.0,3.0,4.0,5.0],\"y\":[5.0,3.0,4.0,3.0,2.0]}",
+  "model_safe_stan": "data {\n  real x0; // Baseline input\n\n  int<lower=1> N; // Number of observations\n  vector[N] x; // Observed inputs\n  vector[N] y; // Observed outputs\n\n  int<lower=1> N_grid; // Number of grid points\n  array[N_grid] real x_grid;  // Input grid\n}\n\nparameters {\n  real alpha; // Intercept\n  real beta;  // Slope\n  real<lower=0> sigma; // Measurement Variability\n}\n\nmodel {\n  alpha ~ normal(0, 3);\n  beta ~ normal(0, 1);\n  sigma ~ normal(0, 1);\n\n  y ~ normal(alpha + beta * (x - x0), sigma);\n}\n\ngenerated quantities {\n  array[N] real y_pred;\n  array[N_grid] real mu_grid;\n  array[N_grid] real y_pred_grid;\n\n  for (n in 1:N)\n    y_pred[n] = normal_rng(alpha + beta * (x[n] - x0), sigma);\n\n  for (n in 1:N_grid) {\n    mu_grid[n] = alpha + beta * (x_grid[n] - x0);\n    y_pred_grid[n] = normal_rng(mu_grid[n], sigma);\n  }\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement. The context inputs `x`, `x0`, `N`, `N_grid`, and `x_grid` are not protected because they are used only as predictors, sizes, or generated-quantity inputs. Each parameter has exactly one built-in prior before it is used in the likelihood.\n"
+}

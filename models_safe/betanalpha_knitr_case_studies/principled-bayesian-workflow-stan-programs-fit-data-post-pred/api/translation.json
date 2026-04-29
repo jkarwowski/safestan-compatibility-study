@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":6,\"y\":[4,6,6,5,6,2]}",
+  "model_safe_stan": "data {\n  int N;    // Number of observations\n  array[N] int y; // Count at each observation\n}\n\nparameters {\n  real<lower=0> lambda; // Poisson intensity\n}\n\nmodel {\n  lambda ~ normal(0, 6); // Prior model\n  y ~ poisson(lambda);         // Observational model\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  array[N] int y_post_pred;\n  for (n in 1:N)\n    y_post_pred[n] = poisson_rng(lambda);\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement, `y ~ poisson(lambda)`, after the parameter `lambda` has received its built-in prior, `lambda ~ normal(0, 6)`. The context input `N` is used only for sizing.\n"
+}

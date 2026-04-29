@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `kid_score`.\n\nGenerated files: none.\n\nReason: the observed response `kid_score` is scored by the built-in likelihood `normal_id_glm(...)`, while `mom_hs` and `mom_iq` are context predictors used to construct the design matrix. However, the parameters `alpha`, `beta`, and `sigma` have no explicit priors. SafeStan requires every parameter to have exactly one built-in prior sampling statement before it is used. Adding proper priors would change the posterior/log density, and the existing implicit flat/improper priors cannot be represented as a minor SafeStan-compatible rewrite.\n"
+}

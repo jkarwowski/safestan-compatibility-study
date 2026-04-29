@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"J\":1,\"sigma\":[4.866457027522311],\"y\":[5.284236652296321]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  array[J] real y;\n  array[J] real<lower=0> sigma;\n}\n\nparameters {\n  real mu;\n  real<lower=0> tau;\n  array[J] real theta_tilde;\n}\n\ntransformed parameters {\n  array[J] real theta;\n  for (j in 1:J)\n    theta[j] = mu + tau * theta_tilde[j];\n}\n\nmodel {\n  mu ~ normal(0, 5);\n  tau ~ cauchy(0, 5);\n  theta_tilde ~ normal(0, 1);\n  y ~ normal(theta, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The other data variables, `J` and `sigma`, are context inputs. All parameters have exactly one built-in prior sampling statement before the transformed parameter `theta` is used in the likelihood.\n"
+}

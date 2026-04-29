@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/marsaglia/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:32:34+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/marsaglia",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0b4ee2a7b90ca05a0069f16db8d24881a18d4152c7164fa4d9",
+  "safe_dir": "models_safe/forestdb/marsaglia",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:32:24+00:00",
+  "usage": {
+    "input_tokens": 3094,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 796,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3890
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

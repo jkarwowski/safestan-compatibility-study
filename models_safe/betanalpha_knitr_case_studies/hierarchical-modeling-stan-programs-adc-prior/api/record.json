@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-adc-prior/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:55:33+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-adc-prior",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0184e51b31eb66430069f156fe862481a3a20489c23c4fe712",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-adc-prior",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:55:26+00:00",
+  "usage": {
+    "input_tokens": 2989,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 642,
+    "output_tokens_details": {
+      "reasoning_tokens": 372
+    },
+    "total_tokens": 3631
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

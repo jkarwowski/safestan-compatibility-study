@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427415,
+  "created_at": 1777427306,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d9d8a0e785413470069f1636a9f008194a1d7895569918fed",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0d9d8a0e785413470069f1636ca4a88194a8ed2ca3d4fc6813",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `Y_safestan_flat`, a deterministic row-major reshape of the original observed `Y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the indexed likelihood statements for `Y[k, n]` inside nested loops with one top-level sampling statement for `Y_safestan_flat`. The data relation is `Y_safestan_flat[(k - 1) * N + n] = Y[k, n]` for Stan indices `k = 1..K`, `n = 1..N`; all other data are copied unchanged. Reordered and vectorized parameter priors so each top-level parameter is sampled exactly once before use: `sigmasq`, `mu`, `sigma2`, and `theta`. These changes preserve the same joint log density.\\n\",\"model_safe_stan\":\"// Orange Trees (Multi-variate normal) \\n// http://www.openbugs.net/Examples/OtreesMVN.html\\n// and refer to ../orange \\n\\n// FIXME: there are some discrepancy for parameters var \\n// and the s.e. for some parameters\\n\\ndata {\\n  int<lower=0> K;\\n  int<lower=0> N;\\n  array[N] int x;\\n  vector[K * N] Y_safestan_flat;\\n  cov_matrix[3] invR;\\n  cov_matrix[3] mu_var_prior;\\n  vector[3] mu_m_prior;\\n}\\nparameters {\\n  real<lower=0> sigmasq;\\n  array[K] vector[3] theta;\\n  vector[3] mu;\\n  cov_matrix[3] sigma2;\\n}\\ntransformed parameters {\\n  real<lower=0> sigma_C;\\n  sigma_C = sqrt(sigmasq);\\n}\\nmodel {\\n  array[K, 3] real phi;\\n  vector[K * N] y_mean_flat;\\n  \\n  sigmasq ~ inv_gamma(.001, .001);\\n  mu ~ multi_normal(mu_m_prior, mu_var_prior);\\n  sigma2 ~ inv_wishart(3, invR);\\n  theta ~ multi_normal(mu, sigma2);\\n  \\n  for (k in 1 : K) {\\n    phi[k, 1] = exp(theta[k, 1]);\\n    phi[k, 2] = exp(theta[k, 2]) - 1;\\n    phi[k, 3] = -exp(theta[k, 3]);\\n    for (n in 1 : N) {\\n      y_mean_flat[(k - 1) * N + n] = phi[k, 1] / (1 + phi[k, 2] * exp(phi[k, 3] * x[n]));\\n    }\\n  }\\n  \\n  Y_safestan_flat ~ normal(y_mean_flat, sigma_C);\\n}\\ngenerated quantities {\\n  vector[3] sigma;\\n  sigma[1] = sqrt(sigma2[1, 1]);\\n  sigma[2] = sqrt(sigma2[2, 2]);\\n  sigma[3] = sqrt(sigma2[3, 3]);\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":4,\\\"N\\\":2,\\\"x\\\":[6,6],\\\"Y_safestan_flat\\\":[3.644810239490128,6.239473103419151,6.284572329993439,4.667815183596147,6.54927102280786,2.4658017616340007,3.704886145259333,2.453863808919702],\\\"invR\\\":[[2.1874619263442,1.7330475614908756,2.078019984177605],[1.7330475614908756,4.731814208467562,5.017660202632694],[2.078019984177605,5.017660202632694,5.460773384092638]],\\\"mu_var_prior\\\":[[3.514111430088555,0.9811486159049189,2.1867714683243498],[0.9811486159049189,3.211243131955637,2.2157082062199795],[2.1867714683243498,2.2157082062199795,3.3498778536206086]],\\\"mu_m_prior\\\":[5.926800945143749,6.740626604040875,4.64297137819424]}\",\"protected_variables\":[\"Y_safestan_flat\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d9d8a0e785413470069f163d2521c819481f3c65f2c98e118",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3703,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 10354,
+    "output_tokens_details": {
+      "reasoning_tokens": 9322
+    },
+    "total_tokens": 14057
+  },
+  "user": null
+}

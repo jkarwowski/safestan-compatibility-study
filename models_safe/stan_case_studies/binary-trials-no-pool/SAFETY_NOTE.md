@@ -6,6 +6,4 @@ Protected data: `y`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before its observation statement. The transformed-data summaries and generated-quantity diagnostic calculation that previously read `y` use this copy instead. Added `theta ~ uniform(0, 1)`, which is density-neutral for `theta` because it is already constrained to `[0, 1]`, and satisfies SafeStan's unique-prior requirement. The likelihood remains `y ~ binomial(K, theta)`.
-
-Deterministic data relation: `y_safestan_copy[n] = y[n]` for every `n = 1, ..., N`.
+Changes: added `y_safestan_copy`, a deterministic top-level data copy with `y_safestan_copy[n] = y[n]` for all `n`, and used it for transformed-data and generated-quantities summaries so the protected variable `y` is not read before its likelihood statement. Added `theta ~ uniform(0, 1)`, which is density-neutral for the existing `vector<lower=0, upper=1>[N]` parameter and satisfies SafeStan's unique-prior requirement. `K`, `K_new`, and `y_new` remain context data; `y_new` is only used in generated quantities and is not part of the model target density.

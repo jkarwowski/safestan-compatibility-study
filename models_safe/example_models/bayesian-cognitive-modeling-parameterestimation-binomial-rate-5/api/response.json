@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425974,
+  "created_at": 1777425965,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0eac2996f31697520069f15e2d4d188194a0447f62b187b7b5",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0eac2996f31697520069f15e2de1c88194b90ebe42d8591891",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `k1`, `k2`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observations `k1` and `k2` are top-level data variables, each is observed exactly once with a plain built-in `binomial` sampling statement, and the parameter `theta` has exactly one built-in prior before use.\\n\",\"model_safe_stan\":\"// Inferring a Common Rate, With Posterior Predictive\\ndata {\\n  int<lower=1> n1;\\n  int<lower=1> n2;\\n  int<lower=0> k1;\\n  int<lower=0> k2;\\n}\\nparameters {\\n  real<lower=0, upper=1> theta;\\n}\\nmodel {\\n  // Prior on Single Rate Theta\\n  theta ~ beta(1, 1);\\n  \\n  // Observed Counts\\n  k1 ~ binomial(n1, theta);\\n  k2 ~ binomial(n2, theta);\\n}\\ngenerated quantities {\\n  int<lower=0, upper=n1> postpredk1;\\n  int<lower=0, upper=n2> postpredk2;\\n  \\n  // Posterior Predictive\\n  postpredk1 = binomial_rng(n1, theta);\\n  postpredk2 = binomial_rng(n2, theta);\\n}\\n\\n\",\"data_safe_json\":\"{\\\"k1\\\": 3, \\\"k2\\\": 3, \\\"n1\\\": 4, \\\"n2\\\": 3}\",\"protected_variables\":[\"k1\",\"k2\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0eac2996f31697520069f15e336684819491eb4478ea6f2b4d",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3118,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 910,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4028
+  },
+  "user": null
+}

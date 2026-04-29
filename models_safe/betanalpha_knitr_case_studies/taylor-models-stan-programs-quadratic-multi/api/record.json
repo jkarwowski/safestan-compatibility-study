@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-quadratic-multi/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:07:07+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/taylor-models-stan-programs-quadratic-multi",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a448bb40ed6c6660069f159abdd7c81a3bf638a1a6ad18351",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-quadratic-multi",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:06:51+00:00",
+  "usage": {
+    "input_tokens": 3424,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1785,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5209
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y` is the observed capture-count interface variable scored by the likelihood.\n\nGenerated files: none.\n\nReason: the likelihood for `y` is implemented with manual `target +=` terms, including a marginalized latent inclusion state with `log_sum_exp(...)` for zero counts and a branch on `y[i] > 0`. SafeStan forbids arbitrary `target +=` scoring, and this zero-inflated/marginalized capture-history likelihood cannot be expressed as a single built-in Stan sampling statement for the top-level protected variable without a substantive model rewrite. The bounded parameters `omega`, `mean_p`, and `sigma` also rely on implicit uniform priors that could be made explicit mechanically, but that does not resolve the non-built-in marginalized likelihood.\n"
+}

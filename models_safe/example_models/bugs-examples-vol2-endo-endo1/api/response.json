@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427236,
+  "created_at": 1777427155,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0bf9f0a036eec1be0069f162d39484819c9213063e33ac7822",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0bf9f0a036eec1be0069f162d424fc819cafadc2191e555481",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `Y1_safestan`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the original likelihood scored the transformed-data slice `Y[1]`, which is not a top-level plain data identifier. The SafeStan version lifts that deterministic observed slice to a top-level protected data variable `Y1_safestan`, with `Y1_safestan[i] = 1` for `i = 1, ..., I`. The transformed-data helper `est1m2` is computed directly; this is the only transformed quantity used by the likelihood and is equivalent to the original `est[1] - est[2]` construction for data where the original indexing is well-defined. The parameter prior on `beta` was already a single built-in prior and was left unchanged.\\n\\n`data_safe.json` augments the supplied data with `Y1_safestan: [1, 1, 1]`, deterministically generated from `I = 3` and the original transformed-data assignment `Y[1, i] = 1`.\\n\",\"model_safe_stan\":\"// Endo: conditional inference in case-contrl studies \\n// http://www.openbugs.net/Examples/Endo.html\\n\\n// In this example, three methods of different \\n// model specifications are used for one equivalent\\n// model. This is method 1. \\n\\ndata {\\n  int n10;\\n  int n01;\\n  int n11;\\n  int I;\\n  array[I] int<lower=0, upper=1> Y1_safestan;\\n}\\ntransformed data {\\n  vector[I] est1m2;\\n  for (i in 1 : I) {\\n    if (i <= n10) {\\n      est1m2[i] = 1;\\n    } else if (i <= n10 + n01) {\\n      est1m2[i] = -1;\\n    } else {\\n      est1m2[i] = 0;\\n    }\\n  }\\n}\\nparameters {\\n  real beta;\\n}\\nmodel {\\n  // METHOD 1: Logistic regression \\n  beta ~ normal(0, 1000);\\n  Y1_safestan ~ binomial_logit(1, beta * est1m2);\\n}\\n\",\"data_safe_json\":\"{\\\"I\\\":3,\\\"n01\\\":5,\\\"n10\\\":2,\\\"n11\\\":6,\\\"Y1_safestan\\\":[1,1,1]}\",\"protected_variables\":[\"Y1_safestan\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0bf9f0a036eec1be0069f163210e84819c8c70075eb5d7f37b",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3281,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7325,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 10606
+  },
+  "user": null
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/nes1996-nes/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:49:41+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/nes1996-nes",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_05535ac94e20b73a0069f171bd1f24819fbed252e7bc51f942",
+  "safe_dir": "models_safe/posteriordb/nes1996-nes",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:49:32+00:00",
+  "usage": {
+    "input_tokens": 3373,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 679,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4052
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

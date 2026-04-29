@@ -1,24 +1,27 @@
 {
   "artifacts_dir": "models_safe/stan_tutorials/negative-binomial2/api",
   "compatibility": "major",
-  "completed_at": "2026-04-28T01:14:27+00:00",
+  "completed_at": "2026-04-29T03:02:04+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_tutorials/negative-binomial2",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_06d23f3e51f4d8470069f009dc48648197aeda642e860deb9c",
+  "response_id": "resp_04c31718dae8a2ca0069f1749c911c8191ad4a07e1dec6e645",
   "safe_dir": "models_safe/stan_tutorials/negative-binomial2",
-  "started_at": "2026-04-28T01:14:04+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:01:48+00:00",
   "usage": {
-    "input_tokens": 2644,
+    "input_tokens": 2867,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1179,
+    "output_tokens": 1202,
     "output_tokens_details": {
-      "reasoning_tokens": 1024
+      "reasoning_tokens": 1034
     },
-    "total_tokens": 3823
+    "total_tokens": 4069
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

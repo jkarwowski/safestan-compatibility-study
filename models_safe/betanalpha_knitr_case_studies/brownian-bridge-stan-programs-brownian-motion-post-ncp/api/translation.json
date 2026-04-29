@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":4,\"N_obs\":3,\"obs_idx\":[2,2,2],\"sigma\":4.560513833795347,\"ts\":[1.0,2.0,3.0,4.0],\"x_left\":5.961827147871776,\"x_obs\":[5.617073794401917,4.5741048050095205,2.270674850683239]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] real ts;\n\n  real x_left;\n\n  int<lower=1> N_obs;\n  array[N_obs] int<lower=1, upper=N + 1> obs_idx;\n  array[N_obs] real x_obs;\n  real<lower=0> sigma;\n}\n\nparameters {\n  array[N - 1] real xs_forward_ncp;\n}\n\ntransformed parameters {\n  array[N] real xs;\n\n  xs[1] = x_left;\n\n  for (n in 2:N) {\n    xs[n]\n      = xs[n - 1] + sqrt(ts[n] - ts[n - 1]) * xs_forward_ncp[n - 1];\n  }\n}\n\nmodel {\n  xs_forward_ncp ~ normal(0, 1);\n  x_obs ~ normal(xs[obs_idx], sigma);\n}\n\n",
+  "protected_variables": [
+    "x_obs"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `x_obs`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `x_obs` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, after the parameter prior for `xs_forward_ncp`.\n"
+}

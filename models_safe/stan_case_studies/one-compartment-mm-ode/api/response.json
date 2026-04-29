@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338329,
-  "created_at": 1777338304,
+  "completed_at": 1777431616,
+  "created_at": 1777431598,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0e030409496014420069f007c0c24c81a0afd5045d854e927b",
+  "id": "resp_0727a5e86fe2eb370069f1742e1f888193ba86171c8c20d5c7",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0e030409496014420069f007c16f7c81a0b928576d757f2554",
+      "id": "rs_0727a5e86fe2eb370069f1742eb9f08193855105847b06fb36",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `C`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `C` is a top-level data variable and is observed exactly once with a plain built-in sampling statement (`C ~ lognormal(...)`) before any other use. Parameters each have one built-in prior sampling statement before the likelihood uses them through `mu_C`.\\n\",\"model_safe_stan\":\"functions {\\n  vector one_comp_mm_elim_abs(real t, vector y, real k_a,\\n                              // Dosing rate in 1/day\\n                              real K_m,\\n                              // Michaelis-Menten constant in mg/L\\n                              real V_m,\\n                              // Maximum elimination rate in 1/day\\n                              real D, real V) {\\n    vector[1] dydt;\\n    \\n    real dose = 0;\\n    real elim = (V_m / V) * y[1] / (K_m + y[1]);\\n    \\n    if (t > 0) {\\n      dose = exp(-k_a * t) * D * k_a / V;\\n    }\\n    \\n    dydt[1] = dose - elim;\\n    \\n    return dydt;\\n  }\\n}\\ndata {\\n  real t0; // Initial time in days;\\n  vector[1] C0; // Initial concentration at t0 in mg/L\\n  \\n  real D; // Total dosage in mg\\n  real V; // Compartment volume in L\\n  \\n  int<lower=1> N_t;\\n  array[N_t] real times; // Measurement times in days\\n  \\n  // Measured concentrations in effect compartment in mg/L\\n  array[N_t] real C;\\n}\\nparameters {\\n  real<lower=0> k_a; // Dosing rate in 1/day\\n  real<lower=0> K_m; // Michaelis-Menten constant in mg/L\\n  real<lower=0> V_m; // Maximum elimination rate in 1/day\\n  real<lower=0> sigma;\\n}\\ntransformed parameters {\\n  array[N_t] vector[1] mu_C = ode_bdf_tol(one_comp_mm_elim_abs, C0, t0,\\n                                          times, 1e-8, 1e-8, 1000, k_a, K_m,\\n                                          V_m, D, V);\\n}\\nmodel {\\n  // Priors\\n  k_a ~ cauchy(0, 1);\\n  K_m ~ cauchy(0, 1);\\n  V_m ~ cauchy(0, 1);\\n  sigma ~ cauchy(0, 1);\\n  \\n  // Likelihood\\n  C ~ lognormal(log(mu_C[ : , 1]), sigma);\\n}\\ngenerated quantities {\\n  array[N_t] real C_ppc;\\n  for (n in 1 : N_t) {\\n    C_ppc[n] = lognormal_rng(log(mu_C[n, 1]), sigma);\\n  }\\n}\\n\\n\",\"data_safe_json\":\"{\\\"times\\\":[0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10],\\\"C\\\":[5.70812264865215,7.10126075072086,8.38520678426651,9.79008249883381,13.4390409239245,11.4478987597702,11.2124282696837,11.4269217682577,12.2432859438401,13.8201804108938,13.8408670746042,11.422291744251,10.5031943081843,11.9121452242965,14.0849980781312,10.5505145523917,10.1905539351877,12.2232272590821,11.7290653047821,12.2719396535996],\\\"D\\\":30,\\\"C0\\\":[0],\\\"t0\\\":0,\\\"N_t\\\":20,\\\"V\\\":2}\",\"protected_variables\":[\"C\"]}",
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `C`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. `C` is the only top-level data variable scored by a sampling statement, and it is observed exactly once with a plain built-in `lognormal` sampling statement. The remaining data variables (`t0`, `C0`, `D`, `V`, `N_t`, and `times`) are context inputs used to construct the ODE prediction. Each parameter has exactly one built-in prior before the likelihood uses the transformed prediction `mu_C`.\\n\",\"model_safe_stan\":\"functions {\\n  vector one_comp_mm_elim_abs(real t, vector y, real k_a,\\n                              // Dosing rate in 1/day\\n                              real K_m,\\n                              // Michaelis-Menten constant in mg/L\\n                              real V_m,\\n                              // Maximum elimination rate in 1/day\\n                              real D, real V) {\\n    vector[1] dydt;\\n    \\n    real dose = 0;\\n    real elim = (V_m / V) * y[1] / (K_m + y[1]);\\n    \\n    if (t > 0) {\\n      dose = exp(-k_a * t) * D * k_a / V;\\n    }\\n    \\n    dydt[1] = dose - elim;\\n    \\n    return dydt;\\n  }\\n}\\ndata {\\n  real t0; // Initial time in days;\\n  vector[1] C0; // Initial concentration at t0 in mg/L\\n  \\n  real D; // Total dosage in mg\\n  real V; // Compartment volume in L\\n  \\n  int<lower=1> N_t;\\n  array[N_t] real times; // Measurement times in days\\n  \\n  // Measured concentrations in effect compartment in mg/L\\n  array[N_t] real C;\\n}\\nparameters {\\n  real<lower=0> k_a; // Dosing rate in 1/day\\n  real<lower=0> K_m; // Michaelis-Menten constant in mg/L\\n  real<lower=0> V_m; // Maximum elimination rate in 1/day\\n  real<lower=0> sigma;\\n}\\ntransformed parameters {\\n  array[N_t] vector[1] mu_C = ode_bdf_tol(one_comp_mm_elim_abs, C0, t0,\\n                                          times, 1e-8, 1e-8, 1000, k_a, K_m,\\n                                          V_m, D, V);\\n}\\nmodel {\\n  // Priors\\n  k_a ~ cauchy(0, 1);\\n  K_m ~ cauchy(0, 1);\\n  V_m ~ cauchy(0, 1);\\n  sigma ~ cauchy(0, 1);\\n  \\n  // Likelihood\\n  C ~ lognormal(log(mu_C[ : , 1]), sigma);\\n}\\ngenerated quantities {\\n  array[N_t] real C_ppc;\\n  for (n in 1 : N_t) {\\n    C_ppc[n] = lognormal_rng(log(mu_C[n, 1]), sigma);\\n  }\\n}\\n\\n\",\"data_safe_json\":\"{\\\"C\\\":[4.25886930132519,2.599661965674428,3.200013981176552,4.806577325883889,5.076741348854217],\\\"C0\\\":[5.901506625459952],\\\"D\\\":5.883177210727657,\\\"N_t\\\":5,\\\"V\\\":6.8202876687699785,\\\"t0\\\":0.0,\\\"times\\\":[1.0,2.0,3.0,4.0,5.0]}\",\"protected_variables\":[\"C\"]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0e030409496014420069f007d2d34881a0a9324714600aef86",
+      "id": "msg_0727a5e86fe2eb370069f1743b68408193829e34af5e936e0f",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 3426,
+    "input_tokens": 3475,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2015,
+    "output_tokens": 1911,
     "output_tokens_details": {
       "reasoning_tokens": 1034
     },
-    "total_tokens": 5441
+    "total_tokens": 5386
   },
   "user": null
 }

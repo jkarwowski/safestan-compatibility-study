@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":4,\"M\":5,\"N\":1,\"V\":3,\"alpha\":[1.4852217399158019,1.6353987989890042,1.1691482600472878,2.8164448475152195],\"beta\":[3.9481122645959736,3.4876545600264244,2.9796016241243595],\"doc\":[4],\"w\":[1]}",
+  "model_safe_stan": "data {\n  int<lower=2> K; // num topics\n  int<lower=2> V; // num words\n  int<lower=1> M; // num docs\n  int<lower=1> N; // total word instances\n  array[N] int<lower=1, upper=V> w; // word n\n  array[N] int<lower=1, upper=M> doc; // doc ID for word n\n  vector<lower=0>[K] alpha; // topic prior\n  vector<lower=0>[V] beta; // word prior\n}\nparameters {\n  array[M] simplex[K] theta; // topic dist for doc m\n  array[K] simplex[V] phi; // word dist for topic k\n}\nmodel {\n  array[N] vector[V] word_prob;\n\n  theta ~ dirichlet(alpha);\n  phi ~ dirichlet(beta);\n\n  for (n in 1 : N) {\n    word_prob[n] = rep_vector(0, V);\n    for (k in 1 : K) {\n      word_prob[n] += theta[doc[n], k] * phi[k];\n    }\n  }\n\n  w ~ categorical(word_prob);\n}\n",
+  "protected_variables": [
+    "w"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `w`. The document ids `doc`, sizes, and hyperparameters `alpha`/`beta` are context inputs.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: vectorized the Dirichlet priors for the top-level parameters `theta` and `phi` so each parameter has one prior sampling statement outside loops. Replaced the manual `target += log_sum_exp(...)` marginalized topic likelihood with deterministic word-probability vectors and one built-in categorical observation statement, `w ~ categorical(word_prob)`. This preserves the same likelihood because `word_prob[n, v] = sum_k theta[doc[n], k] * phi[k, v]`, so the categorical probability of `w[n]` equals the original marginalized topic probability. No data fields were added; `data_safe.json` is unchanged except for JSON formatting.\n"
+}

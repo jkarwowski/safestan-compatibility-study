@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/seismic-events/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:37:03+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/seismic-events",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0ee91308ad637ddd0069f16ec467c48197a1a5842ed4e2234c",
+  "safe_dir": "models_safe/forestdb/seismic-events",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:36:52+00:00",
+  "usage": {
+    "input_tokens": 2925,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 668,
+    "output_tokens_details": {
+      "reasoning_tokens": 427
+    },
+    "total_tokens": 3593
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

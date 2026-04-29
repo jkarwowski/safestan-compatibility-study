@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-leukfr-leukfr/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:42:11+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol1-leukfr-leukfr",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "dN_active"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0b657bd7cee752ee0069f16141b8a8819493ed4e2d6b19b44d",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol1-leukfr-leukfr",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:38:43+00:00",
+  "usage": {
+    "input_tokens": 3479,
+    "input_tokens_details": {
+      "cached_tokens": 3328
+    },
+    "output_tokens": 15818,
+    "output_tokens_details": {
+      "reasoning_tokens": 14894
+    },
+    "total_tokens": 19297
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 5\n}\n",
+  "model_safe_stan": "data {\n  int N;\n}\n\ntransformed data {\n  real a = 1;\n  real b = -0.5;\n}\n\ngenerated quantities {\n  real<lower=0> sigma = 0.75;\n  array[N] real y;\n  for (n in 1:N) y[n] = normal_rng(a, sigma);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The only top-level data variable, `N`, is a context input used as an array size in generated quantities and is not scored by any likelihood.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the program contains no protected observations, no parameters requiring priors, and no forbidden direct log-density manipulation.\n"
+}

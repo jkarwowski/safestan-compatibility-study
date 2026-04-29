@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":1,\"county\":[1],\"x\":[4.278181375128752],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=1, upper=85> county;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  vector[85] a1;\n  vector[85] a2;\n  real mu_a1;\n  real mu_a2;\n  real<lower=0, upper=100> sigma_a1;\n  real<lower=0, upper=100> sigma_a2;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[N] y_hat;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a1[county[i]] + a2[county[i]] * x[i];\n  }\n}\nmodel {\n  mu_a1 ~ normal(0, 1);\n  sigma_a1 ~ uniform(0, 100);\n  a1 ~ normal(mu_a1, sigma_a1);\n  mu_a2 ~ normal(0, 1);\n  sigma_a2 ~ uniform(0, 100);\n  a2 ~ normal(0.1 * mu_a2, sigma_a2);\n  sigma_y ~ uniform(0, 100);\n  \n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 100)` priors for `sigma_a1`, `sigma_a2`, and `sigma_y`. These parameters already had finite bounds `<lower=0, upper=100>` in the original model, so the added priors are the matching proper uniform priors on the existing constrained support and satisfy SafeStan's requirement that every parameter have exactly one built-in prior before use. The observation model `y ~ normal(y_hat, sigma_y)` is unchanged, and `N`, `county`, and `x` remain unprotected context inputs.\n"
+}

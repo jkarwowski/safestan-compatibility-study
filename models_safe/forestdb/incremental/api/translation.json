@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `observed_utterance`.\n\nGenerated files: none.\n\nReason: the observation likelihood is implemented by manual `target += log_sum_exp(listener_lp)` scoring, where `listener_lp` depends on `observed_utterance` through an indexed `log_softmax` term. SafeStan forbids arbitrary `target +=` scoring. Replacing this with a built-in categorical sampling statement would introduce a parameter-dependent normalization term and would not preserve the original posterior/log density. An exact translation would require a custom likelihood or a substantive marginalized-latent-state rewrite, so this is not a minor SafeStan-compatible change.\n"
+}

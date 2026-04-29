@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: the likelihood scores `log_earnings`, a transformed-data value computed as `log(earnings)`.
+
+Generated files: none.
+
+Reason: the observed quantity in the sampling statement is not a top-level data variable but a nonlinear transformation of `earnings`. Making it SafeStan-compatible would require changing the protected interface to a new top-level logged observation or changing the likelihood to a different built-in distribution over `earnings`, which is not a minor copy/reshape rewrite. In addition, the parameters `alpha`, `beta`, and `sigma` have no explicit priors; adding proper priors would change the statistical model, while the existing implicit priors are not finite bounded uniform priors that can be made explicit density-neutrally.

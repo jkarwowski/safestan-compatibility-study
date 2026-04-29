@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425383,
+  "created_at": 1777425367,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d30e46c287098930069f15bd76f248192a9883e175f26882c",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0d30e46c287098930069f15bd806988192b2397209fd1d6164",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement. Context data variables `J`, `N`, and `county` are used only as sizes/indices/predictors. All parameters have explicit built-in prior sampling statements before the likelihood uses transformed quantities depending on them.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> J;\\n  int<lower=0> N;\\n  array[N] int<lower=1, upper=J> county;\\n  vector[N] y;\\n}\\nparameters {\\n  vector[J] et;\\n  real mu_eta;\\n  real<lower=0, upper=100> sigma_eta;\\n  real<lower=0, upper=100> sigma_y;\\n}\\ntransformed parameters {\\n  vector[J] eta;\\n  vector[J] eta_adj;\\n  real mean_eta;\\n  real mu_adj;\\n  vector[N] y_hat;\\n  \\n  eta = 100 * mu_eta + sigma_eta * et;\\n  \\n  mean_eta = mean(eta);\\n  mu_adj = mean_eta;\\n  eta_adj = eta - mean_eta;\\n  for (i in 1 : N) {\\n    y_hat[i] = eta[county[i]];\\n  }\\n}\\nmodel {\\n  mu_eta ~ normal(0, 1);\\n  sigma_eta ~ uniform(0, 100);\\n  sigma_y ~ uniform(0, 100);\\n  et ~ normal(0, 1);\\n  \\n  y ~ normal(y_hat, sigma_y);\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":3,\\\"N\\\":1,\\\"county\\\":[1],\\\"y\\\":[1.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d30e46c287098930069f15bdd9c408192b0a91346c5c47cfb",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3137,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 975,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4112
+  },
+  "user": null
+}

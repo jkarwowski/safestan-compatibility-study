@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `Y` is the response variable scored by the likelihood when `prior_only` does not disable the likelihood.
+
+Generated files: none.
+
+Reason: the model uses manual `target += ...` statements for both priors and the normal likelihood, and the likelihood is gated by the data flag `prior_only`. SafeStan requires protected observations to be scored exactly once by a plain built-in sampling statement and does not allow likelihood gating with different sampling effects across branches. In addition, some parameters (`bs` and `bs_sigma`) have only implicit flat priors in the original model; adding proper priors for them would change the posterior density, while SafeStan requires every parameter to have exactly one built-in prior sampling statement. These issues cannot be repaired by a minor same-density syntactic rewrite.

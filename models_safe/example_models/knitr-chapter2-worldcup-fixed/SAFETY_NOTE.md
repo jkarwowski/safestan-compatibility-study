@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: none in a SafeStan-compatible top-level form. The original model scores `sqrt_dif`, a transformed-data quantity deterministically computed from `score_1` and `score_2`.
+
+Generated files: none.
+
+Reason: the likelihood statement is `sqrt_dif ~ student_t(...)`, but `sqrt_dif` is not a top-level data variable; it is computed in `transformed data` from the observed scores. Replacing this with a protected top-level observation would require changing the protected interface to a derived non-copy transformation of the supplied data. In addition, parameters `b`, `sigma_a`, and `sigma_y` have no explicit priors; adding priors for them would change the posterior/log density because their implicit priors are not finite proper uniform priors. Therefore a SafeStan-compatible version cannot be produced by a minor same-density rewrite.

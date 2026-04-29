@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the observation `y` is scored once with the built-in likelihood `binomial(n, p)`, but the parameter `sigma` has no explicit prior sampling statement. SafeStan requires every parameter to have exactly one built-in prior before use. Adding a prior for `sigma` would change the posterior because `sigma` is only constrained to be positive and therefore has an implicit improper flat prior, not a finite proper uniform prior that can be made explicit density-neutrally.

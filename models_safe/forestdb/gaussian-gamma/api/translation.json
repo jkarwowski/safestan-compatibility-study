@@ -1,9 +1,9 @@
 {
   "compatibility": "as-is",
-  "data_safe_json": "{\"N\":10,\"y\":[-0.3,0.1,0.4,0.2,-0.1,0.6,0.0,0.3,0.5,0.2],\"mu0\":0.0,\"lambda0\":1.0,\"alpha0\":2.0,\"beta0\":2.0}",
+  "data_safe_json": "{\"N\":4,\"alpha0\":1.7144446077446815,\"beta0\":0.8656065695280868,\"lambda0\":2.4289426173166047,\"mu0\":6.228490071480352,\"y\":[4.0,3.0,4.0,4.0]}",
   "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] y;\n  real mu0;\n  real<lower=0> lambda0;\n  real<lower=0> alpha0;\n  real<lower=0> beta0;\n}\nparameters {\n  real mu;\n  real<lower=0> tau;\n}\ntransformed parameters {\n  real<lower=0> sigma = inv_sqrt(tau);\n}\nmodel {\n  tau ~ gamma(alpha0, beta0);\n  mu ~ normal(mu0, inv_sqrt(lambda0 * tau));\n  y ~ normal(mu, sigma);\n}\ngenerated quantities {\n  real y_rep = normal_rng(mu, sigma);\n}\n",
   "protected_variables": [
     "y"
   ],
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement (`y ~ normal(mu, sigma)`) before any other use. Both parameters have exactly one built-in prior sampling statement before subsequent model-block use (`tau ~ gamma(...)`, then `mu ~ normal(...)`).\n"
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement, `y ~ normal(mu, sigma)`, after both parameters have their built-in priors. The remaining data variables (`N`, `mu0`, `lambda0`, `alpha0`, `beta0`) are context inputs used as sizes or hyperparameters and are not protected.\n"
 }

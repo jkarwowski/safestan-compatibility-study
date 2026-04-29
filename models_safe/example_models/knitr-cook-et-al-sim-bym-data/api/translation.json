@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: none. The program does not observe any top-level data variable with a sampling statement; `N`, `N_edges`, `node1`, `node2`, and `E` are context/configuration inputs.\n\nGenerated files: none.\n\nReason: the model block contains manual log-density modification with `target += -0.5 * dot_self(phi[node1] - phi[node2])`, which SafeStan forbids. This term is an intrinsic spatial prior/penalty on transformed parameters and cannot be represented as a minor same-density rewrite using a single built-in prior sampling statement on each top-level parameter. In addition, `phi_std_raw` has no built-in prior sampling statement. Translating this model would require a substantive replacement of the spatial prior construction, so no SafeStan-compatible rewrite is emitted.\n"
+}

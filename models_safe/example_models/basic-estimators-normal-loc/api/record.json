@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/basic-estimators-normal-loc/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:26:26+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/basic-estimators-normal-loc",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_09a2dbd948957ec40069f15defba248192b5a5c18d95610bae",
+  "safe_dir": "models_safe/example_models/basic-estimators-normal-loc",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:25:03+00:00",
+  "usage": {
+    "input_tokens": 2856,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 6986,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 9842
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

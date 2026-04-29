@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: `y` is the observed count interface. The likelihood is a zero-inflated Poisson marginalized mixture implemented by branching on `y[n]` and manually incrementing `target` with `log_mix(...)` or `log(1 - theta) + poisson_lpmf(...)`. SafeStan forbids `target +=` and requires a protected top-level data variable to be scored exactly once by an allowed built-in sampling statement before any other use. Expressing this likelihood under those rules would require a substantive rewrite, such as a custom distribution/manual scoring or an alternative latent-state formulation, rather than a minor mechanical translation.

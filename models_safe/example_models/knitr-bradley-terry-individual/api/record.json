@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-bradley-terry-individual/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:58:12+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-bradley-terry-individual",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_06408ab8936fa5c70069f165a7c84081a193094d4fd964a15d",
+  "safe_dir": "models_safe/example_models/knitr-bradley-terry-individual",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:57:59+00:00",
+  "usage": {
+    "input_tokens": 3566,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1451,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5017
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

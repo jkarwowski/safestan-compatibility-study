@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-simu/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:54:08+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-simu",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0796e0ff75ab8e690069f156a718a0819290b128b890aa3788",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-simu",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:53:58+00:00",
+  "usage": {
+    "input_tokens": 3042,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 873,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3915
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

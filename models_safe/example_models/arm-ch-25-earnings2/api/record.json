@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-25-earnings2/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:20:28+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-25-earnings2",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0c9da34057c03c3e0069f15cd005cc819fb3674a16b4c2d84f",
+  "safe_dir": "models_safe/example_models/arm-ch-25-earnings2",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:20:15+00:00",
+  "usage": {
+    "input_tokens": 3528,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 967,
+    "output_tokens_details": {
+      "reasoning_tokens": 788
+    },
+    "total_tokens": 4495
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

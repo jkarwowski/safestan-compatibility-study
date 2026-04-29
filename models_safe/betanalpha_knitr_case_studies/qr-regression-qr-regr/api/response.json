@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424534,
+  "created_at": 1777424448,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_06217a6219f46c490069f15840b6b081959973f693aec5664b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_06217a6219f46c490069f15841a1508195ac17322c7c9d614d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the original model put the prior sampling statement on transformed parameter `beta`, which SafeStan does not allow. The rewritten model places the equivalent built-in multivariate normal prior on the top-level parameter `beta_tilde`. Since `beta = R_inv * beta_tilde`, the induced covariance for `beta_tilde` is `100 * R * R'`, computed deterministically from context data in transformed data as `beta_tilde_cov`. The protected-data likelihood `y ~ normal(Q * beta_tilde + alpha, sigma)` is unchanged, and no data fields were added.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  int<lower=1> M;\\n  matrix[M, N] X;\\n  vector[N] y;\\n}\\n\\ntransformed data {\\n  // Compute, thin, and then scale QR decomposition\\n  matrix[N, M] Q = qr_Q(X')[, 1:M] * N;\\n  matrix[M, M] R = qr_R(X')[1:M, ] / N;\\n  matrix[M, M] R_inv = inverse(R);\\n  matrix[M, M] beta_tilde_cov = 100 * R * R';\\n}\\n\\nparameters {\\n  vector[M] beta_tilde;\\n  real alpha;\\n  real<lower=0> sigma;\\n}\\n\\ntransformed parameters {\\n  vector[M] beta = R_inv * beta_tilde;\\n}\\n\\nmodel {\\n  beta_tilde ~ multi_normal(rep_vector(0, M), beta_tilde_cov);\\n  alpha ~ normal(0, 10);\\n  sigma ~ cauchy(0, 10);\\n\\n  y ~ normal(Q * beta_tilde + alpha, sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"M\\\":1,\\\"N\\\":5,\\\"X\\\":[[4.203632243761758,4.068335508049714,6.094982411785829,5.134059952157438,4.345512643674157]],\\\"y\\\":[5.0,3.0,5.0,3.0,5.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_06217a6219f46c490069f158931c608195bbf376f9bb4037da",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3141,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 8297,
+    "output_tokens_details": {
+      "reasoning_tokens": 7768
+    },
+    "total_tokens": 11438
+  },
+  "user": null
+}

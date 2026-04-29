@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":4,\"x\":[6.118894317492159,5.984338079424193,2.3145303213335886,6.110298435433132],\"y\":[4.0,4.0,4.0,4.0]}",
+  "model_safe_stan": "data {\n  int N;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  vector<lower=0>[2] a;\n  positive_ordered[2] b;\n  real<lower=0> sigma;\n}\nmodel {\n  vector[N] y_pred;\n  a ~ normal(0, 1);\n  b ~ normal(0, 1);\n  sigma ~ normal(0, 1);\n  y_pred = a[1] * exp(-b[1] * x) + a[2] * exp(-b[2] * x);\n  y ~ lognormal(log(y_pred), sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the existing built-in parameter prior sampling statements for `a`, `b`, and `sigma` so that each parameter is given its unique prior before it is used in the model block. The protected observation `y` remains a top-level data variable and is scored exactly once with the same `lognormal(log(y_pred), sigma)` likelihood. No data values were changed or added.\n"
+}

@@ -1,0 +1,32 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-fit-and-predict-det-conf/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:09:45+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-fit-and-predict-det-conf",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "x1",
+    "y1",
+    "x2"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_07c6fc7e1e9bb83d0069f15a12741081949e48a902625eda86",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-fit-and-predict-det-conf",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:08:34+00:00",
+  "usage": {
+    "input_tokens": 3907,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 7392,
+    "output_tokens_details": {
+      "reasoning_tokens": 6214
+    },
+    "total_tokens": 11299
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-normal/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T00:58:47+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-normal",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_obs"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_024063be3231bc560069f157ab5dc4819f9f2db2c912fbb9ca",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-fit-sales-normal",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:58:19+00:00",
+  "usage": {
+    "input_tokens": 3839,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3193,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 7032
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

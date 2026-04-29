@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"M\":4,\"N\":2,\"X\":[[5.381527626105482,2.994908399577916,5.710508586976299,6.786585173305932],[6.945850524516991,6.076785040897906,3.7318382006211284,6.630141045619443]],\"x0\":[3.079509097667062,4.9527496385595216,3.855248624974836,6.486016352294849],\"y\":[2,2]}",
+  "model_safe_stan": "data {\n  int<lower=0> M; // Number of covariates\n  int<lower=0> N; // Number of observations\n\n  vector[M] x0;   // Covariate baselines\n  matrix[N, M] X; // Covariate design matrix\n\n  array[N] int y;       // Variates\n}\n\ntransformed data {\n  matrix[N, M] deltaX;\n  for (n in 1:N) {\n    deltaX[n,] = X[n] - x0';\n  }\n}\n\nparameters {\n  real alpha;      // Intercept\n  vector[M] beta;  // Slopes\n}\n\nmodel {\n  // Prior model\n  alpha ~ normal(25, 5);\n  beta ~ normal(0, 3);\n\n  // Vectorized observation model\n  y ~ poisson(alpha + deltaX * beta);\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  vector[N] mu = alpha + deltaX * beta;\n  array[N] int y_pred = poisson_rng(mu);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, after the parameter priors for `alpha` and `beta`. Context data variables `M`, `N`, `x0`, and `X` are used only for sizes and predictors.\n"
+}

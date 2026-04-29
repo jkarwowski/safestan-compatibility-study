@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: the original likelihood scores `log_weight`, a transformed-data value computed as `log(weight)`; no SafeStan protected variable is generated.
+
+Generated files: none.
+
+Reason: the model uses parameters `beta` and `sigma` in the likelihood without any explicit priors. SafeStan requires every parameter to be introduced by exactly one built-in prior sampling statement before use. The implicit flat priors on unconstrained `beta` and positive `sigma` are improper and cannot be represented by a density-neutral built-in prior; adding proper priors would change the model. In addition, the observed response is scored through a transformed-data variable rather than a top-level protected data variable, which would require a rewrite if the prior issue were not already substantive.

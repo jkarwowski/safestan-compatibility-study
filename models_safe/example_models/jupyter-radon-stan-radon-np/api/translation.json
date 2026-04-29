@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":4,\"N\":3,\"county\":[1,1,1],\"x\":[4.267361574457203,3.025212467011545,2.4225084551609264],\"y\":[3.0,3.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N; // observations\n  int<lower=1> J; // counties\n  array[N] int<lower=1, upper=J> county;\n  vector[N] x; // floor\n  vector[N] y; // radon\n}\nparameters {\n  vector[J] alpha;\n  real beta;\n  real<lower=0> sigma;\n}\nmodel {\n  alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  sigma ~ normal(0, 10);\n  y ~ normal(alpha[county] + beta * x, sigma);\n}\ngenerated quantities {\n  array[N] real y_rep = normal_rng(alpha[county] + beta * x, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that the parameter priors for `alpha`, `beta`, and `sigma` appear before the likelihood statement that uses them. This preserves the same posterior density while satisfying SafeStan's requirement that each parameter be sampled from its prior before any model-block use. No data changes were required.\n"
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":2,\"N\":3,\"y\":[1,0,1]}",
+  "model_safe_stan": "// ForestDB translation: Nested Chinese Restaurant Process\ndata {\n  int<lower=1> K;\n  int<lower=1> N;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  simplex[K] cluster_weight;\n  vector<lower=0, upper=1>[K] cluster_prob;\n}\nmodel {\n  cluster_weight ~ dirichlet(rep_vector(1.0 / K, K));\n  cluster_prob ~ beta(1, 1);\n  y ~ bernoulli(dot_product(cluster_weight, cluster_prob));\n}\ngenerated quantities {\n  int<lower=1, upper=K> cluster = categorical_rng(cluster_weight);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`. Context data: `K`, `N`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual marginalized Bernoulli-mixture likelihood implemented with `target += log_sum_exp(...)` by the equivalent built-in sampling statement `y ~ bernoulli(dot_product(cluster_weight, cluster_prob))`. For binary observations, `sum_k cluster_weight[k] * Bernoulli(y | cluster_prob[k])` equals `Bernoulli(y | dot_product(cluster_weight, cluster_prob))`, so the posterior density is unchanged. No data fields were added or modified.\n"
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423832,
+  "created_at": 1777423784,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0eb0245c282c33740069f155a8c2c48196b5168d72f6fa87e9",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0eb0245c282c33740069f155a9f0548196a3766606cb7e8349",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the `model` block so that every parameter receives its unique built-in prior before any subsequent model-block use, including use in other hierarchical priors and through transformed parameters in the likelihood predictor. The local predictor `theta` is now declared first but assigned only after all priors. No data changes were made.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;      // Number of observations\\n  vector[N] y;         // Observations\\n  real<lower=0> sigma; // Measurement variability\\n\\n  // First factor information\\n  int<lower=0> N_factor1_levels;\\n\\n  int<lower=0, upper=N_factor1_levels> L_factor1_ncp;\\n  array[L_factor1_ncp] int<lower=1, upper=N_factor1_levels> factor1_ncp_idx;\\n\\n  int<lower=0, upper=N_factor1_levels> L_factor1_cp;\\n  array[L_factor1_cp] int<lower=1, upper=N_factor1_levels> factor1_cp_idx;\\n\\n  // Second factor information\\n  int<lower=0> N_factor2_levels;\\n\\n  int<lower=0, upper=N_factor2_levels> L_factor2_ncp;\\n  array[L_factor2_ncp] int<lower=1, upper=N_factor2_levels> factor2_ncp_idx;\\n\\n  int<lower=0, upper=N_factor2_levels> L_factor2_cp;\\n  array[L_factor2_cp] int<lower=1, upper=N_factor2_levels> factor2_cp_idx;\\n\\n  // Third factor information\\n  int<lower=0> N_factor3_levels;\\n\\n  int<lower=0, upper=N_factor3_levels> L_factor3_ncp;\\n  array[L_factor3_ncp] int<lower=1, upper=N_factor3_levels> factor3_ncp_idx;\\n\\n  int<lower=0, upper=N_factor3_levels> L_factor3_cp;\\n  array[L_factor3_cp] int<lower=1, upper=N_factor3_levels> factor3_cp_idx;\\n\\n  // Nesting configuration\\n  array[N] int<lower=1, upper=N_factor3_levels> obs_to_factor3;\\n  array[N_factor3_levels] int<lower=1, upper=N_factor2_levels> factor3_to_factor2;\\n  array[N_factor2_levels] int<lower=1, upper=N_factor1_levels> factor2_to_factor1;\\n}\\n\\ntransformed data {\\n  // Expand nesting to simplify residual summation\\n  array[N] int<lower=1, upper=N_factor2_levels> obs_to_factor2\\n    = factor3_to_factor2[obs_to_factor3];\\n  array[N] int<lower=1, upper=N_factor2_levels> obs_to_factor1\\n    = factor2_to_factor1[obs_to_factor2];\\n}\\n\\nparameters {\\n  // Baseline\\n  real baseline;\\n\\n  // Hierarchical model for the first factor residuals\\n  vector[L_factor1_ncp] delta_factor1_ncp;\\n  vector[L_factor1_cp] delta_factor1_cp;\\n  real<lower=0> delta_factor1_tau;\\n\\n  // Hierarchical models for the second factor residuals\\n  vector[L_factor2_ncp] delta_factor2_ncp;\\n  vector[L_factor2_cp]  delta_factor2_cp;\\n  vector<lower=0>[N_factor1_levels] delta_factor2_tau;\\n\\n  // Hierarchical models for the third factor residuals\\n  vector[L_factor3_ncp] delta_factor3_ncp;\\n  vector[L_factor3_cp]  delta_factor3_cp;\\n  vector<lower=0>[N_factor2_levels] delta_factor3_tau;\\n}\\n\\ntransformed parameters {\\n  vector[N_factor1_levels] delta_factor1;\\n  vector[N_factor2_levels] delta_factor2;\\n  vector[N_factor3_levels] delta_factor3;\\n\\n  // Reconstruct first factor residuals\\n  delta_factor1[factor1_ncp_idx] = delta_factor1_tau * delta_factor1_ncp;\\n  delta_factor1[factor1_cp_idx] = delta_factor1_cp;\\n\\n  // Reconstruct second factor residuals\\n  delta_factor2[factor2_ncp_idx]\\n    =   delta_factor2_tau[factor2_to_factor1[factor2_ncp_idx]] .* delta_factor2_ncp;\\n  delta_factor2[factor2_cp_idx] = delta_factor2_cp;\\n\\n  // Reconstruct third factor residuals\\n  delta_factor3[factor3_ncp_idx]\\n    =   delta_factor3_tau[factor3_to_factor2[factor3_ncp_idx]] .* delta_factor3_ncp;\\n  delta_factor3[factor3_cp_idx] = delta_factor3_cp;\\n}\\n\\nmodel {\\n  vector[N] theta;\\n\\n  baseline ~ normal(0, 5);\\n\\n  delta_factor1_tau ~ normal(0, 2);\\n  delta_factor1_ncp ~ normal(0, 1);\\n  delta_factor1_cp ~ normal(0, delta_factor1_tau);\\n\\n  delta_factor2_tau ~ normal(0, 2);\\n  delta_factor2_ncp ~ normal(0, 1);\\n  delta_factor2_cp ~ normal(0, delta_factor2_tau[factor2_to_factor1[factor2_cp_idx]]);\\n\\n  delta_factor3_tau ~ normal(0, 2);\\n  delta_factor3_ncp ~ normal(0, 1);\\n  delta_factor3_cp ~ normal(0, delta_factor3_tau[factor3_to_factor2[factor3_cp_idx]]);\\n\\n  theta =  baseline\\n         + delta_factor1[obs_to_factor1]\\n         + delta_factor2[obs_to_factor2]\\n         + delta_factor3[obs_to_factor3];\\n\\n  y ~ normal(theta, sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"L_factor1_cp\\\":2,\\\"L_factor1_ncp\\\":2,\\\"L_factor2_cp\\\":2,\\\"L_factor2_ncp\\\":3,\\\"L_factor3_cp\\\":1,\\\"L_factor3_ncp\\\":0,\\\"N\\\":3,\\\"N_factor1_levels\\\":2,\\\"N_factor2_levels\\\":4,\\\"N_factor3_levels\\\":1,\\\"factor1_cp_idx\\\":[2,2],\\\"factor1_ncp_idx\\\":[2,2],\\\"factor2_cp_idx\\\":[2,2],\\\"factor2_ncp_idx\\\":[2,2,2],\\\"factor2_to_factor1\\\":[1,1,2,1],\\\"factor3_cp_idx\\\":[1],\\\"factor3_ncp_idx\\\":[],\\\"factor3_to_factor2\\\":[2],\\\"obs_to_factor3\\\":[1,1,1],\\\"sigma\\\":4.43024156224951,\\\"y\\\":[3.0,2.0,3.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0eb0245c282c33740069f155d035a08196af260701e8a5dc58",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4288,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 5184,
+    "output_tokens_details": {
+      "reasoning_tokens": 3624
+    },
+    "total_tokens": 9472
+  },
+  "user": null
+}

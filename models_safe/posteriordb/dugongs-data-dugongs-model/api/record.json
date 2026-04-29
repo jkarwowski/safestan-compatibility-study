@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/dugongs-data-dugongs-model/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:40:18+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/dugongs-data-dugongs-model",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "Y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_07f8b782c7c234560069f16f8292d48191adb3a0ec3fc31a3b",
+  "safe_dir": "models_safe/posteriordb/dugongs-data-dugongs-model",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:40:02+00:00",
+  "usage": {
+    "input_tokens": 3105,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1473,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4578
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

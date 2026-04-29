@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"E\":[2.9457970788847416,0.3385527035859187,3.1761085437355527],\"N\":3,\"y\":[2,2,1]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=0> y; // count outcomes\n  vector<lower=0>[N] E; // exposure\n}\ntransformed data {\n  vector[N] log_E = log(E);\n}\nparameters {\n  real beta0; // intercept\n  vector[N] theta; // heterogeneous random effects\n  real<lower=0> sigma; // non-centered re variance \n}\nmodel {\n  beta0 ~ normal(0.0, 2.5);\n  theta ~ normal(0, 1);\n  sigma ~ normal(0, 5);\n  y ~ poisson_log(log_E + beta0 + theta * sigma);\n}\ngenerated quantities {\n  vector[N] eta = log_E + beta0 + theta * sigma;\n  vector[N] mu = exp(eta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that each parameter (`beta0`, `theta`, and `sigma`) receives its built-in prior before being used in the likelihood. This is a mechanical same-density change because Stan log-density contributions are additive. The protected observation `y` remains a top-level data variable and is scored exactly once with `poisson_log`. No data changes were required.\n"
+}

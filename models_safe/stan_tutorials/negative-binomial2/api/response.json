@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338865,
-  "created_at": 1777338844,
+  "completed_at": 1777431724,
+  "created_at": 1777431708,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_06d23f3e51f4d8470069f009dc48648197aeda642e860deb9c",
+  "id": "resp_04c31718dae8a2ca0069f1749c911c8191ad4a07e1dec6e645",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_06d23f3e51f4d8470069f009dd027c8197aee7ff820f17f726",
+      "id": "rs_04c31718dae8a2ca0069f1749d82188191a9cf9b3222dab317",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observation model is a direct built-in likelihood (`y ~ neg_binomial(alpha, beta)`), but SafeStan also requires every parameter to have exactly one built-in prior before use. The parameter `alpha` has only an implicit improper flat prior on `[0, infinity)`. Adding any proper built-in prior for `alpha` would change the posterior/log density, so this cannot be translated with only a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observed count vector `y` is the modelled interface variable and is scored once by the built-in likelihood `neg_binomial(alpha, beta)`. However, SafeStan also requires every top-level parameter to have exactly one built-in prior sampling statement before use. The parameter `alpha` is constrained only to be positive and has no explicit proper built-in prior in the original model. Adding one would change the posterior/log density, so this cannot be translated with only a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_06d23f3e51f4d8470069f009ef84e4819784405d2ec25e4bc4",
+      "id": "msg_04c31718dae8a2ca0069f174aabe788191b6da93f0aa0ff202",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2644,
+    "input_tokens": 2867,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1179,
+    "output_tokens": 1202,
     "output_tokens_details": {
-      "reasoning_tokens": 1024
+      "reasoning_tokens": 1034
     },
-    "total_tokens": 3823
+    "total_tokens": 4069
   },
   "user": null
 }

@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  array[9] real x;\n}\n\nmodel {\n  x ~ normal(0, 1.0 / 3.0);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the original model placed the parameter prior statement `x ~ normal(0, 1)` inside a loop that repeats 9 times. SafeStan does not allow parameter-prior sampling statements inside loops and requires each parameter to have exactly one built-in prior statement. The repeated identical normal prior kernel is mechanically collapsed to the equivalent single prior kernel `x ~ normal(0, 1.0 / 3.0)`, because nine repetitions of a standard normal kernel give a normal kernel with precision 9. No data changes were required.\n"
+}

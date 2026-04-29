@@ -2,10 +2,10 @@ data {
   int<lower=0> N; // items
   array[N] int<lower=0> K; // initial trials
   array[N] int<lower=0> y; // initial successes
+  array[N] int<lower=0> y_safestan_copy; // deterministic copy of y for transformed data
   
   array[N] int<lower=0> K_new; // new trials
   array[N] int<lower=0> y_new; // new successes
-  array[N] int<lower=0> y_safestan_copy; // deterministic copy of y for transformed data summaries
 }
 transformed data {
   real min_y; // minimum successes
@@ -22,7 +22,7 @@ parameters {
   real<lower=0, upper=1> phi; // chance of success (pooled)
 }
 model {
-  phi ~ uniform(0, 1); // density-neutral prior on constrained support
+  phi ~ uniform(0, 1); // implicit bounded prior made explicit
   y ~ binomial(K, phi); // likelihood
 }
 generated quantities {
@@ -52,9 +52,7 @@ generated quantities {
   
   log_p_new = 0;
   for (n in 1 : N) {
-    log_p_new = log_p_new + lchoose(K_new[n], y_new[n])
-                + y_new[n] * log(theta[n])
-                + (K_new[n] - y_new[n]) * log1m(theta[n]);
+    log_p_new = log_p_new + binomial_lpmf(y_new[n] | K_new[n], theta[n]);
   }
   
   for (n in 1 : N) {

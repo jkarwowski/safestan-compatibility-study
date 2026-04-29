@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-convert-odes-one-comp-mm-elim-abs/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:01:59+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-convert-odes-one-comp-mm-elim-abs",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "C"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_037c0a09e4c5d13a0069f1668a9ab881a3960267589393a035",
+  "safe_dir": "models_safe/example_models/knitr-convert-odes-one-comp-mm-elim-abs",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:01:46+00:00",
+  "usage": {
+    "input_tokens": 3502,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1325,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4827
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

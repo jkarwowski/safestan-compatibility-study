@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data choice: `y` is the observed capture-history interface; `nind` and `n_occasions` are context/configuration inputs.
+
+Generated files: none.
+
+Reason: the likelihood is not expressed as a built-in distribution over a top-level observed data variable. The program derives `first` and `last` from `y` in `transformed data`, then conditionally scores the constant observation `1 ~ bernoulli(pr)` inside a loop. SafeStan sampling statements may target only top-level protected data variables or parameters, and protected observations cannot be inside loops. Rewriting this as SafeStan would require introducing artificial/derived observations or replacing the marginalized capture-history likelihood with a different built-in-observation formulation, which is a substantive model/interface change rather than a minor same-density translation.

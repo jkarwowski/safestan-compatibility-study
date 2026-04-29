@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/jupyter-sum-to-zero-stan-binomial-4preds-hard/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:56:10+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/jupyter-sum-to-zero-stan-binomial-4preds-hard",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "pos_tests"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0354bc6250be40bb0069f1651593148193a02948208a4351cd",
+  "safe_dir": "models_safe/example_models/jupyter-sum-to-zero-stan-binomial-4preds-hard",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:55:33+00:00",
+  "usage": {
+    "input_tokens": 3647,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3540,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 7187
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

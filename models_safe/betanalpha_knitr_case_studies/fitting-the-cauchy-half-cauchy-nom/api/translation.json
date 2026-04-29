@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  vector<lower=0>[50] x;\n}\n\nmodel {\n  x ~ cauchy(0, 1);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The model has no data block and does not score any observed data; the only sampling statement is the built-in prior `x ~ cauchy(0, 1)` for the top-level parameter `x`.\n"
+}

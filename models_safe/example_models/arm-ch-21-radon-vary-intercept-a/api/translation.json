@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":2,\"N\":1,\"county\":[1],\"u\":[6.757387877791891,4.9849101738584825],\"x\":[3.0228357993572157],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county;\n  vector[J] u;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  vector[J] a;\n  real b;\n  real g_0;\n  real g_1;\n  real<lower=0, upper=100> sigma_a;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[J] a_hat;\n  vector[J] e_a;\n  vector[N] y_hat;\n  \n  for (j in 1 : J) {\n    a_hat[j] = 100 * g_0 + 100 * g_1 * u[j];\n  }\n  e_a = a - a_hat;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a[county[i]] + x[i] * b * 100;\n  }\n}\nmodel {\n  g_0 ~ normal(0, 1);\n  g_1 ~ normal(0, 1);\n  \n  sigma_a ~ uniform(0, 100);\n  a ~ normal(a_hat, sigma_a);\n  \n  b ~ normal(0, 1);\n  \n  sigma_y ~ uniform(0, 100);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: removed the unused parameter `beta`. It is not referenced in transformed parameters or in the model block and contributes no log-density term, but SafeStan requires every top-level parameter to have exactly one built-in prior sampling statement. The protected likelihood for `y` and the log density over all retained parameters are unchanged. The data file is unchanged.\n"
+}

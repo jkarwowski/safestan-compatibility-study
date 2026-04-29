@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: the model conditions on `log_lik` through a marginalized latent-state likelihood computed with `target += log_sum_exp(...)`.\n\nGenerated files: none.\n\nReason: SafeStan forbids manual `target +=` scoring. Replacing the marginalized finite-state likelihood with protected-data sampling statements would require a substantive model rewrite or a different likelihood representation, not a minor same-density translation.\n"
+}

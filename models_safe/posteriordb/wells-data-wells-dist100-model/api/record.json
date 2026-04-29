@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/wells-data-wells-dist100-model/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:58:44+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/wells-data-wells-dist100-model",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_00fc4673c6c023870069f173d6a064819f9178dcd2f03bfd99",
+  "safe_dir": "models_safe/posteriordb/wells-data-wells-dist100-model",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:58:30+00:00",
+  "usage": {
+    "input_tokens": 3025,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1130,
+    "output_tokens_details": {
+      "reasoning_tokens": 950
+    },
+    "total_tokens": 4155
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

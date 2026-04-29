@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/radon-all-radon-partially-pooled-centered/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:51:18+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/radon-all-radon-partially-pooled-centered",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_063f9238a9eb7ccb0069f17204cde481918d285c18edbde9dd",
+  "safe_dir": "models_safe/posteriordb/radon-all-radon-partially-pooled-centered",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:50:44+00:00",
+  "usage": {
+    "input_tokens": 3121,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3023,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6144
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

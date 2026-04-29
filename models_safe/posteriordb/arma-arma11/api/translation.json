@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"T\":5,\"y\":[6.400052103748422,2.224175077401073,6.988747459920654,3.4633062133582104,3.1363283860156232],\"y_safestan_copy\":[6.400052103748422,2.224175077401073,6.988747459920654,3.4633062133582104,3.1363283860156232]}",
+  "model_safe_stan": "// ARMA(1, 1)\n\ndata {\n  int<lower=1> T; // number of observations\n  array[T] real y; // observed outputs\n  array[T] real y_safestan_copy; // deterministic copy of y for pre-observation recursion\n}\nparameters {\n  real mu; // mean coefficient\n  real phi; // autoregression coefficient\n  real theta; // moving average coefficient\n  real<lower=0> sigma; // noise scale\n}\nmodel {\n  vector[T] nu; // prediction for time t\n  vector[T] err; // error for time t, computed from deterministic copy\n  \n  mu ~ normal(0, 10);\n  phi ~ normal(0, 2);\n  theta ~ normal(0, 2);\n  sigma ~ cauchy(0, 2.5);\n  \n  nu[1] = mu + phi * mu; // assume err[0] == 0\n  err[1] = y_safestan_copy[1] - nu[1];\n  for (t in 2 : T) {\n    nu[t] = mu + phi * y_safestan_copy[t - 1] + theta * err[t - 1];\n    err[t] = y_safestan_copy[t] - nu[t];\n  }\n  \n  y ~ normal(nu, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: rewrote the residual likelihood `err ~ normal(0, sigma)` as the equivalent observation likelihood `y ~ normal(nu, sigma)`. Added `y_safestan_copy`, a deterministic copy of `y`, so that the ARMA recursion can be computed before the protected observation statement without reading protected data early. In `data_safe.json`, `y_safestan_copy[i] = y[i]` for all `i = 1, ..., T`.\n"
+}

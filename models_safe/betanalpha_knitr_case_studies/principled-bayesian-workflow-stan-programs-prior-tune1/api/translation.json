@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "functions {\n  // Difference between one-sided Gaussian tail probability and target probability\n  vector tail_delta(vector y, vector theta, array[] real x_r, array[] int x_i) {\n    vector[1] deltas;\n    deltas[1] = 2 * (normal_cdf(theta[1] | 0, exp(y[1])) - 0.5) - 0.99;\n    return deltas;\n  }\n}\n\ntransformed data {\n  vector[1] y_guess = [log(5)]'; // Initial guess of Gaussian standard deviation\n  vector[1] theta = [15]';       // Target quantile\n  vector[1] y;\n  array[0] real x_r;\n  array[0] int x_i;\n\n  // Find Gaussian standard deviation that ensures 99% probabilty below 15\n  y = algebra_solver(tail_delta, y_guess, theta, x_r, x_i);\n\n  print(\"Standard deviation = \", exp(y[1]));\n}\n\ngenerated quantities {\n  real sigma = exp(y[1]);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no top-level data variables, no sampling statements, no parameters requiring priors, and no prohibited direct log-density manipulation. The transformed-data computation and generated quantity are deterministic and do not condition on protected data.\n"
+}

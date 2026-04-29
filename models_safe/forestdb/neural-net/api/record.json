@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/neural-net/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:34:49+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/neural-net",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0c95becb48bcc73c0069f16e313b18819594bb2b143999aaca",
+  "safe_dir": "models_safe/forestdb/neural-net",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:34:25+00:00",
+  "usage": {
+    "input_tokens": 3306,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2111,
+    "output_tokens_details": {
+      "reasoning_tokens": 1542
+    },
+    "total_tokens": 5417
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

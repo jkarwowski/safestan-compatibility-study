@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":1,\"N\":2,\"county_idx\":[1,1],\"floor_measure\":[3.4475500663235,5.436107913996781],\"log_radon\":[4.009221827293693,5.538015706180802]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county_idx;\n  vector[N] floor_measure;\n  vector[N] log_radon;\n}\nparameters {\n  vector[J] alpha_raw;\n  real beta;\n  real mu_alpha;\n  real<lower=0> sigma_alpha;\n  real<lower=0> sigma_y;\n}\ntransformed parameters {\n  vector[J] alpha;\n  // implies: alpha ~ normal(mu_alpha, sigma_alpha);\n  alpha = mu_alpha + sigma_alpha * alpha_raw;\n}\nmodel {\n  vector[N] mu;\n\n  // Prior\n  sigma_y ~ normal(0, 1);\n  sigma_alpha ~ normal(0, 1);\n  mu_alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  alpha_raw ~ normal(0, 1);\n\n  for (n in 1 : N) {\n    mu[n] = alpha[county_idx[n]] + floor_measure[n] * beta;\n  }\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual likelihood accumulation inside the loop, `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)`, with a single built-in sampling statement `log_radon ~ normal(mu, sigma_y)`. The linear predictor `mu` is still computed deterministically from the same parameters and context data before the observation statement. No data fields were added or changed.\n"
+}

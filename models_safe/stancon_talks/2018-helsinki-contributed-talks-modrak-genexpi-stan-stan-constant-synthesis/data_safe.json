@@ -1,0 +1,24 @@
+{
+  "asymptotic_normalized_state_prior_sigma": 3.24154576922151,
+  "degradation_prior_mean": 5.043396257201822,
+  "degradation_prior_sigma": 3.399019604025857,
+  "expression": [
+    4.276195727867844,
+    0.862120284255873,
+    3.669440441376271
+  ],
+  "expression_safestan_copy": [
+    4.276195727867844,
+    0.862120284255873,
+    3.669440441376271
+  ],
+  "initial_condition_prior_sigma": 1.9365935554023659,
+  "measurement_sigma_absolute": 2.4544476851350905,
+  "measurement_sigma_relative": 0.729155510124023,
+  "measurement_times": [
+    1,
+    2,
+    3
+  ],
+  "num_measurements": 3
+}

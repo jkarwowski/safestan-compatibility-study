@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `kid_score` is the observed response scored by the likelihood. `mom_work` and `N` are context/configuration data.\n\nGenerated files: none.\n\nReason: the likelihood itself is a plain top-level sampling statement, but the parameters `beta` and `sigma` have no explicit priors. SafeStan requires every top-level parameter to have exactly one built-in prior sampling statement before use. Adding proper priors for the unconstrained `beta` vector or the positive `sigma` parameter would change the posterior/log density relative to the original Stan model's implicit improper priors, so this cannot be a minor same-density rewrite.\n"
+}

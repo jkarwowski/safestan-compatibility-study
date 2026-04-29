@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-3-kidiq-prediction/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:20:38+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-3-kidiq-prediction",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_04c6429148c196b80069f15cde16ec8191b7801bcc013dbe32",
+  "safe_dir": "models_safe/example_models/arm-ch-3-kidiq-prediction",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:20:29+00:00",
+  "usage": {
+    "input_tokens": 3156,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 698,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3854
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

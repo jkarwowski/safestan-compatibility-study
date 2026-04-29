@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the observed detection histories `y` are scored through manual `target +=` statements inside a loop, with a data-dependent branch on `sum(y[r])`. SafeStan forbids direct `target +=` scoring and also requires protected observations to be scored exactly once by a built-in distribution before any other use. The likelihood is a marginalized occupancy/latent-state likelihood using `log_sum_exp`; replacing it with SafeStan sampling statements would require a substantive rewrite of the likelihood representation rather than a minor mechanical translation.\n"
+}

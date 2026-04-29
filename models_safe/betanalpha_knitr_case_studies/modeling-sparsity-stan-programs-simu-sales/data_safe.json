@@ -1,0 +1,15 @@
+{
+  "N_obs": 4,
+  "N_obs_days": 1,
+  "N_pred_days": 2,
+  "obs_day_idx": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "pred_day_idx": [
+    1,
+    1
+  ]
+}

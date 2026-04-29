@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "transformed data {\n  matrix[2, 2] Sigma = [[1, 0.1], [0.1, 1]];\n  vector[2] mu = [0, 0]';\n}\nparameters {\n  vector[2] y;\n}\nmodel {\n  y ~ multi_normal(mu, Sigma);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The model has no top-level data variables and no observed likelihood interface to protect. The parameter `y` is assigned exactly one built-in prior sampling statement before any model-block use.\n"
+}

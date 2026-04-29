@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"tau_x\":3.23992749195782,\"x0\":[3.305309810550857,4.733270401499986]}",
+  "model_safe_stan": "data {\n  vector[2] x0;\n  real<lower=0> tau_x;\n}\n\ntransformed data {\n  int<lower=0> M = 2;   // Number of covariates\n  int<lower=0> N = 250; // Number of observations\n\n  vector[2] z0 = [-5, 8]';\n\n  real gamma0 = -7;                          // Intercept\n  vector[M] gamma1 = [4, -6]';               // Linear slopes\n  matrix[M, M] gamma2 = [ [3, -1], [-1, 1]]; // Quadratic slopes\n  real sigma = 0.5;                          // Measurement variability\n}\n\ngenerated quantities {\n  matrix[N, M] X; // Covariate design matrix\n  array[N] real y;      // Variates\n\n  for (n in 1:N) {\n    X[n, 1] = normal_rng(x0[1], tau_x);\n    X[n, 2] = normal_rng(x0[2], tau_x);\n    y[n] = normal_rng(  gamma0\n                      + (X[n] - z0') * gamma1\n                      + (X[n] - z0') * gamma2 * (X[n] - z0')'\n                      + pow(X[n, 1] / 2.75 - 0, 3) + pow(X[n, 2] / 2.25 - 0, 3), sigma);\n  }\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no `model` block, no parameters, and no sampling statements that score top-level data; `x0` and `tau_x` are context inputs used only for simulation in `generated quantities`.\n"
+}

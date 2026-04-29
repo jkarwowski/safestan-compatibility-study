@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427556,
+  "created_at": 1777427483,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0e15cbb900da57620069f1641b77808193a53e144ca393fb60",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0e15cbb900da57620069f1641c17848193aebc3e6c9b627fc8",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: none. The model has no data block and no observed likelihood terms.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added one built-in sampling statement for each top-level parameter to satisfy SafeStan's parameter-prior discipline. The added priors are density-neutral on the existing constrained parameter support: `x ~ uniform(-1, 1)` is constant over `x`'s declared bounds, and `y ~ uniform(-1, 1)` is constant over the declared circle slice because the existing bound on `y` is always contained in `[-1, 1]`. This preserves the original uniform-within-constraints log density while avoiding a parameter-dependent uniform prior for `y`, which would change the density.\\n\",\"model_safe_stan\":\"/*\\n * BUGS volume 3, fun shapes, circle\\n * http://www.openbugs.net/Examples/Funshapes.html\\n */\\nparameters {\\n  real<lower=-1, upper=1> x;\\n  real<lower=-sqrt(1 - square(x)), upper=sqrt(1 - square(x))> y;\\n}\\nmodel {\\n  /* uniform within constraints */\\n  x ~ uniform(-1, 1);\\n  y ~ uniform(-1, 1);\\n}\\n\",\"data_safe_json\":\"{}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0e15cbb900da57620069f164628fe08193bb39b3ac226d8f96",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 2917,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 7058,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 9975
+  },
+  "user": null
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":3,\"t\":[1.0,2.0,3.0],\"x\":[1,2,4]}",
+  "model_safe_stan": "// BUGS pump example (Vol 1, Example 2)\ndata {\n  int<lower=0> N;\n  array[N] int<lower=0> x;\n  vector[N] t;\n}\nparameters {\n  real<lower=0> alpha;\n  real<lower=0> beta;\n  vector<lower=0>[N] theta;\n}\nmodel {\n  alpha ~ exponential(1.0);\n  beta ~ gamma(0.1, 1.0);\n  theta ~ gamma(alpha, beta);\n  x ~ poisson(theta .* t);\n}\n\n",
+  "protected_variables": [
+    "x"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `x`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `x` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `x ~ poisson(theta .* t)`. The other data variables, `N` and `t`, are context inputs used as a size and exposure predictor. Each parameter (`alpha`, `beta`, and `theta`) has exactly one built-in prior before later use.\n"
+}

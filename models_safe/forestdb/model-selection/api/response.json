@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337873,
-  "created_at": 1777337861,
+  "completed_at": 1777429994,
+  "created_at": 1777429986,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_07d6dae7d92452ce0069f00605f16c81929363598ba6ed4695",
+  "id": "resp_04c0e42e0d2a537a0069f16de2cc54819fb0f9ec2868f5f7f8",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_07d6dae7d92452ce0069f006068ed8819284ca3dc79faa890e",
+      "id": "rs_04c0e42e0d2a537a0069f16de37390819f9cd032ded281bf84",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `y` is a whole-data marginalized mixture over the linear and quadratic regression models, implemented by accumulating `normal_lpdf(...)` terms and then using `target += log_sum_exp(lp_linear, lp_quad)`. SafeStan forbids arbitrary `target +=` scoring and requires each protected variable to be observed exactly once with a built-in sampling statement. Replacing this marginalized model-selection likelihood with SafeStan sampling statements would require a substantive model rewrite, such as introducing an unrepresentable discrete model indicator or changing the likelihood factorization, so no minor same-density translation is available.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y` (with `x` as an unprotected predictor/context input).\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `y` is a marginalized model-selection mixture over the entire data set, implemented by accumulating `normal_lpdf` terms into two log probabilities and then using `target += log_sum_exp(lp_linear, lp_quad)`. SafeStan forbids arbitrary `target +=` scoring and `_lpdf` calls, and this global marginalized mixture cannot be expressed as a single built-in sampling statement on a top-level protected variable without a substantive model rewrite or likelihood change.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_07d6dae7d92452ce0069f0060f634081929863e36fa7da716a",
+      "id": "msg_04c0e42e0d2a537a0069f16de90de0819fbe4bd11b480ed146",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2949,
+    "input_tokens": 3456,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 703,
+    "output_tokens": 592,
     "output_tokens_details": {
-      "reasoning_tokens": 516
+      "reasoning_tokens": 417
     },
-    "total_tokens": 3652
+    "total_tokens": 4048
   },
   "user": null
 }

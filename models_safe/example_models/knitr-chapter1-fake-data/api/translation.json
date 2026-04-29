@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 1,\n  \"a\": 4.04573101785471,\n  \"b\": 4.527743384375389,\n  \"sigma\": 4.627807575893257,\n  \"x\": [\n    6.910058962078648\n  ]\n}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  real a;\n  real b;\n  real<lower=0> sigma;\n  vector[N] x;\n}\ngenerated quantities {\n  vector[N] y;\n  for (n in 1 : N) {\n    y[n] = normal_rng(a + b * x[n], sigma);\n  }\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The program does not condition on any top-level data with a likelihood sampling statement; `N`, `a`, `b`, `sigma`, and `x` are context inputs used only to simulate generated quantities.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no parameters, no model-block likelihood, and no forbidden log-density manipulation; `y` is produced in `generated quantities` by `normal_rng` and is not an observed protected data variable.\n"
+}

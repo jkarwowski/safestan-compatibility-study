@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `mu` and `y` in the original model. `mu` is scored by `mu ~ normal(0, 10)`, and `y` is scored through the marginalized mixture likelihood.
+
+Generated files: none.
+
+Reason: the likelihood for `y` is implemented with manual `target += log_sum_exp(...)` scoring inside loops, using component log densities. SafeStan forbids arbitrary `target +=` scoring, and there is no direct built-in Stan sampling statement for this marginalized finite normal mixture likelihood. Replacing it would require a substantive model rewrite rather than a minor same-density translation.

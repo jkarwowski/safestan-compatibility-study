@@ -1,24 +1,27 @@
 {
   "artifacts_dir": "models_safe/stan_tutorials/simple-regression/api",
   "compatibility": "major",
-  "completed_at": "2026-04-28T01:15:30+00:00",
+  "completed_at": "2026-04-29T03:02:11+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_tutorials/simple-regression",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0704ae7014508b860069f00a170a6c81949938260e27d7221b",
+  "response_id": "resp_0b341e95ce94e7010069f174aa3908819f92dafe63ddfcec12",
   "safe_dir": "models_safe/stan_tutorials/simple-regression",
-  "started_at": "2026-04-28T01:15:02+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:02:02+00:00",
   "usage": {
-    "input_tokens": 4575,
+    "input_tokens": 2866,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1489,
+    "output_tokens": 702,
     "output_tokens_details": {
-      "reasoning_tokens": 1279
+      "reasoning_tokens": 516
     },
-    "total_tokens": 6064
+    "total_tokens": 3568
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

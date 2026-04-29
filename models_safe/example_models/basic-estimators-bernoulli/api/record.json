@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/basic-estimators-bernoulli/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:24:54+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/basic-estimators-bernoulli",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0c8f164d6186bd180069f15de1c5d08194893a2e64c3b94214",
+  "safe_dir": "models_safe/example_models/basic-estimators-bernoulli",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:24:49+00:00",
+  "usage": {
+    "input_tokens": 2909,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 425,
+    "output_tokens_details": {
+      "reasoning_tokens": 210
+    },
+    "total_tokens": 3334
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

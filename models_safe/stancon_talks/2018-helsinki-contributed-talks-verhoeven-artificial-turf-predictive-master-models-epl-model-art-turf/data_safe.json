@@ -1,0 +1,36 @@
+{
+  "art_turf": [
+    0
+  ],
+  "away_team": [
+    4
+  ],
+  "away_team_pred": [
+    4
+  ],
+  "away_week": [
+    5
+  ],
+  "goal_difference": [
+    2.751772645446552
+  ],
+  "home_team": [
+    2
+  ],
+  "home_team_pred": [
+    3
+  ],
+  "home_week": [
+    1
+  ],
+  "n_games": 1,
+  "n_games_pred": 1,
+  "n_teams": 4,
+  "n_weeks": 5,
+  "prev_perf": [
+    3.220267559756265,
+    5.80059495320019,
+    6.943745665315875,
+    5.063791890129755
+  ]
+}

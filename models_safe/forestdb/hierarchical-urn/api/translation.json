@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"G\":2,\"N\":5,\"group\":[2,1,2,1,1],\"y\":[0,1,0,0,1]}",
+  "model_safe_stan": "// ForestDB translation: Hierarchical Urn Model\ndata {\n  int<lower=1> G;\n  int<lower=1> N;\n  array[N] int<lower=1, upper=G> group;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0> alpha;\n  real<lower=0> beta;\n  vector<lower=0, upper=1>[G] theta;\n}\nmodel {\n  alpha ~ gamma(2, 1);\n  beta ~ gamma(2, 1);\n  theta ~ beta(alpha, beta);\n  y ~ bernoulli(theta[group]);\n}\ngenerated quantities {\n  real population_mean = alpha / (alpha + beta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the loop of indexed observation statements `y[n] ~ bernoulli(theta[group[n]])` with the equivalent vectorized top-level observation statement `y ~ bernoulli(theta[group])`. This preserves the same likelihood while making the protected observation a plain top-level data variable scored exactly once outside control flow. The data file is unchanged.\n"
+}

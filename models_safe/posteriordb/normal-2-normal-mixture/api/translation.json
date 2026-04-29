@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood for `y` is a marginalized two-component Gaussian mixture implemented with manual `target += log_mix(...)` scoring inside a loop. SafeStan forbids arbitrary `target +=` scoring, and replacing this with SafeStan sampling statements would require a substantive likelihood/model rewrite rather than a minor same-density translation. The parameter prior loop for `mu` could be mechanically vectorized, but the marginalized mixture likelihood remains incompatible.\n"
+}

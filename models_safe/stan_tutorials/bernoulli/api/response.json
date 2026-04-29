@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338680,
-  "created_at": 1777338670,
+  "completed_at": 1777431681,
+  "created_at": 1777431675,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_02a18beb49eeddd00069f0092e2244819c8f4e5df3024279ca",
+  "id": "resp_0a06acd3913814310069f1747bfbb4819f9afdb8686d634788",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_02a18beb49eeddd00069f0092ebcd8819cbc4a36e626a33d7c",
+      "id": "rs_0a06acd3913814310069f1747c9e38819f9d4d17024c09ba62",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once by the built-in `bernoulli` distribution using a plain sampling statement. The parameter `theta` has exactly one built-in prior sampling statement before it is used in the likelihood.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  real<lower=0, upper=1> theta;\\n}\\nmodel {\\n  theta ~ beta(1, 1);\\n  y ~ bernoulli(theta);\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"y\\\": [\\n    0,\\n    1,\\n    0,\\n    0,\\n    0,\\n    0,\\n    0,\\n    0,\\n    0,\\n    1\\n  ],\\n  \\\"N\\\": 10\\n}\",\"protected_variables\":[\"y\"]}",
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The parameter `theta` has exactly one built-in prior before it is used in the likelihood.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  real<lower=0, upper=1> theta;\\n}\\nmodel {\\n  theta ~ beta(1, 1);\\n  y ~ bernoulli(theta);\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"N\\\": 2,\\n  \\\"y\\\": [\\n    1,\\n    0\\n  ]\\n}\\n\",\"protected_variables\":[\"y\"]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_02a18beb49eeddd00069f00935b830819cb8749ae0db74142e",
+      "id": "msg_0a06acd3913814310069f1747fdd38819fbf6379046b4e46ca",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2619,
+    "input_tokens": 2834,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 671,
+    "output_tokens": 510,
     "output_tokens_details": {
-      "reasoning_tokens": 383
+      "reasoning_tokens": 270
     },
-    "total_tokens": 3290
+    "total_tokens": 3344
   },
   "user": null
 }

@@ -1,24 +1,27 @@
 {
   "artifacts_dir": "models_safe/stan_case_studies/worldcup-fixed/api",
   "compatibility": "major",
-  "completed_at": "2026-04-28T01:08:36+00:00",
+  "completed_at": "2026-04-29T03:01:16+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_case_studies/worldcup-fixed",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0a2b9690a353c2d20069f0085dc24c81958e26b727811fe8e6",
+  "response_id": "resp_009c176900418d840069f1745e750881909e7efe105be7039f",
   "safe_dir": "models_safe/stan_case_studies/worldcup-fixed",
-  "started_at": "2026-04-28T01:07:41+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:00:46+00:00",
   "usage": {
-    "input_tokens": 4254,
+    "input_tokens": 3272,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 3429,
+    "output_tokens": 2258,
     "output_tokens_details": {
-      "reasoning_tokens": 3202
+      "reasoning_tokens": 2070
     },
-    "total_tokens": 7683
+    "total_tokens": 5530
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

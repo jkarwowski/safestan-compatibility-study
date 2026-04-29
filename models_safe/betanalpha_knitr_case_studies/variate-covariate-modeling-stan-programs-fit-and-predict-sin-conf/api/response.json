@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424979,
+  "created_at": 1777424950,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_00e130ed081086e20069f15a367044819cbd66d824d0de3828",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_00e130ed081086e20069f15a36f774819c814528e055615509",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `x1`, `y1`, and `x2`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added the explicit prior `phi ~ uniform(0, 2 * pi())` for `phi`, matching the original finite constraint `real<lower=0, upper=2 * pi()> phi` and the model comment indicating an implicit uniform prior. No data fields were changed. The protected observations remain top-level data variables and are each scored exactly once by built-in distributions.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N1; // Number of complete observations\\n  vector[N1] x1;   // Complete observations\\n  vector[N1] y1;   // Complete observations\\n  real<lower=0> alpha1; // Complete observation covariate distribution shape\\n  real<lower=0> beta1;  // Complete observation covariate distribution rate\\n\\n  int<lower=1> N2;      // Number of incomplete observations\\n  vector[N2] x2;        // Incomplete observations\\n  real<lower=0> alpha2; // Incomplete observation covariate distribution shape\\n  real<lower=0> beta2;  // Incomplete observation covariate distribution rate\\n\\n  int<lower=1> N_grid; // Number of grid points for quantifying functional behavior\\n  vector[N_grid] x_grid; // Grid points for quantifying functional behavior\\n}\\n\\nparameters {\\n  real<lower=0> A;                   // Variate units\\n  real<lower=0, upper=2 * pi()> phi; // Radians\\n  real<lower=0> omega1;              // Radians per second\\n  real<lower=0> omega2;              // Radians per second\\n  real<lower=0> gamma;               // Seconds\\n  real<lower=0> sigma;               // Variate units\\n}\\n\\nmodel {\\n  A ~ normal(0, 5);\\n  phi ~ uniform(0, 2 * pi());\\n  omega1 ~ normal(0, 5);\\n  omega2 ~ normal(0, 5);\\n  gamma ~ normal(0, 1);\\n  sigma ~ normal(0, 0.25);\\n\\n  x1 ~ gamma(alpha1, beta1 + gamma * omega1);\\n  y1 ~ normal(A * sin(omega1 * x1 + phi), sigma);\\n\\n  x2 ~ gamma(alpha2, beta2 + gamma * omega2);\\n}\\n\\ngenerated quantities {\\n  array[N1] real x1_pred; // Complete observation covariate retrodiction\\n  array[N1] real y1_pred; // Complete observation conditional variate retrodiction\\n  array[N2] real x2_pred; // Incomplete observation covariate retrodiction\\n  array[N2] real y2_pred; // Incomplete observation conditional variate prediction\\n\\n  array[N_grid] real f1_grid;      // Inferred functional behavior along covariate grid\\n  array[N_grid] real f2_grid;      // Inferred functional behavior along covariate grid\\n  array[N_grid] real y2_pred_grid; // Predictive variate behavior along covariate grid\\n\\n  for (n in 1:N1) {\\n    x1_pred[n] = gamma_rng(alpha1, beta1 + gamma * omega1);\\n    y1_pred[n] = normal_rng(A * sin(omega1 * x1[n] + phi), sigma);\\n  }\\n\\n  for (n in 1:N2) {\\n    x2_pred[n] = gamma_rng(alpha2, beta2 + gamma * omega2);\\n    y2_pred[n] = normal_rng(A * sin(omega2 * x2[n] + phi), sigma);\\n  }\\n\\n  for (n in 1:N_grid) {\\n    f1_grid[n] = A * sin(omega1 * x_grid[n] + phi);\\n    f2_grid[n] = A * sin(omega2 * x_grid[n] + phi);\\n    y2_pred_grid[n] = normal_rng(f2_grid[n], sigma);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N1\\\":3,\\\"N2\\\":1,\\\"N_grid\\\":3,\\\"alpha1\\\":2.465006750021767,\\\"alpha2\\\":3.8215397685253967,\\\"beta1\\\":1.3779189159132301,\\\"beta2\\\":1.645823044047622,\\\"x1\\\":[5.761808476683793,3.683401612574655,5.41300117075016],\\\"x2\\\":[5.103861141777648],\\\"x_grid\\\":[1.0,2.0,3.0],\\\"y1\\\":[3.0,2.0,3.0]}\",\"protected_variables\":[\"x1\",\"y1\",\"x2\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_00e130ed081086e20069f15a4dba88819ca04f3f41043c4c93",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3853,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3178,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 7031
+  },
+  "user": null
+}

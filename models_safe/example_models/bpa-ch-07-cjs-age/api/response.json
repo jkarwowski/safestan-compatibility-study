@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426343,
+  "created_at": 1777426129,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_09426a39114a74880069f15ed1ea248196b81b0456cc78a958",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_09426a39114a74880069f15ed2868881968de47735409634e4",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_bernoulli_safestan`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added `y_bernoulli_safestan` and `n_bernoulli_safestan`. The new protected vector is a deterministic list, in the original likelihood order, of the Bernoulli outcomes scored by the model: for each scored survival or terminal `1` outcome it copies the individual's last-capture entry of `y` (which is 1), and for each recapture term it copies the corresponding `y[i, t]`. For the supplied data this gives `[1, 0, 1, 1, 1, 0, 1, 1, 1]`. The original `y` is retained as context for computing first/last capture indices and the deterministic ordering of the probability vector. The looped/indexed likelihood statements were replaced by one vectorized Bernoulli sampling statement using precomputed probabilities. Added explicit `uniform(0, 1)` priors for the bounded parameters `mean_p` and `beta`, matching the original implicit uniform priors.\\n\",\"model_safe_stan\":\"functions {\\n  int first_capture(array[] int y_i) {\\n    for (k in 1 : size(y_i)) {\\n      if (y_i[k]) {\\n        return k;\\n      }\\n    }\\n    return 0;\\n  }\\n\\n  int last_capture(array[] int y_i) {\\n    for (k_rev in 0 : (size(y_i) - 1)) {\\n      int k = size(y_i) - k_rev;\\n      if (y_i[k]) {\\n        return k;\\n      }\\n    }\\n    return 0;\\n  }\\n\\n  matrix prob_uncaptured(int nind, int n_occasions, matrix p, matrix phi) {\\n    matrix[nind, n_occasions] chi;\\n\\n    for (i in 1 : nind) {\\n      chi[i, n_occasions] = 1.0;\\n      for (t in 1 : (n_occasions - 1)) {\\n        int t_curr = n_occasions - t;\\n        int t_next = t_curr + 1;\\n        chi[i, t_curr] = (1 - phi[i, t_curr])\\n                         + phi[i, t_curr] * (1 - p[i, t_next - 1])\\n                           * chi[i, t_next];\\n      }\\n    }\\n    return chi;\\n  }\\n}\\ndata {\\n  int<lower=0> nind;\\n  int<lower=2> n_occasions;\\n  array[nind, n_occasions] int<lower=0, upper=1> y;\\n  int<lower=1> max_age;\\n  array[nind, n_occasions - 1] int<lower=0, upper=max_age> x;\\n  int<lower=0> n_bernoulli_safestan;\\n  array[n_bernoulli_safestan] int<lower=0, upper=1> y_bernoulli_safestan;\\n}\\ntransformed data {\\n  int n_occ_minus_1 = n_occasions - 1;\\n  array[nind] int<lower=0, upper=n_occasions> first;\\n  array[nind] int<lower=0, upper=n_occasions> last;\\n\\n  for (i in 1 : nind) {\\n    first[i] = first_capture(y[i]);\\n  }\\n  for (i in 1 : nind) {\\n    last[i] = last_capture(y[i]);\\n  }\\n}\\nparameters {\\n  real<lower=0, upper=1> mean_p;\\n  vector<lower=0, upper=1>[max_age] beta;\\n}\\ntransformed parameters {\\n  matrix<lower=0, upper=1>[nind, n_occ_minus_1] phi;\\n  matrix<lower=0, upper=1>[nind, n_occ_minus_1] p;\\n  matrix<lower=0, upper=1>[nind, n_occasions] chi;\\n  vector<lower=0, upper=1>[n_bernoulli_safestan] theta_bernoulli_safestan;\\n\\n  for (i in 1 : nind) {\\n    for (t in 1 : n_occ_minus_1) {\\n      phi[i, t] = 0;\\n      p[i, t] = 0;\\n    }\\n    if (first[i] > 0 && first[i] <= n_occ_minus_1) {\\n      for (t in first[i] : n_occ_minus_1) {\\n        phi[i, t] = beta[x[i, t]];\\n        p[i, t] = mean_p;\\n      }\\n    }\\n  }\\n\\n  chi = prob_uncaptured(nind, n_occasions, p, phi);\\n\\n  {\\n    int k = 1;\\n    if (n_bernoulli_safestan > 0) {\\n      for (k_init in 1 : n_bernoulli_safestan) {\\n        theta_bernoulli_safestan[k_init] = 0;\\n      }\\n    }\\n    for (i in 1 : nind) {\\n      if (first[i] > 0) {\\n        if (last[i] > first[i]) {\\n          for (t in (first[i] + 1) : last[i]) {\\n            theta_bernoulli_safestan[k] = phi[i, t - 1];\\n            k += 1;\\n            theta_bernoulli_safestan[k] = p[i, t - 1];\\n            k += 1;\\n          }\\n        }\\n        theta_bernoulli_safestan[k] = chi[i, last[i]];\\n        k += 1;\\n      }\\n    }\\n  }\\n}\\nmodel {\\n  mean_p ~ uniform(0, 1);\\n  beta ~ uniform(0, 1);\\n  y_bernoulli_safestan ~ bernoulli(theta_bernoulli_safestan);\\n}\\n\",\"data_safe_json\":\"{\\\"max_age\\\":2,\\\"n_occasions\\\":6,\\\"nind\\\":1,\\\"x\\\":[[2,2,1,2,1]],\\\"y\\\":[[0,1,0,1,0,1]],\\\"n_bernoulli_safestan\\\":9,\\\"y_bernoulli_safestan\\\":[1,0,1,1,1,0,1,1,1]}\",\"protected_variables\":[\"y_bernoulli_safestan\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_09426a39114a74880069f15fa060648196a8c1bc61b4ce88fa",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3922,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 22216,
+    "output_tokens_details": {
+      "reasoning_tokens": 20684
+    },
+    "total_tokens": 26138
+  },
+  "user": null
+}

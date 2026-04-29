@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427353,
+  "created_at": 1777427210,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_087e379551ef2a780069f1630a7cd4819785e8d283741bd404",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_087e379551ef2a780069f1630b0c78819798e829d6ef2502aa",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_cat`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the original 0-based observed count array `y` by the deterministic protected array `y_cat`, where `y_cat[i] = y[i] + 1`, so the protected observation can be scored once with a plain top-level left-hand side. Added `K = max(t) + 1` as deterministic support size data. The original zero-inflated/binomial mixture likelihood is represented as a single vectorized built-in `categorical` likelihood: category 1 corresponds to original `y = 0`, category `k + 1` corresponds to original `y = k`, and categories above `t[i] + 1` have probability 0. Parameter priors were moved before parameter-dependent model-block computations, and the manual `target +=` likelihood with an `if` on the observation was replaced by the equivalent built-in sampling statement. The data variable `x` is retained as an ordinary context input and is unused, as in the original model.\\n\",\"model_safe_stan\":\"/**\\n * Hearts: a mixture model for count data\\n * http://www.openbugs.net/Examples/Hearts.html\\n * \\n * integrate out the binary parameters in hearts.stan.0 \\n */\\ndata {\\n  int<lower=0> N;\\n  int<lower=1> K;\\n  array[N] int<lower=0> x;\\n  array[N] int<lower=0, upper=K - 1> t;\\n  array[N] int<lower=1, upper=K> y_cat;\\n}\\nparameters {\\n  real alpha;\\n  real delta;\\n}\\ntransformed parameters {\\n  real<lower=0, upper=1> theta;\\n  theta = inv_logit(delta);\\n}\\nmodel {\\n  array[N] vector[K] y_prob;\\n\\n  alpha ~ normal(0, 100);\\n  delta ~ normal(0, 100);\\n\\n  {\\n    real p;\\n    real theta_model;\\n    real log1m_theta;\\n    real log1m_p;\\n\\n    p = inv_logit(alpha);\\n    theta_model = inv_logit(delta);\\n    log1m_theta = log1m(theta_model);\\n    log1m_p = log1m(p);\\n\\n    for (i in 1 : N) {\\n      y_prob[i] = rep_vector(0, K);\\n      y_prob[i][1] = theta_model + (1 - theta_model) * exp(t[i] * log1m_p);\\n      if (t[i] > 0) {\\n        for (k in 1 : t[i]) {\\n          y_prob[i][k + 1] = exp(log1m_theta + lchoose(t[i], k)\\n                                  + k * log(p) + (t[i] - k) * log1m_p);\\n        }\\n      }\\n    }\\n  }\\n\\n  y_cat ~ categorical(y_prob);\\n}\\ngenerated quantities {\\n  real beta;\\n  beta = exp(alpha);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":4,\\\"K\\\":5,\\\"t\\\":[1,2,3,4],\\\"x\\\":[3,4,1,2],\\\"y_cat\\\":[2,2,3,2]}\",\"protected_variables\":[\"y_cat\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_087e379551ef2a780069f16394c6708197a8dde7b5ea34c653",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3252,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 12691,
+    "output_tokens_details": {
+      "reasoning_tokens": 11912
+    },
+    "total_tokens": 15943
+  },
+  "user": null
+}

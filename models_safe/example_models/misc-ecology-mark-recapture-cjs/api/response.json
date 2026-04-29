@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429093,
+  "created_at": 1777428911,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0c839e0f007924260069f169afb17081949de7033943c6e6e3",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0c839e0f007924260069f169b051d08194afe01660954a29dd",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `history_first1` and `history_first2`, deterministic reshapes of the scored parts of the original `history` count vector.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the hand-written `target +=` CJS count likelihood with two built-in `multinomial` observations. The data were reshaped as `history_first1 = [history[4], history[5], history[6], history[7]]`, `history_first2 = [history[2], history[3]]`, and `history_noinfo = history[1]`; `history_noinfo` is retained only as an unmodelled context value because the original program states that `history[1]` provides no information. The multinomial form is the normalized built-in count likelihood and matches the original parameter-dependent log likelihood up to data-only multinomial coefficients. Added `phi ~ uniform(0, 1)` and `p ~ uniform(0, 1)`, which are density-neutral for the existing finite `[0, 1]` parameter bounds and satisfy SafeStan's unique-prior requirement.\\n\",\"model_safe_stan\":\"/*\\n * Cormack-Jolly-Server (CJS) model.\\n *\\n * SafeStan-compatible rewrite: the scored portions of the aggregated\\n * capture-history counts are represented as two multinomial observations.\\n */\\ndata {\\n  int<lower=0> history_noinfo;\\n  array[4] int<lower=0> history_first1;\\n  array[2] int<lower=0> history_first2;\\n}\\nparameters {\\n  array[2] real<lower=0, upper=1> phi; // phi[t] survival from t to t+1\\n  array[3] real<lower=0, upper=1> p; // p[t]   probability of capture at t+1\\n}\\ntransformed parameters {\\n  // chi[t] probability a sighting at t is last sighting\\n  array[3] real<lower=0, upper=1> chi;\\n  chi[3] = 1;\\n  chi[2] = (1 - phi[2]) + phi[2] * (1 - p[3]);\\n  chi[1] = (1 - phi[1]) + phi[1] * (1 - p[2]) * chi[2];\\n}\\nmodel {\\n  vector[4] theta_first1;\\n  vector[2] theta_first2;\\n\\n  phi ~ uniform(0, 1);\\n  p ~ uniform(0, 1);\\n\\n  theta_first1[1] = chi[1];\\n  theta_first1[2] = phi[1] * (1 - p[2]) * phi[2] * p[3];\\n  theta_first1[3] = phi[1] * p[2] * chi[2];\\n  theta_first1[4] = phi[1] * p[2] * phi[2] * p[3];\\n\\n  theta_first2[1] = chi[2];\\n  theta_first2[2] = phi[2] * p[3];\\n\\n  history_first1 ~ multinomial(theta_first1);\\n  history_first2 ~ multinomial(theta_first2);\\n}\\ngenerated quantities {\\n  real<lower=0, upper=1> beta3;\\n  beta3 = phi[2] * p[3];\\n}\\n\",\"data_safe_json\":\"{\\\"history_noinfo\\\":2,\\\"history_first1\\\":[3,4,4,3],\\\"history_first2\\\":[1,2]}\",\"protected_variables\":[\"history_first1\",\"history_first2\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0c839e0f007924260069f16a615d88819496a0c181e3df8efb",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3335,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 15865,
+    "output_tokens_details": {
+      "reasoning_tokens": 15020
+    },
+    "total_tokens": 19200
+  },
+  "user": null
+}

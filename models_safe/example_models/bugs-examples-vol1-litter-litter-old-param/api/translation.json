@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"G\":2,\"N\":2,\"n\":[2,3,2,1],\"r\":[1,0,0,1]}",
+  "model_safe_stan": "data {\n  int<lower=0> G;\n  int<lower=0> N;\n  array[G * N] int<lower=0> r;\n  array[G * N] int<lower=0> n;\n}\nparameters {\n  vector<lower=0, upper=1>[G * N] p_safestan_flat;\n  vector<lower=0.1>[G] a;\n  vector<lower=0.1>[G] b;\n}\ntransformed parameters {\n  matrix<lower=0, upper=1>[G, N] p;\n  for (g in 1 : G) {\n    for (i in 1 : N) {\n      p[g, i] = p_safestan_flat[(g - 1) * N + i];\n    }\n  }\n}\nmodel {\n  vector[G * N] a_safestan_flat;\n  vector[G * N] b_safestan_flat;\n  a ~ gamma(1, 0.001);\n  b ~ gamma(1, 0.001);\n  for (g in 1 : G) {\n    for (i in 1 : N) {\n      a_safestan_flat[(g - 1) * N + i] = a[g];\n      b_safestan_flat[(g - 1) * N + i] = b[g];\n    }\n  }\n  p_safestan_flat ~ beta(a_safestan_flat, b_safestan_flat);\n  r ~ binomial(n, p_safestan_flat);\n}\ngenerated quantities {\n  vector<lower=0, upper=1>[G] mu;\n  vector<lower=0>[G] theta;\n  for (g in 1 : G) {\n    mu[g] = a[g] / (a[g] + b[g]);\n  }\n  for (g in 1 : G) {\n    theta[g] = 1 / (a[g] + b[g]);\n  }\n}\n",
+  "protected_variables": [
+    "r"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `r`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reshaped the two-dimensional count arrays `r` and `n` into one-dimensional arrays in row-major order with index `k = (g - 1) * N + i`. Replaced the nested indexed sampling statements with vectorized top-level sampling statements. Reparameterized the latent beta probabilities as `p_safestan_flat` and reconstructed the original matrix-shaped `p` deterministically in `transformed parameters`. These are mechanical same-density changes preserving the original product of gamma, beta, and binomial terms.\n"
+}

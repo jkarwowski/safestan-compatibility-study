@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data choice: `y` is the observed data interface scored by the soft k-means likelihood.\n\nGenerated files: none.\n\nReason: the likelihood is implemented with manual `target += log_sum_exp(soft_z[n])` scoring, where `soft_z` depends on `y` and the cluster means. SafeStan forbids `target +=`, and this marginalized soft-assignment likelihood is not expressible as a single built-in Stan sampling statement for top-level protected `y` without a substantive model change. The program also computes `soft_z` from `y` in `transformed parameters`, which protected data cannot be referenced in before observation. Therefore no minor same-density SafeStan translation is produced."
+}

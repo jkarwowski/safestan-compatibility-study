@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{}",
+  "model_safe_stan": "// Sample from 2 x 2 Wishart\n// SafeStan-compatible equivalent using a direct covariance-matrix parameter.\n\ntransformed data {\n  cov_matrix[2] S = [[2, 0], [0, 0.5]];\n}\nparameters {\n  cov_matrix[2] W;\n}\ntransformed parameters {\n  real<lower=0> sd1 = sqrt(W[1, 1]);\n  real<lower=0> sd2 = sqrt(W[2, 2]);\n  real rho = W[1, 2] / (sd1 * sd2);\n  real cov = W[1, 2];\n  real x = 0.5 * log((1 + rho) / (1 - rho));\n}\nmodel {\n  W ~ wishart(4, S);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none. The program has no data block and no observed-data likelihood; the only scoring is a prior distribution over a latent covariance matrix.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the original program scored a transformed parameter `W` with `W ~ wishart(4, S)` and added the change-of-variables term using `target += ...`, which is outside the SafeStan subset. The safe version declares `W` directly as a top-level `cov_matrix[2]` parameter and gives it the same built-in Wishart prior. The former scalar quantities `sd1`, `sd2`, `rho`, `cov`, and `x` are recovered deterministically from `W` in `transformed parameters`, so the induced distribution over those quantities matches the original manual parameterization. The data are unchanged (`{}`).\n"
+}

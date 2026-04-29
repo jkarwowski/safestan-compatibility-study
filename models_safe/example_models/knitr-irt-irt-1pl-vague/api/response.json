@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428411,
+  "created_at": 1777428368,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0acf97ef4d51eb4b0069f167900c0481a39a7aa8fac4d3f533",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0acf97ef4d51eb4b0069f16790ab1081a39a1415ef29f21660",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_safestan_flat`, a deterministic row-major flattening of the original response array `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the original likelihood scored indexed slices `y[i]` inside a loop, which is not allowed for protected data in SafeStan. The rewrite adds `y_safestan_flat`, with `y_safestan_flat[(i - 1) * J + j] = y[i, j]`, builds the matching linear predictor vector in the model block after the parameter priors, and observes `y_safestan_flat` once with a plain built-in `bernoulli_logit` sampling statement. The priors on `theta` and `b` were already explicit built-in priors and are preserved unchanged.\\n\",\"model_safe_stan\":\"//# ---- irt-1pl-vague-stan ----\\ndata {\\n  int<lower=0> I;\\n  int<lower=0> J;\\n  array[I, J] int<lower=0, upper=1> y;\\n  array[I * J] int<lower=0, upper=1> y_safestan_flat;\\n  real mu_theta;\\n  real<lower=0> sigma_theta;\\n  real mu_b;\\n  real<lower=0> sigma_b;\\n}\\nparameters {\\n  vector[I] b;\\n  vector[J] theta;\\n}\\nmodel {\\n  vector[I * J] eta_safestan_flat;\\n\\n  theta ~ normal(mu_theta, sigma_theta);\\n  b ~ normal(mu_b, sigma_b);\\n\\n  for (i in 1 : I) {\\n    for (j in 1 : J) {\\n      eta_safestan_flat[(i - 1) * J + j] = theta[j] - b[i];\\n    }\\n  }\\n  y_safestan_flat ~ bernoulli_logit(eta_safestan_flat);\\n}\\n\",\"data_safe_json\":\"{\\\"I\\\":2,\\\"J\\\":3,\\\"mu_b\\\":2.6087365806619434,\\\"mu_theta\\\":2.763958451958236,\\\"sigma_b\\\":1.7370455838133922,\\\"sigma_theta\\\":1.210515773341465,\\\"y\\\":[[0,1,1],[1,0,1]],\\\"y_safestan_flat\\\":[0,1,1,1,0,1]}\",\"protected_variables\":[\"y_safestan_flat\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0acf97ef4d51eb4b0069f167b8080c81a3a7e57bf1896705c3",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3106,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3679,
+    "output_tokens_details": {
+      "reasoning_tokens": 3106
+    },
+    "total_tokens": 6785
+  },
+  "user": null
+}

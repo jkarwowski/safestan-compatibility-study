@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 3,\n  \"sigma_y\": [\n    5.828528951944753,\n    3.478529016954954,\n    6.314138205180247\n  ],\n  \"y\": [\n    3.0,\n    3.0,\n    3.0\n  ]\n}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  vector[N] y;\n  vector[N] sigma_y;\n}\nparameters {\n  vector[N] eta;\n  real mu_theta;\n  real<lower=0, upper=100> sigma_eta;\n  real xi;\n}\ntransformed parameters {\n  real<lower=0> sigma_theta;\n  vector[N] theta;\n  \n  theta = mu_theta + xi * eta;\n  sigma_theta = abs(xi) / sigma_eta;\n}\nmodel {\n  mu_theta ~ normal(0, 100);\n  sigma_eta ~ inv_gamma(1, 1); //prior distribution can be changed to uniform\n  \n  eta ~ normal(0, sigma_eta);\n  xi ~ normal(0, 5);\n  y ~ normal(theta, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The remaining data variables, `N` and `sigma_y`, are context inputs. Each top-level parameter has exactly one built-in prior sampling statement before the protected likelihood is evaluated.\n"
+}

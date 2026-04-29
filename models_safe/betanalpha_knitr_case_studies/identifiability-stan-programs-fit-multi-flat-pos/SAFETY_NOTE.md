@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: `y` is the observed data variable scored by the likelihood (`y ~ normal(a * b, sigma)`). `N` and `sigma` are context inputs. The likelihood statement itself is a built-in distribution on a top-level data variable, but the parameters `a` and `b` have only implicit flat priors (`a` is constrained positive and `b` is unconstrained) and are used in the likelihood before any built-in prior sampling statement. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors would change the original posterior/log density, and these implicit improper flat priors do not have an exactly matching proper built-in prior rewrite. Therefore this model cannot be translated with only a minor same-density rewrite.

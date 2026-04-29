@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":1,\"county\":[1],\"x\":[5.92868445481042],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=1, upper=85> county;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  vector[85] eta1;\n  vector[85] eta2;\n  real mu_a1;\n  real mu_a2;\n  real<lower=0, upper=100> sigma_a1;\n  real<lower=0, upper=100> sigma_a2;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[85] a1;\n  vector[85] a2;\n  vector[N] y_hat;\n  \n  a1 = mu_a1 + sigma_a1 * eta1;\n  a2 = 0.1 * mu_a2 + sigma_a2 * eta2;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a1[county[i]] + a2[county[i]] * x[i];\n  }\n}\nmodel {\n  mu_a1 ~ normal(0, 1);\n  mu_a2 ~ normal(0, 1);\n  eta1 ~ normal(0, 1);\n  eta2 ~ normal(0, 1);\n  sigma_a1 ~ uniform(0, 100);\n  sigma_a2 ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit built-in `uniform(0, 100)` priors for `sigma_a1`, `sigma_a2`, and `sigma_y`. These parameters were already constrained to `[0, 100]`, so the added sampling statements make the implicit bounded uniform priors explicit and satisfy SafeStan's unique-prior requirement without changing the posterior density. No data changes were required.\n"
+}

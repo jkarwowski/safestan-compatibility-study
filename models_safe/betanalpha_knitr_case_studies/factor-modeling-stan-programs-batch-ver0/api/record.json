@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/factor-modeling-stan-programs-batch-ver0/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:48:13+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-batch-ver0",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_00bc0f970cc608ea0069f1553f7fac81a0ba96a338f6f66dba",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/factor-modeling-stan-programs-batch-ver0",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:47:59+00:00",
+  "usage": {
+    "input_tokens": 3805,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1637,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5442
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

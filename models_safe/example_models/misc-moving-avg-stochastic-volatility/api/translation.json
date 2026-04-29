@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"T\":4,\"y\":[5.794118400230417,3.6924441005369957,2.017575753793198,5.7932749269561254]}",
+  "model_safe_stan": "data {\n  int<lower=0> T; // // time points (equally spaced)\n  vector[T] y; // mean corrected return at time t\n}\nparameters {\n  real mu; // mean log volatility\n  real<lower=-1, upper=1> phi; // persistence of volatility\n  real<lower=0> sigma; // white noise shock scale\n  vector[T] h; // log volatility at time t\n}\nmodel {\n  matrix[T, T] Sigma_h;\n  vector[T] mu_h;\n\n  phi ~ uniform(-1, 1);\n  sigma ~ cauchy(0, 5);\n  mu ~ cauchy(0, 10);\n\n  mu_h = rep_vector(mu, T);\n  for (i in 1 : T) {\n    for (j in 1 : T) {\n      Sigma_h[i, j] = square(sigma) * pow(phi, abs(i - j)) / (1 - square(phi));\n    }\n  }\n\n  h ~ multi_normal(mu_h, Sigma_h);\n  y ~ normal(rep_vector(0, T), exp(h / 2));\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the observation model was vectorized from elementwise `y[t] ~ normal(...)` statements inside a loop to a single top-level `y ~ normal(...)` statement. The latent AR(1) prior for `h` was rewritten from indexed sequential normal statements, including a statement inside a loop, to the equivalent single built-in `multi_normal` prior with the stationary AR(1) covariance matrix. No data fields were added or changed.\n"
+}

@@ -1,0 +1,45 @@
+functions {
+  real t_fall(real g, real h) {
+    return sqrt(2 * h / g);
+  }
+}
+
+data {
+  int N_heights;
+  array[N_heights] real<lower=0> heights;    // meters
+  int N_drops;
+  array[N_drops * N_heights] real obs_t_fall; // seconds, flattened by drop then height
+}
+
+parameters {
+  real<lower=0> sigma_t; // seconds
+  real g;                // meters per second squared
+}
+
+model {
+  array[N_drops * N_heights] real mu_t_fall;
+
+  // Prior model
+  sigma_t ~ normal(0, 0.5);
+  g ~ inv_gamma(1.49, 2.83);
+
+  // Observational model
+  for (n in 1:N_drops) {
+    for (h in 1:N_heights) {
+      mu_t_fall[(n - 1) * N_heights + h] = t_fall(g, heights[h]);
+    }
+  }
+  obs_t_fall ~ normal(mu_t_fall, sigma_t);
+}
+
+// Simulate a full observation from each value of the parameters
+generated quantities {
+  array[N_drops, N_heights] real obs_t_fall_post_pred;
+
+  for (n in 1:N_drops) {
+    for (h in 1:N_heights) {
+      real mu_t_fall = t_fall(g, heights[h]);
+      obs_t_fall_post_pred[n, h] = normal_rng(mu_t_fall, sigma_t);
+    }
+  }
+}

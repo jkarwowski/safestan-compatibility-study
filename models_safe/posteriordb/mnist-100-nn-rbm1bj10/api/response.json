@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777430972,
+  "created_at": 1777430895,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_08d67fdde8ac952c0069f1716f1d2481a28446422734828c1e",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_08d67fdde8ac952c0069f1716fc38081a2ab8442ed373afe9d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the neural-network logits computation until after all parameter prior sampling statements so no parameter is used before its prior. Replaced `to_vector(alpha) ~ ...` and `to_vector(beta) ~ ...` with equivalent matrix-vectorized priors on the top-level parameters `alpha` and `beta`. Replaced the loop of indexed likelihood statements `y[n] ~ categorical_logit(...)` with a single vectorized built-in statement `y ~ categorical_logit(v)` using a local `array[N] vector[K]` of logits. `data_safe.json` is identical to the supplied data.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N; // observations (Full MNIST: 60K)\\n  int<lower=0> M; // predictors   (MNIST: 784)\\n  matrix[N, M] x; // data matrix  (Full MNIST: 60K x 784 = 47M)\\n  int<lower=2> K; // number of categories (MNIST: 10)\\n  array[N] int<lower=1, upper=K> y; // categories\\n}\\ntransformed data {\\n  int<lower=1> J = 10; // number of hidden units (e.g. 100)\\n  \\n  // prior parametrization in Lampinen and Vehtari (2001)\\n  real nu_alpha = 0.5;\\n  real s2_0_alpha = (0.05 / M ^ (1 / nu_alpha)) ^ 2;\\n  real nu_beta = 0.5;\\n  real s2_0_beta = (0.05 / J ^ (1 / nu_beta)) ^ 2;\\n  \\n  vector[N] ones = rep_vector(1, N);\\n  matrix[N, M + 1] x1 = append_col(ones, x);\\n}\\nparameters {\\n  real<lower=0> sigma2_alpha;\\n  real<lower=0> sigma2_beta;\\n  matrix[M, J] alpha;\\n  matrix[J, K - 1] beta;\\n  row_vector[J] alpha1;\\n  row_vector[K - 1] beta1;\\n}\\nmodel {\\n  // Priors\\n  alpha1 ~ normal(0, 1);\\n  beta1 ~ normal(0, 1);\\n  sigma2_alpha ~ inv_gamma(nu_alpha / 2, nu_alpha * s2_0_alpha / 2);\\n  sigma2_beta ~ inv_gamma(nu_beta / 2, nu_beta * s2_0_beta / 2);\\n  \\n  alpha ~ normal(0, sqrt(sigma2_alpha));\\n  beta ~ normal(0, sqrt(sigma2_beta));\\n  \\n  {\\n    matrix[N, K] v_matrix;\\n    array[N] vector[K] v;\\n    v_matrix = append_col(ones,\\n                          append_col(ones,\\n                                     tanh(x1 * append_row(alpha1, alpha)))\\n                          * append_row(beta1, beta));\\n    for (n in 1 : N) {\\n      v[n] = v_matrix[n]';\\n    }\\n    y ~ categorical_logit(v);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":2,\\\"M\\\":3,\\\"N\\\":2,\\\"x\\\":[[6.380649506540683,3.223614298877222,4.593196136567718],[2.3606350985893862,5.055995227424176,3.1817588756124096]],\\\"y\\\":[2,1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_08d67fdde8ac952c0069f171b8190c81a2a7a002f9d4977aae",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3503,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7070,
+    "output_tokens_details": {
+      "reasoning_tokens": 6214
+    },
+    "total_tokens": 10573
+  },
+  "user": null
+}

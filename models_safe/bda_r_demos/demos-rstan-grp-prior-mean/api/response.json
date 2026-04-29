@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423450,
+  "created_at": 1777423440,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_050d2293a5b5df5b0069f154507cd881a1b9da0b2a564f501f",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_050d2293a5b5df5b0069f15451ab8c81a1b1535b8373220236",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `y ~ normal(mu[x], sigma)`. The other data variables `N`, `K`, and `x` are context inputs only. All parameters have exactly one built-in prior before later use in the model block.\\n\",\"model_safe_stan\":\"// Comparison of k groups with common variance and\\n// hierarchical prior for the mean\\ndata {\\n  int<lower=0> N; // number of observations\\n  int<lower=0> K; // number of groups\\n  array[N] int<lower=1, upper=K> x; // discrete group indicators\\n  vector[N] y; // real valued observations\\n}\\nparameters {\\n  real mu0; // prior mean\\n  real<lower=0> sigma0; // prior std constrained to be positive\\n  vector[K] mu; // group means\\n  real<lower=0> sigma; // common std constrained to be positive\\n}\\nmodel {\\n  mu0 ~ normal(10, 10); // weakly informative prior\\n  sigma0 ~ normal(0, 10); // weakly informative prior\\n  mu ~ normal(mu0, sigma0); // population prior with unknown parameters\\n  // log-normal prior sets normal prior on logarithm of the paremeter,\\n  // which is useful for positive parameters that shouldn't be very\\n  // close to 0. BDA3 Chapter 5 uses scaled inverse Chi^2 prior, but\\n  // as these don't need to be (semi-)conjugate, thinking in terms of\\n  // log-normal can be easier.\\n  sigma ~ lognormal(0, .5); // weakly informative prior\\n  y ~ normal(mu[x], sigma); // observation model / likelihood\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"K\\\": 1,\\n  \\\"N\\\": 3,\\n  \\\"x\\\": [\\n    1,\\n    1,\\n    1\\n  ],\\n  \\\"y\\\": [\\n    3.0,\\n    3.0,\\n    3.0\\n  ]\\n}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_050d2293a5b5df5b0069f15458169c81a1b2af314b9e5c538b",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3177,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1060,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4237
+  },
+  "user": null
+}

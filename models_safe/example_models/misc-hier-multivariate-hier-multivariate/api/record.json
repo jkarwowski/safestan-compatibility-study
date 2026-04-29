@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-hier-multivariate-hier-multivariate/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:20:25+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-hier-multivariate-hier-multivariate",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0e4aadef20ee08890069f16ad309fc8197860c9eb9ac881bcd",
+  "safe_dir": "models_safe/example_models/misc-hier-multivariate-hier-multivariate",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:20:02+00:00",
+  "usage": {
+    "input_tokens": 3627,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1749,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5376
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

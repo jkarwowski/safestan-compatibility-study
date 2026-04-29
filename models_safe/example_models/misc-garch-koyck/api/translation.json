@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"T\":1,\"T_lik\":0,\"y_obs\":[],\"y_lag\":[],\"x_lik\":[]}",
+  "model_safe_stan": "// geometric lag time-series (Koyck 1951)\n//\n// http://en.wikipedia.org/wiki/Distributed_lag\n\ndata {\n  int<lower=0> T; // original number of time points\n  int<lower=0> T_lik; // number of modelled observations, max(T - 1, 0)\n  vector[T_lik] y_obs; // original y[2:T]\n  vector[T_lik] y_lag; // original y[1:(T - 1)]\n  vector[T_lik] x_lik; // original x[2:T]\n}\nparameters {\n  real alpha; // intercept\n  real beta; // slope\n  real<lower=0, upper=1> lambda; // lag\n  real<lower=0> sigma; // noise scale\n}\nmodel {\n  alpha ~ cauchy(0, 5);\n  beta ~ cauchy(0, 5);\n  lambda ~ uniform(0, 1);\n  sigma ~ cauchy(0, 5);\n  {\n    vector[T_lik] mu;\n    mu = alpha + beta * x_lik + lambda * y_lag;\n    y_obs ~ normal(mu, sigma);\n  }\n}\n",
+  "protected_variables": [
+    "y_obs"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y_obs`, a deterministic top-level copy of the originally scored response values `y[2:T]`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the original likelihood used indexed observations inside a loop (`y[t] ~ normal(...)`), which is not SafeStan-compatible for protected data. The likelihood was rewritten as one vectorized built-in sampling statement on the top-level protected variable `y_obs`. The rewritten data fields are deterministic reshapes of the original data: `T_lik = max(T - 1, 0)` and, for `i = 1, ..., T_lik`, `y_obs[i] = y[i + 1]`, `y_lag[i] = y[i]`, and `x_lik[i] = x[i + 1]`. For the supplied data, `T = 1`, so these length-`T_lik` fields are empty, matching the original empty likelihood loop. The parameter priors were already built-in and remain before any parameter use.\n"
+}

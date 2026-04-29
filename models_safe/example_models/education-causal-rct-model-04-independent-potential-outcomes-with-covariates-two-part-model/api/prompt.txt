@@ -1,0 +1,431 @@
+You are translating a single Stan model into the SafeStan-compatible Stan subset.
+
+## SafeStan
+
+SafeStan is a static (compile-time) restriction layer over Stan. Its purpose is to prevent likelihood hacking on a designated protected data interface, as described in "Likelihood hacking in probabilistic program synthesis".
+
+SafeStan is designed so that generated models report a normalized marginal log-likelihood for the interface being modelled. To do this, it assigns roles to top-level inputs and parameters. Variables named by --sstan-protect are modelled interface variables: each must be scored by a built-in distribution, exactly once, before any other use. They cannot be inspected in an if, used to compute helper values, or referenced in transformed blocks before that scoring statement. After a modelled interface variable has been scored, it is available as an ordinary model-block quantity and may be used in later computations or later likelihood terms. Other top-level data variables are context inputs: they may be used freely as predictors, constants, indices, or configuration, but they may not appear on the left side of a sampling statement. Parameters are latent variables: each parameter must have exactly one built-in prior sampling statement before it is used in the model block. SafeStan also rejects constructs that can directly inflate, edit, or gate the log-likelihood, such as target +=, target(), jacobian +=, reject(), fatal_error(), and _lp functions.
+
+For this corpus run, `data.json` may be small synthetic data generated only to satisfy the Stan data schema. Use it to produce a valid `data_safe_json` and to preserve deterministic reshapes/copies, but infer the protected interface and compatibility label from `model.stan`, not from the particular synthetic values.
+
+### What SafeStan Enforces
+
+No arbitrary scoring:
+
+Forbids target += ...
+Forbids target()
+Forbids jacobian += ...
+Forbids reject() and fatal_error()
+Forbids _lp function definitions and calls
+Protected data single-use:
+
+Every protected variable must be a top-level data variable.
+Every top-level data variable that the model conditions on with a sampling statement is part of the protected interface, unless a same-density rewrite replaces it by a deterministic top-level protected copy/reshape.
+Do not protect ordinary predictors, covariates, sizes, indices, or constants unless the model itself observes/scores them as data.
+Each protected variable must appear exactly once on the left side of ~.
+Left side must be a plain identifier (no indexing/projections/expressions).
+Protected variables cannot be used before they are observed.
+After observation, a protected variable is treated as a normal value.
+Protected variables cannot be referenced in transformed data/parameters.
+Proper distribution path only:
+
+Sampling statements may target only protected top-level data variables or top-level parameter variables.
+Sampling statements must resolve to built-in Stan distributions.
+User-defined distributions are rejected in ~.
+Strict parameter discipline:
+
+Each parameter must appear in exactly one sampling statement.
+Parameters cannot be used in the model block before their sampling statement.
+Uses through transformed parameters are tracked: if phi depends on theta, then using phi before theta ~ ... counts as using theta before its prior.
+Control-flow safety:
+
+Protected observations and parameter-prior sampling statements cannot appear inside loops (for/while/foreach).
+Conditional (if/else) sampling is allowed only when both branches produce identical sampling effects for protected variables and parameters.
+Reserved identifier:
+
+sstan_trusted_loglik__ is reserved in SafeStan mode.
+
+## Goal
+
+The goal is not to make the model "nicer", rather, the goal is to decide whether the original posterior/log density can be represented under SafeStan restrictions with no or only a small rewrite, preserving the model. Return only the structured JSON requested by the caller.
+
+Work method:
+
+1. Identify the observed/protected data variable(s) scored by the likelihood.
+   Use the Stan program structure for this; do not infer modelling intent from
+   the particular values in `data.json`.
+2. Check whether the protected data variables and parameters already satisfy SafeStan's
+   syntactic discipline. If it does, classify the models `as-is`.
+3. If not, look for a same-density mechanical rewrite.
+4. If the rewrite would require changing the statistical model, substantially replacing a marginalized latent-state algorithm, or changing the likelihood (e.g. by adding additional priors to parameters), classify the case as `major` and do not rewrite the model.
+5. Otherwise, classify the case as `minor`, rewrite the model (and potentially, data): e.g. you can vectorize simple likelihoods, add deterministic data copies/reshapes, switch order of computation preserving the semantics, and add explicit priors only for parameters that already have implicit proper priors with exactly matching built-in distributions (for example, `uniform(lower, upper)` for finite bounded real parameters). After that, output complete files. Do not output patches.
+
+Compatibility labels:
+
+- `as-is`: the original Stan program is already SafeStan-compatible. Return `model_safe_stan` equal to the original and `data_safe_json` equal to the supplied data.
+- `minor`: a same-posterior SafeStan version can be produced using only minor, mechanical, changes. Return new, rewritten `model_safe_stan` equivalent to the original and `data_safe_json` equivalent to the supplied data.
+- `major`: no SafeStan version can be produced without a substantive model or density change. In this case return empty strings for `model_safe_stan` and `data_safe_json`.
+
+Requirements:
+
+- Never invent new observations or new data values beyond deterministic
+  copies/reshapes of the supplied `data.json`.
+- `data_safe_json` must be a valid JSON object string. It may equal the supplied
+  `data.json` exactly, or be a deterministic augmentation/reshape of it.
+- If you add fields to `data_safe_json`, document the exact deterministic
+  relation in `safety_note_md`.
+- Preserve the intended posterior/log density for AS-IS and MINOR.
+- `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
+  include: compatibility, protected data choice, generated files, and a concise
+  explanation of any change.
+
+Examples:
+
+Example 1: AS-IS input
+
+```stan
+data {
+  int<lower=0, upper=1> y;
+}
+parameters {
+  real<lower=0, upper=1> theta;
+}
+model {
+  theta ~ beta(1, 1);
+  y ~ bernoulli(theta);
+}
+```
+
+```json
+{"y": 1}
+```
+
+Example 1 output shape
+
+```json
+{
+  "compatibility": "as-is",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the protected observation is top-level data and is observed with a plain sampling statement.\n",
+  "model_safe_stan": "data {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "data_safe_json": "{\"y\": 1}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 2: MINOR input
+
+```stan
+data {
+  int<lower=1> N;
+  array[N] int<lower=0> trials;
+  array[N] int<lower=0> y;
+}
+transformed data {
+  real mean_y = mean(to_vector(y));
+}
+parameters {
+  vector<lower=0, upper=1>[N] theta;
+}
+model {
+  y ~ binomial(trials, theta);
+}
+```
+
+```json
+{"N": 3, "trials": [10, 10, 10], "y": [4, 5, 6]}
+```
+
+Example 2 output shape
+
+```json
+{
+  "compatibility": "minor",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. Added `theta ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]` and satisfies SafeStan's unique-prior requirement.\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ binomial(trials, theta);\n}\n",
+  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 3: MAJOR input
+
+```stan
+data {
+  int<lower=1> N;
+  vector[N] y;
+}
+parameters {
+  real mu1;
+  real mu2;
+}
+model {
+  for (n in 1:N) {
+    target += log_mix(0.5, normal_lpdf(y[n] | mu1, 1), normal_lpdf(y[n] | mu2, 1));
+  }
+}
+```
+
+```json
+{"N": 3, "y": [0.1, 1.2, -0.5]}
+```
+
+Example 3 output shape
+
+```json
+{
+  "compatibility": "major",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\n",
+  "model_safe_stan": "",
+  "data_safe_json": "",
+  "protected_variables": []
+}
+```
+
+Model directory: models/example_models/education-causal-rct-model-04-independent-potential-outcomes-with-covariates-two-part-model
+
+Metadata:
+
+```json
+{
+  "description": "Imported Stan program from Stan example models: education/causal_rct/Model_04_Independent_Potential_Outcomes_with_Covariates-Two-Part-Model.stan.",
+  "difficulty": "unknown",
+  "id": "education-causal-rct-model-04-independent-potential-outcomes-with-covariates-two-part-model",
+  "method": "sample",
+  "source_group": "example_models",
+  "source_group_label": "Stan example models",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/education/causal_rct/Model_04_Independent_Potential_Outcomes_with_Covariates-Two-Part-Model.stan",
+  "title": "Education Causal Rct Model 04 Independent Potential Outcomes With Covariates Two Part Model"
+}
+```
+
+Source note:
+
+```text
+# Education Causal Rct Model 04 Independent Potential Outcomes With Covariates Two Part Model
+
+- Upstream Stan file: [education/causal_rct/Model_04_Independent_Potential_Outcomes_with_Covariates-Two-Part-Model.stan](https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/education/causal_rct/Model_04_Independent_Potential_Outcomes_with_Covariates-Two-Part-Model.stan)
+- Upstream data: none
+- Data status: no_matched_upstream_data
+- Source group: Stan example models
+- Upstream repository: https://github.com/stan-dev/example-models
+- Upstream commit: `e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b`
+- Import note: Copied into the repository's standard model-directory layout.
+
+## Synthetic Data
+
+- Data status: synthetic/local generated by `generate_synthetic_data_for_missing.py`.
+- Generation method: stanc_debug_generate_data.
+- Parsed data declarations: 8.
+- Data block present: true.
+
+```
+
+Original `model.stan`:
+
+```stan
+functions {
+  real quantile_user_defined(vector x, real p) {
+    int n; // length of vector x
+    real index; // integer index of p
+    int lo; // lower integer cap of the index
+    int hi; // higher integer cap of the index
+    real h; // generated weight between the lo and hi
+    real qs; // weighted average of x[lo] and x[hi]
+    n = num_elements(x);
+    index = 1 + (n - 1) * p;
+    lo = 1;
+    while ((lo + 1) < index) {
+      lo = lo + 1;
+    }
+    hi = lo + 1;
+    h = index - lo;
+    qs = (1 - h) * sort_asc(x)[lo] + h * sort_asc(x)[hi];
+    return qs;
+  }
+}
+data {
+  int<lower=0> N; // sample size
+  int<lower=0> N_cov; // number of covariates
+  array[N] real y; // continuous outcome
+  array[N] int<lower=0, upper=1> y_pos; // indicator for y > 0
+  array[N] int<lower=0, upper=1> z; // treatment assigned
+  array[N] vector[N_cov] x; // covariates
+  array[N] vector[N_cov] xz_inter; // interaction terms
+  real<lower=-1, upper=1> rho; // assumed correlation between the potential outcomes
+}
+parameters {
+  // Binary Sub-Model
+  real alpha_bin; // intercept
+  row_vector[N_cov] beta_bin; // coefficients for x[N]
+  row_vector[N_cov] beta_inter_bin; // coefficients for x_inter[N] 
+  real tau_bin; // treatment effect
+  
+  // Continuous Sub-Model
+  real alpha_cont; // intercept       
+  row_vector[N_cov] beta_cont; // coefficients for x[N]
+  row_vector[N_cov] beta_inter_cont; // coefficients for x_inter[N]
+  real tau_cont; // treatment effect for continuous part
+  
+  real<lower=0> sigma_t; // residual SD for the treated
+  real<lower=0> sigma_c; // residual SD for the control
+}
+model {
+  // Priors for the Binary Sub-Model  
+  alpha_bin ~ student_t(5, 0, 2.5); // student t with high df
+  beta_bin ~ student_t(5, 0, 2.5);
+  beta_inter_bin ~ student_t(5, 0, 2.5);
+  tau_bin ~ student_t(5, 0, 2.5);
+  
+  // Priors for the Continuous Sub-Model       
+  alpha_cont ~ normal(0, 100); // unscaled normal priors for coefficients
+  beta_cont ~ normal(0, 100);
+  beta_inter_cont ~ normal(0, 100);
+  tau_cont ~ normal(0, 100);
+  sigma_c ~ normal(0, 100);
+  sigma_t ~ normal(0, 100);
+  // sigma_c ~ inv_gamma(1, 0.01);          
+  // sigma_t ~ inv_gamma(1, 0.01);
+  
+  // LIKELIHOOD
+  for (n in 1 : N) {
+    // Binary Sub-Model
+    y_pos[n] ~ bernoulli_logit(alpha_bin + beta_bin * x[n]
+                               + beta_inter_bin * xz_inter[n]
+                               + tau_bin * z[n]);
+    
+    // Continuous Sub-Model (if y > 0)
+    if (y_pos[n] == 1) {
+      log(y[n]) ~ normal(alpha_cont + beta_cont * x[n]
+                         + beta_inter_cont * xz_inter[n] + tau_cont * z[n],
+                         sigma_t * z[n] + sigma_c * (1 - z[n]));
+    }
+  }
+}
+generated quantities {
+  // finite sample average treatment effect (ATE) & mean values
+  real y0_bar;
+  real y1_bar;
+  real tau_samp;
+  
+  // finite sample quantile treatment effects (QTEs)
+  real tau_qte25;
+  real tau_qte50;
+  real tau_qte75;
+  {
+    // to create temporary variables
+    // Generate science table
+    array[N] real y0;
+    array[N] real y1;
+    array[N] real tau_ind; // individual treatment effects (ITE)
+    
+    // temporary variable for positive y_pred
+    int y_pred_pos;
+    for (n in 1 : N) {
+      // Predicted chance of success: Binary part
+      real theta_c = inv_logit(alpha_bin + beta_bin * x[n]);
+      real theta_t = inv_logit(alpha_bin + beta_bin * x[n]
+                               + beta_inter_bin * x[n] + tau_bin);
+      
+      // Predicted log mean: Continuous part
+      real mu_c = alpha_cont + beta_cont * x[n];
+      real mu_t = alpha_cont + beta_cont * x[n] + beta_inter_cont * x[n]
+                  + tau_cont;
+      
+      if (z[n] == 1) {
+        // (1) Impute Y_mis(0)    
+        // Binary Sub-model: predict positive y_pred(0)
+        y_pred_pos = bernoulli_rng(theta_c);
+        if (y_pred_pos == 0) {
+          y0[n] = 0;
+        } else {
+          y0[n] = exp(normal_rng(mu_c
+                                 + rho * (sigma_c / sigma_t) * (y[n] - mu_t),
+                                 sigma_c * sqrt(1 - rho ^ 2)));
+        }
+        // Fill in Y_obs(1)
+        y1[n] = y[n];
+      } else {
+        // z[n] == 0,  (2) Impute Y_mis(1)    
+        // Fill in Y_obs(0)
+        y0[n] = y[n];
+        
+        // Binary Sub-model: predict positive y_pred(1)
+        y_pred_pos = bernoulli_rng(theta_t);
+        if (y_pred_pos == 0) {
+          y1[n] = 0;
+        } else {
+          y1[n] = exp(normal_rng(mu_t
+                                 + rho * (sigma_t / sigma_c) * (y[n] - mu_c),
+                                 sigma_t * sqrt(1 - rho ^ 2)));
+        }
+      }
+      tau_ind[n] = y1[n] - y0[n]; // generate ITE   
+    } // end for loop
+    
+    // store mean values and ATE
+    y0_bar = mean(y0);
+    y1_bar = mean(y1);
+    tau_samp = mean(tau_ind);
+    
+    // store QTEs
+    tau_qte25 = quantile_user_defined(to_vector(y1), 0.25)
+                - quantile_user_defined(to_vector(y0), 0.25);
+    tau_qte50 = quantile_user_defined(to_vector(y1), 0.50)
+                - quantile_user_defined(to_vector(y0), 0.50);
+    tau_qte75 = quantile_user_defined(to_vector(y1), 0.75)
+                - quantile_user_defined(to_vector(y0), 0.75);
+  } // end temporary variables
+}
+
+```
+
+Input `data.json` for this run:
+
+```json
+{
+  "N": 2,
+  "N_cov": 4,
+  "rho": -0.1772897197614416,
+  "x": [
+    [
+      6.727349060600306,
+      5.1423975722891155,
+      2.63483560586147,
+      2.7206534432568015
+    ],
+    [
+      3.98179968207611,
+      5.311467071208588,
+      5.910332632403773,
+      3.6138566473878337
+    ]
+  ],
+  "xz_inter": [
+    [
+      4.792110045087956,
+      6.160284103555384,
+      4.155038614219705,
+      5.734915001039128
+    ],
+    [
+      6.991124577455023,
+      4.958062029259631,
+      6.951185789698645,
+      2.1004629654988034
+    ]
+  ],
+  "y": [
+    2.0,
+    2.0
+  ],
+  "y_pos": [
+    1,
+    1
+  ],
+  "z": [
+    1,
+    1
+  ]
+}
+
+```

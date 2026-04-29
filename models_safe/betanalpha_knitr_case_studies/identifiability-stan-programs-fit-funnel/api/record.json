@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/identifiability-stan-programs-fit-funnel/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:57:21+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/identifiability-stan-programs-fit-funnel",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0dca0c144df7eb3f0069f1576c106881958c7808e36f5b3df7",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/identifiability-stan-programs-fit-funnel",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:57:15+00:00",
+  "usage": {
+    "input_tokens": 2974,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 484,
+    "output_tokens_details": {
+      "reasoning_tokens": 227
+    },
+    "total_tokens": 3458
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

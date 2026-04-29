@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/forestdb/metaphor/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:33:06+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/metaphor",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_01f71d2906d2f9ab0069f16dcca7488196a05c2b1c745289c5",
+  "safe_dir": "models_safe/forestdb/metaphor",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:32:44+00:00",
+  "usage": {
+    "input_tokens": 3556,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1696,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5252
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"A\":3,\"N\":5,\"chosen_action\":[2,2,3,3,2],\"utility\":[3.933758561687393,4.167238615045729,2.7168182977290023]}",
+  "model_safe_stan": "// ForestDB translation: Schelling Coordination Game with False Belief\ndata {\n  int<lower=1> A;\n  int<lower=1> N;\n  array[N] int<lower=1, upper=A> chosen_action;\n  vector[A] utility;\n}\nparameters {\n  real<lower=0> beta;\n}\nmodel {\n  beta ~ lognormal(0, 0.75);\n  chosen_action ~ categorical_logit(beta * utility);\n}\ngenerated quantities {\n  simplex[A] action_prob = softmax(beta * utility);\n}\n",
+  "protected_variables": [
+    "chosen_action"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `chosen_action`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: moved the computation of the categorical-logit linear predictor to the likelihood statement after the prior on `beta`. This preserves the same posterior/log density while satisfying SafeStan's requirement that each parameter receive its prior before being used in the model block. No data changes were required.\n"
+}

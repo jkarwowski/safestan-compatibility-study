@@ -1,0 +1,12 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N_z1\":1,\"W_z1\":[1],\"N_z1_w1\":1,\"Y_z1_w1\":[0],\"N_z1_w0\":0,\"Y_z1_w0\":[],\"N_z0_w0\":0,\"Y_z0_w0\":[]}",
+  "model_safe_stan": "data {\n  int<lower=0> N_z1;\n  array[N_z1] int<lower=0, upper=1> W_z1;\n\n  int<lower=0> N_z1_w1;\n  array[N_z1_w1] int<lower=0, upper=1> Y_z1_w1;\n\n  int<lower=0> N_z1_w0;\n  array[N_z1_w0] int<lower=0, upper=1> Y_z1_w0;\n\n  int<lower=0> N_z0_w0;\n  array[N_z0_w0] int<lower=0, upper=1> Y_z0_w0;\n}\n\nparameters {\n  // Population probability of being a complier\n  real<lower=0, upper=1> pi_c;\n  \n  // Probabilities for the binomial outcome distributions\n  real<lower=0, upper=1> eta_c0;\n  real<lower=0, upper=1> eta_c1;\n  real<lower=0, upper=1> eta_n0;\n  real<lower=0, upper=1> eta_n1;\n} \n\nmodel {\n  // Prior for Complier probability\n  pi_c ~ uniform(0, 1);\n  \n  // Priors for outcome model parameters\n  eta_c0 ~ beta(2, 2);  \n  eta_c1 ~ beta(2, 2);  \n  eta_n0 ~ beta(2, 2);\n  eta_n1 ~ beta(2, 2);\n\n  // Likelihood\n  W_z1 ~ bernoulli(pi_c);\n  Y_z1_w1 ~ bernoulli(eta_c1);\n  Y_z1_w0 ~ bernoulli(eta_n1);\n  Y_z0_w0 ~ bernoulli(pi_c * eta_c0 + (1 - pi_c) * eta_n0);\n}\n\ngenerated quantities {\n  // Super-population average causal effects \n  real CACE = (eta_c1 - eta_c0) * 10^3;\n  real NACE = (eta_n1 - eta_n0) * 10^3;\n}\n",
+  "protected_variables": [
+    "W_z1",
+    "Y_z1_w1",
+    "Y_z1_w0",
+    "Y_z0_w0"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `W_z1`, `Y_z1_w1`, `Y_z1_w0`, `Y_z0_w0`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual `target +=` likelihood with built-in, vectorized Bernoulli sampling statements over deterministic top-level reshapes of the observed data. The generated data fields are defined as `W_z1 = W[n]` for rows with `Z[n] == 1`; `Y_z1_w1 = Y[n]` for rows with `Z[n] == 1 && W[n] == 1`; `Y_z1_w0 = Y[n]` for rows with `Z[n] == 1 && W[n] == 0`; and `Y_z0_w0 = Y[n]` for rows with `Z[n] == 0 && W[n] == 0`, with matching `N_*` lengths. Rows with `Z[n] == 0 && W[n] == 1` are not copied because the original program added no likelihood term for them. The `log_mix` Bernoulli mixture for `Z == 0, W == 0` was rewritten exactly as a Bernoulli likelihood with probability `pi_c * eta_c0 + (1 - pi_c) * eta_n0`. Added the explicit density-neutral prior `pi_c ~ uniform(0, 1)` for the bounded parameter that previously had an implicit uniform prior.\n"
+}

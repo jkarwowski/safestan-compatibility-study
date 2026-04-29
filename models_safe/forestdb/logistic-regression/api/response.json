@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337558,
-  "created_at": 1777337546,
+  "completed_at": 1777429944,
+  "created_at": 1777429936,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0d814f311666516d0069f004caec28819cb6ff54cd5cd610f3",
+  "id": "resp_0dc580eea27bb4b50069f16db01334819d8b59bd717a524483",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0d814f311666516d0069f004cb81c0819cb8697ba285406e23",
+      "id": "rs_0dc580eea27bb4b50069f16db0a930819dba803665c6a001b2",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, after the parameter `beta` receives its built-in prior.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  int<lower=1> K;\\n  matrix[N, K] X;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  vector[K] beta;\\n}\\nmodel {\\n  beta ~ normal(0, 3);\\n  y ~ bernoulli_logit(X * beta);\\n}\\ngenerated quantities {\\n  vector[N] p = inv_logit(X * beta);\\n}\\n\\n\",\"data_safe_json\":\"{\\\"N\\\":14,\\\"K\\\":2,\\\"X\\\":[[1.0,-2.0],[1.0,-1.5],[1.0,-1.2],[1.0,-0.8],[1.0,-0.5],[1.0,-0.2],[1.0,0.1],[1.0,0.3],[1.0,0.6],[1.0,0.9],[1.0,1.2],[1.0,1.5],[1.0,1.8],[1.0,2.0]],\\\"y\\\":[0,0,0,0,0,1,0,1,1,1,1,1,1,1]}\",\"protected_variables\":[\"y\"]}",
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement, `y ~ bernoulli_logit(X * beta)`, after the parameter prior `beta ~ normal(0, 3)`. Context inputs `N`, `K`, and `X` are not scored as observations.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  int<lower=1> K;\\n  matrix[N, K] X;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  vector[K] beta;\\n}\\nmodel {\\n  beta ~ normal(0, 3);\\n  y ~ bernoulli_logit(X * beta);\\n}\\ngenerated quantities {\\n  vector[N] p = inv_logit(X * beta);\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"K\\\": 4,\\n  \\\"N\\\": 5,\\n  \\\"X\\\": [\\n    [\\n      6.743572467092793,\\n      4.766326804286665,\\n      5.314791364908196,\\n      3.4615984238698747\\n    ],\\n    [\\n      5.9267375922324455,\\n      5.215334739623721,\\n      3.6973046960456997,\\n      6.864866545302938\\n    ],\\n    [\\n      4.427956561012538,\\n      5.163005328194073,\\n      5.485749232860426,\\n      5.31110341444596\\n    ],\\n    [\\n      6.748072635685081,\\n      4.668483878008022,\\n      4.90807000379698,\\n      3.443484431499976\\n    ],\\n    [\\n      4.561833343388521,\\n      4.456831845731654,\\n      5.1848011781452925,\\n      3.1271235592250983\\n    ]\\n  ],\\n  \\\"y\\\": [\\n    0,\\n    0,\\n    1,\\n    1,\\n    1\\n  ]\\n}\",\"protected_variables\":[\"y\"]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0d814f311666516d0069f004d41db4819c8152437e9e887e18",
+      "id": "msg_0dc580eea27bb4b50069f16db588f8819db37ab78e1079d34b",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2807,
+    "input_tokens": 3339,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 911,
+    "output_tokens": 1112,
     "output_tokens_details": {
       "reasoning_tokens": 516
     },
-    "total_tokens": 3718
+    "total_tokens": 4451
   },
   "user": null
 }

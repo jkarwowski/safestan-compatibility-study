@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-moving-avg-stochastic-volatility-optimized/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:24:53+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-moving-avg-stochastic-volatility-optimized",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0704ce0a594828550069f16bd1be108190a3f8dd1fbdc9a939",
+  "safe_dir": "models_safe/example_models/misc-moving-avg-stochastic-volatility-optimized",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:24:17+00:00",
+  "usage": {
+    "input_tokens": 3105,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3029,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6134
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

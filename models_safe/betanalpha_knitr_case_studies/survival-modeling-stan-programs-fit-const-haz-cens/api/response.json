@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424782,
+  "created_at": 1777424666,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_08850f108b97d6af0069f1591a35e08197b6e8cf261df59f47",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_08850f108b97d6af0069f1591ae640819781b5fa1f8f04c8b7",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `N1_safestan_obs`, `obs_times`, `N3_safestan_obs`, and `N4_safestan_obs`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced manual `target +=` likelihood contributions with built-in sampling statements. The exact observation loop is equivalent to `obs_times ~ exponential(gamma)`. The censored count terms `N1 * log_p1`, `N3 * log_p3`, and `N4 * log_p4` are represented by binomial observations on deterministic protected copies with all trials successful: `N1_safestan_obs ~ binomial(N1, p1)`, `N3_safestan_obs ~ binomial(N3, p3)`, and `N4_safestan_obs ~ binomial(N4, p4)`. When each protected copy equals its corresponding count, the binomial log PMF reduces exactly to the original count times the log probability. The parameter prior for `gamma` was moved before computations depending on `gamma` to satisfy SafeStan parameter-use ordering.\\n\\nData augmentation: added `N1_safestan_obs = N1`, `N3_safestan_obs = N3`, and `N4_safestan_obs = N4` as deterministic copies of supplied data fields.\\n\",\"model_safe_stan\":\"functions {\\n  // Hazard function\\n  real log_hazard(real t, real gamma) {\\n    return log(gamma);\\n  }\\n\\n  // Survival function\\n  real log_survival(real t, real gamma) {\\n    return -gamma * t;\\n  }\\n\\n  // Inverse survival function\\n  real inv_survival(real u, real gamma) {\\n    return - log(u) / gamma;\\n  }\\n}\\n\\ndata {\\n  int<lower=1> N1; // Number of observations in left-censored interval\\n  int<lower=1> N2; // Number of observations in uncensored interval\\n  int<lower=1> N3; // Number of observations in censored interval\\n  int<lower=1> N4; // Number of observations in right-censored interval\\n\\n  int<lower=N1, upper=N1> N1_safestan_obs; // Deterministic protected copy of N1\\n  int<lower=N3, upper=N3> N3_safestan_obs; // Deterministic protected copy of N3\\n  int<lower=N4, upper=N4> N4_safestan_obs; // Deterministic protected copy of N4\\n\\n  array[N2] real<lower=0> obs_times; // Observation times\\n\\n  real t_min;\\n  real<lower=t_min> t1; // Left-censoring threshold\\n  real<lower=t1>    t2; // Interval-censoring left threshold\\n  real<lower=t2>    t3; // Interval-censoring right threshold/Right-censoring threshold\\n  real<lower=t3> t_max;\\n\\n  int<lower=1> N_display;                 // Number of display times\\n  array[N_display] real<lower=0> display_times; // Display times\\n}\\n\\ntransformed data {\\n  int N = N1 + N2 + N3 + N4;\\n}\\n\\nparameters {\\n  real<lower=0> gamma;\\n}\\n\\nmodel {\\n  real log_S1;\\n  real log_S2;\\n  real log_S3;\\n\\n  real log_p1;\\n  real log_p3;\\n  real log_p4;\\n\\n  real p1;\\n  real p3;\\n  real p4;\\n\\n  gamma ~ normal(0, 5);\\n\\n  log_S1 = log_survival(t1, gamma);\\n  log_S2 = log_survival(t2, gamma);\\n  log_S3 = log_survival(t3, gamma);\\n\\n  log_p1 = log_diff_exp(0, log_S1);\\n  log_p3 = log_diff_exp(log_S2, log_S3);\\n  log_p4 = log_S3;\\n\\n  p1 = exp(log_p1);\\n  p3 = exp(log_p3);\\n  p4 = exp(log_p4);\\n\\n  N1_safestan_obs ~ binomial(N1, p1);\\n  obs_times ~ exponential(gamma);\\n  N3_safestan_obs ~ binomial(N3, p3);\\n  N4_safestan_obs ~ binomial(N4, p4);\\n}\\n\\ngenerated quantities {\\n  array[N_display] real display_survival;\\n  array[N] real<lower=0> pred_obs_times;\\n\\n  for (n in 1:N_display)\\n    display_survival[n] = exp(log_survival(display_times[n], gamma));\\n\\n  for (n in 1:N) {\\n    real u = uniform_rng(0, 1);\\n    real time = inv_survival(u, gamma);\\n\\n    if (time < t1) {\\n      pred_obs_times[n] = 0.5 * (t_min + t1);\\n    } else if (time < t2) {\\n      pred_obs_times[n] = time;\\n    } else if (time < t3) {\\n      pred_obs_times[n] = 0.5 * (t2 + t3);\\n    } else {\\n      pred_obs_times[n] = 0.5 * (t3 + t_max);\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N1\\\":2,\\\"N2\\\":5,\\\"N3\\\":1,\\\"N4\\\":4,\\\"N1_safestan_obs\\\":2,\\\"N3_safestan_obs\\\":1,\\\"N4_safestan_obs\\\":4,\\\"N_display\\\":2,\\\"display_times\\\":[1.0,2.0],\\\"obs_times\\\":[1.0,2.0,3.0,4.0,5.0],\\\"t1\\\":4.949605772930189,\\\"t2\\\":4.949605772930189,\\\"t3\\\":4.949605772930189,\\\"t_max\\\":13.92453299668037,\\\"t_min\\\":4.949605772930189}\",\"protected_variables\":[\"N1_safestan_obs\",\"obs_times\",\"N3_safestan_obs\",\"N4_safestan_obs\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_08850f108b97d6af0069f159871edc8197a93c50b14a31f605",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3735,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 10742,
+    "output_tokens_details": {
+      "reasoning_tokens": 9322
+    },
+    "total_tokens": 14477
+  },
+  "user": null
+}

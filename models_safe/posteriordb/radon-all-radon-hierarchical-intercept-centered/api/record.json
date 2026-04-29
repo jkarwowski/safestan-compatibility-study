@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/radon-all-radon-hierarchical-intercept-centered/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:50:45+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/radon-all-radon-hierarchical-intercept-centered",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_03c0a6e59501cc630069f171fb05dc8193a9c4a28a97930790",
+  "safe_dir": "models_safe/posteriordb/radon-all-radon-hierarchical-intercept-centered",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:50:34+00:00",
+  "usage": {
+    "input_tokens": 3221,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1027,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4248
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

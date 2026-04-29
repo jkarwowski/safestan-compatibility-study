@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":4,\"N\":2,\"county_idx\":[2,2],\"log_radon\":[6.134671501894284,6.881518693048437]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> J;\n  array[N] int<lower=1, upper=J> county_idx;\n  vector[N] log_radon;\n}\nparameters {\n  vector[J] alpha;\n  real mu_alpha;\n  real<lower=0> sigma_alpha;\n  real<lower=0> sigma_y;\n}\nmodel {\n  vector[N] mu;\n  \n  // priors\n  sigma_y ~ normal(0, 1);\n  sigma_alpha ~ normal(0, 1);\n  mu_alpha ~ normal(0, 10);\n  \n  // hierarchical prior\n  alpha ~ normal(mu_alpha, sigma_alpha);\n  \n  // likelihood\n  for (n in 1 : N) {\n    mu[n] = alpha[county_idx[n]];\n  }\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` likelihood loop with a single vectorized built-in sampling statement, `log_radon ~ normal(mu, sigma_y)`. The predictor vector `mu` is still computed deterministically from `alpha` and `county_idx` before observing `log_radon`. No data fields were added or changed; `N`, `J`, and `county_idx` remain context inputs.\n"
+}

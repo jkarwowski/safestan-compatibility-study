@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"D\":3,\"K\":3,\"N\":5,\"V\":2,\"doc\":[3,1,1,3,2],\"y\":[2,2,2,2,2]}",
+  "model_safe_stan": "// ForestDB translation: Hierarchical Dirichlet Process\ndata {\n  int<lower=1> D;\n  int<lower=1> K;\n  int<lower=1> V;\n  int<lower=1> N;\n  array[N] int<lower=1, upper=D> doc;\n  array[N] int<lower=1, upper=V> y;\n}\nparameters {\n  simplex[K] global_weight;\n  array[D] simplex[K] local_weight;\n  array[K] simplex[V] atom;\n}\nmodel {\n  array[N] vector[V] y_prob;\n\n  global_weight ~ dirichlet(rep_vector(1.0, K));\n  local_weight ~ dirichlet(5 * global_weight);\n  atom ~ dirichlet(rep_vector(1.0, V));\n\n  for (n in 1:N) {\n    y_prob[n] = rep_vector(0.0, V);\n    for (k in 1:K) {\n      y_prob[n] += local_weight[doc[n], k] * atom[k];\n    }\n  }\n  y ~ categorical(y_prob);\n}\ngenerated quantities {\n  array[D] int<lower=1, upper=K> group_cluster;\n  for (d in 1:D) {\n    group_cluster[d] = categorical_rng(local_weight[d]);\n  }\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual `target += log_sum_exp(...)` marginalized categorical likelihood with a deterministic per-observation probability vector `y_prob[n] = sum_k local_weight[doc[n], k] * atom[k]` followed by the built-in observation statement `y ~ categorical(y_prob)`. This preserves the same likelihood because `categorical_lpmf(y[n] | y_prob[n])` equals the original log-sum over latent components. Also vectorized the Dirichlet priors for `local_weight` and `atom` so each top-level parameter is sampled exactly once and no prior sampling statement is inside a loop. No data fields were added or changed.\n"
+}

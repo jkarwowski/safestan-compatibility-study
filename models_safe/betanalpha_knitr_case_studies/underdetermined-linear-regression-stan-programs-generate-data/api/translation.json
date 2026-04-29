@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "transformed data {\n  int<lower=0> M = 200;\n  int<lower=0> N = 100;\n  real alpha = 3;\n  real sigma = 1;\n}\n\ngenerated quantities {\n  matrix[N, M] X;\n  array[N] real y;\n\n  vector[M] beta;\n  for (m in 1:M) beta[m] = normal_rng(0, 10);\n\n  for (n in 1:N) {\n    for (m in 1:M) X[n, m] = normal_rng(0, 1);\n    y[n] = normal_rng(X[n, 1:M] * beta + alpha, sigma);\n  }\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no top-level data variables, no parameters, and no model-block sampling statements; it only generates simulated quantities in `generated quantities`.\n"
+}

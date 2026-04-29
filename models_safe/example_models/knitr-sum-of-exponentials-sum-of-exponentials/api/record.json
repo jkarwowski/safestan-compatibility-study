@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-sum-of-exponentials-sum-of-exponentials/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:13:29+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-sum-of-exponentials-sum-of-exponentials",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0913a126dfb1af1e0069f1693981c8819f9f4de96f603083e0",
+  "safe_dir": "models_safe/example_models/knitr-sum-of-exponentials-sum-of-exponentials",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:13:13+00:00",
+  "usage": {
+    "input_tokens": 3091,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1199,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4290
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

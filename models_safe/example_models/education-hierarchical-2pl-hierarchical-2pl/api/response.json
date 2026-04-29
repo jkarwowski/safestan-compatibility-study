@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427697,
+  "created_at": 1777427654,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b8d0d1492f9d93c0069f164c6c91c819d840509d4785fd5ee",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0b8d0d1492f9d93c0069f164c73e14819dbb9f7bf6d0a5433f",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: rewrote the parameter priors into SafeStan-compatible top-level sampling statements. The item-level prior `xi[i] ~ multi_normal_cholesky(...)` was vectorized to `xi ~ multi_normal_cholesky(...)` outside the loop. The separate indexed priors for `mu` and `tau` were combined into whole-parameter vectorized built-in priors with the same product density. The computation of `L_Sigma` was moved after the priors for `tau` and `L_Omega`, so those parameters are not used before their priors. The likelihood for the protected observation `y` is unchanged and remains a single top-level sampling statement. No data fields were added or changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> I; // // items\\n  int<lower=1> J; // // persons\\n  int<lower=1> N; // // observations\\n  array[N] int<lower=1, upper=I> ii; // item for n\\n  array[N] int<lower=1, upper=J> jj; // person for n\\n  array[N] int<lower=0, upper=1> y; // correctness for n\\n}\\nparameters {\\n  vector[J] theta; // abilities\\n  array[I] vector[2] xi; // alpha/beta pair vectors\\n  vector[2] mu; // vector for alpha/beta means\\n  vector<lower=0>[2] tau; // vector for alpha/beta residual sds\\n  cholesky_factor_corr[2] L_Omega;\\n}\\ntransformed parameters {\\n  vector[I] alpha;\\n  vector[I] beta;\\n  for (i in 1 : I) {\\n    alpha[i] = exp(xi[i, 1]);\\n    beta[i] = xi[i, 2];\\n  }\\n}\\nmodel {\\n  matrix[2, 2] L_Sigma;\\n  mu ~ normal([0.0, 0.0]', [1.0, 5.0]');\\n  tau ~ exponential(0.1);\\n  L_Omega ~ lkj_corr_cholesky(4);\\n  L_Sigma = diag_pre_multiply(tau, L_Omega);\\n  xi ~ multi_normal_cholesky(mu, L_Sigma);\\n  theta ~ normal(0, 1);\\n  y ~ bernoulli_logit(alpha[ii] .* (theta[jj] - beta[ii]));\\n}\\ngenerated quantities {\\n  corr_matrix[2] Omega;\\n  Omega = multiply_lower_tri_self_transpose(L_Omega);\\n}\\n\",\"data_safe_json\":\"{\\\"I\\\":1,\\\"J\\\":3,\\\"N\\\":4,\\\"ii\\\":[1,1,1,1],\\\"jj\\\":[1,2,2,1],\\\"y\\\":[0,0,0,1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b8d0d1492f9d93c0069f164ecd3c0819da0470044328daf33",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3372,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4260,
+    "output_tokens_details": {
+      "reasoning_tokens": 3568
+    },
+    "total_tokens": 7632
+  },
+  "user": null
+}

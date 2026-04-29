@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/learning-physics/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:32:07+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/learning-physics",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_03e2ea27f17b601d0069f16d9c33bc81908b37fd46f714210e",
+  "safe_dir": "models_safe/forestdb/learning-physics",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:31:56+00:00",
+  "usage": {
+    "input_tokens": 3207,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 885,
+    "output_tokens_details": {
+      "reasoning_tokens": 503
+    },
+    "total_tokens": 4092
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

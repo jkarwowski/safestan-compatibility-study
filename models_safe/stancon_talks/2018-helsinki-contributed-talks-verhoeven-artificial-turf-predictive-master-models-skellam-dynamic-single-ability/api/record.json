@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-single-ability/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T03:11:32+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-single-ability",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0fcbe9307f5dfe240069f176d72c7c81a1aa9d6493a6ec7e09",
+  "safe_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-single-ability",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:11:19+00:00",
+  "usage": {
+    "input_tokens": 4540,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1024,
+    "output_tokens_details": {
+      "reasoning_tokens": 861
+    },
+    "total_tokens": 5564
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

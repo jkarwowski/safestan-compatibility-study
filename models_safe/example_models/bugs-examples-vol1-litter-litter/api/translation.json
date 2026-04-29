@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"G\":2,\"N\":2,\"n\":[[2,2],[4,4]],\"r\":[[1,0],[0,1]]}",
+  "model_safe_stan": "data {\n  int<lower=0> G;\n  int<lower=0> N;\n  array[G, N] int<lower=0> r;\n  array[G, N] int<lower=0> n;\n}\nparameters {\n  array[G, N] real<lower=0, upper=1> p;\n  vector<lower=0, upper=1>[G] mu;\n  vector<lower=0.1>[G] a_plus_b;\n}\ntransformed parameters {\n  vector[G] a;\n  vector[G] b;\n  array[G, N] real<lower=0> a_rep;\n  array[G, N] real<lower=0> b_rep;\n  a = mu .* a_plus_b;\n  b = (1 - mu) .* a_plus_b;\n  for (g in 1 : G) {\n    for (i in 1 : N) {\n      a_rep[g, i] = a[g];\n      b_rep[g, i] = b[g];\n    }\n  }\n}\nmodel {\n  mu ~ uniform(0, 1);\n  a_plus_b ~ pareto(0.1, 1.5);\n  p ~ beta(a_rep, b_rep);\n  r ~ binomial(n, p);\n}\ngenerated quantities {\n  vector<lower=0>[G] theta;\n  for (g in 1 : G) {\n    theta[g] = 1 / (a[g] + b[g]);\n  }\n}\n",
+  "protected_variables": [
+    "r"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `r`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: vectorized the beta prior for `p` and the binomial likelihood for `r` so that the protected observation is scored exactly once with a plain top-level sampling statement outside loops. Changed `p` from a bounded matrix to an equivalently indexed bounded two-dimensional array of reals to allow direct vectorized sampling as a top-level parameter. Added `mu ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]` and satisfies SafeStan's unique-prior requirement. No data fields were added or changed.\n"
+}

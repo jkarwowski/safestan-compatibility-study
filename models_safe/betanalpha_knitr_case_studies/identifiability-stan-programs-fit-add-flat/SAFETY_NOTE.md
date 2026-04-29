@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the observed variable `y` is scored by the likelihood `y ~ normal(a + b, sigma)`, so it is the protected interface. However, parameters `a` and `b` have only implicit improper flat priors and are used in the likelihood before any built-in prior sampling statement. SafeStan requires each parameter to have exactly one built-in prior before use. Adding proper priors would change the posterior/log density, and an improper flat prior over unconstrained reals cannot be represented as a valid built-in sampling statement in a minor same-density rewrite.

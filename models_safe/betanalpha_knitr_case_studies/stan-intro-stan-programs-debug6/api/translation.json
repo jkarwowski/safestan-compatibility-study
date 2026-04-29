@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 3\n}\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n}\n\ntransformed data {\n  array[N] real mu;\n  for (n in 1:N)\n    mu[n] = n;\n}\n\nparameters {\n  array[N] real x;\n}\n\nmodel {\n  x ~ normal(mu, 1);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. `N` is a context input used only to size arrays and construct deterministic transformed data; no top-level data variable is observed with a sampling statement.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The parameter `x` has a single built-in prior sampling statement, and there are no protected observations or forbidden log-density manipulations.\n"
+}

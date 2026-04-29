@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/identifiability-stan-programs-simu-funnel/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:57:54+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/identifiability-stan-programs-simu-funnel",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0002b5af2ad6c5600069f157895e1c819699a23dd9946dd8de",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/identifiability-stan-programs-simu-funnel",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:57:45+00:00",
+  "usage": {
+    "input_tokens": 2938,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 751,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3689
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  real a;          // Unknown truncation\n  real<lower=a> x; // Constrained parameter\n}\n\nmodel {\n  a ~ normal(0, 1);          // Truncation density\n  x ~ normal(0, 1) T[a, ];   // Nominal target density with corrected normalization\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none; the program has no data block and no observed data likelihood.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual `target +=` prior and truncation-normalization terms with equivalent built-in sampling statements. Specifically, `a ~ normal(0, 1)` replaces `normal_lpdf(a | 0, 1)`, and `x ~ normal(0, 1) T[a, ]` replaces `normal_lpdf(x | 0, 1) - normal_lccdf(a | 0, 1)` under the existing constraint `x >= a`. No data fields were added; `data_safe.json` remains `{}`.\n"
+}

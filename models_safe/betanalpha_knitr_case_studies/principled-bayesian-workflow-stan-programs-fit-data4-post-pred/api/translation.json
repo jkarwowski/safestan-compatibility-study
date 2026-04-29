@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the observational model for `y` is implemented with manual `target +=` terms inside a loop, including a data-dependent branch and `log_mix` for a zero-inflated truncated Poisson likelihood. SafeStan forbids arbitrary `target +=` scoring, and replacing this likelihood with SafeStan sampling statements would require a substantive model rewrite or a custom/user-defined distribution rather than a minor same-density translation.\n"
+}

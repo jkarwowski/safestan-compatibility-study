@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the observational model is a zero-inflated Poisson likelihood implemented with manual `target +=` increments, `log_mix`, and a data-dependent branch on `y[n]`. SafeStan forbids arbitrary target manipulation, and there is no equivalent built-in Stan sampling statement for this zero-inflated likelihood. Replacing it would require a substantive model rewrite rather than a minor same-density translation.\n"
+}

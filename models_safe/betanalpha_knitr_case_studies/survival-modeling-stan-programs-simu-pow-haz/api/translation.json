@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 3,\n  \"alpha\": 2.893169252437498,\n  \"sigma\": 2.0216366472230067\n}",
+  "model_safe_stan": "functions {\n  // Inverse survival function\n  real inv_survival(real u, real alpha, real sigma) {\n    return sigma * pow(-log(u), 1 / alpha);\n  }\n}\n\ndata {\n  int<lower=1> N;\n  real<lower=0> alpha;\n  real<lower=0> sigma;\n}\n\ngenerated quantities {\n  array[N] real<lower=0> obs_times;\n\n  for (n in 1:N) {\n    real u = uniform_rng(0, 1);\n    obs_times[n] = inv_survival(u, alpha, sigma);\n  }\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The Stan program has no model block likelihood and no parameter priors to check; all top-level data variables (`N`, `alpha`, and `sigma`) are context inputs used only to generate simulated quantities.\n"
+}

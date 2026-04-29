@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-4-logearn-logheight/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:22:17+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-4-logearn-logheight",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0845b259c68c8dbc0069f15d30548081909c97b7026b1ffac3",
+  "safe_dir": "models_safe/example_models/arm-ch-4-logearn-logheight",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:21:52+00:00",
+  "usage": {
+    "input_tokens": 3013,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2058,
+    "output_tokens_details": {
+      "reasoning_tokens": 1842
+    },
+    "total_tokens": 5071
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

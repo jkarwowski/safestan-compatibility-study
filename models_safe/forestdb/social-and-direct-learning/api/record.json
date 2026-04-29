@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/forestdb/social-and-direct-learning/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:37:20+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/social-and-direct-learning",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0e6f36610d28ac440069f16ecfabac819294f99e832dc8d053",
+  "safe_dir": "models_safe/forestdb/social-and-direct-learning",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:37:03+00:00",
+  "usage": {
+    "input_tokens": 3330,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1224,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4554
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

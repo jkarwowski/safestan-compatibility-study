@@ -2,7 +2,7 @@ data {
   int<lower=0> N; // items
   array[N] int<lower=0> K; // initial trials
   array[N] int<lower=0> y; // initial successes
-  array[N] int<lower=0> y_safestan_copy; // deterministic copy of initial successes
+  array[N] int<lower=0> y_safestan_copy; // deterministic copy of y
   
   array[N] int<lower=0> K_new; // new trials
   array[N] int<lower=0> y_new; // new successes
@@ -24,8 +24,8 @@ parameters {
   vector<lower=0, upper=1>[N] theta; // chance of success 
 }
 model {
-  phi ~ uniform(0, 1); // density-neutral prior from constraint
   kappa ~ pareto(1, 1.5); // hyperprior
+  phi ~ uniform(0, 1); // density-neutral prior implied by bounds
   theta ~ beta(phi * kappa, (1 - phi) * kappa); // prior
   y ~ binomial(K, theta); // likelihood
 }
@@ -56,7 +56,15 @@ generated quantities {
   
   log_p_new = 0;
   for (n in 1 : N) {
-    log_p_new = log_p_new + binomial_lpmf(y_new[n] | K_new[n], theta[n]);
+    if (y_new[n] <= K_new[n]) {
+      log_p_new = log_p_new + lgamma(K_new[n] + 1)
+                  - lgamma(y_new[n] + 1)
+                  - lgamma(K_new[n] - y_new[n] + 1)
+                  + y_new[n] * log(theta[n])
+                  + (K_new[n] - y_new[n]) * log1m(theta[n]);
+    } else {
+      log_p_new = negative_infinity();
+    }
   }
   
   for (n in 1 : N) {

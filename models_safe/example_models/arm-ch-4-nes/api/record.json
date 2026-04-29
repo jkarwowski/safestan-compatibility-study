@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-4-nes/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:23:01+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-4-nes",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0823973d07b9aad10069f15d68bc1881a39fa8370b9dee6f4d",
+  "safe_dir": "models_safe/example_models/arm-ch-4-nes",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:22:48+00:00",
+  "usage": {
+    "input_tokens": 3389,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1045,
+    "output_tokens_details": {
+      "reasoning_tokens": 858
+    },
+    "total_tokens": 4434
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

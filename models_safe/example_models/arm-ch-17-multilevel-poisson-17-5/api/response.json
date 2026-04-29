@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425301,
+  "created_at": 1777425272,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0a7b4d568b56dfc80069f15b784bcc81a098a1ad6717043184",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0a7b4d568b56dfc80069f15b78e1dc81a08449263e0ec1442f",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `stops`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the deterministic assignment to `mu_adj` until after the priors for `b_eth` and `b_precint`. In the original program, that assignment read `b_eth` and `b_precint` before their sampling statements, which violates SafeStan's parameter-use discipline. The assignment is deterministic and unused in the likelihood, so this reordering preserves the posterior/log density. No data fields were changed or added.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  int<lower=0> n_eth;\\n  int<lower=0> n_precint;\\n  \\n  array[N] int<lower=0, upper=n_precint> precint;\\n  array[N] int<lower=0, upper=n_eth> eth;\\n  vector[N] offeset;\\n  array[N] int<lower=0> stops;\\n}\\nparameters {\\n  real mu;\\n  real<lower=0> sigma_epsilon;\\n  real<lower=0> sigma_eth;\\n  real<lower=0> sigma_precint;\\n  \\n  vector[n_eth] b_eth;\\n  vector[n_precint] b_precint;\\n  vector[N] epsilon;\\n}\\nmodel {\\n  real mu_adj;\\n  vector[n_eth] b_eth_adj;\\n  vector[n_precint] b_precint_adj;\\n  vector[N] lambda;\\n  \\n  mu ~ normal(0, 100);\\n  \\n  sigma_epsilon ~ normal(0, 10);\\n  sigma_eth ~ normal(0, 10);\\n  sigma_precint ~ normal(0, 10);\\n  \\n  b_eth ~ normal(0, sigma_eth);\\n  b_eth_adj = b_eth - mean(b_eth);\\n  \\n  b_precint ~ normal(0, sigma_precint);\\n  b_precint_adj = b_precint - mean(b_precint);\\n  \\n  mu_adj = mu + mean(b_eth) + mean(b_precint);\\n  \\n  epsilon ~ normal(0, sigma_epsilon);\\n  \\n  for (i in 1 : N) {\\n    lambda[i] = offeset[i] + mu + b_eth[eth[i]] + b_precint[precint[i]]\\n                + epsilon[i];\\n  }\\n  \\n  stops ~ poisson_log(lambda);\\n}\\n// Information on the data can be found in this blog:\\n// http://www.clayford.net/statistics/poisson-regression-ch-6-of-gelman-and-hill/\\n\",\"data_safe_json\":\"{\\\"N\\\":1,\\\"eth\\\":[1],\\\"n_eth\\\":3,\\\"n_precint\\\":2,\\\"offeset\\\":[3.9977021244463415],\\\"precint\\\":[1],\\\"stops\\\":[1]}\",\"protected_variables\":[\"stops\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0a7b4d568b56dfc80069f15b91abd081a0acdda5c4c3c6378c",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3359,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2760,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 6119
+  },
+  "user": null
+}

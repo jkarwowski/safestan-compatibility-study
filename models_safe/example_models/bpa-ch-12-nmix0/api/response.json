@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426520,
+  "created_at": 1777426497,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0e7e7b2767cb638e0069f160417d208190b1231492d903d73c",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0e7e7b2767cb638e0069f1604233fc81909a542aa1e4149d35",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `y` is the observed data scored by the likelihood in statements of the form `y[i, 1 : T, k] ~ bivariate_poisson_log(alpha_lam[k], p[k])`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood is implemented with a user-defined `bivariate_poisson_log_lpmf` distribution, including `reject()` checks and a `log_sum_exp` marginalization over an unobserved count. SafeStan sampling statements must use built-in Stan distributions, and protected observations must be scored as a plain top-level variable exactly once outside loops. Replacing this marginalized bivariate Poisson likelihood with SafeStan-compatible built-in sampling statements would require a substantive model rewrite or a likelihood change. The missing explicit prior for `p` and the transformed-data use of `y` would be minor issues by themselves, but the custom marginalized likelihood is not a minor same-density translation.\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0e7e7b2767cb638e0069f16056d3088190ab478f7f2d9605e9",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4516,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1772,
+    "output_tokens_details": {
+      "reasoning_tokens": 1531
+    },
+    "total_tokens": 6288
+  },
+  "user": null
+}

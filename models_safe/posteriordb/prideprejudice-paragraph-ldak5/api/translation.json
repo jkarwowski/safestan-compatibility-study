@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `w` (the observed word-token indices). `doc`, `V`, `M`, `N`, `alpha`, and `beta` are context/hyperparameter inputs.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized LDA token likelihood implemented with `target += log_sum_exp(gamma)` inside a loop over tokens, with the latent topic indicator summed out manually. SafeStan forbids arbitrary `target +=` scoring, and replacing this marginalized latent-state calculation with built-in sampling statements would require a substantive model/likelihood rewrite rather than a minor syntactic translation. The parameter priors could be vectorized, but the likelihood cannot be made SafeStan-compatible mechanically while preserving the original normalized log density.\n"
+}

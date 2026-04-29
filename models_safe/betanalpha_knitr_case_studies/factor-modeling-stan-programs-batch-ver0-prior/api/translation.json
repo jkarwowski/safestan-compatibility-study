@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 3,\n  \"N_factor1_levels\": 1,\n  \"N_factor2_levels\": 2,\n  \"N_factor3_levels\": 2,\n  \"factor2_to_factor1\": [\n    1,\n    1\n  ],\n  \"factor3_to_factor2\": [\n    2,\n    1\n  ],\n  \"obs_to_factor3\": [\n    2,\n    1,\n    1\n  ]\n}\n",
+  "model_safe_stan": "data {\n  int<lower=0> N;      // Number of observations\n\n  // First factor information\n  int<lower=0> N_factor1_levels;\n\n  // Second factor information\n  int<lower=0> N_factor2_levels;\n\n  // Third factor information\n  int<lower=0> N_factor3_levels;\n\n  // Nesting configuration\n  array[N] int<lower=1, upper=N_factor3_levels> obs_to_factor3;\n  array[N_factor3_levels] int<lower=1, upper=N_factor2_levels> factor3_to_factor2;\n  array[N_factor2_levels] int<lower=1, upper=N_factor1_levels> factor2_to_factor1;\n}\n\nparameters {\n  // Baseline\n  real baseline;\n}\n\ntransformed parameters {\n  vector[N_factor3_levels] log_psi = rep_vector(baseline, N_factor3_levels);\n}\n\nmodel {\n  baseline ~ normal(0, 1);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. This is a prior-only model; no top-level data variable is observed/scored by a sampling statement.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The only sampling statement is the built-in prior `baseline ~ normal(0, 1);`, and there is no protected data interface to score.\n"
+}

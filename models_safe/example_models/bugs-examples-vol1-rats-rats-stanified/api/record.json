@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-rats-rats-stanified/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:42:32+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol1-rats-rats-stanified",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0e0b8870acbea7a30069f161f3786c8193a6847a5fe3d76838",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol1-rats-rats-stanified",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:42:11+00:00",
+  "usage": {
+    "input_tokens": 3250,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1746,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 4996
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

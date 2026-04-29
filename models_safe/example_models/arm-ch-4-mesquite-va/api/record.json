@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-4-mesquite-va/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:22:52+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-4-mesquite-va",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0b9696fd06c494830069f15d4c7cf0819e817279b0382cc88d",
+  "safe_dir": "models_safe/example_models/arm-ch-4-mesquite-va",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:22:20+00:00",
+  "usage": {
+    "input_tokens": 3090,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2758,
+    "output_tokens_details": {
+      "reasoning_tokens": 2552
+    },
+    "total_tokens": 5848
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

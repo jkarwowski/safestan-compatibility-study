@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429111,
+  "created_at": 1777429094,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b1962f0a4a2a8d00069f16a6664fc81938c9e9172eb97d45e",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0b1962f0a4a2a8d00069f16a66fe5c81938aaa2744d8c5c0d7",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the model block so all parameter priors (`rho`, `alpha`, `sigma`, and `eta`) occur before those parameters are used to construct the latent Gaussian-process function `f`. This preserves the same posterior density because Stan sampling statements add commutative log-density terms. The protected observation `y` remains a top-level data variable and is observed exactly once with the built-in `normal` distribution. The data file is unchanged.\\n\",\"model_safe_stan\":\"// Fit the hyperparameters of a latent-variable Gaussian process with an\\n// exponentiated quadratic kernel and a Gaussian likelihood\\n\\ndata {\\n  int<lower=1> N;\\n  array[N] real x;\\n  vector[N] y;\\n}\\ntransformed data {\\n  real delta = 1e-9;\\n}\\nparameters {\\n  real<lower=0> rho;\\n  real<lower=0> alpha;\\n  real<lower=0> sigma;\\n  vector[N] eta;\\n}\\nmodel {\\n  vector[N] f;\\n\\n  rho ~ inv_gamma(5, 5);\\n  alpha ~ normal(0, 1);\\n  sigma ~ normal(0, 1);\\n  eta ~ normal(0, 1);\\n\\n  {\\n    matrix[N, N] L_K;\\n    matrix[N, N] K = gp_exp_quad_cov(x, alpha, rho);\\n    \\n    // diagonal elements\\n    for (n in 1 : N) {\\n      K[n, n] = K[n, n] + delta;\\n    }\\n    \\n    L_K = cholesky_decompose(K);\\n    f = L_K * eta;\\n  }\\n  \\n  y ~ normal(f, sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":5,\\\"x\\\":[5.456623530998508,5.964900564428904,3.815397906995553,4.586283317228205,6.556130741604509],\\\"y\\\":[4.0,4.0,2.0,4.0,5.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b1962f0a4a2a8d00069f16a7479e88193ac2e559f4c08314a",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3192,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1562,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4754
+  },
+  "user": null
+}

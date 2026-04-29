@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/regression-tests-matrix-indexing/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:27:08+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/regression-tests-matrix-indexing",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "x1_sim"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0609aee37659b16b0069f16c1958d48193b5766d34d1cff635",
+  "safe_dir": "models_safe/example_models/regression-tests-matrix-indexing",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:25:29+00:00",
+  "usage": {
+    "input_tokens": 3924,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 9788,
+    "output_tokens_details": {
+      "reasoning_tokens": 8568
+    },
+    "total_tokens": 13712
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

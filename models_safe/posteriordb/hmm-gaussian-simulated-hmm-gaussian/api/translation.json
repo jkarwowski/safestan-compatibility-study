@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the observation model is a marginalized hidden Markov model likelihood implemented through `normal_lpdf(...)` calculations in `transformed parameters` and a manual `target += log_sum_exp(logalpha[T])` update. SafeStan forbids arbitrary `target +=` scoring and requires protected observations to be scored exactly once by a built-in sampling statement before other use. Replacing this forward-algorithm marginal likelihood with SafeStan sampling statements would require a substantive model rewrite/change rather than a minor same-density translation. In addition, several parameters do not have explicit SafeStan-compatible priors in the model block, and adding proper priors would change the density.\n"
+}

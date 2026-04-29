@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-moving-avg-maq/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:24:17+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-moving-avg-maq",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_099765c411dd283f0069f16ba18478819297d6b9b4bd4a212b",
+  "safe_dir": "models_safe/example_models/misc-moving-avg-maq",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:23:29+00:00",
+  "usage": {
+    "input_tokens": 3180,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 4269,
+    "output_tokens_details": {
+      "reasoning_tokens": 3624
+    },
+    "total_tokens": 7449
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429192,
+  "created_at": 1777429180,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_09e74ead428e669a0069f16abcbc3481a191c44d753513033c",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_09e74ead428e669a0069f16abd517c81a19c355a465c79317b",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The data variables `N`, `D`, and `x` are context inputs used to construct the Gaussian-process covariance; no top-level data variable is observed with a sampling statement.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The only sampling statement is the built-in prior `y ~ multi_normal(mu, K)` for the top-level parameter `y`, and `y` is not used before that prior.\\n\",\"model_safe_stan\":\"// Sample from multidimensional Gaussian process using Stan's built-in\\n// exponentiated quadratic covariance matrix function.  \\n// Fixed kernel hyperparameters: rho=1, alpha=1, sigma=sqrt(0.1)\\n\\ndata {\\n  int<lower=1> N;\\n  int<lower=1> D;\\n  array[N] vector[D] x;\\n}\\ntransformed data {\\n  matrix[N, N] K = gp_exp_quad_cov(x, 1.0, 1.0);\\n  vector[N] mu = rep_vector(0, N);\\n  for (n in 1 : N) {\\n    K[n, n] = K[n, n] + 0.1;\\n  }\\n}\\nparameters {\\n  vector[N] y;\\n}\\nmodel {\\n  y ~ multi_normal(mu, K);\\n}\\n\",\"data_safe_json\":\"{\\\"D\\\":5,\\\"N\\\":4,\\\"x\\\":[[5.449257741426256,6.305394886745183,5.4767913147090574,6.948264271884894,2.288479132816935],[3.3662242627323202,3.7210640415731686,4.766217777273524,4.895591286083997,5.423522130414673],[3.053677314160398,2.9183732051218882,2.135528486637716,2.802135335310148,6.730235245654195],[3.1471380546344414,6.002394481940214,5.556942587155255,4.975602001466522,6.882157254999163]]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_09e74ead428e669a0069f16ac3b14481a19d2e688d126a27e7",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3254,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1043,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4297
+  },
+  "user": null
+}

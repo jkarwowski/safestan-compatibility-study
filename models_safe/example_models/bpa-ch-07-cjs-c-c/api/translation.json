@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data choice: the capture-history data `y` is the observed/modelled interface in the original Stan program.\n\nGenerated files: none.\n\nReason: the original CJS likelihood cannot be represented in SafeStan by a minor same-density rewrite. The protected observation `y` is read in `transformed data` to compute `first` and `last` before it is observed, and the model then scores indexed elements `y[i, t]` inside data-dependent loops and conditionals. The likelihood also includes literal observed constants such as `1 ~ bernoulli(...)`, which are not top-level protected data variables. Making this SafeStan-compatible would require replacing the custom marginalized capture-recapture likelihood with derived event arrays, indices, and constant observations, which is a substantive rewrite rather than a deterministic copy/reshape of the protected interface. The missing explicit uniform priors for the bounded parameters would be mechanically fixable, but the likelihood structure is not.\n"
+}

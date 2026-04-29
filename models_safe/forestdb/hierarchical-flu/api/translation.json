@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"G\":5,\"N\":1,\"group\":[5],\"y\":[1]}",
+  "model_safe_stan": "// ForestDB translation: Hierarchical Flu/Cough Model\ndata {\n  int<lower=1> G;\n  int<lower=1> N;\n  array[N] int<lower=1, upper=G> group;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0> alpha;\n  real<lower=0> beta;\n  vector<lower=0, upper=1>[G] theta;\n}\nmodel {\n  alpha ~ gamma(2, 1);\n  beta ~ gamma(2, 1);\n  theta ~ beta(alpha, beta);\n  y ~ bernoulli(theta[group]);\n}\ngenerated quantities {\n  real population_mean = alpha / (alpha + beta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the loop of indexed observation statements `y[n] ~ bernoulli(theta[group[n]])` with the equivalent vectorized built-in sampling statement `y ~ bernoulli(theta[group])`. This makes the protected top-level data variable appear exactly once on the left side of a sampling statement, outside loops, without changing the likelihood. The supplied data were unchanged.\n"
+}

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/bayes-sparse-regression-linear-regression-wide/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:45:48+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/bayes-sparse-regression-linear-regression-wide",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_05467a492ae84cf80069f154b3a1b4819f9aa8a1e95502fd0f",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/bayes-sparse-regression-linear-regression-wide",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:45:39+00:00",
+  "usage": {
+    "input_tokens": 3075,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 852,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3927
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

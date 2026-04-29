@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428177,
+  "created_at": 1777428160,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_00c4f30e58588a250069f166c064b48194ae5a764858041b5f",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_00c4f30e58588a250069f166c102688194a2a3156d0781e4c0",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `cases`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The only top-level data variable scored by a sampling statement is `cases`, and it is observed exactly once with a plain top-level sampling statement using the built-in `neg_binomial_2` distribution. The parameters `beta`, `gamma`, and `phi_inv` each have exactly one built-in prior before the likelihood uses transformed quantities depending on them.\\n\",\"model_safe_stan\":\"functions {\\n  array[] real sir(real t, array[] real y, array[] real theta,\\n                   array[] real x_r, array[] int x_i) {\\n    real S = y[1];\\n    real I = y[2];\\n    real R = y[3];\\n    real N = x_i[1];\\n    \\n    real beta = theta[1];\\n    real gamma = theta[2];\\n    \\n    real dS_dt = -beta * I * S / N;\\n    real dI_dt = beta * I * S / N - gamma * I;\\n    real dR_dt = gamma * I;\\n    \\n    return {dS_dt, dI_dt, dR_dt};\\n  }\\n}\\ndata {\\n  int<lower=1> n_days;\\n  array[3] real y0;\\n  real t0;\\n  array[n_days] real ts;\\n  int N;\\n  array[n_days] int cases;\\n}\\ntransformed data {\\n  array[0] real x_r;\\n  array[1] int x_i = {N};\\n}\\nparameters {\\n  real<lower=0> gamma;\\n  real<lower=0> beta;\\n  real<lower=0> phi_inv;\\n}\\ntransformed parameters {\\n  array[n_days, 3] real y;\\n  real phi = 1. / phi_inv;\\n  {\\n    array[2] real theta;\\n    theta[1] = beta;\\n    theta[2] = gamma;\\n    \\n    y = integrate_ode_rk45(sir, y0, t0, ts, theta, x_r, x_i);\\n  }\\n}\\nmodel {\\n  //priors\\n  beta ~ normal(2, 1);\\n  gamma ~ normal(0.4, 0.5);\\n  phi_inv ~ exponential(5);\\n  \\n  //sampling distribution\\n  //col(matrix x, int n) - The n-th column of matrix x. Here the number of infected people \\n  cases ~ neg_binomial_2(col(to_matrix(y), 2), phi);\\n}\\ngenerated quantities {\\n  real R0 = beta / gamma;\\n  real recovery_time = 1 / gamma;\\n  array[n_days] real pred_cases;\\n  pred_cases = neg_binomial_2_rng(col(to_matrix(y), 2), phi);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":3,\\\"cases\\\":[3,5,2,5,3],\\\"n_days\\\":5,\\\"t0\\\":0.0,\\\"ts\\\":[1.0,2.0,3.0,4.0,5.0],\\\"y0\\\":[6.315520062655312,5.845034031010872,5.33642547552079]}\",\"protected_variables\":[\"cases\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_00c4f30e58588a250069f166cd732881948bddd5432a2b7fcc",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3442,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1824,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5266
+  },
+  "user": null
+}

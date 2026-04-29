@@ -1,0 +1,31 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol3-hepatitis-hepatitisme/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:53:22+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol3-hepatitis-hepatitisme",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "Yvec1",
+    "y0"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_04d4a5fff42705010069f16459f8b881a2b1954fc5f8229471",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol3-hepatitis-hepatitisme",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:52:25+00:00",
+  "usage": {
+    "input_tokens": 3644,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 6146,
+    "output_tokens_details": {
+      "reasoning_tokens": 5178
+    },
+    "total_tokens": 9790
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

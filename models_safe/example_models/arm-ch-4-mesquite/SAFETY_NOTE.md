@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `weight`.
+
+Generated files: none.
+
+Reason: the observed likelihood is `weight ~ normal_id_glm(x, alpha, beta, sigma)`, so `weight` is the protected interface variable. However, the parameters `alpha`, `beta`, and `sigma` have no explicit priors. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding priors for these unconstrained or half-line parameters would change the original Stan log density, because their current implicit priors are improper flat densities rather than finite-bound density-neutral priors. Therefore this model cannot be translated to SafeStan with only a minor same-density rewrite.

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424128,
+  "created_at": 1777424053,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_00a54501f69dcaba0069f156b50d2081939d09191a465749e2",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_00a54501f69dcaba0069f156b635608193851992dedb000776",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: none. The program does not observe any top-level data variable with a sampling statement; `M`, `N`, `x0`, and `X` are context inputs only.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the explicit `reject(\\\"\\\")` gate enforcing `0 <= alpha + deltaX[n,] * beta <= 1` for every observation with a constrained transformed parameter `p = alpha + deltaX * beta` declared as `vector<lower=0, upper=1>[N]`. This preserves the same parameter support and unnormalized density while removing the forbidden `reject()` call. `data_safe.json` is unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> M; // Number of covariates\\n  int<lower=0> N; // Number of observations\\n\\n  vector[M] x0;   // Covariate baselines\\n  matrix[N, M] X; // Covariate design matrix\\n}\\n\\ntransformed data {\\n  matrix[N, M] deltaX;\\n  for (n in 1:N) {\\n    deltaX[n,] = X[n] - x0';\\n  }\\n}\\n\\nparameters {\\n  real alpha;      // Intercept\\n  vector[M] beta;  // Linear slopes\\n}\\n\\ntransformed parameters {\\n  vector<lower=0, upper=1>[N] p = alpha + deltaX * beta;\\n}\\n\\nmodel {\\n  // Prior model\\n  alpha ~ normal(0, 1);\\n  beta ~ normal(0, 1);\\n}\\n\\n// Simulate a full observation from the current value of the parameters\\ngenerated quantities {\\n  array[N] int y_pred = bernoulli_rng(p);\\n}\\n\",\"data_safe_json\":\"{\\\"M\\\":1,\\\"N\\\":1,\\\"X\\\":[[5.097738602804075]],\\\"x0\\\":[5.7287137584077055]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_00a54501f69dcaba0069f156feab8c81939d51a3bc670aac04",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3175,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 6666,
+    "output_tokens_details": {
+      "reasoning_tokens": 6189
+    },
+    "total_tokens": 9841
+  },
+  "user": null
+}

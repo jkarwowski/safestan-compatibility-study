@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777339120,
-  "created_at": 1777339098,
+  "completed_at": 1777431748,
+  "created_at": 1777431731,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_013f259f962e6a860069f00adaf05c819da21c467a805d12cc",
+  "id": "resp_0f4ba047c75feff80069f174b3b4ec819d80e0b5851fca8a42",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_013f259f962e6a860069f00adc8e8c819d8b0dcd98cc26ae0d",
+      "id": "rs_0f4ba047c75feff80069f174b4c470819d966c52124d84ac27",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observed response vector `y` is the likelihood variable and is scored once with `y ~ bernoulli_logit(eta)`. However, the parameter `gamma` has no prior in the original Stan program, relying on Stan's implicit improper flat prior. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding any proper prior for the unconstrained parameter `gamma` would change the posterior/log density. The indexed `theta[j]` prior inside a loop could be mechanically vectorized, but the missing prior for `gamma` prevents a same-density SafeStan translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observed likelihood is `y ~ bernoulli_logit(eta)`, so `y` is the protected interface variable. However, the model has an unconstrained parameter `gamma` with only Stan's implicit improper flat prior, and `gamma` is used in the prior for `theta` without having its own built-in prior sampling statement. SafeStan requires every top-level parameter to have exactly one built-in prior before use. Adding any proper prior for `gamma` would change the posterior/log density, so this cannot be repaired by a minor same-density rewrite. The elementwise `theta[j] ~ normal(...)` prior inside a loop would also need mechanical vectorization, but the missing proper prior for `gamma` is the blocking issue.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_013f259f962e6a860069f00aeeb634819dbdb709da97ab65c8",
+      "id": "msg_0f4ba047c75feff80069f174c21b10819d886f40d5bf0c5f0c",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 37049,
+    "input_tokens": 3156,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1225,
+    "output_tokens": 1253,
     "output_tokens_details": {
       "reasoning_tokens": 1034
     },
-    "total_tokens": 38274
+    "total_tokens": 4409
   },
   "user": null
 }

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424501,
+  "created_at": 1777424490,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_05fe05a17e090e2f0069f1586a91c081a29cb4352654b02f56",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_05fe05a17e090e2f0069f1586bb10c81a2a775e29f2bbfce0e",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The program has no model-block sampling statements and no parameters, so the top-level data variables (`theta_l`, `theta_u`, and `delta`) are context inputs rather than protected observations. The program does not use forbidden log-density editing constructs such as `target +=`, `target()`, `reject()`, `fatal_error()`, or `_lp` functions.\\n\",\"model_safe_stan\":\"functions {\\n  real cdf(real x, real mu, real sigma) {\\n    real denom = sqrt(sigma * x);\\n    return Phi((x - mu) / denom) - exp(2 * mu / sigma) * Phi(- (x + mu) / denom);\\n  }\\n\\n  vector tail_condition(vector y, vector theta, array[] real x_r, array[] int x_i) {\\n    vector[2] diff;\\n    if (!is_nan(y[1]) && !is_nan(y[2])) {\\n      diff[1] = cdf(theta[1], y[1], exp(y[2])) - 0.01;\\n      diff[2] = cdf(theta[2], y[1], exp(y[2])) - 0.99;\\n    } else {\\n      diff[1] = 0;\\n      diff[2] = 0;\\n    }\\n    return diff;\\n  }\\n}\\n\\ndata {\\n  real theta_l;\\n  real theta_u;\\n  real delta;\\n}\\n\\ntransformed data {\\n  real sigma_guess =\\n      0.25 * (theta_l + theta_u)\\n    * (sqrt(1 + 4 * square( (theta_u - theta_l) / (delta * (theta_l + theta_u)) ) ) - 1);\\n  real mu_guess = 0.5 * (theta_l + theta_u) - sigma_guess;\\n  vector[2] y_guess = [mu_guess, log(sigma_guess)]';\\n  vector[2] theta = [theta_l, theta_u]';\\n  array[0] real x_r;\\n  array[0] int x_i;\\n\\n  print(\\\"Guesses:\\\");\\n  print(\\\"  mu = \\\", mu_guess);\\n  print(\\\"  sigma = \\\", sigma_guess);\\n}\\n\\ngenerated quantities {\\n  real mu;\\n  real sigma;\\n  {\\n    vector[2] y = algebra_solver(tail_condition, y_guess, theta, x_r, x_i);\\n    mu = y[1];\\n    sigma = exp(y[2]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"delta\\\":2.702387530971245,\\\"theta_l\\\":2.9134470090546265,\\\"theta_u\\\":6.653333798042692}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_05fe05a17e090e2f0069f15872038081a29464baafddfdc784",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3354,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1187,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4541
+  },
+  "user": null
+}

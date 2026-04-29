@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428119,
+  "created_at": 1777428106,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_037c0a09e4c5d13a0069f1668a9ab881a3960267589393a035",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_037c0a09e4c5d13a0069f1668b3c2081a3a7318a23cfee6b2a",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `C`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `C` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `C ~ lognormal(...)`, after all parameters have received built-in priors. Other data variables are used only as context inputs for the ODE solution and prediction.\\n\",\"model_safe_stan\":\"functions {\\n  vector one_comp_mm_elim_abs(real t, vector y, real k_a,\\n                              // Dosing rate in 1/day\\n                              real K_m,\\n                              // Michaelis-Menten constant in mg/L\\n                              real V_m,\\n                              // Maximum elimination rate in 1/day\\n                              real D, real V) {\\n    vector[1] dydt;\\n    \\n    real dose = 0;\\n    real elim = (V_m / V) * y[1] / (K_m + y[1]);\\n    \\n    if (t > 0) {\\n      dose = exp(-k_a * t) * D * k_a / V;\\n    }\\n    \\n    dydt[1] = dose - elim;\\n    \\n    return dydt;\\n  }\\n}\\ndata {\\n  real t0; // Initial time in days;\\n  vector[1] C0; // Initial concentration at t0 in mg/L\\n  \\n  real D; // Total dosage in mg\\n  real V; // Compartment volume in L\\n  \\n  int<lower=1> N_t;\\n  array[N_t] real times; // Measurement times in days\\n  \\n  // Measured concentrations in effect compartment in mg/L\\n  array[N_t] real C;\\n}\\nparameters {\\n  real<lower=0> k_a; // Dosing rate in 1/day\\n  real<lower=0> K_m; // Michaelis-Menten constant in mg/L\\n  real<lower=0> V_m; // Maximum elimination rate in 1/day\\n  real<lower=0> sigma;\\n}\\ntransformed parameters {\\n  array[N_t] vector[1] mu_C = ode_bdf_tol(one_comp_mm_elim_abs, C0, t0,\\n                                          times, 1e-8, 1e-8, 1000, k_a, K_m,\\n                                          V_m, D, V);\\n}\\nmodel {\\n  // Priors\\n  k_a ~ cauchy(0, 1);\\n  K_m ~ cauchy(0, 1);\\n  V_m ~ cauchy(0, 1);\\n  sigma ~ cauchy(0, 1);\\n  \\n  // Likelihood\\n  C ~ lognormal(log(mu_C[ : , 1]), sigma);\\n}\\ngenerated quantities {\\n  array[N_t] real C_ppc;\\n  for (n in 1 : N_t) {\\n    C_ppc[n] = lognormal_rng(log(mu_C[n, 1]), sigma);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"C\\\":[4.798867846460151,4.3840372019726335],\\\"C0\\\":[3.3912841251629646],\\\"D\\\":6.490769891594435,\\\"N_t\\\":2,\\\"V\\\":4.753979741970246,\\\"t0\\\":0.0,\\\"times\\\":[1.0,2.0]}\",\"protected_variables\":[\"C\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_037c0a09e4c5d13a0069f16691735c81a389e9ef0e9853cb3e",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3502,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1325,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4827
+  },
+  "user": null
+}

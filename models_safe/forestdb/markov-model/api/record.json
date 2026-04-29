@@ -1,39 +1,30 @@
 {
   "artifacts_dir": "models_safe/forestdb/markov-model/api",
   "compatibility": "minor",
-  "completed_at": "2026-04-28T00:56:55+00:00",
+  "completed_at": "2026-04-29T02:34:07+00:00",
   "model": "gpt-5.5",
   "path": "models/forestdb/markov-model",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [
-    "y_1",
-    "y_2",
-    "y_3",
-    "y_4",
-    "y_5",
-    "y_6",
-    "y_7",
-    "y_8",
-    "y_9",
-    "y_10",
-    "y_11",
-    "y_12",
-    "y_13",
-    "y_14"
+    "y_initial",
+    "y_tail"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_0da47a04036a7f4b0069f004d7df40819fa70673bc63238375",
+  "response_id": "resp_0ff4a09b89f4ac670069f16db02f948191b7bd22853eb5293a",
   "safe_dir": "models_safe/forestdb/markov-model",
-  "started_at": "2026-04-28T00:52:39+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:32:16+00:00",
   "usage": {
-    "input_tokens": 2632,
+    "input_tokens": 3202,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 16463,
+    "output_tokens": 9275,
     "output_tokens_details": {
-      "reasoning_tokens": 15538
+      "reasoning_tokens": 8804
     },
-    "total_tokens": 19095
+    "total_tokens": 12477
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

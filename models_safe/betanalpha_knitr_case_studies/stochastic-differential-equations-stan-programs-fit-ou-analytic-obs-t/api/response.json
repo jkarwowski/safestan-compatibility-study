@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424642,
+  "created_at": 1777424580,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_02a51b793f5a52ae0069f158c4ca7081a3b1c438ea2760b056",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_02a51b793f5a52ae0069f158c56c8081a3920bccbc9b643e95",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_obs`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the latent state `x` and observation `y_obs` were represented as vectors so that the latent Ornstein-Uhlenbeck transition model can be written as one built-in `multi_normal` prior for the top-level parameter `x`. The mean vector and covariance matrix are computed by the same Gaussian Markov recursions as the original sequential transition statements, preserving the same joint density for `x` conditional on `mu`, `gamma`, `tau`, `x0`, and the time data. The protected observation `y_obs` is then scored exactly once with `normal(x, sigma)`. No data values were added or changed; the JSON array for `y_obs` is valid for the vector declaration.\\n\",\"model_safe_stan\":\"data {\\n  real t0;\\n\\n  int<lower=1> N_obs;\\n  array[N_obs] real t_obs;\\n  vector[N_obs] y_obs;\\n  real<lower=0> sigma;\\n}\\n\\nparameters {\\n  real mu;\\n  real<lower=0> gamma;\\n  real<lower=0> tau;\\n\\n  real x0;\\n  vector[N_obs] x;\\n}\\n\\nmodel {\\n  real decay;\\n  real innovation_var;\\n  vector[N_obs] x_mean;\\n  matrix[N_obs, N_obs] x_cov;\\n\\n  mu ~ normal(0, 10);\\n  gamma ~ normal(0, 1);\\n  tau ~ normal(0, 1);\\n\\n  x0 ~ normal(0, 3);\\n\\n  x_cov = rep_matrix(0, N_obs, N_obs);\\n\\n  decay = exp(-gamma * (t_obs[1] - t0));\\n  x_mean[1] = mu + (x0 - mu) * decay;\\n  innovation_var = square(0.7071 * tau) * (1 - decay) / gamma;\\n  x_cov[1, 1] = innovation_var;\\n\\n  for (n in 2:N_obs) {\\n    decay = exp(-gamma * (t_obs[n] - t_obs[n - 1]));\\n    x_mean[n] = mu + (x_mean[n - 1] - mu) * decay;\\n    innovation_var = square(0.7071 * tau) * (1 - decay) / gamma;\\n\\n    for (m in 1:(n - 1)) {\\n      x_cov[n, m] = decay * x_cov[n - 1, m];\\n      x_cov[m, n] = x_cov[n, m];\\n    }\\n\\n    x_cov[n, n] = square(decay) * x_cov[n - 1, n - 1] + innovation_var;\\n  }\\n\\n  x ~ multi_normal(x_mean, x_cov);\\n\\n  y_obs ~ normal(x, sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"N_obs\\\":4,\\\"sigma\\\":2.049991609335336,\\\"t0\\\":5.619496314967426,\\\"t_obs\\\":[3.765694074093375,2.2901830815088906,2.3600484522194196,2.4718046603240142],\\\"y_obs\\\":[2.0,2.0,4.0,4.0]}\",\"protected_variables\":[\"y_obs\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_02a51b793f5a52ae0069f158fdef0c81a3868d8c6727196bcc",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3296,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 5965,
+    "output_tokens_details": {
+      "reasoning_tokens": 5178
+    },
+    "total_tokens": 9261
+  },
+  "user": null
+}

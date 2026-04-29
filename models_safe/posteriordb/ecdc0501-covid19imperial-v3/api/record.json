@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/ecdc0501-covid19imperial-v3/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:44:20+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/ecdc0501-covid19imperial-v3",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "deaths_safestan"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0c3816bcb70c82680069f16fffcf088195a218073c3fa767b2",
+  "safe_dir": "models_safe/posteriordb/ecdc0501-covid19imperial-v3",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:42:07+00:00",
+  "usage": {
+    "input_tokens": 4900,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 12823,
+    "output_tokens_details": {
+      "reasoning_tokens": 10358
+    },
+    "total_tokens": 17723
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

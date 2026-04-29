@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol3-camel-camel/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:51:23+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol3-camel-camel",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_07256db6bbb3eac50069f1640472c08195af3940ec4adcc86e",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol3-camel-camel",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:51:00+00:00",
+  "usage": {
+    "input_tokens": 3425,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1770,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5195
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

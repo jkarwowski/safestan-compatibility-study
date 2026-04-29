@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/state-wide-presidential-votes-hierarchical-gp/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:55:25+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/state-wide-presidential-votes-hierarchical-gp",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0cec0c890dc84f160069f172f34ac881a18926f7d67b64a017",
+  "safe_dir": "models_safe/posteriordb/state-wide-presidential-votes-hierarchical-gp",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:54:43+00:00",
+  "usage": {
+    "input_tokens": 4349,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4411,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 8760
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

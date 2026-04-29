@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/bayes-sparse-regression-linear-regression-unif/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T00:45:56+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/bayes-sparse-regression-linear-regression-unif",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a9fcd772f24bb3d0069f154b2b8ec81a3a9b7b4d2afb647a5",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/bayes-sparse-regression-linear-regression-unif",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:45:38+00:00",
+  "usage": {
+    "input_tokens": 3120,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1566,
+    "output_tokens_details": {
+      "reasoning_tokens": 1397
+    },
+    "total_tokens": 4686
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

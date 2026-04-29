@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428521,
+  "created_at": 1777428476,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0536174c81311a9f0069f167fc9c4881949de9256b9bb56834",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0536174c81311a9f0069f167fd77f08194bc5d624e2eee82c4",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: changed the matrix priors from `to_vector(...) ~ normal(0, 2)` to the equivalent plain top-level parameter sampling statements `alpha ~ normal(0, 2)` and `beta ~ normal(0, 2)`. Moved the deterministic hidden-layer computation to occur after both parameter priors. Replaced the loop of indexed likelihood statements `y[n] ~ categorical_logit(...)` with the equivalent single built-in statement `y ~ categorical_logit_glm(...)`, so the protected data variable is observed exactly once with a plain top-level left-hand side. No data fields were added; `data_safe.json` is the supplied data unchanged.\\n\",\"model_safe_stan\":\"/**\\n * One layer RBM.\\n */\\ndata {\\n  int<lower=0> N; // num train instances\\n  int<lower=0> M; // num train predictors\\n  matrix[N, M] x; // train predictors\\n  int<lower=2> K; // num categories\\n  array[N] int<lower=1, upper=K> y; // train category\\n  int<lower=1> J; // num hidden units\\n}\\nparameters {\\n  matrix[M, J] alpha;\\n  matrix[J, K] beta;\\n}\\nmodel {\\n  matrix[N, J] hidden;\\n\\n  // priors\\n  alpha ~ normal(0, 2);\\n  beta ~ normal(0, 2);\\n\\n  // likelihood\\n  hidden = tanh(x * alpha);\\n  y ~ categorical_logit_glm(hidden, rep_vector(0, K), beta);\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":4,\\\"K\\\":6,\\\"M\\\":3,\\\"N\\\":4,\\\"x\\\":[[5.941729258413188,2.110708222565825,6.694524315401792],[5.018414303657152,5.97279090410972,3.8819687209044726],[4.137827455517949,2.1886917711553617,3.6362918640568997],[2.5103681726151716,5.102582030050497,6.2462651277878525]],\\\"y\\\":[1,4,2,2]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0536174c81311a9f0069f168264e248194b976d45090454c66",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3228,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 4180,
+    "output_tokens_details": {
+      "reasoning_tokens": 3624
+    },
+    "total_tokens": 7408
+  },
+  "user": null
+}

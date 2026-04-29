@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/fitting-the-cauchy-half-cauchy-nom/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:53:24+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/fitting-the-cauchy-half-cauchy-nom",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_044c84da663f92100069f1567ed9ec819da97664cc76778452",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/fitting-the-cauchy-half-cauchy-nom",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:53:18+00:00",
+  "usage": {
+    "input_tokens": 2895,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 476,
+    "output_tokens_details": {
+      "reasoning_tokens": 310
+    },
+    "total_tokens": 3371
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

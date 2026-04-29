@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: `y`.
+Protected data: `y` is the observed/modelled interface variable in the mixture likelihood.
 
 Generated files: none.
 
-Reason: the likelihood for `y` is a marginalized two-component normal mixture implemented with manual `target += log_mix(...)` scoring and built-in `_lupdf` calls. SafeStan forbids arbitrary `target +=` likelihood contributions and requires protected observations to be scored exactly once by a built-in sampling statement. Replacing this marginalized mixture with SafeStan-compatible sampling statements would require a substantive model rewrite, such as introducing latent component indicators or changing the likelihood representation, so no minor same-density translation is available.
+Reason: the likelihood is a marginalized two-component normal mixture implemented with manual `target += log_mix(...)` scoring and explicit `normal_lupdf(...)` terms. SafeStan forbids arbitrary `target +=` likelihood construction, and there is no equivalent built-in sampling statement for this marginalized mixture. Replacing it would require a substantive model rewrite rather than a minor same-density translation.

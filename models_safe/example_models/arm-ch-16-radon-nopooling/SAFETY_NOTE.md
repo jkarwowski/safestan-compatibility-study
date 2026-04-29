@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the model observes `y` through indexed sampling statements inside a loop, which could be mechanically vectorized, but the parameters `a`, `b`, and `sigma_y` have no explicit priors. In Stan this gives improper flat priors over their constrained spaces. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use; adding proper priors would change the posterior/log density, and there is no same-density built-in prior for the omitted improper priors. Therefore a SafeStan-compatible translation would require a substantive model change.

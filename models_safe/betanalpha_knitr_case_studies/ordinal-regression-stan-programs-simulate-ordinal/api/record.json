@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/ordinal-regression-stan-programs-simulate-ordinal/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:00:00+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/ordinal-regression-stan-programs-simulate-ordinal",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0cbe6bc1fb0126250069f15808bb18819cb1842b3df1f3095c",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/ordinal-regression-stan-programs-simulate-ordinal",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:59:52+00:00",
+  "usage": {
+    "input_tokens": 3103,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 818,
+    "output_tokens_details": {
+      "reasoning_tokens": 433
+    },
+    "total_tokens": 3921
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

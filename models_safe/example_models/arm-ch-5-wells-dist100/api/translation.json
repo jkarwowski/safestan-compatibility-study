@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `switched`.\n\nGenerated files: none.\n\nReason: the likelihood observes `switched` with the built-in `bernoulli_logit_glm` distribution, using `dist` only as context through deterministic transformed-data predictors. However, the parameters `alpha` and `beta` have no sampling statements. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors for these unconstrained parameters would change the posterior/log density, and their implicit flat priors are improper rather than finite bounded uniforms. Therefore no same-density minor SafeStan translation is available.\n"
+}

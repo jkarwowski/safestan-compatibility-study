@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":5,\"N\":4,\"county\":[1,1,1,1],\"x\":[2.983236171268429,5.156102842032854,4.923403252230173,6.947200869764695],\"y\":[2.0,3.0,4.0,2.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N; // observations\n  int<lower=1> J; // counties\n  array[N] int<lower=1, upper=J> county;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  real mu_alpha;\n  real<lower=0> sigma_alpha;\n  vector<offset=mu_alpha, multiplier=sigma_alpha>[J] alpha; // non-centered parameterization\n  real beta;\n  real<lower=0> sigma;\n}\nmodel {\n  beta ~ normal(0, 10);\n  sigma ~ normal(0, 10);\n  mu_alpha ~ normal(0, 10);\n  sigma_alpha ~ normal(0, 10);\n  alpha ~ normal(mu_alpha, sigma_alpha); // partial-pooling\n  y ~ normal(alpha[county] + beta * x, sigma);\n}\ngenerated quantities {\n  array[N] real y_rep = normal_rng(alpha[county] + beta * x, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that each parameter receives its built-in prior before being used in any later sampling statement. The protected observation `y` remains a top-level data variable and is observed exactly once with `y ~ normal(...)`. No data fields were added or changed.\n"
+}

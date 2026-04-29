@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428591,
+  "created_at": 1777428572,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_008ff67c8b15d3080069f1685c002c819d9c47b76579184d0a",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_008ff67c8b15d3080069f1685c9584819da2b80aa102203c28",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `complaints`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `complaints` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. All other data variables are context inputs, and all parameters have built-in prior sampling statements before the protected likelihood uses their dependent transformed quantities.\\n\",\"model_safe_stan\":\"functions {\\n  int neg_binomial_2_log_safe_rng(real eta, real phi) {\\n    real phi_div_exp_eta;\\n    real gamma_rate;\\n    phi_div_exp_eta = phi / exp(eta);\\n    gamma_rate = gamma_rng(phi, phi_div_exp_eta);\\n    if (gamma_rate >= exp(20.79)) {\\n      return -9;\\n    }\\n    return poisson_rng(gamma_rate);\\n  }\\n}\\ndata {\\n  int<lower=1> N;\\n  int<lower=1> M;\\n  int<lower=1> K;\\n  array[N] int complaints;\\n  vector[N] traps;\\n  int<lower=1> J;\\n  array[N] int<lower=1, upper=J> building_idx;\\n  matrix[J, K] building_data;\\n  vector[N] log_sq_foot;\\n  array[N] int<lower=1> mo_idx;\\n}\\ntransformed data {\\n  array[M] real mo_gp_vec;\\n  for (m in 1 : M) {\\n    mo_gp_vec[m] = m;\\n  }\\n}\\nparameters {\\n  real alpha;\\n  real<lower=0> sigma_mu;\\n  real<lower=0> sigma_kappa;\\n  vector[J] mu_raw;\\n  vector[J] kappa_raw;\\n  real beta;\\n  real<lower=0> inv_phi;\\n  vector[K] zeta;\\n  vector[K] gamma;\\n  // GP prior parameters\\n  vector[M] gp_raw;\\n  real<lower=0> gp_len;\\n  real<lower=0> sigma_gp;\\n  real<lower=0> sigma_noise;\\n  vector[M] mo_noise_raw;\\n}\\ntransformed parameters {\\n  vector[J] mu = alpha + building_data * zeta + sigma_mu * mu_raw;\\n  vector[J] kappa = beta + building_data * gamma + sigma_kappa * kappa_raw;\\n  vector[M] mo_noise = sigma_noise * mo_noise_raw;\\n  real phi = inv(inv_phi);\\n  vector[M] gp_exp_quad;\\n  vector[M] gp;\\n  {\\n    matrix[M, M] C = gp_exp_quad_cov(mo_gp_vec, sigma_gp, gp_len);\\n    real var_noise = square(sigma_noise);\\n    matrix[M, M] L_C;\\n    for (m in 1 : M) {\\n      C[m, m] += 1e-12;\\n    }\\n    L_C = cholesky_decompose(C);\\n    gp_exp_quad = L_C * gp_raw;\\n  }\\n  \\n  // gp is sum of monthly noise and the smoothly varying process\\n  gp = mo_noise + gp_exp_quad;\\n}\\nmodel {\\n  beta ~ normal(-0.25, 1);\\n  mu_raw ~ normal(0, 1);\\n  kappa_raw ~ normal(0, 1);\\n  sigma_mu ~ normal(0, 1);\\n  sigma_kappa ~ normal(0, 1);\\n  alpha ~ normal(log(4), 1);\\n  zeta ~ normal(0, 1);\\n  gamma ~ normal(0, 1);\\n  inv_phi ~ normal(0, 1);\\n  \\n  // GP priors\\n  gp_raw ~ normal(0, 1);\\n  gp_len ~ gamma(10, 2);\\n  sigma_gp ~ normal(0, 1);\\n  \\n  sigma_noise ~ normal(0, 1);\\n  mo_noise_raw ~ normal(0, 1);\\n  \\n  complaints ~ neg_binomial_2_log(mu[building_idx]\\n                                  + kappa[building_idx] .* traps + gp[mo_idx]\\n                                  + log_sq_foot, phi);\\n}\\ngenerated quantities {\\n  array[N] int y_rep;\\n  \\n  for (n in 1 : N) {\\n    y_rep[n] = neg_binomial_2_log_safe_rng(mu[building_idx[n]]\\n                                           + kappa[building_idx[n]]\\n                                             * traps[n]\\n                                           + gp[mo_idx[n]] + log_sq_foot[n],\\n                                           phi);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":2,\\\"K\\\":4,\\\"M\\\":4,\\\"N\\\":1,\\\"building_data\\\":[[5.471419270544998,5.967496456051593,4.831580101659073,6.9449936833964525],[3.098125065898951,4.609531934865121,6.554292132240067,5.922588761065869]],\\\"building_idx\\\":[2],\\\"complaints\\\":[6],\\\"log_sq_foot\\\":[2.4533329278874425],\\\"mo_idx\\\":[1],\\\"traps\\\":[5.847477717782608]}\",\"protected_variables\":[\"complaints\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_008ff67c8b15d3080069f168693d94819d9430b5732d156963",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3963,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2252,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 6215
+  },
+  "user": null
+}

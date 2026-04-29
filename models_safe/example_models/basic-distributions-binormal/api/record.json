@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/basic-distributions-binormal/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:24:28+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/basic-distributions-binormal",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_081654393632166f0069f15dc5db3c819086321e552db91e1c",
+  "safe_dir": "models_safe/example_models/basic-distributions-binormal",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:24:21+00:00",
+  "usage": {
+    "input_tokens": 2862,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 530,
+    "output_tokens_details": {
+      "reasoning_tokens": 330
+    },
+    "total_tokens": 3392
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

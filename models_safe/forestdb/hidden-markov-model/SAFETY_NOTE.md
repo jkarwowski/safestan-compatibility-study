@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: `y`.
+Protected data choice: `y` is the observed sequence/modelled interface in the original HMM.
 
 Generated files: none.
 
-Reason: the observation sequence `y` is scored through a marginalized hidden Markov model forward algorithm using indexed `categorical_lpmf(...)` calls and a final `target += log_sum_exp(last)`. SafeStan requires each protected data variable to appear exactly once as a plain identifier on the left side of a built-in sampling statement. There is no built-in Stan distribution for this marginalized HMM sequence likelihood, and replacing the forward algorithm with SafeStan sampling statements would require a substantive model rewrite or a change to the likelihood.
+Reason: the likelihood for `y` is computed by a marginalized hidden-state forward algorithm using `categorical_lpmf(...)` terms and a final `target += log_sum_exp(...)`. SafeStan forbids direct `target +=` scoring and cannot express this HMM marginal likelihood as a single built-in sampling statement for the top-level protected data. Rewriting it would require a substantive change to the model or likelihood rather than a minor same-density translation.

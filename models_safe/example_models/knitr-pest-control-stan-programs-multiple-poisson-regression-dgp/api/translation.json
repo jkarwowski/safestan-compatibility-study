@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":1}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n}\nmodel {\n  \n}\ngenerated quantities {\n  vector[N] log_sq_foot;\n  array[N] int live_in_super;\n  array[N] int traps;\n  array[N] int complaints;\n  real alpha = normal_rng(log(4), 0.1);\n  real beta = normal_rng(-0.25, 0.1);\n  real beta_super = normal_rng(-0.5, 0.1);\n  for (n in 1 : N) {\n    log_sq_foot[n] = normal_rng(1.5, 0.1);\n    live_in_super[n] = bernoulli_rng(0.5);\n    traps[n] = poisson_rng(8);\n    complaints[n] = poisson_log_rng(alpha + log_sq_foot[n] + beta * traps[n]\n                                    + beta_super * live_in_super[n]);\n  }\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The only top-level data variable, `N`, is a context size used to determine generated-quantities dimensions and loop bounds; it is not observed with a sampling statement.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The model block contains no likelihood or prior sampling statements, no parameters, and no forbidden direct log-density manipulation.\n"
+}

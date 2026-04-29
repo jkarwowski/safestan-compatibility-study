@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the model conditions on the observed response array `y` through `y[n] ~ normal(...)` inside a loop. That likelihood could be mechanically vectorized, but the model also leaves `sigma_y`, `sigma_alpha`, and `sigma_beta` with improper flat priors on the positive reals. SafeStan requires every parameter to have exactly one built-in prior before it is used. Adding proper priors for these scale parameters would change the posterior/log density, and there is no density-preserving built-in sampling statement for the original improper flat priors. Therefore a SafeStan-compatible version would require a substantive density change.

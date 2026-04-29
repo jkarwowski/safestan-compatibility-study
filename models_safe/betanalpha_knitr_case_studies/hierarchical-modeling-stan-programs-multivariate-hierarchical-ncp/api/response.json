@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424224,
+  "created_at": 1777424174,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0ca47a4a503f18fe0069f1572ea4fc81a08080adfdc769db60",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0ca47a4a503f18fe0069f1572fbee881a096b4a7c07c76f488",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the likelihood for `y` was moved from per-observation indexed sampling statements inside a loop to a single top-level sampling statement `y ~ normal(theta_obs, sigma)`. The helper transformed parameter `theta_obs` is a deterministic array with `theta_obs[n] = theta[indiv_idx[n]]`, preserving the same normal likelihood. The non-centered parameter prior for `eta` was vectorized from looped indexed statements to the single top-level statement `eta ~ normal(0, 1)`. No data changes were required; `data_safe.json` equals the supplied data.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;      // Number of observations\\n  int<lower=0> I;      // Number of components\\n  array[N] vector[I] y;      // Observations\\n  real<lower=0> sigma; // Measurement variability\\n\\n  // Number of individuals in hierarchy\\n  int<lower=0> K;\\n  // Individual from which each observation is generated\\n  array[N] int<lower=1, upper=K> indiv_idx;\\n}\\n\\nparameters {\\n  vector[I] mu;              // Population locations\\n  vector<lower=0>[I] tau;    // Population scales\\n  cholesky_factor_corr[I] L; // Population correlations\\n  array[K] vector[I] eta;  // Non-centered individual parameters\\n}\\n\\ntransformed parameters {\\n  array[K] vector[I] theta; // Multivariate centered parameters for each individual\\n  array[N] vector[I] theta_obs; // Multivariate centered parameters for each observation\\n\\n  for (k in 1:K)\\n    theta[k] = mu + diag_pre_multiply(tau, L) * eta[k];\\n\\n  for (n in 1:N)\\n    theta_obs[n] = theta[indiv_idx[n]];\\n}\\n\\nmodel {\\n  mu ~ normal(0, 5);        // Prior model\\n  tau ~ normal(0, 5);       // Prior model\\n  L ~ lkj_corr_cholesky(4); // Prior model\\n\\n  // Non-centered hierarchical model\\n  eta ~ normal(0, 1);\\n\\n  // Observational model\\n  y ~ normal(theta_obs, sigma);\\n}\\n\\n// Simulate a full observation from the current value of the parameters\\ngenerated quantities {\\n  array[N, I] real y_post_pred;\\n  for (n in 1:N) {\\n    y_post_pred[n] = normal_rng(theta_obs[n], sigma);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"I\\\":3,\\\"K\\\":3,\\\"N\\\":3,\\\"indiv_idx\\\":[2,2,2],\\\"sigma\\\":1.9710147982710937,\\\"y\\\":[[3.0,3.0,3.0],[3.0,3.0,3.0],[3.0,3.0,3.0]]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0ca47a4a503f18fe0069f1575cec2c81a096cd5f362a0f60d3",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3407,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 4847,
+    "output_tokens_details": {
+      "reasoning_tokens": 4142
+    },
+    "total_tokens": 8254
+  },
+  "user": null
+}

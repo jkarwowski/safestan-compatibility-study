@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338761,
-  "created_at": 1777338680,
+  "completed_at": 1777431714,
+  "created_at": 1777431676,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0e41778f650d07c20069f00938f040819c8a3c1ed207c169e8",
+  "id": "resp_0b3f3d37afecdb460069f1747c8e64819e897c0992a40df0ff",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0e41778f650d07c20069f0093a3f6c819cbf09e4428520f1ea",
+      "id": "rs_0b3f3d37afecdb460069f1747d1fa8819e9b73f1ad210ba6d5",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: the intended modelled interface would include `y` for the observed uncensored values and `N_censored` for the censored-count contribution. `U` and `N_observed` are context/configuration inputs.\\n\\nGenerated files: none.\\n\\nReason: the model is not SafeStan-compatible as written because it uses manual `target +=` scoring for the censored observations. More importantly, the parameter `mu` is unconstrained and has no built-in prior; SafeStan requires every parameter to be scored by exactly one built-in prior before use. Adding a proper prior to `mu` would change the posterior/log density relative to the original implicit improper flat prior, so a same-density minor rewrite is not available.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: the model scores the observed uncensored values `y` and also uses `N_censored` as the observed multiplicity of censored observations through the censored-tail likelihood contribution. `U` and `N_observed` are context/configuration inputs.\\n\\nGenerated files: none.\\n\\nReason: the censored-observation contribution is implemented with forbidden manual scoring, `target += N_censored * normal_lccdf(U | mu, 1)`. More importantly, the parameter `mu` has only an implicit improper flat prior in the original model. SafeStan requires every parameter to have exactly one built-in prior before use; adding a proper prior for `mu` would change the posterior/log density. Therefore no same-density SafeStan translation is available as a minor rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0e41778f650d07c20069f009874510819cad808b6a536c0419",
+      "id": "msg_0b3f3d37afecdb460069f1749eb348819e9734a79787d62007",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 7807,
+    "input_tokens": 2891,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 4344,
+    "output_tokens": 2801,
     "output_tokens_details": {
-      "reasoning_tokens": 4142
+      "reasoning_tokens": 2588
     },
-    "total_tokens": 12151
+    "total_tokens": 5692
   },
   "user": null
 }

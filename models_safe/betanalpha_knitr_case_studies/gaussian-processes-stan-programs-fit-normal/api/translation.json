@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N_obs\":1,\"N_predict\":1,\"alpha\":2.0083466055647476,\"observed_idx\":[1],\"rho\":4.5345490309113785,\"sigma\":2.2904861232327316,\"x_predict\":[1.0],\"y_obs\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N_predict;\n  array[N_predict] real x_predict;\n\n  int<lower=1> N_obs;\n  array[N_obs] real y_obs;\n  array[N_obs] int<lower=1, upper=N_predict> observed_idx;\n\n  real<lower=0> rho;\n  real<lower=0> alpha;\n  real<lower=0> sigma;\n}\n\ntransformed data {\n  matrix[N_predict, N_predict] cov =   gp_exp_quad_cov(x_predict, alpha, rho)\n                                     + diag_matrix(rep_vector(1e-10, N_predict));\n  matrix[N_predict, N_predict] L_cov = cholesky_decompose(cov);\n}\n\nparameters {\n  vector[N_predict] f_predict;\n}\n\nmodel {\n  f_predict ~ multi_normal_cholesky(rep_vector(0, N_predict), L_cov);\n  y_obs ~ normal(f_predict[observed_idx], sigma);\n}\n\ngenerated quantities {\n  array[N_predict] real y_predict = normal_rng(f_predict, sigma);\n}\n\n",
+  "protected_variables": [
+    "y_obs"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y_obs`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y_obs` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The parameter `f_predict` has exactly one built-in prior sampling statement before it is used in the model likelihood. Other data variables are context inputs used only as predictors, indices, constants, or transformed-data configuration.\n"
+}

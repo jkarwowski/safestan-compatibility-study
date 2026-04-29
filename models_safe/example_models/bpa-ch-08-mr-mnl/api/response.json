@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426449,
+  "created_at": 1777426369,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0fb23e3308c802b20069f15fc1ee9081a0b62c63294c015f44",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0fb23e3308c802b20069f15fc2ef5081a08cef02c472d14e9e",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `marr`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added explicit `uniform(0, 1)` priors for `mean_s` and `mean_r`, matching the original bounded parameters' implicit uniform priors. Replaced the loop of row-wise multinomial likelihood statements with the vectorized built-in statement `marr ~ multinomial(pr);` so the protected top-level data variable is observed exactly once, with a plain identifier on the left-hand side and outside any loop. No data fields were added or changed; `n_occasions` remains an unprotected context input.\\n\",\"model_safe_stan\":\"data {\\n  int n_occasions;\\n  array[n_occasions, n_occasions + 1] int marr;\\n}\\nparameters {\\n  real<lower=0, upper=1> mean_s; // Mean survival\\n  real<lower=0, upper=1> mean_r; // Mean recovery\\n}\\ntransformed parameters {\\n  vector[n_occasions] s;\\n  vector[n_occasions] r;\\n  array[n_occasions] simplex[n_occasions + 1] pr;\\n  \\n  // Constraints\\n  s = rep_vector(mean_s, n_occasions);\\n  r = rep_vector(mean_r, n_occasions);\\n  \\n  // Define the cell probabilities of the m-array\\n  // Main diagonal\\n  for (t in 1 : n_occasions) {\\n    pr[t, t] = (1 - s[t]) * r[t];\\n    \\n    // Above main diagonal\\n    for (j in (t + 1) : n_occasions) {\\n      pr[t, j] = prod(s[t : (j - 1)]) * (1 - s[j]) * r[j];\\n    }\\n    \\n    // Below main diagonal\\n    for (j in 1 : (t - 1)) {\\n      pr[t, j] = 0;\\n    }\\n  }\\n  \\n  // Last column: probability of non-recovery\\n  for (t in 1 : n_occasions) {\\n    pr[t, n_occasions + 1] = 1 - sum(pr[t,  : n_occasions]);\\n  }\\n}\\nmodel {\\n  // Priors\\n  mean_s ~ uniform(0, 1);\\n  mean_r ~ uniform(0, 1);\\n  \\n  // Define the multinomial likelihood\\n  marr ~ multinomial(pr);\\n}\\n\",\"data_safe_json\":\"{\\\"marr\\\":[[4,5,3],[3,2,4]],\\\"n_occasions\\\":2}\",\"protected_variables\":[\"marr\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0fb23e3308c802b20069f1600e1f5081a0a8dd5594b0c5057d",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3296,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7374,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 10670
+  },
+  "user": null
+}

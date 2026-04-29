@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"K\": 3,\n  \"N\": 2,\n  \"context_idx\": [\n    2,\n    2\n  ],\n  \"sigma\": 3.833847685727647,\n  \"y\": [\n    2.0,\n    2.0\n  ]\n}",
+  "model_safe_stan": "data {\n  int<lower=0> K;                       // Number of contexts\n  int<lower=0> N;                       // Number of observations\n  vector[N] y;                          // Observations\n  array[N] int<lower=1, upper=K> context_idx; // Context assignments\n  real<lower=0> sigma;                  // Measurement variability\n}\n\nparameters {\n  // Horseshoe parameters\n  vector[K] theta;\n}\n\nmodel {\n  // Horseshoe prior model\n  theta ~ normal(0, 0.1);\n\n  // Observational model\n  y ~ normal(theta[context_idx], sigma);\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once by the built-in statement `y ~ normal(theta[context_idx], sigma);` after the parameter `theta` has its built-in prior `theta ~ normal(0, 0.1);`. The remaining data variables `K`, `N`, `context_idx`, and `sigma` are context inputs and are not observed on the left side of a sampling statement.\n"
+}

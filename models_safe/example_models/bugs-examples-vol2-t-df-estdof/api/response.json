@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427459,
+  "created_at": 1777427450,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_01e6957fef2441a20069f163fa9d9c819c919910d0807e8236",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_01e6957fef2441a20069f163fb3698819c91058d693540ed32",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added the explicit prior `d ~ uniform(2, 100);` before the likelihood. This matches the parameter's existing finite bounds and is density-neutral up to a constant for the original constrained parameter, while satisfying SafeStan's requirement that each parameter have exactly one built-in prior sampling statement before use. The data file is unchanged.\\n\",\"model_safe_stan\":\"//# estimated the degree of freedom (dof) from \\n//# samples by sim.stan\\n// http://www.openbugs.net/Examples/t-df.html\\n\\n//# estimate dof using continuous priors \\n\\ndata {\\n  int<lower=0> N;\\n  array[N] real y;\\n}\\nparameters {\\n  // learning about the dof as a continuous quantity\\n  real<lower=2, upper=100> d;\\n}\\nmodel {\\n  d ~ uniform(2, 100);\\n  y ~ student_t(d, 0, 1);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":2,\\\"y\\\":[2.0,2.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_01e6957fef2441a20069f164019c1c819ca5563cbd48bfc099",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 2997,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 812,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3809
+  },
+  "user": null
+}

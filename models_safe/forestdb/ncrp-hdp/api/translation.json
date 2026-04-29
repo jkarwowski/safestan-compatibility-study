@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"D\":5,\"K\":5,\"N\":5,\"V\":1,\"doc\":[3,5,3,5,4],\"y\":[1,1,1,1,1]}",
+  "model_safe_stan": "// ForestDB translation: Nested CRP + HDP\ndata {\n  int<lower=1> D;\n  int<lower=1> K;\n  int<lower=1> V;\n  int<lower=1> N;\n  array[N] int<lower=1, upper=D> doc;\n  array[N] int<lower=1, upper=V> y;\n}\nparameters {\n  simplex[K] global_weight;\n  array[D] simplex[K] local_weight;\n  array[K] simplex[V] atom;\n}\nmodel {\n  global_weight ~ dirichlet(rep_vector(1.0, K));\n  local_weight ~ dirichlet(5 * global_weight);\n  atom ~ dirichlet(rep_vector(1.0, V));\n\n  {\n    array[N] vector[V] y_prob;\n    for (n in 1:N) {\n      y_prob[n] = rep_vector(0.0, V);\n      for (k in 1:K) {\n        y_prob[n] += local_weight[doc[n]][k] * atom[k];\n      }\n    }\n    y ~ categorical(y_prob);\n  }\n}\ngenerated quantities {\n  array[D] int<lower=1, upper=K> group_cluster;\n  for (d in 1:D) {\n    group_cluster[d] = categorical_rng(local_weight[d]);\n  }\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the original likelihood used manual `target += log_sum_exp(...)` scoring for the observed word/category variable `y`. This was algebraically rewritten as a built-in categorical likelihood with probabilities `y_prob[n][v] = sum_k local_weight[doc[n]][k] * atom[k][v]`. The looped Dirichlet priors for `local_weight` and `atom` were vectorized so parameter-prior sampling statements are not inside loops. `doc`, `D`, `K`, `V`, and `N` remain context inputs. No data fields were added; `data_safe.json` equals the supplied data.\n"
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"N\":2,\"county_idx\":[2,2],\"floor_measure\":[5.17809377368401,2.2497186637982804],\"log_radon\":[2.9389229404051234,3.226149276760595],\"log_uppm\":[2.616325624331105,2.7501054520832686]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county_idx;\n  vector[N] log_uppm;\n  vector[N] floor_measure;\n  vector[N] log_radon;\n}\nparameters {\n  vector[J] alpha_raw;\n  vector[2] beta;\n  real mu_alpha;\n  real<lower=0> sigma_alpha;\n  real<lower=0> sigma_y;\n}\ntransformed parameters {\n  vector[J] alpha;\n  // implies: alpha ~ normal(mu_alpha, sigma_alpha);\n  alpha = mu_alpha + sigma_alpha * alpha_raw;\n}\nmodel {\n  vector[N] mu;\n  vector[N] muj;\n  \n  sigma_alpha ~ normal(0, 1);\n  sigma_y ~ normal(0, 1);\n  mu_alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  alpha_raw ~ normal(0, 1);\n  \n  for (n in 1 : N) {\n    muj[n] = alpha[county_idx[n]] + log_uppm[n] * beta[1];\n    mu[n] = muj[n] + floor_measure[n] * beta[2];\n  }\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual likelihood accumulation `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` inside the loop with the equivalent vectorized built-in sampling statement `log_radon ~ normal(mu, sigma_y)` after `mu` is computed. This preserves the same log density while satisfying SafeStan's requirement that protected data be observed exactly once with a plain top-level sampling statement. The data file is unchanged.\n"
+}

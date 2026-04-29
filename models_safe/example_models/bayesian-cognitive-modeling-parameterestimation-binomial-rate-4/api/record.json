@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bayesian-cognitive-modeling-parameterestimation-binomial-rate-4/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:26:09+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bayesian-cognitive-modeling-parameterestimation-binomial-rate-4",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "k"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_02c49c52df7181160069f15e290ba4819d92a127efba9838b1",
+  "safe_dir": "models_safe/example_models/bayesian-cognitive-modeling-parameterestimation-binomial-rate-4",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:26:00+00:00",
+  "usage": {
+    "input_tokens": 3078,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 885,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3963
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,31 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2018-contributed-talks-11-simoiu-threshold-test/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T03:07:16+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2018-contributed-talks-11-simoiu-threshold-test",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "s",
+    "h"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_07c109219529e5500069f175c4d8a48197bd8ae6d3e27dbcd5",
+  "safe_dir": "models_safe/stancon_talks/2018-contributed-talks-11-simoiu-threshold-test",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:06:44+00:00",
+  "usage": {
+    "input_tokens": 3706,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3071,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 6777
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

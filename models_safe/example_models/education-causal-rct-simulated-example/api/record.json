@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/education-causal-rct-simulated-example/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:53:55+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/education-causal-rct-simulated-example",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0c2064fcfbed35aa0069f164a3953c81a1b59d9eb08cceee95",
+  "safe_dir": "models_safe/example_models/education-causal-rct-simulated-example",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:53:39+00:00",
+  "usage": {
+    "input_tokens": 3367,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1738,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5105
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/bda_r_demos/demos-rstan-grp-prior-mean/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:44:11+00:00",
+  "model": "gpt-5.5",
+  "path": "models/bda_r_demos/demos-rstan-grp-prior-mean",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_050d2293a5b5df5b0069f154507cd881a1b9da0b2a564f501f",
+  "safe_dir": "models_safe/bda_r_demos/demos-rstan-grp-prior-mean",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:44:00+00:00",
+  "usage": {
+    "input_tokens": 3177,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1060,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4237
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

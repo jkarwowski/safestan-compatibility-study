@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N_calibrations\": 3,\n  \"obs_t_calib\": [\n    5.1833479180098925,\n    6.001269395819374,\n    3.3389758312046007\n  ]\n}",
+  "model_safe_stan": "data {\n  int N_calibrations;\n  array[N_calibrations] real obs_t_calib; // seconds\n}\n\nparameters {\n  real<lower=0> sigma_t; // seconds\n}\n\nmodel {\n  // Prior model\n  sigma_t ~ normal(0, 0.5);\n\n  // Observational model\n  obs_t_calib ~ normal(rep_vector(0, N_calibrations), sigma_t);\n}\n\n",
+  "protected_variables": [
+    "obs_t_calib"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `obs_t_calib`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `obs_t_calib` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The parameter `sigma_t` has a built-in prior before it is used in the observation model.\n"
+}

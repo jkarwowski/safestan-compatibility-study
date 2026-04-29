@@ -1,0 +1,31 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-05-margossian-models-effcpt-effcpt/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T03:04:01+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2017-contributed-talks-05-margossian-models-effcpt-effcpt",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "cObs",
+    "respObs"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_03c60e144802a2fe0069f174d73ef0819298e8249703047f63",
+  "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-05-margossian-models-effcpt-effcpt",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:02:47+00:00",
+  "usage": {
+    "input_tokens": 4388,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7367,
+    "output_tokens_details": {
+      "reasoning_tokens": 5696
+    },
+    "total_tokens": 11755
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

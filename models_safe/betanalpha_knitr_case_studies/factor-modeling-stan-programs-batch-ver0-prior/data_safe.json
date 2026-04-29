@@ -1,0 +1,19 @@
+{
+  "N": 3,
+  "N_factor1_levels": 1,
+  "N_factor2_levels": 2,
+  "N_factor3_levels": 2,
+  "factor2_to_factor1": [
+    1,
+    1
+  ],
+  "factor3_to_factor2": [
+    2,
+    1
+  ],
+  "obs_to_factor3": [
+    2,
+    1,
+    1
+  ]
+}

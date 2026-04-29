@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/py-ngram/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:36:52+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/py-ngram",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a4ab1cca13873960069f16e6d50b081a0bf45422187254b54",
+  "safe_dir": "models_safe/forestdb/py-ngram",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:35:25+00:00",
+  "usage": {
+    "input_tokens": 3389,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7397,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 10786
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

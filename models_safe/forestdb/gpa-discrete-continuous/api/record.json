@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/forestdb/gpa-discrete-continuous/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:28:43+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/gpa-discrete-continuous",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_093e5e4da732125e0069f16cd34ce081928631c04cc71df0a4",
+  "safe_dir": "models_safe/forestdb/gpa-discrete-continuous",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:28:35+00:00",
+  "usage": {
+    "input_tokens": 3229,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 623,
+    "output_tokens_details": {
+      "reasoning_tokens": 478
+    },
+    "total_tokens": 3852
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

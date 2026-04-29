@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-soil-carbon-soil-incubation/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:13:38+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-soil-carbon-soil-incubation",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "eCO2mean"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0e9ab65fbde84ad90069f1693420fc819c8f9564f42f23bdc2",
+  "safe_dir": "models_safe/example_models/knitr-soil-carbon-soil-incubation",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:13:07+00:00",
+  "usage": {
+    "input_tokens": 4260,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3084,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 7344
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

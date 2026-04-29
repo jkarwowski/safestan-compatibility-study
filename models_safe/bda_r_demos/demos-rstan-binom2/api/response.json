@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423440,
+  "created_at": 1777423430,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0ad78cced13a99fe0069f15446493081978bab2d9e71cf295c",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0ad78cced13a99fe0069f15446eca48197839a763078e2c1d0",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y1`, `y2`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observations are top-level data variables and are each observed exactly once with plain built-in binomial sampling statements. Context inputs `N1` and `N2` are used only as binomial trial counts. Parameters `theta1` and `theta2` each have exactly one built-in prior before being used in the likelihood.\\n\",\"model_safe_stan\":\"//  Comparison of two groups with Binomial\\ndata {\\n  int<lower=0> N1; // number of experiments in group 1\\n  int<lower=0> y1; // number of deaths in group 1\\n  int<lower=0> N2; // number of experiments in group 2\\n  int<lower=0> y2; // number of deaths in group 2\\n}\\nparameters {\\n  real<lower=0, upper=1> theta1; // probability of death in group 1\\n  real<lower=0, upper=1> theta2; // probability of death in group 2\\n}\\nmodel {\\n  // model block creates the log density to be sampled\\n  theta1 ~ beta(1, 1); // prior\\n  theta2 ~ beta(1, 1); // prior\\n  y1 ~ binomial(N1, theta1); // observation model / likelihood\\n  y2 ~ binomial(N2, theta2); // observation model / likelihood\\n  // the notation using ~ is syntactic sugar for\\n  //  target += beta_lpdf(theta1 | 1, 1);       // lpdf for continuous theta1\\n  //  target += beta_lpdf(theta2 | 1, 1);       // lpdf for continuous theta2\\n  //  target += binomial_lpmf(y1 | N1, theta1); // lpmf for discrete y1\\n  //  target += binomial_lpmf(y2 | N2, theta2); // lpmf for discrete y2\\n  // target is the log density to be sampled\\n}\\ngenerated quantities {\\n  // generated quantities are computed after sampling\\n  real oddsratio = (theta2 / (1 - theta2)) / (theta1 / (1 - theta1));\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"N1\\\": 3,\\n  \\\"N2\\\": 3,\\n  \\\"y1\\\": 3,\\n  \\\"y2\\\": 3\\n}\\n\",\"protected_variables\":[\"y1\",\"y2\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0ad78cced13a99fe0069f1544cd35c819788ffe3a4d2db3d9c",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3223,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1116,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4339
+  },
+  "user": null
+}

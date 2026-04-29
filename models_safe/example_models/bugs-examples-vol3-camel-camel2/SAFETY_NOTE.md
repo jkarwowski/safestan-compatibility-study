@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data choice: no SafeStan protected interface can be generated. The model conditions on the hard-coded transformed-data quantities `Y`, `Y1`, and `Y2`; in a SafeStan-compatible model these observations would need to be top-level protected data variables.
+
+Generated files: none.
+
+Reason: the program scores transformed-data variables rather than top-level protected data, and it also contains an arbitrary manual density contribution `target += -1.5 * log(determinant(Sigma))` for the covariance parameter. Replacing that term with a SafeStan sampling statement would require a substantive density/prior change, not a minor same-density rewrite.

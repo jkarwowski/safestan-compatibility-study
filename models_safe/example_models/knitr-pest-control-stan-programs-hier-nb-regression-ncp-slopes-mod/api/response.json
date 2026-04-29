@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428580,
+  "created_at": 1777428561,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0686c3dfb4dff3fa0069f168513e4481a291585d959ca07b47",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0686c3dfb4dff3fa0069f16851c48c81a291bff6912baec20a",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `complaints`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `complaints` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. All parameters have one built-in prior sampling statement before their transformed-parameter dependencies are used in the likelihood.\\n\",\"model_safe_stan\":\"functions {\\n  /*\\n  * Alternative to neg_binomial_2_log_rng() that \\n  * avoids potential numerical problems during warmup\\n  */\\n  int neg_binomial_2_log_safe_rng(real eta, real phi) {\\n    real gamma_rate = gamma_rng(phi, phi / exp(eta));\\n    if (gamma_rate >= exp(20.79)) {\\n      return -9;\\n    }\\n    return poisson_rng(gamma_rate);\\n  }\\n}\\ndata {\\n  int<lower=1> N;\\n  array[N] int<lower=0> complaints;\\n  vector<lower=0>[N] traps;\\n  // 'exposure'\\n  vector[N] log_sq_foot;\\n  // building-level data\\n  int<lower=1> K;\\n  int<lower=1> J;\\n  array[N] int<lower=1, upper=J> building_idx;\\n  matrix[J, K] building_data;\\n}\\nparameters {\\n  real<lower=0> inv_phi; // 1/phi (easier to think about prior for 1/phi instead of phi)\\n  vector[J] mu_raw; // N(0,1) params for non-centered param of building-specific intercepts\\n  real<lower=0> sigma_mu; // sd of buildings-specific intercepts\\n  real alpha; // 'global' intercept\\n  vector[K] zeta; // coefficients on building-level predictors in model for mu\\n  vector[J] kappa_raw; // N(0,1) params for non-centered param of building-specific slopes\\n  real<lower=0> sigma_kappa; // sd of buildings-specific slopes\\n  real beta; // 'global' slope on traps variable\\n  vector[K] gamma; // coefficients on building-level predictors in model for kappa\\n}\\ntransformed parameters {\\n  real phi = inv(inv_phi);\\n  // non-centered parameterization of building-specific intercepts and slopes\\n  vector[J] mu = alpha + building_data * zeta + sigma_mu * mu_raw;\\n  vector[J] kappa = beta + building_data * gamma + sigma_kappa * kappa_raw;\\n}\\nmodel {\\n  inv_phi ~ normal(0, 1);\\n  kappa_raw ~ normal(0, 1);\\n  sigma_kappa ~ normal(0, 1);\\n  beta ~ normal(-0.25, 1);\\n  gamma ~ normal(0, 1);\\n  mu_raw ~ normal(0, 1);\\n  sigma_mu ~ normal(0, 1);\\n  alpha ~ normal(log(4), 1);\\n  zeta ~ normal(0, 1);\\n  complaints ~ neg_binomial_2_log(mu[building_idx]\\n                                  + kappa[building_idx] .* traps\\n                                  + log_sq_foot, phi);\\n}\\ngenerated quantities {\\n  array[N] int y_rep;\\n  for (n in 1 : N) {\\n    real eta_n = mu[building_idx[n]] + kappa[building_idx[n]] * traps[n]\\n                 + log_sq_foot[n];\\n    y_rep[n] = neg_binomial_2_log_safe_rng(eta_n, phi);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"J\\\": 3,\\n  \\\"K\\\": 2,\\n  \\\"N\\\": 4,\\n  \\\"building_data\\\": [\\n    [\\n      6.493000594009302,\\n      5.968148555315944\\n    ],\\n    [\\n      3.242685308548467,\\n      2.1551060235711357\\n    ],\\n    [\\n      4.368991478268091,\\n      6.002226555308311\\n    ]\\n  ],\\n  \\\"building_idx\\\": [\\n    2,\\n    2,\\n    2,\\n    2\\n  ],\\n  \\\"complaints\\\": [\\n    4,\\n    1,\\n    3,\\n    2\\n  ],\\n  \\\"log_sq_foot\\\": [\\n    4.445743832211606,\\n    3.680469147531683,\\n    5.080529782333203,\\n    2.4913708276192144\\n  ],\\n  \\\"traps\\\": [\\n    1.9985734328362172,\\n    0.9306652584999273,\\n    0.0002751267342203769,\\n    3.1436217411571663\\n  ]\\n}\\n\",\"protected_variables\":[\"complaints\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0686c3dfb4dff3fa0069f1685e3bf881a2ab8b20f80a3099c2",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3816,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2189,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 6005
+  },
+  "user": null
+}

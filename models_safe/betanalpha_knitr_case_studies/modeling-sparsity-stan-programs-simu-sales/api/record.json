@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-simu-sales/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:59:52+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-simu-sales",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a36caa27d35eb0e0069f157fdee408194acf70df261bdd3ee",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-simu-sales",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:59:41+00:00",
+  "usage": {
+    "input_tokens": 3456,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1263,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4719
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

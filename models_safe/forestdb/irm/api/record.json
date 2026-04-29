@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/forestdb/irm/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:31:02+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/irm",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_00cb4e3ce5634e830069f16d5fb22081a2bda0a23f3ec2d6bd",
+  "safe_dir": "models_safe/forestdb/irm",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:30:55+00:00",
+  "usage": {
+    "input_tokens": 3178,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 618,
+    "output_tokens_details": {
+      "reasoning_tokens": 447
+    },
+    "total_tokens": 3796
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

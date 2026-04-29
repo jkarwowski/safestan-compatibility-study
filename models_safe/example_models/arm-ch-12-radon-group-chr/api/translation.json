@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"J\":4,\"N\":1,\"county\":[1],\"u\":[3.2715273299456062],\"x\":[2.0694670840672504],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  int<lower=1> J; // number of counties\n  array[N] int<lower=1, upper=J> county;\n  vector[N] u;\n  vector[N] x;\n  vector[N] y;\n}\ntransformed data {\n  matrix[N, 2] cov = [x', u']';\n}\nparameters {\n  vector[2] beta;\n  real mu_a;\n  real<lower=0> sigma;\n  real<lower=0> sigma_a;\n  vector<offset=mu_a, multiplier=sigma_a>[J] alpha;\n}\nmodel {\n  mu_a ~ std_normal();\n  beta ~ normal(0, 100);\n  sigma ~ cauchy(0, 2.5);\n  sigma_a ~ cauchy(0, 2.5);\n  alpha ~ normal(mu_a, sigma_a);\n  \n  y ~ normal_id_glm(cov, alpha[county], beta, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The only data variable observed with a sampling statement is the top-level variable `y`, and it is scored exactly once with the built-in `normal_id_glm` distribution before any other use. The remaining data variables (`N`, `J`, `county`, `u`, and `x`) are context inputs used as sizes, indices, or predictors. Each parameter has exactly one built-in prior sampling statement before it is used in the likelihood.\n"
+}

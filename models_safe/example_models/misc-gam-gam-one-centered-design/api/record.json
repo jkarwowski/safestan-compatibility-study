@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-gam-gam-one-centered-design/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:17:43+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-gam-gam-one-centered-design",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_06ea126ad17530910069f16a3e65cc81a286e8fd4948c1b655",
+  "safe_dir": "models_safe/example_models/misc-gam-gam-one-centered-design",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:17:34+00:00",
+  "usage": {
+    "input_tokens": 4807,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 723,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5530
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

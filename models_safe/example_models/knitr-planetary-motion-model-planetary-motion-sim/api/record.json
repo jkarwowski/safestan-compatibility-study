@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-planetary-motion-model-planetary-motion-sim/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:10:27+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-planetary-motion-model-planetary-motion-sim",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a51fde28fb35b970069f16887616081a3bc64c47cb0fdf821",
+  "safe_dir": "models_safe/example_models/knitr-planetary-motion-model-planetary-motion-sim",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:10:15+00:00",
+  "usage": {
+    "input_tokens": 3429,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1311,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4740
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

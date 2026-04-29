@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/low-dim-gauss-mix-low-dim-gauss-mix/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:46:18+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/low-dim-gauss-mix-low-dim-gauss-mix",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_020d8046e2a1b8f40069f170f2245081a2b22ae374f91d43e5",
+  "safe_dir": "models_safe/posteriordb/low-dim-gauss-mix-low-dim-gauss-mix",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:46:10+00:00",
+  "usage": {
+    "input_tokens": 3024,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 635,
+    "output_tokens_details": {
+      "reasoning_tokens": 475
+    },
+    "total_tokens": 3659
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

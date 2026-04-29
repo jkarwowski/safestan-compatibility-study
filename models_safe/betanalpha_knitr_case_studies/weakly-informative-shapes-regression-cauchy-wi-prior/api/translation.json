@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 2,\n  \"x\": [\n    4.484073047884468,\n    2.8695671444010333\n  ],\n  \"y\": [\n    2.0,\n    2.0\n  ]\n}\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] x; // Rainfall in cm\n  vector[N] y; // Income in k$\n}\n\nparameters {\n  real alpha;          // k$\n  real beta;           // k$ / cm\n  real<lower=0> sigma; // k$\n}\n\nmodel {\n  alpha ~ cauchy(0, 1);\n  beta ~ cauchy(0, 1);\n  sigma ~ cauchy(0, 1);\n  y ~ normal(beta * x + alpha, sigma);\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, after all parameters have received their built-in prior sampling statements. The predictor `x` and size `N` are context inputs and are not protected.\n"
+}

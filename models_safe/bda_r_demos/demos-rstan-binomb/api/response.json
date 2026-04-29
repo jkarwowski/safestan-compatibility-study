@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423438,
+  "created_at": 1777423430,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_07e4e1b0d9bbdd390069f154462f3c8192816471db5b5208cd",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_07e4e1b0d9bbdd390069f15446c6fc8192904cb8f27e966b61",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `y ~ binomial_logit(N, alpha)`. The data variable `N` is context data used as the binomial trial count. The parameter `alpha` has exactly one built-in prior sampling statement before it is used in the likelihood.\\n\",\"model_safe_stan\":\"// Binomial model with a roughly uniform prior for\\n// the probability of success (theta)\\ndata {\\n  int<lower=0> N; // number of experiments\\n  int<lower=0> y; // number of successes\\n}\\nparameters {\\n  // sampling is done for the parameters\\n  real alpha; // logit of probability of success in rang (-Inf,Inf)\\n}\\ntransformed parameters {\\n  // transformed parameters are deterministic transformations of parameters (and data)\\n  real theta = inv_logit(alpha); // probability of success in range (0,1)\\n}\\nmodel {\\n  // model block creates the log density to be sampled\\n  alpha ~ normal(0, 1.5); // roughly uniform prior for theta\\n  y ~ binomial_logit(N, alpha); // model parameterized with logit of probability\\n  // the notation using ~ is syntactic sugar for\\n  //  target += normal_lpdf(alpha | 0, 1.5);       // lpdf for continuous theta\\n  //  target += binomial_logit_lpmf(y | N, alpha); // lpmf for discrete y\\n  // target is the log density to be sampled\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\": 4, \\\"y\\\": 4}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_07e4e1b0d9bbdd390069f1544c11688192ab49625fc9f899c8",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3058,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 950,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4008
+  },
+  "user": null
+}

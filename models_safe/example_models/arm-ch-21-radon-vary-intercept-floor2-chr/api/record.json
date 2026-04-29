@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-21-radon-vary-intercept-floor2-chr/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:17:22+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-21-radon-vary-intercept-floor2-chr",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a91a94885bdd7f90069f15c127548819190536d22878c9c3e",
+  "safe_dir": "models_safe/example_models/arm-ch-21-radon-vary-intercept-floor2-chr",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:17:06+00:00",
+  "usage": {
+    "input_tokens": 3208,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1554,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4762
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

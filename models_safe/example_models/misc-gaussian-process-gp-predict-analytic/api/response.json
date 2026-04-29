@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429160,
+  "created_at": 1777429128,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b62921347fb01070069f16a88e878819595ac83965792329b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0b62921347fb01070069f16a899378819594d746fce5f7d76a",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y1`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the parameter prior statements for `rho`, `alpha`, and `sigma` to the beginning of the `model` block, before those parameters are used to construct the Gaussian-process covariance. This preserves the same joint density because the order of log-density additions is immaterial. No data fields were added or changed.\\n\",\"model_safe_stan\":\"// Fit the hyperparameters of a Gaussian process with an exponentiated\\n// quadratic kernel and analytically predict out-of-sample observations\\nfunctions {\\n  vector gp_pred_rng(array[] real x2, vector y1, array[] real x1, real alpha,\\n                     real rho, real sigma, real delta) {\\n    int N1 = rows(y1);\\n    int N2 = size(x2);\\n    vector[N2] f2;\\n    \\n    {\\n      matrix[N1, N1] L_K;\\n      vector[N1] L_div_y1;\\n      matrix[N1, N2] k_x1_x2;\\n      matrix[N1, N2] L_div_k_x1_x2;\\n      vector[N2] f2_mu;\\n      matrix[N2, N2] cov_f2;\\n      matrix[N2, N2] diag_delta;\\n      matrix[N1, N1] K;\\n      K = gp_exp_quad_cov(x1, alpha, rho);\\n      for (n in 1 : N1) {\\n        K[n, n] = K[n, n] + square(sigma);\\n      }\\n      L_K = cholesky_decompose(K);\\n      L_div_y1 = mdivide_left_tri_low(L_K, y1);\\n      k_x1_x2 = gp_exp_quad_cov(x1, x2, alpha, rho);\\n      L_div_k_x1_x2 = mdivide_left_tri_low(L_K, k_x1_x2);\\n      f2_mu = L_div_k_x1_x2' * L_div_y1;\\n      cov_f2 = gp_exp_quad_cov(x2, alpha, rho)\\n               - L_div_k_x1_x2' * L_div_k_x1_x2;\\n      diag_delta = diag_matrix(rep_vector(delta, N2));\\n      \\n      f2 = multi_normal_rng(f2_mu, cov_f2 + diag_delta);\\n    }\\n    return f2;\\n  }\\n}\\ndata {\\n  int<lower=1> N1;\\n  array[N1] real x1;\\n  vector[N1] y1;\\n  int<lower=1> N2;\\n  array[N2] real x2;\\n}\\ntransformed data {\\n  vector[N1] mu = rep_vector(0, N1);\\n  real delta = 1e-9;\\n}\\nparameters {\\n  real<lower=0> rho;\\n  real<lower=0> alpha;\\n  real<lower=0> sigma;\\n}\\nmodel {\\n  matrix[N1, N1] L_K;\\n  \\n  rho ~ inv_gamma(5, 5);\\n  alpha ~ normal(0, 1);\\n  sigma ~ normal(0, 1);\\n  \\n  {\\n    matrix[N1, N1] K = gp_exp_quad_cov(x1, alpha, rho);\\n    real sq_sigma = square(sigma);\\n    \\n    // diagonal elements\\n    for (n1 in 1 : N1) {\\n      K[n1, n1] = K[n1, n1] + sq_sigma;\\n    }\\n    \\n    L_K = cholesky_decompose(K);\\n  }\\n  \\n  y1 ~ multi_normal_cholesky(mu, L_K);\\n}\\ngenerated quantities {\\n  vector[N2] f2;\\n  vector[N2] y2;\\n  \\n  f2 = gp_pred_rng(x2, y1, x1, alpha, rho, sigma, delta);\\n  for (n2 in 1 : N2) {\\n    y2[n2] = normal_rng(f2[n2], sigma);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N1\\\":5,\\\"N2\\\":1,\\\"x1\\\":[6.233455910986467,2.640452689667739,3.564374673295733,3.9226490696755896,3.8974194383523413],\\\"x2\\\":[4.264340441573884],\\\"y1\\\":[3.0,4.0,5.0,2.0,2.0]}\",\"protected_variables\":[\"y1\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b62921347fb01070069f16aa2e8e48195882a2ed6c40edada",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3710,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3134,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 6844
+  },
+  "user": null
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"k\": 2,\n  \"n\": 2\n}\n",
+  "model_safe_stan": "// Prior and Posterior Prediction\ndata {\n  int<lower=1> n;\n  int<lower=0> k;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n  real<lower=0, upper=1> thetaprior;\n}\nmodel {\n  // Prior on Rate Theta\n  theta ~ beta(1, 1);\n  thetaprior ~ beta(1, 1);\n  // Observed Data\n  k ~ binomial(n, theta);\n}\ngenerated quantities {\n  int<lower=0> postpredk;\n  int<lower=0> priorpredk;\n  \n  // Posterior Predictive\n  postpredk = binomial_rng(n, theta);\n  // Prior Predictive\n  priorpredk = binomial_rng(n, thetaprior);\n}\n",
+  "protected_variables": [
+    "k"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `k`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `k` is a top-level data variable and is observed exactly once with the built-in sampling statement `k ~ binomial(n, theta);`. The data variable `n` is context for the binomial trial count and is not protected. Both parameters have explicit built-in priors before any model-block use.\n"
+}

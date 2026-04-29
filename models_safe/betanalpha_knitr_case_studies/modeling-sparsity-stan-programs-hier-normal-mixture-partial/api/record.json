@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-normal-mixture-partial/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T00:59:23+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-normal-mixture-partial",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0463e5f522aab6670069f157e330908192b4358b627ec4e4f9",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-hier-normal-mixture-partial",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:59:15+00:00",
+  "usage": {
+    "input_tokens": 3289,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 681,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3970
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

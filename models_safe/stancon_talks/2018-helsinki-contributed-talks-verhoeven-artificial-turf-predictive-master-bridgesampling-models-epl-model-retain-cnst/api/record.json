@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-bridgesampling-models-epl-model-retain-cnst/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T03:10:17+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-bridgesampling-models-epl-model-retain-cnst",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "goal_difference"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0d9158c1d486fc270069f1767c401c81948908d274246ac35e",
+  "safe_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-bridgesampling-models-epl-model-retain-cnst",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:09:48+00:00",
+  "usage": {
+    "input_tokens": 3972,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3135,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 7107
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `likelihood` (with `H` and `N` as context inputs).\n\nGenerated files: none.\n\nReason: the likelihood contribution is implemented with manual `target += log_sum_exp(...)`, using `likelihood[n, h]` inside a marginalized finite-hypothesis calculation. SafeStan forbids arbitrary `target +=` scoring, and replacing this with built-in sampling statements on a plain top-level protected data variable would require a substantive model rewrite rather than a mechanical same-density translation.\n"
+}

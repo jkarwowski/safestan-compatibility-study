@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338776,
-  "created_at": 1777338762,
+  "completed_at": 1777431691,
+  "created_at": 1777431682,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_02a08b8a646af9a20069f0098a95f4819294e6752b4c224ea8",
+  "id": "resp_00e06f1cbb72a1990069f174824184819fbc5f77b8404204e3",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_02a08b8a646af9a20069f0098b656c8192bd8215104c3515a1",
+      "id": "rs_00e06f1cbb72a1990069f17482dfcc819fb8db576610ad82dd",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `y` is a marginalized finite normal mixture implemented by computing component log densities and then adding `target += log_mix(theta, ps)`. SafeStan forbids arbitrary `target +=` scoring and requires each protected data variable to be observed exactly once on the left-hand side of a built-in sampling statement. There is no mechanical same-density rewrite of this marginalized mixture into a single built-in sampling statement for `y`; introducing latent component allocations would change the model representation and posterior geometry and is not a minor SafeStan translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `y` is a marginalized finite normal mixture implemented through per-observation log densities and manual `target += log_mix(theta, ps)` scoring. SafeStan forbids arbitrary `target +=` scoring and requires protected observations to be scored exactly once by a built-in sampling statement. Replacing this marginalized mixture with SafeStan sampling statements would require a substantive model rewrite, so no same-density minor translation is provided.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_02a08b8a646af9a20069f009966c488192ab8b17a40861e7f9",
+      "id": "msg_00e06f1cbb72a1990069f174899898819f89d68b286be41b9b",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 12775,
+    "input_tokens": 2939,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 692,
+    "output_tokens": 669,
     "output_tokens_details": {
       "reasoning_tokens": 516
     },
-    "total_tokens": 13467
+    "total_tokens": 3608
   },
   "user": null
 }

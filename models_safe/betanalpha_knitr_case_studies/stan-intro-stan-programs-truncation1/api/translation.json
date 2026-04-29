@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  real a;          // Unknown truncation\n  real<lower=a> x; // Constrained parameter\n}\n\nmodel {\n  a ~ normal(0, 1);   // Truncation density\n  x ~ normal(0, 1);  // Nominal target density\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none. The model has no data block and no observed data likelihood.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the two manual `target += normal_lpdf(...)` prior contributions with equivalent built-in Stan sampling statements for the top-level parameters `a` and `x`. No data changes were required.\n"
+}

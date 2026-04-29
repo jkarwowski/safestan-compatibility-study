@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug1e/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:01:58+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug1e",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0420ce0acec02f540069f15880134081919f9eaf679f56b6a6",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/stan-intro-stan-programs-debug1e",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:01:51+00:00",
+  "usage": {
+    "input_tokens": 2918,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 709,
+    "output_tokens_details": {
+      "reasoning_tokens": 486
+    },
+    "total_tokens": 3627
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

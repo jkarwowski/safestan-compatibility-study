@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425986,
+  "created_at": 1777425903,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_09a2dbd948957ec40069f15defba248192b5a5c18d95610bae",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_09a2dbd948957ec40069f15df0487c81928a8361f7bf324f97",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: none. The original program has no top-level data variables; `y` is a fixed transformed-data constant, not an external data interface variable.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: rewrote the fixed normal factor from `y ~ normal(mu, 1)` to `mu ~ normal(y, 1)`. This is a mechanical same-density rewrite for the normal distribution: the resulting Stan target has the same quadratic contribution, while the sampling statement now targets the top-level parameter `mu`, satisfying SafeStan's parameter-prior discipline. No data fields were added; `data_safe.json` remains `{}`.\\n\",\"model_safe_stan\":\"transformed data {\\n  vector[5] y = [2, 1, -0.5, 3, 0.25]';\\n}\\nparameters {\\n  real mu;\\n}\\nmodel {\\n  mu ~ normal(y, 1);\\n}\\n\",\"data_safe_json\":\"{}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_09a2dbd948957ec40069f15e413c7881929f619b6d4e5c3199",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 2856,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 6986,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 9842
+  },
+  "user": null
+}

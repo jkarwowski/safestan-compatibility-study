@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337352,
-  "created_at": 1777337343,
+  "completed_at": 1777429688,
+  "created_at": 1777429681,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0d97c3090a8600f50069f003ffb98c819ea2edb7f256d25c68",
+  "id": "resp_0081b5f7c902f1c10069f16cb1ad8881948e11659386597651",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0d97c3090a8600f50069f004005b90819e99a49e8b6d4a839c",
+      "id": "rs_0081b5f7c902f1c10069f16cb2aca481948dbf3856e61a0a82",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `y` is a marginalized two-component Gaussian mixture implemented with manual `target += log_mix(...)` scoring and direct calls to `normal_lpdf`. SafeStan forbids arbitrary `target +=` scoring and `_lp` distribution calls. Replacing this with SafeStan sampling statements would require a substantive rewrite of the marginalized mixture likelihood, not a minor same-density translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `y` is the observed variable scored by the likelihood.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `y` is a marginalized two-component Gaussian mixture implemented with manual `target += log_mix(...)` scoring inside a loop. SafeStan forbids arbitrary `target +=` scoring, and there is no equivalent built-in Stan sampling statement for this finite mixture likelihood. Replacing it would require a substantive model rewrite rather than a minor same-density translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0d97c3090a8600f50069f00406b160819eae8cfd8cbb619e1e",
+      "id": "msg_0081b5f7c902f1c10069f16cb74a188194a4ae6a914b6338ed",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2677,
+    "input_tokens": 3179,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 495,
+    "output_tokens": 527,
     "output_tokens_details": {
-      "reasoning_tokens": 350
+      "reasoning_tokens": 377
     },
-    "total_tokens": 3172
+    "total_tokens": 3706
   },
   "user": null
 }

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\": 2, \"earn\": [6.059244407623112, 2.5406301932365647], \"log_earn\": [1.80158510709667, 0.932412157830352], \"eth\": [2, 2], \"height\": [4.895785758432679, 5.325827149546329]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  vector[N] earn;\n  vector[N] log_earn;\n  array[N] int eth;\n  vector[N] height;\n}\nparameters {\n  vector[4] a1;\n  vector[4] a2;\n  real<lower=0> sigma_a1;\n  real<lower=0> sigma_a2;\n  real<lower=0> sigma_y;\n  real mu_a1;\n  real mu_a2;\n}\ntransformed parameters {\n  vector[N] y_hat;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a1[eth[i]] + a2[eth[i]] * height[i];\n  }\n}\nmodel {\n  mu_a1 ~ normal(0, 1);\n  mu_a2 ~ normal(0, 1);\n  sigma_a1 ~ cauchy(0, 5);\n  sigma_a2 ~ cauchy(0, 5);\n  sigma_y ~ cauchy(0, 5);\n  a1 ~ normal(10 * mu_a1, sigma_a1);\n  a2 ~ normal(0.01 * mu_a2, sigma_a2);\n  log_earn ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_earn"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_earn`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added top-level data variable `log_earn` so the originally scored transformed-data response is a SafeStan-protected top-level observation. In `data_safe.json`, `log_earn[i] = log(earn[i])` deterministically from the supplied `earn`. Removed the transformed-data computation of `log_earn`. Reordered the `sigma_a1`, `sigma_a2`, and `sigma_y` prior statements so `sigma_a1` and `sigma_a2` are given priors before being used in the priors for `a1` and `a2`. The original `earn`, `eth`, `height`, and `N` remain unprotected context data.\n"
+}

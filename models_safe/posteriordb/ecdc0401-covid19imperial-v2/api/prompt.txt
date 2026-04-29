@@ -1,0 +1,427 @@
+You are translating a single Stan model into the SafeStan-compatible Stan subset.
+
+## SafeStan
+
+SafeStan is a static (compile-time) restriction layer over Stan. Its purpose is to prevent likelihood hacking on a designated protected data interface, as described in "Likelihood hacking in probabilistic program synthesis".
+
+SafeStan is designed so that generated models report a normalized marginal log-likelihood for the interface being modelled. To do this, it assigns roles to top-level inputs and parameters. Variables named by --sstan-protect are modelled interface variables: each must be scored by a built-in distribution, exactly once, before any other use. They cannot be inspected in an if, used to compute helper values, or referenced in transformed blocks before that scoring statement. After a modelled interface variable has been scored, it is available as an ordinary model-block quantity and may be used in later computations or later likelihood terms. Other top-level data variables are context inputs: they may be used freely as predictors, constants, indices, or configuration, but they may not appear on the left side of a sampling statement. Parameters are latent variables: each parameter must have exactly one built-in prior sampling statement before it is used in the model block. SafeStan also rejects constructs that can directly inflate, edit, or gate the log-likelihood, such as target +=, target(), jacobian +=, reject(), fatal_error(), and _lp functions.
+
+For this corpus run, `data.json` may be small synthetic data generated only to satisfy the Stan data schema. Use it to produce a valid `data_safe_json` and to preserve deterministic reshapes/copies, but infer the protected interface and compatibility label from `model.stan`, not from the particular synthetic values.
+
+### What SafeStan Enforces
+
+No arbitrary scoring:
+
+Forbids target += ...
+Forbids target()
+Forbids jacobian += ...
+Forbids reject() and fatal_error()
+Forbids _lp function definitions and calls
+Protected data single-use:
+
+Every protected variable must be a top-level data variable.
+Every top-level data variable that the model conditions on with a sampling statement is part of the protected interface, unless a same-density rewrite replaces it by a deterministic top-level protected copy/reshape.
+Do not protect ordinary predictors, covariates, sizes, indices, or constants unless the model itself observes/scores them as data.
+Each protected variable must appear exactly once on the left side of ~.
+Left side must be a plain identifier (no indexing/projections/expressions).
+Protected variables cannot be used before they are observed.
+After observation, a protected variable is treated as a normal value.
+Protected variables cannot be referenced in transformed data/parameters.
+Proper distribution path only:
+
+Sampling statements may target only protected top-level data variables or top-level parameter variables.
+Sampling statements must resolve to built-in Stan distributions.
+User-defined distributions are rejected in ~.
+Strict parameter discipline:
+
+Each parameter must appear in exactly one sampling statement.
+Parameters cannot be used in the model block before their sampling statement.
+Uses through transformed parameters are tracked: if phi depends on theta, then using phi before theta ~ ... counts as using theta before its prior.
+Control-flow safety:
+
+Protected observations and parameter-prior sampling statements cannot appear inside loops (for/while/foreach).
+Conditional (if/else) sampling is allowed only when both branches produce identical sampling effects for protected variables and parameters.
+Reserved identifier:
+
+sstan_trusted_loglik__ is reserved in SafeStan mode.
+
+## Goal
+
+The goal is not to make the model "nicer", rather, the goal is to decide whether the original posterior/log density can be represented under SafeStan restrictions with no or only a small rewrite, preserving the model. Return only the structured JSON requested by the caller.
+
+Work method:
+
+1. Identify the observed/protected data variable(s) scored by the likelihood.
+   Use the Stan program structure for this; do not infer modelling intent from
+   the particular values in `data.json`.
+2. Check whether the protected data variables and parameters already satisfy SafeStan's
+   syntactic discipline. If it does, classify the models `as-is`.
+3. If not, look for a same-density mechanical rewrite.
+4. If the rewrite would require changing the statistical model, substantially replacing a marginalized latent-state algorithm, or changing the likelihood (e.g. by adding additional priors to parameters), classify the case as `major` and do not rewrite the model.
+5. Otherwise, classify the case as `minor`, rewrite the model (and potentially, data): e.g. you can vectorize simple likelihoods, add deterministic data copies/reshapes, switch order of computation preserving the semantics, and add explicit priors only for parameters that already have implicit proper priors with exactly matching built-in distributions (for example, `uniform(lower, upper)` for finite bounded real parameters). After that, output complete files. Do not output patches.
+
+Compatibility labels:
+
+- `as-is`: the original Stan program is already SafeStan-compatible. Return `model_safe_stan` equal to the original and `data_safe_json` equal to the supplied data.
+- `minor`: a same-posterior SafeStan version can be produced using only minor, mechanical, changes. Return new, rewritten `model_safe_stan` equivalent to the original and `data_safe_json` equivalent to the supplied data.
+- `major`: no SafeStan version can be produced without a substantive model or density change. In this case return empty strings for `model_safe_stan` and `data_safe_json`.
+
+Requirements:
+
+- Never invent new observations or new data values beyond deterministic
+  copies/reshapes of the supplied `data.json`.
+- `data_safe_json` must be a valid JSON object string. It may equal the supplied
+  `data.json` exactly, or be a deterministic augmentation/reshape of it.
+- If you add fields to `data_safe_json`, document the exact deterministic
+  relation in `safety_note_md`.
+- Preserve the intended posterior/log density for AS-IS and MINOR.
+- `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
+  include: compatibility, protected data choice, generated files, and a concise
+  explanation of any change.
+
+Examples:
+
+Example 1: AS-IS input
+
+```stan
+data {
+  int<lower=0, upper=1> y;
+}
+parameters {
+  real<lower=0, upper=1> theta;
+}
+model {
+  theta ~ beta(1, 1);
+  y ~ bernoulli(theta);
+}
+```
+
+```json
+{"y": 1}
+```
+
+Example 1 output shape
+
+```json
+{
+  "compatibility": "as-is",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the protected observation is top-level data and is observed with a plain sampling statement.\n",
+  "model_safe_stan": "data {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "data_safe_json": "{\"y\": 1}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 2: MINOR input
+
+```stan
+data {
+  int<lower=1> N;
+  array[N] int<lower=0> trials;
+  array[N] int<lower=0> y;
+}
+transformed data {
+  real mean_y = mean(to_vector(y));
+}
+parameters {
+  vector<lower=0, upper=1>[N] theta;
+}
+model {
+  y ~ binomial(trials, theta);
+}
+```
+
+```json
+{"N": 3, "trials": [10, 10, 10], "y": [4, 5, 6]}
+```
+
+Example 2 output shape
+
+```json
+{
+  "compatibility": "minor",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. Added `theta ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]` and satisfies SafeStan's unique-prior requirement.\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ binomial(trials, theta);\n}\n",
+  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 3: MAJOR input
+
+```stan
+data {
+  int<lower=1> N;
+  vector[N] y;
+}
+parameters {
+  real mu1;
+  real mu2;
+}
+model {
+  for (n in 1:N) {
+    target += log_mix(0.5, normal_lpdf(y[n] | mu1, 1), normal_lpdf(y[n] | mu2, 1));
+  }
+}
+```
+
+```json
+{"N": 3, "y": [0.1, 1.2, -0.5]}
+```
+
+Example 3 output shape
+
+```json
+{
+  "compatibility": "major",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\n",
+  "model_safe_stan": "",
+  "data_safe_json": "",
+  "protected_variables": []
+}
+```
+
+Model directory: models/posteriordb/ecdc0401-covid19imperial-v2
+
+Metadata:
+
+```json
+{
+  "description": "A Bayesian model for estimating intervetion effects in the 2020 covid-19 pandemic.",
+  "difficulty": "unknown",
+  "id": "ecdc0401-covid19imperial-v2",
+  "method": "sample",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/covid19imperial_v2.stan",
+  "title": "Epidemic model v2 of Flaxman et al (2020)"
+}
+```
+
+Source note:
+
+```text
+# Epidemic model v2 of Flaxman et al (2020)
+
+- Upstream Stan file: [posterior_database/models/stan/covid19imperial_v2.stan](https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/covid19imperial_v2.stan)
+- Upstream data: posterior_database/data/data/ecdc0401.json.zip
+- Data status: extracted_posteriordb_zip_json
+- Source group: PosteriorDB curated models
+- Upstream repository: https://github.com/stan-dev/posteriordb
+- Upstream commit: `28f8d3d6e975315f42aa274a8399f21e07a43b30`
+- Import note: Imported from PosteriorDB posterior `ecdc0401-covid19imperial_v2` using data `ecdc0401`.
+
+## Synthetic Data
+
+- Data status: synthetic/local generated by `generate_synthetic_data_for_missing.py`.
+- Generation method: stanc_debug_generate_data.
+- Parsed data declarations: 12.
+- Data block present: true.
+
+```
+
+Original `model.stan`:
+
+```stan
+data {
+  int<lower=1> M; // number of countries
+  int<lower=1> P; // number of covariates
+  int<lower=1> N0; // number of days for which to impute infections
+  array[M] int<lower=1> N; // days of observed data for country m. each entry must be <= N2
+  int<lower=1> N2; // days of observed data + // of days to forecast
+  array[N2, M] int cases; // reported cases
+  array[N2, M] int deaths; // reported deaths -- the rows with i > N contain -1 and should be ignored
+  matrix[N2, M] f; // h * s
+  array[M] matrix[N2, P] X;
+  array[M] int EpidemicStart;
+  array[M] real pop;
+  array[N2] real SI; // fixed pre-calculated SI using emprical data from Neil
+}
+transformed data {
+  vector[N2] SI_rev; // SI in reverse order
+  array[M] vector[N2] f_rev; // f in reversed order
+
+  for (i in 1 : N2) {
+    SI_rev[i] = SI[N2 - i + 1];
+  }
+
+  for (m in 1 : M) {
+    for (i in 1 : N2) {
+      f_rev[m, i] = f[N2 - i + 1, m];
+    }
+  }
+}
+parameters {
+  array[M] real<lower=0> mu; // intercept for Rt
+  array[P] real<lower=0> alpha_hier; // sudo parameter for the hier term for alpha
+  real<lower=0> kappa;
+  array[M] real<lower=0> y;
+  real<lower=0> phi;
+  real<lower=0> tau;
+  array[M] real<lower=0> ifr_noise;
+}
+transformed parameters {
+  vector[P] alpha;
+  matrix[N2, M] prediction = rep_matrix(0, N2, M);
+  matrix[N2, M] E_deaths = rep_matrix(0, N2, M);
+  matrix[N2, M] Rt = rep_matrix(0, N2, M);
+  matrix[N2, M] Rt_adj = Rt;
+
+  {
+    matrix[N2, M] cumm_sum = rep_matrix(0, N2, M);
+    for (i in 1 : P) {
+      alpha[i] = alpha_hier[i] - (log(1.05) / 6.0);
+    }
+    for (m in 1 : M) {
+      /*
+      for (i in 2:N0){
+        cumm_sum[i,m] = cumm_sum[i-1,m] + y[m];
+      }
+      */
+      prediction[1 : N0, m] = rep_vector(y[m], N0); // learn the number of cases in the first N0 days
+      cumm_sum[2 : N0, m] = cumulative_sum(prediction[2 : N0, m]);
+
+      Rt[ : , m] = mu[m] * exp(-X[m] * alpha);
+      Rt_adj[1 : N0, m] = Rt[1 : N0, m];
+      for (i in (N0 + 1) : N2) {
+        /*
+        real convolution=0;
+        for(j in 1:(i-1)) {
+          convolution += prediction[j, m] * SI[i-j];
+        }
+        */
+        real convolution = dot_product(sub_col(prediction, 1, m, i - 1),
+                                       tail(SI_rev, i - 1));
+
+        cumm_sum[i, m] = cumm_sum[i - 1, m] + prediction[i - 1, m];
+        Rt_adj[i, m] = ((pop[m] - cumm_sum[i, m]) / pop[m]) * Rt[i, m];
+        prediction[i, m] = Rt_adj[i, m] * convolution;
+      }
+
+      E_deaths[1, m] = 1e-15 * prediction[1, m];
+      for (i in 2 : N2) {
+        // for(j in 1:(i-1)){
+        //   E_deaths[i,m] += prediction[j,m] * f[i-j,m] * ifr_noise[m];
+        // }
+        E_deaths[i, m] = ifr_noise[m]
+                         * dot_product(sub_col(prediction, 1, m, i - 1),
+                                       tail(f_rev[m], i - 1));
+      }
+    }
+  }
+}
+model {
+  tau ~ exponential(0.03);
+  for (m in 1 : M) {
+    y[m] ~ exponential(1 / tau);
+  }
+  phi ~ normal(0, 5);
+  kappa ~ normal(0, 0.5);
+  mu ~ normal(3.28, kappa); // citation: https://academic.oup.com/jtm/article/27/2/taaa021/5735319
+  alpha_hier ~ gamma(.1667, 1);
+  ifr_noise ~ normal(1, 0.1);
+  for (m in 1 : M) {
+    deaths[EpidemicStart[m] : N[m], m] ~ neg_binomial_2(E_deaths[EpidemicStart[m] : N[m], m],
+                                                        phi);
+  }
+}
+generated quantities {
+  matrix[N2, M] prediction0 = rep_matrix(0, N2, M);
+  matrix[N2, M] E_deaths0 = rep_matrix(0, N2, M);
+
+  {
+    matrix[N2, M] cumm_sum0 = rep_matrix(0, N2, M);
+    for (m in 1 : M) {
+      for (i in 2 : N0) {
+        cumm_sum0[i, m] = cumm_sum0[i - 1, m] + y[m];
+      }
+      prediction0[1 : N0, m] = rep_vector(y[m], N0);
+      for (i in (N0 + 1) : N2) {
+        real convolution0 = 0;
+        for (j in 1 : (i - 1)) {
+          convolution0 += prediction0[j, m] * SI[i - j];
+        }
+        cumm_sum0[i, m] = cumm_sum0[i - 1, m] + prediction0[i - 1, m];
+        prediction0[i, m] = ((pop[m] - cumm_sum0[i, m]) / pop[m]) * mu[m]
+                            * convolution0;
+      }
+
+      E_deaths0[1, m] = uniform_rng(1e-16, 1e-15);
+      for (i in 2 : N2) {
+        for (j in 1 : (i - 1)) {
+          E_deaths0[i, m] += prediction0[j, m] * f[i - j, m] * ifr_noise[m];
+        }
+      }
+    }
+  }
+}
+
+```
+
+Input `data.json` for this run:
+
+```json
+{
+  "EpidemicStart": [
+    3,
+    5,
+    5
+  ],
+  "M": 3,
+  "N": [
+    1,
+    3,
+    2
+  ],
+  "N0": 3,
+  "N2": 1,
+  "P": 1,
+  "SI": [
+    2.2284802261959156
+  ],
+  "X": [
+    [
+      [
+        6.54261148555986
+      ]
+    ],
+    [
+      [
+        4.723523150937815
+      ]
+    ],
+    [
+      [
+        6.025381856780085
+      ]
+    ]
+  ],
+  "cases": [
+    [
+      5,
+      3,
+      6
+    ]
+  ],
+  "deaths": [
+    [
+      2,
+      3,
+      3
+    ]
+  ],
+  "f": [
+    [
+      6.730188162802017,
+      4.2046281600848685,
+      2.282197529714342
+    ]
+  ],
+  "pop": [
+    5.438812589900966,
+    2.638716367340174,
+    2.3327141608175817
+  ]
+}
+
+```

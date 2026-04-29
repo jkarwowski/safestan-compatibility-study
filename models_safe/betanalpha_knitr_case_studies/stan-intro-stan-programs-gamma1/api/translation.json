@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  real theta; // Unconstrained declaration for theta\n}\n\nmodel {\n  // Gamma density valid only for positive values of theta\n  theta ~ gamma(1.25, 1.25);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The model has no data block and no observed likelihood terms.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the only sampling statement is the built-in prior `theta ~ gamma(1.25, 1.25)` for the top-level parameter `theta`.\n"
+}

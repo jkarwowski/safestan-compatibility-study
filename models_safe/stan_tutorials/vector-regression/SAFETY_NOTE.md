@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data choice: `y`.
+Protected data: `y`.
 
 Generated files: none.
 
-Reason: the likelihood itself is a SafeStan-style built-in sampling statement, `y ~ normal(X * b, sigma)`, with `X`, `N`, and `K` as context data. However, the parameters `b` and `sigma` have no explicit prior sampling statements before they are used in the likelihood. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors for `b` or `sigma` would change the posterior/log density; the original model relies on implicit improper flat priors, which cannot be represented as a minor SafeStan rewrite.
+Reason: the observed likelihood is `y ~ normal(X * b, sigma)`, so `y` is the protected interface variable and `N`, `K`, and `X` are context inputs. However, the parameters `b` and `sigma` are used in the likelihood without any prior sampling statements. SafeStan requires each parameter to have exactly one built-in prior before use. Adding priors for the unconstrained vector `b` or the positive scale `sigma` would change the posterior/log density, so this cannot be repaired as a minor same-density rewrite.

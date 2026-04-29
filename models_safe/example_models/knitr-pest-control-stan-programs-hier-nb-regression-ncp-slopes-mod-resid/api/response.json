@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428603,
+  "created_at": 1777428585,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0f615ef45e48a7290069f168690e2481908bc907014d85f20b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0f615ef45e48a7290069f168699a2c819081c467405cea4e22",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `complaints`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The only top-level data variable scored by a sampling statement is `complaints`, and it is observed exactly once with a plain built-in sampling statement. All parameters have exactly one built-in prior sampling statement before the protected-data likelihood is evaluated.\\n\",\"model_safe_stan\":\"functions {\\n  int neg_binomial_2_log_safe_rng(real eta, real phi) {\\n    real phi_div_exp_eta;\\n    real gamma_rate;\\n    phi_div_exp_eta = phi / exp(eta);\\n    gamma_rate = gamma_rng(phi, phi_div_exp_eta);\\n    if (gamma_rate >= exp(20.79)) {\\n      return -9;\\n    }\\n    return poisson_rng(gamma_rate);\\n  }\\n}\\ndata {\\n  int<lower=1> N;\\n  int<lower=1> K;\\n  array[N] int complaints;\\n  vector[N] traps;\\n  int<lower=1> J;\\n  array[N] int<lower=1, upper=J> building_idx;\\n  matrix[J, K] building_data;\\n  vector[N] log_sq_foot;\\n  array[N] int mo_idx;\\n  int M;\\n}\\nparameters {\\n  real alpha;\\n  real<lower=0> sigma_alpha;\\n  real<lower=0> sigma_beta;\\n  vector[J] std_alphas;\\n  vector[J] std_betas;\\n  real beta;\\n  real<lower=0> inv_prec;\\n  vector[K] zeta;\\n  vector[K] gamma;\\n}\\ntransformed parameters {\\n  vector[J] alphas = alpha + building_data * zeta + sigma_alpha * std_alphas;\\n  vector[J] betas = beta + building_data * gamma + sigma_beta * std_betas;\\n  real prec = inv(inv_prec);\\n}\\nmodel {\\n  beta ~ normal(0, 1);\\n  std_alphas ~ normal(0, 1);\\n  std_betas ~ normal(0, 1);\\n  sigma_alpha ~ normal(0, 1);\\n  sigma_beta ~ normal(0, 1);\\n  alpha ~ normal(log(4), 1);\\n  zeta ~ normal(0, 1);\\n  gamma ~ normal(0, 1);\\n  inv_prec ~ normal(0, 1);\\n  complaints ~ neg_binomial_2_log(alphas[building_idx]\\n                                  + betas[building_idx] .* traps\\n                                  + log_sq_foot, prec);\\n}\\ngenerated quantities {\\n  array[N] int y_rep;\\n  vector[N] std_resid;\\n  vector[M] mo_resid = rep_vector(0, M);\\n  for (n in 1 : N) {\\n    real eta = alphas[building_idx[n]] + betas[building_idx[n]] * traps[n]\\n               + log_sq_foot[n];\\n    y_rep[n] = neg_binomial_2_log_safe_rng(eta, prec);\\n    std_resid[n] = (y_rep[n] - eta)\\n                   / sqrt(exp(eta) + exp(eta) ^ 2 * inv_prec);\\n    mo_resid[mo_idx[n]] = mo_resid[mo_idx[n]] + std_resid[n];\\n  }\\n  for (m in 1 : M) {\\n    mo_resid[m] = mo_resid[m] / 10;\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":5,\\\"K\\\":1,\\\"M\\\":3,\\\"N\\\":1,\\\"building_data\\\":[[2.507352178387207],[6.074890065796583],[6.187605021009827],[2.1285048755820792],[4.088293392703878]],\\\"building_idx\\\":[2],\\\"complaints\\\":[3],\\\"log_sq_foot\\\":[2.883047680975107],\\\"mo_idx\\\":[1],\\\"traps\\\":[5.226450024964014]}\",\"protected_variables\":[\"complaints\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0f615ef45e48a7290069f168759bac81908d440c140f1d04a2",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3727,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1979,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5706
+  },
+  "user": null
+}

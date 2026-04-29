@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338833,
-  "created_at": 1777338798,
+  "completed_at": 1777431766,
+  "created_at": 1777431695,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0cae77f0e4a542070069f009ae3d0881968f99ddf1e7c5db24",
+  "id": "resp_07008f27b00c76c30069f1748f292881958ab2bf63e32c188b",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0cae77f0e4a542070069f009afa73c8196a4b9d2b23fbaa364",
+      "id": "rs_07008f27b00c76c30069f174907ef08195a2d24c2f170082a2",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `y` is the observed interface variable being scored by the likelihood. `z`, `sigma`, `N`, and `J` are context inputs.\\n\\nGenerated files: none.\\n\\nReason: the original program cannot be translated to SafeStan without a substantive density change. The protected observation `y` is scored many times, including through indexed left-hand sides such as `y[1]`, and a transformed-data value `ry` deterministically derived from `y` is also scored many times. SafeStan requires each protected top-level data variable to appear exactly once on the left side of a sampling statement as a plain identifier, and protected data cannot be referenced in transformed data before observation. In addition, the unconstrained parameters `beta` and `rbeta` have only implicit improper flat priors; SafeStan requires each parameter to have exactly one built-in prior before use, and adding proper priors would change the posterior.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y` is the observed data variable. The model also scores `ry`, which is a transformed-data row-vector copy of `y`; `z`, `sigma`, `N`, and `J` are context/configuration inputs.\\n\\nGenerated files: none.\\n\\nReason: the original program is not representable in SafeStan by a minor mechanical rewrite. The protected observation is scored many times, including through indexed left-hand sides such as `y[1]` and through transformed-data quantities such as `ry` and `ry[1]`, whereas SafeStan requires each protected top-level data variable to be observed exactly once with a plain identifier. In addition, `y` is read in `transformed data` before observation, and the unbounded parameters `beta` and `rbeta` have no built-in prior sampling statement before they are used. Adding proper priors or replacing the many repeated/indexed/transformed likelihood factors with a collection of protected copies would be a substantive density/interface rewrite rather than a minor SafeStan translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0cae77f0e4a542070069f009ce8e3c8196a6182f497c6a78e8",
+      "id": "msg_07008f27b00c76c30069f174d41eec81959884074acff16417",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 5381,
+    "input_tokens": 4856,
     "input_tokens_details": {
-      "cached_tokens": 0
+      "cached_tokens": 2304
     },
-    "output_tokens": 1796,
+    "output_tokens": 5443,
     "output_tokens_details": {
-      "reasoning_tokens": 1552
+      "reasoning_tokens": 5178
     },
-    "total_tokens": 7177
+    "total_tokens": 10299
   },
   "user": null
 }

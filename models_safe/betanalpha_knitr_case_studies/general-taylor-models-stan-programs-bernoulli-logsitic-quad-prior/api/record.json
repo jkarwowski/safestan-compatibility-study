@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/general-taylor-models-stan-programs-bernoulli-logsitic-quad-prior/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:54:50+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/general-taylor-models-stan-programs-bernoulli-logsitic-quad-prior",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0871a8ef9e01043c0069f156cedcdc81a183b46668699affad",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/general-taylor-models-stan-programs-bernoulli-logsitic-quad-prior",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:54:38+00:00",
+  "usage": {
+    "input_tokens": 3242,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1021,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4263
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"k\": 4,\n  \"n\": 4\n}",
+  "model_safe_stan": "// Inferring a Rate\ndata {\n  int<lower=1> n;\n  int<lower=0> k;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  // Prior Distribution for Rate Theta\n  theta ~ beta(1, 1);\n  \n  // Observed Counts\n  k ~ binomial(n, theta);\n}\n\n",
+  "protected_variables": [
+    "k"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `k`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `k` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `k ~ binomial(n, theta);`. The other data variable `n` is context input used only as the binomial trial count. The parameter `theta` has exactly one built-in prior, `theta ~ beta(1, 1);`, before it is used in the likelihood.\n"
+}

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-bradley-terry-individual-hierarchical/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:58:24+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-bradley-terry-individual-hierarchical",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0f8be360d8dbe4f70069f165b2c8dc819fbe10c32669621bfb",
+  "safe_dir": "models_safe/example_models/knitr-bradley-terry-individual-hierarchical",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:58:10+00:00",
+  "usage": {
+    "input_tokens": 3598,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1481,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5079
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

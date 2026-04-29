@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424057,
+  "created_at": 1777424047,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0e27f7ca8cdf75050069f156af5f2081919c52e3aecc439825",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0e27f7ca8cdf75050069f156b04a448191bf207ef436a98054",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The Stan program does not condition on any top-level data variable with a sampling statement; all data inputs (`N`, `x`, `rho`, and `alpha`) are context inputs used to configure the generated simulation.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The model block is empty, there are no parameters requiring priors, and there are no protected observations to score. The generated quantities block simulates new quantities and does not define an observed likelihood.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  array[N] real x;\\n\\n  real<lower=0> rho;\\n  real<lower=0> alpha;\\n}\\n\\ntransformed data {\\n  matrix[N, N] cov =   gp_exp_quad_cov(x, alpha, rho)\\n                     + diag_matrix(rep_vector(1e-10, N));\\n  matrix[N, N] L_cov = cholesky_decompose(cov);\\n}\\n\\nparameters {}\\nmodel {}\\n\\ngenerated quantities {\\n  vector[N] f = multi_normal_cholesky_rng(rep_vector(0, N), L_cov);\\n  array[N] int y = poisson_log_rng(f);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":2,\\\"alpha\\\":2.783284563287624,\\\"rho\\\":4.3875582267821445,\\\"x\\\":[5.839545011483393,5.923439238484608]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0e27f7ca8cdf75050069f156b63eb881919bf30a2ebbaa24c4",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3059,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 884,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3943
+  },
+  "user": null
+}

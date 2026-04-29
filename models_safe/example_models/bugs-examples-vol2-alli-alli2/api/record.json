@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-alli-alli2/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:46:03+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol2-alli-alli2",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "X_safestan_flat"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0dd0061aa3b48ab30069f1628d69f0819694a177a34f14976c",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol2-alli-alli2",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:44:45+00:00",
+  "usage": {
+    "input_tokens": 4318,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 8019,
+    "output_tokens_details": {
+      "reasoning_tokens": 6214
+    },
+    "total_tokens": 12337
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

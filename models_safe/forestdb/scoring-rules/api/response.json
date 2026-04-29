@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777430223,
+  "created_at": 1777430209,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0e21656eabdb2ecd0069f16ec1b8588197be0570c0e25668f6",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0e21656eabdb2ecd0069f16ec25d608197a1d82a795387b7f2",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `chosen_action`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the model-block computations so the parameter `beta` receives its built-in prior before it is used in the likelihood expression. The local `logits` helper was inlined as `beta * utility`; this is a same-density mechanical rewrite. No data fields were added or changed.\\n\",\"model_safe_stan\":\"// ForestDB translation: Scoring Rules\\ndata {\\n  int<lower=1> A;\\n  int<lower=1> N;\\n  array[N] int<lower=1, upper=A> chosen_action;\\n  vector[A] utility;\\n}\\nparameters {\\n  real<lower=0> beta;\\n}\\nmodel {\\n  beta ~ lognormal(0, 0.75);\\n  chosen_action ~ categorical_logit(beta * utility);\\n}\\ngenerated quantities {\\n  simplex[A] action_prob = softmax(beta * utility);\\n}\\n\",\"data_safe_json\":\"{\\\"A\\\":5,\\\"N\\\":4,\\\"chosen_action\\\":[2,5,1,1],\\\"utility\\\":[3.4640388828547177,2.100268419602335,3.470928020208542,3.5259953640276613,5.951777219790987]}\",\"protected_variables\":[\"chosen_action\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0e21656eabdb2ecd0069f16ecd7d588197b89260d71b83296e",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3225,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1367,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4592
+  },
+  "user": null
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"K\":3,\"N\":4,\"indiv_idx\":[2,2,2,2],\"sigma\":2.2646562598176914,\"y\":[4.0,4.0,3.0,4.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;      // Number of observations\n  vector[N] y;         // Observations\n  real<lower=0> sigma; // Measurement variability\n\n  // Number of individual contexts in hierarchy\n  int<lower=0> K;\n  // Individual context from which each observation is generated\n  array[N] int<lower=1, upper=K> indiv_idx;\n}\n\nparameters {\n  real mu;           // Population location\n  real<lower=0> tau; // Population scale\n  vector[K] theta;   // Centered individual parameters\n}\n\nmodel {\n  mu ~ normal(0, 5);                   // Prior model\n  tau ~ normal(0, 5);                  // Prior model\n  theta ~ normal(mu, tau);             // Centered hierarchical model\n  y ~ normal(theta[indiv_idx], sigma); // Observational model\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  array[N] real y_post_pred = normal_rng(theta[indiv_idx], sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `y ~ normal(theta[indiv_idx], sigma)`, after all parameters have received built-in priors. The remaining data variables (`N`, `K`, `sigma`, and `indiv_idx`) are context inputs and are not scored as observations.\n"
+}

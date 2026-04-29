@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":5,\"N_obs\":2,\"center_idxs\":[2,3,4],\"left_idxs\":[1,1,1],\"obs_idx\":[1,1],\"right_idxs\":[5,5,5],\"sigma\":1.2249529999885413,\"ts\":[1.0,2.0,3.0,4.0,5.0],\"x_left\":5.08521496111287,\"x_obs\":[3.1855428290316903,4.087934564875731],\"x_right\":2.9263443394180486}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] real ts;\n\n  real x_left;\n  real x_right;\n\n  array[N - 2] int left_idxs;\n  array[N - 2] int center_idxs;\n  array[N - 2] int right_idxs;\n\n  int<lower=1> N_obs;\n  array[N_obs] int obs_idx;\n  array[N_obs] real x_obs;\n  real<lower=0> sigma;\n}\n\nparameters {\n  array[N - 2] real xs_interior_ncp;\n}\n\ntransformed parameters {\n  array[N] real xs;\n\n  xs[1] = x_left;\n  xs[N] = x_right;\n\n  for (n in 1:(N - 2)) {\n    real t = ts[center_idxs[n]];\n    real t_l = ts[left_idxs[n]];\n    real x_l = xs[left_idxs[n]];\n    real t_r = ts[right_idxs[n]];\n    real x_r =  xs[right_idxs[n]];\n\n    real mu = x_l + (t - t_l) / (t_r - t_l) * (x_r - x_l);\n    real sigma2 = (t_r - t) * (t - t_l) / (t_r - t_l);\n\n    xs[center_idxs[n]] = mu + sqrt(sigma2) * xs_interior_ncp[n];\n  }\n}\n\nmodel {\n  xs_interior_ncp ~ normal(0, 1);\n  x_obs ~ normal(xs[obs_idx], sigma);\n}\n",
+  "protected_variables": [
+    "x_obs"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `x_obs`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: removed the unused user-defined `bridge_lpdf` and `bridge_rng` functions. The model density is unchanged because neither function was referenced by the transformed-parameter or model blocks. The protected observation `x_obs` remains a top-level data variable observed exactly once with the built-in `normal` distribution, after the prior for `xs_interior_ncp`. No data fields were added or changed; `data_safe.json` is identical to the supplied data.\n"
+}

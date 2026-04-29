@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"I\":3,\"J\":1,\"y\":[[0],[0],[0]],\"y_safestan_flat\":[0,0,0]}",
+  "model_safe_stan": "data {\n  int<lower=1> I; // // items\n  int<lower=1> J; // // students\n  array[I, J] int<lower=0, upper=1> y; // boolean correctness of student j on item i for n\n  array[I * J] int<lower=0, upper=1> y_safestan_flat;\n}\nparameters {\n  vector[J] alpha; // ability for student j\n  vector[I] beta; // difficulty for item i\n  vector<lower=0>[I] delta; // discriminativeness for item i\n}\nmodel {\n  vector[I * J] eta;\n\n  alpha ~ normal(0, 1);\n  beta ~ normal(0, 5);\n  delta ~ gamma(2, 2);\n\n  for (i in 1 : I) {\n    for (j in 1 : J) {\n      eta[(i - 1) * J + j] = delta[i] * (alpha[j] - beta[i]);\n    }\n  }\n\n  y_safestan_flat ~ bernoulli_logit(eta);\n}\n",
+  "protected_variables": [
+    "y_safestan_flat"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y_safestan_flat`, a deterministic row-major flattening of the original response array `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_flat` with deterministic relation `y_safestan_flat[(i - 1) * J + j] = y[i, j]` for Stan indices `i = 1:I` and `j = 1:J`. This is needed because the original model scored indexed slices `y[i]` inside a loop, while SafeStan requires the protected observation to be a top-level identifier scored exactly once. The likelihood was rewritten as one vectorized `bernoulli_logit` statement over the flattened responses, with linear predictors computed in the same row-major order. The parameter priors were already explicit and are unchanged.\n"
+}

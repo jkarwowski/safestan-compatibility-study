@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `observed_utterance`.\n\nGenerated files: none.\n\nReason: the observation likelihood is implemented with manual `target += log_sum_exp(listener_lp)` scoring, where `listener_lp` depends on the protected observation through an index into `log_softmax(speaker_logits)`. SafeStan forbids direct `target +=` scoring. Replacing this with a built-in sampling statement such as a categorical likelihood would require a substantive rewrite of the marginalized pragmatic listener likelihood and would not preserve the same log density in general.\n"
+}

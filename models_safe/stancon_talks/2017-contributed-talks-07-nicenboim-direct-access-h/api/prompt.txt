@@ -1,0 +1,437 @@
+You are translating a single Stan model into the SafeStan-compatible Stan subset.
+
+## SafeStan
+
+SafeStan is a static (compile-time) restriction layer over Stan. Its purpose is to prevent likelihood hacking on a designated protected data interface, as described in "Likelihood hacking in probabilistic program synthesis".
+
+SafeStan is designed so that generated models report a normalized marginal log-likelihood for the interface being modelled. To do this, it assigns roles to top-level inputs and parameters. Variables named by --sstan-protect are modelled interface variables: each must be scored by a built-in distribution, exactly once, before any other use. They cannot be inspected in an if, used to compute helper values, or referenced in transformed blocks before that scoring statement. After a modelled interface variable has been scored, it is available as an ordinary model-block quantity and may be used in later computations or later likelihood terms. Other top-level data variables are context inputs: they may be used freely as predictors, constants, indices, or configuration, but they may not appear on the left side of a sampling statement. Parameters are latent variables: each parameter must have exactly one built-in prior sampling statement before it is used in the model block. SafeStan also rejects constructs that can directly inflate, edit, or gate the log-likelihood, such as target +=, target(), jacobian +=, reject(), fatal_error(), and _lp functions.
+
+For this corpus run, `data.json` may be small synthetic data generated only to satisfy the Stan data schema. Use it to produce a valid `data_safe_json` and to preserve deterministic reshapes/copies, but infer the protected interface and compatibility label from `model.stan`, not from the particular synthetic values.
+
+### What SafeStan Enforces
+
+No arbitrary scoring:
+
+Forbids target += ...
+Forbids target()
+Forbids jacobian += ...
+Forbids reject() and fatal_error()
+Forbids _lp function definitions and calls
+Protected data single-use:
+
+Every protected variable must be a top-level data variable.
+Every top-level data variable that the model conditions on with a sampling statement is part of the protected interface, unless a same-density rewrite replaces it by a deterministic top-level protected copy/reshape.
+Do not protect ordinary predictors, covariates, sizes, indices, or constants unless the model itself observes/scores them as data.
+Each protected variable must appear exactly once on the left side of ~.
+Left side must be a plain identifier (no indexing/projections/expressions).
+Protected variables cannot be used before they are observed.
+After observation, a protected variable is treated as a normal value.
+Protected variables cannot be referenced in transformed data/parameters.
+Proper distribution path only:
+
+Sampling statements may target only protected top-level data variables or top-level parameter variables.
+Sampling statements must resolve to built-in Stan distributions.
+User-defined distributions are rejected in ~.
+Strict parameter discipline:
+
+Each parameter must appear in exactly one sampling statement.
+Parameters cannot be used in the model block before their sampling statement.
+Uses through transformed parameters are tracked: if phi depends on theta, then using phi before theta ~ ... counts as using theta before its prior.
+Control-flow safety:
+
+Protected observations and parameter-prior sampling statements cannot appear inside loops (for/while/foreach).
+Conditional (if/else) sampling is allowed only when both branches produce identical sampling effects for protected variables and parameters.
+Reserved identifier:
+
+sstan_trusted_loglik__ is reserved in SafeStan mode.
+
+## Goal
+
+The goal is not to make the model "nicer", rather, the goal is to decide whether the original posterior/log density can be represented under SafeStan restrictions with no or only a small rewrite, preserving the model. Return only the structured JSON requested by the caller.
+
+Work method:
+
+1. Identify the observed/protected data variable(s) scored by the likelihood.
+   Use the Stan program structure for this; do not infer modelling intent from
+   the particular values in `data.json`.
+2. Check whether the protected data variables and parameters already satisfy SafeStan's
+   syntactic discipline. If it does, classify the models `as-is`.
+3. If not, look for a same-density mechanical rewrite.
+4. If the rewrite would require changing the statistical model, substantially replacing a marginalized latent-state algorithm, or changing the likelihood (e.g. by adding additional priors to parameters), classify the case as `major` and do not rewrite the model.
+5. Otherwise, classify the case as `minor`, rewrite the model (and potentially, data): e.g. you can vectorize simple likelihoods, add deterministic data copies/reshapes, switch order of computation preserving the semantics, and add explicit priors only for parameters that already have implicit proper priors with exactly matching built-in distributions (for example, `uniform(lower, upper)` for finite bounded real parameters). After that, output complete files. Do not output patches.
+
+Compatibility labels:
+
+- `as-is`: the original Stan program is already SafeStan-compatible. Return `model_safe_stan` equal to the original and `data_safe_json` equal to the supplied data.
+- `minor`: a same-posterior SafeStan version can be produced using only minor, mechanical, changes. Return new, rewritten `model_safe_stan` equivalent to the original and `data_safe_json` equivalent to the supplied data.
+- `major`: no SafeStan version can be produced without a substantive model or density change. In this case return empty strings for `model_safe_stan` and `data_safe_json`.
+
+Requirements:
+
+- Never invent new observations or new data values beyond deterministic
+  copies/reshapes of the supplied `data.json`.
+- `data_safe_json` must be a valid JSON object string. It may equal the supplied
+  `data.json` exactly, or be a deterministic augmentation/reshape of it.
+- If you add fields to `data_safe_json`, document the exact deterministic
+  relation in `safety_note_md`.
+- Preserve the intended posterior/log density for AS-IS and MINOR.
+- `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
+  include: compatibility, protected data choice, generated files, and a concise
+  explanation of any change.
+
+Examples:
+
+Example 1: AS-IS input
+
+```stan
+data {
+  int<lower=0, upper=1> y;
+}
+parameters {
+  real<lower=0, upper=1> theta;
+}
+model {
+  theta ~ beta(1, 1);
+  y ~ bernoulli(theta);
+}
+```
+
+```json
+{"y": 1}
+```
+
+Example 1 output shape
+
+```json
+{
+  "compatibility": "as-is",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the protected observation is top-level data and is observed with a plain sampling statement.\n",
+  "model_safe_stan": "data {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "data_safe_json": "{\"y\": 1}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 2: MINOR input
+
+```stan
+data {
+  int<lower=1> N;
+  array[N] int<lower=0> trials;
+  array[N] int<lower=0> y;
+}
+transformed data {
+  real mean_y = mean(to_vector(y));
+}
+parameters {
+  vector<lower=0, upper=1>[N] theta;
+}
+model {
+  y ~ binomial(trials, theta);
+}
+```
+
+```json
+{"N": 3, "trials": [10, 10, 10], "y": [4, 5, 6]}
+```
+
+Example 2 output shape
+
+```json
+{
+  "compatibility": "minor",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. Added `theta ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]` and satisfies SafeStan's unique-prior requirement.\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ binomial(trials, theta);\n}\n",
+  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 3: MAJOR input
+
+```stan
+data {
+  int<lower=1> N;
+  vector[N] y;
+}
+parameters {
+  real mu1;
+  real mu2;
+}
+model {
+  for (n in 1:N) {
+    target += log_mix(0.5, normal_lpdf(y[n] | mu1, 1), normal_lpdf(y[n] | mu2, 1));
+  }
+}
+```
+
+```json
+{"N": 3, "y": [0.1, 1.2, -0.5]}
+```
+
+Example 3 output shape
+
+```json
+{
+  "compatibility": "major",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\n",
+  "model_safe_stan": "",
+  "data_safe_json": "",
+  "protected_variables": []
+}
+```
+
+Model directory: models/stancon_talks/2017-contributed-talks-07-nicenboim-direct-access-h
+
+Metadata:
+
+```json
+{
+  "description": "Imported Stan program from StanCon talks: 2017/Contributed-Talks/07_nicenboim/direct_access_h.stan.",
+  "difficulty": "unknown",
+  "id": "2017-contributed-talks-07-nicenboim-direct-access-h",
+  "method": "sample",
+  "source_group": "stancon_talks",
+  "source_group_label": "StanCon talks",
+  "source_url": "https://github.com/stan-dev/stancon_talks/blob/affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb/2017/Contributed-Talks/07_nicenboim/direct_access_h.stan",
+  "title": "2017 Contributed Talks 07 Nicenboim Direct Access H"
+}
+```
+
+Source note:
+
+```text
+# 2017 Contributed Talks 07 Nicenboim Direct Access H
+
+- Upstream Stan file: [2017/Contributed-Talks/07_nicenboim/direct_access_h.stan](https://github.com/stan-dev/stancon_talks/blob/affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb/2017/Contributed-Talks/07_nicenboim/direct_access_h.stan)
+- Upstream data: none
+- Data status: no_matched_upstream_data
+- Source group: StanCon talks
+- Upstream repository: https://github.com/stan-dev/stancon_talks
+- Upstream commit: `affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb`
+- Import note: Copied into the repository's standard model-directory layout.
+
+## Synthetic Data
+
+- Data status: synthetic/local generated by `generate_synthetic_data_for_missing.py`.
+- Generation method: stanc_debug_generate_data.
+- Parsed data declarations: 8.
+- Data block present: true.
+
+```
+
+Original `model.stan`:
+
+```stan
+functions {
+  real psi_max(vector u_psi, array[] int subj, vector RT) {
+    real psi_max;
+    psi_max = positive_infinity();
+    for (i in 1:num_elements(RT))
+         psi_max = fmin(psi_max, log(RT[i]) - u_psi[subj[i]]);
+    return (psi_max);
+  }
+  real da(int winner, real RT, vector beta, real P_b, real mu_da,
+               real mu_b, real sigma, real psi){
+    // theta = softmax(beta)
+    // log(P(w = 1 | theta, P_b)):
+    real log_P_w1;
+    // Prob of direct access given winner = 1
+    real log_P_da_gw1;
+    // Prob of backtracking given winner = 1
+    real log_P_b_gw1;
+    // Equation (10) in log:
+    log_P_w1 = log_sum_exp(categorical_logit_lpmf(1 | beta),
+                log(P_b)+ log1m_exp(categorical_logit_lpmf(1|beta)));
+    // Equation (14) in log:
+    log_P_da_gw1 = categorical_logit_lpmf(1 | beta) - log_P_w1;
+    // Equation (15) in log:
+    log_P_b_gw1 = log(P_b) + log1m_exp(categorical_logit_lpmf(1 | beta)) -
+                  log_P_w1;
+    if(winner==1) {
+    return (log_P_w1 + // Increment on likelihood due to winner=1
+                       // Increment on likelihood due to RT:
+            log_sum_exp(log_P_da_gw1 + lognormal_lpdf(RT - psi| mu_da, sigma),
+            log_P_b_gw1 + lognormal_lpdf(RT - psi | mu_da + mu_b, sigma) ));
+    } else {
+      return (log1m(P_b) + categorical_logit_lpmf(winner | beta) +
+              // Increment on likelihood due to RT:
+              lognormal_lpdf(RT - psi | mu_da, sigma));
+    }
+  }
+  vector da_rng(vector theta, real P_b, real mu_da, real mu_b, real sigma,
+                real psi) {
+    int orig_choice;
+    int backtracking;
+    vector[2] gen;
+    orig_choice = categorical_rng(theta);
+    backtracking = 0;
+    if (orig_choice!=1) backtracking = bernoulli_rng(P_b);
+    // Change the answer to 1 if there was backtracking:
+    gen[1] = backtracking ? 1 : orig_choice;
+    { real mu; // it adds the mu_b if there is backtracking:
+      mu = mu_da + (backtracking ? mu_b : 0);
+      gen[2] = psi + lognormal_rng(mu, sigma);
+    }
+    return(gen);
+  }
+}
+data {
+  int<lower=0> N_obs;
+  int<lower=1> N_choices;
+  vector<lower=0>[N_obs] RT;
+  array[N_obs] int<lower=1,upper=N_choices> winner;
+  array[N_obs] int<lower = 1> subj;
+  int<lower = 1> N_subj;
+  array[N_obs] int<lower = 1> item;
+  int<lower = 1> N_item;
+}
+transformed data {
+  real<lower=0> min_RT;
+  real logmean_RT;
+  min_RT = min(RT);
+  logmean_RT = log(mean(RT));
+}
+parameters{
+  real<lower=0> sigma;
+  real<lower=0> mu_da_0raw;
+  real<lower=0> mu_b_0;
+  vector[N_choices-2] beta_incorrect;
+  real<lower=0> beta_added;
+  vector<lower = 0> [N_choices - 1]  tau_u;
+  cholesky_factor_corr[N_choices - 1] L_u;
+  matrix[N_choices - 1, N_subj] z_u;
+  vector<lower = 0> [2]  tau_u_RT;
+  cholesky_factor_corr[2] L_u_RT;
+  matrix[2, N_subj] z_u_RT;
+  vector<lower = 0> [N_choices - 1]  tau_w;
+  cholesky_factor_corr[N_choices - 1] L_w;
+  matrix[N_choices - 1, N_item] z_w;
+  vector<lower = 0> [2]  tau_w_RT;
+  cholesky_factor_corr[2] L_w_RT;
+  matrix[2, N_item] z_w_RT;
+  real<lower=0,upper=1> P_b;
+  vector[N_subj] u_psi;
+  real<lower = 0> tau_psi;
+  real<upper = psi_max(u_psi, subj, RT) / logmean_RT> psi_0raw;
+}
+transformed parameters{
+  real<lower=0> mu_da_0;
+  vector[N_choices] beta_0;
+  matrix[2, N_subj] u_RT;
+  matrix[N_choices, N_subj] u;
+  matrix[2, N_item] w_RT;
+  matrix[N_choices, N_item] w;
+  real psi_0;
+  u_RT = diag_pre_multiply(tau_u_RT, L_u_RT) * z_u_RT;
+  u[1:N_choices-1] = diag_pre_multiply(tau_u, L_u) * z_u;
+  u[N_choices] = rep_row_vector(0,N_subj);
+  w_RT = diag_pre_multiply(tau_w_RT, L_w_RT) * z_w_RT;
+  w[1:N_choices-1] = diag_pre_multiply(tau_w, L_w) * z_w;
+  w[N_choices] = rep_row_vector(0,N_item);
+  beta_0[1] = beta_added + fmax(max(beta_incorrect),0);
+  beta_0[2:N_choices-1] = beta_incorrect;
+  beta_0[N_choices] = 0;
+  mu_da_0 = mu_da_0raw * logmean_RT;
+  psi_0 = psi_0raw * logmean_RT;
+}
+model {
+  vector[N_obs] log_lik;
+  sigma ~ normal(0,2);
+  beta_added ~ normal(0,2);
+  beta_incorrect ~ normal(0,2);
+  psi_0raw ~ normal(0, 1);
+  tau_psi ~ normal(0, 1);
+  u_psi ~ normal(0, tau_psi);
+  to_vector(z_u_RT) ~ normal(0, 1);
+  to_vector(z_u) ~ normal(0, 1);
+  tau_u_RT ~ normal(0, 1);
+  tau_u ~ normal(0, 1);
+  L_u_RT ~ lkj_corr_cholesky(2.0);
+  L_u ~ lkj_corr_cholesky(2.0);
+  to_vector(z_w_RT) ~ normal(0, 1);
+  to_vector(z_w) ~ normal(0, 1);
+  tau_w_RT ~ normal(0, 1);
+  tau_w ~ normal(0, 1);
+  L_w_RT ~ lkj_corr_cholesky(2.0);
+  L_w ~ lkj_corr_cholesky(2.0);
+  P_b ~ beta(1,1);
+  mu_da_0raw ~ normal(0,1);
+  mu_b_0 ~ normal(0,2);
+  for (n in 1:N_obs) {
+    real mu_da;
+    real mu_b;
+    vector[N_choices] beta;
+    real psi;
+    mu_da = mu_da_0 + u_RT[1,subj[n]] + w_RT[1,item[n]];
+    mu_b = mu_b_0 + u_RT[2,subj[n]] + w_RT[2,item[n]];
+    beta = beta_0 + u[,subj[n]] + w[,item[n]];
+    psi = exp(psi_0 + u_psi[subj[n]]);
+    log_lik[n] = da(winner[n], RT[n], beta, P_b, mu_da, mu_b, sigma, psi);
+  }
+  target += log_lik;
+}
+generated quantities {
+  vector[N_choices] theta_0;
+  matrix[N_choices-1, N_choices-1] Cor_u;
+  matrix[N_choices-1, N_choices-1] Cor_w;
+  matrix[2, 2] Cor_u_RT;
+  matrix[2, 2] Cor_w_RT;
+  vector[N_obs] gen_RT;
+  vector[N_obs] gen_winner;
+  vector[N_obs] log_lik;
+  theta_0 = softmax(beta_0);
+  Cor_u = tcrossprod(L_u);
+  Cor_w = tcrossprod(L_w);
+  Cor_u_RT = tcrossprod(L_u_RT);
+  Cor_w_RT = tcrossprod(L_w_RT);
+  for (n in 1:N_obs) {
+    real mu_da;
+    real mu_b;
+    vector[N_choices] beta;
+    real psi;
+    vector[2] gen;
+    mu_da = mu_da_0 + u_RT[1,subj[n]] + w_RT[1,item[n]];
+    mu_b = mu_b_0 + u_RT[2,subj[n]] + w_RT[2,item[n]];
+    beta = beta_0 + u[,subj[n]] + w[,item[n]];
+    psi = exp(psi_0 + u_psi[subj[n]]);
+    gen =  da_rng(softmax(beta), P_b, mu_da, mu_b, sigma, psi);
+    gen_winner[n] = gen[1];
+    gen_RT[n] = gen[2];
+    log_lik[n] = da(winner[n], RT[n], beta, P_b, mu_da, mu_b, sigma, psi);
+  }
+}
+
+```
+
+Input `data.json` for this run:
+
+```json
+{
+  "N_choices": 4,
+  "N_item": 5,
+  "N_obs": 3,
+  "N_subj": 1,
+  "RT": [
+    0.8434316374489812,
+    2.3568417501121273,
+    0.7510591330582694
+  ],
+  "item": [
+    2,
+    2,
+    1
+  ],
+  "subj": [
+    4,
+    3,
+    1
+  ],
+  "winner": [
+    1,
+    3,
+    4
+  ]
+}
+
+```

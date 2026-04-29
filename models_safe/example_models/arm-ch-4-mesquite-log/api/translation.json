@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: the likelihood scores `log_weight`, a transformed-data value deterministically computed from top-level data `weight`.\n\nGenerated files: none.\n\nReason: the model is not SafeStan-compatible as written because the sampling statement observes `log_weight`, which is not a top-level data variable, and the protected observation is computed in `transformed data` before it is scored. More importantly, the parameters `alpha`, `beta`, and `sigma` have no explicit priors. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors for these unconstrained or half-constrained parameters would change the posterior density, so this cannot be repaired by a minor same-density rewrite.\n"
+}

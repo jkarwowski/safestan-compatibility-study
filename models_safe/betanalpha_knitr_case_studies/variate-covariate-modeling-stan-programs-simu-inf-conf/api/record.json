@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-simu-inf-conf/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:10:04+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-simu-inf-conf",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0c3e7a216482118a0069f15a62f1c081a2b808f5a1b4284047",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-simu-inf-conf",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:09:54+00:00",
+  "usage": {
+    "input_tokens": 3201,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 999,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4200
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

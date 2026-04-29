@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the likelihood observes the top-level data variable `y` with `y ~ neg_binomial(alpha, beta)`, so `y` is the protected interface. However, SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. The original model gives `alpha` only an implicit improper uniform prior on `[0, infinity)`. Adding any proper built-in prior for `alpha` would change the posterior/log density, and there is no minor same-density rewrite that supplies the required SafeStan prior discipline. Although `p_success` has a finite bounded implicit uniform prior that could be made explicit, the unconstrained positive parameter `alpha` prevents a SafeStan-compatible minor translation.

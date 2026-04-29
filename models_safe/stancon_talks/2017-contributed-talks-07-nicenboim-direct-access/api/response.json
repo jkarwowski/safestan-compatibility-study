@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777431902,
+  "created_at": 1777431877,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_08fd3a3b9673e1100069f17545588c8196b7380cccc8c6d2eb",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_08fd3a3b9673e1100069f1754606708196a452a864f2e9a9fa",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `winner` and `RT`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for the observed choice and response-time data is implemented as manual `target += da(winner[n], RT[n], ...)` scoring inside a loop. The user-defined `da` function computes a custom marginalized joint likelihood involving categorical-logit terms, lognormal densities, and a mixture/backtracking calculation. SafeStan forbids arbitrary `target +=` scoring and requires protected observations to be scored exactly once by built-in sampling statements. Replacing this marginalized custom likelihood with SafeStan-compatible sampling statements would require a substantive model rewrite, such as introducing or otherwise handling latent mixture/backtracking states, and is not a minor same-density translation. Additionally, `RT` is used in transformed data to define `min_RT`, which would require a deterministic copy if the likelihood were otherwise compatible, but the custom marginalized likelihood is the blocking issue.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_08fd3a3b9673e1100069f1755caf408196aabc32d08792b502",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3656,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2081,
+    "output_tokens_details": {
+      "reasoning_tokens": 1842
+    },
+    "total_tokens": 5737
+  },
+  "user": null
+}

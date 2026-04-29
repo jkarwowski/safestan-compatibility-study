@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777430066,
+  "created_at": 1777429906,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_05dcfee6f450f1090069f16d926f1481949e73e0e9b1f92c90",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_05dcfee6f450f1090069f16d9300808194917d9efc4496e97f",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `word_safestan` (a deterministic token-level reshape of the original `counts` table). `token_doc` and the dimension variables are context inputs.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the original count likelihood used manual `target += counts[d, v] * log_sum_exp(...)`, which is not allowed in SafeStan. The safe model replaces `counts` by a canonical token expansion: `N_tokens = sum_{d,v} counts[d,v]`; for each document `d` and vocabulary item `v`, `token_doc` contains `d` and `word_safestan` contains `v`, repeated `counts[d,v]` times in lexicographic `(d, v)` order. Tabulating (`token_doc`, `word_safestan`) reconstructs the original counts. The single protected sampling statement `word_safestan ~ categorical(word_prob)` has log density equal to the original count-weighted likelihood. The Dirichlet priors for `theta` and `phi` were vectorized so each top-level parameter has exactly one built-in prior statement outside loops.\\n\",\"model_safe_stan\":\"// SafeStan rewrite: Latent Dirichlet Allocation\\n// `word_safestan` is the protected token expansion of the original counts table.\\ndata {\\n  int<lower=1> D;\\n  int<lower=1> V;\\n  int<lower=1> K;\\n  int<lower=0> N_tokens;\\n  array[N_tokens] int<lower=1, upper=D> token_doc;\\n  array[N_tokens] int<lower=1, upper=V> word_safestan;\\n}\\nparameters {\\n  array[D] simplex[K] theta;\\n  array[K] simplex[V] phi;\\n}\\nmodel {\\n  array[N_tokens] vector[V] word_prob;\\n\\n  theta ~ dirichlet(rep_vector(1.0, K));\\n  phi ~ dirichlet(rep_vector(0.5, V));\\n\\n  for (n in 1:N_tokens) {\\n    vector[V] p = rep_vector(0.0, V);\\n    for (k in 1:K) {\\n      p += theta[token_doc[n], k] * phi[k];\\n    }\\n    word_prob[n] = p;\\n  }\\n\\n  word_safestan ~ categorical(word_prob);\\n}\\ngenerated quantities {\\n  array[D] int<lower=1, upper=K> dominant_topic;\\n  for (d in 1:D) {\\n    dominant_topic[d] = categorical_rng(theta[d]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"D\\\":1,\\\"V\\\":5,\\\"K\\\":5,\\\"N_tokens\\\":14,\\\"token_doc\\\":[1,1,1,1,1,1,1,1,1,1,1,1,1,1],\\\"word_safestan\\\":[1,1,1,1,2,2,3,3,4,4,4,4,5,5]}\",\"protected_variables\":[\"word_safestan\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_05dcfee6f450f1090069f16e2ee6408194bbb0186eb5176a01",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3298,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 13667,
+    "output_tokens_details": {
+      "reasoning_tokens": 12959
+    },
+    "total_tokens": 16965
+  },
+  "user": null
+}

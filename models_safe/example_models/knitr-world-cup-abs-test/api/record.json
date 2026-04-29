@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-world-cup-abs-test/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:13:37+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-world-cup-abs-test",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0103f4f6d0bf40ef0069f169489dd8819c96136099886de6d4",
+  "safe_dir": "models_safe/example_models/knitr-world-cup-abs-test",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:13:28+00:00",
+  "usage": {
+    "input_tokens": 2904,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 685,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3589
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

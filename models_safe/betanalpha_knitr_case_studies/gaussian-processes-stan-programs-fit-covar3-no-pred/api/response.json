@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424044,
+  "created_at": 1777424013,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0da1d724494eefdc0069f1568d07d881a1b19494bb4aeb2304",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0da1d724494eefdc0069f1568d784881a19b43a5d911ab2504",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_obs`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the model block so that the top-level parameters `rho`, `alpha`, and `sigma` are each given their built-in prior before they are used to build the Gaussian-process covariance. The covariance and Cholesky factor computation was inlined into the `multi_normal_cholesky` likelihood. No data fields were added or changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N_obs;\\n  array[N_obs] real x_obs;\\n  vector[N_obs] y_obs;\\n}\\n\\nparameters {\\n  real<lower=0> rho;\\n  real<lower=0> alpha;\\n  real<lower=0> sigma;\\n}\\n\\nmodel {\\n  rho ~ inv_gamma(4.6, 22.1); // P[rho < 2.0] \\\\approx 0.01, P[rho > 20] \\\\approx 0.01\\n  alpha ~ normal(0, 2);\\n  sigma ~ normal(0, 1);\\n\\n  y_obs ~ multi_normal_cholesky(\\n    rep_vector(0, N_obs),\\n    cholesky_decompose(  gp_exp_quad_cov(x_obs, alpha, rho)\\n                       + diag_matrix(rep_vector(square(sigma), N_obs))));\\n}\\n\",\"data_safe_json\":\"{\\\"N_obs\\\":1,\\\"x_obs\\\":[5.620919443633133],\\\"y_obs\\\":[1.0]}\",\"protected_variables\":[\"y_obs\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0da1d724494eefdc0069f156aa9d8081a199272de637dcbd1e",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3129,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2972,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6101
+  },
+  "user": null
+}

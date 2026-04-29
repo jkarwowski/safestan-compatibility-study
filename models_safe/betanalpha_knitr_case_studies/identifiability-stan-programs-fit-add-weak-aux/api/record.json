@@ -1,0 +1,31 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/identifiability-stan-programs-fit-add-weak-aux/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:57:12+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/identifiability-stan-programs-fit-add-weak-aux",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_aux",
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_08758a1e6a30615a0069f1575e91488193888da3f695a0ed87",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/identifiability-stan-programs-fit-add-weak-aux",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:57:02+00:00",
+  "usage": {
+    "input_tokens": 3121,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 936,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4057
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-prior-tune/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:54:02+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-prior-tune",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_07eb950ad1d1007b0069f156a0ecac81a0b0f3a817c9545141",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-prior-tune",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:53:52+00:00",
+  "usage": {
+    "input_tokens": 3142,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 949,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4091
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

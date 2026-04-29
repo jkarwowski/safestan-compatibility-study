@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428533,
+  "created_at": 1777428474,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d6de0fe2554c0b10069f167fa8d6881928f2f15b391772c1a",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0d6de0fe2554c0b10069f167fb207481929b337acf82087b2c",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the existing elementwise normal priors for `alpha` and `beta` before any model-block use of those parameters, and wrote them on the top-level parameter identifiers (`alpha ~ normal(0, 2)` and `beta ~ normal(0, 2)`) instead of `to_vector(...)`; this is the same vectorized normal density over all matrix entries. Replaced the loop of indexed observations `y[n] ~ categorical_logit(...)` with a single protected-data sampling statement `y ~ categorical_logit(v)` by constructing an array of category-logit vectors. The supplied data are unchanged.\\n\",\"model_safe_stan\":\"functions {\\n  /**\\n   * Return the application of tanh() elementwise to the specified\\n   * matrix.  // FIXME(carpenter): remove when tanh vectorized\\n   *\\n   * @param u Input matrix.\\n   * @return \\n   */\\n  matrix tanh_eltwise(matrix u) {\\n    matrix[rows(u), cols(u)] tanh_u;\\n    for (j in 1 : cols(u)) {\\n      for (i in 1 : rows(u)) {\\n        tanh_u[i, j] = tanh(u[i, j]);\\n      }\\n    }\\n    return tanh_u;\\n  }\\n  \\n  /**\\n   * Returns linear predictor for restricted Boltzman machine (RBM).\\n   * Assumes one-hidden layer with logistic sigmoid activation. \\n   *\\n   * @param x Predictors (N x M)\\n   * @param alpha First-layer weights (M x J)\\n   * @param beta Second-layer weights (J x (K - 1))\\n   * @return Linear predictor for output layer of RBM.\\n   */\\n  matrix rbm(matrix x, matrix alpha, matrix beta) {\\n    return tanh_eltwise(x * alpha) * beta;\\n  }\\n}\\ndata {\\n  int<lower=0> N; // observations (MNIST: 60K)\\n  int<lower=0> M; // predictors   (MNIST: 784)\\n  matrix[N, M] x; // data matrix  (MNIST: 60K x 784 = 47M)\\n  int<lower=2> K; // number of categories (MNIST: 10)\\n  array[N] int<lower=1, upper=K> y; // categories\\n  int<lower=1> J; // number of hidden units (e.g. 100)\\n}\\ntransformed data {\\n  matrix[M, N] xt;\\n  vector[N] ones;\\n  xt = x';\\n  ones = rep_vector(1, N);\\n}\\nparameters {\\n  matrix[M, J] alpha;\\n  matrix[J, K - 1] beta;\\n}\\nmodel {\\n  array[N] vector[K] v;\\n  matrix[N, K - 1] eta;\\n\\n  alpha ~ normal(0, 2);\\n  beta ~ normal(0, 2);\\n\\n  eta = rbm(x, alpha, beta);\\n  for (n in 1 : N) {\\n    v[n][1] = ones[n];\\n    for (k in 2 : K) {\\n      v[n][k] = eta[n, k - 1];\\n    }\\n  }\\n\\n  y ~ categorical_logit(v);\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":4,\\\"K\\\":2,\\\"M\\\":4,\\\"N\\\":3,\\\"x\\\":[[6.73288824907847,5.498059847239983,3.3513363335067794,3.2396430553648643],[3.0035147418444126,4.604269356543003,4.7742301234266415,5.528166109599745],[5.237980442914063,4.889184233878926,2.563475380857411,6.589047315924434]],\\\"y\\\":[2,2,2]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d6de0fe2554c0b10069f16830fa2881929b3c33a5d785335d",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3553,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 5620,
+    "output_tokens_details": {
+      "reasoning_tokens": 4660
+    },
+    "total_tokens": 9173
+  },
+  "user": null
+}

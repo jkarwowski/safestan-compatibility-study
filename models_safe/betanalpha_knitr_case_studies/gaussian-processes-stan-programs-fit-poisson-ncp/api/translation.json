@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N_obs\": 1,\n  \"N_predict\": 3,\n  \"alpha\": 4.95377431668197,\n  \"observed_idx\": [\n    2\n  ],\n  \"rho\": 0.5284448743787199,\n  \"x_predict\": [\n    1.0,\n    2.0,\n    3.0\n  ],\n  \"y_obs\": [\n    1\n  ]\n}",
+  "model_safe_stan": "data {\n  int<lower=1> N_predict;\n  array[N_predict] real x_predict;\n\n  int<lower=1> N_obs;\n  array[N_obs] int y_obs;\n  array[N_obs] int<lower=1, upper=N_predict> observed_idx;\n\n  real<lower=0> rho;\n  real<lower=0> alpha;\n}\n\ntransformed data {\n  matrix[N_predict, N_predict] cov =   gp_exp_quad_cov(x_predict, alpha, rho)\n                                     + diag_matrix(rep_vector(1e-10, N_predict));\n  matrix[N_predict, N_predict] L_cov = cholesky_decompose(cov);\n}\n\nparameters {\n  vector[N_predict] f_tilde;\n}\n\ntransformed parameters {\n  vector[N_predict] f_predict = L_cov * f_tilde;\n}\n\nmodel {\n  f_tilde ~ normal(0, 1);\n  y_obs ~ poisson_log(f_predict[observed_idx]);\n}\n\ngenerated quantities {\n  array[N_predict] int y_predict = poisson_log_rng(f_predict);\n}\n",
+  "protected_variables": [
+    "y_obs"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y_obs`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The only observed data variable scored by a sampling statement is the top-level data variable `y_obs`, which is observed exactly once with the built-in `poisson_log` distribution. The parameter `f_tilde` is given exactly one built-in prior before its transformed-parameter-dependent value `f_predict` is used in the likelihood. Other data variables are context inputs used only for dimensions, indexing, and covariance construction.\n"
+}

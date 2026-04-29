@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-linear-multi-prior-sales/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:07:20+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/taylor-models-stan-programs-linear-multi-prior-sales",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_098522a6cf8c1f250069f1598e1c4c819fa0287bca07760e86",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-linear-multi-prior-sales",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:06:21+00:00",
+  "usage": {
+    "input_tokens": 3254,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 5790,
+    "output_tokens_details": {
+      "reasoning_tokens": 5178
+    },
+    "total_tokens": 9044
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

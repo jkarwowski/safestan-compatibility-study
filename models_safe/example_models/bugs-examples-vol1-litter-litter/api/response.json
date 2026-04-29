@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426774,
+  "created_at": 1777426739,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0317caf035de1e4b0069f16133c3a88191998006c8097bdc46",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0317caf035de1e4b0069f161344fb481918f6bec084cf5bff6",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `r`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: vectorized the beta prior for `p` and the binomial likelihood for `r` so that the protected observation is scored exactly once with a plain top-level sampling statement outside loops. Changed `p` from a bounded matrix to an equivalently indexed bounded two-dimensional array of reals to allow direct vectorized sampling as a top-level parameter. Added `mu ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]` and satisfies SafeStan's unique-prior requirement. No data fields were added or changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> G;\\n  int<lower=0> N;\\n  array[G, N] int<lower=0> r;\\n  array[G, N] int<lower=0> n;\\n}\\nparameters {\\n  array[G, N] real<lower=0, upper=1> p;\\n  vector<lower=0, upper=1>[G] mu;\\n  vector<lower=0.1>[G] a_plus_b;\\n}\\ntransformed parameters {\\n  vector[G] a;\\n  vector[G] b;\\n  array[G, N] real<lower=0> a_rep;\\n  array[G, N] real<lower=0> b_rep;\\n  a = mu .* a_plus_b;\\n  b = (1 - mu) .* a_plus_b;\\n  for (g in 1 : G) {\\n    for (i in 1 : N) {\\n      a_rep[g, i] = a[g];\\n      b_rep[g, i] = b[g];\\n    }\\n  }\\n}\\nmodel {\\n  mu ~ uniform(0, 1);\\n  a_plus_b ~ pareto(0.1, 1.5);\\n  p ~ beta(a_rep, b_rep);\\n  r ~ binomial(n, p);\\n}\\ngenerated quantities {\\n  vector<lower=0>[G] theta;\\n  for (g in 1 : G) {\\n    theta[g] = 1 / (a[g] + b[g]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"G\\\":2,\\\"N\\\":2,\\\"n\\\":[[2,2],[4,4]],\\\"r\\\":[[1,0],[0,1]]}\",\"protected_variables\":[\"r\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0317caf035de1e4b0069f1615269b881918af33e34d659312c",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3173,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3172,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6345
+  },
+  "user": null
+}

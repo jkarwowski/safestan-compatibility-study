@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-simplest-regression-fake-data/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:12:55+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-simplest-regression-fake-data",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_025abbec8b41afc00069f1691d555c8192931f71eb8107a2c1",
+  "safe_dir": "models_safe/example_models/knitr-simplest-regression-fake-data",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:12:45+00:00",
+  "usage": {
+    "input_tokens": 2989,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 787,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3776
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

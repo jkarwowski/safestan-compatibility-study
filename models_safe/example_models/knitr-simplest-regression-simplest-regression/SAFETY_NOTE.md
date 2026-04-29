@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the likelihood observation is the top-level data variable `y`, with `x` serving as a predictor/context input. However, the parameters `a`, `b`, and `sigma` have no prior sampling statements before they are used in the likelihood. SafeStan requires each parameter to have exactly one built-in prior. Adding proper priors would change the original posterior/log density, whose parameters have implicit improper flat priors, so this cannot be translated by a minor same-density rewrite.

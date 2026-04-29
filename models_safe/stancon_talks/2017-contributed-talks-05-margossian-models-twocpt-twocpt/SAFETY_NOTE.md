@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: the original likelihood scores `logCObs`, where `logCObs = log(cObs)` is computed from the top-level data variable `cObs`.
+
+Generated files: none.
+
+Reason: the model cannot be translated to SafeStan with only a same-density mechanical rewrite. The transformed observation issue could be handled mechanically by making `logCObs` a deterministic top-level data copy/transform and protecting that variable. However, the parameter `ka` is used in the likelihood through `cHatObs` but has no sampling statement/prior. SafeStan requires every parameter to have exactly one built-in prior before use. Adding a proper prior for `ka` would change the posterior, and the implicit lower-bound-only flat density is improper and is not a minor SafeStan rewrite.

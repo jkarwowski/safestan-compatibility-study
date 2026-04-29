@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/infinite-pcfg/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:31:56+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/infinite-pcfg",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "rule_obs"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0817b757840313230069f16d44b6b0819caf5d81521d557b02",
+  "safe_dir": "models_safe/forestdb/infinite-pcfg",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:30:28+00:00",
+  "usage": {
+    "input_tokens": 3251,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7439,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 10690
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

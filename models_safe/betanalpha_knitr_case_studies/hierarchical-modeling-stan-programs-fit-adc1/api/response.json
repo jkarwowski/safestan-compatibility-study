@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424138,
+  "created_at": 1777424127,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_026d955470e84b6d0069f156ffbcf881a2a25590f0fb46cec1",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_026d955470e84b6d0069f15700936081a28fe92595bd22cb92",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, after the parameter `log_psi` receives its built-in prior. Other data variables are used only as context inputs.\\n\",\"model_safe_stan\":\"functions {\\n  vector group_means(vector y, int N, array[] int indiv_idxs, int N_indiv) {\\n    vector[N_indiv] counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] means = rep_vector(0, N_indiv);\\n    for (n in 1:N) {\\n      int idx = indiv_idxs[n];\\n      real delta = y[n] - means[idx];\\n      counts[idx] += 1;\\n      means[idx] += delta / counts[idx];\\n    }\\n    return means;\\n  }\\n\\n  real F_stat(vector y, int N, array[] int indiv_idxs, int N_indiv) {\\n    real global_mean = 0;\\n    vector[N_indiv] counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] means = rep_vector(0, N_indiv);\\n    vector[N_indiv] sum_squares = rep_vector(0, N_indiv);\\n\\n    real between = 0;\\n    real within = 0;\\n\\n    for (n in 1:N) {\\n      int idx = indiv_idxs[n];\\n      real delta;\\n\\n      delta = y[n] - global_mean;\\n      global_mean += delta / n;\\n\\n      counts[idx] += 1;\\n      delta = y[n] - means[idx];\\n      means[idx] += delta / counts[idx];\\n      sum_squares[idx] += (y[n] - means[idx]) * delta;\\n    }\\n\\n    for (l in 1:N_indiv)\\n      between += counts[l] * square(means[l] - global_mean) / (N_indiv - 1);\\n    within = mean(sum_squares) / (N - N_indiv);\\n\\n    return between / within;\\n  }\\n}\\n\\ndata {\\n  int<lower=0> N;      // Number of observations\\n  array[N] int y;            // Observed counts\\n\\n  // Number of individual experiments\\n  int<lower=0> N_exp;\\n  // Experiment from which each observation is generated\\n  array[N] int<lower=1, upper=N_exp> exp_idx;\\n\\n  // Input for each experiment\\n  vector[N_exp] log_rho_I;\\n}\\n\\nparameters {\\n  real log_psi; // Analog-to-digital coefficient\\n}\\n\\nmodel {\\n  log_psi ~ normal(0, log(10));\\n  y ~ poisson_log(log_psi + log_rho_I[exp_idx]);  // Observational model\\n}\\n\\ngenerated quantities {\\n  array[N] int y_post_pred = poisson_log_rng(log_psi + log_rho_I[exp_idx]);\\n  vector[N_exp] norm_ave = group_means(to_vector(y_post_pred) ./ exp(log_rho_I[exp_idx]),\\n                                       N, exp_idx, N_exp);\\n  real F_exp = F_stat(to_vector(y_post_pred) ./ exp(log_rho_I[exp_idx]),\\n                      N, exp_idx, N_exp);\\n}\\n\\n\",\"data_safe_json\":\"{\\n  \\\"N\\\": 3,\\n  \\\"N_exp\\\": 3,\\n  \\\"exp_idx\\\": [\\n    2,\\n    2,\\n    2\\n  ],\\n  \\\"log_rho_I\\\": [\\n    6.641008542914257,\\n    3.1698887025932683,\\n    4.580125344697715\\n  ],\\n  \\\"y\\\": [\\n    2,\\n    3,\\n    3\\n  ]\\n}\\n\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_026d955470e84b6d0069f1570610c881a29979d2b55c82e6ac",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3565,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1453,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5018
+  },
+  "user": null
+}

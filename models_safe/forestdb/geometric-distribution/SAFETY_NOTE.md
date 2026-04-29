@@ -2,8 +2,8 @@
 
 Compatibility: minor.
 
-Protected data: `y_failures`, the failure-count version of the original trial-count data `y`.
+Protected data: `y_failures`, a deterministic shifted copy of the original observations with `y_failures[n] = y[n] - 1`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: moved the deterministic shift `y_failures[n] = y[n] - 1` from Stan `transformed data` into `data_safe.json`, and made `y_failures` a top-level data variable so it can be protected and scored directly. The original `y` vector is recoverable as `y_failures[n] + 1`, so this is a one-to-one deterministic reshape of the observations and preserves the posterior/log density. The parameter prior `theta ~ beta(1, 1)` and the likelihood distribution are otherwise unchanged.
+Changes: moved `y_failures` from `transformed data` to top-level `data` so the observed likelihood variable is a plain protected data identifier on the left side of a built-in sampling statement. The supplied `data_safe.json` adds `y_failures` deterministically from `y`; for this run, `[1]` becomes `[0]`. The prior on `theta` and the negative-binomial likelihood are otherwise unchanged.

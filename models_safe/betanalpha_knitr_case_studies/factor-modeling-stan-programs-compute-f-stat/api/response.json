@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423783,
+  "created_at": 1777423760,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_01d26eedb8cabcf50069f15590a910819c97cd94dc1d5a74cc",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_01d26eedb8cabcf50069f155913164819c836316ec5a226995",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The program contains no model block and no sampling statements that condition on top-level data, so there is no protected likelihood interface to declare.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. All top-level data are context inputs used only for deterministic generated-quantities calculations, and the program contains no parameters, likelihood sampling statements, manual `target +=` scoring, or other SafeStan-forbidden log-density manipulation.\\n\",\"model_safe_stan\":\"functions {\\n  real F_stat(vector y, int N, array[] int indiv_idxs, int N_indiv) {\\n    real global_mean = 0;\\n    vector[N_indiv] total_counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] running_counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] means = rep_vector(0, N_indiv);\\n    vector[N_indiv] sum_squares = rep_vector(0, N_indiv);\\n\\n    int N_min_occupunacy = 2; // Minimum occupuancy for included contexts\\n    real N_occupied = 0;      // Number of contexts with at least two counts\\n    real between = 0; // Empirical variance of empirical means in occupied contexts\\n    real within = 0;  // Empirical mean of emperical variances in occupied contexts\\n\\n    for (n in 1:N)\\n      total_counts[indiv_idxs[n]] += 1;\\n\\n    for (n in 1:N) {\\n      int idx = indiv_idxs[n];\\n      real delta;\\n\\n      // Skip (nearly) unoccupied contexts\\n      if (total_counts[idx] < N_min_occupunacy) continue;\\n\\n      delta = y[n] - global_mean;\\n      global_mean += delta / n;\\n\\n      running_counts[idx] += 1;\\n      delta = y[n] - means[idx];\\n      means[idx] += delta / running_counts[idx];\\n      sum_squares[idx] += (y[n] - means[idx]) * delta;\\n    }\\n\\n    for (l in 1:N_indiv) {\\n      // Skip (nearly) unoccupied contexts\\n      if (total_counts[l] < N_min_occupunacy) continue;\\n\\n      N_occupied += 1;\\n      between += total_counts[l] * square(means[l] - global_mean);\\n      within += (sum_squares[l] - within) / N_occupied;\\n    }\\n\\n    // Return zero if not enough minimally occupied contexts\\n    if (N_occupied < 2) return 0;\\n\\n    between = between / (N_occupied - 1);\\n    within /= (N - N_occupied);\\n    return between / within;\\n  }\\n}\\n\\ndata {\\n  int<lower=0> N; // Number of observations\\n  vector[N] y;    // Observations\\n\\n  // Main factor contributions logistics\\n  int<lower=0> N_main_factors;\\n  array[N_main_factors] int<lower=0> N_main_factor_levels;\\n  array[N_main_factors, N] int<lower=1> main_factor_level_idx;\\n\\n  // First-order factor interaction contributions logistics\\n  int<lower=0> N_inter1_factors;\\n  array[N_inter1_factors] int<lower=0> N_inter1_factor_levels;\\n  array[N_inter1_factors, N] int<lower=1> inter1_factor_level_idx;\\n\\n  // Second-order factor interaction contributions logistics\\n  int<lower=0> N_inter2_factors;\\n  array[N_inter2_factors] int<lower=0> N_inter2_factor_levels;\\n  array[N_inter2_factors, N] int<lower=1> inter2_factor_level_idx;\\n}\\n\\ngenerated quantities {\\n  array[N_main_factors] real F_main_obs;\\n  array[N_inter1_factors] real F_inter1_obs;\\n  array[N_inter2_factors] real F_inter2_obs;\\n\\n  for (f in 1:N_main_factors)\\n    F_main_obs[f] = F_stat(y, N, main_factor_level_idx[f], N_main_factor_levels[f]);\\n\\n  for (f in 1:N_inter1_factors)\\n    F_inter1_obs[f] = F_stat(y, N, inter1_factor_level_idx[f], N_inter1_factor_levels[f]);\\n\\n  for (f in 1:N_inter2_factors)\\n    F_inter2_obs[f] = F_stat(y, N, inter2_factor_level_idx[f], N_inter2_factor_levels[f]);\\n}\\n\\n\",\"data_safe_json\":\"{\\n  \\\"N\\\": 2,\\n  \\\"N_all_inter1_factor_levels\\\": 9,\\n  \\\"N_all_inter2_factor_levels\\\": 5,\\n  \\\"N_all_main_factor_levels\\\": 6,\\n  \\\"N_inter1_factor_levels\\\": [\\n    4,\\n    2,\\n    3\\n  ],\\n  \\\"N_inter1_factors\\\": 3,\\n  \\\"N_inter2_factor_levels\\\": [\\n    4,\\n    1\\n  ],\\n  \\\"N_inter2_factors\\\": 2,\\n  \\\"N_main_factor_levels\\\": [\\n    4,\\n    2\\n  ],\\n  \\\"N_main_factors\\\": 2,\\n  \\\"inter1_factor_end_idx\\\": [\\n    4,\\n    6,\\n    9\\n  ],\\n  \\\"inter1_factor_level_idx\\\": [\\n    [\\n      1,\\n      1\\n    ],\\n    [\\n      1,\\n      1\\n    ],\\n    [\\n      1,\\n      1\\n    ]\\n  ],\\n  \\\"inter1_factor_start_idx\\\": [\\n    1,\\n    5,\\n    7\\n  ],\\n  \\\"inter2_factor_end_idx\\\": [\\n    4,\\n    5\\n  ],\\n  \\\"inter2_factor_level_idx\\\": [\\n    [\\n      1,\\n      1\\n    ],\\n    [\\n      1,\\n      1\\n    ]\\n  ],\\n  \\\"inter2_factor_start_idx\\\": [\\n    1,\\n    5\\n  ],\\n  \\\"main_factor_end_idx\\\": [\\n    4,\\n    6\\n  ],\\n  \\\"main_factor_level_idx\\\": [\\n    [\\n      1,\\n      1\\n    ],\\n    [\\n      1,\\n      1\\n    ]\\n  ],\\n  \\\"main_factor_start_idx\\\": [\\n    1,\\n    5\\n  ],\\n  \\\"packed_inter1_factor_idx\\\": [\\n    1,\\n    1,\\n    1,\\n    1,\\n    2,\\n    2,\\n    3,\\n    3,\\n    3\\n  ],\\n  \\\"packed_inter2_factor_idx\\\": [\\n    1,\\n    1,\\n    1,\\n    1,\\n    2\\n  ],\\n  \\\"packed_main_factor_idx\\\": [\\n    1,\\n    1,\\n    1,\\n    1,\\n    2,\\n    2\\n  ],\\n  \\\"y\\\": [\\n    2.0,\\n    2.0\\n  ]\\n}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_01d26eedb8cabcf50069f1559cd640819cb1622f835f8fc11b",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4198,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2750,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 6948
+  },
+  "user": null
+}

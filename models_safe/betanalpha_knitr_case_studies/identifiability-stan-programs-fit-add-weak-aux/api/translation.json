@@ -1,0 +1,10 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 3,\n  \"N_aux\": 2,\n  \"sigma\": 4.122133631031135,\n  \"sigma_aux\": 1.9336706402958974,\n  \"y\": [\n    3.0,\n    3.0,\n    3.0\n  ],\n  \"y_aux\": [\n    2.0,\n    2.0\n  ]\n}",
+  "model_safe_stan": "data {\n  int<lower=1> N;      // Number of observations\n  array[N] real y;           // Observations\n  real<lower=0> sigma; // Measurement variability\n\n  int<lower=1> N_aux;      // Number of auxiliary observations\n  array[N_aux] real y_aux;       // Auxiliary observations\n  real<lower=0> sigma_aux; // Auxiliary measurement variability\n}\n\nparameters {\n  real a;\n  real b;\n}\n\nmodel {\n  // Prior model\n  a ~ normal(0, 100);\n  b ~ normal(0, 100);\n\n  // Auxiliary observational model\n  y_aux ~ normal(a, sigma_aux);\n\n  // Observational model\n  y ~ normal(a + b, sigma);\n}\n",
+  "protected_variables": [
+    "y_aux",
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y_aux`, `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observations are top-level data variables, each is observed exactly once with a plain built-in sampling statement, and the parameters `a` and `b` each have exactly one built-in prior before use.\n"
+}

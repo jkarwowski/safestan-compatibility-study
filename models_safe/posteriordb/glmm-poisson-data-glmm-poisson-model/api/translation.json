@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"C\":[3,2,2,3],\"n\":4,\"year\":[3.3872109458720248,4.782423730305184,4.051183873665892,2.3466093499552723]}",
+  "model_safe_stan": "data {\n  int<lower=0> n; // Number of years\n  array[n] int<lower=0> C; // Counts\n  vector[n] year; // Year\n}\ntransformed data {\n  vector[n] year_squared;\n  vector[n] year_cubed;\n  \n  year_squared = year .* year;\n  year_cubed = year .* year .* year;\n}\nparameters {\n  real<lower=-20, upper=20> alpha;\n  real<lower=-10, upper=10> beta1;\n  real<lower=-10, upper=20> beta2;\n  real<lower=-10, upper=10> beta3;\n  vector[n] eps; // Year effects\n  real<lower=0, upper=5> sigma;\n}\ntransformed parameters {\n  vector[n] log_lambda;\n  \n  // Linear predictor incl. random year effect\n  log_lambda = alpha + beta1 * year + beta2 * year_squared\n               + beta3 * year_cubed + eps;\n}\nmodel {\n  // Priors\n  alpha ~ uniform(-20, 20);\n  beta1 ~ uniform(-10, 10);\n  beta2 ~ uniform(-10, 10);\n  beta3 ~ uniform(-10, 10);\n  sigma ~ uniform(0, 5);\n  eps ~ normal(0, sigma);\n  \n  // Likelihood\n  C ~ poisson_log(log_lambda);\n}\ngenerated quantities {\n  vector<lower=0>[n] lambda;\n  \n  lambda = exp(log_lambda);\n}\n",
+  "protected_variables": [
+    "C"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `C`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so the parameter prior `eps ~ normal(0, sigma)` appears before the likelihood `C ~ poisson_log(log_lambda)`. This is density-preserving because Stan sampling statements add log-density terms commutatively, and it satisfies SafeStan's requirement that parameters be sampled before they are used through transformed parameters such as `log_lambda`.\n\nNo data changes were required. `year` and `n` are context inputs and are not protected.\n"
+}

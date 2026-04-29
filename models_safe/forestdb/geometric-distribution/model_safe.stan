@@ -1,5 +1,6 @@
 data {
   int<lower=1> N;
+  array[N] int<lower=1> y;
   array[N] int<lower=0> y_failures;
 }
 parameters {

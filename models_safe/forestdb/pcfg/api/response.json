@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777430183,
+  "created_at": 1777430075,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0eefdb7bffaa0f1f0069f16e3b3d688192830a94877b8fd50e",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0eefdb7bffaa0f1f0069f16e3bcbd88192a3af9e72b2130e4c",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `counts`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the manual `target += counts[c, k] * log(rule_prob[c, k])` likelihood with a single built-in `multinomial` sampling statement for the top-level protected count table. This is the normalized built-in count likelihood corresponding to the same categorical-count log probability. The Dirichlet prior on `rule_prob` was vectorized so the top-level parameter is sampled exactly once and not inside a loop. The data file is unchanged.\\n\",\"model_safe_stan\":\"// ForestDB translation: Probabilistic Context-Free Grammar\\ndata {\\n  int<lower=1> C;\\n  int<lower=1> K;\\n  array[C, K] int<lower=0> counts;\\n}\\nparameters {\\n  array[C] simplex[K] rule_prob;\\n}\\nmodel {\\n  rule_prob ~ dirichlet(rep_vector(1.0, K));\\n  counts ~ multinomial(rule_prob);\\n}\\ngenerated quantities {\\n  array[C] int<lower=1, upper=K> sampled_rule;\\n  for (c in 1:C) {\\n    sampled_rule[c] = categorical_rng(rule_prob[c]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"C\\\":4,\\\"K\\\":2,\\\"counts\\\":[[3,4],[3,4],[3,1],[4,3]]}\",\"protected_variables\":[\"counts\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0eefdb7bffaa0f1f0069f16ea4af7c81929a91b1fb39d9fd31",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3188,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 8643,
+    "output_tokens_details": {
+      "reasoning_tokens": 8286
+    },
+    "total_tokens": 11831
+  },
+  "user": null
+}

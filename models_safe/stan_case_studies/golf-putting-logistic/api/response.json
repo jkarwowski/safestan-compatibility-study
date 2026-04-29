@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338303,
-  "created_at": 1777338273,
+  "completed_at": 1777431597,
+  "created_at": 1777431584,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0eabf261ad04da0d0069f007a1cf90819c8279b2ab0eb37357",
+  "id": "resp_0911ed373de209860069f17420c7d4819d8019bf9078c0ce86",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0eabf261ad04da0d0069f007a27a10819c8b7064b675a8b258",
+      "id": "rs_0911ed373de209860069f17421696c819d8749db1d09153d17",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observation model itself is a simple built-in likelihood, `y ~ binomial(n, p)`, with `y` as top-level data. However, the model has a positive parameter `sigma` with no explicit prior. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use in the model block. The original Stan program therefore represents an implicit improper flat prior on `sigma` over `(0, infinity)`. Adding any proper built-in prior would change the posterior/log density, and there is no density-preserving minor rewrite using SafeStan sampling statements for this improper prior.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `y`, because it is the only top-level data variable appearing on the left side of a sampling statement (`y ~ binomial(n, p)`). The variables `n`, `x`, `r`, `R`, and `J` are context inputs.\\n\\nGenerated files: none.\\n\\nReason: the top-level parameter `sigma` is used in the likelihood but has no explicit built-in prior sampling statement. SafeStan requires every parameter to be sampled exactly once from a built-in prior before use. Adding a proper prior for `sigma` would change the posterior/log density, and the existing lower bound `real<lower=0>` only implies an improper flat prior on the positive half-line, not a finite bounded uniform prior that can be added as a density-neutral mechanical rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0eabf261ad04da0d0069f007bd3028819cafd5989abbe61506",
+      "id": "msg_0911ed373de209860069f1742badbc819dac9600b99ef34384",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2902,
+    "input_tokens": 2998,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1742,
+    "output_tokens": 1005,
     "output_tokens_details": {
-      "reasoning_tokens": 1552
+      "reasoning_tokens": 790
     },
-    "total_tokens": 4644
+    "total_tokens": 4003
   },
   "user": null
 }

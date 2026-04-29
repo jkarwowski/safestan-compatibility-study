@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"K\": 3,\n  \"N\": 1,\n  \"indiv_idx\": [\n    2\n  ],\n  \"sigma\": 4.048542597819614\n}\n",
+  "model_safe_stan": "data {\n  // Number of observations\n  int<lower=1> N;\n\n  // Number of individuals in hierarchy\n  int<lower=0> K;\n\n  // Individual from which each observation is generated\n  array[N] int<lower=1, upper=K> indiv_idx;\n\n  // Measurement variability\n  real<lower=0> sigma;\n}\n\ntransformed data {\n  real mu = 4.5;           // Population location\n  real<lower=0> tau = 3.5; // Population scale\n\n  // Individual parameters\n  array[K] real theta = normal_rng(rep_vector(mu, K), tau);\n}\n\ngenerated quantities {\n   // Simulated observations\n  array[N] real y = normal_rng(theta[indiv_idx], sigma);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. No top-level data variable is conditioned on with a sampling statement; all data variables are context inputs for this prior/data-generating program.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program contains no model-block likelihood or parameter priors, no protected observations, and no forbidden direct log-density manipulation.\n"
+}

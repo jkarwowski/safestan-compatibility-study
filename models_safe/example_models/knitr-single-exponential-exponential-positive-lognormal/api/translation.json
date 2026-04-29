@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":2,\"x\":[5.9601709458186285,3.6275940634717734],\"y\":[2.0,2.0]}",
+  "model_safe_stan": "data {\n  int N;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  real<lower=0> a;\n  real<lower=0> b;\n  real<lower=0> sigma;\n}\nmodel {\n  vector[N] y_pred;\n  a ~ normal(0, 10);\n  b ~ normal(0, 10);\n  sigma ~ normal(0, 10);\n  y_pred = a * exp(-b * x);\n  y ~ lognormal(log(y_pred), sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that each parameter (`a`, `b`, and `sigma`) is given its built-in prior before it is used in the model block. The likelihood for the protected observation `y` is unchanged and remains a single top-level sampling statement. The input data are unchanged.\n"
+}

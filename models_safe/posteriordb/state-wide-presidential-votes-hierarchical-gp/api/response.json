@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777431325,
+  "created_at": 1777431283,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0cec0c890dc84f160069f172f34ac881a18926f7d67b64a017",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0cec0c890dc84f160069f172f5002881a1947fdd313d4b0fba",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the model block so that every parameter receives its built-in prior before any model-block use through `obs_mu` or transformed parameters. Replaced `to_vector(GP_region_std) ~ normal(0, 1)` and `to_vector(GP_state_std) ~ normal(0, 1)` with direct top-level matrix sampling statements; this preserves the same elementwise normal prior density while satisfying SafeStan's top-level parameter prior discipline. The protected observation `y` remains a top-level data variable and is scored exactly once with the built-in `normal` distribution. No data changes were required.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  int<lower=1> N_states;\\n  int<lower=1> N_regions;\\n  int<lower=1> N_years_obs;\\n  int<lower=1> N_years;\\n  array[N_states] int<lower=1> state_region_ind;\\n  array[N] int<lower=1, upper=50> state_ind;\\n  array[N] int<lower=1, upper=10> region_ind;\\n  array[N] int<lower=1> year_ind;\\n  //vector<lower=0>[N] turnout_weight;\\n  vector<lower=0, upper=1>[N] y;\\n}\\ntransformed data {\\n  array[N_years] real years;\\n  vector[17] counts;\\n  \\n  for (t in 1 : N_years) {\\n    years[t] = t;\\n  }\\n  for (i in 1 : 17) {\\n    counts[i] = 2;\\n  }\\n}\\nparameters {\\n  matrix[N_years, N_regions] GP_region_std;\\n  matrix[N_years, N_states] GP_state_std;\\n  vector[N_years_obs] year_std;\\n  vector[N_states] state_std;\\n  vector[N_regions] region_std;\\n  real<lower=0> tot_var;\\n  simplex[17] prop_var;\\n  real mu;\\n  \\n  real<lower=0> length_GP_region_long;\\n  real<lower=0> length_GP_state_long;\\n  real<lower=0> length_GP_region_short;\\n  real<lower=0> length_GP_state_short;\\n}\\ntransformed parameters {\\n  matrix[N_years, N_regions] GP_region;\\n  matrix[N_years, N_states] GP_state;\\n  \\n  vector[N_years_obs] year_re;\\n  vector[N_states] state_re;\\n  vector[N_regions] region_re;\\n  vector[17] vars;\\n  \\n  real sigma_year;\\n  real sigma_region;\\n  vector[10] sigma_state;\\n  \\n  real sigma_error_state_2;\\n  \\n  real sigma_GP_region_long;\\n  real sigma_GP_state_long;\\n  real sigma_GP_region_short;\\n  real sigma_GP_state_short;\\n  \\n  vars = 17 * prop_var * tot_var;\\n  sigma_year = sqrt(vars[1]);\\n  sigma_region = sqrt(vars[2]);\\n  for (i in 1 : 10) {\\n    sigma_state[i] = sqrt(vars[i + 2]);\\n  }\\n  \\n  sigma_GP_region_long = sqrt(vars[13]);\\n  sigma_GP_state_long = sqrt(vars[14]);\\n  sigma_GP_region_short = sqrt(vars[15]);\\n  sigma_GP_state_short = sqrt(vars[16]);\\n  sigma_error_state_2 = sqrt(vars[17]);\\n  \\n  region_re = sigma_region * region_std;\\n  year_re = sigma_year * year_std;\\n  state_re = sigma_state[state_region_ind] .* state_std;\\n  \\n  {\\n    matrix[N_years, N_years] cov_region;\\n    matrix[N_years, N_years] cov_state;\\n    matrix[N_years, N_years] L_cov_region;\\n    matrix[N_years, N_years] L_cov_state;\\n    // replace cov_exp_quad with gp_exp_quad_cov. What is the difference?\\n    cov_region = gp_exp_quad_cov(years, sigma_GP_region_long,\\n                                 length_GP_region_long)\\n                 + gp_exp_quad_cov(years, sigma_GP_region_short,\\n                                   length_GP_region_short);\\n    cov_state = gp_exp_quad_cov(years, sigma_GP_state_long,\\n                                length_GP_state_long)\\n                + gp_exp_quad_cov(years, sigma_GP_state_short,\\n                                  length_GP_state_short);\\n    for (year in 1 : N_years) {\\n      cov_region[year, year] = cov_region[year, year] + 1e-6;\\n      cov_state[year, year] = cov_state[year, year] + 1e-6;\\n    }\\n    \\n    L_cov_region = cholesky_decompose(cov_region);\\n    L_cov_state = cholesky_decompose(cov_state);\\n    GP_region = L_cov_region * GP_region_std;\\n    GP_state = L_cov_state * GP_state_std;\\n  }\\n}\\nmodel {\\n  vector[N] obs_mu;\\n  \\n  GP_region_std ~ normal(0, 1);\\n  GP_state_std ~ normal(0, 1);\\n  year_std ~ normal(0, 1);\\n  state_std ~ normal(0, 1);\\n  region_std ~ normal(0, 1);\\n  mu ~ normal(.5, .5);\\n  tot_var ~ gamma(3, 3);\\n  prop_var ~ dirichlet(counts);\\n  length_GP_region_long ~ weibull(30, 8);\\n  length_GP_state_long ~ weibull(30, 8);\\n  length_GP_region_short ~ weibull(30, 3);\\n  length_GP_state_short ~ weibull(30, 3);\\n  \\n  for (n in 1 : N) {\\n    obs_mu[n] = mu + year_re[year_ind[n]] + state_re[state_ind[n]]\\n                + region_re[region_ind[n]]\\n                + GP_region[year_ind[n], region_ind[n]]\\n                + GP_state[year_ind[n], state_ind[n]];\\n  }\\n  y ~ normal(obs_mu, sigma_error_state_2); //* turnout_weight);\\n}\\ngenerated quantities {\\n  matrix[N_years, N_states] y_new;\\n  matrix[N_years, N_states] y_new_pred;\\n  \\n  {\\n    real level;\\n    level = normal_rng(0.5, sigma_year);\\n    for (state in 1 : N_states) {\\n      for (t in 1 : N_years) {\\n        if (t < 12) {\\n          y_new[t, state] = state_re[state]\\n                            + region_re[state_region_ind[state]]\\n                            + GP_state[t, state]\\n                            + GP_region[t, state_region_ind[state]]\\n                            + (mu + year_re[t]);\\n        } else {\\n          y_new[t, state] = state_re[state]\\n                            + region_re[state_region_ind[state]]\\n                            + GP_state[t, state]\\n                            + GP_region[t, state_region_ind[state]] + level;\\n        }\\n        y_new_pred[t, state] = normal_rng(y_new[t, state],\\n                                          sigma_error_state_2);\\n      }\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":4,\\\"N_regions\\\":2,\\\"N_states\\\":4,\\\"N_years\\\":3,\\\"N_years_obs\\\":4,\\\"region_ind\\\":[1,1,1,1],\\\"state_ind\\\":[1,1,1,1],\\\"state_region_ind\\\":[1,1,1,1],\\\"y\\\":[1.0,0.0,1.0,1.0],\\\"year_ind\\\":[1,1,1,1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0cec0c890dc84f160069f1731446e081a196e194f965b9aa28",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4349,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4411,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 8760
+  },
+  "user": null
+}

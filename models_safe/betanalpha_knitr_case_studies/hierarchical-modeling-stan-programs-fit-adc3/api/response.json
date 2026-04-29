@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424164,
+  "created_at": 1777424129,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d88e515e268b35d0069f157016e6081909e60f88cabee3679",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0d88e515e268b35d0069f15701fd488190a681f53ce319d56f",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the deterministic model-block helper computation for `log_psi` out of the beginning of the model block by inlining the equivalent expression in the observation statement. This preserves the same density while ensuring parameters are first used only after their prior sampling statements. No data changes were made; all other data variables are context inputs.\\n\",\"model_safe_stan\":\"functions {\\n  vector group_means(vector y, int N, array[] int indiv_idxs, int N_indiv) {\\n    vector[N_indiv] counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] means = rep_vector(0, N_indiv);\\n    for (n in 1:N) {\\n      int idx = indiv_idxs[n];\\n      real delta = y[n] - means[idx];\\n      counts[idx] += 1;\\n      means[idx] += delta / counts[idx];\\n    }\\n    return means;\\n  }\\n\\n  real F_stat(vector y, int N, array[] int indiv_idxs, int N_indiv) {\\n    real global_mean = 0;\\n    vector[N_indiv] counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] means = rep_vector(0, N_indiv);\\n    vector[N_indiv] sum_squares = rep_vector(0, N_indiv);\\n\\n    real between = 0;\\n    real within = 0;\\n\\n    for (n in 1:N) {\\n      int idx = indiv_idxs[n];\\n      real delta;\\n\\n      delta = y[n] - global_mean;\\n      global_mean += delta / n;\\n\\n      counts[idx] += 1;\\n      delta = y[n] - means[idx];\\n      means[idx] += delta / counts[idx];\\n      sum_squares[idx] += (y[n] - means[idx]) * delta;\\n    }\\n\\n    for (l in 1:N_indiv)\\n      between += counts[l] * square(means[l] - global_mean) / (N_indiv - 1);\\n    within = mean(sum_squares) / (N - N_indiv);\\n\\n    return between / within;\\n  }\\n}\\n\\ndata {\\n  int<lower=0> N;      // Number of observations\\n  array[N] int y;            // Observed counts\\n\\n  // Number of individual experiments\\n  int<lower=0> N_exp;\\n  // Experiment from which each observation is generated\\n  array[N] int<lower=1, upper=N_exp> exp_idx;\\n\\n  int<lower=0, upper=N_exp> K_ncp;          // Number of noncentered individuals\\n  array[K_ncp] int<lower=1, upper=N_exp> ncp_idx; // Index of noncentered individuals\\n\\n  int<lower=0, upper=N_exp> K_cp;           // Number of centered individuals\\n  array[K_cp] int<lower=1, upper=N_exp> cp_idx;   // Index of noncentered individuals\\n\\n  vector[N_exp] log_rho_I; // Nominal input for each experiment\\n\\n  vector[N_exp] log_rho_T; // Temperature for each experiment\\n}\\n\\nparameters {\\n  real mu_log_psi0;           // Analog-to-digital coefficients population location\\n  real<lower=0> tau_log_psi0; // Analog-to-digital coefficients population scale\\n  vector[K_ncp] log_psi0_ncp; // Non-centered individual analog-to-digital coefficients\\n  vector[K_cp]  log_psi0_cp;  // Ccentered individual analog-to-digital coefficients\\n\\n  real gamma;                     // Exponential temperature dependence\\n}\\n\\ntransformed parameters {\\n  // Recentered individual parameters\\n  vector[N_exp] log_psi0;\\n  log_psi0[ncp_idx] = mu_log_psi0 + tau_log_psi0 *  log_psi0_ncp;\\n  log_psi0[cp_idx] =  log_psi0_cp;\\n}\\n\\nmodel {\\n  mu_log_psi0 ~ normal(0, log(2));\\n  tau_log_psi0 ~ normal(0, 0.5 * log(2));\\n\\n  log_psi0_ncp ~ normal(0, 1);                     // Non-centered hierarchical model\\n  log_psi0_cp ~ normal(mu_log_psi0, tau_log_psi0); // Centered hierarchical model\\n\\n  gamma ~ normal(1.25, 0.25);\\n\\n  y ~ poisson_log(log_psi0[exp_idx]\\n                  + gamma * log_rho_T[exp_idx]\\n                  + log_rho_I[exp_idx]); // Observational model\\n}\\n\\ngenerated quantities {\\n  array[N] int y_post_pred = poisson_log_rng(  log_psi0[exp_idx]\\n                                       + gamma * log_rho_T[exp_idx]\\n                                       + log_rho_I[exp_idx]);\\n  vector[N_exp] norm_ave = group_means(to_vector(y_post_pred) ./ exp(log_rho_I[exp_idx]),\\n                                       N, exp_idx, N_exp);\\n  real F_exp = F_stat(to_vector(y_post_pred) ./ exp(log_rho_I[exp_idx]),\\n                      N, exp_idx, N_exp);\\n}\\n\",\"data_safe_json\":\"{\\\"K_cp\\\":2,\\\"K_ncp\\\":3,\\\"N\\\":3,\\\"N_exp\\\":4,\\\"cp_idx\\\":[2,2],\\\"exp_idx\\\":[2,2,2],\\\"log_rho_I\\\":[2.9929156022365575,3.792803398823719,6.5953372084595925,4.9272114014324835],\\\"log_rho_T\\\":[2.5451109126814195,4.927025308406156,3.659628299976637,5.078408925226029],\\\"ncp_idx\\\":[2,2,2],\\\"y\\\":[3,3,2]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d88e515e268b35d0069f1571e0f70819081c8e64f85ee68ce",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4082,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3971,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 8053
+  },
+  "user": null
+}

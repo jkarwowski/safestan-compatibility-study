@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"K\": 4,\n  \"N\": 1,\n  \"x\": [\n    2\n  ],\n  \"y\": [\n    1.0\n  ]\n}",
+  "model_safe_stan": "// Comparison of k groups with common variance (ANOVA)\ndata {\n  int<lower=0> N; // number of observations\n  int<lower=0> K; // number of groups\n  array[N] int<lower=1, upper=K> x; // discrete group indicators\n  vector[N] y; // real valued observations\n}\nparameters {\n  vector[K] mu;        // group means\n  real<lower=0> sigma; // common standard deviation constrained to be positive\n}\nmodel {\n  mu ~ normal(0, 100); // weakly informative prior\n  sigma ~ normal(0, 1); // weakly informative prior\n  y ~ normal(mu[x], sigma); // observation model / likelihood\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The other data variables (`N`, `K`, and `x`) are context inputs used only for sizes and indexing/prediction. Parameters `mu` and `sigma` each have exactly one built-in prior before they are used in the likelihood.\n"
+}

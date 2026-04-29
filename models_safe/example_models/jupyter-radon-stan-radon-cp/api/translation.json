@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":3,\"x\":[4.653280430879779,2.9948658049511248,2.1392647478059974],\"y\":[3.0,3.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  real alpha;\n  real beta;\n  real<lower=0> sigma;\n}\nmodel {\n  alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  sigma ~ normal(0, 10);\n  y ~ normal(alpha + beta * x, sigma);\n}\ngenerated quantities {\n  array[N] real y_rep = normal_rng(alpha + beta * x, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that each parameter (`alpha`, `beta`, and `sigma`) receives its built-in prior sampling statement before being used in the likelihood for the protected observation `y`. The posterior/log density is otherwise unchanged. No data fields were added or changed; `x` remains an unprotected context predictor and `N` remains a size input.\n"
+}

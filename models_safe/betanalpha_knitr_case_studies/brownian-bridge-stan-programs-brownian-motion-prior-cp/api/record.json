@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-motion-prior-cp/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T00:48:52+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-motion-prior-cp",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a954534184cc3390069f15504446481a38303f7c30783f553",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-motion-prior-cp",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:47:00+00:00",
+  "usage": {
+    "input_tokens": 3041,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 10400,
+    "output_tokens_details": {
+      "reasoning_tokens": 9840
+    },
+    "total_tokens": 13441
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

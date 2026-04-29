@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-chapter2-worldcup-first-try/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:01:31+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-chapter2-worldcup-first-try",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_07f126f7226598580069f166679f8481a2a9a4cd2118db66a3",
+  "safe_dir": "models_safe/example_models/knitr-chapter2-worldcup-first-try",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:01:11+00:00",
+  "usage": {
+    "input_tokens": 3396,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1787,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5183
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338843,
-  "created_at": 1777338834,
+  "completed_at": 1777431714,
+  "created_at": 1777431708,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0bbc4f402eb2d0ce0069f009d25bfc819581a2f5d32680af7c",
+  "id": "resp_0e8a0836d03208ff0069f1749c1568819180b0b3603d1bd7a2",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0bbc4f402eb2d0ce0069f009d341088195957357bb8cf2cafc",
+      "id": "rs_0e8a0836d03208ff0069f1749d041881919ac3678cdf1c8e14",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with the built-in `neg_binomial` distribution using a plain sampling statement. Parameters `alpha` and `beta` each have exactly one built-in prior sampling statement before they are used in the likelihood.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  array[N] int<lower=0> y;\\n}\\nparameters {\\n  real<lower=0> alpha;\\n  real<lower=0> beta;\\n}\\nmodel {\\n  alpha ~ cauchy(0, 10);\\n  beta ~ cauchy(0, 10);\\n  y ~ neg_binomial(alpha, beta);\\n}\\n\\n\",\"data_safe_json\":\"{\\n  \\\"y\\\": [\\n    0,\\n    1,\\n    4,\\n    0,\\n    2,\\n    2,\\n    5,\\n    0,\\n    1\\n  ],\\n  \\\"N\\\": 9\\n}\\n\",\"protected_variables\":[\"y\"]}",
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. `y` is a top-level data variable observed exactly once with a plain built-in sampling statement, and the parameters `alpha` and `beta` each have exactly one built-in prior before being used in the likelihood. `N` is context data.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  array[N] int<lower=0> y;\\n}\\nparameters {\\n  real<lower=0> alpha;\\n  real<lower=0> beta;\\n}\\nmodel {\\n  alpha ~ cauchy(0, 10);\\n  beta ~ cauchy(0, 10);\\n  y ~ neg_binomial(alpha, beta);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":4,\\\"y\\\":[2,2,1,2]}\",\"protected_variables\":[\"y\"]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0bbc4f402eb2d0ce0069f009d85c208195b1e524f424ab0906",
+      "id": "msg_0e8a0836d03208ff0069f174a0ee20819192c8b694821ca27e",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2626,
+    "input_tokens": 2853,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 632,
+    "output_tokens": 529,
     "output_tokens_details": {
-      "reasoning_tokens": 324
+      "reasoning_tokens": 279
     },
-    "total_tokens": 3258
+    "total_tokens": 3382
   },
   "user": null
 }

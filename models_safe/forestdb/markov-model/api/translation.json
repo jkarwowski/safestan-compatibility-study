@@ -1,22 +1,10 @@
 {
   "compatibility": "minor",
-  "data_safe_json": "{\"T\":14,\"S\":3,\"y_1\":1,\"y_2\":1,\"y_3\":2,\"y_4\":2,\"y_5\":3,\"y_6\":3,\"y_7\":2,\"y_8\":2,\"y_9\":1,\"y_10\":1,\"y_11\":2,\"y_12\":3,\"y_13\":3,\"y_14\":2}",
-  "model_safe_stan": "data {\n  int<lower=14, upper=14> T;\n  int<lower=2> S;\n  int<lower=1, upper=S> y_1;\n  int<lower=1, upper=S> y_2;\n  int<lower=1, upper=S> y_3;\n  int<lower=1, upper=S> y_4;\n  int<lower=1, upper=S> y_5;\n  int<lower=1, upper=S> y_6;\n  int<lower=1, upper=S> y_7;\n  int<lower=1, upper=S> y_8;\n  int<lower=1, upper=S> y_9;\n  int<lower=1, upper=S> y_10;\n  int<lower=1, upper=S> y_11;\n  int<lower=1, upper=S> y_12;\n  int<lower=1, upper=S> y_13;\n  int<lower=1, upper=S> y_14;\n}\nparameters {\n  simplex[S] pi;\n  array[S] simplex[S] A;\n}\nmodel {\n  pi ~ dirichlet(rep_vector(1.0, S));\n  A ~ dirichlet(rep_vector(1.0, S));\n  y_1 ~ categorical(pi);\n  y_2 ~ categorical(A[y_1]);\n  y_3 ~ categorical(A[y_2]);\n  y_4 ~ categorical(A[y_3]);\n  y_5 ~ categorical(A[y_4]);\n  y_6 ~ categorical(A[y_5]);\n  y_7 ~ categorical(A[y_6]);\n  y_8 ~ categorical(A[y_7]);\n  y_9 ~ categorical(A[y_8]);\n  y_10 ~ categorical(A[y_9]);\n  y_11 ~ categorical(A[y_10]);\n  y_12 ~ categorical(A[y_11]);\n  y_13 ~ categorical(A[y_12]);\n  y_14 ~ categorical(A[y_13]);\n}\n",
+  "data_safe_json": "{\"S\":3,\"T\":6,\"y_initial\":3,\"y_lag\":[3,1,3,2,2],\"y_tail\":[1,3,2,2,1]}",
+  "model_safe_stan": "data {\n  int<lower=2> T;\n  int<lower=2> S;\n  int<lower=1, upper=S> y_initial;\n  array[T - 1] int<lower=1, upper=S> y_lag;\n  array[T - 1] int<lower=1, upper=S> y_tail;\n}\nparameters {\n  simplex[S] pi;\n  array[S] simplex[S] A;\n}\nmodel {\n  pi ~ dirichlet(rep_vector(1.0, S));\n  A ~ dirichlet(rep_vector(1.0, S));\n  y_initial ~ categorical(pi);\n  y_tail ~ categorical(A[y_lag]);\n}\n",
   "protected_variables": [
-    "y_1",
-    "y_2",
-    "y_3",
-    "y_4",
-    "y_5",
-    "y_6",
-    "y_7",
-    "y_8",
-    "y_9",
-    "y_10",
-    "y_11",
-    "y_12",
-    "y_13",
-    "y_14"
+    "y_initial",
+    "y_tail"
   ],
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y_1`, `y_2`, `y_3`, `y_4`, `y_5`, `y_6`, `y_7`, `y_8`, `y_9`, `y_10`, `y_11`, `y_12`, `y_13`, and `y_14`, a scalar unrolling of the original observed sequence `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual `target += categorical_lpmf(...)` likelihood with built-in `categorical` sampling statements. Because SafeStan requires protected observations to be top-level plain identifiers and not be sampled inside loops, the length-14 observed array was deterministically reshaped into scalar fields with `y_k = y[k]`. The transition likelihood is unrolled in sequence, so each state is scored before it is used to select the next transition row. The prior loop for `A` was replaced by the equivalent vectorized statement `A ~ dirichlet(rep_vector(1.0, S))`. The resulting density for the supplied sequence is the same as the original Stan program.\n"
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y_initial` and `y_tail`, which are deterministic reshapes of the original sequence `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual `target += categorical_lpmf(...)` Markov-chain likelihood with built-in `categorical` sampling statements. Because SafeStan requires protected observations to be top-level identifiers observed exactly once, the original `y` array was reshaped into `y_initial = y[1]`, protected `y_tail[t] = y[t + 1]`, and context lag copy `y_lag[t] = y[t]` for `t = 1, ..., T - 1`. The original transition-matrix prior loop was replaced by the equivalent vectorized statement `A ~ dirichlet(rep_vector(1.0, S))`, so `A` is sampled as a top-level parameter exactly once. For data satisfying these deterministic relations, the posterior/log density is unchanged.\n"
 }

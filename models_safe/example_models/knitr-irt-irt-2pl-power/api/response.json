@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428385,
+  "created_at": 1777428376,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0efacd9e2983d66a0069f167980e188194853dcd62c976b96f",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0efacd9e2983d66a0069f16798b8b08194a5fe25c22b665224",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The model block contains no sampling statements and does not condition on any top-level data variable; `I`, `a`, and `b` are context inputs used only for generated simulation.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The original program has no parameters, no likelihood terms, and no prohibited log-density manipulation.\\n\",\"model_safe_stan\":\"//# ---- irt-2pl-power-stan ----\\ndata {\\n  int<lower=0> I;\\n  vector[I] a;\\n  vector[I] b;\\n}\\nmodel {\\n  \\n}\\ngenerated quantities {\\n  array[100] int<lower=0, upper=I> z_sim;\\n  vector[100] theta_sim;\\n  for (j in 1 : 100) {\\n    theta_sim[j] = (j - 50) / 10.0;\\n    z_sim[j] = 0;\\n    for (i in 1 : I) {\\n      z_sim[j] = z_sim[j]\\n                 + bernoulli_rng(inv_logit(a[i] * (theta_sim[j] - b[i])));\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"I\\\": 3,\\n  \\\"a\\\": [\\n    2.0252708830853514,\\n    2.3619063619424794,\\n    5.610864732772659\\n  ],\\n  \\\"b\\\": [\\n    6.506142960272242,\\n    6.938974375960157,\\n    6.18990037552872\\n  ]\\n}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0efacd9e2983d66a0069f1679f3d8c81948fe945bd262062db",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3078,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 932,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4010
+  },
+  "user": null
+}

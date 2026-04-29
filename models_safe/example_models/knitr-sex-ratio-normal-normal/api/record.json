@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-sex-ratio-normal-normal/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:12:52+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-sex-ratio-normal-normal",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a32d22c7f6cc68a0069f1691c6468819c83f8917b9eec31e5",
+  "safe_dir": "models_safe/example_models/knitr-sex-ratio-normal-normal",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:12:44+00:00",
+  "usage": {
+    "input_tokens": 2945,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 773,
+    "output_tokens_details": {
+      "reasoning_tokens": 494
+    },
+    "total_tokens": 3718
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

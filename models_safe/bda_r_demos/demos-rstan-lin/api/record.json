@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/bda_r_demos/demos-rstan-lin/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:44:25+00:00",
+  "model": "gpt-5.5",
+  "path": "models/bda_r_demos/demos-rstan-lin",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_06e5d69d7e0e7d340069f1545911548195b403ecaa576ff909",
+  "safe_dir": "models_safe/bda_r_demos/demos-rstan-lin",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:44:08+00:00",
+  "usage": {
+    "input_tokens": 3355,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1725,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5080
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"I\":4,\"N\":[2,1,2,4],\"n\":[2,1,2,1],\"x1\":[6.6457858604563285,2.8898010575234587,6.773451602530301,2.8732856252003254],\"x2\":[4.78149582820911,4.7562234337848075,5.988221766352553,6.133724356113719]}",
+  "model_safe_stan": "//#  http://www.openbugs.net/Examples/Seeds.html\n//# tau replaced by sigma direct estimation\n//# using narrower semi-informative priors\ndata {\n  int<lower=0> I;\n  array[I] int<lower=0> n;\n  array[I] int<lower=0> N;\n  vector[I] x1; // seed type\n  vector[I] x2; // root extract\n}\ntransformed data {\n  vector[I] x1x2;\n  x1x2 = x1 .* x2;\n}\nparameters {\n  real alpha0;\n  real alpha1;\n  real alpha12;\n  real alpha2;\n  vector[I] b;\n  real<lower=0> sigma;\n}\nmodel {\n  alpha0 ~ normal(0.0, 1.0); // Narrower priors\n  alpha1 ~ normal(0.0, 1.0);\n  alpha2 ~ normal(0.0, 1.0);\n  alpha12 ~ normal(0.0, 1.0);\n  sigma ~ cauchy(0, 1);\n  \n  b ~ normal(0.0, sigma);\n  n ~ binomial_logit(N,\n                     alpha0 + alpha1 * x1 + alpha2 * x2 + alpha12 * x1x2 + b);\n}\n",
+  "protected_variables": [
+    "n"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `n`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The observed response `n` is a top-level data variable and is scored exactly once with the built-in `binomial_logit` distribution using a plain sampling statement. The remaining data variables (`I`, `N`, `x1`, and `x2`) are context inputs. All parameters have explicit built-in prior sampling statements before later use.\n"
+}

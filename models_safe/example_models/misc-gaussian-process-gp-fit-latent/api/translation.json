@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":5,\"x\":[5.456623530998508,5.964900564428904,3.815397906995553,4.586283317228205,6.556130741604509],\"y\":[4.0,4.0,2.0,4.0,5.0]}",
+  "model_safe_stan": "// Fit the hyperparameters of a latent-variable Gaussian process with an\n// exponentiated quadratic kernel and a Gaussian likelihood\n\ndata {\n  int<lower=1> N;\n  array[N] real x;\n  vector[N] y;\n}\ntransformed data {\n  real delta = 1e-9;\n}\nparameters {\n  real<lower=0> rho;\n  real<lower=0> alpha;\n  real<lower=0> sigma;\n  vector[N] eta;\n}\nmodel {\n  vector[N] f;\n\n  rho ~ inv_gamma(5, 5);\n  alpha ~ normal(0, 1);\n  sigma ~ normal(0, 1);\n  eta ~ normal(0, 1);\n\n  {\n    matrix[N, N] L_K;\n    matrix[N, N] K = gp_exp_quad_cov(x, alpha, rho);\n    \n    // diagonal elements\n    for (n in 1 : N) {\n      K[n, n] = K[n, n] + delta;\n    }\n    \n    L_K = cholesky_decompose(K);\n    f = L_K * eta;\n  }\n  \n  y ~ normal(f, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so all parameter priors (`rho`, `alpha`, `sigma`, and `eta`) occur before those parameters are used to construct the latent Gaussian-process function `f`. This preserves the same posterior density because Stan sampling statements add commutative log-density terms. The protected observation `y` remains a top-level data variable and is observed exactly once with the built-in `normal` distribution. The data file is unchanged.\n"
+}

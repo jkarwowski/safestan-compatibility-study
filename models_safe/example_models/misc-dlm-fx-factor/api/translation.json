@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"C0\":[[0.221959405868735]],\"T\":6,\"m0\":[4.56250524748317],\"r\":4,\"y\":[[3.021929320161002,5.913252842699575,2.078470504939437,2.6363523388421495,2.787307891089416,6.522501432932041],[4.102093376678601,4.12080746003079,6.196952749848873,4.584958973449972,3.898647989774844,2.829349816658369],[3.00481356618449,3.3983616636873344,6.620502161895949,2.803348632639538,4.9082840484494845,6.756153150402108],[5.29655021780666,2.3516292114674187,6.842128671896824,3.156304313278616,6.006147769818131,4.463418839299465]]}",
+  "model_safe_stan": "// Kalman Filter (Multivariate Form)\n// - no missing values\ndata {\n  // system matrices\n  int r;\n  int T;\n  matrix[r, T] y;\n  vector[1] m0;\n  cov_matrix[1] C0;\n}\nparameters {\n  real G_raw;\n  vector[r - 1] lambda;\n  vector<lower=0.0>[r] V;\n  cov_matrix[1] W;\n}\ntransformed parameters {\n  matrix[1, 1] G;\n  matrix[1, r] F;\n  G[1, 1] = G_raw;\n  F[1, 1] = 1;\n  for (i in 1 : (r - 1)) {\n    F[1, i + 1] = lambda[i];\n  }\n}\nmodel {\n  matrix[1, 1] identity;\n  identity = diag_matrix(rep_vector(1.0, 1));\n  W ~ inv_wishart(1, identity);\n  G_raw ~ normal(0, 10);\n  lambda ~ normal(0, 10);\n  V ~ normal(0, 10);\n  y ~ gaussian_dlm_obs(F, G, V, W, m0, C0);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the prior statement `to_vector(G) ~ normal(0, 10)` with a SafeStan-compatible plain-identifier parameter prior. The original `matrix[1, 1] G` parameter was represented by a scalar parameter `G_raw` and a transformed-parameter matrix `G` with `G[1, 1] = G_raw`. This is a one-to-one deterministic reparameterization with unit Jacobian and preserves the posterior/log density. No data changes were required.\n"
+}

@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: no SafeStan protected interface was generated. The original likelihood scores the transformed-data quantity `sqrt_dif`, deterministically computed from `score_1` and `score_2`.\n\nGenerated files: none.\n\nReason: the program is not SafeStan-compatible as written because the observed likelihood is applied to `sqrt_dif`, which is not a top-level data variable, and the parameters `b`, `sigma_a`, and `sigma_y` have no explicit built-in priors. Adding priors for these parameters would change the posterior density, so this cannot be repaired by a minor same-density rewrite.\n"
+}

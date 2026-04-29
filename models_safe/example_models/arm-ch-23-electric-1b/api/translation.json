@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":1,\"n_pair\":1,\"pair\":[1],\"pre_test\":[3.5472123135081546],\"treatment\":[0.9125114430828467],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> n_pair;\n  array[N] int<lower=1, upper=n_pair> pair;\n  vector[N] pre_test;\n  vector<lower=0, upper=1>[N] treatment;\n  vector[N] y;\n}\nparameters {\n  vector[n_pair] a;\n  vector[2] beta;\n  real mu_a;\n  real<lower=0, upper=100> sigma_a;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[N] y_hat;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a[pair[i]] + beta[1] * treatment[i] + beta[2] * pre_test[i];\n  }\n}\nmodel {\n  mu_a ~ normal(0, 1);\n  sigma_a ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  a ~ normal(100 * mu_a, sigma_a);\n  beta ~ normal(0, 100);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 100)` priors for `sigma_a` and `sigma_y`, matching their finite parameter bounds, so every parameter has exactly one SafeStan prior before use. No data changes were made. The protected observation `y` remains a top-level data variable and is observed exactly once with `y ~ normal(y_hat, sigma_y)`. The other data variables (`N`, `n_pair`, `pair`, `pre_test`, and `treatment`) are context inputs.\n"
+}

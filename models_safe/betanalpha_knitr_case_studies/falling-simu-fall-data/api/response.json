@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423990,
+  "created_at": 1777423979,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_01bfed80e03dd3860069f1566b0e1c81a3a3fdb933c41b8ba1",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_01bfed80e03dd3860069f1566bf12881a3a93a5c50ccbe718d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The program does not condition on any top-level data variable with a sampling statement; all data variables are context inputs used for simulation in `generated quantities`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The model has no parameters, no model-block likelihood, and no protected observations to score. The RNG calls in `generated quantities` simulate derived quantities and do not condition on protected data.\\n\",\"model_safe_stan\":\"functions {\\n  // Fall time in vacuum\\n  real t_fall(real g, real h, real v0) {\\n    return (v0 + sqrt(square(v0) + 2 * g * h)) / g;\\n  }\\n\\n  // Fall time in fluid\\n  real t_fall_air(real g, real h, real v0, real k, real m) {\\n    real vT = sqrt(m * g / k);\\n\\n    if (v0 > 0) {\\n      // Positive initial velocity\\n      real a1 = acosh(  exp(  g * h / square(vT)\\n                            + 0.5 * log(1 + square(v0 / vT)) ));\\n      real a2 = atan(v0 / vT);\\n      return (vT / g) * (a1 + a2);\\n    } else if (v0 > -vT) {\\n      // Negative but subterminal initial velocity\\n      real a1 = acosh(  exp( g * h / square(vT)\\n                            - 0.5 * log(1 - square(v0 / vT)) ));\\n      real a2 = atanh(v0 / vT);\\n      return (vT / g) * (a1 + a2);\\n    } else {\\n      // Negative and superterminal initial velocity\\n      real a1 = asinh(  exp(  g * h / square(vT)\\n                             -0.5 * log(square(v0 / vT) - 1) ));\\n      real a2 = atanh(vT / v0);\\n      return (vT / g) * (a1 + a2);\\n    }\\n  }\\n}\\n\\ndata {\\n  int N_heights;\\n  array[N_heights] real<lower=0> heights; // meters\\n  int N_drops;\\n  real m; // kilograms\\n}\\n\\ntransformed data {\\n  real sigma_t = 0.02; // seconds\\n  real sigma_v = 0.5;  // meters per second\\n  real g = 9.806;      // meters per second squared\\n  real k = 0.0012;     // kilograms per meter\\n}\\n\\ngenerated quantities {\\n  array[N_drops, N_heights] real obs_t_fall;\\n  array[N_drops] real v0;\\n\\n  for (n in 1:N_drops) {\\n    v0[n] = normal_rng(0, sigma_v);\\n    for (h in 1:N_heights) {\\n      real mu_t_fall_air = t_fall_air(g, heights[h], v0[n], k, m);\\n      obs_t_fall[n, h] = normal_rng(mu_t_fall_air, sigma_t);\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N_drops\\\":6,\\\"N_heights\\\":4,\\\"heights\\\":[1.7350024536540876,2.2772920073604137,4.523444061431061,3.6479562425811105],\\\"m\\\":3.344505811020908}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_01bfed80e03dd3860069f1567195ec81a39e20510bad3fe4c6",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3480,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1357,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4837
+  },
+  "user": null
+}

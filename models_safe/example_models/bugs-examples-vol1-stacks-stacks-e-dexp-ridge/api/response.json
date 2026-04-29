@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427117,
+  "created_at": 1777427064,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_013aa036bf873da20069f1627886fc819c80b8ff2a54a8d531",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_013aa036bf873da20069f16279146c819c877d2a7987624def",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `Y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the elementwise likelihood loop `Y[n] ~ double_exponential(mu[n], sigmasq)` with the equivalent vectorized built-in sampling statement `Y ~ double_exponential(mu, sigmasq)`. This observes the protected top-level data variable exactly once with a plain left-hand side and outside a loop, preserving the same summed log density. No data fields were added; `data_safe.json` is the supplied data unchanged.\\n\",\"model_safe_stan\":\"// Stacks: robust regression and ridge regression \\n// http://mathstat.helsinki.fi/openbugs/Examples/Stacks.html\\n// Model e) double exponential error ridge regression\\n\\ndata {\\n  int<lower=0> N;\\n  int<lower=0> p;\\n  array[N] real Y;\\n  matrix[N, p] x;\\n}\\n// to standardize the x's \\ntransformed data {\\n  array[N, p] real z;\\n  array[p] real mean_x;\\n  array[p] real sd_x;\\n  for (j in 1 : p) {\\n    mean_x[j] = mean(col(x, j));\\n    sd_x[j] = sd(col(x, j));\\n    for (i in 1 : N) {\\n      z[i, j] = (x[i, j] - mean_x[j]) / sd_x[j];\\n    }\\n  }\\n}\\nparameters {\\n  real beta0;\\n  array[p] real beta;\\n  real<lower=0> sigmasq;\\n  real<lower=0> phi;\\n}\\ntransformed parameters {\\n  real<lower=0> sigma;\\n  array[N] real mu;\\n  \\n  sigma = sqrt(2) * sigmasq;\\n  for (n in 1 : N) {\\n    mu[n] = beta0 + beta[1] * z[n, 1] + beta[2] * z[n, 2] + beta[3] * z[n, 3];\\n  }\\n}\\nmodel {\\n  beta0 ~ normal(0, 316);\\n  phi ~ gamma(0.01, 0.01);\\n  beta ~ normal(0, sqrt(phi));\\n  sigmasq ~ inv_gamma(.001, .001);\\n  Y ~ double_exponential(mu, sigmasq);\\n}\\ngenerated quantities {\\n  real b0;\\n  array[p] real b;\\n  real outlier_1;\\n  real outlier_3;\\n  real outlier_4;\\n  real outlier_21;\\n  \\n  for (j in 1 : p) {\\n    b[j] = beta[j] / sd_x[j];\\n  }\\n  b0 = beta0 - b[1] * mean_x[1] - b[2] * mean_x[2] - b[3] * mean_x[3];\\n  \\n  outlier_1 = step(abs((Y[1] - mu[1]) / sigma) - 2.5);\\n  outlier_3 = step(abs((Y[3] - mu[3]) / sigma) - 2.5);\\n  outlier_4 = step(abs((Y[4] - mu[4]) / sigma) - 2.5);\\n  outlier_21 = step(abs((Y[21] - mu[21]) / sigma) - 2.5);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":21,\\\"Y\\\":[3.627723208039061,0.2,0.30000000000000004,0.4,0.5,0.6000000000000001,0.7000000000000001,0.1,0.2,0.30000000000000004,0.4,0.5,0.6000000000000001,0.7000000000000001,0.1,0.2,0.30000000000000004,0.4,0.5,0.6000000000000001,0.7000000000000001],\\\"p\\\":3,\\\"x\\\":[[2.8410627253365957,5.58945949515647,0.30000000000000004],[0.4,0.5,0.6000000000000001],[0.7000000000000001,0.1,0.2],[0.30000000000000004,0.4,0.5],[0.6000000000000001,0.7000000000000001,0.1],[0.2,0.30000000000000004,0.4],[0.5,0.6000000000000001,0.7000000000000001],[0.1,0.2,0.30000000000000004],[0.4,0.5,0.6000000000000001],[0.7000000000000001,0.1,0.2],[0.30000000000000004,0.4,0.5],[0.6000000000000001,0.7000000000000001,0.1],[0.2,0.30000000000000004,0.4],[0.5,0.6000000000000001,0.7000000000000001],[0.1,0.2,0.30000000000000004],[0.4,0.5,0.6000000000000001],[0.7000000000000001,0.1,0.2],[0.30000000000000004,0.4,0.5],[0.6000000000000001,0.7000000000000001,0.1],[0.2,0.30000000000000004,0.4],[0.5,0.6000000000000001,0.7000000000000001]]}\",\"protected_variables\":[\"Y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_013aa036bf873da20069f162a699dc819c97d6b97887ca6e32",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4294,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 5522,
+    "output_tokens_details": {
+      "reasoning_tokens": 4142
+    },
+    "total_tokens": 9816
+  },
+  "user": null
+}

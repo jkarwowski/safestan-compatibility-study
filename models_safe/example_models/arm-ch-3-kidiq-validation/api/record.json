@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-3-kidiq-validation/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:20:50+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-3-kidiq-validation",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_06857bd85ff0b3820069f15ce62f9c81938af3be1753c54231",
+  "safe_dir": "models_safe/example_models/arm-ch-3-kidiq-validation",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:20:38+00:00",
+  "usage": {
+    "input_tokens": 3086,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1016,
+    "output_tokens_details": {
+      "reasoning_tokens": 799
+    },
+    "total_tokens": 4102
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

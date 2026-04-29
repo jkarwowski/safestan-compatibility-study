@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `switched`.\n\nGenerated files: none.\n\nReason: the observed likelihood is `switched ~ bernoulli_logit_glm(x, alpha, beta)`, with `dist` and `arsenic` used only as predictors. However, the parameters `alpha` and `beta` have no prior sampling statements; in Stan this is an implicit improper flat prior. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors would change the posterior/log density, so this cannot be made SafeStan-compatible by a minor same-density rewrite.\n"
+}

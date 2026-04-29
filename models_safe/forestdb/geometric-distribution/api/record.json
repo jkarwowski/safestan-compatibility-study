@@ -1,26 +1,29 @@
 {
   "artifacts_dir": "models_safe/forestdb/geometric-distribution/api",
   "compatibility": "minor",
-  "completed_at": "2026-04-28T00:52:01+00:00",
+  "completed_at": "2026-04-29T02:29:02+00:00",
   "model": "gpt-5.5",
   "path": "models/forestdb/geometric-distribution",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [
     "y_failures"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_02b190aec57f05a80069f0044e384c81a39446760362c72bad",
+  "response_id": "resp_08c18e632bb7d3db0069f16cd1e580819cba8dd87953658242",
   "safe_dir": "models_safe/forestdb/geometric-distribution",
-  "started_at": "2026-04-28T00:50:22+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:28:33+00:00",
   "usage": {
-    "input_tokens": 2619,
+    "input_tokens": 3067,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 6575,
+    "output_tokens": 2418,
     "output_tokens_details": {
-      "reasoning_tokens": 6214
+      "reasoning_tokens": 2070
     },
-    "total_tokens": 9194
+    "total_tokens": 5485
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

@@ -1,0 +1,10 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":3,\"nc\":[3,4,4],\"nt\":[1,3,3],\"rc\":[3,1,4],\"rt\":[1,2,1]}",
+  "model_safe_stan": "//DOC See \\url{http://www.openbugs.net/Examples/Blockers.html}.\ndata {\n  int<lower=0> N;\n  array[N] int<lower=0> nt;\n  array[N] int<lower=0> rt;\n  array[N] int<lower=0> nc;\n  array[N] int<lower=0> rc;\n}\nparameters {\n  real d;\n  real<lower=0> sigmasq_delta;\n  vector[N] mu;\n  vector[N] delta;\n  real delta_new;\n}\ntransformed parameters {\n  real<lower=0> sigma_delta;\n  sigma_delta = sqrt(sigmasq_delta);\n}\nmodel {\n  mu ~ normal(0, sqrt(1E5));\n  d ~ normal(0, 1E3);\n  sigmasq_delta ~ inv_gamma(1E-3, 1E-3);\n  delta ~ student_t(4, d, sigma_delta);\n  // FIXME: sample in generated quantities in later version\n  delta_new ~ student_t(4, d, sigma_delta);\n  rt ~ binomial_logit(nt, mu + delta);\n  rc ~ binomial_logit(nc, mu);\n}\n",
+  "protected_variables": [
+    "rt",
+    "rc"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `rt`, `rc`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the `model` block so that every parameter is given its built-in prior before any later model-block use through predictors or transformed parameters. The protected observations `rt` and `rc` remain top-level data variables and are each observed exactly once with plain built-in sampling statements. No data fields were added or changed.\n"
+}

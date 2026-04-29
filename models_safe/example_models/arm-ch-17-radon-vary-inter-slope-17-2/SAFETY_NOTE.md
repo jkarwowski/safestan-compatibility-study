@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the likelihood observation itself is a plain top-level statement, `y ~ normal(y_hat, sigma)`, but the model has parameters without SafeStan-compatible priors. In particular, `sigma`, `sigma_a`, and `sigma_b` are constrained positive parameters with only Stan's implicit improper flat density; `sigma_a` and `sigma_b` are used as prior scales for `a` and `b`, and `sigma` is used in the likelihood, without first appearing in a built-in prior sampling statement. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding proper priors for these scale parameters would change the posterior/log density, so this is not a minor same-density rewrite.

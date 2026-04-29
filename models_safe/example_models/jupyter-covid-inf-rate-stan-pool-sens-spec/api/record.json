@@ -1,0 +1,32 @@
+{
+  "artifacts_dir": "models_safe/example_models/jupyter-covid-inf-rate-stan-pool-sens-spec/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:55:19+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/jupyter-covid-inf-rate-stan-pool-sens-spec",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_sample",
+    "y_spec",
+    "y_sens"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0be0bd2d0d1d1c420069f164f16604819d840aa6d59f5a7b18",
+  "safe_dir": "models_safe/example_models/jupyter-covid-inf-rate-stan-pool-sens-spec",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:54:57+00:00",
+  "usage": {
+    "input_tokens": 3069,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2013,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5082
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426723,
+  "created_at": 1777426682,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d564cb5a7f652f50069f160fa86548193b7be4688c091d0a2",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0d564cb5a7f652f50069f160fb52948193832d27b007b526d1",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: the modelled observations are the individual ordered-category `response` values, which the original program constructs in `transformed data` from the contingency-table inputs `Ncum` and `pattern`. A SafeStan rewrite would need these observations as a top-level protected data variable, observed once with a plain sampling statement.\\n\\nGenerated files: none.\\n\\nReason: the original likelihood is not in SafeStan form because `response[i, t] ~ categorical(...)` scores a transformed-data variable inside loops rather than a top-level protected data variable. That part could in principle be mechanically rewritten by expanding the contingency table to top-level data and vectorizing the categorical likelihood. However, the parameter `a` is an unbounded `ordered[Ncut]` parameter used in the likelihood with no prior sampling statement. SafeStan requires every parameter to have exactly one built-in prior before use. Adding a proper prior for `a` would change the posterior/log density, so this cannot be translated with only minor same-density changes.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d564cb5a7f652f50069f1612103f88193b9abe90347505542",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4286,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3253,
+    "output_tokens_details": {
+      "reasoning_tokens": 2995
+    },
+    "total_tokens": 7539
+  },
+  "user": null
+}

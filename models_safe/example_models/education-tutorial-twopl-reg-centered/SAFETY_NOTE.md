@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the likelihood observation `y ~ bernoulli_logit(eta)` is a valid top-level protected-data sampling statement, but the full model cannot be made SafeStan-compatible by a same-density minor rewrite. The parameter `gamma` has no prior in the original Stan program; SafeStan requires every parameter to have exactly one built-in prior before use. Adding a prior for unconstrained `gamma` would change the posterior density. The indexed `theta[j]` priors inside a loop would also need a mechanical vectorization, but the missing prior on `gamma` is a substantive incompatibility.

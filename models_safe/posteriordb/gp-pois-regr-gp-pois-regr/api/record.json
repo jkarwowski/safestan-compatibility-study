@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/gp-pois-regr-gp-pois-regr/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:44:47+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/gp-pois-regr-gp-pois-regr",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "k"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_007666227882de550069f17095501c81a29ebe852cf8ad5edd",
+  "safe_dir": "models_safe/posteriordb/gp-pois-regr-gp-pois-regr",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:44:37+00:00",
+  "usage": {
+    "input_tokens": 3125,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 940,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4065
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

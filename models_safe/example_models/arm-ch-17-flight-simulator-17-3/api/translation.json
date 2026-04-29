@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":4,\"airport\":[2,3,2,3],\"n_airport\":3,\"n_treatment\":3,\"treatment\":[1,3,1,3],\"y\":[2.0,3.0,2.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> n_treatment;\n  int<lower=0> n_airport;\n  array[N] int<lower=0, upper=n_treatment> treatment;\n  array[N] int<lower=0, upper=n_airport> airport;\n  vector[N] y;\n}\nparameters {\n  real<lower=0> sigma;\n  real<lower=0> sigma_gamma;\n  real<lower=0> sigma_delta;\n  vector[n_treatment] gamma;\n  vector[n_airport] delta;\n  real mu;\n}\nmodel {\n  vector[N] y_hat;\n  \n  sigma ~ uniform(0, 100);\n  sigma_gamma ~ uniform(0, 100);\n  sigma_delta ~ uniform(0, 100);\n  \n  mu ~ normal(0, 100);\n  \n  gamma ~ normal(0, sigma_gamma);\n  delta ~ normal(0, sigma_delta);\n  \n  for (i in 1 : N) {\n    y_hat[i] = mu + gamma[treatment[i]] + delta[airport[i]];\n  }\n  \n  y ~ normal(y_hat, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The only data variable scored by a sampling statement is the top-level observation `y`, which is observed exactly once with `y ~ normal(y_hat, sigma)` after all parameters have received built-in priors. Other data variables (`N`, `n_treatment`, `n_airport`, `treatment`, and `airport`) are context inputs used as sizes and indices, not protected observations.\n"
+}

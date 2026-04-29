@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"theta_l\":4.967375481424916,\"theta_u\":2.1440509352138584}",
+  "model_safe_stan": "functions {\n  vector tail_condition(vector y, vector theta, array[] real x_r, array[] int x_i) {\n    real alpha = exp(y[1]);\n    real delta = theta[2] - theta[1];\n    vector[1] diff = [0.01 - 1 / (alpha * delta) * (log(2) - log1p(exp(-alpha * delta)))]';\n    return diff;\n  }\n}\n\ndata {\n  real theta_l;\n  real theta_u;\n}\n\ntransformed data {\n  real alpha_guess = log(2) / (0.01 * (theta_u - theta_l));\n  vector[1] y_guess = [log(alpha_guess)]';\n  vector[2] theta = [theta_l, theta_u]';\n  array[0] real x_r;\n  array[0] int x_i;\n\n  print(\"Guess:\");\n  print(\"  alpha = \", alpha_guess);\n}\n\ngenerated quantities {\n  real alpha;\n  {\n    vector[1] y = algebra_solver(tail_condition, y_guess, theta, x_r, x_i);\n    alpha = exp(y[1]);\n  }\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program contains no model block sampling statements and no observed data likelihood; `theta_l` and `theta_u` are context inputs used deterministically in transformed data and generated quantities, not protected observations.\n"
+}

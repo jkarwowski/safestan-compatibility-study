@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337399,
-  "created_at": 1777337353,
+  "completed_at": 1777429714,
+  "created_at": 1777429689,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_05871db0d9d326390069f00408fd7481909c028ec55efd62f6",
+  "id": "resp_0c758c0319b4090d0069f16cb90aec81a29d841a895e903ff5",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_05871db0d9d326390069f0040a407481909adda0af34782840",
+      "id": "rs_0c758c0319b4090d0069f16cba286081a285f51926a7266289",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the looped manual `target += log_mix(...)` Bernoulli-mixture likelihood with one built-in vectorized Bernoulli sampling statement. This is density-preserving here because, for binary `y` and simplex `theta`,\\n\\n`log_mix(theta[1], bernoulli_lpmf(y | p[1]), bernoulli_lpmf(y | p[2])) = bernoulli_lpmf(y | theta[1] * p[1] + theta[2] * p[2])`.\\n\\nNo data fields were added or changed. The generated quantities were left unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  simplex[2] theta;\\n  ordered[2] logit_p;\\n}\\ntransformed parameters {\\n  vector<lower=0, upper=1>[2] p = inv_logit(logit_p);\\n}\\nmodel {\\n  theta ~ dirichlet(rep_vector(1.0, 2));\\n  logit_p ~ normal(0, 2);\\n  y ~ bernoulli(theta[1] * p[1] + theta[2] * p[2]);\\n}\\ngenerated quantities {\\n  int z_rep = categorical_rng(theta);\\n  int y_rep = bernoulli_rng(p[z_rep]);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":16,\\\"y\\\":[0,0,1,0,1,1,1,0,1,1,1,1,0,1,1,1]}\",\"protected_variables\":[\"y\"]}",
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the manual `target += log_mix(...)` Bernoulli-mixture likelihood with the equivalent built-in sampling statement `y ~ bernoulli(theta[1] * p[1] + theta[2] * p[2])`. For binary observations, a two-component Bernoulli mixture has marginal success probability `theta[1] * p[1] + theta[2] * p[2]`, so this preserves the same likelihood while satisfying SafeStan's requirement that protected data be observed exactly once by a built-in distribution. No data fields were added or changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  simplex[2] theta;\\n  ordered[2] logit_p;\\n}\\ntransformed parameters {\\n  vector<lower=0, upper=1>[2] p = inv_logit(logit_p);\\n}\\nmodel {\\n  theta ~ dirichlet(rep_vector(1.0, 2));\\n  logit_p ~ normal(0, 2);\\n  y ~ bernoulli(theta[1] * p[1] + theta[2] * p[2]);\\n}\\ngenerated quantities {\\n  int z_rep = categorical_rng(theta);\\n  int y_rep = bernoulli_rng(p[z_rep]);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":4,\\\"y\\\":[0,0,0,1]}\",\"protected_variables\":[\"y\"]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_05871db0d9d326390069f004340c6c81908c7b1d5b0693254f",
+      "id": "msg_0c758c0319b4090d0069f16cd0491881a2bf82ad28540c9a79",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2676,
+    "input_tokens": 3211,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 3019,
+    "output_tokens": 2466,
     "output_tokens_details": {
-      "reasoning_tokens": 2588
+      "reasoning_tokens": 2070
     },
-    "total_tokens": 5695
+    "total_tokens": 5677
   },
   "user": null
 }

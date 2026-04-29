@@ -1,26 +1,29 @@
 {
   "artifacts_dir": "models_safe/stan_case_studies/one-compartment-mm-ode/api",
   "compatibility": "as-is",
-  "completed_at": "2026-04-28T01:05:30+00:00",
+  "completed_at": "2026-04-29T03:00:16+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_case_studies/one-compartment-mm-ode",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [
     "C"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_0e030409496014420069f007c0c24c81a0afd5045d854e927b",
+  "response_id": "resp_0727a5e86fe2eb370069f1742e1f888193ba86171c8c20d5c7",
   "safe_dir": "models_safe/stan_case_studies/one-compartment-mm-ode",
-  "started_at": "2026-04-28T01:05:04+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:59:57+00:00",
   "usage": {
-    "input_tokens": 3426,
+    "input_tokens": 3475,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2015,
+    "output_tokens": 1911,
     "output_tokens_details": {
       "reasoning_tokens": 1034
     },
-    "total_tokens": 5441
+    "total_tokens": 5386
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

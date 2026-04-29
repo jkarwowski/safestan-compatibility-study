@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"N\":3,\"county_idx\":[2,2,2],\"floor_measure\":[6.77458371678331,6.741193895036494,4.452289500346619],\"log_radon\":[6.893745201533895,3.9931662781751047,4.758266974925909]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county_idx;\n  vector[N] floor_measure;\n  vector[N] log_radon;\n}\nparameters {\n  vector[J] alpha;\n  real beta;\n  real mu_alpha;\n  real<lower=0> sigma_alpha;\n  real<lower=0> sigma_y;\n}\nmodel {\n  vector[N] mu;\n  \n  // Prior\n  sigma_y ~ normal(0, 1);\n  sigma_alpha ~ normal(0, 1);\n  mu_alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  \n  alpha ~ normal(mu_alpha, sigma_alpha);\n  for (n in 1 : N) {\n    mu[n] = alpha[county_idx[n]] + floor_measure[n] * beta;\n  }\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual looped likelihood contribution `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` with the equivalent built-in vectorized sampling statement `log_radon ~ normal(mu, sigma_y)`. This preserves the same likelihood density while satisfying SafeStan's requirement that protected observations be scored exactly once by a built-in distribution with a plain top-level left-hand side. No data changes were required.\n"
+}

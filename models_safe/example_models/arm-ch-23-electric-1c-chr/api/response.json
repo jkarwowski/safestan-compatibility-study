@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425526,
+  "created_at": 1777425505,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_03ea587df6d7ec360069f15c60f4b8819783a8a1fd4e3c3d4f",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_03ea587df6d7ec360069f15c621d808197a05ddc4cae08a085",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added explicit `sigma_a ~ uniform(0, 100)` and `sigma_y ~ uniform(0, 100)` prior sampling statements. These correspond to the existing finite bounds on `sigma_a` and `sigma_y` and make the implicit proper uniform priors explicit for SafeStan's unique-prior requirement. No data fields were added or changed. The protected observation `y` remains a top-level data variable and is observed exactly once with a built-in distribution.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  int<lower=0> n_grade;\\n  int<lower=0> n_grade_pair;\\n  int<lower=0> n_pair;\\n  array[N] int<lower=1, upper=n_grade> grade;\\n  array[n_pair] int<lower=1, upper=n_grade_pair> grade_pair;\\n  array[N] int<lower=1, upper=n_pair> pair;\\n  vector[N] pre_test;\\n  vector[N] treatment;\\n  vector[N] y;\\n}\\nparameters {\\n  vector[n_pair] eta_a;\\n  vector[n_grade_pair] mu_a;\\n  vector<lower=0, upper=100>[n_grade_pair] sigma_a;\\n  vector<lower=0, upper=100>[n_grade] sigma_y;\\n  vector[n_grade] b;\\n  vector[n_grade] c;\\n}\\ntransformed parameters {\\n  vector[n_pair] a;\\n  vector<lower=0, upper=100>[N] sigma_y_hat;\\n  vector[N] y_hat;\\n  \\n  for (i in 1 : n_pair) {\\n    a[i] = 50 * mu_a[grade_pair[i]] + sigma_a[grade_pair[i]] * eta_a[i];\\n  }\\n  \\n  for (i in 1 : N) {\\n    y_hat[i] = a[pair[i]] + b[grade[i]] * treatment[i]\\n               + c[grade[i]] * pre_test[i];\\n    sigma_y_hat[i] = sigma_y[grade[i]];\\n  }\\n}\\nmodel {\\n  eta_a ~ normal(0, 1);\\n  mu_a ~ normal(0, 1);\\n  sigma_a ~ uniform(0, 100);\\n  sigma_y ~ uniform(0, 100);\\n  b ~ normal(0, 100);\\n  c ~ normal(0, 100);\\n  y ~ normal(y_hat, sigma_y_hat);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":3,\\\"grade\\\":[3,1,3],\\\"grade_pair\\\":[1,1,1,1],\\\"n_grade\\\":3,\\\"n_grade_pair\\\":1,\\\"n_pair\\\":4,\\\"pair\\\":[1,2,1],\\\"pre_test\\\":[6.433302222659345,3.6465725639912954,6.295509923344082],\\\"treatment\\\":[3.3008708151667303,3.3485402770191333,4.199699786180992],\\\"y\\\":[3.0,3.0,3.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_03ea587df6d7ec360069f15c72d1648197b75969cb384059ed",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3424,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2308,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5732
+  },
+  "user": null
+}

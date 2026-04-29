@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424180,
+  "created_at": 1777424164,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_056e06912ab5a2f20069f1572483bc819fabfe833089c924ae",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_056e06912ab5a2f20069f157251114819fa932673b73d6e42d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The only observed data variable scored by a sampling statement is the top-level variable `y`, which is observed exactly once with a built-in `normal` distribution and a plain identifier on the left-hand side. The remaining data variables are context inputs. Each parameter has exactly one built-in prior sampling statement before the transformed parameter depending on it is used in the likelihood.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;      // Number of observations\\n  vector[N] y;         // Observations\\n  real<lower=0> sigma; // Measurement variability\\n\\n  // Number of individual contexts in hierarchy\\n  int<lower=0> K;\\n  // Individual context from which each observation is generated\\n  array[N] int<lower=1, upper=K> indiv_idx;\\n\\n  int<lower=0, upper=K> K_ncp;          // Number of noncentered individuals\\n  array[K_ncp] int<lower=1, upper=K> ncp_idx; // Index of noncentered individuals\\n\\n  int<lower=0, upper=K> K_cp;           // Number of centered individuals\\n  array[K_cp] int<lower=1, upper=K> cp_idx;   // Index of noncentered individuals\\n}\\n\\nparameters {\\n  real mu;                  // Population location\\n  real<lower=0> tau;        // Population scale\\n  vector[K_ncp] theta_ncp;  // Non-centered individual parameters\\n  vector[K_cp]  theta_cp;   // Ccentered individual parameters\\n}\\n\\ntransformed parameters {\\n  // Recentered individual parameters\\n  vector[K] theta;\\n  theta[ncp_idx] = mu + tau * theta_ncp;\\n  theta[cp_idx] = theta_cp;\\n}\\n\\nmodel {\\n  mu ~ normal(0, 5);          // Prior model\\n  tau ~ normal(0, 5);         // Prior model\\n\\n  theta_ncp ~ normal(0, 1);   // Non-centered hierarchical model\\n  theta_cp ~ normal(mu, tau); // Centered hierarchical model\\n\\n  y ~ normal(theta[indiv_idx], sigma); // Observational model\\n}\\n\\n\",\"data_safe_json\":\"{\\n  \\\"K\\\": 3,\\n  \\\"K_cp\\\": 3,\\n  \\\"K_ncp\\\": 2,\\n  \\\"N\\\": 1,\\n  \\\"cp_idx\\\": [\\n    2,\\n    2,\\n    2\\n  ],\\n  \\\"indiv_idx\\\": [\\n    2\\n  ],\\n  \\\"ncp_idx\\\": [\\n    2,\\n    2\\n  ],\\n  \\\"sigma\\\": 3.046537861305944,\\n  \\\"y\\\": [\\n    1.0\\n  ]\\n}\\n\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_056e06912ab5a2f20069f15731448c819f928e35fc65653138",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3348,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1726,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5074
+  },
+  "user": null
+}

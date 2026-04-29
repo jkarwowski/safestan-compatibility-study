@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428166,
+  "created_at": 1777428114,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d3d13c7076c42b60069f16692c11c819cb3246d60ed21265a",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0d3d13c7076c42b60069f1669371d8819c86c8c2b1030fe2a7",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `C_hat`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the original likelihood scored indexed protected observations `C_hat[n]` inside a loop. SafeStan requires each protected data variable to be scored exactly once with a plain top-level identifier. The rewrite computes the array of log predicted concentrations after all parameter priors in the model block, then uses one vectorized built-in likelihood statement, `C_hat ~ lognormal(log_C, sigma);`. This is the same log density as the original product over measurement times. The data file is unchanged.\\n\",\"model_safe_stan\":\"functions {\\n  array[] real one_comp_mm_elim_abs(real t, array[] real y,\\n                                    array[] real theta, array[] real x_r,\\n                                    array[] int x_i) {\\n    array[1] real dydt;\\n    real k_a = theta[1]; // Dosing rate in 1/day\\n    real K_m = theta[2]; // Michaelis-Menten constant in mg/L\\n    real V_m = theta[3]; // Maximum elimination rate in 1/day\\n    real D = x_r[1];\\n    real V = x_r[2];\\n    real dose = 0;\\n    real elim = (V_m / V) * y[1] / (K_m + y[1]);\\n    \\n    if (t > 0) {\\n      dose = exp(-k_a * t) * D * k_a / V;\\n    }\\n    \\n    dydt[1] = dose - elim;\\n    \\n    return dydt;\\n  }\\n}\\ndata {\\n  real t0; // Initial time in days;\\n  array[1] real C0; // Initial concentration at t0 in mg/L\\n  \\n  real D; // Total dosage in mg\\n  real V; // Compartment volume in L\\n  \\n  int<lower=1> N_t;\\n  array[N_t] real times; // Measurement times in days\\n  \\n  // Measured concentrations in effect compartment in mg/L\\n  array[N_t] real C_hat;\\n}\\ntransformed data {\\n  array[2] real x_r = {D, V};\\n  array[0] int x_i;\\n}\\nparameters {\\n  real<lower=0> k_a; // Dosing rate in 1/day\\n  real<lower=0> K_m; // Michaelis-Menten constant in mg/L\\n  real<lower=0> V_m; // Maximum elimination rate in 1/day\\n  real<lower=0> sigma;\\n}\\ntransformed parameters {\\n  array[N_t, 1] real C;\\n  {\\n    array[3] real theta = {k_a, K_m, V_m};\\n    C = integrate_ode_bdf(one_comp_mm_elim_abs, C0, t0, times, theta, x_r,\\n                          x_i);\\n  }\\n}\\nmodel {\\n  array[N_t] real log_C;\\n  \\n  // Priors\\n  k_a ~ cauchy(0, 1);\\n  K_m ~ cauchy(0, 1);\\n  V_m ~ cauchy(0, 1);\\n  sigma ~ cauchy(0, 1);\\n  \\n  // Likelihood\\n  for (n in 1 : N_t) {\\n    log_C[n] = log(C[n, 1]);\\n  }\\n  C_hat ~ lognormal(log_C, sigma);\\n}\\ngenerated quantities {\\n  array[N_t] real C_ppc;\\n  for (n in 1 : N_t) {\\n    C_ppc[n] = lognormal_rng(log(C[n, 1]), sigma);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"C0\\\":[2.838283712633173],\\\"C_hat\\\":[4.4324742079692925,6.637290711608503],\\\"D\\\":6.442167516657358,\\\"N_t\\\":2,\\\"V\\\":4.033417654885227,\\\"t0\\\":0.0,\\\"times\\\":[1.0,2.0]}\",\"protected_variables\":[\"C_hat\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d3d13c7076c42b60069f166c1b804819ca4ffc5369644fb0c",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3602,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 5040,
+    "output_tokens_details": {
+      "reasoning_tokens": 4071
+    },
+    "total_tokens": 8642
+  },
+  "user": null
+}

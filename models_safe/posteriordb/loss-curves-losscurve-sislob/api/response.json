@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777430801,
+  "created_at": 1777430769,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0a78f4038860439c0069f170f1aa74819db70c6763b864ebd4",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0a78f4038860439c0069f170f2b2f0819dad2c8e735ea3f337",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `loss`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. `loss` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `loss ~ normal(...)`. All other top-level data variables are context inputs used as indices, predictors, constants, or configuration. Each parameter has exactly one built-in prior sampling statement before it is used in the likelihood.\\n\",\"model_safe_stan\":\"functions {\\n  real growth_factor_weibull(real t, real omega, real theta) {\\n    return 1 - exp(-(t / theta) ^ omega);\\n  }\\n  \\n  real growth_factor_loglogistic(real t, real omega, real theta) {\\n    real pow_t_omega = t ^ omega;\\n    return pow_t_omega / (pow_t_omega + theta ^ omega);\\n  }\\n}\\ndata {\\n  int<lower=0, upper=1> growthmodel_id;\\n  \\n  int n_data;\\n  int n_time;\\n  int n_cohort;\\n  \\n  array[n_data] int cohort_id;\\n  array[n_data] int t_idx;\\n  \\n  array[n_cohort] int cohort_maxtime;\\n  \\n  vector<lower=0>[n_time] t_value;\\n  \\n  vector[n_cohort] premium;\\n  vector[n_data] loss;\\n}\\nparameters {\\n  real<lower=0> omega;\\n  real<lower=0> theta;\\n  \\n  vector<lower=0>[n_cohort] LR;\\n  \\n  real mu_LR;\\n  real<lower=0> sd_LR;\\n  \\n  real<lower=0> loss_sd;\\n}\\ntransformed parameters {\\n  vector[n_time] gf;\\n  vector[n_data] lm;\\n  \\n  for (i in 1 : n_time) {\\n    gf[i] = growthmodel_id == 1\\n            ? growth_factor_weibull(t_value[i], omega, theta)\\n            : growth_factor_loglogistic(t_value[i], omega, theta);\\n  }\\n  \\n  for (i in 1 : n_data) {\\n    lm[i] = LR[cohort_id[i]] * premium[cohort_id[i]] * gf[t_idx[i]];\\n  }\\n}\\nmodel {\\n  mu_LR ~ normal(0, 0.5);\\n  sd_LR ~ lognormal(0, 0.5);\\n  \\n  LR ~ lognormal(mu_LR, sd_LR);\\n  \\n  loss_sd ~ lognormal(0, 0.7);\\n  \\n  omega ~ lognormal(0, 0.5);\\n  theta ~ lognormal(0, 0.5);\\n  \\n  loss ~ normal(lm, (loss_sd * premium)[cohort_id]);\\n}\\ngenerated quantities {\\n  array[n_cohort] vector<lower=0>[n_time] loss_sample;\\n  array[n_cohort] vector<lower=0>[n_time] loss_prediction;\\n  array[n_cohort] vector<lower=0>[n_time] step_ratio;\\n  \\n  real mu_LR_exp;\\n  \\n  real<lower=0> ppc_minLR;\\n  real<lower=0> ppc_maxLR;\\n  real<lower=0> ppc_EFC;\\n  \\n  for (i in 1 : n_cohort) {\\n    step_ratio[i] = rep_vector(1, n_time);\\n    loss_sample[i] = LR[i] * premium[i] * gf;\\n  }\\n  \\n  mu_LR_exp = exp(mu_LR);\\n  \\n  for (i in 1 : n_data) {\\n    loss_prediction[cohort_id[i], t_idx[i]] = loss[i];\\n  }\\n  \\n  for (i in 1 : n_cohort) {\\n    for (j in 2 : n_time) {\\n      step_ratio[i, j] = gf[t_idx[j]] / gf[t_idx[j - 1]];\\n    }\\n  }\\n  \\n  for (i in 1 : n_cohort) {\\n    for (j in (cohort_maxtime[i] + 1) : n_time) {\\n      loss_prediction[i, j] = loss_prediction[i, j - 1] * step_ratio[i, j];\\n    }\\n  }\\n  \\n  // Create PPC distributions for the max/min of LR\\n  ppc_minLR = min(LR);\\n  ppc_maxLR = max(LR);\\n  \\n  // Create total reserve PPC\\n  ppc_EFC = 0;\\n  \\n  for (i in 1 : n_cohort) {\\n    ppc_EFC = ppc_EFC + loss_prediction[i, n_time]\\n              - loss_prediction[i, cohort_maxtime[i]];\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"cohort_id\\\":[2,3,4,6,5,4],\\\"cohort_maxtime\\\":[1,2,3],\\\"growthmodel_id\\\":0,\\\"loss\\\":[4.414278556447313,5.115006868478175,2.011500397190161,2.3836995523209863,4.341454549895172,6.51641042504006],\\\"n_cohort\\\":3,\\\"n_data\\\":6,\\\"n_time\\\":3,\\\"premium\\\":[2.2638657227284913,4.561580978887463,3.6971633358904894],\\\"t_idx\\\":[1,1,1,1,1,1],\\\"t_value\\\":[3.964070550005543,0.6756596705132712,4.204480523369317]}\",\"protected_variables\":[\"loss\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0a78f4038860439c0069f1710aa49c819d96fdf692060eb1df",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3980,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3419,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 7399
+  },
+  "user": null
+}

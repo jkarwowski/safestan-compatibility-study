@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"J\": 4,\n  \"N\": 2,\n  \"county\": [\n    1,\n    1\n  ],\n  \"x\": [\n    6.68836138460955,\n    4.766030421866344\n  ],\n  \"y\": [\n    2.0,\n    2.0\n  ]\n}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  int<lower=1> J; // number of counties\n  array[N] int<lower=1, upper=J> county;\n  vector[N] x;\n  vector[N] y;\n}\ntransformed data {\n  matrix[N, 1] cov = [x']';\n}\nparameters {\n  vector[1] beta;\n  real<lower=0> sigma_a;\n  real<lower=0> sigma_y;\n  real mu_a;\n  vector<offset=mu_a, multiplier=sigma_a>[J] a;\n}\nmodel {\n  beta ~ std_normal();\n  mu_a ~ std_normal();\n  sigma_a ~ cauchy(0, 2.5);\n  sigma_y ~ cauchy(0, 2.5);\n  \n  a ~ normal(mu_a, sigma_a);\n  y ~ normal_id_glm(cov, a[county], beta, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with the built-in `normal_id_glm` sampling statement after all parameters have received built-in priors. Other data variables (`N`, `J`, `county`, and `x`) are context inputs only.\n"
+}

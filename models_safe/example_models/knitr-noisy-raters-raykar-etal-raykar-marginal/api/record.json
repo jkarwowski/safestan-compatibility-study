@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-noisy-raters-raykar-etal-raykar-marginal/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:09:11+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-noisy-raters-raykar-etal-raykar-marginal",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0930293fd19266550069f1683628a881a2b0061792a6f9c906",
+  "safe_dir": "models_safe/example_models/knitr-noisy-raters-raykar-etal-raykar-marginal",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:08:54+00:00",
+  "usage": {
+    "input_tokens": 3892,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1254,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5146
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

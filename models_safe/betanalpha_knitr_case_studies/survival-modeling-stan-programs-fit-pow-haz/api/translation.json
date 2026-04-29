@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":5,\"N_display\":1,\"display_times\":[1.0],\"obs_times\":[1.0,2.0,3.0,4.0,5.0]}",
+  "model_safe_stan": "functions {\n  // Hazard function\n  real log_hazard(real t, real alpha, real sigma) {\n    return log(alpha) - log(sigma) + (alpha - 1) * log(t / sigma);\n  }\n\n  // Survival function\n  real log_survival(real t, real alpha, real sigma) {\n    return -pow(t / sigma, alpha);\n  }\n\n  // Inverse survival function\n  real inv_survival(real u, real alpha, real sigma) {\n    return sigma * pow(-log(u), 1 / alpha);\n  }\n}\n\ndata {\n  int<lower=1> N;   // Number of observations\n  array[N] real obs_times; // Observation times\n\n  int<lower=1> N_display;                 // Number of display times\n  array[N_display] real<lower=0> display_times; // Display times\n}\n\nparameters {\n  real<lower=0> alpha;\n  real<lower=0> sigma;\n}\n\nmodel {\n  alpha ~ normal(0, 5);\n  sigma ~ normal(0, 5);\n\n  obs_times ~ weibull(alpha, sigma);\n}\n\ngenerated quantities {\n  array[N_display] real display_survival;\n  array[N] real<lower=0> pred_obs_times;\n\n  for (n in 1:N_display)\n    display_survival[n] = exp(log_survival(display_times[n], alpha, sigma));\n\n  for (n in 1:N)\n    pred_obs_times[n] = inv_survival(uniform_rng(0, 1), alpha, sigma);\n}\n",
+  "protected_variables": [
+    "obs_times"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `obs_times`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual `target += log_survival(...) + log_hazard(...)` loop for `obs_times` with the equivalent built-in Weibull sampling statement `obs_times ~ weibull(alpha, sigma);`. This preserves the same density because the hazard-times-survival expression is exactly the Weibull density with shape `alpha` and scale `sigma`. No data values were changed or added.\n"
+}

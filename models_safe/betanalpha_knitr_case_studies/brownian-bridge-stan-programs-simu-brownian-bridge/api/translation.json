@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":5,\"center_idxs\":[2,3,4],\"left_idxs\":[1,1,1],\"right_idxs\":[5,5,5],\"ts\":[1.0,2.0,3.0,4.0,5.0],\"x_left\":3.3049397551171174,\"x_right\":4.201404136367449}",
+  "model_safe_stan": "functions {\n  real bridge_rng(real t, real t_left, real x_left, real t_right, real x_right) {\n    real mu = x_left + (t - t_left) / (t_right - t_left) * (x_right - x_left);\n    real sigma2 = (t_right - t) * (t - t_left) / (t_right - t_left);\n    return normal_rng(mu, sqrt(sigma2));\n  }\n}\n\ndata {\n  int<lower=1> N;\n  array[N] real ts;\n\n  real x_left;\n  real x_right;\n\n  array[N - 2] int left_idxs;\n  array[N - 2] int center_idxs;\n  array[N - 2] int right_idxs;\n}\n\ngenerated quantities {\n  array[N] real xs;\n\n  xs[1] = x_left;\n  xs[N] = x_right;\n\n  for (n in 1:(N - 2)) {\n    xs[center_idxs[n]] = bridge_rng(ts[center_idxs[n]],\n                                    ts[left_idxs[n]],  xs[left_idxs[n]],\n                                    ts[right_idxs[n]], xs[right_idxs[n]]);\n  }\n\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no `model` block, no sampling statements, no parameters, and no protected observed variables; all top-level data are context inputs used only to generate simulated quantities.\n"
+}

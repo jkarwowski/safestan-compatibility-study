@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: `y`.
+Protected data choice: `y`, because it is the only top-level data variable appearing on the left side of a sampling statement (`y ~ binomial(n, p)`). The variables `n`, `x`, `r`, `R`, and `J` are context inputs.
 
 Generated files: none.
 
-Reason: the observation model itself is a simple built-in likelihood, `y ~ binomial(n, p)`, with `y` as top-level data. However, the model has a positive parameter `sigma` with no explicit prior. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use in the model block. The original Stan program therefore represents an implicit improper flat prior on `sigma` over `(0, infinity)`. Adding any proper built-in prior would change the posterior/log density, and there is no density-preserving minor rewrite using SafeStan sampling statements for this improper prior.
+Reason: the top-level parameter `sigma` is used in the likelihood but has no explicit built-in prior sampling statement. SafeStan requires every parameter to be sampled exactly once from a built-in prior before use. Adding a proper prior for `sigma` would change the posterior/log density, and the existing lower bound `real<lower=0>` only implies an improper flat prior on the positive half-line, not a finite bounded uniform prior that can be added as a density-neutral mechanical rewrite.

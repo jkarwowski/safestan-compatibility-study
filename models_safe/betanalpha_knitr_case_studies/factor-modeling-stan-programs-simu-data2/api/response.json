@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423877,
+  "created_at": 1777423868,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d349c19907c3aee0069f155fc4bfc81948fdb09252683bc8f",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0d349c19907c3aee0069f155fd0e9c8194ae03fd717a596a09",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The program has no `data` block, no parameters, no `model` block likelihood, and no sampling statements conditioning on observed data. It is a prior/synthetic-data generator using `transformed data` and `generated quantities`, so there is no protected interface variable to score.\\n\",\"model_safe_stan\":\"transformed data {\\n  real factor_mu = 5;\\n  real factor_tau = 2;\\n\\n  //int N_latent = 2025;\\n  int N_latent = 810;\\n  int K_latent = 81;\\n  int L_latent = 9;\\n\\n  vector[K_latent] context_probs = rep_vector(1.0 / K_latent, K_latent);\\n  vector[L_latent] level_probs = rep_vector(1.0 / L_latent, L_latent);\\n\\n  array[L_latent] real factor_theta\\n    = normal_rng(rep_vector(factor_mu, L_latent), factor_tau);\\n\\n  array[L_latent] real<lower=0> residual_tau\\n    = abs(normal_rng(rep_vector(0, L_latent), 3));\\n}\\n\\ngenerated quantities {\\n  real sigma = 5;\\n\\n  int<lower=1> N = N_latent;\\n\\n  // Number of individual contexts\\n  int<lower=0> K = K_latent;\\n  array[N_latent] int<lower=1, upper=K> obs_to_context;\\n\\n  // Factor information\\n  int<lower=0> N_factor_levels = L_latent;\\n  array[K_latent] int<lower=1, upper=N_factor_levels> context_to_level;\\n\\n  vector[N_latent] y;\\n\\n  {\\n    vector[K_latent] context_theta;\\n\\n    for (k in 1:K) {\\n      int l = categorical_rng(level_probs);\\n      context_to_level[k] = l;\\n      context_theta[k] = normal_rng(factor_theta[l], residual_tau[l]);\\n    }\\n\\n    for (n in 1:N) {\\n      int k = categorical_rng(context_probs);\\n      obs_to_context[n] = k;\\n      y[n] = normal_rng(context_theta[k], sigma);\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d349c19907c3aee0069f156021e188194bb9810ef3a7d93de",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3241,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1017,
+    "output_tokens_details": {
+      "reasoning_tokens": 443
+    },
+    "total_tokens": 4258
+  },
+  "user": null
+}

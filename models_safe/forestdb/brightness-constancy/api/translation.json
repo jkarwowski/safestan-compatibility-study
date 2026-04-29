@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"K\":3,\"N\":5,\"X\":[[2.6666985191198234,4.654093358600571,3.920253806130082],[4.5619081562213335,3.6480458811042085,6.410178602672007],[2.4654173207395154,4.26170686701331,2.9033442275120938],[5.208929313555062,4.468532495419848,3.9993038707242246],[3.0374276678684846,5.517266257261818,5.759061356967044]],\"y\":[5.0,5.0,3.0,3.0,4.0]}",
+  "model_safe_stan": "// ForestDB translation: Brightness Constancy\ndata {\n  int<lower=1> N;\n  int<lower=1> K;\n  matrix[N, K] X;\n  vector[N] y;\n}\nparameters {\n  vector[K] beta;\n  real<lower=0> sigma;\n}\nmodel {\n  beta ~ normal(0, 5);\n  sigma ~ lognormal(0, 1);\n  y ~ normal(X * beta, sigma);\n}\ngenerated quantities {\n  vector[N] mu = X * beta;\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The context inputs `N`, `K`, and `X` are not scored as observations. Parameters `beta` and `sigma` each have exactly one built-in prior before being used in the likelihood.\n"
+}

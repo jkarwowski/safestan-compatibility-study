@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":1,\"n_pair\":1,\"pair\":[1],\"treatment\":[6.125080889238496],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> n_pair;\n  array[N] int<lower=1, upper=n_pair> pair;\n  vector[N] treatment;\n  vector[N] y;\n}\nparameters {\n  real beta;\n  vector[n_pair] eta;\n  real mu_a;\n  real<lower=0, upper=100> sigma_a;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[N] y_hat;\n  vector[n_pair] a;\n  \n  a = 100 * mu_a + sigma_a * eta;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a[pair[i]] + beta * treatment[i];\n  }\n}\nmodel {\n  mu_a ~ normal(0, 1);\n  eta ~ normal(0, 1);\n  beta ~ normal(0, 1);\n  sigma_a ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `sigma_a ~ uniform(0, 100);` and `sigma_y ~ uniform(0, 100);` prior statements. These match the implicit proper uniform priors for the finite-bounded parameters and satisfy SafeStan's requirement that every parameter have exactly one built-in prior before use. The protected likelihood `y ~ normal(y_hat, sigma_y);` is unchanged, and no data changes were required.\n"
+}

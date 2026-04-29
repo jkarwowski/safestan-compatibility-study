@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: the likelihood scores `sqrt_dif`, a deterministic transformed-data vector computed from `score_1` and `score_2`.
+Protected data: the original likelihood scores `sqrt_dif`, a transformed-data quantity computed from `score_1` and `score_2`, rather than a top-level data variable.
 
 Generated files: none.
 
-Reason: although `sqrt_dif` could be made a top-level deterministic data augmentation, the model has parameters `sigma_a` and `sigma_y` with no prior sampling statements. Their only restrictions are lower bounds, which correspond to improper flat priors on positive reals. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors, or otherwise replacing these improper priors, would change the posterior/log density and is therefore a substantive model change rather than a minor SafeStan translation.
+Reason: the model is not SafeStan-compatible without substantive changes. The observed likelihood is placed on a transformed-data expression, so it is not a plain top-level protected data variable. More importantly, `sigma_a` and `sigma_y` are unconstrained-positive parameters with no explicit built-in priors; SafeStan requires every parameter to have exactly one prior sampling statement before use. Adding proper priors for these scale parameters would change the posterior/log density, and an improper density-neutral prior cannot be represented as a SafeStan built-in prior sampling statement.

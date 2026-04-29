@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423874,
+  "created_at": 1777423847,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_096ab921d8e001820069f155e707a88192a341211c6024ed01",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_096ab921d8e001820069f155e810088192ad46903a55f12762",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: none. This is a prior-only Stan program; no top-level data variable is observed on the left side of a sampling statement.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the `delta_main_tau ~ normal(0, 1)` prior to occur before the `packed_delta_main_cp` prior, because the latter uses `delta_main_tau` as a scale and SafeStan requires each parameter to be sampled before any model-block use. This changes only the order of additive log-density terms and preserves the original prior/posterior density. `data_safe.json` is unchanged.\\n\",\"model_safe_stan\":\"data {\\n  // Timing for probability time evolution inferences\\n  int<lower=0> N_fine_t;\\n  vector[N_fine_t] fine_t;\\n\\n  // Total factor configuration information\\n  int<lower=0> N_factor_configs;\\n\\n  // Main factor contributions logistics\\n  int<lower=0> N_main_factors;\\n  array[N_main_factors] int<lower=0> N_main_factor_levels;\\n  array[N_main_factors, N_factor_configs] int<lower=1> main_factor_level_idx;\\n\\n  int<lower=0> N_all_main_factor_levels;\\n  array[N_all_main_factor_levels] int<lower=1, upper=N_main_factors> packed_main_factor_idx;\\n  array[N_main_factors] int<lower=1, upper=N_all_main_factor_levels> main_factor_start_idx;\\n  array[N_main_factors] int<lower=1, upper=N_all_main_factor_levels> main_factor_end_idx;\\n\\n  int<lower=0, upper=N_all_main_factor_levels> L_main_ncp;\\n  array[L_main_ncp] int<lower=1, upper=N_all_main_factor_levels> main_ncp_idx;\\n\\n  int<lower=0, upper=N_all_main_factor_levels> L_main_cp;\\n  array[L_main_cp] int<lower=1, upper=N_all_main_factor_levels> main_cp_idx;\\n}\\n\\nparameters {\\n  // Zeroth-order contribution (Baseline)\\n  real baseline;\\n\\n  // Main factor contributions\\n  vector[L_main_ncp] packed_delta_main_ncp;\\n  vector[L_main_cp] packed_delta_main_cp;\\n  vector<lower=0>[N_main_factors] delta_main_tau;\\n\\n  // Logit probability at time zero\\n  real alpha;\\n}\\n\\nmodel {\\n  // Baseline contribution\\n  baseline ~ normal(-3, 2);\\n\\n  // Main factor contributions\\n  packed_delta_main_ncp ~ normal(0, 1);\\n  delta_main_tau ~ normal(0, 1);\\n  packed_delta_main_cp ~ normal(0, delta_main_tau[packed_main_factor_idx[main_cp_idx]]);\\n\\n  alpha ~ normal(4, 2);\\n}\\n\\ngenerated quantities {\\n  array[N_factor_configs] vector[N_fine_t] p;\\n  {\\n    vector[N_factor_configs] kappa =  rep_vector(baseline, N_factor_configs);\\n\\n    vector[N_all_main_factor_levels] packed_delta_main;\\n\\n    packed_delta_main[main_ncp_idx]\\n      = delta_main_tau[packed_main_factor_idx[main_ncp_idx]] .* packed_delta_main_ncp;\\n    packed_delta_main[main_cp_idx] = packed_delta_main_cp;\\n\\n    for (f in 1:N_main_factors) {\\n      vector[N_main_factor_levels[f]] delta_main\\n        = packed_delta_main[main_factor_start_idx[f]:main_factor_end_idx[f]];\\n      kappa += delta_main[main_factor_level_idx[f]];\\n    }\\n\\n    for (c in 1:N_factor_configs)\\n      p[c] = inv_logit(alpha + kappa[c] * fine_t / 365.0);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"L_main_cp\\\":3,\\\"L_main_ncp\\\":1,\\\"N_all_main_factor_levels\\\":11,\\\"N_factor_configs\\\":3,\\\"N_fine_t\\\":4,\\\"N_main_factor_levels\\\":[4,4,1,2],\\\"N_main_factors\\\":4,\\\"fine_t\\\":[5.245544387221947,3.926394662417818,3.946056308848305,4.587730839723676],\\\"main_cp_idx\\\":[2,2,2],\\\"main_factor_end_idx\\\":[4,8,9,11],\\\"main_factor_level_idx\\\":[[1,1,1],[1,1,1],[1,1,1],[1,1,1]],\\\"main_factor_start_idx\\\":[1,5,9,10],\\\"main_ncp_idx\\\":[2],\\\"packed_main_factor_idx\\\":[1,1,1,1,2,2,2,2,3,4,4]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_096ab921d8e001820069f155fdb3848192b9eb56e7540aaf1e",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3852,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3158,
+    "output_tokens_details": {
+      "reasoning_tokens": 2064
+    },
+    "total_tokens": 7010
+  },
+  "user": null
+}

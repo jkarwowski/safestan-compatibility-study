@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: the original likelihood scores `log_weight`, a transformed-data quantity computed as `log(weight)`. There is no SafeStan-compatible protected top-level observation in the original program as written.\n\nGenerated files: none.\n\nReason: the model cannot be translated with only minor mechanical changes. The likelihood is applied to a transformed-data variable rather than a protected top-level data variable, and the parameters `alpha`, `beta`, and `sigma` have only implicit improper flat priors. SafeStan requires each parameter to have exactly one built-in prior sampling statement before use; adding proper priors would change the posterior/log density. Therefore no same-density SafeStan rewrite is produced.\n"
+}

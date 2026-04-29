@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428627,
+  "created_at": 1777428615,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0a51fde28fb35b970069f16887616081a3bc64c47cb0fdf821",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0a51fde28fb35b970069f16887f8e481a38f45bd4c706fc158",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. No top-level data variable is observed/scored by a sampling statement; `n`, `sigma_x`, and `sigma_y` are context inputs for deterministic simulation and generated quantities.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The only sampling statement is the built-in prior `phi ~ normal(0, 1)` for the sole parameter, and there is no protected observation likelihood to rewrite.\\n\",\"model_safe_stan\":\"// It's assumed that the planet orbits a star at position (0, 0),\\n// and that the mass of the planet is negligable next to that of\\n// the star (meaning the star doesn't move).\\n\\nfunctions {\\n  array[] real ode(real t, array[] real y, array[] real theta,\\n                   array[] real x_r, array[] int x_i) {\\n    vector[2] q = to_vector({y[1], y[2]});\\n    real r_cube = pow(dot_self(q), 1.5);\\n    vector[2] p = to_vector({y[3], y[4]});\\n    real m = x_r[1];\\n    real k = x_r[2];\\n    \\n    vector[4] dydt;\\n    dydt[1 : 2] = p ./ m;\\n    dydt[3 : 4] = -k * q ./ r_cube;\\n    \\n    return to_array_1d(dydt);\\n  }\\n}\\ndata {\\n  int n;\\n  real<lower=0> sigma_x;\\n  real<lower=0> sigma_y;\\n}\\ntransformed data {\\n  // intial state at t = 0\\n  real t0 = 0;\\n  int n_coord = 2;\\n  array[n_coord] real q0 = {1.0, 0.0};\\n  array[n_coord] real p0 = {0.0, 1.0};\\n  array[n_coord * 2] real y0 = append_array(q0, p0);\\n  \\n  // model parameters\\n  real m = 1.0;\\n  real k = 1.0;\\n  \\n  // exact motion\\n  array[n] real t;\\n  for (i in 1 : n) {\\n    t[i] = (i * 1.0) / 10;\\n  }\\n  array[2] real x_r = {m, k};\\n  \\n  array[0] real theta;\\n  array[0] int x_i;\\n  \\n  array[n, n_coord * 2] real y = integrate_ode_rk45(ode, y0, t0, t, theta,\\n                                                    x_r, x_i);\\n}\\nparameters {\\n  real phi;\\n}\\nmodel {\\n  phi ~ normal(0, 1);\\n}\\ngenerated quantities {\\n  array[n, 2] real q_obs;\\n  \\n  q_obs[ : , 1] = normal_rng(y[ : , 1], sigma_x);\\n  q_obs[ : , 2] = normal_rng(y[ : , 2], sigma_y);\\n}\\n\",\"data_safe_json\":\"{\\\"n\\\":2,\\\"sigma_x\\\":3.3666609443675215,\\\"sigma_y\\\":3.222546944956186}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0a51fde28fb35b970069f1688ea17081a3b5567162fd1b6120",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3429,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1311,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4740
+  },
+  "user": null
+}

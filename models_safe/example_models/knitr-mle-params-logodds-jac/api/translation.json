@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":3,\"y\":[1,1,1]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  real alpha;\n}\ntransformed parameters {\n  real<lower=0, upper=1> theta = inv_logit(alpha);\n}\nmodel {\n  alpha ~ logistic(0, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the original transformed-parameter sampling statement `theta ~ uniform(0, 1)` plus manual Jacobian term `target += log(theta) + log1m(theta)` with the equivalent built-in prior `alpha ~ logistic(0, 1)`. Since `theta = inv_logit(alpha)`, `logistic_lpdf(alpha | 0, 1)` equals `log(theta) + log1m(theta)`, while the uniform density on `theta` contributes zero on its support. This removes forbidden manual target modification and ensures the top-level parameter `alpha` has exactly one built-in prior. The data were unchanged.\n"
+}

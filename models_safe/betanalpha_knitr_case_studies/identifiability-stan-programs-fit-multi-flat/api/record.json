@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/identifiability-stan-programs-fit-multi-flat/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T00:57:31+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/identifiability-stan-programs-fit-multi-flat",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0084373949492b0a0069f15774079881a2a5032f66d35f26eb",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/identifiability-stan-programs-fit-multi-flat",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:57:23+00:00",
+  "usage": {
+    "input_tokens": 2986,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 670,
+    "output_tokens_details": {
+      "reasoning_tokens": 510
+    },
+    "total_tokens": 3656
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

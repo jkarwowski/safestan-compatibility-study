@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N_drops\":5,\"N_heights\":3,\"heights\":[4.185359043840389,0.1974802048343865,3.1783236155335604]}",
+  "model_safe_stan": "functions {\n  real t_fall(real g, real h) {\n    return sqrt(2 * h / g);\n  }\n}\n\ndata {\n  int N_heights;\n  array[N_heights] real<lower=0> heights; // meters\n  int N_drops;\n}\n\ngenerated quantities {\n  real<lower=0> sigma_t = abs(normal_rng(0, 0.5));\n  real<lower=0> g = inv_gamma_rng(1.49, 2.83);\n\n  array[N_drops, N_heights] real mu_t_fall;\n  array[N_drops, N_heights] real obs_t_fall;\n\n  for (n in 1:N_drops) {\n    for (h in 1:N_heights) {\n      mu_t_fall[n, h] = t_fall(g, heights[h]);\n      obs_t_fall[n, h] = normal_rng(mu_t_fall[n, h], sigma_t);\n    }\n  }\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. No top-level data variable is conditioned on with a sampling statement; `N_heights`, `heights`, and `N_drops` are context inputs used only for generated quantities.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program contains no model-block likelihood terms, no parameters requiring priors, and no forbidden direct target manipulation.\n"
+}

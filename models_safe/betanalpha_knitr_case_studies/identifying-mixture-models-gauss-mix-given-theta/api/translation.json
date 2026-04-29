@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y` (the observed vector scored by the mixture likelihood). `N` is a size and `theta` is a known mixture-weight context input.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized two-component Gaussian mixture implemented with manual `target += log_mix(...)` scoring inside a loop. SafeStan forbids `target +=`, and there is no equivalent built-in Stan sampling statement for this mixture likelihood. Replacing it would require a substantive model rewrite, such as introducing latent allocation variables or a custom distribution, which is not a minor same-density SafeStan translation.\n"
+}

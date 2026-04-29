@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"N\":1,\"county\":[1],\"x\":[6.298555760013877],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  int<lower=1> J; // number of counties\n  array[N] int<lower=1, upper=J> county;\n  vector[N] x;\n  vector[N] y;\n}\ntransformed data {\n  matrix[N, 1] cov = [x']';\n}\nparameters {\n  vector[1] beta;\n  real mu_a;\n  real<lower=0> sigma_a;\n  real<lower=0> sigma_y;\n  vector<offset=mu_a, multiplier=sigma_a>[J] alpha;\n}\nmodel {\n  beta ~ std_normal();\n  mu_a ~ std_normal();\n  sigma_a ~ cauchy(0, 2.5);\n  alpha ~ normal(mu_a, sigma_a);\n  sigma_y ~ cauchy(0, 2.5);\n  \n  y ~ normal_id_glm(cov, alpha[county], beta, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the `sigma_a ~ cauchy(0, 2.5)` prior to occur before `alpha ~ normal(mu_a, sigma_a)`, because `sigma_a` is used in the `alpha` prior and SafeStan requires each parameter to be sampled from its prior before model-block use. This is a same-density reordering of additive log-density terms. No data changes were made.\n"
+}

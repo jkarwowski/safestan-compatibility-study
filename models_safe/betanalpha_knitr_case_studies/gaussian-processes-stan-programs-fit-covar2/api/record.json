@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-fit-covar2/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T00:53:51+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-fit-covar2",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_obs"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0ec8f321ff8fb3530069f15684302c81949c74e24b3d4d2645",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/gaussian-processes-stan-programs-fit-covar2",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:53:24+00:00",
+  "usage": {
+    "input_tokens": 3560,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2951,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 6511
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

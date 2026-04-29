@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-19-schools/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:16:24+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-19-schools",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0d6557771a7300050069f15bda546481a38de61774a2555e6b",
+  "safe_dir": "models_safe/example_models/arm-ch-19-schools",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:16:10+00:00",
+  "usage": {
+    "input_tokens": 3053,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1462,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4515
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/forestdb/overinf/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:34:53+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/overinf",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0019fc534180fdc90069f16e35fb6c819e8a8de5ec0e3f9438",
+  "safe_dir": "models_safe/forestdb/overinf",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:34:29+00:00",
+  "usage": {
+    "input_tokens": 3607,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1752,
+    "output_tokens_details": {
+      "reasoning_tokens": 1525
+    },
+    "total_tokens": 5359
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

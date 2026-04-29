@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":2,\"N\":1,\"y\":[0]}",
+  "model_safe_stan": "// ForestDB translation: Infinite Mixture Model\ndata {\n  int<lower=1> K;\n  int<lower=1> N;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  simplex[K] cluster_weight;\n  vector<lower=0, upper=1>[K] cluster_prob;\n}\nmodel {\n  cluster_weight ~ dirichlet(rep_vector(1.0 / K, K));\n  cluster_prob ~ beta(1, 1);\n  y ~ bernoulli(dot_product(cluster_weight, cluster_prob));\n}\ngenerated quantities {\n  int<lower=1, upper=K> cluster = categorical_rng(cluster_weight);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual marginalized mixture likelihood implemented with `target += log_sum_exp(...)` by an equivalent built-in Bernoulli sampling statement. Because `y` is binary, the finite mixture likelihood satisfies\n`sum_k cluster_weight[k] * Bernoulli(y | cluster_prob[k]) = Bernoulli(y | dot_product(cluster_weight, cluster_prob))`.\nThe protected variable `y` is now observed exactly once as a top-level data variable with a plain sampling statement. Parameter priors were already explicit and unchanged. No data fields were added or changed.\n"
+}

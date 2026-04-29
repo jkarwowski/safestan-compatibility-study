@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/low-dim-gauss-mix-collapse-low-dim-gauss-mix-collapse/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:46:30+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/low-dim-gauss-mix-collapse-low-dim-gauss-mix-collapse",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_04b8bf3cab429dad0069f170f2219c819caacc3adaa13c13e1",
+  "safe_dir": "models_safe/posteriordb/low-dim-gauss-mix-collapse-low-dim-gauss-mix-collapse",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:46:10+00:00",
+  "usage": {
+    "input_tokens": 3042,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1704,
+    "output_tokens_details": {
+      "reasoning_tokens": 1532
+    },
+    "total_tokens": 4746
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

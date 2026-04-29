@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-simu-quadratic-multi-corr/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:08:19+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/taylor-models-stan-programs-simu-quadratic-multi-corr",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0395fe3b4cd798490069f159f9d9a081a1b545fcb618fa9fc8",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-simu-quadratic-multi-corr",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:08:09+00:00",
+  "usage": {
+    "input_tokens": 3282,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1085,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4367
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

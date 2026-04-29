@@ -1,0 +1,37 @@
+{
+  "N": 4,
+  "N_regions": 2,
+  "N_states": 4,
+  "N_years": 3,
+  "N_years_obs": 4,
+  "region_ind": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "state_ind": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "state_region_ind": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "y": [
+    1.0,
+    0.0,
+    1.0,
+    1.0
+  ],
+  "year_ind": [
+    1,
+    1,
+    1,
+    1
+  ]
+}

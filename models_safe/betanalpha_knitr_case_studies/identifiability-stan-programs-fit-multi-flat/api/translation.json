@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood observes the top-level data variable `y` with a built-in normal sampling statement, while `N` and `sigma` are context inputs. However, parameters `a` and `b` have only implicit improper flat priors and are used in the likelihood before any SafeStan-recognized prior sampling statement. Adding proper priors would change the posterior/log density, and replacing the flat improper priors is not a minor same-density rewrite.\n"
+}

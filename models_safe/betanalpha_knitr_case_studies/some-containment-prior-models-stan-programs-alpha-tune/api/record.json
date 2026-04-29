@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/some-containment-prior-models-stan-programs-alpha-tune/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:01:19+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/some-containment-prior-models-stan-programs-alpha-tune",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a4c07a67eebcad60069f1585604e481a2a18c4b7964a02c56",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/some-containment-prior-models-stan-programs-alpha-tune",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:01:09+00:00",
+  "usage": {
+    "input_tokens": 3142,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 946,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4088
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

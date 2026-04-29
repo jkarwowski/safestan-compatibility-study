@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":2,\"group_id\":[1,2],\"n_groups\":2,\"n_scenarios\":1,\"scenario_id\":[1,1],\"y\":[2.0,2.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> n_groups;\n  int<lower=0> n_scenarios;\n  array[N] int<lower=1, upper=n_groups> group_id;\n  array[N] int<lower=1, upper=n_scenarios> scenario_id;\n  vector[N] y;\n}\nparameters {\n  vector[n_groups] eta_a;\n  vector[n_scenarios] eta_b;\n  real mu_a;\n  real mu_b;\n  real<lower=0, upper=100> sigma_a;\n  real<lower=0, upper=100> sigma_b;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[N] y_hat;\n  vector[n_groups] a;\n  vector[n_scenarios] b;\n  \n  a = 0.1 * mu_a + eta_a * sigma_a;\n  b = 0.1 * mu_b + eta_b * sigma_b;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a[group_id[i]] + b[scenario_id[i]];\n  }\n}\nmodel {\n  mu_a ~ normal(0, 1);\n  mu_b ~ normal(0, 1);\n  eta_a ~ normal(0, 1);\n  eta_b ~ normal(0, 1);\n  sigma_a ~ uniform(0, 100);\n  sigma_b ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 100)` priors for `sigma_a`, `sigma_b`, and `sigma_y`. These parameters were already finite-bounded real parameters, so the added priors make the implicit bounded-uniform prior discipline explicit for SafeStan. The protected observation `y` is already a top-level data variable and is observed exactly once with a built-in distribution. The data file is unchanged.\n"
+}

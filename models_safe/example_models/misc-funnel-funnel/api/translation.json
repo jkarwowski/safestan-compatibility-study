@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  real y;\n  vector[9] x;\n}\nmodel {\n  y ~ normal(0, 3);\n  x ~ normal(0, exp(y / 2));\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The model has no data block and therefore no protected observed interface variables. Both top-level parameters have exactly one built-in prior sampling statement, and `y` is given its prior before it is used in the prior scale for `x`.\n"
+}

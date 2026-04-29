@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "transformed data {\n  cov_matrix[3] S = [[2, 0, 0], [0, 1, 0], [0, 0, 0.5]];\n}\nparameters {\n  cov_matrix[3] W;\n}\nmodel {\n  W ~ inv_wishart(5, S);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The model has no top-level data variables and no observed likelihood; the single parameter `W` has exactly one built-in prior sampling statement before any use.\n"
+}

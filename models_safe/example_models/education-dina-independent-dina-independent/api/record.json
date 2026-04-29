@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/education-dina-independent-dina-independent/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:54:04+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/education-dina-independent-dina-independent",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0e98b89514c009340069f164b420c481908c8c4d6f6d0cb3d6",
+  "safe_dir": "models_safe/example_models/education-dina-independent-dina-independent",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:53:55+00:00",
+  "usage": {
+    "input_tokens": 3918,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 679,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4597
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

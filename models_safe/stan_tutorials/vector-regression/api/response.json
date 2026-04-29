@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777339165,
-  "created_at": 1777339145,
+  "completed_at": 1777431758,
+  "created_at": 1777431748,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0be297cf607b14130069f00b0959e8819ca1a483c342488c52",
+  "id": "resp_0881aba9545b44580069f174c4695c819ca9bf52fc6edeaa69",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0be297cf607b14130069f00b0a0958819c83747ff4ac3a7d33",
+      "id": "rs_0881aba9545b44580069f174c5ee40819cad31ef2792b7a0d8",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `y`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood itself is a SafeStan-style built-in sampling statement, `y ~ normal(X * b, sigma)`, with `X`, `N`, and `K` as context data. However, the parameters `b` and `sigma` have no explicit prior sampling statements before they are used in the likelihood. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors for `b` or `sigma` would change the posterior/log density; the original model relies on implicit improper flat priors, which cannot be represented as a minor SafeStan rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observed likelihood is `y ~ normal(X * b, sigma)`, so `y` is the protected interface variable and `N`, `K`, and `X` are context inputs. However, the parameters `b` and `sigma` are used in the likelihood without any prior sampling statements. SafeStan requires each parameter to have exactly one built-in prior before use. Adding priors for the unconstrained vector `b` or the positive scale `sigma` would change the posterior/log density, so this cannot be repaired as a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0be297cf607b14130069f00b1b962c819ca90a51d810089a01",
+      "id": "msg_0881aba9545b44580069f174cd22b4819c9ca18b2f9801412e",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 5380,
+    "input_tokens": 2961,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1224,
+    "output_tokens": 698,
     "output_tokens_details": {
-      "reasoning_tokens": 1034
+      "reasoning_tokens": 516
     },
-    "total_tokens": 6604
+    "total_tokens": 3659
   },
   "user": null
 }

@@ -1,0 +1,550 @@
+You are translating a single Stan model into the SafeStan-compatible Stan subset.
+
+## SafeStan
+
+SafeStan is a static (compile-time) restriction layer over Stan. Its purpose is to prevent likelihood hacking on a designated protected data interface, as described in "Likelihood hacking in probabilistic program synthesis".
+
+SafeStan is designed so that generated models report a normalized marginal log-likelihood for the interface being modelled. To do this, it assigns roles to top-level inputs and parameters. Variables named by --sstan-protect are modelled interface variables: each must be scored by a built-in distribution, exactly once, before any other use. They cannot be inspected in an if, used to compute helper values, or referenced in transformed blocks before that scoring statement. After a modelled interface variable has been scored, it is available as an ordinary model-block quantity and may be used in later computations or later likelihood terms. Other top-level data variables are context inputs: they may be used freely as predictors, constants, indices, or configuration, but they may not appear on the left side of a sampling statement. Parameters are latent variables: each parameter must have exactly one built-in prior sampling statement before it is used in the model block. SafeStan also rejects constructs that can directly inflate, edit, or gate the log-likelihood, such as target +=, target(), jacobian +=, reject(), fatal_error(), and _lp functions.
+
+For this corpus run, `data.json` may be small synthetic data generated only to satisfy the Stan data schema. Use it to produce a valid `data_safe_json` and to preserve deterministic reshapes/copies, but infer the protected interface and compatibility label from `model.stan`, not from the particular synthetic values.
+
+### What SafeStan Enforces
+
+No arbitrary scoring:
+
+Forbids target += ...
+Forbids target()
+Forbids jacobian += ...
+Forbids reject() and fatal_error()
+Forbids _lp function definitions and calls
+Protected data single-use:
+
+Every protected variable must be a top-level data variable.
+Every top-level data variable that the model conditions on with a sampling statement is part of the protected interface, unless a same-density rewrite replaces it by a deterministic top-level protected copy/reshape.
+Do not protect ordinary predictors, covariates, sizes, indices, or constants unless the model itself observes/scores them as data.
+Each protected variable must appear exactly once on the left side of ~.
+Left side must be a plain identifier (no indexing/projections/expressions).
+Protected variables cannot be used before they are observed.
+After observation, a protected variable is treated as a normal value.
+Protected variables cannot be referenced in transformed data/parameters.
+Proper distribution path only:
+
+Sampling statements may target only protected top-level data variables or top-level parameter variables.
+Sampling statements must resolve to built-in Stan distributions.
+User-defined distributions are rejected in ~.
+Strict parameter discipline:
+
+Each parameter must appear in exactly one sampling statement.
+Parameters cannot be used in the model block before their sampling statement.
+Uses through transformed parameters are tracked: if phi depends on theta, then using phi before theta ~ ... counts as using theta before its prior.
+Control-flow safety:
+
+Protected observations and parameter-prior sampling statements cannot appear inside loops (for/while/foreach).
+Conditional (if/else) sampling is allowed only when both branches produce identical sampling effects for protected variables and parameters.
+Reserved identifier:
+
+sstan_trusted_loglik__ is reserved in SafeStan mode.
+
+## Goal
+
+The goal is not to make the model "nicer", rather, the goal is to decide whether the original posterior/log density can be represented under SafeStan restrictions with no or only a small rewrite, preserving the model. Return only the structured JSON requested by the caller.
+
+Work method:
+
+1. Identify the observed/protected data variable(s) scored by the likelihood.
+   Use the Stan program structure for this; do not infer modelling intent from
+   the particular values in `data.json`.
+2. Check whether the protected data variables and parameters already satisfy SafeStan's
+   syntactic discipline. If it does, classify the models `as-is`.
+3. If not, look for a same-density mechanical rewrite.
+4. If the rewrite would require changing the statistical model, substantially replacing a marginalized latent-state algorithm, or changing the likelihood (e.g. by adding additional priors to parameters), classify the case as `major` and do not rewrite the model.
+5. Otherwise, classify the case as `minor`, rewrite the model (and potentially, data): e.g. you can vectorize simple likelihoods, add deterministic data copies/reshapes, switch order of computation preserving the semantics, and add explicit priors only for parameters that already have implicit proper priors with exactly matching built-in distributions (for example, `uniform(lower, upper)` for finite bounded real parameters). After that, output complete files. Do not output patches.
+
+Compatibility labels:
+
+- `as-is`: the original Stan program is already SafeStan-compatible. Return `model_safe_stan` equal to the original and `data_safe_json` equal to the supplied data.
+- `minor`: a same-posterior SafeStan version can be produced using only minor, mechanical, changes. Return new, rewritten `model_safe_stan` equivalent to the original and `data_safe_json` equivalent to the supplied data.
+- `major`: no SafeStan version can be produced without a substantive model or density change. In this case return empty strings for `model_safe_stan` and `data_safe_json`.
+
+Requirements:
+
+- Never invent new observations or new data values beyond deterministic
+  copies/reshapes of the supplied `data.json`.
+- `data_safe_json` must be a valid JSON object string. It may equal the supplied
+  `data.json` exactly, or be a deterministic augmentation/reshape of it.
+- If you add fields to `data_safe_json`, document the exact deterministic
+  relation in `safety_note_md`.
+- Preserve the intended posterior/log density for AS-IS and MINOR.
+- `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
+  include: compatibility, protected data choice, generated files, and a concise
+  explanation of any change.
+
+Examples:
+
+Example 1: AS-IS input
+
+```stan
+data {
+  int<lower=0, upper=1> y;
+}
+parameters {
+  real<lower=0, upper=1> theta;
+}
+model {
+  theta ~ beta(1, 1);
+  y ~ bernoulli(theta);
+}
+```
+
+```json
+{"y": 1}
+```
+
+Example 1 output shape
+
+```json
+{
+  "compatibility": "as-is",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the protected observation is top-level data and is observed with a plain sampling statement.\n",
+  "model_safe_stan": "data {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "data_safe_json": "{\"y\": 1}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 2: MINOR input
+
+```stan
+data {
+  int<lower=1> N;
+  array[N] int<lower=0> trials;
+  array[N] int<lower=0> y;
+}
+transformed data {
+  real mean_y = mean(to_vector(y));
+}
+parameters {
+  vector<lower=0, upper=1>[N] theta;
+}
+model {
+  y ~ binomial(trials, theta);
+}
+```
+
+```json
+{"N": 3, "trials": [10, 10, 10], "y": [4, 5, 6]}
+```
+
+Example 2 output shape
+
+```json
+{
+  "compatibility": "minor",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. Added `theta ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]` and satisfies SafeStan's unique-prior requirement.\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ binomial(trials, theta);\n}\n",
+  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 3: MAJOR input
+
+```stan
+data {
+  int<lower=1> N;
+  vector[N] y;
+}
+parameters {
+  real mu1;
+  real mu2;
+}
+model {
+  for (n in 1:N) {
+    target += log_mix(0.5, normal_lpdf(y[n] | mu1, 1), normal_lpdf(y[n] | mu2, 1));
+  }
+}
+```
+
+```json
+{"N": 3, "y": [0.1, 1.2, -0.5]}
+```
+
+Example 3 output shape
+
+```json
+{
+  "compatibility": "major",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\n",
+  "model_safe_stan": "",
+  "data_safe_json": "",
+  "protected_variables": []
+}
+```
+
+Model directory: models/stancon_talks/2018-contributed-talks-02-pourzanjani-stan-isplines
+
+Metadata:
+
+```json
+{
+  "description": "Imported Stan program from StanCon talks: 2018/Contributed-Talks/02_pourzanjani/stan/isplines.stan.",
+  "difficulty": "unknown",
+  "id": "2018-contributed-talks-02-pourzanjani-stan-isplines",
+  "method": "sample",
+  "source_group": "stancon_talks",
+  "source_group_label": "StanCon talks",
+  "source_url": "https://github.com/stan-dev/stancon_talks/blob/affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb/2018/Contributed-Talks/02_pourzanjani/stan/isplines.stan",
+  "title": "2018 Contributed Talks 02 Pourzanjani Stan Isplines"
+}
+```
+
+Source note:
+
+```text
+# 2018 Contributed Talks 02 Pourzanjani Stan Isplines
+
+- Upstream Stan file: [2018/Contributed-Talks/02_pourzanjani/stan/isplines.stan](https://github.com/stan-dev/stancon_talks/blob/affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb/2018/Contributed-Talks/02_pourzanjani/stan/isplines.stan)
+- Upstream data: none
+- Data status: no_matched_upstream_data
+- Source group: StanCon talks
+- Upstream repository: https://github.com/stan-dev/stancon_talks
+- Upstream commit: `affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb`
+- Import note: Copied into the repository's standard model-directory layout.
+
+## Synthetic Data
+
+- Data status: synthetic/local generated by `generate_synthetic_data_for_missing.py`.
+- Generation method: stanc_debug_generate_data.
+- Parsed data declarations: 3.
+- Data block present: true.
+
+```
+
+Original `model.stan`:
+
+```stan
+functions {
+  real I1(real x) {
+	 real ret = 0;
+	 if(x < -20) return(0);
+
+	 if(x >= -20 && x < -20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= -20 && x < -20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= -20 && x < -20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= -20 && x < -16) return(ret + -0.9999999999 * x^4/256 + -47.99999999 * x^3/192 + -767.9999999 * x^2/128 + -4095.9999998976 * x/64 - 254.999999926333);
+	 else ret = ret + 1.00000006033338;
+
+	 if(x >= -16) return(1);
+
+	 return(ret);
+}
+
+real I2(real x) {
+	 real ret = 0;
+	 if(x < -20) return(0);
+
+	 if(x >= -20 && x < -20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= -20 && x < -20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= -20 && x < -16) return(ret + 448 * x^4/131072 + 22272 * x^3/98304 + 365568 * x^2/65536 + 1986560 * x/32768 - -246.875);
+	 else ret = ret + 0.875;
+
+	 if(x >= -16 && x < -12) return(ret + -0.9999999999 * x^4/2048 + -36 * x^3/1536 + -431.9999999 * x^2/1024 + -1727.9999999568 * x/512 - 10.00000002685);
+	 else ret = ret + 0.124999987212497;
+
+	 if(x >= -12) return(1);
+
+	 return(ret);
+}
+
+real I3(real x) {
+	 real ret = 0;
+	 if(x < -20) return(0);
+
+	 if(x >= -20 && x < -20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= -20 && x < -16) return(ret + -1408 * x^4/1179648 + -75264 * x^3/884736 + -1320960 * x^2/589824 + -7577600 * x/294912 - 107.638888888889);
+	 else ret = ret + 0.361111111111086;
+
+	 if(x >= -16 && x < -12) return(ret + 224 * x^4/294912 + 8832 * x^3/221184 + 112128 * x^2/147456 + 464896 * x/73728 - -20);
+	 else ret = ret + 0.583333333333329;
+
+	 if(x >= -12 && x < -8) return(ret + -0.9999999999 * x^4/4608 + -24 * x^3/3456 + -192 * x^2/2304 + -511.9999999872 * x/1152 - 0.83333333365);
+	 else ret = ret + 0.0555555552388891;
+
+	 if(x >= -8) return(1);
+
+	 return(ret);
+}
+
+real I4(real x) {
+	 real ret = 0;
+	 if(x < -20) return(0);
+
+	 if(x >= -20 && x < -16) return(ret + 1 * x^4/6144 + 60 * x^3/4608 + 1200 * x^2/3072 + 8000 * x/1536 - -26.0416666666667);
+	 else ret = ret + 0.0416666666666714;
+
+	 if(x >= -16 && x < -12) return(ret + -3 * x^4/6144 + -132 * x^3/4608 + -1872 * x^2/3072 + -8383.9999999999 * x/1536 - 16.6666666666656);
+	 else ret = ret + 0.458333333333599;
+
+	 if(x >= -12 && x < -8) return(ret + 3 * x^4/6144 + 84 * x^3/4608 + 720 * x^2/3072 + 1984 * x/1536 - -3.125);
+	 else ret = ret + 0.458333333333332;
+
+	 if(x >= -8 && x < -4) return(ret + -0.9999999999 * x^4/6144 + -12 * x^3/4608 + -47.99999999 * x^2/3072 + -63.9999999984 * x/1536 - 2.66666633219614e-10);
+	 else ret = ret + 0.0416666664520834;
+
+	 if(x >= -4) return(1);
+
+	 return(ret);
+}
+
+real I5(real x) {
+	 real ret = 0;
+	 if(x < -16) return(0);
+
+	 if(x >= -16 && x < -12) return(ret + 1 * x^4/6144 + 48 * x^3/4608 + 768 * x^2/3072 + 4096 * x/1536 - -10.6666666666667);
+	 else ret = ret + 0.0416666666666643;
+
+	 if(x >= -12 && x < -8) return(ret + -3 * x^4/6144 + -96 * x^3/4608 + -960 * x^2/3072 + -2816 * x/1536 - 2.875);
+	 else ret = ret + 0.458333333333332;
+
+	 if(x >= -8 && x < -4) return(ret + 3 * x^4/6144 + 48 * x^3/4608 + 192 * x^2/3072 + 256 * x/1536 - -0.666666666666666);
+	 else ret = ret + 0.458333333333333;
+
+	 if(x >= -4 && x < 0) return(ret + -0.9999999999 * x^4/6144 - -0.0416666666625);
+	 else ret = ret + 0.0416666666625;
+
+	 if(x >= 0) return(1);
+
+	 return(ret);
+}
+
+real I6(real x) {
+	 real ret = 0;
+	 if(x < -12) return(0);
+
+	 if(x >= -12 && x < -8) return(ret + 1 * x^4/6144 + 36 * x^3/4608 + 432 * x^2/3072 + 1728 * x/1536 - -3.375);
+	 else ret = ret + 0.0416666666666661;
+
+	 if(x >= -8 && x < -4) return(ret + -3 * x^4/6144 + -60 * x^3/4608 + -336 * x^2/3072 + -30720 * x/147456 - -0.666666666666666);
+	 else ret = ret + 0.458333333333333;
+
+	 if(x >= -4 && x < 0) return(ret + 3 * x^4/6144 + 12 * x^3/4608 + -48 * x^2/3072 + 64 * x/1536 - -0.458333333333333);
+	 else ret = ret + 0.458333333333333;
+
+	 if(x >= 0 && x < 4) return(ret + -1 * x^4/6144 + 12 * x^3/4608 + -48 * x^2/3072 + 64 * x/1536 - 0);
+	 else ret = ret + 0.0416666666666667;
+
+	 if(x >= 4) return(1);
+
+	 return(ret);
+}
+
+real I7(real x) {
+	 real ret = 0;
+	 if(x < -8) return(0);
+
+	 if(x >= -8 && x < -4) return(ret + 1 * x^4/6144 + 24 * x^3/4608 + 192 * x^2/3072 + 512 * x/1536 - -0.666666666666667);
+	 else ret = ret + 0.0416666666666666;
+
+	 if(x >= -4 && x < 0) return(ret + -3 * x^4/6144 + -24 * x^3/4608 + 256 * x/1536 - -0.458333333333333);
+	 else ret = ret + 0.458333333333333;
+
+	 if(x >= 0 && x < 4) return(ret + 3 * x^4/6144 + -24 * x^3/4608 + 256 * x/1536 - 0);
+	 else ret = ret + 0.458333333333333;
+
+	 if(x >= 4 && x < 8) return(ret + -1 * x^4/6144 + 24 * x^3/4608 + -192 * x^2/3072 + 512 * x/1536 - 0.625);
+	 else ret = ret + 0.0416666666666666;
+
+	 if(x >= 8) return(1);
+
+	 return(ret);
+}
+
+real I8(real x) {
+	 real ret = 0;
+	 if(x < -4) return(0);
+
+	 if(x >= -4 && x < 0) return(ret + 1 * x^4/6144 + 12 * x^3/4608 + 48 * x^2/3072 + 64 * x/1536 - -0.0416666666666667);
+	 else ret = ret + 0.0416666666666667;
+
+	 if(x >= 0 && x < 4) return(ret + -3 * x^4/6144 + 12 * x^3/4608 + 48 * x^2/3072 + 64 * x/1536 - 0);
+	 else ret = ret + 0.458333333333333;
+
+	 if(x >= 4 && x < 8) return(ret + 3 * x^4/6144 + -60 * x^3/4608 + 336 * x^2/3072 + -320 * x/1536 - 0.208333333333333);
+	 else ret = ret + 0.458333333333333;
+
+	 if(x >= 8 && x < 12) return(ret + -1 * x^4/6144 + 36 * x^3/4608 + -432 * x^2/3072 + 1728 * x/1536 - 3.33333333333333);
+	 else ret = ret + 0.0416666666666661;
+
+	 if(x >= 12) return(1);
+
+	 return(ret);
+}
+
+real I9(real x) {
+	 real ret = 0;
+	 if(x < 0) return(0);
+
+	 if(x >= 0 && x < 4) return(ret + 1 * x^4/6144 - 0);
+	 else ret = ret + 0.0416666666666667;
+
+	 if(x >= 4 && x < 8) return(ret + -3 * x^4/6144 + 48 * x^3/4608 + -192 * x^2/3072 + 256 * x/1536 - 0.208333333333333);
+	 else ret = ret + 0.458333333333333;
+
+	 if(x >= 8 && x < 12) return(ret + 3 * x^4/6144 + -96 * x^3/4608 + 960 * x^2/3072 + -2816 * x/1536 - -3.33333333333333);
+	 else ret = ret + 0.458333333333332;
+
+	 if(x >= 12 && x < 16) return(ret + -1 * x^4/6144 + 48 * x^3/4608 + -768 * x^2/3072 + 4096 * x/1536 - 10.625);
+	 else ret = ret + 0.0416666666666643;
+
+	 if(x >= 16) return(1);
+
+	 return(ret);
+}
+
+real I10(real x) {
+	 real ret = 0;
+	 if(x < 4) return(0);
+
+	 if(x >= 4 && x < 8) return(ret + 1 * x^4/6144 + -12 * x^3/4608 + 48 * x^2/3072 + -64 * x/1536 - -0.0416666666666667);
+	 else ret = ret + 0.0416666666666667;
+
+	 if(x >= 8 && x < 12) return(ret + -3 * x^4/6144 + 84 * x^3/4608 + -720 * x^2/3072 + 1984 * x/1536 - 2.66666666666667);
+	 else ret = ret + 0.458333333333332;
+
+	 if(x >= 12 && x < 16) return(ret + 3 * x^4/6144 + -132 * x^3/4608 + 1872 * x^2/3072 + -8383.9999999999 * x/1536 - -17.1249999999992);
+	 else ret = ret + 0.458333333333599;
+
+	 if(x >= 16 && x < 20) return(ret + -1 * x^4/6144 + 60 * x^3/4608 + -1200 * x^2/3072 + 8000 * x/1536 - 26);
+	 else ret = ret + 0.0416666666666714;
+
+	 if(x >= 20) return(1);
+
+	 return(ret);
+}
+
+real I11(real x) {
+	 real ret = 0;
+	 if(x < 8) return(0);
+
+	 if(x >= 8 && x < 12) return(ret + 1 * x^4/4608 + -24 * x^3/3456 + 192 * x^2/2304 + -512 * x/1152 - -0.888888888888889);
+	 else ret = ret + 0.0555555555555558;
+
+	 if(x >= 12 && x < 16) return(ret + -224 * x^4/294912 + 8832 * x^3/221184 + -112128 * x^2/147456 + 464896 * x/73728 - 19.4166666666667);
+	 else ret = ret + 0.583333333333329;
+
+	 if(x >= 16 && x < 20) return(ret + 1408 * x^4/1179648 + -75264 * x^3/884736 + 1320960 * x^2/589824 + -7577600 * x/294912 - -108);
+	 else ret = ret + 0.361111111111086;
+
+	 if(x >= 20 && x < 20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= 20) return(1);
+
+	 return(ret);
+}
+
+real I12(real x) {
+	 real ret = 0;
+	 if(x < 12) return(0);
+
+	 if(x >= 12 && x < 16) return(ret + 1 * x^4/2048 + -36 * x^3/1536 + 432 * x^2/1024 + -1728 * x/512 - -10.125);
+	 else ret = ret + 0.125;
+
+	 if(x >= 16 && x < 20) return(ret + -448 * x^4/131072 + 22272 * x^3/98304 + -365568 * x^2/65536 + 1986560 * x/32768 - 246);
+	 else ret = ret + 0.875;
+
+	 if(x >= 20 && x < 20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= 20 && x < 20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= 20) return(1);
+
+	 return(ret);
+}
+
+real I13(real x) {
+	 real ret = 0;
+	 if(x < 16) return(0);
+
+	 if(x >= 16 && x < 20) return(ret + 1 * x^4/256 + -48 * x^3/192 + 768 * x^2/128 + -4095.9999999999 * x/64 - -255.999999999975);
+	 else ret = ret + 1.00000000000637;
+
+	 if(x >= 20 && x < 20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= 20 && x < 20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= 20 && x < 20) return(ret + 0 - 0);
+	 else ret = ret + 0;
+
+	 if(x >= 20) return(1);
+
+	 return(ret);
+}
+
+array[] real ispline(vector x, matrix c) {
+
+	 int N;
+	 array[dims(x)[1]] real ret;
+	 N = dims(x)[1];
+
+	 for(n in 1:N) ret[n] = c[n][1]*I1(x[n]) + c[n][2]*I2(x[n]) + c[n][3]*I3(x[n]) + c[n][4]*I4(x[n]) + c[n][5]*I5(x[n]) + c[n][6]*I6(x[n]) + c[n][7]*I7(x[n]) + c[n][8]*I8(x[n]) + c[n][9]*I9(x[n]) + c[n][10]*I10(x[n]) + c[n][11]*I11(x[n]) + c[n][12]*I12(x[n]) + c[n][13]*I13(x[n]);
+
+	 return(ret);
+}
+}
+data {
+  int<lower=0> N;
+  vector[N] x;
+  vector[N] y;
+}
+parameters {
+  simplex[13] c;
+}
+model {
+  y ~ normal(ispline(x, rep_matrix(to_row_vector(c), N)), 0.05);
+}
+generated quantities {
+  vector[81] seq;
+  array[81] real fhat;
+  for(n in 1:81) seq[n] = (n-1)*0.5 - 20;
+  fhat = ispline(seq, rep_matrix(to_row_vector(c), 101));
+}
+
+```
+
+Input `data.json` for this run:
+
+```json
+{
+  "N": 4,
+  "x": [
+    2.8440205772660434,
+    4.855521447245719,
+    6.232557109736673,
+    3.829291858040595
+  ],
+  "y": [
+    4.0,
+    3.0,
+    4.0,
+    4.0
+  ]
+}
+
+```

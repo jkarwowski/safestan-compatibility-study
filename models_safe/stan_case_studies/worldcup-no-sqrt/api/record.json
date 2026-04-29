@@ -1,24 +1,27 @@
 {
   "artifacts_dir": "models_safe/stan_case_studies/worldcup-no-sqrt/api",
   "compatibility": "major",
-  "completed_at": "2026-04-28T01:09:47+00:00",
+  "completed_at": "2026-04-29T03:01:15+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_case_studies/worldcup-no-sqrt",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0250cdcff9218e4f0069f008be152c819c89eda5bdcd553f10",
+  "response_id": "resp_09b0787ba3be81c10069f17466376c81958b2d975e077d11cf",
   "safe_dir": "models_safe/stan_case_studies/worldcup-no-sqrt",
-  "started_at": "2026-04-28T01:09:17+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:00:54+00:00",
   "usage": {
-    "input_tokens": 4195,
+    "input_tokens": 3198,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1762,
+    "output_tokens": 1790,
     "output_tokens_details": {
       "reasoning_tokens": 1552
     },
-    "total_tokens": 5957
+    "total_tokens": 4988
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

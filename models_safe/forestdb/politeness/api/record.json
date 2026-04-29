@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/forestdb/politeness/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:35:25+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/politeness",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0ae66f00504e76010069f16e5a97e88195918a6889a71ce50f",
+  "safe_dir": "models_safe/forestdb/politeness",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:35:06+00:00",
+  "usage": {
+    "input_tokens": 3899,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1163,
+    "output_tokens_details": {
+      "reasoning_tokens": 961
+    },
+    "total_tokens": 5062
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425608,
+  "created_at": 1777425534,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0ed80e1c70e3689b0069f15c7eb07c819d8c24bfa3cb39f5e0",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0ed80e1c70e3689b0069f15c7f5354819dbd30843ec64503fe",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `yt`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the model block so each parameter is given its built-in prior before any later use. Vectorized the group prior from indexed loop statements to `ag ~ multi_normal(...)`, and vectorized the protected data observation to the top-level statement `yt ~ multi_normal(...)`.\\n\\nThe original data likelihood used `yt[i, 2]` inside the mean for `yt[i]` before the observation statement. This was rewritten algebraically as the equivalent marginal bivariate normal for `(yt[i, 1], yt[i, 2])`: the residual transform `(yt1, yt2) -> (yt1 - b * yt2, yt2)` has unit Jacobian, so the corresponding transformed mean and covariance preserve the same log density without reading protected `yt` before scoring it.\\n\\nNo data fields were added or changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> J;\\n  int<lower=0> N;\\n  array[N] int<lower=1, upper=J> siteset;\\n  array[N] vector[2] yt;\\n  vector[N] z;\\n}\\nparameters {\\n  array[J] vector[2] ag;\\n  real b;\\n  real d;\\n  real<lower=-1, upper=1> rho_ag;\\n  real<lower=-1, upper=1> rho_yt;\\n  vector[2] mu_ag;\\n  real<lower=0, upper=100> sigma_a;\\n  real<lower=0, upper=100> sigma_g;\\n  real<lower=0, upper=100> sigma_t;\\n  real<lower=0, upper=100> sigma_y;\\n}\\nmodel {\\n  vector[J] a;\\n  vector[J] g;\\n  matrix[2, 2] Sigma_ag;\\n  matrix[2, 2] Sigma_yt;\\n  array[N] vector[2] yt_hat;\\n  real cov_yt_resid;\\n  real var_t;\\n  \\n  // data level\\n  sigma_y ~ uniform(0, 100);\\n  sigma_t ~ uniform(0, 100);\\n  rho_yt ~ uniform(-1, 1);\\n  d ~ normal(0, 31.6);\\n  b ~ normal(0, 31.6);\\n  \\n  // group level\\n  sigma_a ~ uniform(0, 100);\\n  sigma_g ~ uniform(0, 100);\\n  rho_ag ~ uniform(-1, 1);\\n  mu_ag ~ normal(0, 31.6);\\n  \\n  Sigma_ag[1, 1] = pow(sigma_a, 2);\\n  Sigma_ag[2, 2] = pow(sigma_g, 2);\\n  Sigma_ag[1, 2] = rho_ag * sigma_a * sigma_g;\\n  Sigma_ag[2, 1] = Sigma_ag[1, 2];\\n  \\n  ag ~ multi_normal(mu_ag, Sigma_ag);\\n  \\n  for (j in 1 : J) {\\n    a[j] = ag[j, 1];\\n    g[j] = ag[j, 2];\\n  }\\n  \\n  cov_yt_resid = rho_yt * sigma_y * sigma_t;\\n  var_t = pow(sigma_t, 2);\\n  Sigma_yt[1, 1] = pow(sigma_y, 2) + 2 * b * cov_yt_resid\\n                    + pow(b, 2) * var_t;\\n  Sigma_yt[2, 2] = var_t;\\n  Sigma_yt[1, 2] = cov_yt_resid + b * var_t;\\n  Sigma_yt[2, 1] = Sigma_yt[1, 2];\\n  \\n  for (i in 1 : N) {\\n    yt_hat[i, 2] = g[siteset[i]] + d * z[i];\\n    yt_hat[i, 1] = a[siteset[i]] + b * yt_hat[i, 2];\\n  }\\n  \\n  yt ~ multi_normal(yt_hat, Sigma_yt);\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":4,\\\"N\\\":1,\\\"siteset\\\":[4],\\\"yt\\\":[[6.215153121525856,6.421225739956876]],\\\"z\\\":[3.1997537493558026]}\",\"protected_variables\":[\"yt\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0ed80e1c70e3689b0069f15cc44638819daf18c1daaa994c1e",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3574,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7785,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 11359
+  },
+  "user": null
+}

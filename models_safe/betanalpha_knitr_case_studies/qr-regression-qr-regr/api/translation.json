@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"M\":1,\"N\":5,\"X\":[[4.203632243761758,4.068335508049714,6.094982411785829,5.134059952157438,4.345512643674157]],\"y\":[5.0,3.0,5.0,3.0,5.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  int<lower=1> M;\n  matrix[M, N] X;\n  vector[N] y;\n}\n\ntransformed data {\n  // Compute, thin, and then scale QR decomposition\n  matrix[N, M] Q = qr_Q(X')[, 1:M] * N;\n  matrix[M, M] R = qr_R(X')[1:M, ] / N;\n  matrix[M, M] R_inv = inverse(R);\n  matrix[M, M] beta_tilde_cov = 100 * R * R';\n}\n\nparameters {\n  vector[M] beta_tilde;\n  real alpha;\n  real<lower=0> sigma;\n}\n\ntransformed parameters {\n  vector[M] beta = R_inv * beta_tilde;\n}\n\nmodel {\n  beta_tilde ~ multi_normal(rep_vector(0, M), beta_tilde_cov);\n  alpha ~ normal(0, 10);\n  sigma ~ cauchy(0, 10);\n\n  y ~ normal(Q * beta_tilde + alpha, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the original model put the prior sampling statement on transformed parameter `beta`, which SafeStan does not allow. The rewritten model places the equivalent built-in multivariate normal prior on the top-level parameter `beta_tilde`. Since `beta = R_inv * beta_tilde`, the induced covariance for `beta_tilde` is `100 * R * R'`, computed deterministically from context data in transformed data as `beta_tilde_cov`. The protected-data likelihood `y ~ normal(Q * beta_tilde + alpha, sigma)` is unchanged, and no data fields were added.\n"
+}

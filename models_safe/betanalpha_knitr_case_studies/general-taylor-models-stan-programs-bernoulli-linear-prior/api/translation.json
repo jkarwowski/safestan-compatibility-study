@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"M\":1,\"N\":1,\"X\":[[5.097738602804075]],\"x0\":[5.7287137584077055]}",
+  "model_safe_stan": "data {\n  int<lower=0> M; // Number of covariates\n  int<lower=0> N; // Number of observations\n\n  vector[M] x0;   // Covariate baselines\n  matrix[N, M] X; // Covariate design matrix\n}\n\ntransformed data {\n  matrix[N, M] deltaX;\n  for (n in 1:N) {\n    deltaX[n,] = X[n] - x0';\n  }\n}\n\nparameters {\n  real alpha;      // Intercept\n  vector[M] beta;  // Linear slopes\n}\n\ntransformed parameters {\n  vector<lower=0, upper=1>[N] p = alpha + deltaX * beta;\n}\n\nmodel {\n  // Prior model\n  alpha ~ normal(0, 1);\n  beta ~ normal(0, 1);\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  array[N] int y_pred = bernoulli_rng(p);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none. The program does not observe any top-level data variable with a sampling statement; `M`, `N`, `x0`, and `X` are context inputs only.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the explicit `reject(\"\")` gate enforcing `0 <= alpha + deltaX[n,] * beta <= 1` for every observation with a constrained transformed parameter `p = alpha + deltaX * beta` declared as `vector<lower=0, upper=1>[N]`. This preserves the same parameter support and unnormalized density while removing the forbidden `reject()` call. `data_safe.json` is unchanged.\n"
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 2, \"airport\": [1, 1], \"n_airport\": 1, \"n_treatment\": 4, \"treatment\": [3, 4], \"y\": [2.0, 2.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> n_airport;\n  int<lower=0> n_treatment;\n  array[N] int<lower=1, upper=n_airport> airport;\n  array[N] int<lower=1, upper=n_treatment> treatment;\n  vector[N] y;\n}\nparameters {\n  vector[n_airport] d_raw;\n  vector[n_treatment] g_raw;\n  real mu;\n  real mu_d_raw;\n  real mu_g_raw;\n  real<lower=0, upper=100> sigma_d_raw;\n  real<lower=0, upper=100> sigma_g_raw;\n  real<lower=0, upper=100> sigma_y;\n  real xi_d;\n  real<lower=0, upper=100> xi_g;\n}\ntransformed parameters {\n  vector[n_airport] d;\n  vector[n_treatment] g;\n  real<lower=0> sigma_d;\n  real<lower=0> sigma_g;\n  vector[N] y_hat;\n  \n  g = xi_g * (g_raw - mean(g_raw));\n  d = xi_d * (d_raw - mean(d_raw));\n  sigma_g = xi_g * sigma_g_raw;\n  sigma_d = abs(xi_d) * sigma_d_raw;\n  for (i in 1 : N) {\n    y_hat[i] = mu + g[treatment[i]] + d[airport[i]];\n  }\n}\nmodel {\n  sigma_y ~ uniform(0, 100);\n  sigma_d_raw ~ uniform(0, 100);\n  sigma_g_raw ~ uniform(0, 100);\n  xi_g ~ uniform(0, 100);\n  xi_d ~ normal(0, 100);\n  mu ~ normal(0, 100);\n  mu_g_raw ~ normal(0, 1);\n  mu_d_raw ~ normal(0, 1);\n  g_raw ~ normal(100 * mu_g_raw, sigma_g_raw);\n  d_raw ~ normal(100 * mu_d_raw, sigma_d_raw);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The only observed data variable scored by a sampling statement is top-level data variable `y`, and it appears exactly once on the left side of a built-in distribution statement. All top-level parameters have exactly one built-in prior sampling statement before their model-block use through `y_hat`.\n"
+}

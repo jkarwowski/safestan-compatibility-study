@@ -1,0 +1,17 @@
+{
+  "N": 2,
+  "group_id": [
+    1,
+    2
+  ],
+  "n_groups": 2,
+  "n_scenarios": 1,
+  "scenario_id": [
+    1,
+    1
+  ],
+  "y": [
+    2.0,
+    2.0
+  ]
+}

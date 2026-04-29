@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/basic-estimators-negative-binomial2/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:25:03+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/basic-estimators-negative-binomial2",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_05e2d4c4adec33140069f15de69ecc81a385a52cc108c645a2",
+  "safe_dir": "models_safe/example_models/basic-estimators-negative-binomial2",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:24:54+00:00",
+  "usage": {
+    "input_tokens": 2941,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 724,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3665
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":2,\"K\":1,\"N\":1,\"team0\":[[1,1]],\"team1\":[[1,1]],\"y\":[0]}",
+  "model_safe_stan": "/**\n * Bradley-Terry model for teams, where each team is made up of\n * players, and the ability of a team is the sum of the abilities of\n * its players.\n */\ndata {\n  int<lower=0> K; // players\n  int<lower=0> J; // players per team\n  int<lower=0> N; // matches\n  array[N, J] int<lower=1, upper=K> team0; // team 0 players\n  array[N, J] int<lower=1, upper=K> team1; // team 1 players\n  array[N] int<lower=0, upper=1> y; // winner\n}\nparameters {\n  vector[K] alpha_std;\n  real<lower=0> sigma;\n}\ntransformed parameters {\n  vector[K] alpha = sigma * alpha_std; // alpha ~ normal(0, sigma)\n}\nmodel {\n  vector[N] eta;\n  sigma ~ lognormal(0, 0.5); // zero avoiding, weakly informative\n  alpha_std ~ normal(0, 1); // hierarchical, zero centered\n  for (n in 1 : N) {\n    // additive Bradley-Terry model\n    eta[n] = sum(alpha[team1[n]]) - sum(alpha[team0[n]]);\n  }\n  y ~ bernoulli_logit(eta);\n}\ngenerated quantities {\n  array[K] int<lower=1, upper=K> ranking; // rank of player ability\n  {\n    array[K] int ranked_index = sort_indices_desc(alpha);\n    for (k in 1 : K) {\n      ranking[ranked_index[k]] = k;\n    }\n  }\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: rewrote the pointwise likelihood inside the loop into a deterministic computation of a vector `eta` followed by a single vectorized sampling statement `y ~ bernoulli_logit(eta)`. This preserves the same Bernoulli-logit likelihood while making the protected observation a top-level left-hand side used exactly once and outside loops. No data fields were added or changed.\n"
+}

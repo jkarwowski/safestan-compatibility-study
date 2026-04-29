@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423814,
+  "created_at": 1777423766,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0dfd79bc3e0eafaa0069f15596d72c819fbb43272665667284",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0dfd79bc3e0eafaa0069f15597d464819f81b880e531ea42e3",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: none. The program contains no model-block sampling statements and no top-level data variable is observed/scored as a likelihood term.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: removed the two `reject(...)` calls from `transformed data`, because SafeStan forbids `reject()`/`fatal_error()` constructs. These statements were deterministic data-validation guards only; there are no parameters, priors, likelihood terms, or protected observations in this program. The supplied JSON data were preserved unchanged and no fields were added.\\n\",\"model_safe_stan\":\"data {\\n   // Number of observations\\n  int<lower=0> N;\\n\\n  // Main factor indices\\n  int<lower=0> N_main_factors;\\n  array[N_main_factors] int<lower=0> N_main_factor_levels;\\n  array[N_main_factors, N] int<lower=1> main_factor_level_idx;\\n}\\n\\ntransformed data {\\n  int N1 = choose(N_main_factors, 2);\\n  int N2 = choose(N_main_factors, 3);\\n}\\n\\ngenerated quantities {\\n  // First-order interaction indices\\n  int N_inter1_factors = N1;          // Number of interaction factors\\n  array[N1] int N_inter1_factor_levels;     // Number of levels within each interaction factor\\n  array[N1] int inter1_factor1_idx;         // First main factor in interaction\\n  array[N1] int inter1_factor2_idx;         // Second main factor in interaction\\n  array[N1, N] int inter1_factor_level_idx; // Interaction level assignments for each observation\\n\\n  // Second-order interaction indices\\n  int N_inter2_factors = N2;          // Number of interaction factors\\n  array[N2] int N_inter2_factor_levels;     // Number of levels within each interaction factor\\n  array[N2] int inter2_factor1_idx;         // First main factor in interaction\\n  array[N2] int inter2_factor2_idx;         // Second main factor in interaction\\n  array[N2] int inter2_factor3_idx;         // Third main factor in interaction\\n  array[N2, N] int inter2_factor_level_idx; // Interaction level assignments for each observation\\n\\n  // Construct first-order interactions\\n  for (i in 1:N_main_factors) {\\n    // Number of first-order interactions with first index less than i\\n    int N_i = (i - 1) * N_main_factors - (i - 1) * i / 2;\\n\\n    for (j in (i + 1):N_main_factors) {\\n      int idx = N_i + j - i;\\n      N_inter1_factor_levels[idx] = N_main_factor_levels[i] * N_main_factor_levels[j];\\n      inter1_factor1_idx[idx] = i;\\n      inter1_factor2_idx[idx] = j;\\n    }\\n  }\\n\\n  // Construct second-order interactions\\n  for (i in 1:N_main_factors) {\\n    // Number of second-order interactions with first index less than i\\n    int N_i =   (i - 1) * N_main_factors * (N_main_factors - 1) / 2\\n              - N_main_factors * (i - 1) * i / 2\\n              + (i - 1) * i * (i + 1) / 6;\\n\\n    for (j in (i + 1):N_main_factors) {\\n      // Number of second-order interactions with first index equal to i\\n      // and second index less than j\\n      int N_j =   (j - 1) * N_main_factors - (j - 1) * j / 2\\n                - (N_main_factors * i - i * (i + 1) / 2);\\n\\n      for (k in (j + 1):N_main_factors) {\\n        int idx = N_i + N_j + (k - j);\\n        N_inter2_factor_levels[idx] =   N_main_factor_levels[i]\\n                                      * N_main_factor_levels[j]\\n                                      * N_main_factor_levels[k];\\n        inter2_factor1_idx[idx] = i;\\n        inter2_factor2_idx[idx] = j;\\n        inter2_factor3_idx[idx] = k;\\n      }\\n    }\\n  }\\n\\n  for (n in 1:N) {\\n    // Assign first-order interactions\\n    for (i in 1:N_main_factors) {\\n      int N_i = (i - 1) * N_main_factors - (i - 1) * i / 2;\\n\\n      for (j in (i + 1):N_main_factors) {\\n        int idx = N_i + j - i;\\n        inter1_factor_level_idx[idx, n]\\n          =   (main_factor_level_idx[i, n] - 1) * N_main_factor_levels[j]\\n            +  main_factor_level_idx[j, n];\\n      }\\n    }\\n\\n    // Assign second-order interactions\\n    for (i in 1:N_main_factors) {\\n      int N_i =   (i - 1) * N_main_factors * (N_main_factors - 1) / 2\\n                - N_main_factors * (i - 1) * i / 2\\n                + (i - 1) * i * (i + 1) / 6;\\n\\n      for (j in (i + 1):N_main_factors) {\\n        int N_j =   (j - 1) * N_main_factors - (j - 1) * j / 2\\n                  - (N_main_factors * i - i * (i + 1) / 2);\\n\\n        for (k in (j + 1):N_main_factors) {\\n          int idx = N_i + N_j + (k - j);\\n          inter2_factor_level_idx[idx, n]\\n            =   (main_factor_level_idx[i, n] - 1) * N_main_factor_levels[j] * N_main_factor_levels[k]\\n              + (main_factor_level_idx[j, n] - 1) * N_main_factor_levels[k]\\n              +  main_factor_level_idx[k, n];\\n        }\\n      }\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":2,\\\"N_all_main_factor_levels\\\":5,\\\"N_main_factor_levels\\\":[1,4],\\\"N_main_factors\\\":2,\\\"main_factor_end_idx\\\":[1,5],\\\"main_factor_level_idx\\\":[[1,1],[1,1]],\\\"main_factor_start_idx\\\":[1,2],\\\"packed_main_factor_idx\\\":[1,2,2,2,2]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0dfd79bc3e0eafaa0069f155bf53a8819fbeef06eb7fcf8bee",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4265,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 5155,
+    "output_tokens_details": {
+      "reasoning_tokens": 3624
+    },
+    "total_tokens": 9420
+  },
+  "user": null
+}

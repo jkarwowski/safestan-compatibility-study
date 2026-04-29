@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777431958,
+  "created_at": 1777431926,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_00ee2c7501ea9af70069f175767a648191831ecda86f7faeb9",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_00ee2c7501ea9af70069f17577137c8191b3adedaa4ecd524c",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`, `z`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the model block so that every parameter is given its built-in prior before any parameter-dependent computation. In the original program, `lambda` was computed from `beta_1` through `beta_5` and `sigma_1` through `sigma_5` before those parameters' prior sampling statements. The rewritten model places the priors first and then computes `lambda` in a local nested block before the likelihood. This is a same-density mechanical rewrite because multiplication of prior and likelihood factors is order-independent. No data fields or values were changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;  // number of observations\\n  int<lower=0> D;  // number of days\\n  int<lower=0> O;  // number of officers\\n  int<lower=0> W;  // number of day of week\\n  int<lower=0> M;  // number of months\\n  int<lower=0> H;  // number of holidays\\n  int<lower=0> P;  // number of periods\\n  array[N] int day;\\n  array[N] int officer;\\n  array[N] int week;\\n  array[N] int month;\\n  array[N] int holiday;\\n  array[N] int period;\\n  array[N] int y;        // number of tickets written per officer per day\\n  array[D] int z;        // number of crashes per day\\n}\\n\\nparameters {\\n  real beta_0;\\n  array[O] real beta_1;\\n  array[W] real beta_2;\\n  array[M] real beta_3;\\n  array[H] real beta_4;\\n  array[P] real beta_5;\\n  vector[D] epsilon;\\n\\n  real<lower=0> sigma;\\n  real<lower=0> sigma_0;\\n  real<lower=0> sigma_1;\\n  real<lower=0> sigma_2;\\n  real<lower=0> sigma_3;\\n  real<lower=0> sigma_4;\\n  real<lower=0> sigma_5;\\n}\\n\\nmodel {\\n  // Prior\\n  beta_0  ~ normal(0, 1);\\n  beta_1  ~ normal(0, 1);\\n  beta_2  ~ normal(0, 1);\\n  beta_3  ~ normal(0, 1);\\n  beta_4  ~ normal(0, 1);\\n  beta_5  ~ normal(0, 1);\\n  epsilon ~ normal(0, 1);\\n\\n  sigma   ~ chi_square(1);\\n  sigma_0 ~ chi_square(1);\\n  sigma_1 ~ chi_square(1);\\n  sigma_2 ~ chi_square(1);\\n  sigma_3 ~ chi_square(1);\\n  sigma_4 ~ chi_square(1);\\n  sigma_5 ~ chi_square(1);\\n\\n  // Likelihood\\n  {\\n    vector[N] lambda;\\n    for(n in 1:N) lambda[n] = sigma_1 * beta_1[officer[n]] +\\n                              sigma_2 * beta_2[week[n]] +\\n                              sigma_3 * beta_3[month[n]] +\\n                              sigma_4 * beta_4[holiday[n]] +\\n                              sigma_5 * beta_5[period[n]];\\n\\n    y ~ poisson_log(sigma * epsilon[day] + lambda);\\n  }\\n  z ~ poisson_log(sigma_0 * epsilon + beta_0);\\n}\\n\",\"data_safe_json\":\"{\\\"D\\\":3,\\\"H\\\":1,\\\"M\\\":1,\\\"N\\\":1,\\\"O\\\":1,\\\"P\\\":3,\\\"W\\\":1,\\\"day\\\":[6],\\\"holiday\\\":[4],\\\"month\\\":[4],\\\"officer\\\":[6],\\\"period\\\":[6],\\\"week\\\":[2],\\\"y\\\":[1],\\\"z\\\":[6,6,3]}\",\"protected_variables\":[\"y\",\"z\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_00ee2c7501ea9af70069f1759055e08191b8fb5830004421fe",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3620,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3019,
+    "output_tokens_details": {
+      "reasoning_tokens": 2069
+    },
+    "total_tokens": 6639
+  },
+  "user": null
+}

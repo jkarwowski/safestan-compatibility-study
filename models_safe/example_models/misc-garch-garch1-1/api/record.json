@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-garch-garch1-1/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:18:13+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-garch-garch1-1",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0341b4441629cb3d0069f16a43e49081a1a2da4189a2903239",
+  "safe_dir": "models_safe/example_models/misc-garch-garch1-1",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:17:39+00:00",
+  "usage": {
+    "input_tokens": 3200,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2610,
+    "output_tokens_details": {
+      "reasoning_tokens": 2397
+    },
+    "total_tokens": 5810
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

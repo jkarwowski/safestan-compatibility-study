@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/fims-aus-jpn-irt-2pl-latent-reg-irt/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:45:27+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/fims-aus-jpn-irt-2pl-latent-reg-irt",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_03d1b1b49269a0fc0069f170686b4c8197a2d7c486b1be73ce",
+  "safe_dir": "models_safe/posteriordb/fims-aus-jpn-irt-2pl-latent-reg-irt",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:43:52+00:00",
+  "usage": {
+    "input_tokens": 3901,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 8308,
+    "output_tokens_details": {
+      "reasoning_tokens": 7250
+    },
+    "total_tokens": 12209
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

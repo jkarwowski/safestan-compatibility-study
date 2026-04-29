@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 2}",
+  "model_safe_stan": "data {\n  int N;\n}\n\ngenerated quantities {\n  // Simulate model configuration from prior model\n  real<lower=0> lambda = inv_gamma_rng(3.5, 9);\n  real<lower=0, upper=1> theta = beta_rng(3, 3);\n\n  // Simulate data from observational model\n  array[N] int y = rep_array(0, N);\n  for (n in 1:N)\n    if (!bernoulli_rng(theta))\n      y[n] = poisson_rng(lambda);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The only top-level data variable is `N`, which is a context/input size and is not observed with a sampling statement.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program contains no model-block likelihood or parameter priors; it is a generated-quantities prior predictive simulator using `N` only as configuration.\n"
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427911,
+  "created_at": 1777427770,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_041a34e0198768750069f1653ab2dc819590abcea5803f29f5",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_041a34e0198768750069f1653b4d1881958cc8c198d38dd099",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: kept `y` as the only protected observation and moved all parameter priors before the likelihood so no parameter is used before its prior. Replaced the manual ICAR `target += -0.5 * dot_self(...)` term with a built-in `multi_normal_prec` prior for the top-level parameter `phi_raw`; the precision matrix is computed deterministically in `transformed data` as B'B, where B maps `phi_raw` to the neighbor edge differences used in the original penalty. Replaced the explicit transformed-data `reject` check with a constrained transformed-data declaration for `N_singletons`; this enforces the same valid input condition without `reject`. No fields were added to `data_safe.json`.\\n\",\"model_safe_stan\":\"functions {\\n  /**\\n   * Constrain sum-to-zero vector\\n   *\\n   * @param y unconstrained zero-sum parameters\\n   * @return vector z, the vector whose slices sum to zero\\n   */\\n  vector zero_sum_constrain(vector y) {\\n    int N = num_elements(y);\\n    vector[N + 1] z = zeros_vector(N + 1);\\n    real sum_w = 0;\\n    for (ii in 1:N) {\\n      int i = N - ii + 1; \\n      real n = i;\\n      real w = y[i] * inv_sqrt(n * (n + 1));\\n      sum_w += w;\\n      z[i] += sum_w;     \\n      z[i + 1] -= w * n;    \\n    }\\n    return z;\\n  }\\n\\n  /**\\n   * Component-wise constrain sum-to-zero vectors\\n   *\\n   * @param phi unconstrained vector of zero-sum slices\\n   * @param idxs component start and end indices\\n   * @param sizes component sizes\\n   * @return vector phi_ozs, the vector whose slices sum to zero\\n   */\\n  vector zero_sum_components(vector phi, array[ , ] int idxs, array[] int sizes) {\\n    vector[sum(sizes)] phi_ozs;\\n    int idx_phi = 1;\\n    int idx_ozs = 1;\\n    for (i in 1:size(sizes)) {\\n      int n = sizes[i];\\n      phi_ozs[idx_ozs : idx_ozs + n - 1] = \\n        zero_sum_constrain(segment(phi, idx_phi, n - 1));\\n      idx_phi += n - 1;\\n      idx_ozs += n;\\n    }\\n    return phi_ozs;\\n  }\\n}\\n\\ndata {\\n  int<lower=0> N;\\n  array[N] int<lower=0> y; // count outcomes\\n  vector<lower=0>[N] E; // exposure\\n  int<lower=1> K; // num covariates\\n  matrix[N, K] xs; // design matrix\\n\\n  int<lower=0, upper=N> N_components;\\n  array[N_components] int<lower=1, upper=N> component_sizes;\\n  vector<lower=0>[N_components] scaling_factors;\\n\\n  // neighbor graph structure\\n  int<lower = 0> N_edges;  // number of neighbor pairs\\n  array[2, N_edges] int<lower = 1, upper = (sum(component_sizes))> neighbors;  // columnwise adjacent\\n}\\n\\ntransformed data {\\n  int<lower=0> N_connected = sum(component_sizes);\\n  int<lower=0> N_singletons = N - N_connected;\\n  int<lower=0> N_phi_raw = N_connected - N_components;\\n  vector<lower=0>[N_connected] taus;\\n  array[N_components, 2] int component_idxs;\\n  int idx = 1;\\n  matrix[N_connected, N_phi_raw] zero_sum_basis;\\n  matrix[N_edges, N_phi_raw] edge_basis;\\n  matrix[N_phi_raw, N_phi_raw] phi_raw_precision;\\n  vector[N] log_E;\\n  vector[K] means_xs;  // column means of xs before centering\\n  matrix[N, K] xs_centered;  // centered version of xs\\n\\n  for (n in 1:N_components) {\\n    taus[idx: component_sizes[n] + idx - 1]\\n      = rep_vector(scaling_factors[n], component_sizes[n]);\\n    component_idxs[n, 1] = idx;\\n    component_idxs[n, 2] = component_sizes[n] + idx - 1;\\n    idx += component_sizes[n];\\n  }\\n\\n  // ICAR precision in phi_raw coordinates.\\n  zero_sum_basis = rep_matrix(0, N_connected, N_phi_raw);\\n  edge_basis = rep_matrix(0, N_edges, N_phi_raw);\\n  for (j in 1:N_phi_raw) {\\n    vector[N_phi_raw] basis_raw = rep_vector(0, N_phi_raw);\\n    basis_raw[j] = 1;\\n    zero_sum_basis[, j] = zero_sum_components(basis_raw, component_idxs, component_sizes);\\n  }\\n  for (e in 1:N_edges) {\\n    for (j in 1:N_phi_raw) {\\n      edge_basis[e, j] = zero_sum_basis[neighbors[1, e], j] - zero_sum_basis[neighbors[2, e], j];\\n    }\\n  }\\n  phi_raw_precision = edge_basis' * edge_basis;\\n\\n  log_E = log(E);\\n  // center continuous predictors \\n  for (k in 1:K) {\\n    means_xs[k] = mean(xs[, k]);\\n    xs_centered[, k] = xs[, k] - means_xs[k];\\n  }\\n}\\n\\nparameters {\\n  real beta0;  // intercept\\n  vector[K] betas;  // covariates\\n  \\n  real<lower=0> sigma;  // random effects scale\\n  real<lower=0, upper=1> rho;  // proportion unstructured vs. spatially structured variance\\n  \\n  vector[N_connected] theta; // heterogeneous effects\\n  vector[N_singletons] singletons_re; // random effects for areas with no neighbours\\n\\n  // concatenation of unconstrained vectors, each size N - 1\\n  vector[N_connected - N_components] phi_raw;\\n}\\n\\ntransformed parameters {\\n  vector[N_connected] phi = zero_sum_components(phi_raw, component_idxs, component_sizes);\\n  vector[N] gamma;  // BYM2, per Freni-Sterrantino\\n  gamma[1 : N_connected] = sqrt(1 - rho) * theta + sqrt(rho * inv(taus)) .* phi;\\n  gamma[N_connected + 1 : N] = singletons_re;\\n}\\n\\nmodel {\\n  beta0 ~ std_normal();\\n  betas ~ std_normal();\\n  theta ~ std_normal();\\n  singletons_re ~ std_normal();\\n  sigma ~ std_normal();\\n  rho ~ beta(0.5, 0.5);\\n  phi_raw ~ multi_normal_prec(rep_vector(0, N_phi_raw), phi_raw_precision);\\n  y ~ poisson_log(log_E + beta0 + xs_centered * betas + gamma * sigma);\\n}\\n\\ngenerated quantities {\\n  real beta_intercept = beta0 - dot_product(means_xs, betas);  // adjust intercept\\n  array[N] int y_rep;\\n  {\\n    vector[N] eta = log_E + beta0 + xs_centered * betas + gamma * sigma;\\n    y_rep = max(eta) < 26 ? poisson_log_rng(eta) : rep_array(-1, N);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"E\\\":[0.1,0.2,0.30000000000000004,0.4,0.5,0.6000000000000001,0.7000000000000001,0.1,0.2,0.30000000000000004,0.4,0.5,0.6000000000000001,0.7000000000000001,0.1,0.2],\\\"K\\\":3,\\\"N\\\":16,\\\"N_components\\\":4,\\\"N_edges\\\":2,\\\"component_sizes\\\":[4,4,4,4],\\\"neighbors\\\":[[4,4],[4,4]],\\\"scaling_factors\\\":[0.1,0.2,0.30000000000000004,0.4],\\\"xs\\\":[[0.1,0.2,0.30000000000000004],[0.4,0.5,0.6000000000000001],[0.7000000000000001,0.1,0.2],[0.30000000000000004,0.4,0.5],[0.6000000000000001,0.7000000000000001,0.1],[0.2,0.30000000000000004,0.4],[0.5,0.6000000000000001,0.7000000000000001],[0.1,0.2,0.30000000000000004],[0.4,0.5,0.6000000000000001],[0.7000000000000001,0.1,0.2],[0.30000000000000004,0.4,0.5],[0.6000000000000001,0.7000000000000001,0.1],[0.2,0.30000000000000004,0.4],[0.5,0.6000000000000001,0.7000000000000001],[0.1,0.2,0.30000000000000004],[0.4,0.5,0.6000000000000001]],\\\"y\\\":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_041a34e0198768750069f165bce39c81959536cee0ebf6a220",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4905,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 13661,
+    "output_tokens_details": {
+      "reasoning_tokens": 11374
+    },
+    "total_tokens": 18566
+  },
+  "user": null
+}

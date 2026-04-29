@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data choice: the observed data scored by sampling statements are `y`, `m`, and `J`. The remaining data variables (`nyears`, `R`, and `t_pred`) are context/configuration inputs.\n\nGenerated files: none.\n\nReason: the model cannot be translated to SafeStan by a minor same-density rewrite. The latent state process samples parameter elements `N1[t]` and `Nad[t]` inside a loop using user-defined `_lpdf` distributions (`real_poisson_lpdf` and `real_binomial_lpdf`), and those functions contain `reject()`. SafeStan requires sampling statements for parameters to be built-in distributions, not user-defined distributions, and disallows `_lp` functions and `reject()`. Replacing these generalized real-valued Poisson/binomial densities with built-in Stan distributions would change the support/density of the latent continuous state variables. In addition, some parameters have implicit improper flat priors, which SafeStan cannot make explicit without changing the posterior.\n"
+}

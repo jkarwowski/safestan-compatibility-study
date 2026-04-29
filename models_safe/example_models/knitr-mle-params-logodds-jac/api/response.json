@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428446,
+  "created_at": 1777428418,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_05aed880aa9f171b0069f167c2c97881a3b8ca2090ddfd8e6b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_05aed880aa9f171b0069f167c36a7c81a3939f3873f7c38edf",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the original transformed-parameter sampling statement `theta ~ uniform(0, 1)` plus manual Jacobian term `target += log(theta) + log1m(theta)` with the equivalent built-in prior `alpha ~ logistic(0, 1)`. Since `theta = inv_logit(alpha)`, `logistic_lpdf(alpha | 0, 1)` equals `log(theta) + log1m(theta)`, while the uniform density on `theta` contributes zero on its support. This removes forbidden manual target modification and ensures the top-level parameter `alpha` has exactly one built-in prior. The data were unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  real alpha;\\n}\\ntransformed parameters {\\n  real<lower=0, upper=1> theta = inv_logit(alpha);\\n}\\nmodel {\\n  alpha ~ logistic(0, 1);\\n  y ~ bernoulli(theta);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":3,\\\"y\\\":[1,1,1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_05aed880aa9f171b0069f167dbdde081a3af62fa6d389032a7",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 2960,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2375,
+    "output_tokens_details": {
+      "reasoning_tokens": 2057
+    },
+    "total_tokens": 5335
+  },
+  "user": null
+}

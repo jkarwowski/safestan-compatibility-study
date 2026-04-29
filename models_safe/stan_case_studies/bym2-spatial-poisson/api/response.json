@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338270,
-  "created_at": 1777338219,
+  "completed_at": 1777431621,
+  "created_at": 1777431577,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_015bc87e2a4ccb940069f0076b4eb48190812e95bfa8db2dfd",
+  "id": "resp_021e16bbb1beb4df0069f174193d4881a09cd48b20f1489a34",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_015bc87e2a4ccb940069f0076bfd5c8190bfbbbdc3feefdbe3",
+      "id": "rs_021e16bbb1beb4df0069f1741a2ec881a0bd0267c813960476",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood itself is a built-in `poisson_log` observation of top-level data `y`, but the model also uses a user-defined ICAR prior via `phi ~ standard_icar(edges)`, implemented by custom `_lpdf` functions and `reject()`. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use, and rejects user-defined distributions and `reject()`. Replacing the ICAR prior with a built-in multivariate normal precision prior would change the prior normalization/log density relative to the original custom ICAR density, so this is not a minor same-density translation.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observed outcome `y` is the protected interface and is scored by the Poisson likelihood. However, the model also assigns the spatial parameter `phi` a custom ICAR prior via the user-defined distribution `standard_icar`, whose implementation contains a `reject()` call and custom log-density code. SafeStan requires each parameter to have exactly one built-in prior sampling statement, and user-defined distributions in sampling statements are rejected. Replacing this ICAR prior with a built-in distribution or auxiliary construction would be a substantive density/model rewrite, not a minor mechanical SafeStan translation. The model would also require reordering priors before the likelihood, but that is not the blocking issue.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_015bc87e2a4ccb940069f0079cb1388190b1f2526feca35f8c",
+      "id": "msg_021e16bbb1beb4df0069f17443f2d481a0bbcbb101d6a0fb20",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 5346,
+    "input_tokens": 3858,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2779,
+    "output_tokens": 3311,
     "output_tokens_details": {
-      "reasoning_tokens": 2588
+      "reasoning_tokens": 3106
     },
-    "total_tokens": 8125
+    "total_tokens": 7169
   },
   "user": null
 }

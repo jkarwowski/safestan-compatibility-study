@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424895,
+  "created_at": 1777424890,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_098110f658261fa80069f159fa87348194a1c525bfb9e31e96",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_098110f658261fa80069f159fb15e88194bf2ddbb7d2a6f391",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The program has no data block, no parameters, and no model-block likelihood or prior sampling statements; it only defines a transformed-data constant and simulates generated quantities with RNG functions.\\n\",\"model_safe_stan\":\"transformed data {\\n  int<lower=0> N = 230; // Number of observations\\n}\\n\\ngenerated quantities {\\n  array[N] real t; // Temperature in F\\n  array[N] real p; // Price in cents\\n  array[N] real b; // Hotel bookings in counts\\n\\n  array[N] real s; // Sales\\n\\n  for (n in 1:N) {\\n    t[n] = normal_rng(78, 4);\\n    p[n] = normal_rng(300, 15);\\n    b[n] = normal_rng(1000 + 50 * (t[n] - 75), 200);\\n\\n    s[n] = normal_rng(  2910\\n                      + 0.75 * t[n] - 1.5 * square(t[n] - 82) - 35\\n                      - 5 * (p[n] - 300)\\n                      + 0.2 * (p[n] - 300) * (t[n] - 75)\\n                      + 0.33 * (b[n] - 1000), 100);\\n  }\\n}\\n\",\"data_safe_json\":\"{}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_098110f658261fa80069f159fdc7008194aeb7a372a007ebcf",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3082,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 659,
+    "output_tokens_details": {
+      "reasoning_tokens": 288
+    },
+    "total_tokens": 3741
+  },
+  "user": null
+}

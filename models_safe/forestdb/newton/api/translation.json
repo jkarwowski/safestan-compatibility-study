@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"K\":4,\"N\":3,\"X\":[[5.6459521327435525,4.045185063250931,5.680954098721079,4.378299233495024],[2.5052311889009546,3.851307457653573,5.3335152157049315,6.733396044947406],[4.73263447459799,3.158085774168836,4.3456355937283115,4.315706649655877]],\"y\":[3.0,3.0,3.0]}",
+  "model_safe_stan": "// ForestDB translation: Newtonian Dynamics\ndata {\n  int<lower=1> N;\n  int<lower=1> K;\n  matrix[N, K] X;\n  vector[N] y;\n}\nparameters {\n  vector[K] beta;\n  real<lower=0> sigma;\n}\nmodel {\n  beta ~ normal(0, 5);\n  sigma ~ lognormal(0, 1);\n  y ~ normal(X * beta, sigma);\n}\ngenerated quantities {\n  vector[N] mu = X * beta;\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. Context data `N`, `K`, and `X` are not protected. Parameters `beta` and `sigma` each have one built-in prior before being used in the likelihood.\n"
+}

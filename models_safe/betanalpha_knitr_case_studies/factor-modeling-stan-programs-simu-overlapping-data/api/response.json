@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423887,
+  "created_at": 1777423875,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0e4c9255c30675af0069f15603142c81958e7222d7350db1b6",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0e4c9255c30675af0069f15603c0b88195bbc0f9556f88b518",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The program has no data block, no parameters, and no model-block likelihood or prior sampling statements; it is a prior-predictive/generated-quantities simulator with an empty protected interface.\\n\",\"model_safe_stan\":\"transformed data {\\n  int N_latent = 300;\\n\\n  int N1 = 5;\\n  int N2 = 8;\\n  int N3 = 4;\\n\\n  real baseline = 5;\\n\\n  real<lower=0> delta1_tau = 4;\\n  vector[N1] delta1 = to_vector(normal_rng(rep_vector(0, N1), delta1_tau));\\n\\n  real<lower=0> delta2_tau = 7;\\n  vector[N2] delta2 = to_vector(normal_rng(rep_vector(0, N2), delta2_tau));\\n\\n  real<lower=0> delta3_tau = 5;\\n  vector[N3] delta3 = to_vector(normal_rng(rep_vector(0, N3), delta3_tau));\\n\\n  // First-order interactions\\n  int<lower=0> N_factor12_levels = N1 * N2;\\n\\n  real<lower=0> delta12_tau = 3;\\n  vector[N1 * N2] delta12 = to_vector(normal_rng(rep_vector(0, N1 * N2), delta12_tau));\\n\\n  int<lower=0> N_factor13_levels = N1 * N3;\\n\\n  real<lower=0> delta13_tau = 0.25;\\n  vector[N1 * N3] delta13 = to_vector(normal_rng(rep_vector(0, N1 * N3), delta13_tau));\\n\\n  int<lower=0> N_factor23_levels = N2 * N3;\\n\\n  real<lower=0> delta23_tau = 2;\\n  vector[N2 * N3] delta23 = to_vector(normal_rng(rep_vector(0, N2 * N3), delta23_tau));\\n\\n  // Second-order interactions\\n  int<lower=0> N_factor123_levels = N1 * N2 * N3;\\n\\n  real<lower=0> delta123_tau = 0.01;\\n  vector[N_factor123_levels] delta123 = to_vector(normal_rng(rep_vector(0, N1 * N2 * N3), delta123_tau));\\n\\n  vector[N1] factor1_level_probs = rep_vector(1.0, N1);\\n  vector[N2] factor2_level_probs = rep_vector(1.0, N2);\\n  vector[N3] factor3_level_probs = rep_vector(1.0, N3);\\n\\n  factor1_level_probs[1] = 6;\\n  factor1_level_probs[4] = 3;\\n  factor1_level_probs /= sum(factor1_level_probs);\\n\\n  factor2_level_probs[1] = 2;\\n  factor2_level_probs[3] = 5;\\n  factor2_level_probs[6] = 4;\\n  factor2_level_probs /= sum(factor2_level_probs);\\n\\n  factor3_level_probs[2] = 3;\\n  factor3_level_probs /= sum(factor3_level_probs);\\n}\\n\\ngenerated quantities {\\n  int N = N_latent;\\n\\n  int<lower=0> N_main_factors = 3;\\n  array[3] int<lower=0> N_main_factor_levels = {N1, N2, N3};\\n  array[3, N_latent] int<lower=1> main_factor_level_idx;\\n\\n  array[N_latent] real y;\\n  real sigma = 1;\\n\\n  {\\n    vector[N_latent] theta;\\n\\n\\n    array[N_latent] int factor1_idx;\\n    array[N_latent] int factor2_idx;\\n    array[N_latent] int factor3_idx;\\n\\n    array[N_latent] int factor12_idx;\\n    array[N_latent] int factor13_idx;\\n    array[N_latent] int factor23_idx;\\n    array[N_latent] int factor123_idx;\\n\\n    for (n in 1:N) {\\n      factor1_idx[n] = categorical_rng(factor1_level_probs);\\n      factor2_idx[n] = categorical_rng(factor2_level_probs);\\n      factor3_idx[n] = categorical_rng(factor3_level_probs);\\n\\n      factor12_idx[n] = (factor1_idx[n] - 1) * N2 + factor2_idx[n];\\n      factor23_idx[n] = (factor2_idx[n] - 1) * N3 + factor3_idx[n];\\n      factor13_idx[n] = (factor1_idx[n] - 1) * N3 + factor3_idx[n];\\n\\n      factor123_idx[n] =   (factor1_idx[n] - 1) * N2 * N3\\n                        + (factor2_idx[n] - 1) * N3\\n                        +  factor3_idx[n];\\n    }\\n\\n    main_factor_level_idx[1] = factor1_idx;\\n    main_factor_level_idx[2] = factor2_idx;\\n    main_factor_level_idx[3] = factor3_idx;\\n\\n    theta =  baseline\\n           + delta1[factor1_idx]\\n           + delta2[factor2_idx]\\n           + delta3[factor3_idx]\\n           + delta12[factor12_idx]\\n           + delta13[factor13_idx]\\n           + delta23[factor23_idx]\\n           + delta123[factor123_idx];\\n\\n    y = normal_rng(theta, sigma);\\n  }\\n}\\n\",\"data_safe_json\":\"{}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0e4c9255c30675af0069f1560a2844819588e65b5ab5dd95e2",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3944,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1836,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5780
+  },
+  "user": null
+}

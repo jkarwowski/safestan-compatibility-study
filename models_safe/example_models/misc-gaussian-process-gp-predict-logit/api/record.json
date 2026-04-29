@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-gaussian-process-gp-predict-logit/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:19:41+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-gaussian-process-gp-predict-logit",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "z1"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_035bb8a04015b7d00069f16a9f728481a09d60bf9575cb2f5e",
+  "safe_dir": "models_safe/example_models/misc-gaussian-process-gp-predict-logit",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:19:11+00:00",
+  "usage": {
+    "input_tokens": 3396,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2806,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 6202
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

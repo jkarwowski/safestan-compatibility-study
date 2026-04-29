@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `t_uc` for the uncensored Weibull event times and `t_rc` for the right-censored time contributions encoded through the survival probability.
+
+Generated files: none.
+
+Reason: the uncensored Weibull terms and the random-effect prior loop could be mechanically vectorized, but the right-censoring likelihood is represented as `1 ~ bernoulli(...)`, where the Bernoulli probability is a Weibull survival/CCDF expression involving `t_rc`. SafeStan sampling statements must score a top-level protected data variable or parameter with a built-in distribution, and protected observations must appear as plain identifiers exactly once. There is no same-density built-in sampling statement that scores `t_rc` with this censored survival contribution. Replacing the literal `1` by new all-one Bernoulli data would invent an observation/interface, and introducing latent event times would be a substantive augmentation of the model representation. Therefore no minor SafeStan translation is produced.

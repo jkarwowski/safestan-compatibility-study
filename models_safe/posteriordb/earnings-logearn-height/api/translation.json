@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: the model scores `log_earn`, a transformed-data value computed as `log(earn)` from the top-level data variable `earn`.\n\nGenerated files: none.\n\nReason: the likelihood is applied to a transformed-data variable rather than a plain top-level data identifier, and the parameters `beta` and `sigma` have no built-in prior sampling statements before use. Adding proper priors for these unconstrained/one-sided parameters would change the posterior, and replacing the likelihood with one directly on `earn` would change the density. Therefore this is not a minor same-density SafeStan translation.\n"
+}

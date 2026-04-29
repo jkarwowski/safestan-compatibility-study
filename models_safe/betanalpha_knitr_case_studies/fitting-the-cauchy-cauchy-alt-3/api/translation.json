@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  vector<lower=0, upper=1>[50] x_tilde;\n}\n\ntransformed parameters {\n  vector[50] x = tan(pi() * (x_tilde - 0.5));\n}\n\nmodel {\n  x_tilde ~ uniform(0, 1);\n}\n\ngenerated quantities {\n  real I = abs(x[1]) < 1 ? 1 : 0;\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added an explicit `x_tilde ~ uniform(0, 1)` prior. The original model relied on the implicit uniform density from the finite `<lower=0, upper=1>` constraint on `x_tilde`; the explicit uniform prior has log density zero on the constrained support, so this is a same-density mechanical rewrite that satisfies SafeStan's requirement that each parameter have exactly one built-in prior sampling statement.\n"
+}

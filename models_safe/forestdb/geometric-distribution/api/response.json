@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337521,
-  "created_at": 1777337422,
+  "completed_at": 1777429742,
+  "created_at": 1777429713,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_02b190aec57f05a80069f0044e384c81a39446760362c72bad",
+  "id": "resp_08c18e632bb7d3db0069f16cd1e580819cba8dd87953658242",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_02b190aec57f05a80069f0044ecb1081a39e6e5744cbafd227",
+      "id": "rs_08c18e632bb7d3db0069f16cd4128c819c90b6b8b2436e3286",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_failures`, the failure-count version of the original trial-count data `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the deterministic shift `y_failures[n] = y[n] - 1` from Stan `transformed data` into `data_safe.json`, and made `y_failures` a top-level data variable so it can be protected and scored directly. The original `y` vector is recoverable as `y_failures[n] + 1`, so this is a one-to-one deterministic reshape of the observations and preserves the posterior/log density. The parameter prior `theta ~ beta(1, 1)` and the likelihood distribution are otherwise unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  array[N] int<lower=0> y_failures;\\n}\\nparameters {\\n  real<lower=0, upper=1> theta;\\n}\\nmodel {\\n  theta ~ beta(1, 1);\\n  y_failures ~ neg_binomial_2((1 - theta) / theta, 1);\\n}\\ngenerated quantities {\\n  int y_rep = 1 + neg_binomial_2_rng((1 - theta) / theta, 1);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":10,\\\"y_failures\\\":[0,1,0,3,2,0,1,4,1,0]}\",\"protected_variables\":[\"y_failures\"]}",
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_failures`, a deterministic shifted copy of the original observations with `y_failures[n] = y[n] - 1`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved `y_failures` from `transformed data` to top-level `data` so the observed likelihood variable is a plain protected data identifier on the left side of a built-in sampling statement. The supplied `data_safe.json` adds `y_failures` deterministically from `y`; for this run, `[1]` becomes `[0]`. The prior on `theta` and the negative-binomial likelihood are otherwise unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  array[N] int<lower=1> y;\\n  array[N] int<lower=0> y_failures;\\n}\\nparameters {\\n  real<lower=0, upper=1> theta;\\n}\\nmodel {\\n  theta ~ beta(1, 1);\\n  y_failures ~ neg_binomial_2((1 - theta) / theta, 1);\\n}\\ngenerated quantities {\\n  int y_rep = 1 + neg_binomial_2_rng((1 - theta) / theta, 1);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":1,\\\"y\\\":[1],\\\"y_failures\\\":[0]}\",\"protected_variables\":[\"y_failures\"]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_02b190aec57f05a80069f004aee47c81a383a28c4c79362dbf",
+      "id": "msg_08c18e632bb7d3db0069f16cec2580819cb7c367541c035b3c",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2619,
+    "input_tokens": 3067,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 6575,
+    "output_tokens": 2418,
     "output_tokens_details": {
-      "reasoning_tokens": 6214
+      "reasoning_tokens": 2070
     },
-    "total_tokens": 9194
+    "total_tokens": 5485
   },
   "user": null
 }

@@ -6,4 +6,4 @@ Protected data: `C`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-No changes were required. The protected observation `C` is a top-level data variable and is observed exactly once with a plain built-in sampling statement (`C ~ lognormal(...)`) before any other use. Parameters each have one built-in prior sampling statement before the likelihood uses them through `mu_C`.
+No changes were required. `C` is the only top-level data variable scored by a sampling statement, and it is observed exactly once with a plain built-in `lognormal` sampling statement. The remaining data variables (`t0`, `C0`, `D`, `V`, `N_t`, and `times`) are context inputs used to construct the ODE prediction. Each parameter has exactly one built-in prior before the likelihood uses the transformed prediction `mu_C`.

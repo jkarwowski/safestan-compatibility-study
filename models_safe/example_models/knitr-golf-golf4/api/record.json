@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-golf-golf4/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:04:42+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-golf-golf4",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_rate_safestan"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0ad28f7adb44de600069f16715704481a3a2a59270893338b7",
+  "safe_dir": "models_safe/example_models/knitr-golf-golf4",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:04:05+00:00",
+  "usage": {
+    "input_tokens": 3244,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3248,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 6492
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

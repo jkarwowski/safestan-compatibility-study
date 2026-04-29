@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337546,
-  "created_at": 1777337534,
+  "completed_at": 1777429935,
+  "created_at": 1777429926,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_01a94d5ed47d0bee0069f004be19a081a388d6d0f40c7cd414",
+  "id": "resp_0b740637e2ce6bd50069f16da6d454819690748c27276e88a8",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_01a94d5ed47d0bee0069f004beb96c81a3864c09e884b15873",
+      "id": "rs_0b740637e2ce6bd50069f16da777088196ac1a9f629f106192",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with the built-in sampling statement `y ~ normal(X * beta, sigma);` after the parameters `beta` and `sigma` have each received their prior sampling statements.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  int<lower=1> K;\\n  matrix[N, K] X;\\n  vector[N] y;\\n}\\nparameters {\\n  vector[K] beta;\\n  real<lower=0> sigma;\\n}\\nmodel {\\n  beta ~ normal(0, 5);\\n  sigma ~ lognormal(0, 1);\\n  y ~ normal(X * beta, sigma);\\n}\\ngenerated quantities {\\n  vector[N] mu = X * beta;\\n}\\n\\n\",\"data_safe_json\":\"{\\\"N\\\":12,\\\"K\\\":2,\\\"X\\\":[[1.0,-1.0],[1.0,-0.7],[1.0,-0.4],[1.0,-0.1],[1.0,0.0],[1.0,0.2],[1.0,0.4],[1.0,0.6],[1.0,0.8],[1.0,1.0],[1.0,1.2],[1.0,1.5]],\\\"y\\\":[0.3,0.7,0.8,1.1,1.2,1.5,1.7,1.9,2.2,2.4,2.5,3.0]}\",\"protected_variables\":[\"y\"]}",
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The response `y` is a top-level data variable observed exactly once with a built-in `normal` sampling statement, after the parameters `beta` and `sigma` receive their built-in priors. The remaining data variables `N`, `K`, and `X` are context inputs and are not protected.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  int<lower=1> K;\\n  matrix[N, K] X;\\n  vector[N] y;\\n}\\nparameters {\\n  vector[K] beta;\\n  real<lower=0> sigma;\\n}\\nmodel {\\n  beta ~ normal(0, 5);\\n  sigma ~ lognormal(0, 1);\\n  y ~ normal(X * beta, sigma);\\n}\\ngenerated quantities {\\n  vector[N] mu = X * beta;\\n}\\n\",\"data_safe_json\":\"{\\n  \\\"K\\\": 2,\\n  \\\"N\\\": 1,\\n  \\\"X\\\": [\\n    [\\n      3.4122733433688595,\\n      5.938328956212357\\n    ]\\n  ],\\n  \\\"y\\\": [\\n    1.0\\n  ]\\n}\",\"protected_variables\":[\"y\"]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_01a94d5ed47d0bee0069f004c70ff081a38767808fe95bce8a",
+      "id": "msg_0b740637e2ce6bd50069f16dadbf84819683f2ec49552662c7",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2795,
+    "input_tokens": 3167,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 937,
+    "output_tokens": 863,
     "output_tokens_details": {
       "reasoning_tokens": 516
     },
-    "total_tokens": 3732
+    "total_tokens": 4030
   },
   "user": null
 }

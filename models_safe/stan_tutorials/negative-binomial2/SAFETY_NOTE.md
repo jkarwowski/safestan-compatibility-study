@@ -6,4 +6,4 @@ Protected data: `y`.
 
 Generated files: none.
 
-Reason: the observation model is a direct built-in likelihood (`y ~ neg_binomial(alpha, beta)`), but SafeStan also requires every parameter to have exactly one built-in prior before use. The parameter `alpha` has only an implicit improper flat prior on `[0, infinity)`. Adding any proper built-in prior for `alpha` would change the posterior/log density, so this cannot be translated with only a minor same-density rewrite.
+Reason: the observed count vector `y` is the modelled interface variable and is scored once by the built-in likelihood `neg_binomial(alpha, beta)`. However, SafeStan also requires every top-level parameter to have exactly one built-in prior sampling statement before use. The parameter `alpha` is constrained only to be positive and has no explicit proper built-in prior in the original model. Adding one would change the posterior/log density, so this cannot be translated with only a minor same-density rewrite.

@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `weight` is the top-level data variable whose transformed value `log_weight = log(weight)` is scored by the likelihood.\n\nGenerated files: none.\n\nReason: the model cannot be made SafeStan-compatible by a minor same-density rewrite. The parameters `beta` and `sigma` have no explicit prior sampling statements; adding proper built-in priors would change the posterior, while their implicit flat/half-flat priors are not a minor SafeStan prior rewrite. In addition, the observed sampling statement scores transformed data (`log_weight`) rather than a top-level protected data variable, so preserving the exact original log density would require changing the protected data interface or likelihood representation.\n"
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":4,\"x\":[5.459627033620195,4.34795385027026,4.876193221239422,3.28924278066246],\"y\":[4.0,4.0,4.0,4.0]}",
+  "model_safe_stan": "data {\n  int N;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  real a;\n  real b;\n  real<lower=0> sigma;\n}\nmodel {\n  a ~ normal(0, 10);\n  b ~ normal(0, 10);\n  sigma ~ normal(0, 10);\n  y ~ normal(a * exp(-b * x), sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the three parameter prior sampling statements so that `a`, `b`, and `sigma` are each given their built-in prior before they are used in the likelihood for `y`. This preserves the original log density because Stan sampling statements add commutative log-density terms. No data changes were required; `N` and `x` remain context inputs.\n"
+}

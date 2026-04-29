@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/inverse-statics/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:31:04+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/inverse-statics",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0d1fcd67332157740069f16d5f61b881a2be6cf08b551f3f8b",
+  "safe_dir": "models_safe/forestdb/inverse-statics",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:30:55+00:00",
+  "usage": {
+    "input_tokens": 3284,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 919,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4203
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

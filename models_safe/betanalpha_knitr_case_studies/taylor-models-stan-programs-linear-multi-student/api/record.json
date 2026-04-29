@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-linear-multi-student/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:06:42+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/taylor-models-stan-programs-linear-multi-student",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0d126d6ff6fa02ef0069f1599150f4819ebe9debf74faa8a63",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/taylor-models-stan-programs-linear-multi-student",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:06:25+00:00",
+  "usage": {
+    "input_tokens": 3337,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1643,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4980
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

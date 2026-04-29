@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-stacks-stacks-d-normal-ridge/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:44:35+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol1-stacks-stacks-d-normal-ridge",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "Y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_04a3258bf04ba8b00069f1626c291c81978888a6d7d3ea50a2",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol1-stacks-stacks-d-normal-ridge",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:44:12+00:00",
+  "usage": {
+    "input_tokens": 3985,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2649,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 6634
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/earnings-logearn-height/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:41:12+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/earnings-logearn-height",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0ad8e8d3c8e031fe0069f16facd2c8819f89f40198798c3ea3",
+  "safe_dir": "models_safe/posteriordb/earnings-logearn-height",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:40:44+00:00",
+  "usage": {
+    "input_tokens": 2989,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2247,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 5236
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,10 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N1\": 3,\n  \"N2\": 3,\n  \"y1\": 3,\n  \"y2\": 3\n}\n",
+  "model_safe_stan": "//  Comparison of two groups with Binomial\ndata {\n  int<lower=0> N1; // number of experiments in group 1\n  int<lower=0> y1; // number of deaths in group 1\n  int<lower=0> N2; // number of experiments in group 2\n  int<lower=0> y2; // number of deaths in group 2\n}\nparameters {\n  real<lower=0, upper=1> theta1; // probability of death in group 1\n  real<lower=0, upper=1> theta2; // probability of death in group 2\n}\nmodel {\n  // model block creates the log density to be sampled\n  theta1 ~ beta(1, 1); // prior\n  theta2 ~ beta(1, 1); // prior\n  y1 ~ binomial(N1, theta1); // observation model / likelihood\n  y2 ~ binomial(N2, theta2); // observation model / likelihood\n  // the notation using ~ is syntactic sugar for\n  //  target += beta_lpdf(theta1 | 1, 1);       // lpdf for continuous theta1\n  //  target += beta_lpdf(theta2 | 1, 1);       // lpdf for continuous theta2\n  //  target += binomial_lpmf(y1 | N1, theta1); // lpmf for discrete y1\n  //  target += binomial_lpmf(y2 | N2, theta2); // lpmf for discrete y2\n  // target is the log density to be sampled\n}\ngenerated quantities {\n  // generated quantities are computed after sampling\n  real oddsratio = (theta2 / (1 - theta2)) / (theta1 / (1 - theta1));\n}\n",
+  "protected_variables": [
+    "y1",
+    "y2"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y1`, `y2`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observations are top-level data variables and are each observed exactly once with plain built-in binomial sampling statements. Context inputs `N1` and `N2` are used only as binomial trial counts. Parameters `theta1` and `theta2` each have exactly one built-in prior before being used in the likelihood.\n"
+}

@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: no SafeStan-compatible protected data interface can represent the current likelihood directly. The data matrix `likelihood` is used inside a manual marginalized likelihood factor.\n\nGenerated files: none.\n\nReason: the model uses `target += log_sum_exp(lp)` to add a custom marginalized likelihood term depending on `hypothesis_weight` and the data matrix `likelihood`. SafeStan forbids direct `target +=` scoring, and replacing this factor with built-in sampling statements would require introducing a different observed variable or otherwise substantively changing the likelihood/interface. The Dirichlet prior on `hypothesis_weight` is compatible, but the custom marginal likelihood is not a minor same-density rewrite.\n"
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-multivariate-probit-probit-multi-good/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:25:13+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-multivariate-probit-probit-multi-good",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0d00c619429dd6220069f16be7754881939808cba16988870f",
+  "safe_dir": "models_safe/example_models/misc-multivariate-probit-probit-multi-good",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:24:39+00:00",
+  "usage": {
+    "input_tokens": 3489,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2641,
+    "output_tokens_details": {
+      "reasoning_tokens": 2472
+    },
+    "total_tokens": 6130
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

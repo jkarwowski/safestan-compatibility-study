@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\": 2, \"x\": [2.864178392195542, 4.429943202368497], \"y\": [2.0, 2.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  vector[N] y;\n  vector[N] x;\n}\nparameters {\n  real alpha;\n  real beta;\n  real<lower=0> sigma;\n}\nmodel {\n  alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  sigma ~ cauchy(0, 5);\n  y ~ normal(rep_vector(alpha, N) + beta * x, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the original likelihood scored `y[n]` inside a loop. SafeStan requires each protected top-level data variable to be observed exactly once with a plain identifier on the left-hand side of a built-in sampling statement, outside loops. The likelihood was mechanically vectorized to `y ~ normal(rep_vector(alpha, N) + beta * x, sigma);`, which preserves the same log density as the original product over `n`. No data changes were required.\n"
+}

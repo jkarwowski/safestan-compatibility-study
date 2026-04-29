@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `switched`.\n\nGenerated files: none.\n\nReason: the observed likelihood is `switched ~ bernoulli_logit_glm(x, alpha, beta)`, so `switched` is the protected interface variable while `N` and `dist` are context inputs. However, the parameters `alpha` and `beta` have no prior sampling statements before being used in the likelihood. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors for these unconstrained parameters would change the posterior/log density, so this cannot be translated by a minor same-density rewrite.\n"
+}

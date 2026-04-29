@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":4,\"R\":3,\"T\":1,\"culm\":[2,2,1],\"response\":[[3],[3],[1]],\"r_safestan_flat\":[3,3,1,1]}",
+  "model_safe_stan": "data {\n  int<lower=0> N; // 1000, number of students\n  int<lower=0> R; // 32, number of patterns of results: 2^T\n  int<lower=0> T; // 5, number of questions\n  array[R] int<lower=0> culm;\n  array[R, T] int<lower=0> response;\n  array[T * N] int<lower=0> r_safestan_flat;\n}\nparameters {\n  array[T] real alpha;\n  vector[N] theta;\n  real<lower=0> beta;\n}\nmodel {\n  vector[T * N] eta;\n\n  alpha ~ normal(0, 100.);\n  theta ~ normal(0, 1);\n  beta ~ normal(0.0, 100.);\n\n  for (k in 1 : T) {\n    for (j in 1 : N) {\n      eta[(k - 1) * N + j] = beta * theta[j] - alpha[k];\n    }\n  }\n  r_safestan_flat ~ bernoulli_logit(eta);\n}\ngenerated quantities {\n  real mean_alpha;\n  array[T] real a;\n  mean_alpha = mean(alpha);\n  for (t in 1 : T) {\n    a[t] = alpha[t] - mean_alpha;\n  }\n}\n",
+  "protected_variables": [
+    "r_safestan_flat"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `r_safestan_flat`, a deterministic flattened expansion of the compressed LSAT response patterns.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the original likelihood scores `r[k]`, where `r` is transformed data constructed from `response` and `culm`. SafeStan requires observed variables on the left side of `~` to be top-level protected data and not indexed. I added `r_safestan_flat` as top-level data and replaced the loop of indexed Bernoulli-logit sampling statements with one vectorized sampling statement. The deterministic relation is `r_safestan_flat[(k - 1) * N + j] = r[k, j]`, where `r` is the expanded response array defined by the original transformed-data construction. The existing built-in priors for `alpha`, `theta`, and `beta` were retained.\n"
+}

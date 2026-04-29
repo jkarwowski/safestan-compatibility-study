@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/forestdb/blame/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:26:45+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/blame",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_029b6f1914913d4e0069f16c561f408194ac8c99bc34e52a3c",
+  "safe_dir": "models_safe/forestdb/blame",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:26:29+00:00",
+  "usage": {
+    "input_tokens": 3425,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1209,
+    "output_tokens_details": {
+      "reasoning_tokens": 1032
+    },
+    "total_tokens": 4634
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

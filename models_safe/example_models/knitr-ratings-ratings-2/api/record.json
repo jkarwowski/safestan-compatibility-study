@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-ratings-ratings-2/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:12:44+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-ratings-ratings-2",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0323f0b5fba10ad70069f168ffc054819c8c129b587c64a801",
+  "safe_dir": "models_safe/example_models/knitr-ratings-ratings-2",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:12:15+00:00",
+  "usage": {
+    "input_tokens": 2988,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2490,
+    "output_tokens_details": {
+      "reasoning_tokens": 2146
+    },
+    "total_tokens": 5478
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

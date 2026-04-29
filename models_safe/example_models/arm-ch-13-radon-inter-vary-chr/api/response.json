@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425191,
+  "created_at": 1777425171,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_06f37ec2be6972140069f15b13222481a0ad6e428a8d1eaa5f",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_06f37ec2be6972140069f15b13b9c881a09eba15172c730ae0",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added explicit `uniform(0, 100)` priors for the bounded scale parameters `sigma_a1`, `sigma_a2`, and `sigma_y`. These parameters already had finite Stan constraints `<lower=0, upper=100>`, so the added uniform statements are constant on the existing support and preserve the posterior up to a normalizing constant while satisfying SafeStan's requirement that every parameter have exactly one built-in prior sampling statement before use. No data changes were made; `N`, `county`, `u`, and `x` remain context inputs.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  array[N] int<lower=1, upper=85> county;\\n  vector[N] u;\\n  vector[N] x;\\n  vector[N] y;\\n}\\ntransformed data {\\n  vector[N] inter;\\n  \\n  inter = u .* x;\\n}\\nparameters {\\n  vector[2] beta;\\n  vector[85] eta1;\\n  vector[85] eta2;\\n  real mu_a1;\\n  real mu_a2;\\n  real<lower=0, upper=100> sigma_a1;\\n  real<lower=0, upper=100> sigma_a2;\\n  real<lower=0, upper=100> sigma_y;\\n}\\ntransformed parameters {\\n  vector[85] a1;\\n  vector[85] a2;\\n  vector[N] y_hat;\\n  \\n  a1 = mu_a1 + sigma_a1 * eta1;\\n  a2 = 0.1 * mu_a2 + sigma_a2 * eta2;\\n  \\n  for (i in 1 : N) {\\n    y_hat[i] = a1[county[i]] + x[i] * a2[county[i]] + beta[1] * u[i]\\n               + beta[2] * inter[i];\\n  }\\n}\\nmodel {\\n  beta ~ normal(0, 100);\\n  \\n  mu_a1 ~ normal(0, 1);\\n  mu_a2 ~ normal(0, 1);\\n  eta1 ~ normal(0, 1);\\n  eta2 ~ normal(0, 1);\\n  sigma_a1 ~ uniform(0, 100);\\n  sigma_a2 ~ uniform(0, 100);\\n  sigma_y ~ uniform(0, 100);\\n  \\n  y ~ normal(y_hat, sigma_y);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":3,\\\"county\\\":[1,1,1],\\\"u\\\":[3.095263830103437,3.240803823622999,2.134870852219283],\\\"x\\\":[5.0791611210885055,2.7963246401033395,2.90628749790133],\\\"y\\\":[3.0,3.0,3.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_06f37ec2be6972140069f15b21edd881a0984888d51d6fe63c",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3318,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1745,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5063
+  },
+  "user": null
+}

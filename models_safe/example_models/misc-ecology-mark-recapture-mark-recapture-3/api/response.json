@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429059,
+  "created_at": 1777428981,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0cd4402799a2e4b50069f169f5c2488195bf5e0748729afdb9",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0cd4402799a2e4b50069f169f67d988195b94033c705cfd611",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `R`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added `R_safestan_copy`, a deterministic copy of `R`, because the original model uses `R` in transformed data and parameter bounds before the observation statement. Replaced the manual Jacobian/prior contribution `target += -2 * log(N)` with the built-in prior statement `N ~ pareto(C - R_safestan_copy + M, 1)`, whose log density is proportional to `-2 * log(N)` on the same support. The binomial observation of `R` is unchanged and remains the protected likelihood term.\\n\\nDeterministic data augmentation: `R_safestan_copy = R`; for the supplied data this is `0`.\\n\",\"model_safe_stan\":\"/*\\n * mark-recpapture-2 prior:\\n *\\n *   theta ~ uniform(0, M / (C - R + M))\\n * \\n * reparameterized in temrs of N:\\n *\\n *   (M / N) ~ uniform(0, M / (C - R + M));\\n * \\n * requires Jacobian adjustment:\\n *\\n *   function:      f(N) -> M / N\\n *   derivative:    f'(N)  =  -M / N^2\\n *   Jacobian adj:  abs(f'(N)) = M / N^2\\n *   log Jac adj:   log(abs(f'(N)) = log(M) - 2 * log(N)\\n *   drop const:    -2 * log(N)\\n */\\n\\ndata {\\n  int<lower=0> M;\\n  int<lower=0> C;\\n  int<lower=0, upper=min(M, C)> R;\\n  int<lower=0, upper=min(M, C)> R_safestan_copy;\\n}\\ntransformed data {\\n  real theta_max;\\n  theta_max = M;\\n  theta_max = theta_max / (C - R_safestan_copy + M);\\n}\\nparameters {\\n  real<lower=(C - R_safestan_copy + M)> N;\\n}\\ntransformed parameters {\\n  real<lower=0, upper=theta_max> theta;\\n  theta = M / N;\\n}\\nmodel {\\n  N ~ pareto(C - R_safestan_copy + M, 1);\\n  R ~ binomial(C, theta);\\n}\\n\",\"data_safe_json\":\"{\\\"C\\\":3,\\\"M\\\":3,\\\"R\\\":0,\\\"R_safestan_copy\\\":0}\",\"protected_variables\":[\"R\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0cd4402799a2e4b50069f16a3fb2b88195a55f355438635c0d",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3216,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 6825,
+    "output_tokens_details": {
+      "reasoning_tokens": 6214
+    },
+    "total_tokens": 10041
+  },
+  "user": null
+}

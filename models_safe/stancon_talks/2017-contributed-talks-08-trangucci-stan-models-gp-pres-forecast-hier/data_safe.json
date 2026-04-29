@@ -1,0 +1,31 @@
+{
+  "N": 2,
+  "N_regions": 2,
+  "N_states": 2,
+  "N_years": 4,
+  "N_years_obs": 2,
+  "region_ind": [
+    1,
+    1
+  ],
+  "state_ind": [
+    1,
+    1
+  ],
+  "state_region_ind": [
+    1,
+    1
+  ],
+  "turnout_weight": [
+    2.6903015530882666,
+    2.6237553643718092
+  ],
+  "y": [
+    0.0,
+    1.0
+  ],
+  "year_ind": [
+    1,
+    1
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":4,\"K_cp\":2,\"K_ncp\":1,\"N\":4,\"context_idx\":[2,2,2,2],\"cp_idx\":[2,2],\"ncp_idx\":[2],\"sigma\":0.557447756249116,\"tau\":3.492783935193742,\"y\":[4.0,4.0,4.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> K;                       // Number of groups\n  int<lower=0> N;                       // Number of observations\n  vector[N] y;                          // Observations\n  array[N] int<lower=1, upper=K> context_idx; // Context assignments\n\n  int<lower=0, upper=K> K_cp;\n  array[K_cp] int<lower=0, upper=K> cp_idx;\n\n  int<lower=0, upper=K> K_ncp;\n  array[K_ncp] int<lower=0, upper=K> ncp_idx;\n\n  real<lower=0> tau;                    // Base Population Scale\n  real<lower=0> sigma;                  // Measurement variability\n}\n\nparameters {\n  vector[K_cp] theta_cp;\n  vector[K_ncp] theta_ncp;\n\n  vector<lower=0>[K] lambda;\n}\n\ntransformed parameters {\n  vector[K] theta;\n  theta[cp_idx] = theta_cp;\n  theta[ncp_idx] = theta_ncp .* lambda[ncp_idx];\n}\n\nmodel {\n  // Horseshoe prior model\n  lambda ~ cauchy(0, 1);\n  theta_cp ~ normal(0, lambda[cp_idx] * tau);\n  theta_ncp ~ normal(0, tau);\n\n  // Observational model\n  y ~ normal(theta[context_idx], sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the parameter prior statements so that `lambda` is sampled before it is used in the scale of the `theta_cp` prior. This preserves the same posterior density because it only changes the order of additive log-density terms. The protected observation `y` is a top-level data variable and is observed exactly once with a built-in `normal` sampling statement. No data changes were made.\n"
+}

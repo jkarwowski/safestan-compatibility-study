@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"N\":4,\"county\":[1,1,1,1],\"u\":[2.309238178005751,3.0264764018433343,2.103542146728213,2.0574451908984566],\"x\":[3.495833343962871,2.0997115949172627,2.493482840964261,2.216662253811686],\"x_mean\":[6.3086973787618845,2.7608148522349722,2.0832279854105167,2.4624273051275383],\"y\":[3.0,4.0,4.0,4.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county;\n  vector[N] u;\n  vector[N] x;\n  vector[N] x_mean;\n  vector[N] y;\n}\nparameters {\n  vector[J] a;\n  vector[3] b;\n  real mu_a;\n  real<lower=0, upper=100> sigma_a;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[N] y_hat;\n\n  for (i in 1 : N) {\n    y_hat[i] = a[county[i]] + u[i] * b[1] + x[i] * b[2] + x_mean[i] * b[3];\n  }\n}\nmodel {\n  mu_a ~ normal(0, 1);\n  sigma_a ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  a ~ normal(mu_a, sigma_a);\n  b ~ normal(0, 1);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit built-in `uniform(0, 100)` priors for the finite-bounded scale parameters `sigma_a` and `sigma_y`, matching their existing constrained implicit uniform priors and satisfying SafeStan's requirement that every parameter have exactly one prior sampling statement before use. The prior statements were ordered so that parameters are not used before their priors. No data changes were made; `J`, `N`, `county`, `u`, `x`, and `x_mean` remain context inputs.\n"
+}

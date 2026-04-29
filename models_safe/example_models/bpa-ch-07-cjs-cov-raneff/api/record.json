@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/bpa-ch-07-cjs-cov-raneff/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:30:29+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bpa-ch-07-cjs-cov-raneff",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_030cf2484eb627cd0069f15eee23ac8197b351c8b79147348f",
+  "safe_dir": "models_safe/example_models/bpa-ch-07-cjs-cov-raneff",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:29:16+00:00",
+  "usage": {
+    "input_tokens": 4326,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 6449,
+    "output_tokens_details": {
+      "reasoning_tokens": 6214
+    },
+    "total_tokens": 10775
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

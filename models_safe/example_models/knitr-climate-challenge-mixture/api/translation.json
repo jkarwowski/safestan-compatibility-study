@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: candidate protected observations are `mu`, which is scored by `mu ~ normal(0, 10)`, and `y`, which is scored inside the marginalized mixture likelihood.\n\nGenerated files: none.\n\nReason: the likelihood for `y` is implemented through manual `target += log_sum_exp(ps)` scoring, where `ps` contains `normal_lpdf(y[n] | mu[k], sigma)` terms. SafeStan forbids `target +=` and requires protected observations to be scored exactly once using built-in sampling statements with a plain top-level data variable on the left-hand side. There is no built-in Stan distribution corresponding to this finite normal mixture likelihood, and replacing the marginalized mixture with latent allocations or another formulation would be a substantive model rewrite. Therefore no same-density minor SafeStan translation is produced.\n"
+}

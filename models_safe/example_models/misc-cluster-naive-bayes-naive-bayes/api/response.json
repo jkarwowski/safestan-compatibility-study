@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428981,
+  "created_at": 1777428844,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_07d4f45366b015710069f1696c1d6c8193bad9a36e57013f20",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_07d4f45366b015710069f1696cb8808193a149cf61f7216cfc",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `z`, `w`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: vectorized the `phi` Dirichlet prior so the top-level parameter is sampled once outside a loop, and vectorized the `z` likelihood as a single top-level protected-data sampling statement. Rewrote the word likelihood for `w` as one built-in `categorical_logit_glm` sampling statement using a one-hot topic design matrix computed after `z` is observed and `log(phi)` as logits. This preserves the density because `softmax(log(phi[k])) = phi[k]` for each simplex row. No data fields were added or changed.\\n\",\"model_safe_stan\":\"// supervised naive Bayes\\n\\ndata {\\n  // training data\\n  int<lower=1> K; // num topics\\n  int<lower=1> V; // num words\\n  int<lower=0> M; // num docs\\n  int<lower=0> N; // total word instances\\n  array[M] int<lower=1, upper=K> z; // topic for doc m\\n  array[N] int<lower=1, upper=V> w; // word n\\n  array[N] int<lower=1, upper=M> doc; // doc ID for word n\\n  // hyperparameters\\n  vector<lower=0>[K] alpha; // topic prior\\n  vector<lower=0>[V] beta; // word prior\\n}\\nparameters {\\n  simplex[K] theta; // topic prevalence\\n  array[K] simplex[V] phi; // word dist for topic k\\n}\\nmodel {\\n  matrix[K, V] log_phi;\\n  matrix[N, K] topic_indicator;\\n\\n  // priors\\n  theta ~ dirichlet(alpha);\\n  phi ~ dirichlet(beta);\\n\\n  for (k in 1 : K) {\\n    for (v in 1 : V) {\\n      log_phi[k, v] = log(phi[k][v]);\\n    }\\n  }\\n\\n  // likelihood for document topics\\n  z ~ categorical(theta);\\n\\n  // likelihood for words, using one-hot document-topic indicators\\n  topic_indicator = rep_matrix(0, N, K);\\n  for (n in 1 : N) {\\n    topic_indicator[n, z[doc[n]]] = 1;\\n  }\\n  w ~ categorical_logit_glm(topic_indicator, rep_vector(0, V), log_phi);\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":4,\\\"M\\\":2,\\\"N\\\":1,\\\"V\\\":3,\\\"alpha\\\":[1.7115669373336428,4.851946511553678,4.124779345446246,4.50683683170329],\\\"beta\\\":[1.586721238754401,0.26453679904386024,4.511757153933806],\\\"doc\\\":[1],\\\"w\\\":[3],\\\"z\\\":[1,1]}\",\"protected_variables\":[\"z\",\"w\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_07d4f45366b015710069f169f14c6481938a524f2949995254",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3303,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 12120,
+    "output_tokens_details": {
+      "reasoning_tokens": 11423
+    },
+    "total_tokens": 15423
+  },
+  "user": null
+}

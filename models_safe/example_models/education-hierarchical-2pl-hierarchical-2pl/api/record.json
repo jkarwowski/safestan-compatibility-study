@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/education-hierarchical-2pl-hierarchical-2pl/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:54:57+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/education-hierarchical-2pl-hierarchical-2pl",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0b8d0d1492f9d93c0069f164c6c91c819d840509d4785fd5ee",
+  "safe_dir": "models_safe/example_models/education-hierarchical-2pl-hierarchical-2pl",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:54:14+00:00",
+  "usage": {
+    "input_tokens": 3372,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4260,
+    "output_tokens_details": {
+      "reasoning_tokens": 3568
+    },
+    "total_tokens": 7632
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

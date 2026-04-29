@@ -1,0 +1,31 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-convert-odes-sir-old/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:03:06+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-convert-odes-sir-old",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "stoi_hat",
+    "B_hat"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_03f1c04da801ba6b0069f166986e548195bca6558e5e446046",
+  "safe_dir": "models_safe/example_models/knitr-convert-odes-sir-old",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:02:00+00:00",
+  "usage": {
+    "input_tokens": 3608,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 6238,
+    "output_tokens_details": {
+      "reasoning_tokens": 5178
+    },
+    "total_tokens": 9846
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

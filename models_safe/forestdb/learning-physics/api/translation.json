@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"K\":5,\"N\":2,\"X\":[[5.076807251601844,3.014382494009058,3.5772437715155325,4.543591038085202,6.584496643292908],[6.820115264113004,6.631002651096124,2.655535878546289,6.200055895090842,3.9197069541002536]],\"y\":[2.0,2.0]}",
+  "model_safe_stan": "// ForestDB translation: Learning Physics from Dynamical Scenes\ndata {\n  int<lower=1> N;\n  int<lower=1> K;\n  matrix[N, K] X;\n  vector[N] y;\n}\nparameters {\n  vector[K] beta;\n  real<lower=0> sigma;\n}\nmodel {\n  beta ~ normal(0, 5);\n  sigma ~ lognormal(0, 1);\n  y ~ normal(X * beta, sigma);\n}\ngenerated quantities {\n  vector[N] mu = X * beta;\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The context inputs `N`, `K`, and `X` are not scored as observations, and both parameters have built-in priors before use.\n"
+}

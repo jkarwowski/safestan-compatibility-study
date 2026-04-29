@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y` (`N` is a context size).\n\nGenerated files: none.\n\nReason: the likelihood for `y` is a marginalized two-component normal mixture implemented with manual `target += log_mix(...)` scoring over indexed observations. SafeStan forbids `target +=`, and the protected observation cannot be scored through indexed manual `_lpdf` calls. Replacing this with SafeStan sampling statements would require a substantive mixture-model rewrite rather than a minor same-density translation.\n"
+}

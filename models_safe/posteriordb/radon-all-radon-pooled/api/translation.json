@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":2,\"floor_measure\":[6.3173219065806565,3.6121610919766254],\"log_radon\":[5.6770319481249025,6.577154759781891]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  vector[N] floor_measure;\n  vector[N] log_radon;\n}\nparameters {\n  real alpha;\n  real beta;\n  real<lower=0> sigma_y;\n}\nmodel {\n  vector[N] mu;\n  \n  // priors\n  sigma_y ~ normal(0, 1);\n  alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  \n  // likelihood\n  mu = alpha + beta * floor_measure;\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual likelihood accumulation inside the loop, `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)`, with the equivalent vectorized built-in sampling statement `log_radon ~ normal(mu, sigma_y)`. This preserves the same likelihood density while satisfying SafeStan's requirement that protected data be scored exactly once by a built-in distribution with a plain top-level left-hand side. The predictor `floor_measure` and size `N` remain unprotected context inputs. Parameter priors were already explicit and are unchanged. No data values were changed or added.\n"
+}

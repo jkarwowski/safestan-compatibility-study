@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\": 5}",
+  "model_safe_stan": "data {\n  int<lower=1> N; // Number of ys, supplied by interface\n}\n\nparameters {\n  array[N] real y;  // Probabilistic variables y\n  real theta; // Probabilistic variable theta\n}\n\nmodel {\n  // Add marginal probabiltiy density for theta\n  // to the joint log probability density using\n  // equivalent sampling statement\n  theta ~ normal(0, 1);\n\n  // Add conditional probability density for the ys\n  // given theta to the joint log probabilty density\n  // using equivalent sampling statement\n  y ~ normal(theta, 1);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none. The only data variable, `N`, is a context size and is not scored by a sampling statement.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the two parameter sampling statements so that `theta` is given its built-in prior before it is used in the prior for `y`. This preserves the same joint density because the original sampling statements contribute additively to the log density.\n"
+}

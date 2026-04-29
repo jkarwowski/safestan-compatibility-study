@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/basic-estimators-normal-multi/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:26:00+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/basic-estimators-normal-multi",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_00f568f169b53df50069f15e114d1081a0a5d872d061059d06",
+  "safe_dir": "models_safe/example_models/basic-estimators-normal-multi",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:25:37+00:00",
+  "usage": {
+    "input_tokens": 5078,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2155,
+    "output_tokens_details": {
+      "reasoning_tokens": 1928
+    },
+    "total_tokens": 7233
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2018-contributed-talks-02-pourzanjani-stan-isplines/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T03:06:52+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2018-contributed-talks-02-pourzanjani-stan-isplines",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0f53dc18b32a646d0069f17590e6ec8191ae0d05e6e80ad60f",
+  "safe_dir": "models_safe/stancon_talks/2018-contributed-talks-02-pourzanjani-stan-isplines",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:05:52+00:00",
+  "usage": {
+    "input_tokens": 7252,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 6898,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 14150
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

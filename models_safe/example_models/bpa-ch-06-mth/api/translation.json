@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood for `y` is a marginalized latent inclusion/capture-history model implemented with manual `target +=` statements, including `log_sum_exp(...)` for all-zero capture histories. SafeStan forbids arbitrary `target +=` scoring and requires each protected top-level observation to be scored exactly once by a built-in sampling statement. Replacing this marginalized mixture likelihood would require a substantive model rewrite, such as introducing a non-Stan discrete latent state or a custom distribution, and is therefore not a minor same-density translation. The use of `y` in `transformed data` to compute row totals could be handled mechanically with deterministic copies, and the bounded parameters' implicit uniform priors could be made explicit, but those minor fixes do not address the non-SafeStan likelihood structure.\n"
+}

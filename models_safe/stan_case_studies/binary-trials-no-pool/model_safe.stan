@@ -2,7 +2,7 @@ data {
   int<lower=0> N; // items
   array[N] int<lower=0> K; // initial trials
   array[N] int<lower=0> y; // initial successes
-  array[N] int<lower=0> y_safestan_copy; // deterministic copy of initial successes
+  array[N] int<lower=0> y_safestan_copy; // deterministic copy of y for non-likelihood summaries
   
   array[N] int<lower=0> K_new; // new trials
   array[N] int<lower=0> y_new; // new successes
@@ -22,7 +22,7 @@ parameters {
   vector<lower=0, upper=1>[N] theta; // chance of success
 }
 model {
-  theta ~ uniform(0, 1); // density-neutral prior induced by bounds
+  theta ~ uniform(0, 1);
   y ~ binomial(K, theta); // likelihood
 }
 generated quantities {

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-pooling/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T03:11:35+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-pooling",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "goal_difference"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_02d349025518777a0069f176b26d1081a09dd2c2c4e77c1fd0",
+  "safe_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-pooling",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:10:42+00:00",
+  "usage": {
+    "input_tokens": 4083,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4915,
+    "output_tokens_details": {
+      "reasoning_tokens": 3624
+    },
+    "total_tokens": 8998
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":5,\"N\":5,\"y\":[0,0,0,0,1]}",
+  "model_safe_stan": "// ForestDB translation: CrossCat\ndata {\n  int<lower=1> K;\n  int<lower=1> N;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  simplex[K] cluster_weight;\n  vector<lower=0, upper=1>[K] cluster_prob;\n}\nmodel {\n  real mixture_prob;\n  cluster_weight ~ dirichlet(rep_vector(1.0 / K, K));\n  cluster_prob ~ beta(1, 1);\n  mixture_prob = dot_product(cluster_weight, cluster_prob);\n  y ~ bernoulli(mixture_prob);\n}\ngenerated quantities {\n  int<lower=1, upper=K> cluster = categorical_rng(cluster_weight);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual marginalized mixture likelihood implemented with `target += log_sum_exp(...)` and `bernoulli_lpmf(...)` by the algebraically equivalent built-in sampling statement `y ~ bernoulli(mixture_prob)`, where `mixture_prob = dot_product(cluster_weight, cluster_prob)`. For binary observations, `sum_k w_k Bernoulli(y | p_k)` is exactly `Bernoulli(y | sum_k w_k p_k)`, so the posterior/log density is preserved while avoiding arbitrary target manipulation. The input data are unchanged.\n"
+}

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-simple-bernoulli/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T03:05:26+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-simple-bernoulli",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_056f400526df00f30069f17571ad6c81939fdb60b0d8cc5c62",
+  "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-simple-bernoulli",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:05:21+00:00",
+  "usage": {
+    "input_tokens": 3015,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 433,
+    "output_tokens_details": {
+      "reasoning_tokens": 177
+    },
+    "total_tokens": 3448
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

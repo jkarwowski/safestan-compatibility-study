@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/jupyter-radon-stan-radon-np-uranium/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:55:30+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/jupyter-radon-stan-radon-np-uranium",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0909c696f60249440069f1650793e8819fb3fc36906febc01b",
+  "safe_dir": "models_safe/example_models/jupyter-radon-stan-radon-np-uranium",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:55:19+00:00",
+  "usage": {
+    "input_tokens": 3237,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1025,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4262
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"K\":4,\"N\":3,\"x\":[[6.425465890579266,5.299312066641534,3.5761976830337803],[6.931113219562874,2.184331295221872,3.640813156331639],[6.584062779302228,2.1891290270614534,6.894200947349968]],\"y\":[[3.0,3.0,3.0,3.0],[3.0,3.0,3.0,3.0],[3.0,3.0,3.0,3.0]]}",
+  "model_safe_stan": "data {\n  int<lower=1> K;\n  int<lower=1> J;\n  int<lower=0> N;\n  array[N] vector[J] x;\n  array[N] vector[K] y;\n}\nparameters {\n  matrix[K, J] beta;\n  cholesky_factor_corr[K] L_Omega;\n  vector<lower=0>[K] L_sigma;\n}\nmodel {\n  array[N] vector[K] mu;\n  matrix[K, K] L_Sigma;\n\n  beta ~ normal(0, 5);\n  L_Omega ~ lkj_corr_cholesky(4);\n  L_sigma ~ cauchy(0, 2.5);\n\n  for (n in 1 : N) {\n    mu[n] = beta * x[n];\n  }\n  L_Sigma = diag_post_multiply(L_Omega, L_sigma);\n\n  y ~ multi_normal_cholesky(mu, L_Sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the parameter priors so that `beta`, `L_Omega`, and `L_sigma` are each sampled before any model-block use. Replaced `to_vector(beta) ~ normal(0, 5)` with the equivalent vectorized top-level parameter statement `beta ~ normal(0, 5)`, preserving the same product normal prior density while satisfying SafeStan's sampling-target discipline. No data changes were required.\n"
+}

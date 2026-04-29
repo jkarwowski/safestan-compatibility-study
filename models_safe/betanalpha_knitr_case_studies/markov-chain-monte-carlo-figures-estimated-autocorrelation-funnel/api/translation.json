@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  real x;\n  real log_tau;\n}\n\nmodel {\n  log_tau ~ normal(0, 1);\n  x ~ normal(0, exp(log_tau));\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the two parameter sampling statements so that `log_tau` receives its built-in prior before it is used in the prior for `x`. This preserves the same joint log density because Stan sampling statements add commutatively to the target density. No protected data variables are present.\n"
+}

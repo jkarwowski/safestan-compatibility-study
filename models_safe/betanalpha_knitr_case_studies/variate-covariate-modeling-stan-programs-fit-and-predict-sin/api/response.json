@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424950,
+  "created_at": 1777424929,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_02788c70c8d5d64b0069f15a2181fc81a2be0b44fd0b1c7754",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_02788c70c8d5d64b0069f15a2209a881a298ee690e80002924",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y1`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added an explicit `phi ~ uniform(0, 2 * pi())` prior so that every parameter has exactly one built-in prior sampling statement before use. This makes the original finite-bounded implicit uniform prior for `phi` explicit for SafeStan. No data fields were added or changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N1; // Number of complete observations\\n  vector[N1] x1;   // Complete observations\\n  vector[N1] y1;   // Complete observations\\n\\n  int<lower=1> N2; // Number of incomplete observations\\n  vector[N2] x2;   // Incomplete observations\\n\\n  int<lower=1> N_grid; // Number of grid points for quantifying functional behavior\\n  vector[N_grid] x_grid; // Grid points for quantifying functional behavior\\n}\\n\\nparameters {\\n  real<lower=0> A;                   // Variate units\\n  real<lower=0, upper=2 * pi()> phi; // Radians\\n  real<lower=0> omega;               // Radians per second\\n  real<lower=0> sigma;               // Variate units\\n}\\n\\nmodel {\\n  A ~ normal(0, 5);\\n  phi ~ uniform(0, 2 * pi());\\n  omega ~ normal(0, 5);\\n  sigma ~ normal(0, 1);\\n\\n  y1 ~ normal(A * sin(omega * x1 + phi), sigma);\\n}\\n\\ngenerated quantities {\\n  array[N1] real y1_pred; // Complete observation conditional variate retrodiction\\n  array[N2] real y2_pred; // Incomplete observation conditional variate prediction\\n\\n  array[N_grid] real f_grid;       // Inferred functional behavior along covariate grid\\n  array[N_grid] real y2_pred_grid; // Predictive variate behavior along covariate grid\\n\\n  for (n in 1:N1) {\\n    y1_pred[n] = normal_rng(A * sin(omega * x1[n] + phi), sigma);\\n  }\\n\\n  for (n in 1:N2) {\\n    y2_pred[n] = normal_rng(A * sin(omega * x2[n] + phi), sigma);\\n  }\\n\\n  for (n in 1:N_grid) {\\n    f_grid[n] = A * sin(omega * x_grid[n] + phi);\\n    y2_pred_grid[n] = normal_rng(f_grid[n], sigma);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N1\\\":2,\\\"N2\\\":3,\\\"N_grid\\\":2,\\\"x1\\\":[5.813549432440877,2.8198267269100175],\\\"x2\\\":[2.4498608514505267,4.741823958429283,2.017104351704055],\\\"x_grid\\\":[1.0,2.0],\\\"y1\\\":[2.0,2.0]}\",\"protected_variables\":[\"y1\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_02788c70c8d5d64b0069f15a33448881a2b367c650d2a8f7d7",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3488,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2277,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5765
+  },
+  "user": null
+}

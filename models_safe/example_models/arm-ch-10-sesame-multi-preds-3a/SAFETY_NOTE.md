@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `watched`.
+
+Generated files: none.
+
+Reason: the observed likelihood is `watched ~ normal_id_glm(x, alpha, beta, sigma)`, where `watched` is a top-level data variable and would be the protected interface. However, the model has parameters `alpha`, `beta`, and `sigma` with no explicit priors. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding proper priors for the unconstrained `alpha` and `beta` and the lower-bounded `sigma` would change the posterior/log density rather than being a minor same-density rewrite.

@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `weight`.\n\nGenerated files: none.\n\nReason: the likelihood observes `weight` with a built-in normal sampling statement, but the model has parameters `a`, `b`, and `sigma` with no explicit priors. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding priors for these unconstrained or half-line constrained parameters would change the original posterior/log density, so this cannot be translated by a minor same-density rewrite.\n"
+}

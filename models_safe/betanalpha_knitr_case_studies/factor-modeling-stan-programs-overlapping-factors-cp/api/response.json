@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423821,
+  "created_at": 1777423788,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0a5c1318b56bfc070069f155ac88ec819da7199761b1a392bc",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0a5c1318b56bfc070069f155ad78f0819da61b5ef166dc2591",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the `model` block so that every parameter is given its built-in prior sampling statement before it is used to compute the linear predictor or to parameterize another prior. In particular, the hierarchical scale parameters are sampled before the packed factor effects that use them as scales. The observation `y` remains a top-level protected data variable and is observed exactly once with `y ~ normal(theta, sigma)`. No data fields were added; `data_safe.json` is the supplied data.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;      // Number of observations\\n  vector[N] y;         // Observations\\n  real<lower=0> sigma; // Measurement variability\\n\\n  // Main factor contributions logistics\\n  int<lower=0> N_main_factors;\\n  array[N_main_factors] int<lower=0> N_main_factor_levels;\\n  array[N_main_factors, N] int<lower=1> main_factor_level_idx;\\n\\n  int<lower=0> N_all_main_factor_levels;\\n  array[N_all_main_factor_levels] int<lower=1, upper=N_main_factors> packed_main_factor_idx;\\n  array[N_main_factors] int<lower=1, upper=N_all_main_factor_levels> main_factor_start_idx;\\n  array[N_main_factors] int<lower=1, upper=N_all_main_factor_levels> main_factor_end_idx;\\n\\n  // First-order factor interaction contributions logistics\\n  int<lower=0> N_inter1_factors;\\n  array[N_inter1_factors] int<lower=0> N_inter1_factor_levels;\\n  array[N_inter1_factors, N] int<lower=1> inter1_factor_level_idx;\\n\\n  int<lower=0> N_all_inter1_factor_levels;\\n  array[N_all_inter1_factor_levels] int<lower=1, upper=N_inter1_factors> packed_inter1_factor_idx;\\n  array[N_inter1_factors] int<lower=1, upper=N_all_inter1_factor_levels> inter1_factor_start_idx;\\n  array[N_inter1_factors] int<lower=1, upper=N_all_inter1_factor_levels> inter1_factor_end_idx;\\n\\n  // Second-order factor interaction contributions logistics\\n  int<lower=0> N_inter2_factors;\\n  array[N_inter2_factors] int<lower=0> N_inter2_factor_levels;\\n  array[N_inter2_factors, N] int<lower=1> inter2_factor_level_idx;\\n\\n  int<lower=0> N_all_inter2_factor_levels;\\n  array[N_all_inter2_factor_levels] int<lower=1, upper=N_inter2_factors> packed_inter2_factor_idx;\\n  array[N_inter2_factors] int<lower=1, upper=N_all_inter2_factor_levels> inter2_factor_start_idx;\\n  array[N_inter2_factors] int<lower=1, upper=N_all_inter2_factor_levels> inter2_factor_end_idx;\\n}\\n\\nparameters {\\n  // Zeroth-order contribution (Baseline)\\n  real baseline;\\n\\n  // Main factor contributions\\n  vector[N_all_main_factor_levels] packed_delta_main;\\n  vector<lower=0>[N_main_factors] delta_main_tau;\\n\\n  // First-order factor interaction contributions\\n  vector[N_all_inter1_factor_levels] packed_delta_inter1;\\n  vector<lower=0>[N_inter1_factors] delta_inter1_tau;\\n\\n  // Second-order factor interaction contributions\\n  vector[N_all_inter2_factor_levels] packed_delta_inter2;\\n  vector<lower=0>[N_inter2_factors] delta_inter2_tau;\\n}\\n\\nmodel {\\n  vector[N] theta;\\n\\n  // Baseline contribution hierarchical model\\n  baseline ~ normal(0, 8);\\n\\n  // Main factor hierarchial models\\n  delta_main_tau ~ normal(0, 4);\\n  packed_delta_main ~ normal(0, delta_main_tau[packed_main_factor_idx]);\\n\\n  // First-order interaction factor hierarchial models\\n  delta_inter1_tau ~ normal(0, 2);\\n  packed_delta_inter1 ~ normal(0, delta_inter1_tau[packed_inter1_factor_idx]);\\n\\n  // Second-order interaction factor hierarchial models\\n  delta_inter2_tau ~ normal(0, 1);\\n  packed_delta_inter2 ~ normal(0, delta_inter2_tau[packed_inter2_factor_idx]);\\n\\n  // Baseline contribution\\n  theta = rep_vector(baseline, N);\\n\\n  // Main factor contributions\\n  for (f in 1:N_main_factors) {\\n    // Extract level parameters of fth main factor\\n    vector[N_main_factor_levels[f]] delta_main\\n      = packed_delta_main[main_factor_start_idx[f]:main_factor_end_idx[f]];\\n\\n    // Add contribution to total heterogeneity\\n    theta += delta_main[main_factor_level_idx[f]];\\n  }\\n\\n  // First-order factor interaction contributions\\n  for (f in 1:N_inter1_factors) {\\n    // Extract level parameters of fth first-order interaction factor\\n    vector[N_inter1_factor_levels[f]] delta_inter1\\n      = packed_delta_inter1[inter1_factor_start_idx[f]:inter1_factor_end_idx[f]];\\n\\n    // Add contribution to total heterogeneity\\n    theta += delta_inter1[inter1_factor_level_idx[f]];\\n  }\\n\\n  // Second-order factor interaction contributions\\n  for (f in 1:N_inter2_factors) {\\n    // Extract level parameters of fth second-order interaction factor\\n    vector[N_inter2_factor_levels[f]] delta_inter2\\n      = packed_delta_inter2[inter2_factor_start_idx[f]:inter2_factor_end_idx[f]];\\n\\n    // Add contribution to total heterogeneity\\n    theta += delta_inter2[inter2_factor_level_idx[f]];\\n  }\\n\\n  // Observational model\\n  y ~ normal(theta, sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":2,\\\"N_all_inter1_factor_levels\\\":10,\\\"N_all_inter2_factor_levels\\\":6,\\\"N_all_main_factor_levels\\\":12,\\\"N_inter1_factor_levels\\\":[3,3,4],\\\"N_inter1_factors\\\":3,\\\"N_inter2_factor_levels\\\":[1,2,1,2],\\\"N_inter2_factors\\\":4,\\\"N_main_factor_levels\\\":[2,3,4,3],\\\"N_main_factors\\\":4,\\\"inter1_factor_end_idx\\\":[3,6,10],\\\"inter1_factor_level_idx\\\":[[1,1],[1,1],[1,1]],\\\"inter1_factor_start_idx\\\":[1,4,7],\\\"inter2_factor_end_idx\\\":[1,3,4,6],\\\"inter2_factor_level_idx\\\":[[1,1],[1,1],[1,1],[1,1]],\\\"inter2_factor_start_idx\\\":[1,2,4,5],\\\"main_factor_end_idx\\\":[2,5,9,12],\\\"main_factor_level_idx\\\":[[1,1],[1,1],[1,1],[1,1]],\\\"main_factor_start_idx\\\":[1,3,6,10],\\\"packed_inter1_factor_idx\\\":[1,1,1,2,2,2,3,3,3,3],\\\"packed_inter2_factor_idx\\\":[1,2,2,3,4,4],\\\"packed_main_factor_idx\\\":[1,1,2,2,2,3,3,3,3,4,4,4],\\\"sigma\\\":1.9921671893664936,\\\"y\\\":[2.0,2.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0a5c1318b56bfc070069f155c56838819db1cd87f3a795b1bd",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4605,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4315,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 8920
+  },
+  "user": null
+}

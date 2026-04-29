@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/rate-1-data-rate-1-model/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:53:01+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/rate-1-data-rate-1-model",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "k"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_08fab85d729d086d0069f17285d1bc819e962980fa009a79b5",
+  "safe_dir": "models_safe/posteriordb/rate-1-data-rate-1-model",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:52:53+00:00",
+  "usage": {
+    "input_tokens": 2946,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 467,
+    "output_tokens_details": {
+      "reasoning_tokens": 204
+    },
+    "total_tokens": 3413
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

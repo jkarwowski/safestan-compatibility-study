@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428029,
+  "created_at": 1777427965,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_03fe5aad2dd6b0d30069f165fdb78481a0a1e430da841a88f8",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_03fe5aad2dd6b0d30069f165fea78081a09b4b08dcb413106d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: none. `N`, `N_edges`, `node1`, and `node2` are context graph inputs used to define the prior precision structure; the original model does not observe or score any top-level data variable as a likelihood.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the forbidden manual `target +=` prior contribution and the expression-left-hand-side statement `sum(phi) ~ normal(...)` with a single built-in prior statement, `phi ~ multi_normal_prec(...)`. The precision matrix is built deterministically in `transformed data` as the graph Laplacian from `node1`/`node2` plus the soft sum-to-zero precision `(1 / square(0.01 * N)) * 1 1'`. This gives the same unnormalized log density in `phi` as the original model, up to constants independent of `phi`. No data fields were added or changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  int<lower=0> N_edges;\\n  array[N_edges] int<lower=1, upper=N> node1; // node1[i] adjacent to node2[i]\\n  array[N_edges] int<lower=1, upper=N> node2; // and node1[i] < node2[i]\\n}\\ntransformed data {\\n  matrix[N, N] Q = rep_matrix(0, N, N);\\n  vector[N] phi_zero = rep_vector(0, N);\\n  real sum_to_zero_precision = 1 / square(0.01 * N);\\n\\n  for (e in 1:N_edges) {\\n    Q[node1[e], node1[e]] += 1;\\n    Q[node2[e], node2[e]] += 1;\\n    Q[node1[e], node2[e]] -= 1;\\n    Q[node2[e], node1[e]] -= 1;\\n  }\\n\\n  Q += rep_matrix(sum_to_zero_precision, N, N);\\n}\\nparameters {\\n  vector[N] phi;\\n}\\nmodel {\\n  phi ~ multi_normal_prec(phi_zero, Q);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":3,\\\"N_edges\\\":4,\\\"node1\\\":[1,1,1,1],\\\"node2\\\":[2,2,2,2]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_03fe5aad2dd6b0d30069f16639e73881a0a6eec233fda64738",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3054,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 5211,
+    "output_tokens_details": {
+      "reasoning_tokens": 4660
+    },
+    "total_tokens": 8265
+  },
+  "user": null
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"K\":2,\"N\":5,\"X\":[[6.956754304402135,5.974307383779966],[5.236700600125509,6.802340785579198],[6.391825022186895,3.51976170772979],[6.580524852204308,5.1311136846365395],[6.372245778123164,6.738436059369397]],\"y\":[3.0,5.0,3.0,5.0,5.0]}",
+  "model_safe_stan": "// ForestDB translation: Inverse Statics\ndata {\n  int<lower=1> N;\n  int<lower=1> K;\n  matrix[N, K] X;\n  vector[N] y;\n}\nparameters {\n  vector[K] beta;\n  real<lower=0> sigma;\n}\nmodel {\n  beta ~ normal(0, 5);\n  sigma ~ lognormal(0, 1);\n  y ~ normal(X * beta, sigma);\n}\ngenerated quantities {\n  vector[N] mu = X * beta;\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The context inputs `N`, `K`, and `X` are not scored as observations. The parameters `beta` and `sigma` each have exactly one built-in prior before they are used in the likelihood.\n"
+}

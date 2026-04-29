@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777339144,
-  "created_at": 1777339121,
+  "completed_at": 1777431750,
+  "created_at": 1777431741,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0c614a4ee932650c0069f00af1e79c819c829e305c94ea8ba4",
+  "id": "resp_0fc136e8e3415ea20069f174bdb48081a3942f2937605d45f7",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0c614a4ee932650c0069f00af31c8c819cb133ca4200afa9f3",
+      "id": "rs_0fc136e8e3415ea20069f174beb6f081a396bfc34534350195",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observation model is the single built-in sampling statement `y ~ bernoulli_logit(eta)`, but the parameter `gamma` has no prior sampling statement and is used to compute `theta`. SafeStan requires every parameter to have exactly one built-in prior before use. Adding a proper prior for unconstrained `gamma` would change the posterior/log density, so this cannot be translated as a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observed likelihood is `y ~ bernoulli_logit(eta)`, so `y` is the protected data variable. The model is not SafeStan-compatible because parameter `gamma` is used in the model block to construct `theta` but has no sampling statement/prior. Adding a proper built-in prior for unconstrained `gamma` would change the posterior/log density, and there is no density-neutral finite-bound uniform prior available. Therefore this cannot be translated with only a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0c614a4ee932650c0069f00b06d1bc819ca5956d36c74da4c7",
+      "id": "msg_0fc136e8e3415ea20069f174c52d4081a39b421741567aa9f7",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 37086,
+    "input_tokens": 3162,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1188,
+    "output_tokens": 686,
     "output_tokens_details": {
-      "reasoning_tokens": 1034
+      "reasoning_tokens": 516
     },
-    "total_tokens": 38274
+    "total_tokens": 3848
   },
   "user": null
 }

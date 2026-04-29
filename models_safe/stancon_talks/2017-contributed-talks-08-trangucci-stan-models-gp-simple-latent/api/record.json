@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-gp-simple-latent/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T03:05:23+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-gp-simple-latent",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_05d9ce83362f53e90069f1755f5f3c819688ec29f6c0742bf7",
+  "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-gp-simple-latent",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:05:03+00:00",
+  "usage": {
+    "input_tokens": 3704,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2036,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5740
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

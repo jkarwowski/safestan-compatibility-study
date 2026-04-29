@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the observed data likelihood is `y ~ poisson_log(...)`, so `y` is the protected interface variable. However, the model also contains an arbitrary prior contribution for the spatial effect,\n\n```stan\ntarget += -0.5 * dot_self(phi[node1] - phi[node2]);\n```\n\nSafeStan forbids `target +=` and requires each parameter to have exactly one built-in prior sampling statement before use. This CAR/ICAR-style spatial prior on pairwise differences cannot be mechanically expressed as a SafeStan-compatible built-in sampling statement on the top-level parameter `phi_std_raw` without changing the density, normalization, or model structure. Therefore a same-posterior SafeStan translation would require a substantive model rewrite.\n"
+}

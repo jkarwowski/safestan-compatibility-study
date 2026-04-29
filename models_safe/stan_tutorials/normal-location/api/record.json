@@ -1,24 +1,27 @@
 {
   "artifacts_dir": "models_safe/stan_tutorials/normal-location/api",
   "compatibility": "major",
-  "completed_at": "2026-04-28T01:14:48+00:00",
+  "completed_at": "2026-04-29T03:02:10+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_tutorials/normal-location",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0e161d5e5a274db00069f009f4244481a2bf6daae88bc812aa",
+  "response_id": "resp_03c9c0ebdad870f80069f174a2cb2c8194b98bcc621c820ffd",
   "safe_dir": "models_safe/stan_tutorials/normal-location",
-  "started_at": "2026-04-28T01:14:27+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:01:54+00:00",
   "usage": {
-    "input_tokens": 2532,
+    "input_tokens": 2779,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1139,
+    "output_tokens": 1198,
     "output_tokens_details": {
-      "reasoning_tokens": 954
+      "reasoning_tokens": 1005
     },
-    "total_tokens": 3671
+    "total_tokens": 3977
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

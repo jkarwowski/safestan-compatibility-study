@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"I\":3,\"J\":2,\"y_flat\":[0,0,0,1,0,1]}",
+  "model_safe_stan": "data {\n  int<lower=0> I;\n  int<lower=0> J;\n  array[I * J] int<lower=0, upper=1> y_flat;\n}\nparameters {\n  real<lower=0> sigma_theta;\n  vector[J] theta;\n  \n  real<lower=0> sigma_a;\n  vector<lower=0>[I] a;\n  \n  real mu_b;\n  real<lower=0> sigma_b;\n  vector[I] b;\n}\nmodel {\n  vector[I * J] eta_flat;\n  \n  sigma_theta ~ cauchy(0, 2);\n  theta ~ normal(0, sigma_theta);\n  \n  sigma_a ~ cauchy(0, 2);\n  a ~ lognormal(0, sigma_a);\n  \n  mu_b ~ normal(0, 5);\n  sigma_b ~ cauchy(0, 2);\n  b ~ normal(mu_b, sigma_b);\n  \n  for (i in 1 : I) {\n    for (j in 1 : J) {\n      eta_flat[(i - 1) * J + j] = a[i] * (theta[j] - b[i]);\n    }\n  }\n  \n  y_flat ~ bernoulli_logit(eta_flat);\n}\n",
+  "protected_variables": [
+    "y_flat"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y_flat` (a deterministic row-major flattening of the original observed `y`).\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the indexed, looped observation statements `y[i] ~ bernoulli_logit(...)` with a single plain protected sampling statement `y_flat ~ bernoulli_logit(eta_flat)`. The new data field satisfies `y_flat[(i - 1) * J + j] = y[i, j]` for `i = 1..I`, `j = 1..J`; for the supplied data this is `[0, 0, 0, 1, 0, 1]`. All parameter priors are unchanged, and `eta_flat` is computed only after those priors.\n"
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":4,\"K\":3,\"N\":3,\"jj\":[2,3,2],\"kk\":[2,1,2],\"y\":[0,1,0]}",
+  "model_safe_stan": "data {\n  int<lower=1> J;\n  int<lower=1> K;\n  int<lower=1> N;\n  array[N] int<lower=1, upper=J> jj;\n  array[N] int<lower=1, upper=K> kk;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  real delta;\n  array[J] real alpha;\n  array[K] real beta;\n  array[K] real log_gamma; // log of discrimination of question k\n}\nmodel {\n  vector[N] eta;\n\n  alpha ~ normal(0, 1);\n  beta ~ normal(0, 1);\n  delta ~ normal(0.75, 1);\n  log_gamma ~ normal(0, 1);\n\n  for (n in 1 : N) {\n    eta[n] = exp(log_gamma[kk[n]])\n             * (alpha[jj[n]] - beta[kk[n]] + delta);\n  }\n  y ~ bernoulli_logit(eta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the per-observation likelihood loop `y[n] ~ bernoulli_logit(...)` with a deterministic local linear-predictor vector `eta` followed by one vectorized built-in sampling statement `y ~ bernoulli_logit(eta)`. This preserves the same Bernoulli-logit likelihood while making the protected observation a top-level plain left-hand side, observed exactly once outside loops. Priors and data are unchanged.\n"
+}

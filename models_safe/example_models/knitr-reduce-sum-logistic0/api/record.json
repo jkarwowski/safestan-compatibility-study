@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-reduce-sum-logistic0/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:12:45+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-reduce-sum-logistic0",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "n_redcards"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0cf4fb4c1027f32f0069f169034a9c819c99af5c4e74f83d8a",
+  "safe_dir": "models_safe/example_models/knitr-reduce-sum-logistic0",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:12:19+00:00",
+  "usage": {
+    "input_tokens": 3004,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2465,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 5469
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

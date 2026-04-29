@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423766,
+  "created_at": 1777423739,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0990d3564c9b9e3a0069f1557b920c8196a726e00d54680486",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0990d3564c9b9e3a0069f1557c309881968cc95de5b44151f2",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered three hyperparameter prior statements so that `delta_factor1_tau`, `delta_factor2_tau`, and `delta_factor3_tau` are sampled before they are used as scales in hierarchical priors. This is a mechanical same-density change because Stan sampling statements add to the log density commutatively. No data fields were changed.\\n\",\"model_safe_stan\":\"functions {\\n  real F_stat(vector y, int N, array[] int indiv_idxs, int N_indiv) {\\n    real global_mean = 0;\\n    vector[N_indiv] total_counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] running_counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] means = rep_vector(0, N_indiv);\\n    vector[N_indiv] sum_squares = rep_vector(0, N_indiv);\\n\\n    int N_min_occupunacy = 2; // Minimum occupuancy for included contexts\\n    real N_occupied = 0;      // Number of contexts with at least two counts\\n    real between = 0; // Empirical variance of empirical means in occupied contexts\\n    real within = 0;  // Empirical mean of emperical variances in occupied contexts\\n\\n    for (n in 1:N)\\n      total_counts[indiv_idxs[n]] += 1;\\n\\n    for (n in 1:N) {\\n      int idx = indiv_idxs[n];\\n      real delta;\\n\\n      // Skip (nearly) unoccupied contexts\\n      if (total_counts[idx] < N_min_occupunacy) continue;\\n\\n      delta = y[n] - global_mean;\\n      global_mean += delta / n;\\n\\n      running_counts[idx] += 1;\\n      delta = y[n] - means[idx];\\n      means[idx] += delta / running_counts[idx];\\n      sum_squares[idx] += (y[n] - means[idx]) * delta;\\n    }\\n\\n    for (l in 1:N_indiv) {\\n      // Skip (nearly) unoccupied contexts\\n      if (total_counts[l] < N_min_occupunacy) continue;\\n\\n      N_occupied += 1;\\n      between += total_counts[l] * square(means[l] - global_mean);\\n      within += (sum_squares[l] - within) / N_occupied;\\n    }\\n\\n    // Return zero if not enough minimally occupied contexts\\n    if (N_occupied < 2) return 0;\\n\\n    between = between / (N_occupied - 1);\\n    within /= (N - N_occupied);\\n    return between / within;\\n  }\\n}\\n\\ndata {\\n  int<lower=0> N;      // Number of observations\\n  vector[N] log_rho_I; // Observed input signal\\n  array[N] int y;            // Observered output counts\\n\\n  // First factor information\\n  int<lower=0> N_factor1_levels;\\n\\n  int<lower=0, upper=N_factor1_levels> L_factor1_ncp;\\n  array[L_factor1_ncp] int<lower=1, upper=N_factor1_levels> factor1_ncp_idx;\\n\\n  int<lower=0, upper=N_factor1_levels> L_factor1_cp;\\n  array[L_factor1_cp] int<lower=1, upper=N_factor1_levels> factor1_cp_idx;\\n\\n  // Second factor information\\n  int<lower=0> N_factor2_levels;\\n\\n  int<lower=0, upper=N_factor2_levels> L_factor2_ncp;\\n  array[L_factor2_ncp] int<lower=1, upper=N_factor2_levels> factor2_ncp_idx;\\n\\n  int<lower=0, upper=N_factor2_levels> L_factor2_cp;\\n  array[L_factor2_cp] int<lower=1, upper=N_factor2_levels> factor2_cp_idx;\\n\\n  // Third factor information\\n  int<lower=0> N_factor3_levels;\\n\\n  int<lower=0, upper=N_factor3_levels> L_factor3_ncp;\\n  array[L_factor3_ncp] int<lower=1, upper=N_factor3_levels> factor3_ncp_idx;\\n\\n  int<lower=0, upper=N_factor3_levels> L_factor3_cp;\\n  array[L_factor3_cp] int<lower=1, upper=N_factor3_levels> factor3_cp_idx;\\n\\n  // Nesting configuration\\n  array[N] int<lower=1, upper=N_factor3_levels> obs_to_factor3;\\n  array[N_factor3_levels] int<lower=1, upper=N_factor2_levels> factor3_to_factor2;\\n  array[N_factor2_levels] int<lower=1, upper=N_factor1_levels> factor2_to_factor1;\\n}\\n\\nparameters {\\n  // Baseline\\n  real baseline;\\n\\n  // Hierarchical model for the first factor residuals\\n  vector[L_factor1_ncp] delta_factor1_ncp;\\n  vector[L_factor1_cp] delta_factor1_cp;\\n  real<lower=0> delta_factor1_tau;\\n\\n  // Hierarchical models for the second factor residuals\\n  vector[L_factor2_ncp] delta_factor2_ncp;\\n  vector[L_factor2_cp]  delta_factor2_cp;\\n  vector<lower=0>[N_factor1_levels] delta_factor2_tau;\\n\\n  // Hierarchical models for the third factor residuals\\n  vector[L_factor3_ncp] delta_factor3_ncp;\\n  vector[L_factor3_cp]  delta_factor3_cp;\\n  vector<lower=0>[N_factor2_levels] delta_factor3_tau;\\n}\\n\\ntransformed parameters {\\n  vector[N_factor1_levels] delta_factor1;\\n  vector[N_factor2_levels] delta_factor2;\\n  vector[N_factor3_levels] delta_factor3;\\n\\n  vector[N_factor3_levels] log_psi;\\n\\n  // Reconstruct first factor residuals\\n  delta_factor1[factor1_ncp_idx] = delta_factor1_tau * delta_factor1_ncp;\\n  delta_factor1[factor1_cp_idx] = delta_factor1_cp;\\n\\n  // Reconstruct second factor residuals\\n  delta_factor2[factor2_ncp_idx]\\n    =   delta_factor2_tau[factor2_to_factor1[factor2_ncp_idx]] .* delta_factor2_ncp;\\n  delta_factor2[factor2_cp_idx] = delta_factor2_cp;\\n\\n  // Reconstruct third factor residuals\\n  delta_factor3[factor3_ncp_idx]\\n    =   delta_factor3_tau[factor3_to_factor2[factor3_ncp_idx]] .* delta_factor3_ncp;\\n  delta_factor3[factor3_cp_idx] = delta_factor3_cp;\\n\\n  log_psi =  baseline\\n           + delta_factor1[factor2_to_factor1[factor3_to_factor2]]\\n           + delta_factor2[factor3_to_factor2]\\n           + delta_factor3;\\n}\\n\\nmodel {\\n  baseline ~ normal(0, 1);\\n\\n  delta_factor1_tau ~ normal(0, 1);\\n  delta_factor1_cp ~ normal(0, delta_factor1_tau);\\n  delta_factor1_ncp ~ normal(0, 1);\\n\\n  delta_factor2_tau ~ normal(0, 0.5);\\n  delta_factor2_cp ~ normal(0, delta_factor2_tau[factor2_to_factor1[factor2_cp_idx]]);\\n  delta_factor2_ncp ~ normal(0, 1);\\n\\n  delta_factor3_tau ~ normal(0, 0.25);\\n  delta_factor3_cp ~ normal(0, delta_factor3_tau[factor3_to_factor2[factor3_cp_idx]]);\\n  delta_factor3_ncp ~ normal(0, 1);\\n\\n  y ~ poisson_log(log_psi[obs_to_factor3] + log_rho_I);\\n}\\n\\ngenerated quantities {\\n  array[N] int y_post_pred = poisson_log_rng(log_psi[obs_to_factor3] + log_rho_I);\\n  real F_post_pred = F_stat(to_vector(y_post_pred) ./ exp(log_rho_I),\\n                            N, obs_to_factor3, N_factor3_levels);\\n}\\n\",\"data_safe_json\":\"{\\\"L_factor1_cp\\\":2,\\\"L_factor1_ncp\\\":1,\\\"L_factor2_cp\\\":2,\\\"L_factor2_ncp\\\":1,\\\"L_factor3_cp\\\":2,\\\"L_factor3_ncp\\\":1,\\\"N\\\":1,\\\"N_factor1_levels\\\":4,\\\"N_factor2_levels\\\":3,\\\"N_factor3_levels\\\":2,\\\"factor1_cp_idx\\\":[2,2],\\\"factor1_ncp_idx\\\":[2],\\\"factor2_cp_idx\\\":[2,2],\\\"factor2_ncp_idx\\\":[2],\\\"factor2_to_factor1\\\":[4,4,2],\\\"factor3_cp_idx\\\":[2,2],\\\"factor3_ncp_idx\\\":[2],\\\"factor3_to_factor2\\\":[1,2],\\\"log_rho_I\\\":[4.02854939800127],\\\"obs_to_factor3\\\":[1],\\\"y\\\":[1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0990d3564c9b9e3a0069f1558d234c81969c9f4fb966d0a39a",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4737,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3628,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 8365
+  },
+  "user": null
+}

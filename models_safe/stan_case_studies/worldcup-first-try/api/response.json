@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338460,
-  "created_at": 1777338424,
+  "completed_at": 1777431649,
+  "created_at": 1777431622,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0688b415d6a116660069f0083805e481978c79609354a2e5ee",
+  "id": "resp_02c848393e330f830069f17446736081a08b0a33be3ecab2e8",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0688b415d6a116660069f00839a1788197b942fff9e54ca27d",
+      "id": "rs_02c848393e330f830069f17447743081a0977bd7b84867d08d",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: the likelihood is applied to `sqrt_dif`, a transformed-data quantity deterministically computed from `score_1` and `score_2`. No SafeStan protected-data interface is generated.\\n\\nGenerated files: none.\\n\\nReason: although the transformed observation issue could be handled by a deterministic top-level data augmentation, the parameters `b`, `sigma_a`, and `sigma_y` have no built-in prior sampling statements. SafeStan requires every parameter to be sampled exactly once from a built-in prior before use. Adding proper priors for these unbounded/half-bounded parameters would change the posterior/log density, so this model cannot be translated with only a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: the model scores the transformed-data quantity `sqrt_dif`, computed deterministically from `score_1 - score_2`; no SafeStan protected variables are generated for this major case.\\n\\nGenerated files: none.\\n\\nReason: the observed quantity on the left side of the likelihood, `sqrt_dif ~ student_t(...)`, is not a top-level data variable. More importantly, parameters `b`, `sigma_a`, and `sigma_y` have no explicit built-in priors before they are used in the likelihood path. Adding priors for these unconstrained or half-constrained parameters would change the posterior density, so this cannot be translated to SafeStan by a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0688b415d6a116660069f0085a88408197b61c874e708032c3",
+      "id": "msg_02c848393e330f830069f1745fe3d881a09ad4cc25eb9c4837",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 4182,
+    "input_tokens": 3232,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2263,
+    "output_tokens": 2265,
     "output_tokens_details": {
       "reasoning_tokens": 2070
     },
-    "total_tokens": 6445
+    "total_tokens": 5497
   },
   "user": null
 }

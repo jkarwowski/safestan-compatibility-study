@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `k`.
+
+Generated files: none.
+
+Reason: the observation model for `k` is a marginalized discrete mixture over the unobserved number of surveys `n`, implemented through `binomial_lpmf(k | n, theta)` inside `transformed parameters` and a manual `target += log_sum_exp(lp_parts)` statement in the `model` block. SafeStan forbids manual `target +=` scoring and requires protected data to be observed exactly once with a built-in sampling statement. There is no direct built-in Stan distribution corresponding to this marginalized uniform mixture over `n`, and rewriting it would require a substantive change to the latent-state/marginalized likelihood representation rather than a minor mechanical translation.

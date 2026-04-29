@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":2,\"Y\":[2.376322872738066,5.414735034652741],\"x\":[5.69255264345685,4.751369227050612]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] real x;\n  array[N] real Y;\n}\nparameters {\n  real<lower=0> sigma;\n  real<lower=0> alpha;\n  array[2] real beta;\n  real<lower=min(x), upper=max(x)> x_change;\n}\nmodel {\n  array[N] real mu;\n  \n  alpha ~ normal(0, 5);\n  beta ~ normal(0, 5);\n  sigma ~ cauchy(0, 5);\n  x_change ~ uniform(min(x), max(x));\n  \n  for (n in 1 : N) {\n    mu[n] = alpha\n            + ((x[n] < x_change) ? beta[1] : beta[2]) * (x[n] - x_change);\n  }\n  \n  Y ~ normal(mu, sigma);\n}\n",
+  "protected_variables": [
+    "Y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `Y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added an explicit prior `x_change ~ uniform(min(x), max(x));` before `x_change` is used in the model block. This represents the bounded parameter's implicit flat prior on its declared finite support as a built-in sampling statement, satisfying SafeStan's requirement that every parameter have exactly one prior before use. No data fields were added or changed. `N` and `x` remain unprotected context inputs.\n"
+}

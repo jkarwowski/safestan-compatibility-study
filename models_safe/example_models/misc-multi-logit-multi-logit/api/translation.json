@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"D\":4,\"K\":6,\"N\":1,\"x\":[[4.111843910617768,5.866690834145995,5.183812867140128,2.4476302961487972]],\"y\":[1]}",
+  "model_safe_stan": "data {\n  int<lower=2> K; // number of categories\n  int<lower=2> D; // number of predictors\n  int<lower=0> N; // number of observations\n  matrix[N, D] x; // predictors\n  array[N] int<lower=1, upper=K> y; // observations\n}\nparameters {\n  matrix[K, D] beta; // slopes\n}\nmodel {\n  // prior\n  beta ~ cauchy(0, 2.5);\n\n  // likelihood\n  y ~ categorical_logit_glm(x, rep_vector(0, K), beta');\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the elementwise protected-data likelihood `y[n] ~ categorical_logit(...)` inside a loop was replaced by the equivalent built-in vectorized likelihood `y ~ categorical_logit_glm(x, rep_vector(0, K), beta')`, so the protected top-level data variable is observed exactly once with a plain left-hand side. The prior was changed from `to_vector(beta) ~ cauchy(0, 2.5)` to the equivalent elementwise matrix statement `beta ~ cauchy(0, 2.5)`, making the top-level parameter the direct sampling target. The prior now appears before any use of `beta` in the likelihood. `data_safe.json` is unchanged from the supplied data.\n"
+}

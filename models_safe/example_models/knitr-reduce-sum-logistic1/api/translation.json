@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":3,\"grainsize\":4,\"n_games\":[1,2,4],\"n_redcards\":[1,2,4],\"rating\":[3.4398038421550092,5.552130633089254,5.6787576598871015]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=0> n_redcards;\n  array[N] int<lower=0> n_games;\n  vector[N] rating;\n  int<lower=1> grainsize;\n}\ntransformed data {\n  vector[2] beta_location;\n  vector[2] beta_scale;\n\n  beta_location[1] = 0;\n  beta_location[2] = 0;\n  beta_scale[1] = 10;\n  beta_scale[2] = 1;\n}\nparameters {\n  vector[2] beta;\n}\nmodel {\n  beta ~ normal(beta_location, beta_scale);\n  n_redcards ~ binomial_logit(n_games, beta[1] + beta[2] * rating);\n}\n",
+  "protected_variables": [
+    "n_redcards"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `n_redcards`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the `reduce_sum`/`target +=` likelihood implemented through a user-defined partial-sum log-probability function with the equivalent vectorized built-in sampling statement `n_redcards ~ binomial_logit(...)`. Combined the two component priors for `beta[1]` and `beta[2]` into one top-level vectorized prior `beta ~ normal(...)` so the parameter `beta` is observed by exactly one built-in prior statement. The data file is unchanged; `grainsize` is retained as an unused context input.\n"
+}

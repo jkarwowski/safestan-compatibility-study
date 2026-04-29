@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429828,
+  "created_at": 1777429808,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b8d47f29132277f0069f16d3007b8819494367d76ed65b24e",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0b8d47f29132277f0069f16d3098ac81949dab1314425a0f3c",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the manual marginalized mixture likelihood implemented with `target += log_sum_exp(...)` by the algebraically equivalent built-in observation statement `y ~ bernoulli(mix_prob)`, where `mix_prob = dot_product(cluster_weight, cluster_prob)`. This preserves the density because a finite mixture of Bernoulli distributions is Bernoulli with success probability equal to the mixture-weighted mean of the component probabilities. No data fields were added or changed.\\n\",\"model_safe_stan\":\"// ForestDB translation: Infinite Dirichlet-Multinomial Mixture\\ndata {\\n  int<lower=1> K;\\n  int<lower=1> N;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  simplex[K] cluster_weight;\\n  vector<lower=0, upper=1>[K] cluster_prob;\\n}\\nmodel {\\n  real mix_prob;\\n  cluster_weight ~ dirichlet(rep_vector(1.0 / K, K));\\n  cluster_prob ~ beta(1, 1);\\n  mix_prob = dot_product(cluster_weight, cluster_prob);\\n  y ~ bernoulli(mix_prob);\\n}\\ngenerated quantities {\\n  int<lower=1, upper=K> cluster = categorical_rng(cluster_weight);\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":1,\\\"N\\\":3,\\\"y\\\":[0,0,0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b8d47f29132277f0069f16d422b788194808fe58224d98dfe",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3238,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1923,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5161
+  },
+  "user": null
+}

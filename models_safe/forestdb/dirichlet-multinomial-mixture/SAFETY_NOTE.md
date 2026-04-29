@@ -6,4 +6,4 @@ Protected data: `y`.
 
 Generated files: none.
 
-Reason: the likelihood for `y` is a marginalized finite mixture. Each row is scored through a manually accumulated `target += log_sum_exp(...)` expression using a user-defined `dm_lpmf` component. SafeStan forbids arbitrary `target +=` scoring and requires each protected variable to be observed exactly once with a built-in distribution sampling statement. Replacing this marginalized mixture with SafeStan-compatible sampling statements would require a substantive model rewrite or a different likelihood representation, not a minor same-density translation.
+Reason: the likelihood for `y` is a marginalized finite mixture implemented with manual `target += log_sum_exp(...)` scoring and a user-defined Dirichlet-multinomial log PMF. SafeStan forbids arbitrary `target +=` likelihood construction and requires protected observations to be scored exactly once by a built-in sampling statement. Replacing this marginalized mixture with SafeStan sampling statements would require a substantive model rewrite or a change to the likelihood representation, so no minor same-density translation is provided.

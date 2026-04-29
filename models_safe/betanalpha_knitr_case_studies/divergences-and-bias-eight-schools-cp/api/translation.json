@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"J\": 2,\n  \"sigma\": [\n    1.770268571456641,\n    2.068573880445703\n  ],\n  \"y\": [\n    3.4701004342452446,\n    5.801561047695437\n  ]\n}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  array[J] real y;\n  array[J] real<lower=0> sigma;\n}\n\nparameters {\n  real mu;\n  real<lower=0> tau;\n  array[J] real theta;\n}\n\nmodel {\n  mu ~ normal(0, 5);\n  tau ~ cauchy(0, 5);\n  theta ~ normal(mu, tau);\n  y ~ normal(theta, sigma);\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement after all parameter priors. The remaining data variables `J` and `sigma` are context inputs only.\n"
+}

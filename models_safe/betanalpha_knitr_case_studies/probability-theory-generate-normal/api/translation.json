@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"mu\":4.872529550616466,\"sigma\":4.635051747380403}",
+  "model_safe_stan": "// Values provided externally\ndata {\n  real mu;\n  real<lower=0> sigma;\n}\n\ngenerated quantities {\n  // Generate an exact sample from a distribution\n  // specified by a normal probabilty density function\n  real x = normal_rng(mu, sigma);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The program does not condition on or score any top-level data variable; `mu` and `sigma` are context inputs used only for RNG generation in `generated quantities`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program contains no likelihood statements, parameters, manual target manipulation, or other constructs rejected by SafeStan.\n"
+}

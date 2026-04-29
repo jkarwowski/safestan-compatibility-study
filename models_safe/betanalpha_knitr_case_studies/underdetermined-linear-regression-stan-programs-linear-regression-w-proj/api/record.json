@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/underdetermined-linear-regression-stan-programs-linear-regression-w-proj/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:08:38+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/underdetermined-linear-regression-stan-programs-linear-regression-w-proj",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0adf21a8a53f2d740069f15a040140819693c3787de4964a6a",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/underdetermined-linear-regression-stan-programs-linear-regression-w-proj",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:08:19+00:00",
+  "usage": {
+    "input_tokens": 3559,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1890,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5449
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

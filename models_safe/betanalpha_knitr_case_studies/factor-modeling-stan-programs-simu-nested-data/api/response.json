@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423883,
+  "created_at": 1777423873,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_05301f60e0b6c9b90069f15601864c819fb6fe1cca526c936b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_05301f60e0b6c9b90069f1560214b4819fb59e4ba5abae3730",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The program has no top-level data variables, no parameters, and no likelihood/sampling statements in the model block; it is a prior/data-simulation program using RNG calls only in allowed non-model blocks.\\n\",\"model_safe_stan\":\"transformed data {\\n  int N_latent = 750;\\n\\n  int L1 = 5;\\n  int L2 = 25;\\n  int L3 = 125;\\n\\n  vector[L1] factor1_level_probs = rep_vector(1.0 / L1, L1);\\n  vector[L2] factor2_level_probs = rep_vector(1.0 / L2, L2);\\n  vector[L3] factor3_level_probs = rep_vector(1.0 / L3, L3);\\n\\n  real baseline = 5;\\n  real delta_factor1_tau = 2;\\n\\n  array[L1] real delta_factor1\\n    = normal_rng(rep_vector(0, L1), delta_factor1_tau);\\n\\n  array[L1] real<lower=0> delta_factor2_tau\\n    = abs(normal_rng(rep_vector(0, L1), 2.25));\\n\\n  array[L2] real<lower=0> delta_factor3_tau\\n      = abs(normal_rng(rep_vector(0, L2), 1.5));\\n}\\n\\ngenerated quantities {\\n  real sigma = 1;\\n\\n  int<lower=1> N = N_latent;\\n  int<lower=1> N_factor1_levels = L1;\\n  int<lower=1> N_factor2_levels = L2;\\n  int<lower=1> N_factor3_levels = L3;\\n\\n  array[N_latent] int<lower=1, upper=N_factor3_levels> obs_to_factor3;\\n  array[L3] int<lower=1, upper=N_factor2_levels> factor3_to_factor2;\\n  array[L2] int<lower=1, upper=N_factor1_levels> factor2_to_factor1;\\n\\n  vector[N_latent] y;\\n\\n  {\\n    vector[L2] delta_factor2;\\n    vector[L3] delta_factor3;\\n\\n    for (l2 in 1:L2) {\\n      int l1 = categorical_rng(factor1_level_probs);\\n      factor2_to_factor1[l2] = l1;\\n      delta_factor2[l2] = normal_rng(0, delta_factor2_tau[l1]);\\n    }\\n\\n    for (l3 in 1:L3) {\\n      int l2 = categorical_rng(factor2_level_probs);\\n      factor3_to_factor2[l3] = l2;\\n      delta_factor3[l3] = normal_rng(0, delta_factor3_tau[l2]);\\n    }\\n\\n    for (n in 1:N) {\\n      int l3 = categorical_rng(factor3_level_probs);\\n      int l2 = factor3_to_factor2[l3];\\n      int l1 = factor2_to_factor1[l2];\\n      obs_to_factor3[n] = l3;\\n\\n      y[n] = normal_rng(  baseline\\n                        + delta_factor1[l1]\\n                        + delta_factor2[l2]\\n                        + delta_factor3[l3], sigma);\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_05301f60e0b6c9b90069f156076d00819fa76793fbbab15744",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3466,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1318,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4784
+  },
+  "user": null
+}

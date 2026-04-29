@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N2\": 2,\n  \"gamma\": 3.076938513739364,\n  \"t1\": 1.0,\n  \"t2\": 2.0,\n  \"t3\": 3.0\n}\n",
+  "model_safe_stan": "functions {\n  // Inverse survival function\n  real inv_survival(real u, real gamma) {\n    return - log(u) / gamma;\n  }\n}\n\ndata {\n  int<lower=1> N2;\n  real<lower=0> gamma;\n\n  real t1; // Left-censoring threshold\n  real t2; // Interval-censoring left threshold\n  real t3; // Interval-censoring right threshold/Right-censoring threshold\n}\n\ngenerated quantities {\n  int<lower=0> N1 = 0;\n  array[N2] real<lower=0> obs_times = rep_array(0.0, N2);\n  int<lower=0> N3 = 0;\n  int<lower=0> N4 = 0;\n  {\n    int n = 1;\n    while (1) {\n      real u = uniform_rng(0, 1);\n      real time = inv_survival(u, gamma);\n\n      if (time < t1) {\n        N1 += 1;\n      } else if (time < t2) {\n        obs_times[n] = time;\n        n += 1;\n      } else if (time < t3) {\n        N3 += 1;\n      } else {\n        N4 += 1;\n      }\n\n      if (n > N2) break;\n    }\n  }\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The program contains no model block, no parameters, and no likelihood sampling statements conditioning on data.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. All top-level data variables are context inputs used only by generated-quantities simulation code; there is no protected observed interface to score.\n"
+}

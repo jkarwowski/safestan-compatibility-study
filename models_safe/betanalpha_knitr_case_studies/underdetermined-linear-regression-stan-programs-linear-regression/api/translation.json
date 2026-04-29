@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"M\": 4,\n  \"N\": 4,\n  \"X\": [\n    [\n      5.5132343775941655,\n      2.6710313373460117,\n      2.9585348564362195,\n      5.697403696742464\n    ],\n    [\n      6.296467848390579,\n      5.911468275240946,\n      6.194767194654699,\n      2.0499289510813496\n    ],\n    [\n      6.052714434487657,\n      3.8437608953525784,\n      2.491078968432836,\n      5.372822778343108\n    ],\n    [\n      4.425186235197458,\n      2.7667665658516976,\n      2.757055238503329,\n      3.0589419295243854\n    ]\n  ],\n  \"y\": [\n    4.0,\n    4.0,\n    3.0,\n    4.0\n  ]\n}",
+  "model_safe_stan": "data {\n  int<lower=1> N; // Number of observations\n  int<lower=1> M; // Number of covariates\n  matrix[N, M] X; // Design matrix\n  vector[N] y;    // Observations\n}\n\nparameters {\n  vector[M] beta;\n  real alpha;\n  real<lower=0> sigma;\n}\n\nmodel {\n  // Weakly informative containment priors\n  beta ~ normal(0, 10);\n  alpha ~ normal(0, 2);\n  sigma ~ normal(0, 2);\n\n  // Observational model\n  y ~ normal(X * beta + alpha, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The context inputs `N`, `M`, and `X` are used only as sizes/predictors. All parameters (`beta`, `alpha`, and `sigma`) have exactly one built-in prior sampling statement before they are used in the likelihood.\n"
+}

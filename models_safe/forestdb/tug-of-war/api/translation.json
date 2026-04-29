@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"A\":1,\"N\":4,\"chosen_action\":[1,1,1,1],\"utility\":[5.762319912573442]}",
+  "model_safe_stan": "// ForestDB translation: Tug of War\ndata {\n  int<lower=1> A;\n  int<lower=1> N;\n  array[N] int<lower=1, upper=A> chosen_action;\n  vector[A] utility;\n}\nparameters {\n  real<lower=0> beta;\n}\nmodel {\n  beta ~ lognormal(0, 0.75);\n  chosen_action ~ categorical_logit(beta * utility);\n}\ngenerated quantities {\n  simplex[A] action_prob = softmax(beta * utility);\n}\n",
+  "protected_variables": [
+    "chosen_action"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `chosen_action`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: moved the parameter prior before any model-block use of `beta` by inlining the deterministic `logits = beta * utility` expression in the observation statement. This preserves the same log density while satisfying SafeStan's requirement that each parameter be sampled from its prior before use. No data changes were required.\n"
+}

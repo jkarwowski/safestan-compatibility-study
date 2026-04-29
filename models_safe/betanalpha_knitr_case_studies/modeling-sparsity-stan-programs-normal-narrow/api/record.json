@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-normal-narrow/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:59:43+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-normal-narrow",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0027dd56da8909c00069f157f72fc0819cacd3f52953980caf",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-normal-narrow",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:59:35+00:00",
+  "usage": {
+    "input_tokens": 3066,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 920,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3986
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

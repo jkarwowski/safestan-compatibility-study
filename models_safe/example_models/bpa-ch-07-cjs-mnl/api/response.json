@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426270,
+  "created_at": 1777426229,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0f0b95510482fcc90069f15f3591248196bc88b68b0f483f36",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0f0b95510482fcc90069f15f36d2388196886f31225d5bcd3b",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `marr`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added `marr_safestan_copy`, a deterministic copy of `marr`, because protected data are used in `transformed data` to compute release totals before the likelihood observation. The protected likelihood was changed from a loop over indexed rows, `marr[t] ~ multinomial(pr[t])`, to the equivalent vectorized built-in statement `marr ~ multinomial(pr)` so that the protected variable appears exactly once on the left side as a plain top-level identifier. Added explicit `uniform(0, 1)` priors for `phi` and `p`, which are density-neutral for parameters already constrained to `[0, 1]` and satisfy SafeStan's unique-prior requirement. Generated-quantities fit calculations read the deterministic copy of `marr`.\\n\\nDeterministic data augmentation: `marr_safestan_copy` is exactly equal to `marr` from the supplied data.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> n_occasions; // Number of capture occasions\\n  array[n_occasions - 1, n_occasions] int<lower=0> marr; // m-array\\n  array[n_occasions - 1, n_occasions] int<lower=0> marr_safestan_copy; // deterministic copy of marr for pre-observation use\\n}\\ntransformed data {\\n  // Compoud declaration was enabled in Stan 2.13\\n  int n_occasions_minus_1 = n_occasions - 1;\\n  //  int n_occasions_minus_1;\\n  array[n_occasions - 1] int r;\\n  \\n  //  n_occasions_minus_1 = n_occasions - 1;\\n  \\n  // Calculate the number of birds released each year\\n  for (t in 1 : n_occasions_minus_1) {\\n    r[t] = sum(marr_safestan_copy[t]);\\n  }\\n}\\nparameters {\\n  vector<lower=0, upper=1>[n_occasions_minus_1] phi; // Survival\\n  vector<lower=0, upper=1>[n_occasions_minus_1] p; // Recapture\\n}\\ntransformed parameters {\\n  vector<lower=0, upper=1>[n_occasions_minus_1] q;\\n  array[n_occasions_minus_1] simplex[n_occasions] pr;\\n  \\n  q = 1.0 - p; // Probability of non-recapture\\n  \\n  // Define the cell probabilities of the m-array\\n  for (t in 1 : n_occasions_minus_1) {\\n    // Main diagonal\\n    pr[t, t] = phi[t] * p[t];\\n    \\n    // Above main diagonal\\n    for (j in (t + 1) : n_occasions_minus_1) {\\n      pr[t, j] = prod(phi[t : j]) * prod(q[t : (j - 1)]) * p[j];\\n    }\\n    \\n    // Below main diagonal\\n    pr[t,  : t - 1] = rep_vector(0, t - 1);\\n  }\\n  \\n  // Last column: probability of non-recapture\\n  for (t in 1 : n_occasions_minus_1) {\\n    pr[t, n_occasions] = 1 - sum(pr[t,  : n_occasions_minus_1]);\\n  }\\n}\\nmodel {\\n  // Priors\\n  phi ~ uniform(0, 1);\\n  p ~ uniform(0, 1);\\n  \\n  // Define the multinomial likelihood\\n  marr ~ multinomial(pr);\\n}\\ngenerated quantities {\\n  real fit;\\n  real fit_new;\\n  matrix[n_occasions_minus_1, n_occasions] E_org;\\n  matrix[n_occasions_minus_1, n_occasions] E_new;\\n  array[n_occasions_minus_1] vector[n_occasions] expmarr;\\n  array[n_occasions_minus_1, n_occasions] int<lower=0> marr_new;\\n  \\n  // Assess model fit using Freeman-Tukey statistic\\n  // Compute fit statistics for observed data\\n  for (t in 1 : n_occasions_minus_1) {\\n    expmarr[t] = r[t] * pr[t];\\n    for (j in 1 : n_occasions) {\\n      E_org[t, j] = square(sqrt(marr_safestan_copy[t][j]) - sqrt(expmarr[t][j]));\\n    } //j\\n  } //t\\n  \\n  // Generate replicate data and compute fit stats from them\\n  for (t in 1 : n_occasions_minus_1) {\\n    marr_new[t] = multinomial_rng(pr[t], r[t]);\\n    for (j in 1 : n_occasions) {\\n      E_new[t, j] = square(sqrt(marr_new[t][j]) - sqrt(expmarr[t][j]));\\n    }\\n  }\\n  fit = sum(E_org);\\n  fit_new = sum(E_new);\\n}\\n\",\"data_safe_json\":\"{\\\"marr\\\":[[4,4,1],[4,2,3]],\\\"n_occasions\\\":3,\\\"marr_safestan_copy\\\":[[4,4,1],[4,2,3]]}\",\"protected_variables\":[\"marr\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0f0b95510482fcc90069f15f57acd88196a91e627670b19886",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3745,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4379,
+    "output_tokens_details": {
+      "reasoning_tokens": 3106
+    },
+    "total_tokens": 8124
+  },
+  "user": null
+}

@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: the original model scores `log_earn`, a transformed-data value computed as `log(earn)`, so the underlying observed top-level data variable is `earn` but the actual sampling statement is not on a top-level data variable.
+
+Generated files: none.
+
+Reason: the likelihood is written as `log_earn ~ normal(y_hat, sigma_y)` where `log_earn` is constructed in `transformed data` from `earn`. SafeStan requires protected observations to be top-level data variables and to be scored directly with a plain left-hand-side sampling statement. Replacing this exactly with a built-in sampling statement on `earn` is not possible without changing the log density; for example, `earn ~ lognormal(y_hat, sigma_y)` would add the log-Jacobian term relative to the original Stan target. In addition, the parameter `xi` has no prior and no finite-bounds implicit proper prior, while SafeStan requires every parameter to have exactly one built-in prior. Adding a prior or otherwise removing this improper latent dimension would be a substantive model change.

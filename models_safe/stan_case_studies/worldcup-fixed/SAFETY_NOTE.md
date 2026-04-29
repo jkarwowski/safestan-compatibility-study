@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data choice: the observed likelihood is applied to `sqrt_dif`, a transformed-data response deterministically computed from `score_1` and `score_2` as `2 * (step(score_1 - score_2) - 0.5) * sqrt(abs(score_1 - score_2))`. A minor rewrite could make this a top-level protected data variable, but no complete SafeStan translation is generated.
+Protected data: the model observes `sqrt_dif`, a transformed-data quantity computed deterministically from `score_1` and `score_2`.
 
 Generated files: none.
 
-Reason: the model has parameters `b`, `sigma_a`, and `sigma_y` with implicit improper flat priors. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding proper priors would change the posterior/log density, and improper flat priors cannot be represented by SafeStan sampling statements. Therefore preserving the original density would require a substantive model change.
+Reason: the likelihood statement is `sqrt_dif ~ student_t(...)`, but `sqrt_dif` is not a top-level data variable. More importantly, parameters `b`, `sigma_a`, and `sigma_y` have only Stan's implicit improper flat priors. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors for these parameters would change the posterior/log density, so this cannot be translated with only a minor same-density rewrite.

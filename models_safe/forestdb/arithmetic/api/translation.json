@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"C\":4,\"K\":3,\"N_obs\":25,\"obs_context\":[1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4],\"obs_rule\":[1,1,2,2,3,3,1,1,2,2,3,3,3,1,1,2,2,2,3,1,1,2,2,2,3]}",
+  "model_safe_stan": "// ForestDB translation: Inducing Arithmetic Functions\n// SafeStan rewrite: count table expanded to categorical observations.\ndata {\n  int<lower=1> C;\n  int<lower=1> K;\n  int<lower=0> N_obs;\n  array[N_obs] int<lower=1, upper=C> obs_context;\n  array[N_obs] int<lower=1, upper=K> obs_rule;\n}\nparameters {\n  array[C] simplex[K] rule_prob;\n}\nmodel {\n  rule_prob ~ dirichlet(rep_vector(1.0, K));\n  obs_rule ~ categorical(rule_prob[obs_context]);\n}\ngenerated quantities {\n  array[C] int<lower=1, upper=K> sampled_rule;\n  for (c in 1:C) {\n    sampled_rule[c] = categorical_rng(rule_prob[c]);\n  }\n}\n",
+  "protected_variables": [
+    "obs_rule"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `obs_rule`, a deterministic expansion of the original `counts` table. `C`, `K`, `N_obs`, and `obs_context` are context inputs.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual `target += counts[c, k] * log(rule_prob[c, k])` loop with one vectorized built-in likelihood statement, `obs_rule ~ categorical(rule_prob[obs_context])`. The original `counts` field is replaced by deterministic arrays computed as follows: `N_obs = sum(counts)`, and for each `c = 1..C` and `k = 1..K` in row-major order, append `counts[c, k]` copies of `c` to `obs_context` and `k` to `obs_rule`. This gives exactly the same log density as the original target increments. The Dirichlet prior loop was vectorized to `rule_prob ~ dirichlet(rep_vector(1.0, K))` so the top-level parameter is sampled once outside loops.\n"
+}

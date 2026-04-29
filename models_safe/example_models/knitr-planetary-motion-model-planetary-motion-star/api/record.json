@@ -1,0 +1,31 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-planetary-motion-model-planetary-motion-star/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:11:56+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-planetary-motion-model-planetary-motion-star",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "q_obs_x",
+    "q_obs_y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0f4ac80b69c7283b0069f1688b7c1c819d94cfb7ee44be43f8",
+  "safe_dir": "models_safe/example_models/knitr-planetary-motion-model-planetary-motion-star",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:10:19+00:00",
+  "usage": {
+    "input_tokens": 3607,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 9431,
+    "output_tokens_details": {
+      "reasoning_tokens": 8286
+    },
+    "total_tokens": 13038
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

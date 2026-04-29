@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777431173,
+  "created_at": 1777431156,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0aabc0b3a142253e0069f17274f8dc819581e8835aa8176229",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0aabc0b3a142253e0069f172758c048195ba641c5c8ab3117d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `log_radon`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the looped manual likelihood contribution `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` with a single built-in vectorized sampling statement `log_radon ~ normal(mu, sigma_y)`. The predictor vector `mu` is computed deterministically from context data and already-prior-sampled parameters before this observation statement. This preserves the same normal likelihood density while satisfying SafeStan's requirement that the protected observation be scored exactly once by a built-in distribution with a plain top-level data variable on the left-hand side. No data fields were added or changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  int<lower=0> J;\\n  array[N] int<lower=1, upper=J> county_idx;\\n  vector[N] floor_measure;\\n  vector[N] log_radon;\\n}\\nparameters {\\n  real<lower=0> sigma_y;\\n  real<lower=0> sigma_alpha;\\n  real<lower=0> sigma_beta;\\n  vector[J] alpha_raw;\\n  vector[J] beta_raw;\\n  real mu_alpha;\\n  real mu_beta;\\n}\\ntransformed parameters {\\n  vector[J] alpha;\\n  vector[J] beta;\\n  // implies: alpha ~ normal(mu_alpha, sigma_alpha);\\n  alpha = mu_alpha + sigma_alpha * alpha_raw;\\n  // implies: beta ~ normal(mu_beta, sigma_beta);\\n  beta = mu_beta + sigma_beta * beta_raw;\\n}\\nmodel {\\n  vector[N] mu;\\n  // Prior\\n  sigma_y ~ normal(0, 1);\\n  sigma_beta ~ normal(0, 1);\\n  sigma_alpha ~ normal(0, 1);\\n  mu_alpha ~ normal(0, 10);\\n  mu_beta ~ normal(0, 10);\\n  alpha_raw ~ normal(0, 1);\\n  beta_raw ~ normal(0, 1);\\n  \\n  // Likelihood\\n  for (n in 1 : N) {\\n    mu[n] = alpha[county_idx[n]] + floor_measure[n] * beta[county_idx[n]];\\n  }\\n  log_radon ~ normal(mu, sigma_y);\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":1,\\\"N\\\":4,\\\"county_idx\\\":[1,1,1,1],\\\"floor_measure\\\":[2.8757967375942433,2.179789660278225,3.831900202680709,6.585037115243369],\\\"log_radon\\\":[6.415937560510176,3.4926780916399167,3.6384347530145154,3.9572789050896207]}\",\"protected_variables\":[\"log_radon\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0aabc0b3a142253e0069f1728195308195911ff2fc0f80f015",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3366,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1700,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5066
+  },
+  "user": null
+}

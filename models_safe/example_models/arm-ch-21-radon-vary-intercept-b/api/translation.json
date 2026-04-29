@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood for the observed data is the built-in statement `y ~ normal(y_hat, sigma_y)`, so `y` is the protected interface variable. The early transformed-parameters read of `y` in `e_y = y - y_hat` could be handled mechanically with a deterministic data copy, but the model also declares `beta` as an unconstrained parameter with no sampling statement and no contribution to the density. SafeStan requires every parameter to have exactly one built-in prior before use. Adding a proper prior for `beta` would change the posterior, and there is no exact built-in improper flat prior over `real` vectors. Removing `beta` would change the parameter space. Therefore a SafeStan version would require a substantive model/density change rather than a minor same-density rewrite.\n"
+}

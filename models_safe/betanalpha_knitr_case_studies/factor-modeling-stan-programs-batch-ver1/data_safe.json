@@ -1,0 +1,36 @@
+{
+  "L_factor1_cp": 0,
+  "L_factor1_ncp": 1,
+  "N": 3,
+  "N_factor1_levels": 1,
+  "N_factor2_levels": 4,
+  "N_factor3_levels": 1,
+  "factor1_cp_idx": [],
+  "factor1_ncp_idx": [
+    1
+  ],
+  "factor2_to_factor1": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "factor3_to_factor2": [
+    3
+  ],
+  "log_rho_I": [
+    5.581187555233437,
+    3.446137227533364,
+    2.2302987221459136
+  ],
+  "obs_to_factor3": [
+    1,
+    1,
+    1
+  ],
+  "y": [
+    3,
+    3,
+    3
+  ]
+}

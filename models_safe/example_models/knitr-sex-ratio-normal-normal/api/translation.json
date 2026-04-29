@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"mu_0\":3.770259832084088,\"sigma_0\":1.6769399406262537,\"sigma_y\":0.6949254352654088,\"y\":6.999333334372917}",
+  "model_safe_stan": "data {\n  real y;\n  real<lower=0> sigma_y;\n  real mu_0;\n  real<lower=0> sigma_0;\n}\nparameters {\n  real theta;\n}\nmodel {\n  theta ~ normal(mu_0, sigma_0);\n  y ~ normal(theta, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that the parameter prior `theta ~ normal(mu_0, sigma_0)` appears before the likelihood `y ~ normal(theta, sigma_y)`. This preserves the same posterior/log density while satisfying SafeStan's rule that a parameter must be given its unique built-in prior before it is used. No data changes were required.\n"
+}

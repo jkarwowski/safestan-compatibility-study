@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  vector<lower=0>[50] x_a;\n  vector<lower=0>[50] x_b;\n}\n\ntransformed parameters {\n  vector[50] x = x_a .* sqrt(x_b);\n}\n\nmodel {\n  x_a ~ normal(0, 1);\n  x_b ~ inv_gamma(0.5, 0.5);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no data block and no observed data likelihood; the two top-level parameter variables each have exactly one built-in prior sampling statement before any model-block use, and there are no forbidden manual target manipulations.\n"
+}

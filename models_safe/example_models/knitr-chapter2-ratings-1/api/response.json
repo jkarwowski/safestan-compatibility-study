@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428058,
+  "created_at": 1777428042,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0c88bfb7f04e9f230069f1664a24c08197b35cced810602122",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0c88bfb7f04e9f230069f1664acb6081978a4b2df07f4ad548",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added an explicit `sigma_y ~ uniform(0, 2.5)` prior before `sigma_y` is used in the likelihood. This matches the existing finite bounds on `sigma_y` and makes the implicit proper bounded-uniform prior explicit for SafeStan's unique-prior requirement. No data changes were required. `N` is a size and `movie` is an index/predictor, so they are not protected.\\n\",\"model_safe_stan\":\"data {\\n  int N;\\n  vector[N] y;\\n  array[N] int<lower=1, upper=2> movie;\\n}\\nparameters {\\n  vector<lower=0, upper=5>[2] theta;\\n  real<lower=0, upper=2.5> sigma_y;\\n}\\nmodel {\\n  theta ~ normal(3, 1);\\n  sigma_y ~ uniform(0, 2.5);\\n  y ~ normal(theta[movie], sigma_y);\\n  /* equivalently:\\n    for (j in 1:2){\\n      theta[j] ~ normal(3, 1);\\n    }\\n    for (n in 1:N){\\n      y[n] ~ normal(theta[movie[n]], sigma_y);\\n    }\\n  */\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":6,\\\"movie\\\":[2,2,2,2,2,1],\\\"y\\\":[6.0,5.0,3.0,5.0,5.0,4.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0c88bfb7f04e9f230069f16657addc8197997dd7ae279919ea",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3051,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1433,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4484
+  },
+  "user": null
+}

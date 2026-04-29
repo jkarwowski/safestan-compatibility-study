@@ -1,0 +1,11 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"n_sample\":6,\"n_sens\":4,\"n_spec\":2,\"y_sample\":4,\"y_sens\":3,\"y_spec\":2}",
+  "model_safe_stan": "/**\n * meta-analysis over studies of disease infection rate \n * for variation in sensitivity and specificity\n * pool data from all studies\n */\ndata {\n  int y_sample;\n  int n_sample;\n  int y_spec;\n  int n_spec;\n  int y_sens;\n  int n_sens;\n}\nparameters {\n  real<lower=0, upper=1> p;\n  real<lower=0, upper=1> spec;\n  real<lower=0, upper=1> sens;\n}\nmodel {\n  real p_sample;\n  p ~ uniform(0, 1);\n  spec ~ uniform(0, 1);\n  sens ~ uniform(0, 1);\n  p_sample = p * sens + (1 - p) * (1 - spec);\n  y_sample ~ binomial(n_sample, p_sample);\n  y_spec ~ binomial(n_spec, spec);\n  y_sens ~ binomial(n_sens, sens);\n}\n",
+  "protected_variables": [
+    "y_sample",
+    "y_spec",
+    "y_sens"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y_sample`, `y_spec`, `y_sens`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 1)` priors for the bounded parameters `p`, `spec`, and `sens` before their first use in the model block. These priors are density-neutral relative to the original finite `[0, 1]` parameter constraints. The observed/protected variables are each scored exactly once by built-in `binomial` sampling statements. No data changes were made; `n_sample`, `n_spec`, and `n_sens` remain unprotected context counts.\n"
+}

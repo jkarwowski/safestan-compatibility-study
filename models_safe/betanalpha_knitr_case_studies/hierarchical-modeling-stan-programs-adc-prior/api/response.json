@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424133,
+  "created_at": 1777424126,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0184e51b31eb66430069f156fe862481a3a20489c23c4fe712",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0184e51b31eb66430069f156ff1dac81a39f1823ea70a8490a",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none. The program has no data block and no observed likelihood terms.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required; the program contains only generated-quantities prior-predictive simulation and no protected observations, parameters, sampling statements, or manual target modifications.\\n\",\"model_safe_stan\":\"generated quantities {\\n  real<lower=0> psi;\\n  {\\n    real mu_log_psi0 = normal_rng(0, 0.5 * log(1.25));\\n    real tau_log_psi0 = abs(normal_rng(0, log(1.25)));\\n    real log_psi0 = normal_rng(mu_log_psi0, tau_log_psi0);\\n    real log_rho_T = normal_rng(0, log(2));\\n    real gamma = normal_rng(1.25, 0.25);\\n    psi = exp(log_psi0 + gamma * log_rho_T);\\n  }\\n}\\n\\n\",\"data_safe_json\":\"{}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0184e51b31eb66430069f15703c17481a38077c0c7e707211e",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 2989,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 642,
+    "output_tokens_details": {
+      "reasoning_tokens": 372
+    },
+    "total_tokens": 3631
+  },
+  "user": null
+}

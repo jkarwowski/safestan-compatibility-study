@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/factor-modeling-stan-programs-simu-overlapping-data/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:51:28+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-simu-overlapping-data",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0e4c9255c30675af0069f15603142c81958e7222d7350db1b6",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/factor-modeling-stan-programs-simu-overlapping-data",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:51:14+00:00",
+  "usage": {
+    "input_tokens": 3944,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1836,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5780
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

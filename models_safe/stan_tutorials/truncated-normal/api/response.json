@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338981,
-  "created_at": 1777338931,
+  "completed_at": 1777431748,
+  "created_at": 1777431724,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0ab1e80b93a85bb70069f00a339108819eb1a0d6faa9a752be",
+  "id": "resp_0e1e697a32e7ef0f0069f174ac9ee881949de5582662030706",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0ab1e80b93a85bb70069f00a35c508819ea8ae89363e822242",
+      "id": "rs_0e1e697a32e7ef0f0069f174ad5bdc81949cd4039163e008a2",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `y`.\\n\\nGenerated files: none.\\n\\nReason: the observed likelihood is for the top-level data variable `y`, but the original model scores it elementwise as `y[n] ~ normal(mu, sigma) T[, U]` inside a loop, which is not allowed for protected data under SafeStan. That part could likely be vectorized mechanically, but the model also leaves the unconstrained parameter `mu` with an implicit improper flat prior. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding any proper built-in prior for `mu` would change the posterior/log density, so an exact SafeStan translation is not a minor rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `y` is the observed data scored by the truncated normal likelihood. `N` and `U` are context inputs.\\n\\nGenerated files: none.\\n\\nReason: the likelihood currently scores indexed observations inside a loop, which could in principle be mechanically vectorized to a single top-level `y ~ normal(mu, sigma) T[, U]` statement. However, the parameter `mu` has only an implicit improper flat prior. SafeStan requires every parameter to have exactly one built-in prior before use, and adding any proper prior for `mu` would change the posterior/log density. Therefore a SafeStan-compatible version cannot be produced without a substantive density change.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0ab1e80b93a85bb70069f00a62ebd8819eae623a878a61f173",
+      "id": "msg_0e1e697a32e7ef0f0069f174c25fec8194aaa9fcad0701a286",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 7620,
+    "input_tokens": 2863,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 2783,
+    "output_tokens": 1742,
     "output_tokens_details": {
-      "reasoning_tokens": 2588
+      "reasoning_tokens": 1552
     },
-    "total_tokens": 10403
+    "total_tokens": 4605
   },
   "user": null
 }

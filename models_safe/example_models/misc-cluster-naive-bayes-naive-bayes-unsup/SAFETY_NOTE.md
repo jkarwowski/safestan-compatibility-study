@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `w` is the observed word sequence being scored by the marginalized naive-Bayes likelihood. The document index `doc` and size/prior inputs are context data.
+
+Generated files: none.
+
+Reason: the likelihood is implemented by manually accumulating `categorical_lpmf(w[n] | phi[k])` terms into `gamma` and then adding `target += log_sum_exp(gamma[m])` for each document, marginalizing over the latent document topic. SafeStan forbids `target +=`, and this marginalized mixture likelihood cannot be represented as a single built-in sampling statement on the top-level protected data without a substantive model rewrite. The looped prior on `phi[k]` could be mechanically vectorized, but the marginalized likelihood remains incompatible.

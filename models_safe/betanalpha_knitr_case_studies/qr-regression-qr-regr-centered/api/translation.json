@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"M\":2,\"N\":5,\"X\":[[5.000676996225948,3.9256877078012855,6.445197845839144,5.318541143019176,6.5951363454539775],[2.244419124054609,4.412062664082077,3.749487532973278,5.9393290782594965,3.7071123667327446]],\"y\":[4.0,3.0,5.0,5.0,4.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  int<lower=1> M;\n  matrix[M, N] X;\n  vector[N] y;\n}\n\ntransformed data {\n  matrix[M, N] X_centered;\n  matrix[N, M] Q;\n  matrix[M, M] R;\n  matrix[M, M] R_inv;\n\n  for (m in 1:M)\n    X_centered[m] = X[m] - mean(X[m]);\n\n  // Compute, thin, and then scale QR decomposition\n   Q = qr_Q(X_centered')[, 1:M] * N;\n   R = qr_R(X_centered')[1:M, ] / N;\n   R_inv = inverse(R);\n}\n\nparameters {\n  vector[M] beta;\n  real alpha;\n  real<lower=0> sigma;\n}\n\ntransformed parameters {\n  vector[M] beta_tilde = R * beta;\n}\n\nmodel {\n  beta ~ normal(0, 10);\n  alpha ~ normal(0, 100);\n  sigma ~ cauchy(0, 10);\n\n  y ~ normal(Q * beta_tilde + alpha, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the original model placed the prior `beta ~ normal(0, 10)` on `beta`, a transformed parameter derived from the top-level parameter `beta_tilde`. SafeStan requires priors to be sampling statements on top-level parameters. The safe version uses the equivalent QR parameterization with `beta` as the top-level parameter and defines `beta_tilde = R * beta` as a transformed parameter. This preserves the regression likelihood and the intended prior on `beta` while satisfying SafeStan's parameter-prior discipline. The data file is unchanged.\n"
+}

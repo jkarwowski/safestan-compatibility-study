@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-gaussian-process-gp-sim-cholesky/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:19:40+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-gaussian-process-gp-sim-cholesky",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0b71a975954855d40069f16ab279a481a1aa5c926c4c074c7e",
+  "safe_dir": "models_safe/example_models/misc-gaussian-process-gp-sim-cholesky",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:19:30+00:00",
+  "usage": {
+    "input_tokens": 3112,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 983,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4095
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

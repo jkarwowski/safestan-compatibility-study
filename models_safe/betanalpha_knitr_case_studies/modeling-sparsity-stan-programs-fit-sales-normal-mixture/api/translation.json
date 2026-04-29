@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y_obs`.\n\nGenerated files: none.\n\nReason: the observed interface variable is `y_obs`, which is scored once with a built-in `neg_binomial_2_log` likelihood. However, the model also defines a marginalized normal-mixture prior for `delta_days_tilde` using `target += log_mix(...)` inside a loop. SafeStan forbids manual `target +=` scoring, and there is no equivalent single built-in Stan sampling statement for this mixture prior. Replacing it would require a substantive latent-mixture/model rewrite rather than a minor same-density translation.\n"
+}

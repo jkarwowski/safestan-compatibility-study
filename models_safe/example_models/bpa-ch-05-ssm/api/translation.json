@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"T\":1,\"y\":[5.781370246206928]}",
+  "model_safe_stan": "data {\n  int<lower=0> T;\n  vector[T] y;\n}\nparameters {\n  real<lower=0, upper=10> mean_lambda; // Mean growth rate\n  real<lower=0, upper=10> sigma_proc; // SD of state process\n  real<lower=0, upper=100> sigma_obs; // SD of observation process\n  vector<lower=0>[T - 1] lambda;\n  real<lower=0, upper=500> N_est1; // Initial population size\n}\ntransformed parameters {\n  vector<lower=0>[T] N_est;\n  \n  N_est[1] = N_est1;\n  // State process\n  for (t in 1 : (T - 1)) {\n    N_est[t + 1] = N_est[t] * lambda[t];\n  }\n}\nmodel {\n  // Explicit priors matching the original bounded implicit priors\n  mean_lambda ~ uniform(0, 10);\n  sigma_proc ~ uniform(0, 10);\n  sigma_obs ~ uniform(0, 100);\n  N_est1 ~ uniform(0, 500);\n  \n  // State process\n  lambda ~ normal(mean_lambda, sigma_proc);\n  \n  // Observation process\n  y ~ normal(N_est, sigma_obs);\n}\ngenerated quantities {\n  real<lower=0> sigma2_obs;\n  real<lower=0> sigma2_proc;\n  \n  sigma2_obs = square(sigma_obs);\n  sigma2_proc = square(sigma_proc);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit built-in uniform priors for the finite-bounded parameters `mean_lambda`, `sigma_proc`, `sigma_obs`, and `N_est1`, matching the implicit bounded uniform priors indicated by the original parameter constraints/comments. This satisfies SafeStan's requirement that every parameter have exactly one prior sampling statement before use. The parameter `lambda` already had its built-in normal prior. No data copies or reshapes were needed; `data_safe.json` is unchanged from the supplied data. `T` remains an unprotected context input.\n"
+}

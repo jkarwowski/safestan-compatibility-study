@@ -1,0 +1,10 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":4,\"M\":2,\"N\":1,\"V\":3,\"alpha\":[1.7115669373336428,4.851946511553678,4.124779345446246,4.50683683170329],\"beta\":[1.586721238754401,0.26453679904386024,4.511757153933806],\"doc\":[1],\"w\":[3],\"z\":[1,1]}",
+  "model_safe_stan": "// supervised naive Bayes\n\ndata {\n  // training data\n  int<lower=1> K; // num topics\n  int<lower=1> V; // num words\n  int<lower=0> M; // num docs\n  int<lower=0> N; // total word instances\n  array[M] int<lower=1, upper=K> z; // topic for doc m\n  array[N] int<lower=1, upper=V> w; // word n\n  array[N] int<lower=1, upper=M> doc; // doc ID for word n\n  // hyperparameters\n  vector<lower=0>[K] alpha; // topic prior\n  vector<lower=0>[V] beta; // word prior\n}\nparameters {\n  simplex[K] theta; // topic prevalence\n  array[K] simplex[V] phi; // word dist for topic k\n}\nmodel {\n  matrix[K, V] log_phi;\n  matrix[N, K] topic_indicator;\n\n  // priors\n  theta ~ dirichlet(alpha);\n  phi ~ dirichlet(beta);\n\n  for (k in 1 : K) {\n    for (v in 1 : V) {\n      log_phi[k, v] = log(phi[k][v]);\n    }\n  }\n\n  // likelihood for document topics\n  z ~ categorical(theta);\n\n  // likelihood for words, using one-hot document-topic indicators\n  topic_indicator = rep_matrix(0, N, K);\n  for (n in 1 : N) {\n    topic_indicator[n, z[doc[n]]] = 1;\n  }\n  w ~ categorical_logit_glm(topic_indicator, rep_vector(0, V), log_phi);\n}\n",
+  "protected_variables": [
+    "z",
+    "w"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `z`, `w`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: vectorized the `phi` Dirichlet prior so the top-level parameter is sampled once outside a loop, and vectorized the `z` likelihood as a single top-level protected-data sampling statement. Rewrote the word likelihood for `w` as one built-in `categorical_logit_glm` sampling statement using a one-hot topic design matrix computed after `z` is observed and `log(phi)` as logits. This preserves the density because `softmax(log(phi[k])) = phi[k]` for each simplex row. No data fields were added or changed.\n"
+}

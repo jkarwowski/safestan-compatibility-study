@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":2,\"x\":[5.154505073719477,2.9864731177847794],\"y\":[2.0,2.0]}",
+  "model_safe_stan": "// Fit the hyperparameters of a Gaussian process with an \n// exponentiated quadratic kernel\n\ndata {\n  int<lower=1> N;\n  array[N] real x;\n  vector[N] y;\n}\ntransformed data {\n  vector[N] mu = rep_vector(0, N);\n}\nparameters {\n  real<lower=0> rho;\n  real<lower=0> alpha;\n  real<lower=0> sigma;\n}\nmodel {\n  matrix[N, N] L_K;\n  matrix[N, N] K;\n  real sq_sigma;\n\n  rho ~ inv_gamma(5, 5);\n  alpha ~ normal(0, 1);\n  sigma ~ normal(0, 1);\n\n  K = gp_exp_quad_cov(x, alpha, rho);\n  sq_sigma = square(sigma);\n  \n  // diagonal elements\n  for (n in 1 : N) {\n    K[n, n] = K[n, n] + sq_sigma;\n  }\n  \n  L_K = cholesky_decompose(K);\n  \n  y ~ multi_normal_cholesky(mu, L_K);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that the parameter priors for `rho`, `alpha`, and `sigma` appear before those parameters are used to construct the Gaussian-process covariance. Local declarations were split from parameter-dependent assignments to preserve Stan validity and the same posterior density. No data changes were made.\n"
+}

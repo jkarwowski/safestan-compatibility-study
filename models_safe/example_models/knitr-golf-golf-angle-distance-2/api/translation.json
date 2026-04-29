@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":4,\"R\":2.586711534515036,\"distance_tolerance\":2.8724186673406087,\"n\":[6,3,4,6],\"overshot\":2.0358956812507034,\"r\":3.2467189371919623,\"x\":[5.259962543664817,4.363394708425872,2.0263103121196044,3.950663705881129],\"y\":[3,3,4,2]}",
+  "model_safe_stan": "data {\n  int J;\n  array[J] int n;\n  vector[J] x;\n  array[J] int y;\n  real r;\n  real R;\n  real overshot;\n  real distance_tolerance;\n}\ntransformed data {\n  vector[J] threshold_angle = asin((R - r) ./ x);\n}\nparameters {\n  real<lower=0> sigma_angle;\n  real<lower=0> sigma_distance;\n}\nmodel {\n  sigma_angle ~ normal(0, 1);\n  sigma_distance ~ normal(0, 1);\n  {\n    vector[J] p_angle = 2 * Phi(threshold_angle / sigma_angle) - 1;\n    vector[J] p_distance = Phi((distance_tolerance - overshot)\n                               ./ ((x + overshot) * sigma_distance))\n                           - Phi((-overshot)\n                                 ./ ((x + overshot) * sigma_distance));\n    vector[J] p = p_angle .* p_distance;\n    y ~ binomial(n, p);\n  }\n}\ngenerated quantities {\n  real sigma_degrees = sigma_angle * 180 / pi();\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: `y` is the only top-level data variable observed on the left side of a sampling statement, so it is the protected interface variable. The parameter prior was moved before any model-block use of `sigma_angle` or `sigma_distance`, and the original vectorized prior `[sigma_angle, sigma_distance] ~ normal(0, 1)` was split into two equivalent built-in top-level parameter prior statements. The binomial likelihood for `y` is unchanged. No data fields were added or changed; `data_safe.json` is the supplied data.\n"
+}

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/election88-election88-full/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:44:30+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/election88-election88-full",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_048a214c200ece950069f17066d3b08190b8d9803dbad833d0",
+  "safe_dir": "models_safe/posteriordb/election88-election88-full",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:43:50+00:00",
+  "usage": {
+    "input_tokens": 3657,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3612,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 7269
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/iohmm-reg-simulated-iohmm-reg/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:45:18+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/iohmm-reg-simulated-iohmm-reg",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_019b82e3bf2446720069f170b5fa34819e800cf8455ce59045",
+  "safe_dir": "models_safe/posteriordb/iohmm-reg-simulated-iohmm-reg",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:45:09+00:00",
+  "usage": {
+    "input_tokens": 4864,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 715,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5579
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

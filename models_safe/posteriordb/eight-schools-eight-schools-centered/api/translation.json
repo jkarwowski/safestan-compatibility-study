@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":2,\"sigma\":[2.1523142053114706,2.4109308350354977],\"y\":[5.022419251569275,6.113012827085329]}",
+  "model_safe_stan": "data {\n  int<lower=0> J; // number of schools\n  array[J] real y; // estimated treatment\n  array[J] real<lower=0> sigma; // std of estimated effect\n}\nparameters {\n  array[J] real theta; // treatment effect in school j\n  real mu; // hyper-parameter of mean\n  real<lower=0> tau; // hyper-parameter of sdv\n}\nmodel {\n  tau ~ cauchy(0, 5); // a non-informative prior\n  mu ~ normal(0, 5);\n  theta ~ normal(mu, tau);\n  y ~ normal(theta, sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model-block sampling statements so that `mu` is given its built-in prior before it is used in the prior for `theta`. The posterior density is unchanged because the same sampling statements are retained and only their order is changed. No data changes were required; `sigma` and `J` remain unprotected context inputs.\n"
+}

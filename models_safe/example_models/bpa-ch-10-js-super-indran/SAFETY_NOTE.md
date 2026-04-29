@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y` (the augmented capture-history array) is the observed interface variable scored by the model likelihood.
+
+Generated files: none.
+
+Reason: the likelihood is implemented by the user-defined `_lp` function `js_super_lp`, includes manual `target += log_sum_exp(...)` terms for marginalized latent capture/entry histories, uses sampling statements on constants, and scores indexed elements `y[i, t]` rather than a single plain top-level protected variable. The protected data are also inspected in `transformed data` to compute first and last capture occasions before observation. Replacing this with SafeStan-compatible built-in sampling statements would require a substantive rewrite of the marginalized Jolly-Seber likelihood, not a minor same-density translation.

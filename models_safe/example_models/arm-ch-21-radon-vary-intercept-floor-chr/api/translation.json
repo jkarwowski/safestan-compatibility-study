@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"N\":1,\"county\":[1],\"u\":[5.731405040661364],\"x\":[5.0023783240402695],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county;\n  vector[N] u;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  vector[2] b;\n  vector[J] eta;\n  real mu_a;\n  real<lower=0, upper=100> sigma_a;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[J] a;\n  vector[N] y_hat;\n  \n  a = mu_a + sigma_a * eta;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a[county[i]] + u[i] * b[1] + x[i] * b[2];\n  }\n}\nmodel {\n  mu_a ~ normal(0, 1);\n  eta ~ normal(0, 1);\n  b ~ normal(0, 1);\n  sigma_a ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 100)` priors for the bounded parameters `sigma_a` and `sigma_y`. These match the parameters' existing finite constraints and are density-neutral in Stan's proportional sampling notation, while satisfying SafeStan's requirement that every parameter have exactly one built-in prior before use. No data fields were added or changed.\n"
+}

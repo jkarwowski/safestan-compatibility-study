@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":1,\"N\":1,\"county\":[1],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  int<lower=1> J; // number of counties\n  array[N] int<lower=1, upper=J> county;\n  vector[N] y;\n}\nparameters {\n  real mu_a;\n  real<lower=0> sigma_a;\n  real<lower=0> sigma_y;\n  vector<offset=(10 * mu_a), multiplier=sigma_a>[J] alpha;\n}\nmodel {\n  mu_a ~ std_normal();\n  sigma_a ~ cauchy(0, 2.5);\n  sigma_y ~ cauchy(0, 2.5);\n  alpha ~ normal(10 * mu_a, sigma_a);\n  \n  y ~ normal(alpha[county], sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the parameter prior statements so that `sigma_a` is observed with its prior before being used as the scale in the prior for `alpha`. This preserves the same posterior density because the order of independent log-density additions in the model block is immaterial. No data changes were required; `N`, `J`, and `county` remain context inputs, and `y` is the only protected observed variable.\n"
+}

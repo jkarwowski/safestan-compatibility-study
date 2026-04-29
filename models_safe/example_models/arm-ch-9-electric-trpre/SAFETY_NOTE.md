@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `post_test`.
+
+Generated files: none.
+
+Reason: the likelihood observation itself is a built-in sampling statement, `post_test ~ normal_id_glm(...)`, and `post_test` is a top-level data variable. However, the parameters `alpha`, `beta`, and `sigma` have no explicit prior sampling statements before being used in the likelihood. SafeStan requires each parameter to have exactly one built-in prior. Adding proper priors would change the posterior/log density; the original model uses implicit improper flat priors, including an unbounded positive flat prior for `sigma`. Therefore this cannot be translated with only a minor same-density rewrite.

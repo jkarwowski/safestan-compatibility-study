@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":3,\"N_grid\":3,\"x\":[4.499053812399982,4.129749315122941,3.3079867124922595],\"x0\":6.427283129200069,\"x_grid\":[1.0,2.0,3.0],\"y\":[3.0,3.0,2.0]}",
+  "model_safe_stan": "data {\n  real x0; // Baseline input\n\n  int<lower=1> N; // Number of observations\n  vector[N] x; // Observed inputs\n  vector[N] y; // Observed outputs\n\n  int<lower=1> N_grid; // Number of grid points\n  array[N_grid] real x_grid;  // Input grid\n}\n\nparameters {\n  real alpha; // Intercept\n  real beta;  // Slope\n  real<lower=0> nu_inv; // Inverse degrees of freedom\n  real<lower=0> sigma;  // Measurement Variability\n}\n\nmodel {\n  alpha ~ normal(0, 3);\n  beta ~ normal(0, 1);\n  nu_inv ~ normal(0, 0.5);\n  sigma ~ normal(0, 1);\n\n  y ~ student_t(inv(nu_inv), alpha + beta * (x - x0), sigma);\n}\n\ngenerated quantities {\n  array[N] real y_pred;\n  array[N_grid] real mu_grid;\n  array[N_grid] real y_pred_grid;\n\n  for (n in 1:N)\n    y_pred[n] = student_t_rng(inv(nu_inv), alpha + beta * (x[n] - x0), sigma);\n\n  for (n in 1:N_grid) {\n    mu_grid[n] = alpha + beta * (x_grid[n] - x0);\n    y_pred_grid[n] = student_t_rng(inv(nu_inv), mu_grid[n], sigma);\n  }\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. All parameters have exactly one built-in prior sampling statement before later use, and the remaining data variables are unscored context inputs.\n"
+}

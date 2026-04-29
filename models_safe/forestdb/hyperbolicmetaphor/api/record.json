@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/forestdb/hyperbolicmetaphor/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:30:11+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/hyperbolicmetaphor",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_08180872557867770069f16d029918819d969fee80c9b7692b",
+  "safe_dir": "models_safe/forestdb/hyperbolicmetaphor",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:29:22+00:00",
+  "usage": {
+    "input_tokens": 3555,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3800,
+    "output_tokens_details": {
+      "reasoning_tokens": 3624
+    },
+    "total_tokens": 7355
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

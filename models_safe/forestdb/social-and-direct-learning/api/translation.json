@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `likelihood` is the observed data entering the manual likelihood; `H` and `N` are context/configuration inputs.\n\nGenerated files: none.\n\nReason: the model uses `target += log_sum_exp(...)` to add a marginalized likelihood term involving `likelihood` and `hypothesis_weight`. SafeStan forbids arbitrary `target +=` scoring, and there is no equivalent built-in Stan sampling statement with a plain top-level observed left-hand side that represents this generic precomputed mixture likelihood. Rewriting it would require a substantive change, such as introducing a different observation representation or a custom/user-defined distribution, which is outside the SafeStan-compatible subset.\n"
+}

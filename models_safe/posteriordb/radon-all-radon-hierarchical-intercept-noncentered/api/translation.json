@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":2,\"N\":2,\"county_idx\":[2,2],\"floor_measure\":[4.679580691603352,3.239743010068926],\"log_radon\":[6.145597835528757,2.894732353872479],\"log_uppm\":[2.4352131537657478,6.391731046233957]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county_idx;\n  vector[N] log_uppm;\n  vector[N] floor_measure;\n  vector[N] log_radon;\n}\nparameters {\n  vector[J] alpha_raw;\n  vector[2] beta;\n  real mu_alpha;\n  real<lower=0> sigma_alpha;\n  real<lower=0> sigma_y;\n}\ntransformed parameters {\n  vector[J] alpha;\n  // implies: alpha ~ normal(mu_alpha, sigma_alpha);\n  alpha = mu_alpha + sigma_alpha * alpha_raw;\n}\nmodel {\n  vector[N] mu;\n  vector[N] muj;\n  \n  sigma_alpha ~ normal(0, 1);\n  sigma_y ~ normal(0, 1);\n  mu_alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  alpha_raw ~ normal(0, 1);\n  \n  for (n in 1 : N) {\n    muj[n] = alpha[county_idx[n]] + log_uppm[n] * beta[1];\n    mu[n] = muj[n] + floor_measure[n] * beta[2];\n  }\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual looped likelihood contribution `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` with the equivalent built-in sampling statement `log_radon ~ normal(mu, sigma_y)` after `mu` is computed. No data fields were added or changed. Predictor and indexing data (`J`, `N`, `county_idx`, `log_uppm`, and `floor_measure`) remain unprotected context inputs.\n"
+}

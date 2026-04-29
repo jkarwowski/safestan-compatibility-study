@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424353,
+  "created_at": 1777424328,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_025ad36370d5936d0069f157c808d481a08a4e87a223928584",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_025ad36370d5936d0069f157c8936c81a0a1a7d1b52e86e50e",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the parameter prior statements so that `lambda` is sampled before it is used in the scale of the `theta_cp` prior. This preserves the same posterior density because it only changes the order of additive log-density terms. The protected observation `y` is a top-level data variable and is observed exactly once with a built-in `normal` sampling statement. No data changes were made.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> K;                       // Number of groups\\n  int<lower=0> N;                       // Number of observations\\n  vector[N] y;                          // Observations\\n  array[N] int<lower=1, upper=K> context_idx; // Context assignments\\n\\n  int<lower=0, upper=K> K_cp;\\n  array[K_cp] int<lower=0, upper=K> cp_idx;\\n\\n  int<lower=0, upper=K> K_ncp;\\n  array[K_ncp] int<lower=0, upper=K> ncp_idx;\\n\\n  real<lower=0> tau;                    // Base Population Scale\\n  real<lower=0> sigma;                  // Measurement variability\\n}\\n\\nparameters {\\n  vector[K_cp] theta_cp;\\n  vector[K_ncp] theta_ncp;\\n\\n  vector<lower=0>[K] lambda;\\n}\\n\\ntransformed parameters {\\n  vector[K] theta;\\n  theta[cp_idx] = theta_cp;\\n  theta[ncp_idx] = theta_ncp .* lambda[ncp_idx];\\n}\\n\\nmodel {\\n  // Horseshoe prior model\\n  lambda ~ cauchy(0, 1);\\n  theta_cp ~ normal(0, lambda[cp_idx] * tau);\\n  theta_ncp ~ normal(0, tau);\\n\\n  // Observational model\\n  y ~ normal(theta[context_idx], sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":4,\\\"K_cp\\\":2,\\\"K_ncp\\\":1,\\\"N\\\":4,\\\"context_idx\\\":[2,2,2,2],\\\"cp_idx\\\":[2,2],\\\"ncp_idx\\\":[2],\\\"sigma\\\":0.557447756249116,\\\"tau\\\":3.492783935193742,\\\"y\\\":[4.0,4.0,4.0,3.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_025ad36370d5936d0069f157def06c81a0bd7f28cd49c5d1b0",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3326,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2647,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 5973
+  },
+  "user": null
+}

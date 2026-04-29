@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"M\":3,\"N\":3,\"X\":[[2.1875761960019493,4.2508560324994065,2.6445669133681697],[5.451094366322652,5.182728813285605,2.4375239228673866],[3.457962032198232,3.590847550340743,6.687153527990094]],\"x0\":[5.407904889174819,2.251995767980091,5.443470177406203],\"y\":[3.0,3.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> M; // Number of covariates\n  int<lower=0> N; // Number of observations\n\n  vector[M] x0;   // Covariate baselines\n  matrix[N, M] X; // Covariate design matrix\n\n  array[N] real y;      // Variates\n}\n\ntransformed data {\n  matrix[N, M + 1] deltaX;\n  for (n in 1:N) {\n    deltaX[n, 1] = 1;\n    deltaX[n, 2:(M + 1)] = X[n] - x0';\n  }\n}\n\nparameters {\n  real beta0;          // Intercept\n  vector[M] beta1;     // Slopes\n  real<lower=0> sigma; // Measurement Variability\n}\n\nmodel {\n  // Prior model\n  beta0 ~ normal(0, 10);\n  beta1 ~ normal(0, 10);\n  sigma ~ normal(0, 5);\n\n  // Vectorized observation model\n  y ~ normal(deltaX * append_row(beta0, beta1), sigma);\n}\n\n// Simulate a full observation from the current value of the parameters\ngenerated quantities {\n  array[N] real y_pred = normal_rng(deltaX * append_row(beta0, beta1), sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: inlined the construction of the regression coefficient vector in the likelihood so that `beta0` and `beta1` are not used in the model block before their prior sampling statements. The statistical model and likelihood are unchanged. `M`, `N`, `X`, and `x0` remain unprotected context data. `data_safe.json` is unchanged; no deterministic copies or reshapes were added.\n"
+}

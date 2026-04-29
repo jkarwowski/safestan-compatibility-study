@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data choice: `y` is the observed capture-history matrix scored by the Jolly-Seber likelihood.
+
+Generated files: none.
+
+Reason: the likelihood is implemented in the user-defined `jolly_seber_lp` function, which is an `_lp` function and uses manual `target += log_sum_exp(...)` scoring for marginalized latent entry/capture cases. It also includes sampling statements on constants and indexed elements of `y` inside loops and conditionals, while `y` is inspected in `transformed data` before any SafeStan observation statement. Replacing this marginalized latent-state likelihood with SafeStan built-in sampling statements would require a substantive model rewrite rather than a minor same-density translation.

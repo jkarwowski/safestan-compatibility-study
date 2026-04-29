@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"E\":[4.138392748271597,4.651065491735806,4.9655339211958465,3.445847128636348],\"N\":4,\"y\":[2,3,3,2]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=0> y; // count outcomes\n  vector<lower=0>[N] E; // exposure\n}\ntransformed data {\n  vector[N] log_E = log(E);\n}\nparameters {\n  real beta0; // intercept\n}\nmodel {\n  beta0 ~ normal(0.0, 2.5);\n  y ~ poisson_log(log_E + beta0); // intercept only, no covariates\n}\ngenerated quantities {\n  vector[N] eta = log_E + beta0;\n  vector[N] mu = exp(eta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that the parameter `beta0` receives its built-in prior before it is used in the protected-data likelihood. The likelihood `y ~ poisson_log(log_E + beta0)` and the prior `beta0 ~ normal(0.0, 2.5)` are otherwise unchanged, so the posterior density is preserved. No data changes were required.\n"
+}

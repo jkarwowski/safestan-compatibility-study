@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the model scores the observation sequence through a marginalized hidden Markov model forward algorithm, with the log likelihood added manually by `target += log_sum_exp(logalpha[T])`. The protected data `y` are also used in `transformed parameters` before any SafeStan observation statement. Replacing this with SafeStan-compatible built-in sampling statements would require a substantive likelihood/model rewrite rather than a mechanical same-density translation.\n"
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 4, \"y\": 4}",
+  "model_safe_stan": "// Binomial model with a roughly uniform prior for\n// the probability of success (theta)\ndata {\n  int<lower=0> N; // number of experiments\n  int<lower=0> y; // number of successes\n}\nparameters {\n  // sampling is done for the parameters\n  real alpha; // logit of probability of success in rang (-Inf,Inf)\n}\ntransformed parameters {\n  // transformed parameters are deterministic transformations of parameters (and data)\n  real theta = inv_logit(alpha); // probability of success in range (0,1)\n}\nmodel {\n  // model block creates the log density to be sampled\n  alpha ~ normal(0, 1.5); // roughly uniform prior for theta\n  y ~ binomial_logit(N, alpha); // model parameterized with logit of probability\n  // the notation using ~ is syntactic sugar for\n  //  target += normal_lpdf(alpha | 0, 1.5);       // lpdf for continuous theta\n  //  target += binomial_logit_lpmf(y | N, alpha); // lpmf for discrete y\n  // target is the log density to be sampled\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `y ~ binomial_logit(N, alpha)`. The data variable `N` is context data used as the binomial trial count. The parameter `alpha` has exactly one built-in prior sampling statement before it is used in the likelihood.\n"
+}

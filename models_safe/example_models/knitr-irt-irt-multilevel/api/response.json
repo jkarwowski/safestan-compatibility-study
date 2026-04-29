@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777428418,
+  "created_at": 1777428386,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_07d6d73dfb54cb530069f167a23e5c819690fa99e0ea8f5035",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_07d6d73dfb54cb530069f167a2e24c81969602449e75d05d9d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: the protected observation `y` is already a top-level data variable and is scored exactly once with `y ~ bernoulli_logit(log_odds)`. The model needed SafeStan parameter-discipline repairs: the hyperparameter priors were moved before dependent priors, and explicit `uniform(0, 20)` priors were added for `sigma_beta`, `sigma_gamma`, and `sigma_delta`, matching their existing finite bounds. No data fields were added or changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> I; // // items\\n  int<lower=1> J; // // students\\n  int<lower=1> K; // // schools\\n  int<lower=1> N; // data items\\n  array[N] int<lower=1, upper=I> ii; // item for n\\n  array[N] int<lower=1, upper=J> jj; // student for n\\n  array[N] int<lower=1, upper=J> kk; // school for n\\n  array[N] int<lower=0, upper=1> y; // correctness for n\\n}\\nparameters {\\n  vector[J] alpha; // ability for student j\\n  vector[I] beta; // difficulty for item i\\n  vector[K] gamma; // ability for school k\\n  vector<lower=0>[I] delta; // discriminativeness for item i\\n  real zeta; // intercept\\n  real<lower=0> mu_delta;\\n  real<lower=0, upper=20> sigma_beta;\\n  real<lower=0, upper=20> sigma_gamma;\\n  real<lower=0, upper=20> sigma_delta;\\n}\\nmodel {\\n  vector[N] log_odds;\\n\\n  alpha ~ normal(0, 1); // priors\\n  sigma_beta ~ uniform(0, 20);\\n  sigma_gamma ~ uniform(0, 20);\\n  sigma_delta ~ uniform(0, 20);\\n  mu_delta ~ lognormal(0, 10);\\n  beta ~ normal(0, sigma_beta);\\n  gamma ~ normal(0, sigma_gamma);\\n  delta ~ lognormal(mu_delta, sigma_delta);\\n  zeta ~ normal(0, 10);\\n\\n  for (n in 1 : N) {\\n    // likelihood\\n    log_odds[n] = delta[ii[n]]\\n                  * (zeta + alpha[jj[n]] + gamma[kk[n]] - beta[ii[n]]);\\n  }\\n  y ~ bernoulli_logit(log_odds);\\n}\\n\",\"data_safe_json\":\"{\\\"I\\\":3,\\\"J\\\":1,\\\"K\\\":3,\\\"N\\\":3,\\\"ii\\\":[2,1,2],\\\"jj\\\":[1,1,1],\\\"kk\\\":[1,1,1],\\\"y\\\":[0,1,0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_07d6d73dfb54cb530069f167be12ac8196a0ccbbe4b5a73bf6",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3331,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3084,
+    "output_tokens_details": {
+      "reasoning_tokens": 2390
+    },
+    "total_tokens": 6415
+  },
+  "user": null
+}

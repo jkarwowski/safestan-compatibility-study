@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{}",
+  "model_safe_stan": "transformed data {\n  vector[5] y = [2, 1, -0.5, 3, 0.25]';\n}\nparameters {\n  real mu;\n}\nmodel {\n  mu ~ normal(y, 1);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none. The original program has no top-level data variables; `y` is a fixed transformed-data constant, not an external data interface variable.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: rewrote the fixed normal factor from `y ~ normal(mu, 1)` to `mu ~ normal(y, 1)`. This is a mechanical same-density rewrite for the normal distribution: the resulting Stan target has the same quadratic contribution, while the sampling statement now targets the top-level parameter `mu`, satisfying SafeStan's parameter-prior discipline. No data fields were added; `data_safe.json` remains `{}`.\n"
+}

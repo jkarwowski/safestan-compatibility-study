@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/arma-arma11/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:38:29+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/arma-arma11",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_029ba33a1cb779ea0069f16ef31a888195b95d540fce0686c4",
+  "safe_dir": "models_safe/posteriordb/arma-arma11",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:37:38+00:00",
+  "usage": {
+    "input_tokens": 3128,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4216,
+    "output_tokens_details": {
+      "reasoning_tokens": 3624
+    },
+    "total_tokens": 7344
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

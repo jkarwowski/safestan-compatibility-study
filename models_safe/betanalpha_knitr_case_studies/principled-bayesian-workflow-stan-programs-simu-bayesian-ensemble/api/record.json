@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/principled-bayesian-workflow-stan-programs-simu-bayesian-ensemble/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:00:39+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/principled-bayesian-workflow-stan-programs-simu-bayesian-ensemble",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_018baf231f2801aa0069f15830c0488192a7262581778246da",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/principled-bayesian-workflow-stan-programs-simu-bayesian-ensemble",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:00:32+00:00",
+  "usage": {
+    "input_tokens": 2991,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 606,
+    "output_tokens_details": {
+      "reasoning_tokens": 395
+    },
+    "total_tokens": 3597
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

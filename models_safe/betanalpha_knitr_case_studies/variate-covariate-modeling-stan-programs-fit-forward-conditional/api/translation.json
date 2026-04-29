@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":1,\"x1\":[4.164660011199408],\"x2\":[6.211113122187613],\"y1\":[3.557793173295816]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  vector[N] x1; // Complete observation\n  vector[N] y1; // Complete observation\n  vector[N] x2; // Incomplete observation\n}\n\nparameters {\n  real<lower=0> sigma;\n}\n\nmodel {\n  sigma ~ normal(0, 1);\n\n  y1 ~ normal(x1, sigma);\n}\n\ngenerated quantities {\n  // Predict completion of second observation using\n  // conditional variate model from first observation\n  array[N] real y2_pred = normal_rng(x2, sigma);\n}\n",
+  "protected_variables": [
+    "y1"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y1`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The only observed data variable scored by a sampling statement is the top-level data variable `y1`, which is observed exactly once with a plain built-in sampling statement. `x1`, `x2`, and `N` are context inputs and are not protected.\n"
+}

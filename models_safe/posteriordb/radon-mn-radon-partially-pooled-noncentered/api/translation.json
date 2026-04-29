@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":4,\"N\":2,\"county_idx\":[2,2],\"log_radon\":[5.384220125335139,5.313695179893336]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> J;\n  array[N] int<lower=1, upper=J> county_idx;\n  vector[N] log_radon;\n}\nparameters {\n  vector[J] alpha_raw;\n  real mu_alpha;\n  real<lower=0> sigma_alpha;\n  real<lower=0> sigma_y;\n}\ntransformed parameters {\n  vector[J] alpha;\n  // implies: alpha ~ normal(mu_alpha, sigma_alpha);\n  alpha = mu_alpha + sigma_alpha * alpha_raw;\n}\nmodel {\n  vector[N] mu;\n\n  // priors\n  sigma_y ~ normal(0, 1);\n  sigma_alpha ~ normal(0, 1);\n  mu_alpha ~ normal(0, 10);\n  alpha_raw ~ normal(0, 1);\n\n  // likelihood\n  for (n in 1 : N) {\n    mu[n] = alpha[county_idx[n]];\n  }\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual per-observation likelihood accumulation `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` with a single built-in vectorized sampling statement `log_radon ~ normal(mu, sigma_y)`. The linear predictor `mu` is still computed deterministically from `alpha` and `county_idx`. Existing parameter priors were already explicit built-in sampling statements and were left unchanged. No data fields were added or changed.\n"
+}

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":1,\"N\":2,\"context_idx\":[1,1],\"sigma\":4.334888013676291,\"y\":[2.0,2.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> K;                       // Number of contexts\n  int<lower=0> N;                       // Number of observations\n  vector[N] y;                          // Observations\n  array[N] int<lower=1, upper=K> context_idx; // Context assignments\n  real<lower=0> sigma;                  // Measurement variability\n}\n\nparameters {\n  // Horseshoe parameters\n  vector[K] theta;\n  real<lower=0> tau;\n}\n\nmodel {\n  // Horseshoe prior model\n  tau ~ normal(0, 10);\n  theta ~ cauchy(0, tau);\n\n  // Observational model\n  y ~ normal(theta[context_idx], sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the two parameter prior sampling statements so that `tau` is given its prior before it is used as the scale in the prior for `theta`. This is a same-density mechanical change because the Stan log density contributions are additive and no data or model terms were changed. No data fields were added.\n"
+}

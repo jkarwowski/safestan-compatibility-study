@@ -1,24 +1,27 @@
 {
   "artifacts_dir": "models_safe/stan_tutorials/k-component-normal-mixture-simplex/api",
   "compatibility": "major",
-  "completed_at": "2026-04-28T01:13:17+00:00",
+  "completed_at": "2026-04-29T03:01:47+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_tutorials/k-component-normal-mixture-simplex",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_090fc6781a7f7aac0069f0099994e8819297ef93bc3a31e0b6",
+  "response_id": "resp_03b8e626700dbd660069f1748b5ccc81a281dbec8057235fcb",
   "safe_dir": "models_safe/stan_tutorials/k-component-normal-mixture-simplex",
-  "started_at": "2026-04-28T01:12:57+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:01:31+00:00",
   "usage": {
-    "input_tokens": 12862,
+    "input_tokens": 3031,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1010,
+    "output_tokens": 1206,
     "output_tokens_details": {
-      "reasoning_tokens": 826
+      "reasoning_tokens": 1034
     },
-    "total_tokens": 13872
+    "total_tokens": 4237
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N1\":1,\"N2\":1}",
+  "model_safe_stan": "functions {\n  // Location-dispersion paramaeterization of gamma family\n  real gamma_ld_lpdf(vector y, vector mu, real phi) {\n    real beta = inv(phi);\n    vector[num_elements(mu)] alpha = beta * mu;\n    return gamma_lpdf(y | alpha, beta);\n  }\n\n  // Location-dispersion paramaeterization of gamma family\n  real gamma_ld_rng(real mu, real phi) {\n    real beta = inv(phi);\n    real alpha = beta * mu;\n    return gamma_rng(alpha, beta);\n  }\n}\n\ndata {\n  int<lower=1> N1;\n  int<lower=1> N2;\n}\n\ntransformed data {\n  real lambda = 0.1;\n  real psi = 0.25;\n\n  real mu1 = 30;\n  real phi1 = 15;\n\n  real mu2 = 70;\n  real phi2 = 1;\n}\n\ngenerated quantities {\n  array[N1] real x1;\n  array[N1] real y1;\n\n  array[N2] real x2;\n  array[N2] real y2;\n\n  for (n in 1:N1) {\n    x1[n] = gamma_ld_rng(mu1, phi1);\n    y1[n] = gamma_ld_rng(lambda * x1[n], psi);\n  }\n\n  for (n in 1:N2) {\n    x2[n] = gamma_ld_rng(mu2, phi2);\n    y2[n] = gamma_ld_rng(lambda * x2[n], psi);\n  }\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program has no model block, no parameters, and no sampling statements conditioning on top-level data. `N1` and `N2` are context inputs used only as generated-quantity sizes, so no protected data variables are needed.\n"
+}

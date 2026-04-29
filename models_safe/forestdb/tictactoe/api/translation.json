@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"A\":5,\"N\":3,\"chosen_action\":[1,2,4],\"utility\":[6.473870109687564,3.768504101026006,3.864315965584066,6.723496684630948,6.563995800084036]}",
+  "model_safe_stan": "// ForestDB translation: Tic-Tac-Toe\ndata {\n  int<lower=1> A;\n  int<lower=1> N;\n  array[N] int<lower=1, upper=A> chosen_action;\n  vector[A] utility;\n}\nparameters {\n  real<lower=0> beta;\n}\nmodel {\n  vector[A] logits;\n  beta ~ lognormal(0, 0.75);\n  logits = beta * utility;\n  chosen_action ~ categorical_logit(logits);\n}\ngenerated quantities {\n  simplex[A] action_prob = softmax(beta * utility);\n}\n",
+  "protected_variables": [
+    "chosen_action"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `chosen_action`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that the parameter `beta` receives its built-in prior before being used to compute `logits`. This preserves the same posterior/log density. No data changes were required.\n"
+}

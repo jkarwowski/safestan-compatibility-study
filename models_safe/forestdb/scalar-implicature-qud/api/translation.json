@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data choice: `observed_utterance` is the observed interface variable used by the likelihood calculation.\n\nGenerated files: none.\n\nReason: the likelihood is implemented with `target += log_sum_exp(listener_lp)`, where `listener_lp` depends on `observed_utterance` and on parameters through a marginalized latent-state/RSA listener computation. SafeStan forbids direct `target +=` scoring. Replacing this with a built-in sampling statement such as `categorical_logit` would require constructing a normalized distribution over utterances and would subtract a parameter-dependent normalizer, changing the posterior/log density. Introducing an explicit latent state or compensating factor would be a substantive model rewrite, not a minor same-density translation.\n"
+}

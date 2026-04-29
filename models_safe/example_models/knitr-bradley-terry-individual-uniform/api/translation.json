@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the observed likelihood is `y ~ bernoulli_logit(alpha[player1] - alpha[player0])`, so `y` is the protected interface variable. However, the model is explicitly a maximum-likelihood Bradley-Terry model with no prior on the unconstrained parameter `alpha_raw`. SafeStan requires every parameter to have exactly one built-in prior sampling statement before it is used, including uses through transformed parameters such as `alpha`. Adding a proper prior to `alpha_raw` would change the posterior/log density, and there is no finite bounded implicit uniform prior to make explicit. Therefore this cannot be translated to SafeStan by a minor same-density rewrite.\n"
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777425002,
+  "created_at": 1777424981,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b5701f3faa11f750069f15a558e48819684cb8b0fb1d04b24",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0b5701f3faa11f750069f15a563f2c8196bc3737a7cd47542d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The data variables `N1` and `N2` are context sizes used only to control generated-quantities simulation. No top-level data variable is scored by a sampling statement, and there are no parameters requiring priors.\\n\",\"model_safe_stan\":\"functions {\\n  // Location-dispersion paramaeterization of gamma family\\n  real gamma_ld_lpdf(vector y, vector mu, real phi) {\\n    real beta = inv(phi);\\n    vector[num_elements(mu)] alpha = beta * mu;\\n    return gamma_lpdf(y | alpha, beta);\\n  }\\n\\n  // Location-dispersion paramaeterization of gamma family\\n  real gamma_ld_rng(real mu, real phi) {\\n    real beta = inv(phi);\\n    real alpha = beta * mu;\\n    return gamma_rng(alpha, beta);\\n  }\\n}\\n\\ndata {\\n  int<lower=1> N1;\\n  int<lower=1> N2;\\n}\\n\\ntransformed data {\\n  real lambda = 0.1;\\n  real psi = 0.1;\\n  real gamma = 5;\\n\\n  real mu1 = 30;\\n  real phi1 = 15;\\n\\n  real mu2 = 70;\\n  real phi2 = 1;\\n}\\n\\ngenerated quantities {\\n  array[N1] real x1;\\n  array[N1] real y1;\\n\\n  array[N2] real x2;\\n  array[N2] real y2;\\n\\n  for (n in 1:N1) {\\n    x1[n] = gamma_ld_rng(mu1, phi1);\\n    y1[n] = gamma_ld_rng(lambda * x1[n], psi + 0.001 * gamma * mu1);\\n  }\\n\\n  for (n in 1:N2) {\\n    x2[n] = gamma_ld_rng(mu2, phi2);\\n    y2[n] = gamma_ld_rng(lambda * x2[n], psi + 0.001 * gamma * mu2);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N1\\\":3,\\\"N2\\\":5}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b5701f3faa11f750069f15a676af081968591f7f10dacf542",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3260,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2093,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5353
+  },
+  "user": null
+}

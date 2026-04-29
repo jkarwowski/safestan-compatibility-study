@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427904,
+  "created_at": 1777427890,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0f8be360d8dbe4f70069f165b2c8dc819fbe10c32669621bfb",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0f8be360d8dbe4f70069f165b3a1f0819fb6ddb55e852d5642",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement, `y ~ bernoulli_logit(...)`, after all parameters have received their priors. The remaining data variables (`K`, `N`, `player0`, and `player1`) are context inputs used as sizes and indices/predictors, not observed likelihood variables.\\n\",\"model_safe_stan\":\"/**\\n * Bradley-Terry Model\\n * Infer scores from incomplete set of paired comparisons.\\n * Assumes ratings (a > b or b > a) are generated probabilistically\\n * from scores.  Typical applications include those where observed\\n * data are:\\n *\\n *  - winner of sporting match between two contestants (not all\\n *  contestants need play each other and contestants might play each\\n *  other more than once)\\n *\\n *  - whether product A is preferred to product B by a human rater\\n *  (not all pairs of products need play each other and there may be\\n *  multiple raters)\\n *\\n * Prior (i.e., population distribution of players [on log odds scale])\\n *\\n *   alpha[k] ~ normal(0, 3)\\n *\\n * Likelihood\\n *\\n *   y[n] ~ bernoulli(alpha[player1[n]] - alpha[player0[n]]))\\n *\\n * Pr[player 1 wins match n]\\n *   = exp(alpha[player1[n]]) / (exp(alpha[player1[n]]) + exp(alpha[player0[n]]))\\n *   = inverse_logit(alpha[player1[n]] - alpha[player0[n]])\\n *\\n * Odds for player 1 in match n\\n *   = Pr[player 1 wins match n] / (1 - Pr[player 1 wins match n])\\n *\\n * Log odds for player 1 in match n\\n *   = log(odds for player 1)\\n *   = logit(Pr[player1 wins match n])\\n *   = log(Pr[player 1 wins match n] / (1 - Pr[player 1 wins match n]))\\n *\\n * inverse_logit(u) = 1 / (1 + exp(-u)) = exp(u) / (1 + exp(u))\\n *\\n * Ranking\\n *   player i better than player j = alpha[i] > alpha[j]\\n *   best player = ARGMAX_k alpha[k]\\n\\n * Bradley, Ralph Allan; Terry, Milton E. 1952.  Rank analysis of\\n *   incomplete block designs: I. The method of paired\\n *   comparisons. Biometrika. 39 (3/4): 324. doi:10.2307/2334029\\n */\\ndata {\\n  int<lower=0> K; // players\\n  int<lower=0> N; // games\\n  array[N] int<lower=1, upper=K> player1; // player 1 for game n\\n  array[N] int<lower=1, upper=K> player0; // player 0 for game n\\n  array[N] int<lower=0, upper=1> y; // winner for game n\\n}\\nparameters {\\n  real<lower=0> sigma; // scale of ability variation\\n  vector[K] alpha; // ability for player n\\n}\\nmodel {\\n  sigma ~ lognormal(0, 0.5); // boundary avoiding\\n  alpha ~ normal(0, sigma); // hierarchical\\n  y ~ bernoulli_logit(alpha[player1] - alpha[player0]);\\n}\\ngenerated quantities {\\n  array[K] int<lower=1, upper=K> ranking; // rank of player ability\\n  {\\n    array[K] int ranked_index = sort_indices_desc(alpha);\\n    for (k in 1 : K) {\\n      ranking[ranked_index[k]] = k;\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":2,\\\"N\\\":1,\\\"player0\\\":[1],\\\"player1\\\":[1],\\\"y\\\":[1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0f8be360d8dbe4f70069f165ba9018819fabc16d0e0c48dcfa",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3598,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1481,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 5079
+  },
+  "user": null
+}

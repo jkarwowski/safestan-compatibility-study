@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424336,
+  "created_at": 1777424296,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0545b469beb7b3e50069f157a8879081968568f0ee9215b38b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0545b469beb7b3e50069f157a95a608196adfe3e0b99a1bb03",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_obs`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: moved the prior for `tau_day` before the prior for `delta_days_cp`, because `delta_days_cp ~ double_exponential(0, tau_day)` uses `tau_day` as its scale. This is only a reordering of commuting log-density terms and preserves the original posterior/log density. No data fields were added or changed.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N_obs; // Number of sales observations\\n  array[N_obs] int y_obs;  // Daily units sold\\n\\n  int<lower=0> N_obs_days;                           // Number of days observed\\n  array[N_obs] int<lower=1, upper=N_obs_days> obs_day_idx; // Day of each observation\\n\\n  int<lower=0> N_pred_days;                        // Number of future days to predict\\n  array[N_pred_days] int<lower=N_obs_days> pred_day_idx; // Day of each prediction\\n\\n  int<lower=0, upper=N_obs_days> K_cp;\\n  array[K_cp] int<lower=0, upper=N_obs_days> cp_idx;\\n\\n  int<lower=0, upper=N_obs_days> K_ncp;\\n  array[K_ncp] int<lower=0, upper=N_obs_days> ncp_idx;\\n}\\n\\nparameters {\\n  vector[K_cp] delta_days_cp;   // Daily excess\\n  vector[K_ncp] delta_days_ncp; // Daily excess\\n\\n  real alpha;                   // Baseline sales per day\\n  real<lower=0> delta_season;   // Amplitude of log seasonal variation\\n  real delta_phi;               // Phase of seasonal variation from 10.5 days\\n  real<lower=0> tau_day;        // Weekly log variation scale\\n  real<lower=0> milli_inv_psi;  // Observational dispersion times 1000\\n}\\n\\ntransformed parameters {\\n  real phi = 10.5 + delta_phi;\\n\\n  vector[N_obs_days] delta_days;\\n  delta_days[cp_idx] = delta_days_cp;\\n  delta_days[ncp_idx] = delta_days_ncp * tau_day;\\n}\\n\\nmodel {\\n  // Prior model\\n  delta_days_ncp ~ double_exponential(0, 1);\\n  tau_day ~ normal(0, log(1.1));\\n  delta_days_cp ~ double_exponential(0, tau_day);\\n\\n  alpha ~ normal(log(200), log(50));\\n  delta_season ~ normal(0, log(1.5));\\n  delta_phi ~ normal(0, 1);\\n  milli_inv_psi ~ normal(0, 10);\\n\\n  // Observational model\\n  y_obs\\n    ~ neg_binomial_2_log(  alpha\\n                         + delta_season * sin(2 * pi() * to_vector(obs_day_idx) / 360 + phi)\\n                         + delta_days[obs_day_idx], 1000 / milli_inv_psi);\\n}\\n\\ngenerated quantities {\\n  array[N_obs_days] real log_mu;\\n  array[N_obs_days] int y_post_retro;\\n  array[N_pred_days] int y_post_pre;\\n\\n  for (d in 1:N_obs_days) {\\n    real lm = alpha + delta_season * sin(2 * pi() * d / 360 + phi) + delta_days[d];\\n\\n    // Truncate extreme samples to avoid numerical overflow\\n    // in neg_binomial_2_log pseudo random number generator\\n    if (lm > +20) lm = +20;\\n    if (lm < -20) lm = -20;\\n\\n    log_mu[d] = lm;\\n    y_post_retro[d] = neg_binomial_2_log_rng(lm, 1000 / milli_inv_psi);\\n  }\\n\\n  for (d in 1:N_pred_days) {\\n    real delta_day = double_exponential_rng(0, tau_day);\\n    real lm =   alpha\\n              + delta_season * sin(2 * pi() * pred_day_idx[d] / 360 + phi)\\n              + delta_day;\\n\\n    // Truncate extreme samples to avoid numerical overflow\\n    // in neg_binomial_2_log pseudo random number generator\\n    if (lm > +20) lm = +20;\\n    if (lm < -20) lm = -20;\\n\\n    y_post_pre[d] = neg_binomial_2_log_rng(lm, 1000 / milli_inv_psi);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"K_cp\\\":0,\\\"K_ncp\\\":0,\\\"N_obs\\\":4,\\\"N_obs_days\\\":1,\\\"N_pred_days\\\":1,\\\"cp_idx\\\":[],\\\"ncp_idx\\\":[],\\\"obs_day_idx\\\":[1,1,1,1],\\\"pred_day_idx\\\":[1],\\\"y_obs\\\":[4,4,2,4]}\",\"protected_variables\":[\"y_obs\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0545b469beb7b3e50069f157cb7a3c819684173fc23b05fca1",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3847,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 4243,
+    "output_tokens_details": {
+      "reasoning_tokens": 3106
+    },
+    "total_tokens": 8090
+  },
+  "user": null
+}

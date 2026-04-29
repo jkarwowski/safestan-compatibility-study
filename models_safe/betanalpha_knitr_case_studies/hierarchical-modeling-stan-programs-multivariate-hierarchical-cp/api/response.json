@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424197,
+  "created_at": 1777424168,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0b064f7ddca09f6b0069f157282a50819db74c14e09fd28328",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0b064f7ddca09f6b0069f15728e5a0819d8edbdcfdb5e1e2e9",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: rewrote the observational model from a loop of indexed statements `y[n] ~ normal(...)` to a single top-level protected-data sampling statement `y ~ normal(theta_obs, sigma)`. The local `theta_obs` array is a deterministic model-block helper with `theta_obs[n] = theta[indiv_idx[n]]`, so the likelihood density is unchanged. No data fields were added; `data_safe.json` is the supplied data unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;      // Number of observations\\n  int<lower=0> I;      // Number of components\\n  array[N] vector[I] y;      // Observations\\n  real<lower=0> sigma; // Measurement variability\\n\\n  // Number of individuals in hierarchy\\n  int<lower=0> K;\\n  // Individual from which each observation is generated\\n  array[N] int<lower=1, upper=K> indiv_idx;\\n}\\n\\nparameters {\\n  vector[I] mu;              // Population locations\\n  vector<lower=0>[I] tau;    // Population scales\\n  cholesky_factor_corr[I] L; // Population correlations\\n  array[K] vector[I] theta;        // Centered individual parameters\\n}\\n\\nmodel {\\n  array[N] vector[I] theta_obs;\\n\\n  mu ~ normal(0, 5);        // Prior model\\n  tau ~ normal(0, 5);       // Prior model\\n  L ~ lkj_corr_cholesky(4); // Prior model\\n\\n  // Centered hierarchical model\\n  theta ~ multi_normal_cholesky(mu, diag_pre_multiply(tau, L));\\n\\n  // Observational model\\n  for (n in 1:N)\\n    theta_obs[n] = theta[indiv_idx[n]];\\n  y ~ normal(theta_obs, sigma);\\n}\\n\\n// Simulate a full observation from the current value of the parameters\\ngenerated quantities {\\n  array[N, I] real y_post_pred;\\n  for (n in 1:N)\\n    y_post_pred[n] = normal_rng(theta[indiv_idx[n]], sigma);\\n}\\n\",\"data_safe_json\":\"{\\\"I\\\":2,\\\"K\\\":3,\\\"N\\\":4,\\\"indiv_idx\\\":[2,2,2,2],\\\"sigma\\\":2.5864703643500455,\\\"y\\\":[[4.0,4.0],[4.0,4.0],[4.0,4.0],[4.0,3.0]]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0b064f7ddca09f6b0069f157427510819d82d09d9c0a66b505",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3341,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2685,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 6026
+  },
+  "user": null
+}

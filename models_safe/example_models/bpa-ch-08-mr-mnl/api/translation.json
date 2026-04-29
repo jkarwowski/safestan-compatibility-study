@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"marr\":[[4,5,3],[3,2,4]],\"n_occasions\":2}",
+  "model_safe_stan": "data {\n  int n_occasions;\n  array[n_occasions, n_occasions + 1] int marr;\n}\nparameters {\n  real<lower=0, upper=1> mean_s; // Mean survival\n  real<lower=0, upper=1> mean_r; // Mean recovery\n}\ntransformed parameters {\n  vector[n_occasions] s;\n  vector[n_occasions] r;\n  array[n_occasions] simplex[n_occasions + 1] pr;\n  \n  // Constraints\n  s = rep_vector(mean_s, n_occasions);\n  r = rep_vector(mean_r, n_occasions);\n  \n  // Define the cell probabilities of the m-array\n  // Main diagonal\n  for (t in 1 : n_occasions) {\n    pr[t, t] = (1 - s[t]) * r[t];\n    \n    // Above main diagonal\n    for (j in (t + 1) : n_occasions) {\n      pr[t, j] = prod(s[t : (j - 1)]) * (1 - s[j]) * r[j];\n    }\n    \n    // Below main diagonal\n    for (j in 1 : (t - 1)) {\n      pr[t, j] = 0;\n    }\n  }\n  \n  // Last column: probability of non-recovery\n  for (t in 1 : n_occasions) {\n    pr[t, n_occasions + 1] = 1 - sum(pr[t,  : n_occasions]);\n  }\n}\nmodel {\n  // Priors\n  mean_s ~ uniform(0, 1);\n  mean_r ~ uniform(0, 1);\n  \n  // Define the multinomial likelihood\n  marr ~ multinomial(pr);\n}\n",
+  "protected_variables": [
+    "marr"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `marr`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 1)` priors for `mean_s` and `mean_r`, matching the original bounded parameters' implicit uniform priors. Replaced the loop of row-wise multinomial likelihood statements with the vectorized built-in statement `marr ~ multinomial(pr);` so the protected top-level data variable is observed exactly once, with a plain identifier on the left-hand side and outside any loop. No data fields were added or changed; `n_occasions` remains an unprotected context input.\n"
+}

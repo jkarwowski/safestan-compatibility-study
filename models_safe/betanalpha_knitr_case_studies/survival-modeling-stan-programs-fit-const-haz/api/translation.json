@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":3,\"N_display\":2,\"display_times\":[1.0,2.0],\"obs_times\":[1.0,2.0,3.0]}",
+  "model_safe_stan": "functions {\n  // Survival function\n  real log_survival(real t, real gamma) {\n    return -gamma * t;\n  }\n\n  // Inverse survival function\n  real inv_survival(real u, real gamma) {\n    return - log(u) / gamma;\n  }\n}\n\ndata {\n  int<lower=1> N;             // Number of observations\n  array[N] real<lower=0> obs_times; // Observation times\n\n  int<lower=1> N_display;                 // Number of display times\n  array[N_display] real<lower=0> display_times; // Display times\n}\n\nparameters {\n  real<lower=0> gamma;\n}\n\nmodel {\n  gamma ~ normal(0, 5);\n  obs_times ~ exponential(gamma);\n}\n\ngenerated quantities {\n  array[N_display] real display_survival;\n  array[N] real<lower=0> pred_obs_times;\n\n  for (n in 1:N_display)\n    display_survival[n] = exp(log_survival(display_times[n], gamma));\n\n  for (n in 1:N)\n    pred_obs_times[n] = inv_survival(uniform_rng(0, 1), gamma);\n}\n",
+  "protected_variables": [
+    "obs_times"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `obs_times`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual `target += log_survival(obs_times[n], gamma) + log_hazard(obs_times[n], gamma)` loop with the equivalent built-in vectorized sampling statement `obs_times ~ exponential(gamma)`. This preserves the same log density for nonnegative observation times because the original contribution is `log(gamma) - gamma * obs_times[n]`. No data fields were added or changed.\n"
+}

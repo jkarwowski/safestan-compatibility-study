@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"N\":4,\"county\":[1,1,1,1],\"u\":[4.40904669920361,5.506291362644063,5.025425829983101,4.5922100430639805],\"y\":[3.0,4.0,2.0,3.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county;\n  vector[N] u;\n  vector[N] y;\n}\nparameters {\n  real b;\n  vector[J] eta;\n  real mu_a;\n  real<lower=0, upper=100> sigma_a;\n  real<lower=0, upper=100> sigma_y;\n}\ntransformed parameters {\n  vector[J] a;\n  vector[N] y_hat;\n  \n  a = mu_a + sigma_a * eta;\n  \n  for (i in 1 : N) {\n    y_hat[i] = a[county[i]] + u[i] * b * 0.1;\n  }\n}\nmodel {\n  mu_a ~ normal(0, 1);\n  eta ~ normal(0, 1);\n  b ~ normal(0, 1);\n  sigma_a ~ uniform(0, 100);\n  sigma_y ~ uniform(0, 100);\n  y ~ normal(y_hat, sigma_y);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 100)` priors for `sigma_a` and `sigma_y`. These parameters were already constrained to `[0, 100]`, so the added priors make the implicit bounded uniform priors explicit for SafeStan without changing the posterior except for a constant log-density offset. The protected observation `y` is a top-level data variable and is observed exactly once with the built-in `normal` distribution. No data changes were required.\n"
+}

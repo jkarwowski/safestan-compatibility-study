@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":1,\"N\":1,\"county_idx\":[1],\"floor_measure\":[2.441022272343008],\"log_radon\":[6.959815321796682]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  int<lower=0> J;\n  array[N] int<lower=1, upper=J> county_idx;\n  vector[N] floor_measure;\n  vector[N] log_radon;\n}\nparameters {\n  real<lower=0> sigma_y;\n  real<lower=0> sigma_alpha;\n  real<lower=0> sigma_beta;\n  vector[J] alpha_raw;\n  vector[J] beta_raw;\n  real mu_alpha;\n  real mu_beta;\n}\ntransformed parameters {\n  vector[J] alpha;\n  vector[J] beta;\n  // implies: alpha ~ normal(mu_alpha, sigma_alpha);\n  alpha = mu_alpha + sigma_alpha * alpha_raw;\n  // implies: beta ~ normal(mu_beta, sigma_beta);\n  beta = mu_beta + sigma_beta * beta_raw;\n}\nmodel {\n  vector[N] mu;\n  // Prior\n  sigma_y ~ normal(0, 1);\n  sigma_beta ~ normal(0, 1);\n  sigma_alpha ~ normal(0, 1);\n  mu_alpha ~ normal(0, 10);\n  mu_beta ~ normal(0, 10);\n  alpha_raw ~ normal(0, 1);\n  beta_raw ~ normal(0, 1);\n\n  // Likelihood\n  for (n in 1 : N) {\n    mu[n] = alpha[county_idx[n]] + floor_measure[n] * beta[county_idx[n]];\n  }\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual likelihood accumulation `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` inside the loop with a deterministic loop that computes `mu`, followed by one top-level built-in sampling statement `log_radon ~ normal(mu, sigma_y)`. This preserves the same normal likelihood density while satisfying SafeStan's requirement that the protected data variable be observed exactly once with a plain sampling statement. The data file is unchanged.\n"
+}

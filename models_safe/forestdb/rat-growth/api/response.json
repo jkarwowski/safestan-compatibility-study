@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777337931,
-  "created_at": 1777337874,
+  "completed_at": 1777430208,
+  "created_at": 1777430153,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0911b5e7482ca9d50069f0061264c0819291a2a277ccbc83b0",
+  "id": "resp_0ef3884a3414639f0069f16e89baac819f9bf4dd1511b65cd7",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0911b5e7482ca9d50069f0061303108192bc9c1ffb1a156d08",
+      "id": "rs_0ef3884a3414639f0069f16e8a44b4819f8134fa1e304a450f",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the nested indexed likelihood statements `y[n, t] ~ normal(...)` with a single vectorized built-in sampling statement `y ~ normal(mu_y, sigma_y)` on the top-level protected matrix `y`. The local matrix `mu_y` is computed after all parameter priors in the model block. This preserves the original product of normal likelihood terms while satisfying SafeStan's requirement that protected data be observed exactly once with a plain top-level left-hand side and not inside loops.\\n\\nThe data file is unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  int<lower=1> T;\\n  vector[T] time;\\n  matrix[N, T] y;\\n}\\nparameters {\\n  real mu_alpha;\\n  real mu_beta;\\n  real<lower=0> sigma_alpha;\\n  real<lower=0> sigma_beta;\\n  real<lower=0> sigma_y;\\n  vector[N] alpha_raw;\\n  vector[N] beta_raw;\\n}\\ntransformed parameters {\\n  vector[N] alpha = mu_alpha + sigma_alpha * alpha_raw;\\n  vector[N] beta = mu_beta + sigma_beta * beta_raw;\\n}\\nmodel {\\n  mu_alpha ~ normal(50, 20);\\n  mu_beta ~ normal(7, 5);\\n  sigma_alpha ~ normal(0, 10);\\n  sigma_beta ~ normal(0, 5);\\n  sigma_y ~ normal(0, 5);\\n  alpha_raw ~ normal(0, 1);\\n  beta_raw ~ normal(0, 1);\\n\\n  {\\n    matrix[N, T] mu_y;\\n    for (n in 1 : N) {\\n      for (t in 1 : T) {\\n        mu_y[n, t] = alpha[n] + beta[n] * time[t];\\n      }\\n    }\\n    y ~ normal(mu_y, sigma_y);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":5,\\\"T\\\":5,\\\"time\\\":[0.0,1.0,2.0,3.0,4.0],\\\"y\\\":[[50,58,65,72,81],[48,55,61,69,76],[52,61,68,75,83],[47,53,59,66,72],[51,59,67,73,80]]}\",\"protected_variables\":[\"y\"]}",
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reshaped the observed response `y` from an `N` by `T` matrix into a length `N * T` vector in row-major order: `y[(n - 1) * T + t]` equals the original matrix entry `y[n, t]`. The nested elementwise likelihood was replaced by one vectorized built-in sampling statement on the plain top-level protected variable `y`, outside loops. The linear predictors are computed deterministically in the same row-major order after all parameter priors, preserving the original joint density.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  int<lower=1> T;\\n  vector[T] time;\\n  vector[N * T] y;\\n}\\nparameters {\\n  real mu_alpha;\\n  real mu_beta;\\n  real<lower=0> sigma_alpha;\\n  real<lower=0> sigma_beta;\\n  real<lower=0> sigma_y;\\n  vector[N] alpha_raw;\\n  vector[N] beta_raw;\\n}\\ntransformed parameters {\\n  vector[N] alpha = mu_alpha + sigma_alpha * alpha_raw;\\n  vector[N] beta = mu_beta + sigma_beta * beta_raw;\\n}\\nmodel {\\n  vector[N * T] mu_y;\\n\\n  mu_alpha ~ normal(50, 20);\\n  mu_beta ~ normal(7, 5);\\n  sigma_alpha ~ normal(0, 10);\\n  sigma_beta ~ normal(0, 5);\\n  sigma_y ~ normal(0, 5);\\n  alpha_raw ~ normal(0, 1);\\n  beta_raw ~ normal(0, 1);\\n\\n  for (n in 1 : N) {\\n    for (t in 1 : T) {\\n      mu_y[(n - 1) * T + t] = alpha[n] + beta[n] * time[t];\\n    }\\n  }\\n  y ~ normal(mu_y, sigma_y);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":5,\\\"T\\\":3,\\\"time\\\":[1.0,2.0,3.0],\\\"y\\\":[5.0,5.0,3.0,5.0,3.0,5.0,2.0,5.0,5.0,3.0,5.0,4.0,5.0,5.0,5.0]}\",\"protected_variables\":[\"y\"]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0911b5e7482ca9d50069f006464874819284c90ab07b13f56a",
+      "id": "msg_0ef3884a3414639f0069f16ebd1630819fa0484376b33f6a00",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 2828,
+    "input_tokens": 3550,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 3571,
+    "output_tokens": 4740,
     "output_tokens_details": {
-      "reasoning_tokens": 2980
+      "reasoning_tokens": 4142
     },
-    "total_tokens": 6399
+    "total_tokens": 8290
   },
   "user": null
 }

@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":3,\"N\":1,\"county_idx\":[2],\"floor_measure\":[6.226191051538669],\"log_radon\":[4.476207763993235]}",
+  "model_safe_stan": "data {\n  int<lower=0> J;\n  int<lower=0> N;\n  array[N] int<lower=1, upper=J> county_idx;\n  vector[N] floor_measure;\n  vector[N] log_radon;\n}\nparameters {\n  real alpha;\n  vector[J] beta;\n  real mu_beta;\n  real<lower=0> sigma_beta;\n  real<lower=0> sigma_y;\n}\nmodel {\n  vector[N] mu;\n  // Prior\n  alpha ~ normal(0, 10);\n  sigma_y ~ normal(0, 1);\n  sigma_beta ~ normal(0, 1);\n  mu_beta ~ normal(0, 10);\n\n  beta ~ normal(mu_beta, sigma_beta);\n  for (n in 1 : N) {\n    mu[n] = alpha + floor_measure[n] * beta[county_idx[n]];\n  }\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual per-observation likelihood contribution `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` with a deterministic construction of `mu` followed by one vectorized built-in sampling statement, `log_radon ~ normal(mu, sigma_y)`. This preserves the same likelihood density. The predictors and indexing data (`floor_measure`, `county_idx`, `J`, and `N`) remain unprotected context inputs. No data changes were required.\n"
+}

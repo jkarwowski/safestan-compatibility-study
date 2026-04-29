@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-surgical-surgical/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:44:41+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol1-surgical-surgical",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "r"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0755fbba587a869e0069f162803bdc8190b3e5ef9362ff7739",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol1-surgical-surgical",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:44:32+00:00",
+  "usage": {
+    "input_tokens": 3079,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 934,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4013
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

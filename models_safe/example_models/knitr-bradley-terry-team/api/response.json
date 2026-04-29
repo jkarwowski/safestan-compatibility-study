@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427932,
+  "created_at": 1777427904,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_02dc3224d489f8010069f165c07cbc819c8198e0d731217270",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_02dc3224d489f8010069f165c11ef0819c883f3a2eb348ed05",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: rewrote the pointwise likelihood inside the loop into a deterministic computation of a vector `eta` followed by a single vectorized sampling statement `y ~ bernoulli_logit(eta)`. This preserves the same Bernoulli-logit likelihood while making the protected observation a top-level left-hand side used exactly once and outside loops. No data fields were added or changed.\\n\",\"model_safe_stan\":\"/**\\n * Bradley-Terry model for teams, where each team is made up of\\n * players, and the ability of a team is the sum of the abilities of\\n * its players.\\n */\\ndata {\\n  int<lower=0> K; // players\\n  int<lower=0> J; // players per team\\n  int<lower=0> N; // matches\\n  array[N, J] int<lower=1, upper=K> team0; // team 0 players\\n  array[N, J] int<lower=1, upper=K> team1; // team 1 players\\n  array[N] int<lower=0, upper=1> y; // winner\\n}\\nparameters {\\n  vector[K] alpha_std;\\n  real<lower=0> sigma;\\n}\\ntransformed parameters {\\n  vector[K] alpha = sigma * alpha_std; // alpha ~ normal(0, sigma)\\n}\\nmodel {\\n  vector[N] eta;\\n  sigma ~ lognormal(0, 0.5); // zero avoiding, weakly informative\\n  alpha_std ~ normal(0, 1); // hierarchical, zero centered\\n  for (n in 1 : N) {\\n    // additive Bradley-Terry model\\n    eta[n] = sum(alpha[team1[n]]) - sum(alpha[team0[n]]);\\n  }\\n  y ~ bernoulli_logit(eta);\\n}\\ngenerated quantities {\\n  array[K] int<lower=1, upper=K> ranking; // rank of player ability\\n  {\\n    array[K] int ranked_index = sort_indices_desc(alpha);\\n    for (k in 1 : K) {\\n      ranking[ranked_index[k]] = k;\\n    }\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":2,\\\"K\\\":1,\\\"N\\\":1,\\\"team0\\\":[[1,1]],\\\"team1\\\":[[1,1]],\\\"y\\\":[0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_02dc3224d489f8010069f165d8aca8819caec0e9029a4786be",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3237,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2640,
+    "output_tokens_details": {
+      "reasoning_tokens": 2055
+    },
+    "total_tokens": 5877
+  },
+  "user": null
+}

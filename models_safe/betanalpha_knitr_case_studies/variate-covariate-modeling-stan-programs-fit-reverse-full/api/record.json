@@ -1,0 +1,32 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-fit-reverse-full/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:09:55+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-fit-reverse-full",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y1",
+    "x1",
+    "y2"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_081c98e868190e5d0069f15a42149481a0a2a5e7c22797e91f",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/variate-covariate-modeling-stan-programs-fit-reverse-full",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:09:21+00:00",
+  "usage": {
+    "input_tokens": 3635,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3571,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 7206
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

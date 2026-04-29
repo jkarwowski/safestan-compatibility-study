@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-24-dogs-check/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:21:07+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-24-dogs-check",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_flat_safestan"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0336303933eebbab0069f15cb4c57481a28c814f55ad93abe1",
+  "safe_dir": "models_safe/example_models/arm-ch-24-dogs-check",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:19:48+00:00",
+  "usage": {
+    "input_tokens": 3417,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 8168,
+    "output_tokens_details": {
+      "reasoning_tokens": 7250
+    },
+    "total_tokens": 11585
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

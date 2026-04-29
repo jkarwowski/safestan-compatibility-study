@@ -1,0 +1,17 @@
+{
+  "K": 1,
+  "N": 2,
+  "N_factor_levels": 2,
+  "context_to_level": [
+    2
+  ],
+  "obs_to_context": [
+    1,
+    1
+  ],
+  "sigma": 0.19229773810211861,
+  "y": [
+    2.0,
+    2.0
+  ]
+}

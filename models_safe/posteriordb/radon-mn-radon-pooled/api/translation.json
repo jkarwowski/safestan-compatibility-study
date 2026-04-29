@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":3,\"floor_measure\":[5.387557870447299,6.571023829143955,3.763240089937252],\"log_radon\":[6.759964491280572,3.690494837271601,2.288627098401936]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  vector[N] floor_measure;\n  vector[N] log_radon;\n}\nparameters {\n  real alpha;\n  real beta;\n  real<lower=0> sigma_y;\n}\nmodel {\n  vector[N] mu;\n  \n  // priors\n  sigma_y ~ normal(0, 1);\n  alpha ~ normal(0, 10);\n  beta ~ normal(0, 10);\n  \n  // likelihood\n  mu = alpha + beta * floor_measure;\n  log_radon ~ normal(mu, sigma_y);\n}\n",
+  "protected_variables": [
+    "log_radon"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `log_radon`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the looped manual likelihood contribution `target += normal_lpdf(log_radon[n] | mu[n], sigma_y)` with a single vectorized built-in sampling statement, `log_radon ~ normal(mu, sigma_y)`. This preserves the normal observation model while satisfying SafeStan's requirement that protected data be observed exactly once with a plain top-level sampling statement. The existing parameter priors were already built-in sampling statements before parameter use. No data changes were required.\n"
+}

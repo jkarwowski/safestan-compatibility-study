@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"I\":1,\"N\":[1],\"n\":[1],\"x1\":[6.397822020171828],\"x2\":[6.038401412896308]}",
+  "model_safe_stan": "data {\n  int<lower=0> I;\n  array[I] int<lower=0> n;\n  array[I] int<lower=0> N;\n  vector[I] x1;\n  vector[I] x2;\n}\ntransformed data {\n  vector[I] x1x2;\n  x1x2 = x1 .* x2;\n}\nparameters {\n  real alpha0;\n  real alpha1;\n  real alpha12;\n  real alpha2;\n  real<lower=0> tau;\n  vector[I] b;\n}\ntransformed parameters {\n  real<lower=0> sigma;\n  sigma = 1.0 / sqrt(tau);\n}\nmodel {\n  alpha0 ~ normal(0.0, 1.0E3);\n  alpha1 ~ normal(0.0, 1.0E3);\n  alpha2 ~ normal(0.0, 1.0E3);\n  alpha12 ~ normal(0.0, 1.0E3);\n  tau ~ gamma(1.0E-3, 1.0E-3);\n  \n  b ~ normal(0.0, sigma);\n  n ~ binomial_logit(N,\n                     alpha0 + alpha1 * x1 + alpha2 * x2 + alpha12 * x1x2 + b);\n}\n\n",
+  "protected_variables": [
+    "n"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `n`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `n` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `n ~ binomial_logit(...)`, after all parameters used by the likelihood have received built-in priors. The remaining data variables (`I`, `N`, `x1`, and `x2`) are context inputs used as sizes, trial counts, and predictors, and are not protected.\n"
+}

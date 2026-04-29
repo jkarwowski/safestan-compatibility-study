@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"G\":2,\"N\":4,\"group\":[1,1,2,1],\"y\":[0,1,1,1]}",
+  "model_safe_stan": "// ForestDB translation: Biases from Noise\ndata {\n  int<lower=1> G;\n  int<lower=1> N;\n  array[N] int<lower=1, upper=G> group;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0> alpha;\n  real<lower=0> beta;\n  vector<lower=0, upper=1>[G] theta;\n}\nmodel {\n  alpha ~ gamma(2, 1);\n  beta ~ gamma(2, 1);\n  theta ~ beta(alpha, beta);\n  y ~ bernoulli(theta[group]);\n}\ngenerated quantities {\n  real population_mean = alpha / (alpha + beta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the loop of indexed scalar observations `y[n] ~ bernoulli(theta[group[n]])` with the equivalent vectorized sampling statement `y ~ bernoulli(theta[group])`. This preserves the same Bernoulli likelihood while making the protected observation a single top-level data variable observed exactly once. No data changes were required.\n"
+}

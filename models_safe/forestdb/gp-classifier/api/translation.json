@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 5, \"x\": [2.6117466705473227, 5.89711622951171, 6.195657970123058, 5.833755908302036, 3.072575432080699], \"y\": [0, 1, 1, 0, 1]}",
+  "model_safe_stan": "// ForestDB translation: Gaussian Process Classifier\ndata {\n  int<lower=1> N;\n  vector[N] x;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0> length_scale;\n  real<lower=0> sigma_f;\n  vector[N] eta;\n}\ntransformed parameters {\n  vector[N] f;\n  {\n    matrix[N, N] K;\n    for (i in 1:N) {\n      for (j in 1:N) {\n        K[i, j] = square(sigma_f)\n                  * exp(-0.5 * square((x[i] - x[j]) / length_scale));\n      }\n      K[i, i] += 1e-6;\n    }\n    f = cholesky_decompose(K) * eta;\n  }\n}\nmodel {\n  length_scale ~ lognormal(0, 0.5);\n  sigma_f ~ lognormal(0, 0.5);\n  eta ~ normal(0, 1);\n  y ~ bernoulli_logit(f);\n}\ngenerated quantities {\n  vector[N] p = inv_logit(f);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with the built-in distribution `bernoulli_logit` using a plain sampling statement. The other data variables, `N` and `x`, are context inputs and are not scored. All parameters have explicit built-in priors before the likelihood uses the transformed parameter `f`.\n"
+}

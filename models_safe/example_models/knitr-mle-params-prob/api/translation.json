@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 2, \"y\": [0, 1]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `y ~ bernoulli(theta)`. The context variable `N` is used only for sizing, and the parameter `theta` has exactly one built-in prior statement before it is used in the likelihood.\n"
+}

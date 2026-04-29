@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424128,
+  "created_at": 1777424118,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_08d51cb16cef1c460069f156f66e50819ebda241495a824f01",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_08d51cb16cef1c460069f156f709b8819e853659e73e724196",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none; the program has no `data` block and no observed sampling statements.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The program is a prior/predictive simulator using only `transformed data` constants and `generated quantities`; it has no protected data interface, no parameters requiring priors, and no likelihood-scoring statements.\\n\",\"model_safe_stan\":\"transformed data {\\n  int<lower=0> M = 3;         // Number of covariates\\n  int<lower=0> N = 1000;      // Number of observations\\n\\n  vector[M] x0 = [-1, 0, 1]'; // Covariate baseline\\n  vector[M] z0 = [-3, 1, 2]'; // Latent functional behavior baseline\\n  real gamma0 = -2.6;                      // True intercept\\n  vector[M] gamma1 = [0.2, -2.0, 0.33]';   // True slopes\\n  matrix[M, M] gamma2 = [ [+0.40, -0.05, -0.20],\\n                          [-0.05, -1.00, -0.05],\\n                          [-0.20, -0.05, +0.50] ];\\n}\\n\\ngenerated quantities {\\n  matrix[N, M] X; // Covariate design matrix\\n  array[N] real y;      // Variates\\n\\n  for (n in 1:N) {\\n    real x2 = -5;\\n    while (x2 < x0[2] - 4 || x2 > x0[2] + 4)\\n      x2 = normal_rng(x0[2], 2);\\n\\n    X[n, 2] = x2;\\n    X[n, 1] = normal_rng(x0[1] + 1.0 * cos(1.5 * (X[n, 2] - x0[2])), 0.3);\\n    X[n, 3] = normal_rng(x0[3] + 0.76 * (X[n, 1] - x0[1]), 0.5);\\n\\n    y[n] = bernoulli_logit_rng(  gamma0\\n                               + (X[n] - z0') * gamma1\\n                               + (X[n] - z0') * gamma2 * (X[n] - z0')');\\n  }\\n}\\n\\n\",\"data_safe_json\":\"{}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_08d51cb16cef1c460069f156fd6f24819ea303aa8e015f3c2a",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3303,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1116,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4419
+  },
+  "user": null
+}

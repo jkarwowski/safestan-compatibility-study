@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `post_test`.\n\nGenerated files: none.\n\nReason: `post_test` is the only top-level data variable observed with a sampling statement; `pre_test` and `treatment` are predictors and `N` is a size. The likelihood statement itself is a built-in distribution on a plain top-level data variable, but the parameters `beta` and `sigma` have no prior sampling statements before they are used. SafeStan requires every parameter to have exactly one built-in prior before use. Adding priors for the unconstrained `beta` and lower-bounded `sigma` would change the posterior/log density rather than be a minor same-density rewrite.\n"
+}

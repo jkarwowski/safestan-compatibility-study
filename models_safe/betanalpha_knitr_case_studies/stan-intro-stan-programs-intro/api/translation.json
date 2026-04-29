@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\": 3, \"y\": [3.0, 3.0, 3.0]}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] real y;\n}\n\nparameters {\n  real theta;\n}\n\nmodel {\n  theta ~ normal(0, 1);\n  y ~ normal(theta, 1);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced manual `target += normal_lpdf(...)` terms with equivalent built-in sampling statements. The parameter prior is now `theta ~ normal(0, 1)`, and the elementwise likelihood loop for `y[n]` was vectorized to the single protected observation statement `y ~ normal(theta, 1)`. No data changes were required; `N` remains an ordinary context size variable.\n"
+}

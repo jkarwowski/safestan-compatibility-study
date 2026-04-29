@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426267,
+  "created_at": 1777426245,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_03f8b34e2c93133a0069f15f456828819c89a72cc8b51a13e2",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_03f8b34e2c93133a0069f15f45f498819ca69f09e8f9297929",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `marr_j`, `marr_a`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the row-wise multinomial likelihood loop with vectorized top-level sampling statements, so each protected data variable is observed exactly once with a plain identifier on the left-hand side. Added explicit `uniform(0, 1)` priors for `mean_phijuv`, `mean_phiad`, and `mean_p`; these are density-neutral because the parameters are already constrained to `[0, 1]` and the original model documented these priors as implicit. The data are unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> n_occasions; // Number of capture occasions\\n  array[n_occasions - 1, n_occasions] int<lower=0> marr_j; // Juv. m-array\\n  array[n_occasions - 1, n_occasions] int<lower=0> marr_a; // Ad. m-array\\n}\\ntransformed data {\\n  // Compoud declaration is enabled in Stan 2.13\\n  int n_occ_minus_1 = n_occasions - 1;\\n  //  int n_occ_minus_1;\\n  \\n  //  n_occ_minus_1 = n_occasions - 1;\\n}\\nparameters {\\n  real<lower=0, upper=1> mean_phijuv; // Mean juv. survival\\n  real<lower=0, upper=1> mean_phiad; // Mean ad. survival\\n  real<lower=0, upper=1> mean_p; // Mean recapture\\n}\\ntransformed parameters {\\n  vector<lower=0, upper=1>[n_occ_minus_1] phi_juv;\\n  vector<lower=0, upper=1>[n_occ_minus_1] phi_ad;\\n  vector<lower=0, upper=1>[n_occ_minus_1] p;\\n  vector<lower=0, upper=1>[n_occ_minus_1] q;\\n  array[n_occ_minus_1] simplex[n_occasions] pr_j;\\n  array[n_occ_minus_1] simplex[n_occasions] pr_a;\\n  \\n  // Constraints\\n  phi_juv = rep_vector(mean_phijuv, n_occ_minus_1);\\n  phi_ad = rep_vector(mean_phiad, n_occ_minus_1);\\n  p = rep_vector(mean_p, n_occ_minus_1);\\n  \\n  q = 1.0 - p; // Probability of non-recapture\\n  \\n  // Define the cell probabilities of the m-arrays\\n  // Main diagonal\\n  for (t in 1 : n_occ_minus_1) {\\n    pr_j[t, t] = phi_juv[t] * p[t];\\n    pr_a[t, t] = phi_ad[t] * p[t];\\n    \\n    // Above main diagonal\\n    for (j in (t + 1) : n_occ_minus_1) {\\n      pr_j[t, j] = phi_juv[t] * prod(phi_ad[(t + 1) : j])\\n                   * prod(q[t : (j - 1)]) * p[j];\\n      pr_a[t, j] = prod(phi_ad[t : j]) * prod(q[t : (j - 1)]) * p[j];\\n    }\\n    \\n    // Below main diagonal\\n    pr_j[t,  : t - 1] = rep_vector(0, t - 1);\\n    pr_a[t,  : t - 1] = rep_vector(0, t - 1);\\n  }\\n  \\n  // Last column: probability of non-recapture\\n  for (t in 1 : n_occ_minus_1) {\\n    pr_j[t, n_occasions] = 1 - sum(pr_j[t,  : n_occ_minus_1]);\\n    pr_a[t, n_occasions] = 1 - sum(pr_a[t,  : n_occ_minus_1]);\\n  }\\n}\\nmodel {\\n  // Priors\\n  mean_phijuv ~ uniform(0, 1);\\n  mean_phiad ~ uniform(0, 1);\\n  mean_p ~ uniform(0, 1);\\n  \\n  // Define the multinomial likelihood\\n  marr_j ~ multinomial(pr_j);\\n  marr_a ~ multinomial(pr_a);\\n}\\n\",\"data_safe_json\":\"{\\\"marr_a\\\":[[2,4]],\\\"marr_j\\\":[[4,4]],\\\"n_occasions\\\":2}\",\"protected_variables\":[\"marr_j\",\"marr_a\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_03f8b34e2c93133a0069f15f561b88819ca3ed74caad84250c",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3714,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2620,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 6334
+  },
+  "user": null
+}

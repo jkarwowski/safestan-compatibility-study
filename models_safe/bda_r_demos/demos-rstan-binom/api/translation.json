@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 1,\n  \"y\": 1\n}\n",
+  "model_safe_stan": "// Binomial model with beta(1,1) prior\ndata {\n  int<lower=0> N; // number of experiments\n  int<lower=0> y; // number of successes\n}\nparameters {\n  real<lower=0, upper=1> theta; // probability of success in range (0,1)\n}\nmodel {\n  // model block creates the log density to be sampled\n  theta ~ beta(1, 1); // prior\n  y ~ binomial(N, theta); // observation model / likelihood\n  // the notation using ~ is syntactic sugar for\n  //  target += beta_lpdf(theta | 1, 1);     // lpdf for continuous theta\n  //  target += binomial_lpmf(y | N, theta); // lpmf for discrete y\n  // target is the log density to be sampled\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The observed data variable `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement, `y ~ binomial(N, theta)`. The data variable `N` is context data used as the binomial trial count and is not protected. The parameter `theta` has exactly one built-in prior sampling statement before it is used in the likelihood.\n"
+}

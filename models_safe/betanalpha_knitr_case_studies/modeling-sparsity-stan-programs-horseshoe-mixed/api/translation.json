@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":3,\"K_cp\":3,\"K_ncp\":1,\"N\":2,\"context_idx\":[2,2],\"cp_idx\":[2,2,2],\"ncp_idx\":[2],\"sigma\":2.109288223271995,\"y\":[2.0,2.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> K;                       // Number of groups\n  int<lower=0> N;                       // Number of observations\n  vector[N] y;                          // Observations\n  array[N] int<lower=1, upper=K> context_idx; // Context assignments\n\n  int<lower=0, upper=K> K_cp;\n  array[K_cp] int<lower=0, upper=K> cp_idx;\n\n  int<lower=0, upper=K> K_ncp;\n  array[K_ncp] int<lower=0, upper=K> ncp_idx;\n\n  real<lower=0> sigma;                  // Measurement variability\n}\n\nparameters {\n  vector[K_cp] theta_cp;\n  vector[K_ncp] theta_ncp;\n\n  vector<lower=0>[K] lambda;\n  real<lower=0> tau;\n}\n\ntransformed parameters {\n  vector[K] theta;\n  theta[cp_idx] = theta_cp;\n  theta[ncp_idx] = theta_ncp .* lambda[ncp_idx] * tau;\n}\n\nmodel {\n  // Horseshoe prior model\n  theta_ncp ~ normal(0, 1);\n  lambda ~ cauchy(0, 1);\n  tau ~ normal(0, 0.1);\n  theta_cp ~ normal(0, lambda[cp_idx] * tau);\n\n  // Observational model\n  y ~ normal(theta[context_idx], sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the prior sampling statements in the `model` block so that `lambda` and `tau` are given their built-in priors before they are used in the prior for `theta_cp`. This is a same-density mechanical reordering of additive Stan log-density terms. The protected likelihood statement `y ~ normal(theta[context_idx], sigma)` is unchanged. No data fields were added or changed.\n"
+}

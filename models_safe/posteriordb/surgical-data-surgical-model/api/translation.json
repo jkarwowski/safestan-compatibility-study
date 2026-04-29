@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N\": 1,\n  \"n\": [\n    2\n  ],\n  \"r\": [\n    2\n  ]\n}\n",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  array[N] int r;\n  array[N] int n;\n}\nparameters {\n  real mu;\n  real<lower=0> sigmasq;\n  array[N] real b;\n}\ntransformed parameters {\n  real<lower=0> sigma;\n  array[N] real<lower=0, upper=1> p;\n  sigma = sqrt(sigmasq);\n  for (i in 1 : N) {\n    p[i] = inv_logit(b[i]);\n  }\n}\nmodel {\n  mu ~ normal(0.0, 1000.0);\n  sigmasq ~ inv_gamma(0.001, 0.001);\n  b ~ normal(mu, sigma);\n  r ~ binomial_logit(n, b);\n}\ngenerated quantities {\n  real pop_mean;\n  pop_mean = inv_logit(mu);\n}\n",
+  "protected_variables": [
+    "r"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `r`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `r` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `r ~ binomial_logit(n, b);`. The other data variables, `N` and `n`, are context inputs used as a size and binomial-trials predictor. All parameters have exactly one built-in prior before use in the model block.\n"
+}

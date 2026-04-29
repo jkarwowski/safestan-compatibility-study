@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\":2,\"m\":3.9659118167395517,\"y\":[2.0]}",
+  "model_safe_stan": "data {\n  int<lower = 1> N; // Number of point masses\n  array[N - 1] real<lower = 0.0> y; // Data\n  real m; // Mass of particles\n}\ntransformed data {\n  // This matrix is constant. We build it once\n  matrix[N, N] K_unscaled = rep_matrix(0, N, N);\n\n  for(n in 1:N) {\n    if(n == 1) {\n      K_unscaled[n, n] = 1.0 / m;\n      K_unscaled[n, n + 1] = -1.0 / m;\n    } else if(n == N) {\n      K_unscaled[n, n - 1] = -1.0 / m;\n      K_unscaled[n, n] = 1.0 / m;\n    } else {\n      K_unscaled[n, n - 1] = -1.0 / m;\n      K_unscaled[n, n] = 2.0 / m;\n      K_unscaled[n, n + 1] = -1.0 / m;\n    }\n  }\n}\nparameters {\n  real<lower = 0.0> k;\n  real<lower = 0.0> sigma;\n}\ntransformed parameters {\n  vector[N - 1] eigs;\n\n  {\n    matrix[N, N] K = k * K_unscaled;\n\n    eigs = eigenvalues_sym(K)[2:N];\n  }\n}\nmodel {\n  k ~ normal(1.0, 1.0);\n  sigma ~ normal(0.0, 1.0);\n\n  // Don't forget, the resonance frequencies are the square roots of the\n  // eigenvalues\n  y ~ normal(sqrt(eigs), sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement after both parameters have received built-in priors. The other data variables, `N` and `m`, are context inputs used for dimensions and deterministic matrix construction only.\n"
+}

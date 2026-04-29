@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-linear-regression-regression/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:22:06+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-linear-regression-regression",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_039de8da236e4abd0069f16b43f06481979cd3f98466da5f26",
+  "safe_dir": "models_safe/example_models/misc-linear-regression-regression",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:21:55+00:00",
+  "usage": {
+    "input_tokens": 2967,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 842,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3809
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

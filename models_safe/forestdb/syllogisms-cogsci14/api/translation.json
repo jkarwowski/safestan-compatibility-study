@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `likelihood` would be the modelled data interface, since the model's log density depends on this top-level data matrix through the marginalized term `log_sum_exp(log(hypothesis_weight[h]) + log(likelihood[n, h]))`.\n\nGenerated files: none.\n\nReason: the likelihood is implemented with manual `target +=` scoring of a marginalized finite mixture/product-of-likelihoods expression. SafeStan forbids arbitrary `target +=`, and there is no built-in Stan sampling statement with the same density for the continuous matrix `likelihood`. Replacing this with SafeStan-compatible sampling statements would require a substantive statistical rewrite rather than a minor mechanical translation.\n"
+}

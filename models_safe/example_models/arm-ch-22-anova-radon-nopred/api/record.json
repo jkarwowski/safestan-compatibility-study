@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-22-anova-radon-nopred/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:17:46+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-22-anova-radon-nopred",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_02163452eb773dfa0069f15c2823348197a05f92e034f1306c",
+  "safe_dir": "models_safe/example_models/arm-ch-22-anova-radon-nopred",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:17:28+00:00",
+  "usage": {
+    "input_tokens": 3134,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2008,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5142
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

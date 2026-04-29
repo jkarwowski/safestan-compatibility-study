@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/dpmem/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:28:01+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/dpmem",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0ab7176a7867fb930069f16c9c4940819f87585ea95cbc24a0",
+  "safe_dir": "models_safe/forestdb/dpmem",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:27:40+00:00",
+  "usage": {
+    "input_tokens": 3238,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1949,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5187
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

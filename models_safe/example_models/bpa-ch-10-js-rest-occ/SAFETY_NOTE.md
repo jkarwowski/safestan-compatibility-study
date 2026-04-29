@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the capture-history likelihood is implemented as a marginalized Jolly-Seber likelihood inside the user-defined `_lp` function `jolly_seber_lp`, using `target += log_sum_exp(...)`, built-in `_lpmf` calls, indexed sampling of `y[i, t]` inside loops, and sampling statements on constant pseudo-observations such as `1 ~ bernoulli(...)`. SafeStan forbids `_lp` functions and direct `target +=` scoring, and protected data must be observed exactly once with a top-level plain sampling statement. Although some issues such as implicit uniform priors or transformed-data summaries of `y` could be handled mechanically, replacing this marginalized latent-state likelihood with SafeStan-compatible built-in sampling statements would require a substantive model rewrite and is not a minor same-density translation.

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429151,
+  "created_at": 1777429127,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0cc25872b966014d0069f16a87de1c8196bc8fad81af802f8b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0cc25872b966014d0069f16a888a3c8196888875d2316c7913",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y1`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The only observed data variable scored by a sampling statement is top-level `y1`, and it is observed exactly once with the built-in `normal` distribution using a plain left-hand-side identifier. The remaining data variables (`N1`, `N2`, `x1`, and `x2`) are context inputs. Each parameter has exactly one built-in prior sampling statement before it is used in the model likelihood.\\n\",\"model_safe_stan\":\"// Fit the hyperparameters of a latent-variable Gaussian process with an\\n// exponentiated quadratic kernel and a Gaussian likelihood and predict\\n// out-of-sample observations\\n\\ndata {\\n  int<lower=1> N1;\\n  array[N1] real x1;\\n  vector[N1] y1;\\n  int<lower=1> N2;\\n  array[N2] real x2;\\n}\\ntransformed data {\\n  real delta = 1e-9;\\n  int<lower=1> N = N1 + N2;\\n  array[N] real x;\\n  for (n1 in 1 : N1) {\\n    x[n1] = x1[n1];\\n  }\\n  for (n2 in 1 : N2) {\\n    x[N1 + n2] = x2[n2];\\n  }\\n}\\nparameters {\\n  real<lower=0> rho;\\n  real<lower=0> alpha;\\n  real<lower=0> sigma;\\n  vector[N] eta;\\n}\\ntransformed parameters {\\n  vector[N] f;\\n  {\\n    matrix[N, N] L_K;\\n    matrix[N, N] K = gp_exp_quad_cov(x, alpha, rho);\\n    \\n    // diagonal elements\\n    for (n in 1 : N) {\\n      K[n, n] = K[n, n] + delta;\\n    }\\n    \\n    L_K = cholesky_decompose(K);\\n    f = L_K * eta;\\n  }\\n}\\nmodel {\\n  rho ~ inv_gamma(5, 5);\\n  alpha ~ normal(0, 1);\\n  sigma ~ normal(0, 1);\\n  eta ~ normal(0, 1);\\n  \\n  y1 ~ normal(f[1 : N1], sigma);\\n}\\ngenerated quantities {\\n  vector[N2] y2;\\n  for (n2 in 1 : N2) {\\n    y2[n2] = normal_rng(f[N1 + n2], sigma);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N1\\\":3,\\\"N2\\\":3,\\\"x1\\\":[3.8145125498135557,6.8961712263681765,2.7920805776678685],\\\"x2\\\":[5.356136083370345,5.56539013666822,5.456092919796995],\\\"y1\\\":[3.0,3.0,3.0]}\",\"protected_variables\":[\"y1\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0cc25872b966014d0069f16a9b16ec819681055e8d0fd5c9e8",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3359,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2282,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5641
+  },
+  "user": null
+}

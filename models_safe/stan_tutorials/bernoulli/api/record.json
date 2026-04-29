@@ -1,26 +1,29 @@
 {
   "artifacts_dir": "models_safe/stan_tutorials/bernoulli/api",
   "compatibility": "as-is",
-  "completed_at": "2026-04-28T01:11:20+00:00",
+  "completed_at": "2026-04-29T03:01:22+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_tutorials/bernoulli",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [
     "y"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_02a18beb49eeddd00069f0092e2244819c8f4e5df3024279ca",
+  "response_id": "resp_0a06acd3913814310069f1747bfbb4819f9afdb8686d634788",
   "safe_dir": "models_safe/stan_tutorials/bernoulli",
-  "started_at": "2026-04-28T01:11:09+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:01:15+00:00",
   "usage": {
-    "input_tokens": 2619,
+    "input_tokens": 2834,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 671,
+    "output_tokens": 510,
     "output_tokens_details": {
-      "reasoning_tokens": 383
+      "reasoning_tokens": 270
     },
-    "total_tokens": 3290
+    "total_tokens": 3344
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

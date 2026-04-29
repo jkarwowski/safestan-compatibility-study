@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"N_calibrations\": 5\n}\n",
+  "model_safe_stan": "data {\n  int N_calibrations;\n}\n\ntransformed data {\n  real sigma_t = 0.02; // seconds\n}\n\ngenerated quantities {\n  array[N_calibrations] real obs_t;\n  for (n in 1:N_calibrations)\n      obs_t[n] = normal_rng(0, sigma_t);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The only top-level data variable, `N_calibrations`, is a context input used as a size and is not observed/scored by any likelihood statement.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program contains no model-block likelihood, no parameters requiring priors, and no protected observations. The generated-quantities simulation uses `normal_rng` and does not condition on data.\n"
+}

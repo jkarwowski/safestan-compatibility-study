@@ -1,24 +1,27 @@
 {
   "artifacts_dir": "models_safe/stan_tutorials/two-pl-regression-noncentered/api",
   "compatibility": "major",
-  "completed_at": "2026-04-28T01:19:04+00:00",
+  "completed_at": "2026-04-29T03:02:31+00:00",
   "model": "gpt-5.5",
   "path": "models/stan_tutorials/two-pl-regression-noncentered",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0c614a4ee932650c0069f00af1e79c819c829e305c94ea8ba4",
+  "response_id": "resp_0fc136e8e3415ea20069f174bdb48081a3942f2937605d45f7",
   "safe_dir": "models_safe/stan_tutorials/two-pl-regression-noncentered",
-  "started_at": "2026-04-28T01:18:41+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:02:21+00:00",
   "usage": {
-    "input_tokens": 37086,
+    "input_tokens": 3162,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 2304
     },
-    "output_tokens": 1188,
+    "output_tokens": 686,
     "output_tokens_details": {
-      "reasoning_tokens": 1034
+      "reasoning_tokens": 516
     },
-    "total_tokens": 38274
+    "total_tokens": 3848
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

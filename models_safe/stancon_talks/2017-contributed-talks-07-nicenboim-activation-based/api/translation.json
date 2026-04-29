@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `winner` and `RT` are the observed response interface variables; `N_obs` and `N_choices` are context/configuration inputs.\n\nGenerated files: none.\n\nReason: the likelihood for the joint choice/response-time observation is implemented by manual `target += race(...)` scoring through a user-defined function that combines `lognormal_lpdf` for the winning choice with `lognormal_lccdf` terms for the non-winning choices. SafeStan forbids arbitrary `target +=` scoring, and this race likelihood cannot be represented as a minor same-density rewrite using only built-in sampling statements on plain top-level protected data variables. Additionally, `RT` is read in `transformed data` to define `min_RT` before any possible observation statement, which would require at least a deterministic-copy repair, but the manual marginalized likelihood remains the substantive blocker.\n"
+}

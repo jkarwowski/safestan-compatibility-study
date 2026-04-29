@@ -1,0 +1,7 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{}",
+  "model_safe_stan": "// the original version not using transformation is in ring.stan.0\nparameters {\n  real<lower=0.5, upper=1> z;\n  real<lower=0, upper=2 * pi()> phi;\n}\nmodel {\n  z ~ beta(2, 1) T[0.5, 1];\n  phi ~ uniform(0, 2 * pi());\n}\ngenerated quantities {\n  real x;\n  real y;\n  x = z * cos(phi);\n  y = z * sin(phi);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: none. The original program has no data block and no observed data likelihood.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual prior factor `target += log(z)` with the built-in prior statement `z ~ beta(2, 1) T[0.5, 1]`, which is proportional to `z` on the declared support and therefore preserves the same posterior density up to an additive constant. Added `phi ~ uniform(0, 2 * pi())`, which is density-neutral for the existing finite bounded parameter and satisfies SafeStan's unique-prior requirement. No data changes were required.\n"
+}

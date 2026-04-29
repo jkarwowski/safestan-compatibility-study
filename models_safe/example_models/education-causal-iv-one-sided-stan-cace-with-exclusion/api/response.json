@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427706,
+  "created_at": 1777427556,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0aade15aac188c0c0069f16464f5f481a2bf38a5baa1617d6d",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0aade15aac188c0c0069f164657f4081a2a8c65aa5422f32ab",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `W_z1`, `Y_z1_w1`, `Y_z1_w0`, and `Y_z0_w0`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the disallowed manual `target +=` likelihood with vectorized built-in Bernoulli sampling statements over deterministic top-level partitions of the originally scored data. `W_z1` is `W[n]` for rows with `Z[n] == 1`; `Y_z1_w1` is `Y[n]` for rows with `Z[n] == 1 && W[n] == 1`; `Y_z1_w0` is `Y[n]` for rows with `Z[n] == 1 && W[n] == 0`; and `Y_z0_w0` is `Y[n]` for rows with `Z[n] == 0 && W[n] == 0`, all in original row order. The count variables are the corresponding lengths. For the `Z == 0, W == 0` branch, the Bernoulli mixture was collapsed using the identity `log_mix(pi_c, bernoulli_lpmf(y | eta_c0), bernoulli_lpmf(y | eta_n)) = bernoulli_lpmf(y | pi_c * eta_c0 + (1 - pi_c) * eta_n)` for binary `y`. Added the explicit density-neutral prior `pi_c ~ uniform(0, 1)` for the already bounded parameter `pi_c`. No new observation values were invented; the generated data are deterministic reshapes of the supplied data.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N_z1;\\n  array[N_z1] int<lower=0, upper=1> W_z1;\\n\\n  int<lower=0> N_z1_w1;\\n  array[N_z1_w1] int<lower=0, upper=1> Y_z1_w1;\\n\\n  int<lower=0> N_z1_w0;\\n  array[N_z1_w0] int<lower=0, upper=1> Y_z1_w0;\\n\\n  int<lower=0> N_z0_w0;\\n  array[N_z0_w0] int<lower=0, upper=1> Y_z0_w0;\\n}\\n\\nparameters {\\n  // Population probability of being a complier\\n  real<lower=0, upper=1> pi_c;\\n\\n  // Probabilities for the binomial outcome distributions\\n  real<lower=0, upper=1> eta_c0;\\n  real<lower=0, upper=1> eta_c1;\\n  real<lower=0, upper=1> eta_n;\\n}\\n\\nmodel {\\n  // Prior for complier probability; density-neutral for the bounded parameter.\\n  pi_c ~ uniform(0, 1);\\n\\n  // Priors for outcome model parameters\\n  eta_c0 ~ beta(2, 2);\\n  eta_c1 ~ beta(2, 2);\\n  eta_n ~ beta(2, 2);\\n\\n  // Likelihood, expressed with SafeStan-compatible built-in distributions.\\n  W_z1 ~ bernoulli(pi_c);\\n  Y_z1_w1 ~ bernoulli(eta_c1);\\n  Y_z1_w0 ~ bernoulli(eta_n);\\n  Y_z0_w0 ~ bernoulli(pi_c * eta_c0 + (1 - pi_c) * eta_n);\\n}\\n\\ngenerated quantities {\\n  // Superpopulation complier average causal effect (CACE)\\n  // in per-1000 units\\n  real CACE = (eta_c1 - eta_c0) * 10^3;\\n}\\n\",\"data_safe_json\":\"{\\\"N_z1\\\":0,\\\"W_z1\\\":[],\\\"N_z1_w1\\\":0,\\\"Y_z1_w1\\\":[],\\\"N_z1_w0\\\":0,\\\"Y_z1_w0\\\":[],\\\"N_z0_w0\\\":2,\\\"Y_z0_w0\\\":[1,0]}\",\"protected_variables\":[\"W_z1\",\"Y_z1_w1\",\"Y_z1_w0\",\"Y_z0_w0\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0aade15aac188c0c0069f164f4d3cc81a29bb657154d73cfab",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3455,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 13899,
+    "output_tokens_details": {
+      "reasoning_tokens": 12948
+    },
+    "total_tokens": 17354
+  },
+  "user": null
+}

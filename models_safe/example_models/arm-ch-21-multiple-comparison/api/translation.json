@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\": 3, \"y\": [3.0, 3.0, 3.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> N;\n  vector[N] y;\n}\nparameters {\n  real mu_theta;\n  real<lower=0, upper=100> sigma_theta;\n  vector[N] theta;\n  real<lower=0, upper=100> sigma_y;\n}\nmodel {\n  mu_theta ~ normal(0, 1);\n  sigma_theta ~ uniform(0, 100);\n  theta ~ normal(100 * mu_theta, sigma_theta);\n  sigma_y ~ uniform(0, 100);\n  y ~ normal(theta, sigma_y);\n}\ngenerated quantities {\n  vector[N] e_theta;\n  \n  e_theta = theta - mu_theta;\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added explicit `uniform(0, 100)` priors for `sigma_theta` and `sigma_y`. These parameters were already finite-bounded as `real<lower=0, upper=100>`, so the added uniform sampling statements make the implicit bounded-support prior explicit, changing the log density only by constants. The prior for `sigma_theta` is placed before `theta` uses it, and the prior for `sigma_y` is placed before `y` uses it. No data changes were required.\n"
+}

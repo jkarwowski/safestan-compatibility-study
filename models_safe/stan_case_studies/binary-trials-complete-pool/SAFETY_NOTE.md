@@ -6,4 +6,4 @@ Protected data: `y`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before its observation statement. Added `phi ~ uniform(0, 1)`, which is density-neutral for the already constrained parameter `phi` and satisfies SafeStan's unique-prior requirement. Replaced the generated-quantities call to `binomial_lpmf` with the algebraically equivalent binomial log-probability formula to avoid direct `_lp` function calls. These changes preserve the posterior/log density for the protected likelihood `y ~ binomial(K, phi)`.
+Changes: added `y_safestan_copy`, a deterministic top-level data copy of `y` with `y_safestan_copy[n] = y[n]` for `n = 1..N`, and used it in `transformed data` so protected `y` is not read before its model-block observation. Added `phi ~ uniform(0, 1)`, which is density-neutral for the existing `real<lower=0, upper=1>` parameter and satisfies SafeStan's unique-prior rule. `y_new` remains unprotected context data used only for generated-quantities predictive evaluation; it is not conditioned on in the model.

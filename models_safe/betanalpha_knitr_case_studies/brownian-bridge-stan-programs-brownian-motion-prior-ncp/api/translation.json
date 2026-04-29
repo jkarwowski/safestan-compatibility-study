@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N\": 3, \"ts\": [1.0, 2.0, 3.0], \"x_left\": 5.478387009757785}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] real ts;\n\n  real x_left;\n}\n\nparameters {\n  array[N - 1] real xs_forward_ncp;\n}\n\ntransformed parameters {\n  array[N] real xs;\n\n  xs[1] = x_left;\n\n  for (n in 2:N) {\n    xs[n]\n      = xs[n - 1] + sqrt(ts[n] - ts[n - 1]) * xs_forward_ncp[n - 1];\n  }\n}\n\nmodel {\n  xs_forward_ncp ~ normal(0, 1);\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The model contains no observed data likelihood; `N`, `ts`, and `x_left` are context inputs only and are not scored by sampling statements.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The only sampling statement is the built-in prior `xs_forward_ncp ~ normal(0, 1)` for the top-level parameter, and there are no protected observations or forbidden manual log-density operations.\n"
+}

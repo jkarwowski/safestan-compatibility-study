@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777430088,
+  "created_at": 1777430065,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0c95becb48bcc73c0069f16e313b18819594bb2b143999aaca",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0c95becb48bcc73c0069f16e31f4ec81958eb315ae123a2e1b",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the looped indexed likelihood `y[n] ~ bernoulli_logit(...)` with a deterministic vector of logits `eta` followed by a single top-level observation statement `y ~ bernoulli_logit(eta)`. This preserves the same Bernoulli-logit likelihood while satisfying SafeStan's requirement that protected data be observed exactly once as a plain top-level identifier and not inside a loop. Also changed `to_vector(w1) ~ normal(0, 1)` to `w1 ~ normal(0, 1)`, which is the same elementwise normal prior density but targets the top-level parameter directly.\\n\\nNo data fields were added or changed; `data_safe.json` is the supplied data.\\n\",\"model_safe_stan\":\"// ForestDB translation: Bayesian Neural Network\\ndata {\\n  int<lower=1> N;\\n  int<lower=1> D;\\n  int<lower=1> H;\\n  matrix[N, D] X;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  matrix[D, H] w1;\\n  vector[H] b1;\\n  vector[H] w2;\\n  real b2;\\n}\\nmodel {\\n  vector[N] eta;\\n\\n  w1 ~ normal(0, 1);\\n  b1 ~ normal(0, 1);\\n  w2 ~ normal(0, 1);\\n  b2 ~ normal(0, 1);\\n\\n  for (n in 1:N) {\\n    row_vector[H] hidden = tanh(X[n] * w1 + b1');\\n    eta[n] = b2 + hidden * w2;\\n  }\\n  y ~ bernoulli_logit(eta);\\n}\\ngenerated quantities {\\n  vector[N] p;\\n  for (n in 1:N) {\\n    row_vector[H] hidden = tanh(X[n] * w1 + b1');\\n    p[n] = inv_logit(b2 + hidden * w2);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"D\\\":2,\\\"H\\\":3,\\\"N\\\":1,\\\"X\\\":[[6.967371397229527,5.396590424084054]],\\\"y\\\":[0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0c95becb48bcc73c0069f16e4563d88195b1d410f52ea5ba0c",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3306,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2111,
+    "output_tokens_details": {
+      "reasoning_tokens": 1542
+    },
+    "total_tokens": 5417
+  },
+  "user": null
+}

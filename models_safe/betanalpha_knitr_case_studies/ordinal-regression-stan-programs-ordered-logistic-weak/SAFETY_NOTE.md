@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the protected observation `y` is scored once with the built-in `ordered_logistic` likelihood, but the parameter `c` has no explicit prior sampling statement. SafeStan requires every top-level parameter to have exactly one built-in prior before it is used in the model block. Adding a proper prior for the ordered cut points would change the posterior/log density, while the original implicit flat prior on the ordered cut points is not a proper finite-bound prior that can be mechanically expressed as a density-neutral SafeStan prior.

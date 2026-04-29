@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424766,
+  "created_at": 1777424756,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0fee40edcdb898250069f15974cd94819fbb6a547ad9c90ba3",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0fee40edcdb898250069f1597575c8819fa9d66b4e71a7785a",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with a plain built-in sampling statement. The context inputs `x`, `x0`, `N`, `N_grid`, and `x_grid` are not protected because they are used only as predictors, sizes, or generated-quantity inputs. Each parameter has exactly one built-in prior before it is used in the likelihood.\\n\",\"model_safe_stan\":\"data {\\n  real x0; // Baseline input\\n\\n  int<lower=1> N; // Number of observations\\n  vector[N] x; // Observed inputs\\n  vector[N] y; // Observed outputs\\n\\n  int<lower=1> N_grid; // Number of grid points\\n  array[N_grid] real x_grid;  // Input grid\\n}\\n\\nparameters {\\n  real alpha; // Intercept\\n  real beta;  // Slope\\n  real<lower=0> sigma; // Measurement Variability\\n}\\n\\nmodel {\\n  alpha ~ normal(0, 3);\\n  beta ~ normal(0, 1);\\n  sigma ~ normal(0, 1);\\n\\n  y ~ normal(alpha + beta * (x - x0), sigma);\\n}\\n\\ngenerated quantities {\\n  array[N] real y_pred;\\n  array[N_grid] real mu_grid;\\n  array[N_grid] real y_pred_grid;\\n\\n  for (n in 1:N)\\n    y_pred[n] = normal_rng(alpha + beta * (x[n] - x0), sigma);\\n\\n  for (n in 1:N_grid) {\\n    mu_grid[n] = alpha + beta * (x_grid[n] - x0);\\n    y_pred_grid[n] = normal_rng(mu_grid[n], sigma);\\n  }\\n}\\n\\n\",\"data_safe_json\":\"{\\\"N\\\":5,\\\"N_grid\\\":5,\\\"x\\\":[6.520203345710167,2.615030260429509,4.804636512172149,6.435080291594295,2.690065034428421],\\\"x0\\\":4.781943946772099,\\\"x_grid\\\":[1.0,2.0,3.0,4.0,5.0],\\\"y\\\":[5.0,3.0,4.0,3.0,2.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0fee40edcdb898250069f1597aaa98819fb3b7cc13492263a9",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3294,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1101,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4395
+  },
+  "user": null
+}

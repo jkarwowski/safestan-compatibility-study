@@ -1,0 +1,33 @@
+{
+  "artifacts_dir": "models_safe/example_models/education-causal-iv-one-sided-stan-cace-with-exclusion/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:55:06+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/education-causal-iv-one-sided-stan-cace-with-exclusion",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "W_z1",
+    "Y_z1_w1",
+    "Y_z1_w0",
+    "Y_z0_w0"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0aade15aac188c0c0069f16464f5f481a2bf38a5baa1617d6d",
+  "safe_dir": "models_safe/example_models/education-causal-iv-one-sided-stan-cace-with-exclusion",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:52:36+00:00",
+  "usage": {
+    "input_tokens": 3455,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 13899,
+    "output_tokens_details": {
+      "reasoning_tokens": 12948
+    },
+    "total_tokens": 17354
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

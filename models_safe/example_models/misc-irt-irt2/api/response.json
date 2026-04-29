@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429315,
+  "created_at": 1777429292,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_047560e37700e14b0069f16b2cb6d481929a60566008ba21bd",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_047560e37700e14b0069f16b2d49d08192b86a9b9e204410fd",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: replaced the per-observation likelihood loop `y[n] ~ bernoulli_logit(...)` with a deterministic local linear-predictor vector `eta` followed by one vectorized built-in sampling statement `y ~ bernoulli_logit(eta)`. This preserves the same Bernoulli-logit likelihood while making the protected observation a top-level plain left-hand side, observed exactly once outside loops. Priors and data are unchanged.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> J;\\n  int<lower=1> K;\\n  int<lower=1> N;\\n  array[N] int<lower=1, upper=J> jj;\\n  array[N] int<lower=1, upper=K> kk;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  real delta;\\n  array[J] real alpha;\\n  array[K] real beta;\\n  array[K] real log_gamma; // log of discrimination of question k\\n}\\nmodel {\\n  vector[N] eta;\\n\\n  alpha ~ normal(0, 1);\\n  beta ~ normal(0, 1);\\n  delta ~ normal(0.75, 1);\\n  log_gamma ~ normal(0, 1);\\n\\n  for (n in 1 : N) {\\n    eta[n] = exp(log_gamma[kk[n]])\\n             * (alpha[jj[n]] - beta[kk[n]] + delta);\\n  }\\n  y ~ bernoulli_logit(eta);\\n}\\n\",\"data_safe_json\":\"{\\\"J\\\":4,\\\"K\\\":3,\\\"N\\\":3,\\\"jj\\\":[2,3,2],\\\"kk\\\":[2,1,2],\\\"y\\\":[0,1,0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_047560e37700e14b0069f16b4100f08192916c5d89a3779ef7",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3096,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2004,
+    "output_tokens_details": {
+      "reasoning_tokens": 1543
+    },
+    "total_tokens": 5100
+  },
+  "user": null
+}

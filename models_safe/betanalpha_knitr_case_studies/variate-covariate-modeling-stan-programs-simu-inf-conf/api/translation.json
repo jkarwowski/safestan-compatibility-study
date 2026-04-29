@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\"N1\": 3, \"N2\": 1}",
+  "model_safe_stan": "functions {\n  real inf_prob(real alpha, real x) {\n    return -expm1(-alpha * x); // 1 - exp(-alpha * x)\n  }\n\n  vector inf_probs(real alpha, vector x) {\n    int N = num_elements(x);\n    vector[N] p;\n    for (n in 1:N) p[n] = inf_prob(alpha, x[n]);\n    return p;\n  }\n}\n\ndata {\n  int<lower=1> N1;\n  int<lower=1> N2;\n}\n\ntransformed data {\n  real alpha1 = 0.45;\n  real alpha2 = 1.1;\n  real zeta = -0.35;\n  real gamma = 0.8;\n}\n\ngenerated quantities {\n  array[N1] real x1;\n  array[N1] int y1;\n\n  array[N2] real x2;\n  array[N2] int y2;\n\n  for (n in 1:N1) {\n    x1[n] = exponential_rng(gamma * alpha1);\n    y1[n] = bernoulli_rng(inf_prob(alpha1, x1[n]));\n  }\n\n  for (n in 1:N2) {\n    x2[n] = exponential_rng(gamma * alpha2);\n    y2[n] = bernoulli_rng(inf_prob(alpha2 + zeta, x2[n]));\n  }\n}\n\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The program does not condition on any observed data with sampling statements; `N1` and `N2` are context inputs used only for sizing generated quantities. There are no parameters requiring priors and no protected observations.\n"
+}

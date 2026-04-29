@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol3-hepatitis-hepatitis/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:52:36+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol3-hepatitis-hepatitis",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "Yvec1"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0c91ba70aaf5f5310069f16450241881918055555da853b7b7",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol3-hepatitis-hepatitis",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:52:16+00:00",
+  "usage": {
+    "input_tokens": 3572,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 2450,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 6022
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

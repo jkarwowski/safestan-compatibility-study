@@ -1,0 +1,10 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":2,\"T\":3,\"V\":3,\"alpha\":[0.20777803527233213,1.2779255102690041],\"beta\":[4.2537798883297375,0.7235939018963284,1.7952082237533538],\"w\":[2,3,3],\"z\":[2,2,2],\"trans\":[[0,0],[0,2]],\"emit\":[[0,0,0],[0,1,2]]}",
+  "model_safe_stan": "data {\n  int<lower=1> K; // num categories\n  int<lower=1> V; // num words\n  int<lower=0> T; // num instances\n  array[T] int<lower=1, upper=V> w; // words\n  array[T] int<lower=1, upper=K> z; // categories\n  array[K, K] int<lower=0> trans; // transition sufficient counts\n  array[K, V] int<lower=0> emit; // emission sufficient counts\n  vector<lower=0>[K] alpha; // transit prior\n  vector<lower=0>[V] beta; // emit prior\n}\nparameters {\n  array[K] simplex[K] theta; // transit probs\n  array[K] simplex[V] phi; // emit probs\n}\nmodel {\n  theta ~ dirichlet(alpha);\n  phi ~ dirichlet(beta);\n\n  trans ~ multinomial(theta);\n  emit ~ multinomial(phi);\n}\n",
+  "protected_variables": [
+    "trans",
+    "emit"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `trans`, `emit`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added top-level protected data variables `trans` and `emit`, computed deterministically from the supplied `z` and `w` exactly as in the original `transformed data` block. Here `trans[k1, k2]` counts transitions from category `k1` to category `k2`, and `emit[k, v]` counts occurrences of word `v` in category `k`. For the supplied data, `trans = [[0, 0], [0, 2]]` and `emit = [[0, 0, 0], [0, 1, 2]]`. Removed the transformed-data construction of these observed sufficient statistics and replaced looped/indexed Dirichlet priors and multinomial likelihoods with vectorized built-in sampling statements on top-level variables, preserving the original product density.\n"
+}

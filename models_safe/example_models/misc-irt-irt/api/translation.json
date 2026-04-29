@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"J\":4,\"K\":1,\"N\":2,\"jj\":[4,1],\"kk\":[1,1],\"y\":[0,0]}",
+  "model_safe_stan": "// IRT 1PL (RASCH) MODEL \n\ndata {\n  int<lower=1> J; // number of students\n  int<lower=1> K; // number of questions\n  int<lower=1> N; // number of observations\n  array[N] int<lower=1, upper=J> jj; // student for observation n\n  array[N] int<lower=1, upper=K> kk; // question for observation n\n  array[N] int<lower=0, upper=1> y; // correctness for observation n\n}\nparameters {\n  real delta; // mean student ability\n  array[J] real alpha; // ability of student j - mean ability\n  array[K] real beta; // difficulty of question k\n}\nmodel {\n  vector[N] eta;\n\n  alpha ~ normal(0, 1); // informative true prior\n  beta ~ normal(0, 1); // informative true prior\n  delta ~ normal(.75, 1); // informative true prior\n\n  for (n in 1 : N) {\n    eta[n] = alpha[jj[n]] - beta[kk[n]] + delta;\n  }\n  y ~ bernoulli_logit(eta);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: rewrote the per-observation likelihood loop `y[n] ~ bernoulli_logit(...)` into a single top-level protected observation statement `y ~ bernoulli_logit(eta)`. The local model-block vector `eta` is computed deterministically from already-prior-sampled parameters and context data (`jj`, `kk`, `N`). This preserves the same Bernoulli-logit likelihood while satisfying SafeStan's requirement that protected data appear exactly once on the left side of a plain sampling statement outside loops. No data fields were added or changed.\n"
+}

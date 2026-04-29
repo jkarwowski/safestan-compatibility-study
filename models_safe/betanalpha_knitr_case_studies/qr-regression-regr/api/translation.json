@@ -1,0 +1,9 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{\n  \"M\": 1,\n  \"N\": 4,\n  \"X\": [\n    [\n      6.130437168981628,\n      4.410298578705823,\n      6.704785224811964,\n      3.472719530570954\n    ]\n  ],\n  \"y\": [\n    4.0,\n    4.0,\n    3.0,\n    4.0\n  ]\n}",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  int<lower=1> M;\n  matrix[M, N] X;\n  vector[N] y;\n}\n\nparameters {\n  vector[M] beta;\n  real alpha;\n  real<lower=0> sigma;\n}\n\nmodel {\n  beta ~ normal(0, 10);\n  alpha ~ normal(0, 10);\n  sigma ~ cauchy(0, 10);\n\n  y ~ normal(X' * beta + alpha, sigma);\n}\n\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement. The context inputs `N`, `M`, and `X` are not scored as observations. All parameters have exactly one built-in prior sampling statement before being used in the likelihood.\n"
+}

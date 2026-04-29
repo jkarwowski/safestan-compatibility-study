@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426190,
+  "created_at": 1777426131,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0a9c3dbdd990c87c0069f15ed32d1c81a2a57cf0f8913e1f31",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0a9c3dbdd990c87c0069f15ed3c1a081a29b9ad6abbea3cd5d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: the capture-history data `y` is the observed/modelled interface in the original Stan program.\\n\\nGenerated files: none.\\n\\nReason: the original CJS likelihood cannot be represented in SafeStan by a minor same-density rewrite. The protected observation `y` is read in `transformed data` to compute `first` and `last` before it is observed, and the model then scores indexed elements `y[i, t]` inside data-dependent loops and conditionals. The likelihood also includes literal observed constants such as `1 ~ bernoulli(...)`, which are not top-level protected data variables. Making this SafeStan-compatible would require replacing the custom marginalized capture-recapture likelihood with derived event arrays, indices, and constant observations, which is a substantive rewrite rather than a deterministic copy/reshape of the protected interface. The missing explicit uniform priors for the bounded parameters would be mechanically fixable, but the likelihood structure is not.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0a9c3dbdd990c87c0069f15f0c701c81a2b33e38bbb5577cd3",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3859,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 5419,
+    "output_tokens_details": {
+      "reasoning_tokens": 5174
+    },
+    "total_tokens": 9278
+  },
+  "user": null
+}

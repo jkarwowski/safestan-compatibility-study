@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-pest-control-stan-programs-multiple-nb-regression/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T02:10:09+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-pest-control-stan-programs-multiple-nb-regression",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "complaints"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_03ab8f5ae8ee85560069f1686fdf58819d9b1bb38103574879",
+  "safe_dir": "models_safe/example_models/knitr-pest-control-stan-programs-multiple-nb-regression",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:09:51+00:00",
+  "usage": {
+    "input_tokens": 3285,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1621,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4906
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

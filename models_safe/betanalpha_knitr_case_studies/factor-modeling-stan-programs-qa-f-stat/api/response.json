@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423852,
+  "created_at": 1777423832,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_03d251a1ec0c1a2e0069f155d87cd88195ba8af4a0d6f4f144",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_03d251a1ec0c1a2e0069f155d9254881959a694831901def47",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: none.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The program contains no `model` likelihood statements, no parameters requiring priors, and no forbidden direct log-density manipulation. All top-level data variables are used only as context inputs for deterministic generated-quantities calculations, so no protected interface variable is identified.\\n\",\"model_safe_stan\":\"functions {\\n  real F_stat(vector y, int N, array[] int indiv_idxs, int N_indiv) {\\n    real global_mean = 0;\\n    vector[N_indiv] total_counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] running_counts = rep_vector(0, N_indiv);\\n    vector[N_indiv] means = rep_vector(0, N_indiv);\\n    vector[N_indiv] sum_squares = rep_vector(0, N_indiv);\\n\\n    int N_min_occupunacy = 2; // Minimum occupuancy for included contexts\\n    real N_occupied = 0;      // Number of contexts with at least two counts\\n    real between = 0; // Empirical variance of empirical means in occupied contexts\\n    real within = 0;  // Empirical mean of emperical variances in occupied contexts\\n\\n    for (n in 1:N)\\n      total_counts[indiv_idxs[n]] += 1;\\n\\n    for (n in 1:N) {\\n      int idx = indiv_idxs[n];\\n      real delta;\\n\\n      // Skip (nearly) unoccupied contexts\\n      if (total_counts[idx] < N_min_occupunacy) continue;\\n\\n      delta = y[n] - global_mean;\\n      global_mean += delta / n;\\n\\n      running_counts[idx] += 1;\\n      delta = y[n] - means[idx];\\n      means[idx] += delta / running_counts[idx];\\n      sum_squares[idx] += (y[n] - means[idx]) * delta;\\n    }\\n\\n    for (l in 1:N_indiv) {\\n      // Skip (nearly) unoccupied contexts\\n      if (total_counts[l] < N_min_occupunacy) continue;\\n\\n      N_occupied += 1;\\n      between += total_counts[l] * square(means[l] - global_mean);\\n      within += (sum_squares[l] - within) / N_occupied;\\n    }\\n\\n    // Return zero if not enough minimally occupied contexts\\n    if (N_occupied < 2) return 0;\\n\\n    between = between / (N_occupied - 1);\\n    within /= (N - N_occupied);\\n    return between / within;\\n  }\\n}\\n\\ndata {\\n  int<lower=0> N;                     // Number of observations\\n  int<lower=0> N_samples;             // Number of items sampled at each observation\\n  array[N] int<lower=0, upper=N_samples> y; // Number of passing items at each observation\\n  vector[N] t;                        // Observation times (days)\\n\\n  // Days for conditional retrodictive checks\\n  int<lower=0> N_checks;\\n  int<lower=0> N_check_obs;\\n  array[N_checks, N_check_obs] int<lower=1, upper=N> check_idx;\\n\\n  // Total factor configuration information\\n  int<lower=0> N_factor_configs;\\n  array[N] int<lower=0, upper=N_factor_configs> factor_config_idx;\\n\\n  // Main factor contributions logistics\\n  int<lower=0> N_main_factors;\\n  array[N_main_factors] int<lower=0> N_main_factor_levels;\\n  array[N_main_factors, N_factor_configs] int<lower=1> main_factor_level_idx;\\n\\n  // First-order factor interaction contributions logistics\\n  int<lower=0> N_inter1_factors;\\n  array[N_inter1_factors] int<lower=0> N_inter1_factor_levels;\\n  array[N_inter1_factors, N_factor_configs] int<lower=1> inter1_factor_level_idx;\\n\\n  // Second-order factor interaction contributions logistics\\n  int<lower=0> N_inter2_factors;\\n  array[N_inter2_factors] int<lower=0> N_inter2_factor_levels;\\n  array[N_inter2_factors, N_factor_configs] int<lower=1> inter2_factor_level_idx;\\n}\\n\\ngenerated quantities {\\n  array[N_main_factors, N_checks] real F_main_obs;\\n  array[N_inter1_factors, N_checks] real F_inter1_obs;\\n  array[N_inter2_factors, N_checks] real F_inter2_obs;\\n\\n  for (c in 1:N_checks) {\\n    array[N_check_obs] int check_to_factor = factor_config_idx[check_idx[c]];\\n\\n    for (f in 1:N_main_factors)\\n      F_main_obs[f, c] = F_stat(to_vector(y[check_idx[c]]), N_check_obs,\\n                                main_factor_level_idx[f][check_to_factor],\\n                                N_main_factor_levels[f]);\\n\\n    for (f in 1:N_inter1_factors)\\n      F_inter1_obs[f, c] = F_stat(to_vector(y[check_idx[c]]), N_check_obs,\\n                                  inter1_factor_level_idx[f][check_to_factor],\\n                                  N_inter1_factor_levels[f]);\\n    for (f in 1:N_inter2_factors)\\n      F_inter2_obs[f, c] = F_stat(to_vector(y[check_idx[c]]), N_check_obs,\\n                                  inter2_factor_level_idx[f][check_to_factor],\\n                                  N_inter2_factor_levels[f]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":4,\\\"N_all_inter1_factor_levels\\\":9,\\\"N_all_inter2_factor_levels\\\":2,\\\"N_all_main_factor_levels\\\":2,\\\"N_check_obs\\\":1,\\\"N_checks\\\":1,\\\"N_factor_configs\\\":1,\\\"N_inter1_factor_levels\\\":[4,3,2],\\\"N_inter1_factors\\\":3,\\\"N_inter2_factor_levels\\\":[1,1],\\\"N_inter2_factors\\\":2,\\\"N_main_factor_levels\\\":[2],\\\"N_main_factors\\\":1,\\\"N_samples\\\":1,\\\"check_idx\\\":[[2]],\\\"factor_config_idx\\\":[0,0,0,0],\\\"inter1_factor_end_idx\\\":[4,7,9],\\\"inter1_factor_level_idx\\\":[[1],[1],[1]],\\\"inter1_factor_start_idx\\\":[1,5,8],\\\"inter2_factor_end_idx\\\":[1,2],\\\"inter2_factor_level_idx\\\":[[1],[1]],\\\"inter2_factor_start_idx\\\":[1,2],\\\"main_factor_end_idx\\\":[2],\\\"main_factor_level_idx\\\":[[1]],\\\"main_factor_start_idx\\\":[1],\\\"packed_inter1_factor_idx\\\":[1,1,1,1,2,2,2,3,3],\\\"packed_inter2_factor_idx\\\":[1,2],\\\"packed_main_factor_idx\\\":[1,1],\\\"t\\\":[1.0,2.0,3.0,4.0],\\\"y\\\":[0,1,0,1]}\",\"protected_variables\":[]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_03d251a1ec0c1a2e0069f155e4d78c81959920b0c755007fa2",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 4468,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2665,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 7133
+  },
+  "user": null
+}

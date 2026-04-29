@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-laplace-wide/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T00:59:40+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-laplace-wide",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0f3b73115a53e7f80069f157f3990c819c868be1a004fdb82f",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/modeling-sparsity-stan-programs-laplace-wide",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:59:31+00:00",
+  "usage": {
+    "input_tokens": 3064,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 852,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3916
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

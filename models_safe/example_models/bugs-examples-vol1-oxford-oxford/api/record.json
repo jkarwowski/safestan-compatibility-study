@@ -1,0 +1,31 @@
+{
+  "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-oxford-oxford/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T01:41:29+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/bugs-examples-vol1-oxford-oxford",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "r0",
+    "r1"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_03704bb620cf2d890069f161ba547c81a0ab3ed6f6eed3d02f",
+  "safe_dir": "models_safe/example_models/bugs-examples-vol1-oxford-oxford",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:41:14+00:00",
+  "usage": {
+    "input_tokens": 3265,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1615,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4880
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

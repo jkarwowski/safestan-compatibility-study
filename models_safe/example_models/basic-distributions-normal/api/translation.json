@@ -1,0 +1,7 @@
+{
+  "compatibility": "as-is",
+  "data_safe_json": "{}",
+  "model_safe_stan": "parameters {\n  real y;\n}\nmodel {\n  y ~ normal(0, 1);\n}\n",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: none. The model has no top-level data variables and no observed-data likelihood; `y` is a parameter with a built-in normal prior.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required. The sole sampling statement assigns exactly one built-in prior to the top-level parameter `y`, and there are no protected observations to declare.\n"
+}

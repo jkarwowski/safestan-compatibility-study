@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data choice: `y` is the observed interface variable being scored by the likelihood. `z`, `sigma`, `N`, and `J` are context inputs.
+Protected data: `y` is the observed data variable. The model also scores `ry`, which is a transformed-data row-vector copy of `y`; `z`, `sigma`, `N`, and `J` are context/configuration inputs.
 
 Generated files: none.
 
-Reason: the original program cannot be translated to SafeStan without a substantive density change. The protected observation `y` is scored many times, including through indexed left-hand sides such as `y[1]`, and a transformed-data value `ry` deterministically derived from `y` is also scored many times. SafeStan requires each protected top-level data variable to appear exactly once on the left side of a sampling statement as a plain identifier, and protected data cannot be referenced in transformed data before observation. In addition, the unconstrained parameters `beta` and `rbeta` have only implicit improper flat priors; SafeStan requires each parameter to have exactly one built-in prior before use, and adding proper priors would change the posterior.
+Reason: the original program is not representable in SafeStan by a minor mechanical rewrite. The protected observation is scored many times, including through indexed left-hand sides such as `y[1]` and through transformed-data quantities such as `ry` and `ry[1]`, whereas SafeStan requires each protected top-level data variable to be observed exactly once with a plain identifier. In addition, `y` is read in `transformed data` before observation, and the unbounded parameters `beta` and `rbeta` have no built-in prior sampling statement before they are used. Adding proper priors or replacing the many repeated/indexed/transformed likelihood factors with a collection of protected copies would be a substantive density/interface rewrite rather than a minor SafeStan translation.

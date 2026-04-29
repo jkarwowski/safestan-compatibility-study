@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":2,\"x\":[2.6859125624723887,5.95579614622564],\"y\":[2.0,2.0]}",
+  "model_safe_stan": "data {\n  int N;\n  vector[N] x;\n  vector[N] y;\n}\nparameters {\n  real a;\n  real b;\n  real<lower=0> sigma;\n}\nmodel {\n  a ~ normal(0, 10);\n  b ~ normal(0, 10);\n  sigma ~ normal(0, 10);\n  y ~ normal(a * exp(-b * x), sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the model block so that all parameter priors (`a`, `b`, and `sigma`) are stated before the likelihood that uses those parameters. This is a density-preserving mechanical change because Stan log-density contributions are additive. No data changes were required; `x` and `N` remain unprotected context inputs.\n"
+}

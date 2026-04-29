@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/m0-data-m0-model/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:47:45+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/m0-data-m0-model",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0aa4a89bdd3373a40069f17106dc2c8190bf8a363fea4fc71c",
+  "safe_dir": "models_safe/posteriordb/m0-data-m0-model",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:46:30+00:00",
+  "usage": {
+    "input_tokens": 3365,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 6134,
+    "output_tokens_details": {
+      "reasoning_tokens": 5880
+    },
+    "total_tokens": 9499
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

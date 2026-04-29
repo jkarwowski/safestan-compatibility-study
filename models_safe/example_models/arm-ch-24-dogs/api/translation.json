@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"n_dogs\":1,\"n_trials\":3,\"y\":[[1,0,1]],\"y_safestan_obs\":[1,0,1]}",
+  "model_safe_stan": "data {\n  int<lower=0> n_dogs;\n  int<lower=0> n_trials;\n  array[n_dogs, n_trials] int<lower=0, upper=1> y;\n  array[n_dogs * n_trials] int<lower=0, upper=1> y_safestan_obs;\n}\nparameters {\n  vector[3] beta;\n}\ntransformed parameters {\n  matrix[n_dogs, n_trials] n_avoid;\n  matrix[n_dogs, n_trials] n_shock;\n  matrix[n_dogs, n_trials] p;\n  vector[n_dogs * n_trials] p_safestan_obs;\n  \n  for (j in 1 : n_dogs) {\n    n_avoid[j, 1] = 0;\n    n_shock[j, 1] = 0;\n    for (t in 2 : n_trials) {\n      n_avoid[j, t] = n_avoid[j, t - 1] + 1 - y[j, t - 1];\n      n_shock[j, t] = n_shock[j, t - 1] + y[j, t - 1];\n    }\n    for (t in 1 : n_trials) {\n      p[j, t] = beta[1] + beta[2] * n_avoid[j, t] + beta[3] * n_shock[j, t];\n      p_safestan_obs[(j - 1) * n_trials + t] = p[j, t];\n    }\n  }\n}\nmodel {\n  beta ~ normal(0, 100);\n  y_safestan_obs ~ bernoulli_logit(p_safestan_obs);\n}\n",
+  "protected_variables": [
+    "y_safestan_obs"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y_safestan_obs`, a deterministic row-major flattening of the original observed `y` array.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_obs` because the original model scored indexed elements of `y` inside loops, while SafeStan requires each protected variable to be scored exactly once with a plain top-level identifier. The original `y` remains as context data for the lagged history computations in `transformed parameters`, and `y_safestan_obs[(i - 1) * n_trials + t] = y[i, t]`. The likelihood was vectorized as `y_safestan_obs ~ bernoulli_logit(p_safestan_obs)`, where `p_safestan_obs` is the matching row-major flattening of `p`. The prior on `beta` was already SafeStan-compatible.\n"
+}

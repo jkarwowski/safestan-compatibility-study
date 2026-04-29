@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777432179,
+  "created_at": 1777432008,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_07490dca5cccb0370069f175c81470819084ee81f28567cb55",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_07490dca5cccb0370069f175c8b42c81908f3136402b25081e",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `yc` and `yb_safestan_flat`. The protected `yb_safestan_flat` represents the original binary observation array `yb` as a deterministic column-major flattening: `yb_safestan_flat[(k - 1) * N + n] = yb[n, k]` for `n = 1..N` and `k = 1..Kb`, matching `to_vector(z)`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added `yb_safestan_flat` to the data as a deterministic reshape of `yb`; moved the computation of `z` into the `model` block after `yc` has been observed, because `z` depends on protected `yc`; vectorized the `zb` prior into a single top-level parameter sampling statement; and replaced the looped/indexed binary likelihood with one built-in `bernoulli_logit` statement on the protected flat copy. These are mechanical same-density changes for data satisfying the documented deterministic copy relation.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N;\\n  int<lower=0> K;\\n  int<lower=0> Kb;\\n  int<lower=0> Kc;\\n  array[N, Kb] int<lower=0, upper=1> yb;\\n  array[N * Kb] int<lower=0, upper=1> yb_safestan_flat;\\n  array[N] vector[Kc] yc;\\n}\\n\\ntransformed data {\\n  matrix[Kc, Kc] I = diag_matrix(rep_vector(1, Kc));\\n}\\n\\nparameters {\\n  array[N] vector[Kb] zb;\\n  cholesky_factor_corr[K] L_R;  // first continuous, then binary\\n  vector<lower=0>[Kc] sigma;\\n  vector[K] mu;\\n}\\n\\nmodel {\\n  vector[Kc] mu_c;\\n  vector[Kb] mu_b;\\n  matrix[N, Kb] z;\\n  matrix[Kc, Kc] L_inv;\\n\\n  mu ~ normal(0, 10);\\n  L_R ~ lkj_corr_cholesky(2);\\n  sigma ~ cauchy(0, 2.5);\\n  zb ~ normal(0, 1);\\n\\n  mu_c = head(mu, Kc);\\n  mu_b = tail(mu, Kb);\\n\\n  yc ~ multi_normal_cholesky(mu_c, diag_pre_multiply(sigma, L_R[1:Kc, 1:Kc]));\\n\\n  L_inv = mdivide_left_tri_low(diag_pre_multiply(sigma, L_R[1:Kc, 1:Kc]), I);\\n  for (n in 1:N) {\\n    vector[Kc] resid = L_inv * (yc[n] - mu_c);\\n    z[n,] = transpose(mu_b + tail(L_R * append_row(resid, zb[n]), Kb));\\n  }\\n  yb_safestan_flat ~ bernoulli_logit(to_vector(z));\\n}\\n\\ngenerated quantities {\\n  matrix[K, K] R = multiply_lower_tri_self_transpose(L_R);\\n  vector[K] full_sigma = append_row(sigma, rep_vector(1, Kb));\\n  matrix[K, K] Sigma = multiply_lower_tri_self_transpose(diag_pre_multiply(full_sigma, L_R));\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":3,\\\"Kb\\\":4,\\\"Kc\\\":3,\\\"N\\\":1,\\\"yb\\\":[[1,0,1,1]],\\\"yb_safestan_flat\\\":[1,0,1,1],\\\"yc\\\":[[2.2188065350077495,2.717056534365478,3.6919197675475934]]}\",\"protected_variables\":[\"yc\",\"yb_safestan_flat\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_07490dca5cccb0370069f1766e216c81908058ed32cf370e32",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3443,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 15621,
+    "output_tokens_details": {
+      "reasoning_tokens": 14727
+    },
+    "total_tokens": 19064
+  },
+  "user": null
+}

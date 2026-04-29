@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the observation model scores the top-level data variable `y` with a built-in normal likelihood, but the parameter prior structure is not SafeStan-compatible. The vector parameters `beta1`, `beta2_d`, and `beta2_o` are given priors only through indexed component statements such as `beta1[1] ~ ...`, and the declarations allow sizes determined by `M`. Rewriting these to SafeStan top-level parameter priors while preserving the exact density would require either restricting/changing the data support, changing the parameterization, or adding priors to components that are not explicitly prior-scored by the original program. Those are substantive model-density changes rather than a minor mechanical rewrite.

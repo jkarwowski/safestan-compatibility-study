@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/survival-modeling-stan-programs-simu-const-haz-cens-cond2/api",
+  "compatibility": "as-is",
+  "completed_at": "2026-04-29T01:05:45+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/survival-modeling-stan-programs-simu-const-haz-cens-cond2",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_09bc497b698311a60069f1595f4aec8197b3b05a18272ab839",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/survival-modeling-stan-programs-simu-const-haz-cens-cond2",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:05:35+00:00",
+  "usage": {
+    "input_tokens": 3359,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 1131,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4490
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

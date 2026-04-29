@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777430326,
+  "created_at": 1777430254,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0120a338e3a096da0069f16eeeaedc819fafddfe46eac31b2e",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0120a338e3a096da0069f16eef5c00819f9075390420e64e9d",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_safestan_response`, a deterministic tail copy of the modeled observations from original `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added `N_safestan_obs = max(T - K, 0)` and `y_safestan_response = y[(K + 1):T]` when `T > K` (empty otherwise). For the supplied synthetic data this response tail is empty because `K = 4` and `T = 2`. The indexed likelihood inside the loop was rewritten as a single vectorized sampling statement on the top-level protected variable. The AR lag calculations remain deterministic helper computations using the original `y` as context, preserving the original log density for the supplied data relation.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> K;\\n  int<lower=0> T;\\n  array[T] real y;\\n  int<lower=0, upper=T> N_safestan_obs;\\n  array[N_safestan_obs] real y_safestan_response;\\n}\\nparameters {\\n  real alpha;\\n  array[K] real beta;\\n  real<lower=0> sigma;\\n}\\nmodel {\\n  alpha ~ normal(0, 10);\\n  beta ~ normal(0, 10);\\n  sigma ~ cauchy(0, 2.5);\\n  \\n  {\\n    array[N_safestan_obs] real mu;\\n    for (n in 1 : N_safestan_obs) {\\n      int t = K + n;\\n      mu[n] = alpha;\\n      \\n      for (k in 1 : K) {\\n        mu[n] = mu[n] + beta[k] * y[t - k];\\n      }\\n    }\\n    \\n    y_safestan_response ~ normal(mu, sigma);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":4,\\\"T\\\":2,\\\"y\\\":[6.086847152331341,5.554668472136441],\\\"N_safestan_obs\\\":0,\\\"y_safestan_response\\\":[]}\",\"protected_variables\":[\"y_safestan_response\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0120a338e3a096da0069f16f3363c4819fa9545f170e79f34e",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3004,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 6209,
+    "output_tokens_details": {
+      "reasoning_tokens": 5696
+    },
+    "total_tokens": 9213
+  },
+  "user": null
+}

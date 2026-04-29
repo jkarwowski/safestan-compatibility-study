@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":2,\"N\":1,\"y\":[1]}",
+  "model_safe_stan": "// ForestDB translation: Pitman-Yor Process\ndata {\n  int<lower=1> K;\n  int<lower=1> N;\n  array[N] int<lower=0, upper=1> y;\n}\nparameters {\n  simplex[K] cluster_weight;\n  vector<lower=0, upper=1>[K] cluster_prob;\n}\nmodel {\n  real mixed_prob;\n  cluster_weight ~ dirichlet(rep_vector(1.0 / K, K));\n  cluster_prob ~ beta(1, 1);\n  mixed_prob = dot_product(cluster_weight, cluster_prob);\n  y ~ bernoulli(mixed_prob);\n}\ngenerated quantities {\n  int<lower=1, upper=K> cluster = categorical_rng(cluster_weight);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the manual marginalized mixture likelihood implemented with `target += log_sum_exp(...)` by the equivalent built-in Bernoulli observation `y ~ bernoulli(mixed_prob)`, where `mixed_prob = dot_product(cluster_weight, cluster_prob)`. For binary observations, `sum_k cluster_weight[k] * bernoulli_pmf(y[n] | cluster_prob[k])` is exactly `bernoulli_pmf(y[n] | dot_product(cluster_weight, cluster_prob))`, so the posterior/log density is preserved. The parameter priors were already explicit built-in sampling statements and remain before parameter use. `data_safe.json` is unchanged.\n"
+}

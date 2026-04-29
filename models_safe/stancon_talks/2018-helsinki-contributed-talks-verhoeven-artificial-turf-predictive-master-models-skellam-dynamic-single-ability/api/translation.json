@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `goal_difference`.\n\nGenerated files: none.\n\nReason: the likelihood scores indexed observations inside a loop using the user-defined distribution `zero_inflated_skellam`. SafeStan sampling statements for protected data must observe a top-level protected variable exactly once with a plain identifier on the left-hand side and must resolve to a built-in Stan distribution. Preserving this zero-inflated Skellam likelihood would require a substantive rewrite using custom log-density calculations or a new distribution path, which is outside the SafeStan-compatible subset.\n"
+}

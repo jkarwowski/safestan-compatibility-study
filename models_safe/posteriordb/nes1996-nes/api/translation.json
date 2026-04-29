@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `partyid7`.\n\nGenerated files: none.\n\nReason: the observed response `partyid7` is scored by a built-in normal likelihood, but the parameters `beta` and `sigma` have no explicit prior sampling statements. SafeStan requires every parameter to have exactly one built-in prior before it is used. Adding proper priors to the unconstrained `beta` vector or positive `sigma` would change the posterior/log density, and these implicit improper priors cannot be represented as a minor density-preserving rewrite.\n"
+}

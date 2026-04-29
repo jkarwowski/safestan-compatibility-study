@@ -1,0 +1,41 @@
+{
+  "L_factor1_cp": 2,
+  "L_factor1_ncp": 2,
+  "L_factor2_cp": 3,
+  "L_factor2_ncp": 1,
+  "N": 1,
+  "N_factor1_levels": 4,
+  "N_factor2_levels": 4,
+  "N_factor3_levels": 4,
+  "factor1_cp_idx": [
+    2,
+    2
+  ],
+  "factor1_ncp_idx": [
+    2,
+    2
+  ],
+  "factor2_cp_idx": [
+    2,
+    2,
+    2
+  ],
+  "factor2_ncp_idx": [
+    2
+  ],
+  "factor2_to_factor1": [
+    1,
+    4,
+    2,
+    3
+  ],
+  "factor3_to_factor2": [
+    2,
+    4,
+    2,
+    4
+  ],
+  "obs_to_factor3": [
+    1
+  ]
+}

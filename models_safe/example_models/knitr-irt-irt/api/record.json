@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-irt-irt/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:05:02+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-irt-irt",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_safestan_flat"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_08e4c686673a0d310069f16724203c8192aed7b25f3f3c2709",
+  "safe_dir": "models_safe/example_models/knitr-irt-irt",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:04:19+00:00",
+  "usage": {
+    "input_tokens": 3023,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3632,
+    "output_tokens_details": {
+      "reasoning_tokens": 3106
+    },
+    "total_tokens": 6655
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777338103,
-  "created_at": 1777338088,
+  "completed_at": 1777431537,
+  "created_at": 1777431527,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0f16b808c2a382f30069f006e8e4408196ba2c47e32cc4ad68",
+  "id": "resp_0a1a93a5a828da590069f173e7bbac819f8675eba99e97f54e",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0f16b808c2a382f30069f006e9cc988196af02fad773e93dce",
+      "id": "rs_0a1a93a5a828da590069f173e844dc819fb339de70c2c69234",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with a plain built-in sampling statement, `y ~ binomial_logit(K, alpha)`, after all parameters have received their priors. Context data `N` and `K` are used only as size/trial inputs. The extra JSON fields `y_new` and `K_new` are preserved exactly from the original data file and are not declared or used by the Stan program.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N; // items\\n  array[N] int<lower=0> K; // initial trials\\n  array[N] int<lower=0> y; // initial successes\\n}\\nparameters {\\n  real mu; // population mean of success log-odds\\n  real<lower=0> sigma; // population sd of success log-odds\\n  vector[N] alpha; // success log-odds\\n}\\nmodel {\\n  mu ~ normal(-1, 1); // hyperprior\\n  sigma ~ normal(0, 1); // hyperprior\\n  alpha ~ normal(mu, sigma); // prior (hierarchical)\\n  y ~ binomial_logit(K, alpha); // likelihood\\n}\\ngenerated quantities {\\n  vector[N] theta; // chance of success\\n  \\n  for (n in 1 : N) {\\n    theta[n] = inv_logit(alpha[n]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"y_new\\\":[127,127,144,61,114,126,155,29,137,46,142,42,132,73,195,159,129,14],\\\"y\\\":[18,17,16,15,14,14,13,12,11,11,10,10,10,10,10,9,8,7],\\\"K_new\\\":[367,426,521,275,418,466,586,138,510,200,538,186,435,277,591,558,408,70],\\\"K\\\":[45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45],\\\"N\\\":18}\",\"protected_variables\":[\"y\"]}",
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is scored exactly once with the built-in `binomial_logit` distribution using a plain sampling statement. Context data `N` and `K` are not protected. Each parameter (`mu`, `sigma`, and `alpha`) has exactly one built-in prior before later use.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> N; // items\\n  array[N] int<lower=0> K; // initial trials\\n  array[N] int<lower=0> y; // initial successes\\n}\\nparameters {\\n  real mu; // population mean of success log-odds\\n  real<lower=0> sigma; // population sd of success log-odds\\n  vector[N] alpha; // success log-odds\\n}\\nmodel {\\n  mu ~ normal(-1, 1); // hyperprior\\n  sigma ~ normal(0, 1); // hyperprior\\n  alpha ~ normal(mu, sigma); // prior (hierarchical)\\n  y ~ binomial_logit(K, alpha); // likelihood\\n}\\ngenerated quantities {\\n  vector[N] theta; // chance of success\\n  \\n  for (n in 1 : N) {\\n    theta[n] = inv_logit(alpha[n]);\\n  }\\n}\\n\\n\",\"data_safe_json\":\"{\\n  \\\"K\\\": [\\n    2,\\n    2,\\n    1,\\n    1\\n  ],\\n  \\\"N\\\": 4,\\n  \\\"y\\\": [\\n    1,\\n    2,\\n    1,\\n    1\\n  ]\\n}\\n\",\"protected_variables\":[\"y\"]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0f16b808c2a382f30069f006f2aec081969346f070232bbb72",
+      "id": "msg_0a1a93a5a828da590069f173eef8ec819f8fbe3f7f42614570",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -41,14 +41,14 @@
   "parallel_tool_calls": true,
   "presence_penalty": 0.0,
   "previous_response_id": null,
-  "prompt_cache_key": null,
+  "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "reasoning": {
     "effort": "high",
     "summary": null
   },
   "safety_identifier": null,
-  "service_tier": "default",
+  "service_tier": "flex",
   "status": "completed",
   "store": true,
   "temperature": 1.0,
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 3060,
+    "input_tokens": 3035,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1077,
+    "output_tokens": 956,
     "output_tokens_details": {
       "reasoning_tokens": 516
     },
-    "total_tokens": 4137
+    "total_tokens": 3991
   },
   "user": null
 }

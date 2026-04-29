@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the likelihood for `y` is a marginalized finite mixture implemented through `normal_lupdf(...)` values and a manual `target += log_mix(theta, ps)` update. SafeStan forbids arbitrary `target +=` scoring and requires protected observations to be scored exactly once by a built-in sampling statement. There is no minor same-density rewrite to a single built-in sampling statement for this mixture likelihood; introducing latent component indicators would be a substantive model change rather than a mechanical SafeStan translation.

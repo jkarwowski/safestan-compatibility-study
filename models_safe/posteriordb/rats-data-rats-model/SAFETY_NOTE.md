@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the likelihood observes indexed elements `y[n]` inside a loop. That part could only be made SafeStan-shaped by a mechanical vectorization or top-level-copy rewrite. However the model also has parameters `sigma_y`, `sigma_alpha`, and `sigma_beta` with implicit improper flat priors on positive reals. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding proper priors for these scale parameters would change the posterior/log density, and there is no same-density built-in proper prior corresponding to the original improper flat priors. Therefore a SafeStan-compatible translation would require a substantive density change.

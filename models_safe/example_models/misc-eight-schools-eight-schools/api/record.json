@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/misc-eight-schools-eight-schools/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:17:34+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/misc-eight-schools-eight-schools",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0efbec317661d39f0069f16a205f7c8193bcd5e2c36f83074a",
+  "safe_dir": "models_safe/example_models/misc-eight-schools-eight-schools",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:17:04+00:00",
+  "usage": {
+    "input_tokens": 2973,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2282,
+    "output_tokens_details": {
+      "reasoning_tokens": 2070
+    },
+    "total_tokens": 5255
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

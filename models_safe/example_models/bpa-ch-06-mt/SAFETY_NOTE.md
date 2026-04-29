@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y` is the capture-history matrix modelled by the likelihood; `M` and `T` are context sizes.
+
+Generated files: none.
+
+Reason: the likelihood is implemented with manual `target +=` statements and a `log_sum_exp` marginalized latent-inclusion calculation for all-zero capture histories. SafeStan forbids arbitrary target increments, and replacing this marginalized capture-recapture likelihood with built-in sampling statements would require a substantive model rewrite. The protected data are also inspected in `transformed data` to compute row totals before any observation statement, which is not SafeStan-compatible. Adding explicit uniform priors for the bounded parameters would be mechanical, but it would not address the non-SafeStan likelihood representation.

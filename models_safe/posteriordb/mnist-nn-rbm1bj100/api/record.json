@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/mnist-nn-rbm1bj100/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:49:48+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/mnist-nn-rbm1bj100",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0903e5b2975c35480069f1716f4f308193a28a2cd3351207d6",
+  "safe_dir": "models_safe/posteriordb/mnist-nn-rbm1bj100",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:48:15+00:00",
+  "usage": {
+    "input_tokens": 3541,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 8647,
+    "output_tokens_details": {
+      "reasoning_tokens": 7768
+    },
+    "total_tokens": 12188
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777426873,
+  "created_at": 1777426757,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_037344e9069f23920069f16145a71c81949f0cba373c159383",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_037344e9069f23920069f16146b8cc8194bcf7dcc1071a88f1",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `r`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reshaped the two-dimensional count arrays `r` and `n` into one-dimensional arrays in row-major order with index `k = (g - 1) * N + i`. Replaced the nested indexed sampling statements with vectorized top-level sampling statements. Reparameterized the latent beta probabilities as `p_safestan_flat` and reconstructed the original matrix-shaped `p` deterministically in `transformed parameters`. These are mechanical same-density changes preserving the original product of gamma, beta, and binomial terms.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> G;\\n  int<lower=0> N;\\n  array[G * N] int<lower=0> r;\\n  array[G * N] int<lower=0> n;\\n}\\nparameters {\\n  vector<lower=0, upper=1>[G * N] p_safestan_flat;\\n  vector<lower=0.1>[G] a;\\n  vector<lower=0.1>[G] b;\\n}\\ntransformed parameters {\\n  matrix<lower=0, upper=1>[G, N] p;\\n  for (g in 1 : G) {\\n    for (i in 1 : N) {\\n      p[g, i] = p_safestan_flat[(g - 1) * N + i];\\n    }\\n  }\\n}\\nmodel {\\n  vector[G * N] a_safestan_flat;\\n  vector[G * N] b_safestan_flat;\\n  a ~ gamma(1, 0.001);\\n  b ~ gamma(1, 0.001);\\n  for (g in 1 : G) {\\n    for (i in 1 : N) {\\n      a_safestan_flat[(g - 1) * N + i] = a[g];\\n      b_safestan_flat[(g - 1) * N + i] = b[g];\\n    }\\n  }\\n  p_safestan_flat ~ beta(a_safestan_flat, b_safestan_flat);\\n  r ~ binomial(n, p_safestan_flat);\\n}\\ngenerated quantities {\\n  vector<lower=0, upper=1>[G] mu;\\n  vector<lower=0>[G] theta;\\n  for (g in 1 : G) {\\n    mu[g] = a[g] / (a[g] + b[g]);\\n  }\\n  for (g in 1 : G) {\\n    theta[g] = 1 / (a[g] + b[g]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"G\\\":2,\\\"N\\\":2,\\\"n\\\":[2,3,2,1],\\\"r\\\":[1,0,0,1]}\",\"protected_variables\":[\"r\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_037344e9069f23920069f161b627848194968049c2561297c6",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3192,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 11037,
+    "output_tokens_details": {
+      "reasoning_tokens": 10358
+    },
+    "total_tokens": 14229
+  },
+  "user": null
+}

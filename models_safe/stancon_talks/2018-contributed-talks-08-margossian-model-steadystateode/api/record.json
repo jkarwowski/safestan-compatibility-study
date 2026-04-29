@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/stancon_talks/2018-contributed-talks-08-margossian-model-steadystateode/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T03:06:47+00:00",
+  "model": "gpt-5.5",
+  "path": "models/stancon_talks/2018-contributed-talks-08-margossian-model-steadystateode",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_004d8fa0adc1c1e80069f175a9655c8197a53cfe8f8db17fc8",
+  "safe_dir": "models_safe/stancon_talks/2018-contributed-talks-08-margossian-model-steadystateode",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T03:06:17+00:00",
+  "usage": {
+    "input_tokens": 4733,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2858,
+    "output_tokens_details": {
+      "reasoning_tokens": 2631
+    },
+    "total_tokens": 7591
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

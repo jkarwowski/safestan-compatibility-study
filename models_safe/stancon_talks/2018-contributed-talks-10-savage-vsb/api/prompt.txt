@@ -1,0 +1,643 @@
+You are translating a single Stan model into the SafeStan-compatible Stan subset.
+
+## SafeStan
+
+SafeStan is a static (compile-time) restriction layer over Stan. Its purpose is to prevent likelihood hacking on a designated protected data interface, as described in "Likelihood hacking in probabilistic program synthesis".
+
+SafeStan is designed so that generated models report a normalized marginal log-likelihood for the interface being modelled. To do this, it assigns roles to top-level inputs and parameters. Variables named by --sstan-protect are modelled interface variables: each must be scored by a built-in distribution, exactly once, before any other use. They cannot be inspected in an if, used to compute helper values, or referenced in transformed blocks before that scoring statement. After a modelled interface variable has been scored, it is available as an ordinary model-block quantity and may be used in later computations or later likelihood terms. Other top-level data variables are context inputs: they may be used freely as predictors, constants, indices, or configuration, but they may not appear on the left side of a sampling statement. Parameters are latent variables: each parameter must have exactly one built-in prior sampling statement before it is used in the model block. SafeStan also rejects constructs that can directly inflate, edit, or gate the log-likelihood, such as target +=, target(), jacobian +=, reject(), fatal_error(), and _lp functions.
+
+For this corpus run, `data.json` may be small synthetic data generated only to satisfy the Stan data schema. Use it to produce a valid `data_safe_json` and to preserve deterministic reshapes/copies, but infer the protected interface and compatibility label from `model.stan`, not from the particular synthetic values.
+
+### What SafeStan Enforces
+
+No arbitrary scoring:
+
+Forbids target += ...
+Forbids target()
+Forbids jacobian += ...
+Forbids reject() and fatal_error()
+Forbids _lp function definitions and calls
+Protected data single-use:
+
+Every protected variable must be a top-level data variable.
+Every top-level data variable that the model conditions on with a sampling statement is part of the protected interface, unless a same-density rewrite replaces it by a deterministic top-level protected copy/reshape.
+Do not protect ordinary predictors, covariates, sizes, indices, or constants unless the model itself observes/scores them as data.
+Each protected variable must appear exactly once on the left side of ~.
+Left side must be a plain identifier (no indexing/projections/expressions).
+Protected variables cannot be used before they are observed.
+After observation, a protected variable is treated as a normal value.
+Protected variables cannot be referenced in transformed data/parameters.
+Proper distribution path only:
+
+Sampling statements may target only protected top-level data variables or top-level parameter variables.
+Sampling statements must resolve to built-in Stan distributions.
+User-defined distributions are rejected in ~.
+Strict parameter discipline:
+
+Each parameter must appear in exactly one sampling statement.
+Parameters cannot be used in the model block before their sampling statement.
+Uses through transformed parameters are tracked: if phi depends on theta, then using phi before theta ~ ... counts as using theta before its prior.
+Control-flow safety:
+
+Protected observations and parameter-prior sampling statements cannot appear inside loops (for/while/foreach).
+Conditional (if/else) sampling is allowed only when both branches produce identical sampling effects for protected variables and parameters.
+Reserved identifier:
+
+sstan_trusted_loglik__ is reserved in SafeStan mode.
+
+## Goal
+
+The goal is not to make the model "nicer", rather, the goal is to decide whether the original posterior/log density can be represented under SafeStan restrictions with no or only a small rewrite, preserving the model. Return only the structured JSON requested by the caller.
+
+Work method:
+
+1. Identify the observed/protected data variable(s) scored by the likelihood.
+   Use the Stan program structure for this; do not infer modelling intent from
+   the particular values in `data.json`.
+2. Check whether the protected data variables and parameters already satisfy SafeStan's
+   syntactic discipline. If it does, classify the models `as-is`.
+3. If not, look for a same-density mechanical rewrite.
+4. If the rewrite would require changing the statistical model, substantially replacing a marginalized latent-state algorithm, or changing the likelihood (e.g. by adding additional priors to parameters), classify the case as `major` and do not rewrite the model.
+5. Otherwise, classify the case as `minor`, rewrite the model (and potentially, data): e.g. you can vectorize simple likelihoods, add deterministic data copies/reshapes, switch order of computation preserving the semantics, and add explicit priors only for parameters that already have implicit proper priors with exactly matching built-in distributions (for example, `uniform(lower, upper)` for finite bounded real parameters). After that, output complete files. Do not output patches.
+
+Compatibility labels:
+
+- `as-is`: the original Stan program is already SafeStan-compatible. Return `model_safe_stan` equal to the original and `data_safe_json` equal to the supplied data.
+- `minor`: a same-posterior SafeStan version can be produced using only minor, mechanical, changes. Return new, rewritten `model_safe_stan` equivalent to the original and `data_safe_json` equivalent to the supplied data.
+- `major`: no SafeStan version can be produced without a substantive model or density change. In this case return empty strings for `model_safe_stan` and `data_safe_json`.
+
+Requirements:
+
+- Never invent new observations or new data values beyond deterministic
+  copies/reshapes of the supplied `data.json`.
+- `data_safe_json` must be a valid JSON object string. It may equal the supplied
+  `data.json` exactly, or be a deterministic augmentation/reshape of it.
+- If you add fields to `data_safe_json`, document the exact deterministic
+  relation in `safety_note_md`.
+- Preserve the intended posterior/log density for AS-IS and MINOR.
+- `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
+  include: compatibility, protected data choice, generated files, and a concise
+  explanation of any change.
+
+Examples:
+
+Example 1: AS-IS input
+
+```stan
+data {
+  int<lower=0, upper=1> y;
+}
+parameters {
+  real<lower=0, upper=1> theta;
+}
+model {
+  theta ~ beta(1, 1);
+  y ~ bernoulli(theta);
+}
+```
+
+```json
+{"y": 1}
+```
+
+Example 1 output shape
+
+```json
+{
+  "compatibility": "as-is",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the protected observation is top-level data and is observed with a plain sampling statement.\n",
+  "model_safe_stan": "data {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "data_safe_json": "{\"y\": 1}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 2: MINOR input
+
+```stan
+data {
+  int<lower=1> N;
+  array[N] int<lower=0> trials;
+  array[N] int<lower=0> y;
+}
+transformed data {
+  real mean_y = mean(to_vector(y));
+}
+parameters {
+  vector<lower=0, upper=1>[N] theta;
+}
+model {
+  y ~ binomial(trials, theta);
+}
+```
+
+```json
+{"N": 3, "trials": [10, 10, 10], "y": [4, 5, 6]}
+```
+
+Example 2 output shape
+
+```json
+{
+  "compatibility": "minor",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. Added `theta ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]` and satisfies SafeStan's unique-prior requirement.\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ binomial(trials, theta);\n}\n",
+  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 3: MAJOR input
+
+```stan
+data {
+  int<lower=1> N;
+  vector[N] y;
+}
+parameters {
+  real mu1;
+  real mu2;
+}
+model {
+  for (n in 1:N) {
+    target += log_mix(0.5, normal_lpdf(y[n] | mu1, 1), normal_lpdf(y[n] | mu2, 1));
+  }
+}
+```
+
+```json
+{"N": 3, "y": [0.1, 1.2, -0.5]}
+```
+
+Example 3 output shape
+
+```json
+{
+  "compatibility": "major",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\n",
+  "model_safe_stan": "",
+  "data_safe_json": "",
+  "protected_variables": []
+}
+```
+
+Model directory: models/stancon_talks/2018-contributed-talks-10-savage-vsb
+
+Metadata:
+
+```json
+{
+  "description": "Imported Stan program from StanCon talks: 2018/Contributed-Talks/10_savage/vsb.stan.",
+  "difficulty": "unknown",
+  "id": "2018-contributed-talks-10-savage-vsb",
+  "method": "sample",
+  "source_group": "stancon_talks",
+  "source_group_label": "StanCon talks",
+  "source_url": "https://github.com/stan-dev/stancon_talks/blob/affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb/2018/Contributed-Talks/10_savage/vsb.stan",
+  "title": "2018 Contributed Talks 10 Savage Vsb"
+}
+```
+
+Source note:
+
+```text
+# 2018 Contributed Talks 10 Savage Vsb
+
+- Upstream Stan file: [2018/Contributed-Talks/10_savage/vsb.stan](https://github.com/stan-dev/stancon_talks/blob/affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb/2018/Contributed-Talks/10_savage/vsb.stan)
+- Upstream data: none
+- Data status: no_matched_upstream_data
+- Source group: StanCon talks
+- Upstream repository: https://github.com/stan-dev/stancon_talks
+- Upstream commit: `affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb`
+- Import note: Copied into the repository's standard model-directory layout.
+
+## Synthetic Data
+
+- Data status: synthetic/local generated by `generate_synthetic_data_for_missing.py`.
+- Generation method: stanc_debug_generate_data.
+- Parsed data declarations: 9.
+- Data block present: true.
+
+```
+
+Original `model.stan`:
+
+```stan
+// our Stan model, saved as vsb.stan
+// first we define the function that takes data and parameters and returns predicted market shares
+functions {
+  // calculates shares for a given market
+  row_vector shares(real alpha, vector beta, matrix bigX, matrix Sigma, row_vector xi, matrix z) {
+    matrix[rows(z), cols(xi)+1] utilities;
+    matrix[rows(z), cols(xi)+1] probs;
+    row_vector[cols(xi)+1] shares;
+    // 1. Rather than pass in p and x separately, we'll pass in bigX = append_col(p, X)
+    // 2. append alpha_shock, beta_shock
+    {
+      matrix[rows(z), cols(xi)] tmp;
+
+      tmp = rep_matrix((bigX*append_row(alpha, beta) + xi')', rows(z));
+
+      // replace the append_col wing single values (might speed things up)
+      utilities[1:rows(z), 1:cols(xi)] = tmp + z * cholesky_decompose(Sigma)' * bigX';
+      utilities[1:rows(z), cols(xi) + 1] = rep_vector(0.0, rows(z));
+
+      for(i in 1:rows(z)) {
+         probs[i] = softmax(utilities[i]')';
+      }
+
+    }
+
+    for(j in 1:cols(probs)) {
+      shares[j] = mean(col(probs, j));
+    }
+
+    return(shares);
+  }
+}
+// next define our data
+data {
+  int NS; // number of individuals in integration
+  int J; // number of products
+  int T; // number of markets
+  int P; // number of features
+  matrix[NS, P+1] z; // normal(0,1) draws of the shocks
+  matrix[T, J] price; // price for each unit
+  array[T, J+1] int sales; // unit sales across T markets for J+1 products (inc outside good)
+  matrix[T*J, P] X_repeat; // T Xs stacked on top of each other. This format allows characteristics to vary across markets.
+  real nu;
+}
+// next join the product data together into single matrices
+transformed data {
+  matrix[T*J, P+1] bigX;
+  bigX = append_col(to_vector(price'), X_repeat);
+}
+// define parameters
+parameters {
+  real alpha;
+  vector[P] beta;
+  vector[P] gamma;
+  real gamma0;
+  real<lower = 0> price_scale;
+  matrix[T, J] xi;
+  vector<lower = 0>[P+1] scales;
+  corr_matrix[P+1] Omega;
+  real<lower = 0> lambda;
+}
+
+transformed parameters {
+  cov_matrix[P+1] Sigma;
+  Sigma = quad_form_diag(Omega, scales);
+}
+// and the model
+model {
+  // priors
+  alpha ~ normal(0, 1);
+  beta ~ normal(0, 1);
+  gamma0 ~ normal(0, 3);
+  gamma ~ normal(0, 3);
+  price_scale ~ normal(0, 1);
+  lambda ~ normal(0, 1);
+  to_vector(xi) ~ normal(0, 1);
+  scales ~ normal(0, 1);
+  Omega ~ lkj_corr(nu);
+
+  // model of price -- this helps pin down xi
+  for (i in 1:rows(to_vector(price'))) {
+    log(to_vector(price')[i]) ~ normal(gamma0 + X_repeat[i] * gamma + lambda * to_vector(xi')[i], price_scale);
+  }
+
+
+  // model of sales
+  {
+    matrix[T, J+1] pred_shares;
+    for(t in 1:T) {
+      // predicted market shares given data and parameters
+      pred_shares[t] = shares(alpha, beta, bigX[(t*J-J+1):(t*J)], Sigma, xi[t], z);
+      // sales are measured with multinomial measurement error
+      sales[t] ~ multinomial(pred_shares[t]');
+    }
+
+  }
+}
+
+```
+
+Input `data.json` for this run:
+
+```json
+{
+  "J": 5,
+  "NS": 6,
+  "P": 5,
+  "T": 5,
+  "X_repeat": [
+    [
+      2.3955584864253407,
+      6.257012916061563,
+      4.060380418068689,
+      4.38280764862664,
+      5.830029939804343
+    ],
+    [
+      2.64487435291094,
+      5.958561600431544,
+      2.553026609937004,
+      4.070477220857084,
+      6.1219723835441515
+    ],
+    [
+      6.29304446200965,
+      2.400778687686238,
+      2.150571298259019,
+      5.611776427677672,
+      2.9959321139680677
+    ],
+    [
+      4.253673185349937,
+      4.8829724625844655,
+      2.812432452065478,
+      6.563255379021499,
+      4.58231642290424
+    ],
+    [
+      3.912859115573621,
+      3.87190951035772,
+      3.5533539248349744,
+      4.167993636040103,
+      3.8142231697093814
+    ],
+    [
+      2.218108256259487,
+      2.436159131885317,
+      6.351069572063188,
+      4.830052053313514,
+      4.471069012864308
+    ],
+    [
+      5.66770136014973,
+      5.295203296240118,
+      3.6272668492364026,
+      4.07350330608349,
+      3.710371797888691
+    ],
+    [
+      5.706301656447709,
+      2.8593123487524315,
+      2.366217244777385,
+      2.7151809647455645,
+      6.785477878984571
+    ],
+    [
+      4.604635320484618,
+      3.8637584214034777,
+      2.9645477625720407,
+      5.4423280927606825,
+      5.889948130565327
+    ],
+    [
+      2.8840759402319223,
+      4.337984446062849,
+      4.3680524677266135,
+      6.95173413132946,
+      3.6482278976271214
+    ],
+    [
+      2.8546832935810196,
+      3.3966145648822925,
+      4.78217746908416,
+      2.041762398130287,
+      2.8602488557173382
+    ],
+    [
+      2.2156989813807937,
+      6.849849661339507,
+      5.218725259461033,
+      2.996466977238701,
+      2.3876233944695375
+    ],
+    [
+      6.882093732186363,
+      2.2958884719242727,
+      5.128479225667464,
+      6.491770179511637,
+      2.952982250619761
+    ],
+    [
+      4.345761160526567,
+      4.715733218336133,
+      3.2768452520499753,
+      2.0221288813010734,
+      5.674405561681823
+    ],
+    [
+      4.922755008327103,
+      6.73967321057539,
+      3.0965108843029685,
+      4.323250691214058,
+      2.4706747012713572
+    ],
+    [
+      3.5327041637283756,
+      4.183767554003876,
+      3.820069270844134,
+      2.8762783902166267,
+      6.044833693541864
+    ],
+    [
+      2.3240008183479945,
+      6.868622711807735,
+      4.509092587483507,
+      4.963082070055132,
+      2.395953507415394
+    ],
+    [
+      5.725311715344921,
+      6.225374532988165,
+      6.070088346924626,
+      3.7529858822633964,
+      2.724472025824663
+    ],
+    [
+      6.23801181600316,
+      3.4927997422150194,
+      6.696086717467097,
+      4.303530114490045,
+      3.8445375001127133
+    ],
+    [
+      3.938797858040253,
+      6.975340652654881,
+      3.19067392937814,
+      6.520904185814608,
+      6.217067235734796
+    ],
+    [
+      2.1943365565086737,
+      6.068971002497455,
+      5.015750594515278,
+      4.921300883508364,
+      3.9320536164052564
+    ],
+    [
+      3.3790002689741634,
+      2.1984469957998103,
+      2.9414995991294886,
+      6.695127692507226,
+      6.753589207110332
+    ],
+    [
+      3.948516039510509,
+      4.345626759126257,
+      3.077066212957547,
+      4.134052848630257,
+      2.118110408062274
+    ],
+    [
+      4.54669210188268,
+      3.7356946985979524,
+      5.066948643078286,
+      4.250338766961723,
+      4.131185138441175
+    ],
+    [
+      4.980165299808522,
+      4.017880683816202,
+      4.858908987214349,
+      3.1138081738798924,
+      3.3259365652882167
+    ]
+  ],
+  "nu": 3.4570456944450205,
+  "price": [
+    [
+      5.150001605641821,
+      2.2428714206773446,
+      5.152590297982825,
+      2.6620055368497613,
+      2.4150844705531918
+    ],
+    [
+      5.046275501239176,
+      2.876891614656163,
+      4.080763125319912,
+      5.69822668226916,
+      6.85149253833168
+    ],
+    [
+      2.7119598034760717,
+      5.522294850834928,
+      4.970863031168376,
+      3.0773841470965544,
+      3.078306949884671
+    ],
+    [
+      3.8904280329911467,
+      4.0741908544971785,
+      6.8362717719064205,
+      6.789018123604994,
+      4.019769775375416
+    ],
+    [
+      4.842863373180639,
+      6.291778569247435,
+      6.648011799670457,
+      2.9649279698155633,
+      2.6618615437883726
+    ]
+  ],
+  "sales": [
+    [
+      6,
+      2,
+      5,
+      6,
+      4,
+      2
+    ],
+    [
+      6,
+      2,
+      4,
+      6,
+      5,
+      3
+    ],
+    [
+      2,
+      3,
+      6,
+      3,
+      6,
+      5
+    ],
+    [
+      2,
+      3,
+      3,
+      3,
+      2,
+      4
+    ],
+    [
+      3,
+      6,
+      4,
+      5,
+      5,
+      4
+    ]
+  ],
+  "z": [
+    [
+      6.550876170971831,
+      4.036422710385701,
+      3.6342047358540404,
+      4.570586664426097,
+      4.399291349040418,
+      4.091764272612819
+    ],
+    [
+      2.615392064436726,
+      5.682995284297041,
+      5.8152888573045285,
+      4.123201581955966,
+      4.528014532625533,
+      4.723294760648822
+    ],
+    [
+      4.679772232747199,
+      2.962655835820109,
+      3.167099055932376,
+      4.370313994834602,
+      3.8528473252916973,
+      6.10927914216845
+    ],
+    [
+      5.669253913062415,
+      4.748923432539932,
+      6.911223061438629,
+      5.085482658530293,
+      2.1436541112912972,
+      2.9784767736709385
+    ],
+    [
+      3.468078940690943,
+      3.789023320122808,
+      4.171280604373994,
+      5.892468714420167,
+      5.7645822673888825,
+      3.375287608427087
+    ],
+    [
+      2.196101770959619,
+      3.06202948550463,
+      6.514855192072491,
+      4.3678387402786925,
+      4.599761715345066,
+      5.366027058206704
+    ]
+  ]
+}
+
+```

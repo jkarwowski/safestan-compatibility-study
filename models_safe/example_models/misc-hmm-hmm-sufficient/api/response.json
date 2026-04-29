@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429408,
+  "created_at": 1777429240,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0de93cb8b8aed3e60069f16af8d8f88191958a0e43b66d80b8",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0de93cb8b8aed3e60069f16af964dc8191a6863d8ab5913942",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `trans`, `emit`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added top-level protected data variables `trans` and `emit`, computed deterministically from the supplied `z` and `w` exactly as in the original `transformed data` block. Here `trans[k1, k2]` counts transitions from category `k1` to category `k2`, and `emit[k, v]` counts occurrences of word `v` in category `k`. For the supplied data, `trans = [[0, 0], [0, 2]]` and `emit = [[0, 0, 0], [0, 1, 2]]`. Removed the transformed-data construction of these observed sufficient statistics and replaced looped/indexed Dirichlet priors and multinomial likelihoods with vectorized built-in sampling statements on top-level variables, preserving the original product density.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> K; // num categories\\n  int<lower=1> V; // num words\\n  int<lower=0> T; // num instances\\n  array[T] int<lower=1, upper=V> w; // words\\n  array[T] int<lower=1, upper=K> z; // categories\\n  array[K, K] int<lower=0> trans; // transition sufficient counts\\n  array[K, V] int<lower=0> emit; // emission sufficient counts\\n  vector<lower=0>[K] alpha; // transit prior\\n  vector<lower=0>[V] beta; // emit prior\\n}\\nparameters {\\n  array[K] simplex[K] theta; // transit probs\\n  array[K] simplex[V] phi; // emit probs\\n}\\nmodel {\\n  theta ~ dirichlet(alpha);\\n  phi ~ dirichlet(beta);\\n\\n  trans ~ multinomial(theta);\\n  emit ~ multinomial(phi);\\n}\\n\",\"data_safe_json\":\"{\\\"K\\\":2,\\\"T\\\":3,\\\"V\\\":3,\\\"alpha\\\":[0.20777803527233213,1.2779255102690041],\\\"beta\\\":[4.2537798883297375,0.7235939018963284,1.7952082237533538],\\\"w\\\":[2,3,3],\\\"z\\\":[2,2,2],\\\"trans\\\":[[0,0],[0,2]],\\\"emit\\\":[[0,0,0],[0,1,2]]}\",\"protected_variables\":[\"trans\",\"emit\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0de93cb8b8aed3e60069f16b9d93b48191ae128b2337ad5122",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3357,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 13727,
+    "output_tokens_details": {
+      "reasoning_tokens": 13132
+    },
+    "total_tokens": 17084
+  },
+  "user": null
+}

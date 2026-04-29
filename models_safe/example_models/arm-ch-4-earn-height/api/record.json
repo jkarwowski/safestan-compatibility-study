@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/arm-ch-4-earn-height/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:20:59+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/arm-ch-4-earn-height",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_03fd9e4375b01ab10069f15cf258b8819db9694db8c8c3257b",
+  "safe_dir": "models_safe/example_models/arm-ch-4-earn-height",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:20:50+00:00",
+  "usage": {
+    "input_tokens": 3007,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 684,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 3691
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

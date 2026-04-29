@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `y`.
+
+Generated files: none.
+
+Reason: the model observes `y` with a built-in normal sampling statement, but the parameters do not satisfy SafeStan's prior discipline. `alpha` and `beta` have normal priors only after they are used in the likelihood, which could be mechanically reordered, but `mu`, `sigma_a`, `sigma_b`, and `sigma_y` have only Stan's implicit improper priors. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. Adding proper priors for these parameters would change the posterior/log density, so no minor same-density SafeStan translation is available.

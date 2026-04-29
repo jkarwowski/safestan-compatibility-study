@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"K\":1,\"N\":1,\"context_idx\":[1],\"sigma\":2.1300631440796614,\"w\":[0.1323977172320482],\"y\":[1.0]}",
+  "model_safe_stan": "data {\n  int<lower=0> K;                       // Number of contexts\n  int<lower=0> N;                       // Number of observations\n  vector[N] y;                          // Observations\n  array[N] int<lower=1, upper=K> context_idx; // Context assignments\n\n  vector<lower=0, upper=1>[K] w;        // Partial centering parameters\n\n  real<lower=0> sigma;                  // Measurement variability\n}\n\nparameters {\n  vector[K] theta_tilde;\n  vector<lower=0>[K] lambda;\n  real<lower=0> tau;\n}\n\ntransformed parameters {\n  vector[K] theta;\n  for (k in 1:K)\n    theta[k] = pow(lambda[k] * tau, 1 - w[k]) * theta_tilde[k];\n}\n\nmodel {\n  vector[K] theta_tilde_scale;\n\n  lambda ~ cauchy(0, 1);\n  tau ~ normal(0, 0.1);\n\n  for (k in 1:K)\n    theta_tilde_scale[k] = pow(lambda[k] * tau, w[k]);\n  theta_tilde ~ normal(0, theta_tilde_scale);\n\n  // Observational model\n  y ~ normal(theta[context_idx], sigma);\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: reordered the parameter priors so that `lambda` and `tau` are sampled before they are used in the prior scale for `theta_tilde`. Replaced the loop of indexed prior statements `theta_tilde[k] ~ normal(...)` with a single top-level vectorized prior `theta_tilde ~ normal(0, theta_tilde_scale)`, where `theta_tilde_scale[k]` is the same deterministic scale as in the original model. This preserves the same joint density while satisfying SafeStan's requirement that each parameter have exactly one non-loop built-in prior sampling statement with a plain top-level left-hand side.\n\nNo data changes were required.\n"
+}

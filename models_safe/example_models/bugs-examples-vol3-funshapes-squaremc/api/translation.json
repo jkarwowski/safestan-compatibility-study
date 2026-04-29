@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: none; the program has no data block and no observed data likelihood.\n\nGenerated files: none.\n\nReason: the model is a prior-only shape distribution implemented by an explicit `target += log1m(...)` term. SafeStan forbids arbitrary `target +=` scoring and requires each parameter to have exactly one built-in prior sampling statement. The nonstandard density factor depending on `x_raw` cannot be replaced by a minor same-density set of built-in sampling statements; adding uniform priors, especially for `y_raw` with parameter-dependent bounds, would change the density. A SafeStan translation would therefore require a substantive model rewrite.\n"
+}

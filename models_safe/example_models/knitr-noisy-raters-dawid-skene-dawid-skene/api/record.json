@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/knitr-noisy-raters-dawid-skene-dawid-skene/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:09:24+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/knitr-noisy-raters-dawid-skene-dawid-skene",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_047e99d0b39e827d0069f16829dc1c819793ee2776eeadc957",
+  "safe_dir": "models_safe/example_models/knitr-noisy-raters-dawid-skene-dawid-skene",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:08:41+00:00",
+  "usage": {
+    "input_tokens": 3776,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3278,
+    "output_tokens_details": {
+      "reasoning_tokens": 3106
+    },
+    "total_tokens": 7054
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427719,
+  "created_at": 1777427697,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0be0bd2d0d1d1c420069f164f16604819d840aa6d59f5a7b18",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0be0bd2d0d1d1c420069f164f1f6a4819db1ce8ed1a1fa155a",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y_sample`, `y_spec`, `y_sens`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: added explicit `uniform(0, 1)` priors for the bounded parameters `p`, `spec`, and `sens` before their first use in the model block. These priors are density-neutral relative to the original finite `[0, 1]` parameter constraints. The observed/protected variables are each scored exactly once by built-in `binomial` sampling statements. No data changes were made; `n_sample`, `n_spec`, and `n_sens` remain unprotected context counts.\\n\",\"model_safe_stan\":\"/**\\n * meta-analysis over studies of disease infection rate \\n * for variation in sensitivity and specificity\\n * pool data from all studies\\n */\\ndata {\\n  int y_sample;\\n  int n_sample;\\n  int y_spec;\\n  int n_spec;\\n  int y_sens;\\n  int n_sens;\\n}\\nparameters {\\n  real<lower=0, upper=1> p;\\n  real<lower=0, upper=1> spec;\\n  real<lower=0, upper=1> sens;\\n}\\nmodel {\\n  real p_sample;\\n  p ~ uniform(0, 1);\\n  spec ~ uniform(0, 1);\\n  sens ~ uniform(0, 1);\\n  p_sample = p * sens + (1 - p) * (1 - spec);\\n  y_sample ~ binomial(n_sample, p_sample);\\n  y_spec ~ binomial(n_spec, spec);\\n  y_sens ~ binomial(n_sens, sens);\\n}\\n\",\"data_safe_json\":\"{\\\"n_sample\\\":6,\\\"n_sens\\\":4,\\\"n_spec\\\":2,\\\"y_sample\\\":4,\\\"y_sens\\\":3,\\\"y_spec\\\":2}\",\"protected_variables\":[\"y_sample\",\"y_spec\",\"y_sens\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0be0bd2d0d1d1c420069f16504468c819da6386fd06fbfb8fe",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3069,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 2013,
+    "output_tokens_details": {
+      "reasoning_tokens": 1552
+    },
+    "total_tokens": 5082
+  },
+  "user": null
+}

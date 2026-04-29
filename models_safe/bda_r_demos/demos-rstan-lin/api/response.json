@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777423465,
+  "created_at": 1777423449,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_06e5d69d7e0e7d340069f1545911548195b403ecaa576ff909",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_06e5d69d7e0e7d340069f1545a42d88195af683c9d3ea6bfe0",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with the plain built-in sampling statement `y ~ normal(mu, sigma);`. The other data variables are context inputs, and all parameters have built-in prior sampling statements before their use in the likelihood.\\n\",\"model_safe_stan\":\"// Gaussian linear model with adjustable priors\\ndata {\\n  int<lower=0> N; // number of data points\\n  vector[N] x; // covariate / predictor\\n  vector[N] y; // target\\n  real xpred; // new covariate value to make predictions\\n  real pmualpha; // prior mean for alpha\\n  real psalpha; // prior std for alpha\\n  real pmubeta; // prior mean for beta\\n  real psbeta; // prior std for beta\\n  real pssigma; // prior std for half-normal prior for sigma\\n}\\nparameters {\\n  real alpha; // intercept\\n  real beta; // slope\\n  real<lower=0> sigma; // standard deviation is constrained to be positive\\n}\\ntransformed parameters {\\n  // deterministic transformation of parameters and data\\n  vector[N] mu = alpha + beta * x; // linear model\\n}\\nmodel {\\n  alpha ~ normal(pmualpha, psalpha); // prior\\n  beta ~ normal(pmubeta, psbeta); // prior\\n  sigma ~ normal(0, pssigma); // as sigma is constrained to be positive,\\n  // this is same as half-normal prior\\n  y ~ normal(mu, sigma); // observation model / likelihood\\n  // the notation using ~ is syntactic sugar for\\n  //  target += normal_lpdf(alpha | pmualpha, psalpha);\\n  //  target += normal_lpdf(beta | pmubeta, psbeta);\\n  //  target += normal_lpdf(y | mu, sigma);\\n  // target is the log density to be sampled\\n}\\ngenerated quantities {\\n  // sample from the predictive distribution\\n  real ypred = normal_rng(alpha + beta * xpred, sigma);\\n  // compute log predictive densities to be used for LOO-CV\\n  vector[N] log_lik;\\n  for (i in 1 : N) {\\n    log_lik[i] = normal_lpdf(y[i] | mu[i], sigma);\\n  }\\n}\\n\\n\",\"data_safe_json\":\"{\\\"N\\\":2,\\\"pmualpha\\\":3.17936705405011,\\\"pmubeta\\\":6.08911158817957,\\\"psalpha\\\":6.936983595963188,\\\"psbeta\\\":2.5635086291558955,\\\"pssigma\\\":2.9594980151883217,\\\"x\\\":[6.159090290172822,2.425124181132792],\\\"xpred\\\":6.497554066699851,\\\"y\\\":[2.0,2.0]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_06e5d69d7e0e7d340069f154655c048195b77226fc0a1c5f4c",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3355,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1725,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 5080
+  },
+  "user": null
+}

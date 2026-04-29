@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777431952,
+  "created_at": 1777431924,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0d6bf03bdf816cf80069f17573efb48196971fba2545e85f3a",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0d6bf03bdf816cf80069f175749b1881969edf33e19f8f5320",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `z1`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the model block so every top-level parameter prior sampling statement appears before any use of that parameter. The protected observation `z1` was already a top-level data variable scored exactly once by a built-in distribution with a plain sampling statement. No data fields were added or changed; sampling statement order is density-preserving in Stan because log-density contributions are additive.\\n\",\"model_safe_stan\":\"data {\\n\\tint<lower=1> N1;\\n\\tvector[N1] x1;\\n\\tarray[N1] int z1;\\n\\tint<lower=1> N2;\\n\\tvector[N2] x2;\\n\\treal<lower=0> alpha_rho;\\n\\treal<lower=0> beta_rho;\\n}\\ntransformed data {\\n\\tint<lower=1> N;\\n\\tvector[N1+N2] x;\\n\\t// cov_exp_quad wants real valued inputs\\n\\tarray[N1+N2] real rx;\\n\\tarray[N1] real rx1;\\n\\tarray[N2] real rx2;\\n\\n\\tN = N1 + N2;\\n\\tx = append_row(x1, x2);\\n\\n\\trx = to_array_1d(x);\\n\\trx1 = to_array_1d(x1);\\n\\trx2 = to_array_1d(x2);\\n}\\nparameters {\\n\\tvector[N1] y_tilde1;\\n\\treal<lower=0> eta_sq;\\n\\treal<lower=1> inv_rho;\\n\\treal<lower=0> sigma_sq;\\n\\treal mu_0;\\n\\treal mu_b;\\n\\treal<lower=0> NB_phi_inv;\\n}\\nmodel {\\n\\tvector[N1] mu1;\\n\\tvector[N1] y1;\\n\\tmatrix[N1,N1] Sigma1;\\n\\tmatrix[N1,N1] L1;\\n\\n\\t// GP hyperpriors\\n\\teta_sq ~ cauchy(0, 1);\\n\\tsigma_sq ~ cauchy(0, 1);\\n\\tinv_rho ~ gamma(alpha_rho, beta_rho); // Gamma prior with mean of 4 and std of 2\\n\\n\\t// Mean model priors\\n\\tmu_0 ~ normal(0, 2);\\n\\tmu_b ~ normal(0, 0.2);\\n\\n\\t// Negative-binomial prior\\n\\t// For neg_binomial_2, phi^-1 controls the overdispersion.\\n\\t// phi^-1 ~ 0 reduces to the poisson.  phi^-1 = 1 represents variance = mu+mu^2\\n\\tNB_phi_inv ~ cauchy(0, 5);\\n\\n\\t// Generate non-centered parameterization\\n\\ty_tilde1 ~ normal(0, 1);\\n\\n\\t// Calculate mean function\\n\\tmu1 = mu_0 + mu_b * x1;\\n\\n\\t// Calculate covariance matrix using new optimized function\\n\\tSigma1 = gp_exp_quad_cov(rx1, sqrt(eta_sq), sqrt(0.5) * inv_rho);\\n\\tfor (n in 1:N1) Sigma1[n,n] = Sigma1[n,n] + sigma_sq;\\n\\n\\t// Decompose\\n\\tL1 = cholesky_decompose(Sigma1);\\n\\t// We're using a the non-centered parameterization, so rescale y_tilde\\n\\ty1 = mu1 + L1 * y_tilde1;\\n\\n\\t// Likelihood\\n\\tz1 ~ neg_binomial_2_log(y1, inv(NB_phi_inv));\\n}\\n\\ngenerated quantities {\\n\\tvector[N1] y1;\\n\\tvector[N2] y2;\\n\\tvector[N] y;\\n\\tarray[N] int z_rep;\\n\\n\\t{\\n\\t\\t// Don't save these parameters\\n\\t\\tmatrix[N,N] Sigma;\\n\\t\\tmatrix[N,N] L;\\n\\t\\tvector[N] y_tilde;\\n\\n\\t\\tSigma = gp_exp_quad_cov(rx, sqrt(eta_sq), sqrt(0.5) * inv_rho);\\n\\t\\tfor (n in 1:N) Sigma[n,n] = Sigma[n,n] + sigma_sq;\\n\\n\\t\\tfor (n in 1:N1) y_tilde[n] = y_tilde1[n];\\n\\t\\tfor (n in (N1 + 1):N) y_tilde[n] = normal_rng(0,1);\\n\\n\\t\\t// Decompose\\n\\t\\tL = cholesky_decompose(Sigma);\\n\\t\\ty = mu_0 + mu_b * x + L * y_tilde;\\n\\n\\t\\tfor (n in 1:N1) y1[n] = y[n];\\n\\t\\tfor (n in 1:N2) y2[n] = y[N1+n];\\n\\n\\t\\tfor (n in 1:N) z_rep[n] = neg_binomial_2_log_rng(y[n], inv(NB_phi_inv));\\n\\t}\\n}\\n\",\"data_safe_json\":\"{\\\"N1\\\":5,\\\"N2\\\":4,\\\"alpha_rho\\\":4.565643462973362,\\\"beta_rho\\\":1.1057826896389564,\\\"x1\\\":[6.148268693652437,5.914805197987434,2.7094860951433617,4.630789327210853,2.7533698695818773],\\\"x2\\\":[3.561252588343655,2.2116907659610745,5.580291903740152,4.734514742547081],\\\"z1\\\":[3,2,5,3,5]}\",\"protected_variables\":[\"z1\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0d6bf03bdf816cf80069f17589b34c8196badc6dc64d2d3a63",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3932,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 3145,
+    "output_tokens_details": {
+      "reasoning_tokens": 1842
+    },
+    "total_tokens": 7077
+  },
+  "user": null
+}

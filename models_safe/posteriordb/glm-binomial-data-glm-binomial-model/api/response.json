@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777430670,
+  "created_at": 1777430660,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_03d484b1314716180069f17084680081a2a4658d49cfbd933b",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_03d484b1314716180069f17085544081a2aae4e8820c3cfe1f",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `C`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `C` is a top-level data variable and is observed exactly once with the built-in distribution `binomial_logit`. The other data variables (`nyears`, `N`, and `year`) are context inputs used as sizes, binomial totals, and covariates. Each parameter has exactly one built-in prior before the likelihood uses the transformed predictor `logit_p`.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=0> nyears; // Number of Years\\n  array[nyears] int<lower=0> C; // Counts\\n  array[nyears] int<lower=0> N; // Binomial Totals\\n  vector[nyears] year; // Year covariates\\n}\\ntransformed data {\\n  vector[nyears] year_squared;\\n  \\n  year_squared = year .* year;\\n}\\nparameters {\\n  real alpha;\\n  real beta1;\\n  real beta2;\\n}\\ntransformed parameters {\\n  vector[nyears] logit_p;\\n  \\n  // Linear predictor\\n  logit_p = alpha + beta1 * year + beta2 * year_squared;\\n}\\nmodel {\\n  // Priors\\n  alpha ~ normal(0, 100);\\n  beta1 ~ normal(0, 100);\\n  beta2 ~ normal(0, 100);\\n  \\n  // Likelihood\\n  // Distribution for random part\\n  C ~ binomial_logit(N, logit_p);\\n}\\ngenerated quantities {\\n  array[nyears] real<lower=0, upper=1> p;\\n  \\n  for (i in 1 : nyears) {\\n    p[i] = inv_logit(logit_p[i]);\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"C\\\":[3,3,3],\\\"N\\\":[3,4,4],\\\"nyears\\\":3,\\\"year\\\":[2.8631355720847833,4.768964404711445,4.594436416485234]}\",\"protected_variables\":[\"C\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_03d484b1314716180069f1708bcb4481a2865b1707753c6896",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3217,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1038,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4255
+  },
+  "user": null
+}

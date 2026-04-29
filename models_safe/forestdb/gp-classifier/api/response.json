@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777429725,
+  "created_at": 1777429715,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0ed102ab03c653280069f16cd3287c819594c3a9a1b88a38a9",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0ed102ab03c653280069f16cd4a10c8195810cf03728823a07",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"as-is\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: as-is.\\n\\nProtected data: `y`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nNo changes were required. The protected observation `y` is a top-level data variable and is observed exactly once with the built-in distribution `bernoulli_logit` using a plain sampling statement. The other data variables, `N` and `x`, are context inputs and are not scored. All parameters have explicit built-in priors before the likelihood uses the transformed parameter `f`.\\n\",\"model_safe_stan\":\"// ForestDB translation: Gaussian Process Classifier\\ndata {\\n  int<lower=1> N;\\n  vector[N] x;\\n  array[N] int<lower=0, upper=1> y;\\n}\\nparameters {\\n  real<lower=0> length_scale;\\n  real<lower=0> sigma_f;\\n  vector[N] eta;\\n}\\ntransformed parameters {\\n  vector[N] f;\\n  {\\n    matrix[N, N] K;\\n    for (i in 1:N) {\\n      for (j in 1:N) {\\n        K[i, j] = square(sigma_f)\\n                  * exp(-0.5 * square((x[i] - x[j]) / length_scale));\\n      }\\n      K[i, i] += 1e-6;\\n    }\\n    f = cholesky_decompose(K) * eta;\\n  }\\n}\\nmodel {\\n  length_scale ~ lognormal(0, 0.5);\\n  sigma_f ~ lognormal(0, 0.5);\\n  eta ~ normal(0, 1);\\n  y ~ bernoulli_logit(f);\\n}\\ngenerated quantities {\\n  vector[N] p = inv_logit(f);\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\": 5, \\\"x\\\": [2.6117466705473227, 5.89711622951171, 6.195657970123058, 5.833755908302036, 3.072575432080699], \\\"y\\\": [0, 1, 1, 0, 1]}\",\"protected_variables\":[\"y\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0ed102ab03c653280069f16cdad82c81959f2cb3f077e54a2f",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3329,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1030,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4359
+  },
+  "user": null
+}

@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777424994,
+  "created_at": 1777424962,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_081c98e868190e5d0069f15a42149481a0a2a5e7c22797e91f",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_081c98e868190e5d0069f15a42ac1481a0bd09a483afc51ec7",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `y1`, `x1`, and `y2`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: reordered the `model` block so that every parameter receives its original built-in prior before the parameter is used in deterministic computations or likelihood terms. The deterministic variance computations were moved into a local block after the priors. No data variables were added or modified; `data_safe.json` is the supplied data. The protected observations remain top-level data and are each observed exactly once with built-in `normal` sampling statements. `y1` is observed before it is used as a predictor in the likelihood for `x1`.\\n\",\"model_safe_stan\":\"data {\\n  int<lower=1> N;\\n  vector[N] x1; // Complete observation\\n  vector[N] y1; // Complete observation\\n  vector[N] y2; // Incomplete observation\\n\\n  int<lower=1> N_grid; // Number of grid points for quantifying functional behavior\\n  vector[N_grid] y_grid; // Grid points for quantifying functional behavior\\n}\\n\\nparameters {\\n  real mu1;\\n  real<lower=0> tau1;\\n\\n  real mu2;\\n  real<lower=0> tau2;\\n\\n  real<lower=0> sigma;\\n}\\n\\nmodel {\\n  mu1 ~ normal(0, 3);\\n  tau1 ~ normal(0, 1);\\n\\n  mu2 ~ normal(0, 3);\\n  tau2 ~ normal(0, 1);\\n\\n  sigma ~ normal(0, 1);\\n\\n  {\\n    real sigma_sq = square(sigma);\\n\\n    real tau1_sq = square(tau1);\\n    real sum_sq_1 = tau1_sq + sigma_sq;\\n\\n    real tau2_sq = square(tau2);\\n    real sum_sq_2 = tau2_sq + sigma_sq;\\n\\n    y1 ~ normal(mu1, sqrt(sum_sq_1));\\n    x1 ~ normal((y1 * tau1_sq + mu1 * sigma_sq) / sum_sq_1,\\n                sqrt(tau1_sq * sigma_sq / sum_sq_1));\\n\\n    y2 ~ normal(mu2, sqrt(sum_sq_2));\\n  }\\n}\\n\\ngenerated quantities {\\n  // Predict completion of second observation\\n  vector[N_grid] f1_grid;    // Inferred functional behavior along covariate grid\\n  vector[N_grid] f2_grid;    // Inferred functional behavior along covariate grid\\n  array[N_grid] real x2_pred_grid; // Predictive variate behavior along covariate grid\\n\\n  array[N] real x2_pred;\\n\\n  {\\n    real sigma_sq = square(sigma);\\n\\n    real tau1_sq = square(tau1);\\n    real sum_sq_1 = tau1_sq + sigma_sq;\\n\\n    real tau2_sq = square(tau2);\\n    real sum_sq_2 = tau2_sq + sigma_sq;\\n\\n    f1_grid = (y_grid * tau1_sq + mu1 * sigma_sq) / sum_sq_1;\\n    f2_grid = (y_grid * tau2_sq + mu2 * sigma_sq) / sum_sq_2;\\n\\n    x2_pred_grid = normal_rng((y_grid * tau2_sq + mu2 * sigma_sq) / sum_sq_2,\\n                              sqrt(tau2_sq * sigma_sq / sum_sq_2));\\n\\n    x2_pred = normal_rng((y2 * tau2_sq + mu2 * sigma_sq) / sum_sq_2,\\n                         sqrt(tau2_sq * sigma_sq / sum_sq_2));\\n  }\\n}\\n\",\"data_safe_json\":\"{\\\"N\\\":3,\\\"N_grid\\\":2,\\\"x1\\\":[3.497216211620378,6.027719880495813,5.143723072959267],\\\"y1\\\":[4.860835774030196,6.551125634749765,3.3363038315689293],\\\"y2\\\":[6.808256229410933,6.981438737732268,4.989343114481347],\\\"y_grid\\\":[1.0,2.0]}\",\"protected_variables\":[\"y1\",\"x1\",\"y2\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_081c98e868190e5d0069f15a5e691881a08877b84cb7c26464",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3635,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 3571,
+    "output_tokens_details": {
+      "reasoning_tokens": 2588
+    },
+    "total_tokens": 7206
+  },
+  "user": null
+}

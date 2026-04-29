@@ -1,0 +1,9 @@
+# SafeStan Safety Note
+
+Compatibility: major.
+
+Protected data: `winner` and `RT` are the observed variables scored by the custom race likelihood. `holdout` is a context/input variable used to select held-out rows, not an observed likelihood variable.
+
+Generated files: none.
+
+Reason: the likelihood is implemented with `target += race(...)`, where `race` is a user-defined log-density combining a lognormal density for the winning accumulator with lognormal complementary CDF terms for the non-winning accumulators. SafeStan forbids arbitrary `target +=` scoring and user-defined likelihood paths. Replacing this joint custom likelihood for `winner` and `RT` with built-in sampling statements would require a substantive model rewrite and is not a minor same-density translation. The model also uses protected observations in transformed data and in parameter bounds, which would require additional restructuring, but the custom manual likelihood is already sufficient to make this a major incompatibility.

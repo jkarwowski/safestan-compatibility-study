@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/posteriordb/dogs-dogs/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:40:02+00:00",
+  "model": "gpt-5.5",
+  "path": "models/posteriordb/dogs-dogs",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y_safestan_flat"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_05ffb0bb3a6abaff0069f16f26cc1c81a08fe3bca2badf2126",
+  "safe_dir": "models_safe/posteriordb/dogs-dogs",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:38:30+00:00",
+  "usage": {
+    "input_tokens": 3172,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7966,
+    "output_tokens_details": {
+      "reasoning_tokens": 7250
+    },
+    "total_tokens": 11138
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

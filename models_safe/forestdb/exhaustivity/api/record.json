@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/forestdb/exhaustivity/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T02:28:16+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/exhaustivity",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_0618410780c7c1d10069f16cb19964819298ce320e834d2d46",
+  "safe_dir": "models_safe/forestdb/exhaustivity",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:28:01+00:00",
+  "usage": {
+    "input_tokens": 3632,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 1195,
+    "output_tokens_details": {
+      "reasoning_tokens": 1034
+    },
+    "total_tokens": 4827
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

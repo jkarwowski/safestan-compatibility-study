@@ -1,0 +1,7 @@
+{
+  "compatibility": "major",
+  "data_safe_json": "",
+  "model_safe_stan": "",
+  "protected_variables": [],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `grade`.\n\nGenerated files: none.\n\nReason: the training responses `grade` are the only data scored by sampling statements; `item` and `subject` are predictors, and the holdout variables are context for generated predictions. The original model observes `grade[response]` inside a loop rather than observing the top-level protected variable with one plain sampling statement. In addition, several latent hyperparameters (`mu_first_difficulty`, `sigma_ability`, `sigma_first_difficulty`, and `sigma_step`) have only implicit improper flat/constrained priors, while SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors would change the posterior/log density. The `difficulty` prior is also expressed on slices and differences rather than as a single built-in prior for a top-level parameter. An equivalent SafeStan translation would therefore require substantive reparameterization and prior/density changes, not a minor mechanical rewrite.\n"
+}

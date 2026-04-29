@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-hand/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T00:50:48+00:00",
+  "model": "gpt-5.5",
+  "path": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-hand",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_0a84858c86793b380069f155be72588196abafbd398b41c958",
+  "safe_dir": "models_safe/betanalpha_knitr_case_studies/factor-modeling-stan-programs-overlapping-factors-hand",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T00:50:06+00:00",
+  "usage": {
+    "input_tokens": 4176,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 4418,
+    "output_tokens_details": {
+      "reasoning_tokens": 3106
+    },
+    "total_tokens": 8594
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

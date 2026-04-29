@@ -1,0 +1,121 @@
+{
+  "background": false,
+  "billing": {
+    "payer": "developer"
+  },
+  "completed_at": 1777427200,
+  "created_at": 1777427117,
+  "error": null,
+  "frequency_penalty": 0.0,
+  "id": "resp_0fa21cdba680dd5c0069f162ade3cc81a2a80f9526e7cb2897",
+  "incomplete_details": null,
+  "instructions": null,
+  "max_output_tokens": 64000,
+  "max_tool_calls": null,
+  "metadata": {},
+  "model": "gpt-5.5-2026-04-23",
+  "moderation": null,
+  "object": "response",
+  "output": [
+    {
+      "id": "rs_0fa21cdba680dd5c0069f162ae868081a28c965363b9b2adc9",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "content": [
+        {
+          "annotations": [],
+          "logprobs": [],
+          "text": "{\"compatibility\":\"minor\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: minor.\\n\\nProtected data: `xc`, `dc`, `wc`, `di`, and `wi`.\\n\\nGenerated files: `model_safe.stan`, `data_safe.json`.\\n\\nChanges: rewrote the elementwise likelihoods that were inside loops into one top-level sampling statement for each protected data variable. Helper linear-predictor/probability vectors are computed only after the protected variables they depend on have been observed. Moved parameter priors before parameter use and replaced the nested elementwise `phi[i, j] ~ uniform(0, 1)` loop by the equivalent vectorized `phi ~ uniform(0, 1)`. The data JSON is unchanged and no data fields were added.\\n\",\"model_safe_stan\":\"// Cervix: case - control study with errors in covariates \\n//  http://www.openbugs.net/Examples/Cervix.html\\n\\n// from the JAGS readme in classic-bugs/vol2/cervix:\\n\\n//# ``The epidemiology in this example is a little out of date. It is now known\\n//#   that Human Papillomavirus (HPV) is a necessary cause of cervical cancer.\\n//#   Although HSV-2 may have a role as a cofactor in some cases, trying to\\n//#   model its effect on cervical cancer without taking into account HPV is\\n//#   rather pointless.'' \\n\\n//# In this version, the binary missing x's are integrated out. \\n\\ndata {\\n  int<lower=0> Nc;\\n  int<lower=0> Ni;\\n  array[Nc] int xc;\\n  array[Nc] int wc;\\n  array[Nc] int dc;\\n  array[Ni] int wi;\\n  array[Ni] int di;\\n}\\nparameters {\\n  array[2, 2] real<lower=0, upper=1> phi;\\n  real<lower=0, upper=1> q;\\n  real beta0C;\\n  real beta;\\n  // note that xi is discrete parameters with support {0, 1} \\n  // integrated out here \\n  //int xi[Ni]; \\n}\\nmodel {\\n  vector[Nc] eta_dc_c;\\n  vector[Nc] p_wc_c;\\n  vector[Ni] p_di_i;\\n  vector[Ni] p_wi_i;\\n\\n  q ~ uniform(0, 1);\\n  beta0C ~ normal(0, 320);\\n  beta ~ normal(0, 320);\\n  phi ~ uniform(0, 1);\\n\\n  xc ~ bernoulli(q);\\n\\n  for (n in 1 : Nc) {\\n    eta_dc_c[n] = beta0C + beta * xc[n];\\n  }\\n  dc ~ bernoulli_logit(eta_dc_c);\\n\\n  for (n in 1 : Nc) {\\n    p_wc_c[n] = phi[xc[n] + 1, dc[n] + 1];\\n  }\\n  wc ~ bernoulli(p_wc_c);\\n\\n  for (n in 1 : Ni) {\\n    p_di_i[n] = inv_logit(beta0C + beta) * q\\n                + inv_logit(beta0C) * (1 - q);\\n  }\\n  di ~ bernoulli(p_di_i);\\n\\n  for (n in 1 : Ni) {\\n    p_wi_i[n] = phi[1, di[n] + 1] * (1 - q) + phi[2, di[n] + 1] * q;\\n  }\\n  wi ~ bernoulli(p_wi_i);\\n}\\ngenerated quantities {\\n  real gamma1;\\n  real gamma2;\\n  // calculate gamma1 = P(x=1|d=0) and gamma2 = P(x=1|d=1) \\n  gamma1 = 1\\n           / (1 + (1 + exp(beta0C + beta)) / (1 + exp(beta0C)) * (1 - q) / q);\\n  gamma2 = 1\\n           / (1\\n              + (1 + exp(-beta0C - beta)) / (1 + exp(-beta0C)) * (1 - q) / q);\\n}\\n\",\"data_safe_json\":\"{\\\"Nc\\\":2,\\\"Ni\\\":1,\\\"dc\\\":[6,3],\\\"di\\\":[2],\\\"wc\\\":[3,5],\\\"wi\\\":[3],\\\"xc\\\":[3,4]}\",\"protected_variables\":[\"xc\",\"dc\",\"wc\",\"di\",\"wi\"]}",
+          "type": "output_text"
+        }
+      ],
+      "id": "msg_0fa21cdba680dd5c0069f162faa23081a2ae76a0cf797a3a73",
+      "phase": "final_answer",
+      "role": "assistant",
+      "status": "completed",
+      "type": "message"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "presence_penalty": 0.0,
+  "previous_response_id": null,
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "effort": "high",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "flex",
+  "status": "completed",
+  "store": true,
+  "temperature": 1.0,
+  "text": {
+    "format": {
+      "description": null,
+      "name": "safestan_translation",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "enum": [
+              "as-is",
+              "minor",
+              "major"
+            ],
+            "type": "string"
+          },
+          "data_safe_json": {
+            "description": "Valid JSON object text for data_safe.json, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "model_safe_stan": {
+            "description": "Full model_safe.stan content, or empty string for major rewrites.",
+            "type": "string"
+          },
+          "protected_variables": {
+            "description": "Top-level data variables to pass to --sstan-protect.",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "safety_note_md": {
+            "description": "Markdown content for SAFETY_NOTE.md.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "safety_note_md",
+          "model_safe_stan",
+          "data_safe_json",
+          "protected_variables"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "json_schema"
+    },
+    "verbosity": "medium"
+  },
+  "tool_choice": "auto",
+  "tools": [],
+  "top_logprobs": 0,
+  "top_p": 0.98,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 3594,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 7761,
+    "output_tokens_details": {
+      "reasoning_tokens": 6732
+    },
+    "total_tokens": 11355
+  },
+  "user": null
+}

@@ -1,0 +1,30 @@
+{
+  "artifacts_dir": "models_safe/forestdb/hierarchical-flu/api",
+  "compatibility": "minor",
+  "completed_at": "2026-04-29T02:29:08+00:00",
+  "model": "gpt-5.5",
+  "path": "models/forestdb/hierarchical-flu",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [
+    "y"
+  ],
+  "reasoning_effort": "high",
+  "response_id": "resp_064849bdef27b0f70069f16cea49c881a08275bf10500fd350",
+  "safe_dir": "models_safe/forestdb/hierarchical-flu",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:28:58+00:00",
+  "usage": {
+    "input_tokens": 3174,
+    "input_tokens_details": {
+      "cached_tokens": 1792
+    },
+    "output_tokens": 870,
+    "output_tokens_details": {
+      "reasoning_tokens": 516
+    },
+    "total_tokens": 4044
+  },
+  "wrote_data_safe": true,
+  "wrote_model_safe": true
+}

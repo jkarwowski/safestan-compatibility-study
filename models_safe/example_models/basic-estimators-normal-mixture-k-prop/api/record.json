@@ -1,0 +1,28 @@
+{
+  "artifacts_dir": "models_safe/example_models/basic-estimators-normal-mixture-k-prop/api",
+  "compatibility": "major",
+  "completed_at": "2026-04-29T01:25:37+00:00",
+  "model": "gpt-5.5",
+  "path": "models/example_models/basic-estimators-normal-mixture-k-prop",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "protected_variables": [],
+  "reasoning_effort": "high",
+  "response_id": "resp_056f4eeb9adbbb880069f15e0b3f808192abaf57d0771967e0",
+  "safe_dir": "models_safe/example_models/basic-estimators-normal-mixture-k-prop",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T01:25:31+00:00",
+  "usage": {
+    "input_tokens": 3095,
+    "input_tokens_details": {
+      "cached_tokens": 2304
+    },
+    "output_tokens": 501,
+    "output_tokens_details": {
+      "reasoning_tokens": 334
+    },
+    "total_tokens": 3596
+  },
+  "wrote_data_safe": false,
+  "wrote_model_safe": false
+}

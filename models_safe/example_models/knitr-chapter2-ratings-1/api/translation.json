@@ -1,0 +1,9 @@
+{
+  "compatibility": "minor",
+  "data_safe_json": "{\"N\":6,\"movie\":[2,2,2,2,2,1],\"y\":[6.0,5.0,3.0,5.0,5.0,4.0]}",
+  "model_safe_stan": "data {\n  int N;\n  vector[N] y;\n  array[N] int<lower=1, upper=2> movie;\n}\nparameters {\n  vector<lower=0, upper=5>[2] theta;\n  real<lower=0, upper=2.5> sigma_y;\n}\nmodel {\n  theta ~ normal(3, 1);\n  sigma_y ~ uniform(0, 2.5);\n  y ~ normal(theta[movie], sigma_y);\n  /* equivalently:\n    for (j in 1:2){\n      theta[j] ~ normal(3, 1);\n    }\n    for (n in 1:N){\n      y[n] ~ normal(theta[movie[n]], sigma_y);\n    }\n  */\n}\n",
+  "protected_variables": [
+    "y"
+  ],
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added an explicit `sigma_y ~ uniform(0, 2.5)` prior before `sigma_y` is used in the likelihood. This matches the existing finite bounds on `sigma_y` and makes the implicit proper bounded-uniform prior explicit for SafeStan's unique-prior requirement. No data changes were required. `N` is a size and `movie` is an index/predictor, so they are not protected.\n"
+}

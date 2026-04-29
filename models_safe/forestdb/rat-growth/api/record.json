@@ -1,27 +1,29 @@
 {
   "artifacts_dir": "models_safe/forestdb/rat-growth/api",
   "compatibility": "minor",
-  "completed_at": "2026-04-28T00:58:51+00:00",
-  "manual_postprocess": "Replaced invalid matrix normal observation with row-major vector y_vec deterministic flattening.",
+  "completed_at": "2026-04-29T02:36:48+00:00",
   "model": "gpt-5.5",
   "path": "models/forestdb/rat-growth",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
   "protected_variables": [
-    "y_vec"
+    "y"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_0911b5e7482ca9d50069f0061264c0819291a2a277ccbc83b0",
+  "response_id": "resp_0ef3884a3414639f0069f16e89baac819f9bf4dd1511b65cd7",
   "safe_dir": "models_safe/forestdb/rat-growth",
-  "started_at": "2026-04-28T00:57:54+00:00",
+  "service_tier": "flex",
+  "started_at": "2026-04-29T02:35:53+00:00",
   "usage": {
-    "input_tokens": 2828,
+    "input_tokens": 3550,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 3571,
+    "output_tokens": 4740,
     "output_tokens_details": {
-      "reasoning_tokens": 2980
+      "reasoning_tokens": 4142
     },
-    "total_tokens": 6399
+    "total_tokens": 8290
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true
