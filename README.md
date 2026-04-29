@@ -1,13 +1,14 @@
 # Stan/SafeStan Regression Model Collection
 
-This repository is a regression corpus for comparing original Stan models against SafeStan-compatible translations. It contains 131 curated model directories from ForestDB translations, Stan case studies, and Stan tutorial/example models, plus 1,117 imported model directories from external Stan repositories.
+This repository is a regression corpus for comparing original Stan models against SafeStan-compatible translations. It contains 131 curated model directories from ForestDB translations, Stan case studies, and Stan tutorial/example models, plus 1,062 imported model directories from external Stan repositories.
 
 Each model directory has the same shape:
 
 ```text
 models/<category>/<model>/
   model.stan          # original Stan program
-  data.json           # data for the original program
+  data.json           # current run data, usually small synthetic schema data
+  data_original.json  # preserved original concrete data, when replaced
   metadata.json       # source, difficulty, and default run settings
   source.md           # source provenance
   run.py              # thin wrapper around scripts/run_cmdstan_model.py
