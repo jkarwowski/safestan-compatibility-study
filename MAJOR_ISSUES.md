@@ -1,48 +1,75 @@
 # Major SafeStan Blocker Issues
 
-This analysis covers the `461` local artifacts classified as `major` in `RESULTS.md`.
+This analysis covers the `442` deduplicated local artifacts classified as `major` in `RESULTS.md`.
 
-The review was manual and split by source family. The primary blocker table is non-overlapping and sums to `461`. Many models have secondary blockers as well, so the feature tiers should be read as "primary blocker resolved" counts, not as a guarantee that every model in that tier would need only one language change.
+The raw artifact tree has `461` major rows. The difference is the `19` major rows in `stan_case_studies` and `stan_tutorials` that are source-identical copies of `example_models` rows. Those duplicate rows are retained in `MODEL_LIST.md` for inventory completeness but are excluded here. No within-source variants were collapsed.
+
+The review was manual and split by source family. The primary blocker table is non-overlapping and sums to `442`. Many models have secondary blockers as well, so the feature tiers should be read as "primary blocker resolved" counts, not as a guarantee that every model in that tier would need only one language change.
+
+## Direct Answer
+
+Among the `442` deduplicated major cases:
+
+| Allowed change | Additional major models covered | Cumulative additional models |
+|---|---:|---:|
+| Add explicit priors or allow flat/improper/no-prior cases | 164 | 164 |
+| Add a built-in finite mixture operator | 40 | 204 |
+| Add other self-contained observation primitives similar to mixture | 109 | 313 |
+| Add custom prior/process primitives as well | 43 | 356 |
+| Add protected-data interface rewrites | 50 | 406 |
+| Remaining other/out-of-scope cases | 36 | 442 |
+
+So the main numbers are:
+
+- Priors policy alone adds `164` models.
+- Finite mixture support adds `40` models.
+- Priors plus finite mixture adds `204` models.
+- Priors plus finite mixture plus other self-contained observation primitives adds `313` models.
+- If custom prior/process primitives are also considered reasonable SafeStan primitives, the count rises to `356`.
 
 ## Primary Blockers
 
 | Primary blocker | Count | Representative models | What is missing |
 |---|---:|---|---|
-| Missing, improper, or otherwise invalid parameter-prior discipline | 206 | `stan_tutorials/simple-regression`, `posteriordb/wells-data-wells-dae-model`, `example_models/arm-ch-16-radon-2`, `example_models/education-tutorial-twopl-reg-dif`, `betanalpha_knitr_case_studies/bayes-sparse-regression-linear-regression-unif` | A SafeStan policy for explicit flat/improper priors, bounded uniform priors as priors, and mechanical prior-vectorization over matrices/arrays without changing density. |
-| Custom, marginalized, or procedural protected-data likelihood | 183 | `forestdb/adjectives`, `forestdb/finite-gaussian-mixture`, `stan_tutorials/k-component-normal-mixture`, `example_models/bpa-ch-12-nmix0`, `example_models/misc-cluster-lda-corr-lda`, `posteriordb/hmm-gaussian-simulated-hmm-gaussian` | Built-in protected-observation primitives for mixtures, HMMs/forward algorithms, capture-recapture histories, LDA/topic models, N-mixture/occupancy models, and other normalized finite-latent likelihoods. |
-| Protected-data interface/layout mismatch | 36 | `bda_r_demos/demos-rstan-lin-std`, `example_models/arm-ch-4-logearn-height`, `example_models/basic-estimators-normal-multi`, `posteriordb/bones-data-bones-model`, `example_models/bugs-examples-vol1-lsat-lsat` | A disciplined data-interface rewrite mechanism for transformed, expanded, split, ragged, sliced, or row-wise protected observations. |
-| Custom/manual/non-top-level parameter prior or latent-process prior | 32 | `stan_case_studies/bym2-spatial-poisson`, `example_models/knitr-car-iar-poisson-bym2`, `example_models/jupyter-sum-to-zero-stan-bym2-soft`, `betanalpha_knitr_case_studies/brownian-bridge-stan-programs-fit-ou-analytic-all-t`, `posteriordb/traffic-accident-nyc-bym2-offset-only` | Trusted prior families or certification for ICAR/CAR/GMRF, Brownian/OU/state-process priors, determinant/P-spline penalties, and user-defined prior densities. |
-| Conditional `prior_only`-style likelihood gate | 3 | `posteriordb/diamonds-diamonds`, `posteriordb/mcycle-gp-accel-gp`, `posteriordb/mcycle-splines-accel-splines` | A policy for data-independent likelihood gates or a preprocessing rule that selects the observed-likelihood branch before SafeStan checking. |
-| Compiler/regression stress case rather than a model translation | 1 | `example_models/regression-tests-mother` | Treat as a compiler stress test, not as an applied-model compatibility target. |
+| Explicit flat/improper/no-prior parameter discipline | 164 | `example_models/arm-ch-5-wells-dae`, `example_models/knitr-chapter1-vector-regression`, `posteriordb/wells-data-wells-dae-model`, `betanalpha_knitr_case_studies/weakly-informative-shapes-regression-no-prior`, `stancon_talks/2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-estimate-sigma-absolute` | A SafeStan policy for adding explicit priors, accepting intentional flat or improper priors, accepting bounded uniform priors as priors, and mechanically vectorizing priors over arrays/matrices without changing density. |
+| Built-in finite mixture operator | 40 | `example_models/basic-estimators-normal-mixture-k`, `example_models/knitr-chapter2-mixture`, `forestdb/finite-gaussian-mixture`, `posteriordb/normal-2-normal-mixture`, `betanalpha_knitr_case_studies/identifying-mixture-models-gauss-mix` | A trusted finite-mixture observation primitive for normalized `log_mix`/`log_sum_exp` mixtures and closely related finite model-selection/changepoint mixtures. |
+| Other self-contained protected-observation primitive | 109 | `example_models/bpa-ch-07-cjs-c-c`, `example_models/bpa-ch-12-nmix0`, `forestdb/hidden-markov-model`, `posteriordb/hmm-gaussian-simulated-hmm-gaussian`, `example_models/knitr-noisy-raters-dawid-skene-dawid-skene`, `example_models/basic-estimators-normal-censored` | Trusted observation primitives for HMM/forward algorithms, capture-recapture and occupancy/N-mixture likelihoods, LDA/topic and latent-class likelihoods, censoring/truncation/survival, Skellam/hurdle/GPD/race/LBA kernels, ordinal IRT kernels, Kronecker-GP observation likelihoods, and GARCH/time-series conditional likelihoods. |
+| Custom prior/process primitive | 43 | `example_models/knitr-car-iar-poisson-bym2`, `example_models/jupyter-sum-to-zero-stan-bym2-soft`, `posteriordb/traffic-accident-nyc-bym2-offset-only`, `betanalpha_knitr_case_studies/brownian-bridge-stan-programs-brownian-bridge-prior-cp`, `stancon_talks/2018-helsinki-contributed-talks-laitinen-fixed-parameter-hierarchical-noncentered` | Trusted parameter-side primitives or certification for ICAR/CAR/BYM/GMRF priors, Brownian/OU/state-space processes, sum-to-zero and expression priors, IPM/state-process priors, determinant/P-spline penalties, triangular/custom shape priors, and user-defined prior densities. |
+| Protected-data interface/layout rewrite | 50 | `bda_r_demos/demos-rstan-lin-std`, `example_models/applications-covid-19-imperial-model-imperial-model`, `example_models/arm-ch-4-logearn-height`, `example_models/bugs-examples-vol1-lsat-lsat`, `posteriordb/bones-data-bones-model`, `posteriordb/ecdc0501-covid19imperial-v3` | A disciplined data-interface rewrite mechanism for transformed, expanded, split, ragged, sliced, row-wise, missing-data, or otherwise non-top-level protected observations. |
+| Other, not a reasonable primitive, or stress case | 36 | `forestdb/adjectives`, `forestdb/blm`, `forestdb/scalar-implicature`, `forestdb/social-meaning`, `posteriordb/diamonds-diamonds`, `example_models/regression-tests-mother` | These are mostly arbitrary procedural likelihood tables, nested pragmatics/RSA programs, likelihood gates such as `prior_only`, toy manual target densities, or compiler/regression stress programs rather than good SafeStan language-extension targets. |
+| **Total** | **442** |  |  |
 
-## Manual Review Partitions
+## Source-Family Breakdown
 
-| Review partition | Major cases | Main pattern |
-|---|---:|---|
-| `forestdb`, `stan_case_studies`, `stan_tutorials`, `bda_r_demos`, `stancon_talks` | 95 | Mostly custom/marginalized likelihoods, with a smaller block of missing priors and transformed observations. |
-| `betanalpha_knitr_case_studies` | 37 | Mix of missing priors, manual protected likelihoods, latent-process priors, and custom prior densities. |
-| `posteriordb` | 75 | Mostly missing/improper priors, followed by procedural observation likelihoods and a few ragged/conditional interfaces. |
-| `example_models` first major block | 127 | ARM-style missing priors dominate; capture-history and transformed-response cases are also common. |
-| `example_models` middle major block | 39 | Mostly BPA capture-recapture, multistate, N-mixture, IPM, and derived-event likelihoods. |
-| `example_models` later major block | 88 | Missing priors, custom likelihoods, CAR/ICAR-style priors, transformed protected data, and one stress test. |
-| **Total** | **461** |  |
+| Review partition | Major cases | Add priors | Finite mixture | Other observation primitives | Custom prior/process primitives | Data-interface rewrite | Other/out of scope |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `example_models` | 254 | 113 | 13 | 65 | 30 | 32 | 1 |
+| `posteriordb` | 75 | 32 | 5 | 20 | 2 | 13 | 3 |
+| `betanalpha_knitr_case_studies` | 37 | 12 | 13 | 2 | 8 | 0 | 2 |
+| `forestdb`, `bda_r_demos`, `stancon_talks` | 76 | 7 | 9 | 22 | 3 | 5 | 30 |
+| **Total** | **442** | **164** | **40** | **109** | **43** | **50** | **36** |
 
 ## Feature Tiers
 
 These tiers are cumulative over primary blockers and assume the current minor-rewrite methodology remains acceptable: deterministic data augmentation, reshaping, vectorization, and reordering that preserves the normalized density.
 
-| Tier | Added SafeStan capability or policy | Newly resolved primary blockers | Cumulative resolved | Notes |
-|---|---|---:|---:|---|
-| 1 | Parameter-prior policy: explicit flat/improper priors, bounded uniform priors, and matrix/array prior-vectorization | 206 | 206 | This is still the largest blocker. It covers many GLM, regression, IRT, and MLE-style examples whose protected likelihood is otherwise ordinary. |
-| 2 | Observation-side primitives for finite-latent and procedural likelihoods | 183 | 389 | Highest-value language work after priors: finite mixtures, HMMs, LDA/topic models, capture-recapture histories, N-mixture/occupancy, Skellam/hurdle/custom race likelihoods, and similar normalized constructions. |
-| 3 | Protected-data interface rewrite support | 36 | 425 | Covers models that observe transformed, expanded, split, ragged, sliced, row-wise, or otherwise non-top-level data. |
-| 4 | Trusted custom prior/process families | 32 | 457 | Covers ICAR/CAR/GMRF, Brownian bridge, OU/state-space, P-spline/determinant penalties, and other parameter-side processes. |
-| 5 | Conditional likelihood-gate policy | 3 | 460 | Mostly `prior_only` flags. These are easy to identify but require a language or preprocessing decision. |
-| 6 | Exclude or separately classify compiler/regression stress programs | 1 | 461 | `regression-tests-mother` is not a representative applied-model blocker. |
+The current deduplicated compatible count is `721 / 1163`: `315` as-is plus `406` minor. The table below shows how many of the `442` major cases each feature tier would add.
+
+| Tier | Added SafeStan capability or policy | Newly resolved primary blockers | Cumulative resolved major cases | Dedup compatible total | Notes |
+|---|---|---:|---:|---:|---|
+| 1 | Parameter-prior policy: explicit priors, intentional flat/improper priors, bounded uniform priors, and matrix/array prior-vectorization | 164 | 164 | 885 / 1163 | This is still the largest single blocker. It covers many GLM, regression, IRT, and MLE-style examples whose protected likelihood is otherwise ordinary. |
+| 2 | Built-in finite mixture operator | 40 | 204 | 925 / 1163 | This includes normal mixtures, soft clustering, finite changepoint/model-selection mixtures, and other normalized finite latent mixture patterns. |
+| 3 | Other self-contained protected-observation primitives | 109 | 313 | 1034 / 1163 | Highest-value language work after priors plus mixtures. It covers HMMs, capture-recapture, occupancy/N-mixture, LDA/topic models, censoring/truncation/survival, Skellam/hurdle/GPD/race/LBA, ordinal IRT, Kronecker-GP observation likelihoods, and related normalized likelihood kernels. |
+| 4 | Trusted custom prior/process primitives | 43 | 356 | 1077 / 1163 | This is not observation-side like finite mixtures, but it is still relatively self-contained for ICAR/CAR/BYM, Brownian/OU/state-space, sum-to-zero, IPM/state-process, determinant/P-spline, and shape-prior families. |
+| 5 | Protected-data interface rewrite support | 50 | 406 | 1127 / 1163 | Covers models that observe transformed, expanded, split, ragged, sliced, row-wise, missing-data, or otherwise non-top-level data. |
+| 6 | Exclude, separately classify, or manually certify other/stress cases | 36 | 442 | 1163 / 1163 | Mostly ForestDB pragmatics/RSA programs and a few likelihood gates, toy target densities, or compiler stress tests. These should not drive core SafeStan primitive design. |
 
 ## Practical Takeaways
 
-- The full dataset changes the picture from the small study: missing/improper priors remain the largest single category, but custom or marginalized protected likelihoods are nearly as common.
-- Many major cases are not "Stan syntax" problems. They encode normalized likelihoods procedurally with `target +=`, `log_mix`, `log_sum_exp`, forward algorithms, or user-defined density functions. SafeStan would need trusted primitives, not just a looser parser, to accept these safely.
-- Protected-data interface issues are a distinct class. They arise when the observed object is computed from data, represented as ragged slices, split into multiple top-level variables, or scored row-wise/index-wise rather than as a single protected observation.
-- The generated safe translations also need a validation pass. The latest smoke check found `93` generated safe models that still do not run after rechecking, including `61` compile-time errors in generated `model_safe.stan` files. These are translation-quality failures, not `major` compatibility blockers.
+- The deduplicated full dataset leaves `442` major cases, not `461`; the removed rows are exactly the borrowed case-study/tutorial duplicates of `example_models`.
+- Prior policy is the largest single unlock: `164` models.
+- A finite mixture operator is useful but smaller than the broad "custom likelihood" bucket suggested by the earlier coarse analysis: it covers `40` models by itself.
+- Other self-contained observation primitives are the next major payoff: `109` more models. These are good candidates for SafeStan primitives because they are normalized likelihood patterns, not arbitrary target manipulation.
+- Custom prior/process primitives add another `43` models, but they are conceptually separate from finite-mixture-style observation primitives.
+- Data-interface rewrites are a distinct compatibility layer. They add `50` models, but they require protecting the right observed object when the original Stan program scores a transformed, ragged, split, or derived representation.
+- The generated safe translations also need validation work. The latest smoke check found `93` generated safe models that still do not run after rechecking, including `61` compile-time errors in generated `model_safe.stan` files. These are translation-quality failures, not `major` compatibility blockers.
