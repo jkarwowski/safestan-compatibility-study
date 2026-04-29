@@ -1,78 +1,87 @@
 # SafeStan Compatibility Results
 
-Run id: `models-safe-high-20260428T004612Z`
+This report covers the full local corpus: `1193` Stan model directories mirrored under `models_safe/`.
 
-Model/API: `gpt-5.5` with reasoning effort `high`.
+Counts below use the on-disk artifacts in `models_safe/*/*/api/record.json` and the matching `SAFETY_NOTE.md` files. The absolute-path run summary in `runs_metadata/openai_safestan_generation_latest.json` reports `320` as-is, `416` minor, and `457` major, but it disagrees with the local artifact tree on six models. For this repository state, the local artifacts are the authoritative source.
 
-Processed `45` models with `0` API/script failures. Compatibility totals: `10` as-is, `11` minor, `24` major.
+Model/API: `gpt-5.5` with reasoning effort `high`, Flex service tier, prompt cache key `safestan-translation-v1`.
 
-SafeStan outputs and API reproducibility artifacts are mirrored under `models_safe/<category>/<model>/`. Major cases intentionally contain only `SAFETY_NOTE.md` plus API artifacts.
+API usage stored in the local artifacts: `6116846` input tokens, `2317312` cached input tokens, `3316659` output tokens, including `2731134` reasoning output tokens.
 
-Compiler check: all `21` generated as-is/minor `model_safe.stan` files passed current `stanc --sstanc` validation with their recorded protected variables.
+Original Stan smoke test: `runs_metadata/full-dataset-smoke-clean-20260429T0015Z.json` ran all `1193` original models with `1` chain, `20` warmup draws, and `20` sampling draws; result `1193` ok, `0` failed.
 
-Result comparison run: `full-200x1-logprob-20260428T014242Z` compared all `21` generated models with `1` chain, `200` warmup draws, `200` sampling draws, and `3` log-prob/gradient spot checks per model. Results: `20` same, `1` same-density with MCMC-summary mismatch.
+## Compatibility Totals
 
-Data available: `yes` means the original source supplied concrete data in metadata; `no (synthetic/local)` means `data.json` was synthetic or locally supplied.
+Processed `1193` models. Compatibility totals: `320` as-is, `412` minor, `461` major.
 
-Token usage recorded by the API: `288173` input, `75264` cached input, `128277` output, including `100611` reasoning output tokens.
+SafeStan output files were generated for all `732` as-is/minor artifact records: `320` as-is and `412` minor. Of those, `555` have at least one protected variable and `177` are prior-only, simulation, or generated-quantities programs with no protected data interface.
 
-| Category | as-is | minor | major |
-|---|---:|---:|---:|
-| `forestdb` | 5 | 5 | 5 |
-| `stan_case_studies` | 2 | 6 | 7 |
-| `stan_tutorials` | 3 | 0 | 12 |
-| **Total** | **10** | **11** | **24** |
+| Source family | Models | as-is | minor | major | Safe files | No protected data |
+|---|---:|---:|---:|---:|---:|---:|
+| `bda_r_demos` | 14 | 9 | 2 | 3 | 11 | 0 |
+| `betanalpha_knitr_case_studies` | 302 | 183 | 82 | 37 | 265 | 139 |
+| `example_models` | 538 | 82 | 202 | 254 | 284 | 36 |
+| `forestdb` | 101 | 20 | 37 | 44 | 57 | 0 |
+| `posteriordb` | 147 | 14 | 58 | 75 | 72 | 0 |
+| `stan_case_studies` | 15 | 2 | 6 | 7 | 8 | 0 |
+| `stan_tutorials` | 15 | 3 | 0 | 12 | 3 | 0 |
+| `stancon_talks` | 61 | 7 | 25 | 29 | 32 | 2 |
+| **Total** | **1193** | **320** | **412** | **461** | **732** | **177** |
 
-| Model | Category | Compatibility | Data available | Protected variables | Safe files | stanc check | Input | Output | Reasoning | Safety note | Same result? |
-|---|---|---:|---|---|---:|---:|---:|---:|---:|---|---|
-| [Inferences with Binomials](models/forestdb/binomial-inference/) | `forestdb` | as-is | no (synthetic/local) | `y` | yes | pass | 2523 | 795 | 516 | [note](models_safe/forestdb/binomial-inference/SAFETY_NOTE.md) | same |
-| [Burglary Bayesnet](models/forestdb/burglary-bayesnet/) | `forestdb` | minor | no (synthetic/local) | `calls_state` | yes | pass | 3238 | 10233 | 8804 | [note](models_safe/forestdb/burglary-bayesnet/SAFETY_NOTE.md) | same |
-| [Finite Dirichlet-Multinomial Mixture](models/forestdb/dirichlet-multinomial-mixture/) | `forestdb` | major | no (synthetic/local) | - | no | n/a | 2892 | 684 | 516 | [note](models_safe/forestdb/dirichlet-multinomial-mixture/SAFETY_NOTE.md) | n/a |
-| [Finite Gaussian Mixture](models/forestdb/finite-gaussian-mixture/) | `forestdb` | major | no (synthetic/local) | - | no | n/a | 2677 | 495 | 350 | [note](models_safe/forestdb/finite-gaussian-mixture/SAFETY_NOTE.md) | n/a |
-| [Finite Mixture Model](models/forestdb/finite-mixture/) | `forestdb` | minor | no (synthetic/local) | `y` | yes | pass | 2676 | 3019 | 2588 | [note](models_safe/forestdb/finite-mixture/SAFETY_NOTE.md) | same |
-| [1D Gaussian with Gaussian/Gamma Hyperparameters](models/forestdb/gaussian-gamma/) | `forestdb` | as-is | no (synthetic/local) | `y` | yes | pass | 2686 | 913 | 516 | [note](models_safe/forestdb/gaussian-gamma/SAFETY_NOTE.md) | same |
-| [Inferences with Gaussians](models/forestdb/gaussian-inference/) | `forestdb` | as-is | no (synthetic/local) | `y` | yes | pass | 2559 | 533 | 263 | [note](models_safe/forestdb/gaussian-inference/SAFETY_NOTE.md) | same |
-| [Geometric Distribution](models/forestdb/geometric-distribution/) | `forestdb` | minor | no (synthetic/local) | `y_failures` | yes | pass | 2619 | 6575 | 6214 | [note](models_safe/forestdb/geometric-distribution/SAFETY_NOTE.md) | same |
-| [Discrete-Time Hidden Markov Model](models/forestdb/hidden-markov-model/) | `forestdb` | major | no (synthetic/local) | - | no | n/a | 2814 | 689 | 516 | [note](models_safe/forestdb/hidden-markov-model/SAFETY_NOTE.md) | n/a |
-| [Bayesian Linear Regression](models/forestdb/linear-regression/) | `forestdb` | as-is | no (synthetic/local) | `y` | yes | pass | 2795 | 937 | 516 | [note](models_safe/forestdb/linear-regression/SAFETY_NOTE.md) | same |
-| [Bayesian Logistic Regression](models/forestdb/logistic-regression/) | `forestdb` | as-is | no (synthetic/local) | `y` | yes | pass | 2807 | 911 | 516 | [note](models_safe/forestdb/logistic-regression/SAFETY_NOTE.md) | same |
-| [Markov Model](models/forestdb/markov-model/) | `forestdb` | minor | no (synthetic/local) | `y_1`, `y_2`, `y_3`, `y_4`, `y_5`, `y_6`, `y_7`, `y_8`, `y_9`, `y_10`, `y_11`, `y_12`, `y_13`, `y_14` | yes | pass | 2632 | 16463 | 15538 | [note](models_safe/forestdb/markov-model/SAFETY_NOTE.md) | same |
-| [Medical Diagnosis](models/forestdb/medical-diagnosis/) | `forestdb` | major | no (synthetic/local) | - | no | n/a | 2766 | 2759 | 2588 | [note](models_safe/forestdb/medical-diagnosis/SAFETY_NOTE.md) | n/a |
-| [Model Selection](models/forestdb/model-selection/) | `forestdb` | major | no (synthetic/local) | - | no | n/a | 2949 | 703 | 516 | [note](models_safe/forestdb/model-selection/SAFETY_NOTE.md) | n/a |
-| [Rat Growth](models/forestdb/rat-growth/) | `forestdb` | minor | no (synthetic/local) | `y_vec` | yes | pass | 2828 | 3571 | 2980 | [note](models_safe/forestdb/rat-growth/SAFETY_NOTE.md) | same |
-| [Binary Trials Complete Pooling](models/stan_case_studies/binary-trials-complete-pool/) | `stan_case_studies` | minor | yes | `y` | yes | pass | 3651 | 5540 | 4142 | [note](models_safe/stan_case_studies/binary-trials-complete-pool/SAFETY_NOTE.md) | same |
-| [Binary Trials Hierarchical Logit](models/stan_case_studies/binary-trials-hier-logit/) | `stan_case_studies` | minor | yes | `y` | yes | pass | 3874 | 5743 | 4142 | [note](models_safe/stan_case_studies/binary-trials-hier-logit/SAFETY_NOTE.md) | same |
-| [Binary Trials Hierarchical Logit Centered](models/stan_case_studies/binary-trials-hier-logit-centered/) | `stan_case_studies` | as-is | yes | `y` | yes | pass | 3060 | 1077 | 516 | [note](models_safe/stan_case_studies/binary-trials-hier-logit-centered/SAFETY_NOTE.md) | same |
-| [Binary Trials Hierarchical](models/stan_case_studies/binary-trials-hierarchical/) | `stan_case_studies` | minor | yes | `y` | yes | pass | 3817 | 4160 | 2588 | [note](models_safe/stan_case_studies/binary-trials-hierarchical/SAFETY_NOTE.md) | same |
-| [Binary Trials No Pooling](models/stan_case_studies/binary-trials-no-pool/) | `stan_case_studies` | minor | yes | `y` | yes | pass | 3724 | 4053 | 2588 | [note](models_safe/stan_case_studies/binary-trials-no-pool/SAFETY_NOTE.md) | same |
-| [BYM2 Spatial Poisson](models/stan_case_studies/bym2-spatial-poisson/) | `stan_case_studies` | major | yes | - | no | n/a | 5346 | 2779 | 2588 | [note](models_safe/stan_case_studies/bym2-spatial-poisson/SAFETY_NOTE.md) | n/a |
-| [Golf Putting Logistic](models/stan_case_studies/golf-putting-logistic/) | `stan_case_studies` | major | yes | - | no | n/a | 2902 | 1742 | 1552 | [note](models_safe/stan_case_studies/golf-putting-logistic/SAFETY_NOTE.md) | n/a |
-| [One-Compartment Michaelis-Menten ODE](models/stan_case_studies/one-compartment-mm-ode/) | `stan_case_studies` | as-is | yes | `C` | yes | pass | 3426 | 2015 | 1034 | [note](models_safe/stan_case_studies/one-compartment-mm-ode/SAFETY_NOTE.md) | same |
-| [SIR ODE](models/stan_case_studies/sir-ode/) | `stan_case_studies` | minor | yes | `stoi`, `B` | yes | pass | 3383 | 2525 | 1552 | [note](models_safe/stan_case_studies/sir-ode/SAFETY_NOTE.md) | same |
-| [Soil Incubation ODE](models/stan_case_studies/soil-incubation-ode/) | `stan_case_studies` | minor | yes | `eCO2mean` | yes | pass | 4423 | 4492 | 3106 | [note](models_safe/stan_case_studies/soil-incubation-ode/SAFETY_NOTE.md) | same density; MCMC mismatch; log_prob max abs(delta) 3.55e-15, failed posterior-summary columns 2 |
-| [World Cup First Try](models/stan_case_studies/worldcup-first-try/) | `stan_case_studies` | major | yes | - | no | n/a | 4182 | 2263 | 2070 | [note](models_safe/stan_case_studies/worldcup-first-try/SAFETY_NOTE.md) | n/a |
-| [World Cup Fixed](models/stan_case_studies/worldcup-fixed/) | `stan_case_studies` | major | yes | - | no | n/a | 4254 | 3429 | 3202 | [note](models_safe/stan_case_studies/worldcup-fixed/SAFETY_NOTE.md) | n/a |
-| [World Cup No Prior](models/stan_case_studies/worldcup-no-prior/) | `stan_case_studies` | major | yes | - | no | n/a | 4216 | 2265 | 2070 | [note](models_safe/stan_case_studies/worldcup-no-prior/SAFETY_NOTE.md) | n/a |
-| [World Cup No Square Root](models/stan_case_studies/worldcup-no-sqrt/) | `stan_case_studies` | major | yes | - | no | n/a | 4195 | 1762 | 1552 | [note](models_safe/stan_case_studies/worldcup-no-sqrt/SAFETY_NOTE.md) | n/a |
-| [World Cup with Replication](models/stan_case_studies/worldcup-replication/) | `stan_case_studies` | major | yes | - | no | n/a | 4269 | 4874 | 4660 | [note](models_safe/stan_case_studies/worldcup-replication/SAFETY_NOTE.md) | n/a |
-| [Bernoulli Estimator](models/stan_tutorials/bernoulli/) | `stan_tutorials` | as-is | yes | `y` | yes | pass | 2619 | 671 | 383 | [note](models_safe/stan_tutorials/bernoulli/SAFETY_NOTE.md) | same |
-| [Censored Normal](models/stan_tutorials/censored-normal/) | `stan_tutorials` | major | yes | - | no | n/a | 7807 | 4344 | 4142 | [note](models_safe/stan_tutorials/censored-normal/SAFETY_NOTE.md) | n/a |
-| [K-Component Normal Mixture](models/stan_tutorials/k-component-normal-mixture/) | `stan_tutorials` | major | yes | - | no | n/a | 12775 | 692 | 516 | [note](models_safe/stan_tutorials/k-component-normal-mixture/SAFETY_NOTE.md) | n/a |
-| [K-Component Normal Mixture with Simplex Weights](models/stan_tutorials/k-component-normal-mixture-simplex/) | `stan_tutorials` | major | yes | - | no | n/a | 12862 | 1010 | 826 | [note](models_safe/stan_tutorials/k-component-normal-mixture-simplex/SAFETY_NOTE.md) | n/a |
-| [Multivariate Normal](models/stan_tutorials/multivariate-normal/) | `stan_tutorials` | major | yes | - | no | n/a | 5381 | 1796 | 1552 | [note](models_safe/stan_tutorials/multivariate-normal/SAFETY_NOTE.md) | n/a |
-| [Negative Binomial](models/stan_tutorials/negative-binomial/) | `stan_tutorials` | as-is | yes | `y` | yes | pass | 2626 | 632 | 324 | [note](models_safe/stan_tutorials/negative-binomial/SAFETY_NOTE.md) | same |
-| [Negative Binomial 2](models/stan_tutorials/negative-binomial2/) | `stan_tutorials` | major | yes | - | no | n/a | 2644 | 1179 | 1024 | [note](models_safe/stan_tutorials/negative-binomial2/SAFETY_NOTE.md) | n/a |
-| [Normal Location](models/stan_tutorials/normal-location/) | `stan_tutorials` | major | no (synthetic/local) | - | no | n/a | 2532 | 1139 | 954 | [note](models_safe/stan_tutorials/normal-location/SAFETY_NOTE.md) | n/a |
-| [Normal Mixture](models/stan_tutorials/normal-mixture/) | `stan_tutorials` | major | yes | - | no | n/a | 12659 | 685 | 516 | [note](models_safe/stan_tutorials/normal-mixture/SAFETY_NOTE.md) | n/a |
-| [Simple Regression](models/stan_tutorials/simple-regression/) | `stan_tutorials` | major | yes | - | no | n/a | 4575 | 1489 | 1279 | [note](models_safe/stan_tutorials/simple-regression/SAFETY_NOTE.md) | n/a |
-| [Truncated Normal](models/stan_tutorials/truncated-normal/) | `stan_tutorials` | major | yes | - | no | n/a | 7620 | 2783 | 2588 | [note](models_safe/stan_tutorials/truncated-normal/SAFETY_NOTE.md) | n/a |
-| [Two-Parameter Logistic IRT](models/stan_tutorials/two-parameter-logistic-irt/) | `stan_tutorials` | as-is | yes | `y` | yes | pass | 34375 | 10221 | 3106 | [note](models_safe/stan_tutorials/two-parameter-logistic-irt/SAFETY_NOTE.md) | same |
-| [2PL Regression Centered](models/stan_tutorials/two-pl-regression-centered/) | `stan_tutorials` | major | yes | - | no | n/a | 37049 | 1225 | 1034 | [note](models_safe/stan_tutorials/two-pl-regression-centered/SAFETY_NOTE.md) | n/a |
-| [2PL Regression Noncentered](models/stan_tutorials/two-pl-regression-noncentered/) | `stan_tutorials` | major | yes | - | no | n/a | 37086 | 1188 | 1034 | [note](models_safe/stan_tutorials/two-pl-regression-noncentered/SAFETY_NOTE.md) | n/a |
-| [Vector Regression](models/stan_tutorials/vector-regression/) | `stan_tutorials` | major | yes | - | no | n/a | 5380 | 1224 | 1034 | [note](models_safe/stan_tutorials/vector-regression/SAFETY_NOTE.md) | n/a |
+## SafeStan Smoke Check
 
-Notes:
+I ran `cmdsafestan` over the generated safe models with `1` chain, `20` warmup draws, and `20` sampling draws.
 
-- `rat-growth` required a manual postprocess after the API response: the matrix observation was flattened to `y_vec` so the protected observation is a plain top-level identifier accepted by SafeStan.
-- `two-parameter-logistic-irt` required a manual postprocess after the API response: malformed as-is `data_safe.json` was replaced with the original `data.json`.
-- `soil-incubation-ode` has identical checked log density/gradients, but the short MCMC posterior summaries differed for `alpha12` and `alpha21`; this is recorded as `same density; MCMC mismatch`.
+First pass: `runs_metadata/cmdsafestan-safe-smoke-20260429T165345Z.json` tested all `732` generated safe models through the repository runner. Result: `467` ok, `265` failed. Of the failures, `177` were no-protected-data models that cannot be invoked with `stanc --sstanc` because SafeStan requires `--sstan-protect`.
+
+Targeted recheck: `runs_metadata/cmdsafestan-safe-smoke-recheck-20260429T170612Z.json` reran the `265` first-pass failures. No-protected-data models were compiled via `cmdsafestan --mode plain`; protected models were rerun with the current SafeStan wrapper and `init=0`. Recheck result: `172` ok, `93` failed.
+
+Combined result after recheck: `639` of `732` generated safe models run successfully; `93` still fail.
+
+| Final failure reason | Count | Notes |
+|---|---:|---|
+| Compile-time Stan/SafeStan error | 61 | Generated `model_safe.stan` is not accepted by `stanc`, usually because a translation used an unsupported array/matrix sampling form or otherwise produced invalid Stan. |
+| Initialization failure | 21 | Compilation succeeds, but short sampling fails to find a valid initial state even with `init=0`. |
+| Runtime exception after compile | 11 | Compilation succeeds, but transformed data, log-probability evaluation, or sampling fails at runtime. |
+| **Total** | **93** | 88 protected SafeStan runs and 5 no-protected-data plain-mode runs. |
+
+| Source family | Compile | Init | Runtime | Final failures |
+|---|---:|---:|---:|---:|
+| `bda_r_demos` | 0 | 1 | 0 | 1 |
+| `betanalpha_knitr_case_studies` | 3 | 10 | 2 | 15 |
+| `example_models` | 30 | 7 | 6 | 43 |
+| `forestdb` | 10 | 0 | 0 | 10 |
+| `posteriordb` | 8 | 0 | 3 | 11 |
+| `stancon_talks` | 10 | 3 | 0 | 13 |
+| **Total** | **61** | **21** | **11** | **93** |
+
+## Major Blockers
+
+The `461` major cases were reviewed manually in source-family batches. The primary blocker counts are:
+
+| Primary blocker | Count |
+|---|---:|
+| Missing, improper, or otherwise invalid parameter-prior discipline | 206 |
+| Custom, marginalized, or procedural protected-data likelihood | 183 |
+| Protected-data interface/layout mismatch | 36 |
+| Custom/manual/non-top-level parameter prior or latent-process prior | 32 |
+| Conditional `prior_only`-style likelihood gate | 3 |
+| Compiler/regression stress case rather than a model translation | 1 |
+| **Total** | **461** |
+
+See `MAJOR_ISSUES.md` for the blocker taxonomy, examples, and feature-tier interpretation.
+
+## Artifact Consistency Note
+
+`runs_metadata/openai_safestan_generation_latest.json` points at an absolute artifact root outside this checkout and differs from the checked-out local artifacts on six models:
+
+| Model | Run summary | Local artifact |
+|---|---|---|
+| `example_models/applications-covid-19-imperial-model-imperial-model` | minor | major |
+| `example_models/bpa-ch-08-mr-mnl-age` | minor | major |
+| `example_models/bugs-examples-vol1-bones-bones` | major | minor |
+| `example_models/bugs-examples-vol1-leukfr-leukfr` | minor | major |
+| `example_models/bugs-examples-vol1-lsat-lsat` | minor | major |
+| `posteriordb/ecdc0501-covid19imperial-v3` | minor | major |
+
+This report uses the local `record.json`/`SAFETY_NOTE.md` artifacts because those are the files present in this repository and the files exercised by the `cmdsafestan` smoke checks.
