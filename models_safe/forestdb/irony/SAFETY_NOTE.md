@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: `observed_utterance` is the data value used by the likelihood-like scoring expression. The remaining data variables are sizes or context inputs.
+Protected data choice: `observed_utterance` is the observed interface variable scored by the model. The other data variables (`S`, `U`, `Q`, `state_prior`, `qud_weight`, `semantics`, and `utility`) are sizes, constants, or context inputs rather than observed likelihood targets.
 
 Generated files: none.
 
-Reason: the model scores `observed_utterance` using `target += log_sum_exp(listener_lp)`, a manually marginalized latent-state likelihood. SafeStan forbids direct `target +=` scoring. Replacing this with a built-in categorical sampling statement would require adding a normalization term over utterances; because `state_bias` affects that normalizer, this would change the posterior/log density. Therefore an equivalent SafeStan rewrite is not a minor mechanical change.
+Reason: the likelihood for `observed_utterance` is implemented with manual `target += log_sum_exp(listener_lp)` scoring after marginalizing over latent states. SafeStan forbids arbitrary `target +=` scoring and requires protected observations to be scored exactly once by a built-in distribution. Replacing this term with a built-in categorical distribution would require normalizing over utterances, which would add a parameter-dependent normalization term because `state_bias` is unconstrained. That would change the posterior/log density. Therefore this is not a minor same-density translation.

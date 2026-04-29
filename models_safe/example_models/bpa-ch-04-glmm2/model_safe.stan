@@ -23,11 +23,13 @@ transformed parameters {
 }
 model {
   vector[nobs] log_lambda_obs;
-
+  
   // Priors
   mu ~ normal(0, 10);
+  
   sd_alpha ~ uniform(0, 5);
   alpha ~ normal(0, sd_alpha);
+  
   sd_eps ~ uniform(0, 3);
   eps ~ normal(0, sd_eps);
   

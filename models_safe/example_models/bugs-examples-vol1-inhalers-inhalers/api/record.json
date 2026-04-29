@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-inhalers-inhalers/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T01:38:43+00:00",
+  "completed_at": "2026-04-29T16:23:32+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/example_models/bugs-examples-vol1-inhalers-inhalers",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0d564cb5a7f652f50069f160fa86548193b7be4688c091d0a2",
+  "response_id": "resp_08ee5120ade52d380069f230608bb881a180f8e1f8b9a8db19",
   "safe_dir": "models_safe/example_models/bugs-examples-vol1-inhalers-inhalers",
   "service_tier": "flex",
-  "started_at": "2026-04-29T01:38:02+00:00",
+  "started_at": "2026-04-29T16:22:56+00:00",
   "usage": {
-    "input_tokens": 4286,
+    "input_tokens": 4287,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 3253,
+    "output_tokens": 3347,
     "output_tokens_details": {
-      "reasoning_tokens": 2995
+      "reasoning_tokens": 3106
     },
-    "total_tokens": 7539
+    "total_tokens": 7634
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

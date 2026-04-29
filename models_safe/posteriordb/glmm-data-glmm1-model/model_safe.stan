@@ -16,25 +16,26 @@ parameters {
 }
 transformed parameters {
   matrix[nyear, nsite] log_lambda;
-  vector[nobs] log_lambda_obs;
-  
+
   log_lambda = rep_matrix(alpha', nyear);
-  for (i in 1 : nobs) {
-    log_lambda_obs[i] = log_lambda[obsyear[i], obssite[i]];
-  }
 }
 model {
+  vector[nobs] obs_log_lambda;
+
   // Priors
   mu_alpha ~ normal(0, 10);
   sd_alpha ~ uniform(0, 5);
   alpha ~ normal(mu_alpha, sd_alpha);
-  
-  obs ~ poisson_log(log_lambda_obs);
+
+  for (i in 1:nobs) {
+    obs_log_lambda[i] = log_lambda[obsyear[i], obssite[i]];
+  }
+  obs ~ poisson_log(obs_log_lambda);
 }
 generated quantities {
   array[nmis] int<lower=0> mis;
-  
-  for (i in 1 : nmis) {
+
+  for (i in 1:nmis) {
     mis[i] = poisson_log_rng(log_lambda[misyear[i], missite[i]]);
   }
 }

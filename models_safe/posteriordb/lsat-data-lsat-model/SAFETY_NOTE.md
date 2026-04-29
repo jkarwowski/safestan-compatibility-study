@@ -2,8 +2,10 @@
 
 Compatibility: minor.
 
-Protected data: `r_safestan_flat`, a deterministic flattened expansion of the compressed LSAT response patterns.
+Protected data: `pattern_id`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: the original likelihood scores `r[k]`, where `r` is transformed data constructed from `response` and `culm`. SafeStan requires observed variables on the left side of `~` to be top-level protected data and not indexed. I added `r_safestan_flat` as top-level data and replaced the loop of indexed Bernoulli-logit sampling statements with one vectorized sampling statement. The deterministic relation is `r_safestan_flat[(k - 1) * N + j] = r[k, j]`, where `r` is the expanded response array defined by the original transformed-data construction. The existing built-in priors for `alpha`, `theta`, and `beta` were retained.
+Changes: the original model builds an expanded response matrix `r` in `transformed data` and then observes indexed rows of `r` inside a loop. SafeStan requires protected observations to be top-level data variables and to be observed once with a plain sampling statement. The rewritten model replaces the compressed cumulative-count encoding by a deterministic top-level protected vector `pattern_id`, where `pattern_id[j] = i` iff `culm[i - 1] < j <= culm[i]` with `culm[0] = 0`. The original `response` table is retained as context defining the binary response pattern for each category.
+
+The likelihood is rewritten as one vectorized `categorical_logit` statement. For each student and each response pattern, the categorical logit is the joint Bernoulli-logit log probability of that pattern under the original Rasch item model. Because the LSAT source model uses `response` as the fixed table of all `2^T` response patterns, the categorical normalizer is one, so this is the same likelihood as the original product of Bernoulli-logit item terms. The original parameter priors were already explicit and are unchanged.

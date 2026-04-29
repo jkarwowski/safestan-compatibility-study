@@ -6,4 +6,4 @@ Protected data: `observed_utterance`.
 
 Generated files: none.
 
-Reason: the observation likelihood is implemented with manual `target += log_sum_exp(listener_lp)` scoring, where `listener_lp` depends on the protected observation through an index into `log_softmax(speaker_logits)`. SafeStan forbids direct `target +=` scoring. Replacing this with a built-in sampling statement such as a categorical likelihood would require a substantive rewrite of the marginalized pragmatic listener likelihood and would not preserve the same log density in general.
+Reason: the observation is scored through a marginalized finite-state likelihood implemented with manual `target += log_sum_exp(listener_lp)`. SafeStan forbids arbitrary `target +=` scoring, and replacing this expression with a built-in sampling statement would require a substantive likelihood rewrite. In particular, a categorical rewrite would introduce a normalization over utterances that is not present in the original target density when `state_bias` is free, so it would not preserve the original posterior/log density.

@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777425360,
-  "created_at": 1777425336,
+  "completed_at": 1777479477,
+  "created_at": 1777479440,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0e5444a7d8b2e5000069f15bb7fd1c819f97a0b7c615d2315b",
+  "id": "resp_02ff8ab4bdd7dae60069f22f10c3148191a881cb027efa1433",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0e5444a7d8b2e5000069f15bb88fd8819f8aae74566d5cc9c8",
+      "id": "rs_02ff8ab4bdd7dae60069f22f1192f48191bfe30a1374376c86",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: the observed uncensored weights derived as `weight_obs` from the top-level data variable `weight`. No `--sstan-protect` list is emitted because no compatible SafeStan rewrite is generated.\\n\\nGenerated files: none.\\n\\nReason: the model scores `weight_obs`, a transformed-data value, rather than a top-level protected data variable. More importantly, parameters `a`, `b`, and `sigma` have implicit improper priors and are used in likelihood/prior expressions without any built-in prior sampling statements. Adding proper priors would change the posterior/log density, so this cannot be translated to SafeStan by a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: the observed likelihood is for the non-censored weights, represented in the original program as transformed-data `weight_obs` deterministically split from top-level `weight` using the censoring threshold `C`.\\n\\nGenerated files: none.\\n\\nReason: the likelihood target `weight_obs ~ normal(...)` is not a top-level data variable; it is constructed in `transformed data` by inspecting `weight`, so a SafeStan version would at least require deterministic top-level reshaped data. More importantly, the regression parameters `a`, `b`, and `sigma` have no explicit proper priors in the original model. SafeStan requires every parameter to have exactly one built-in prior before use. Adding priors for these parameters would change the posterior/log density, so this cannot be translated with only a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0e5444a7d8b2e5000069f15bcf6ac8819f986935a8b56c9efc",
+      "id": "msg_02ff8ab4bdd7dae60069f22f3494c88191a9b9bb804aa22b5e",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 3257,
+    "input_tokens": 19065,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2257,
+    "output_tokens": 2811,
     "output_tokens_details": {
-      "reasoning_tokens": 2070
+      "reasoning_tokens": 2588
     },
-    "total_tokens": 5514
+    "total_tokens": 21876
   },
   "user": null
 }

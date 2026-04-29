@@ -30,11 +30,6 @@ parameters {
   //int xi[Ni]; 
 }
 model {
-  vector[Nc] eta_dc_c;
-  vector[Nc] p_wc_c;
-  vector[Ni] p_di_i;
-  vector[Ni] p_wi_i;
-
   q ~ uniform(0, 1);
   beta0C ~ normal(0, 320);
   beta ~ normal(0, 320);
@@ -42,26 +37,35 @@ model {
 
   xc ~ bernoulli(q);
 
-  for (n in 1 : Nc) {
-    eta_dc_c[n] = beta0C + beta * xc[n];
+  {
+    vector[Nc] dc_logit;
+    for (n in 1 : Nc) {
+      dc_logit[n] = beta0C + beta * xc[n];
+    }
+    dc ~ bernoulli_logit(dc_logit);
   }
-  dc ~ bernoulli_logit(eta_dc_c);
 
-  for (n in 1 : Nc) {
-    p_wc_c[n] = phi[xc[n] + 1, dc[n] + 1];
+  {
+    vector[Nc] wc_prob;
+    for (n in 1 : Nc) {
+      wc_prob[n] = phi[xc[n] + 1, dc[n] + 1];
+    }
+    wc ~ bernoulli(wc_prob);
   }
-  wc ~ bernoulli(p_wc_c);
 
-  for (n in 1 : Ni) {
-    p_di_i[n] = inv_logit(beta0C + beta) * q
-                + inv_logit(beta0C) * (1 - q);
+  {
+    real di_prob;
+    di_prob = inv_logit(beta0C + beta) * q + inv_logit(beta0C) * (1 - q);
+    di ~ bernoulli(di_prob);
   }
-  di ~ bernoulli(p_di_i);
 
-  for (n in 1 : Ni) {
-    p_wi_i[n] = phi[1, di[n] + 1] * (1 - q) + phi[2, di[n] + 1] * q;
+  {
+    vector[Ni] wi_prob;
+    for (n in 1 : Ni) {
+      wi_prob[n] = phi[1, di[n] + 1] * (1 - q) + phi[2, di[n] + 1] * q;
+    }
+    wi ~ bernoulli(wi_prob);
   }
-  wi ~ bernoulli(p_wi_i);
 }
 generated quantities {
   real gamma1;

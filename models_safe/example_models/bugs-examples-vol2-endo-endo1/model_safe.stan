@@ -10,19 +10,35 @@ data {
   int n01;
   int n11;
   int I;
-  array[I] int<lower=0, upper=1> Y1_safestan;
+  array[I] int<lower=0, upper=1> Y1_safestan_obs;
 }
 transformed data {
+  int J;
+  array[2, I] int Y;
+  array[2] vector<lower=0>[I] est;
   vector[I] est1m2;
+  J = 2;
   for (i in 1 : I) {
-    if (i <= n10) {
-      est1m2[i] = 1;
-    } else if (i <= n10 + n01) {
-      est1m2[i] = -1;
-    } else {
-      est1m2[i] = 0;
-    }
+    Y[1, i] = 1;
+    Y[2, i] = 0;
   }
+  for (i in 1 : n10) {
+    est[1, i] = 1;
+    est[2, i] = 0;
+  }
+  for (i in (n10 + 1) : (n10 + n01)) {
+    est[1, i] = 0;
+    est[2, i] = 1;
+  }
+  for (i in (n10 + n01 + 1) : (n10 + n01 + n11)) {
+    est[1, i] = 1;
+    est[2, i] = 1;
+  }
+  for (i in (n10 + n01 + n11 + 1) : I) {
+    est[1, i] = 0;
+    est[2, i] = 0;
+  }
+  est1m2 = est[1] - est[2];
 }
 parameters {
   real beta;
@@ -30,5 +46,5 @@ parameters {
 model {
   // METHOD 1: Logistic regression 
   beta ~ normal(0, 1000);
-  Y1_safestan ~ binomial_logit(1, beta * est1m2);
+  Y1_safestan_obs ~ binomial_logit(1, beta * est1m2);
 }

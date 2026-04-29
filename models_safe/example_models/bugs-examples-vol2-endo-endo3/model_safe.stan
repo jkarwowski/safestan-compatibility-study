@@ -10,7 +10,8 @@ data {
   int n01;
   int n11;
   int I;
-  array[2 * I] int<lower=0> Y_safestan;
+  array[I] int<lower=0> Y1;
+  array[I] int<lower=0> Y2;
 }
 transformed data {
   array[2] vector<lower=0>[I] est;
@@ -39,5 +40,6 @@ model {
   // METHOD 3 fit standard Poisson regressions relative to baseline
   beta ~ normal(0, 1000);
   beta0 ~ normal(0, 1000);
-  Y_safestan ~ poisson_log(append_row(beta0 + beta * est[1], beta0 + beta * est[2]));
+  Y1 ~ poisson_log(beta0 + beta * est[1]);
+  Y2 ~ poisson_log(beta0 + beta * est[2]);
 }

@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777429807,
-  "created_at": 1777429777,
+  "completed_at": 1777480236,
+  "created_at": 1777480222,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_03755c01ef950ab30069f16d110168819c8bba378d1b3adf6a",
+  "id": "resp_0171c935a07dd3a90069f2321ef0248193a01575a235c8b20f",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_03755c01ef950ab30069f16d11931c819cabfafb035d017da0",
+      "id": "rs_0171c935a07dd3a90069f2321f8a988193a7b3fc1527656583",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `observed_utterance`.\\n\\nGenerated files: none.\\n\\nReason: the observation likelihood is implemented by manual `target += log_sum_exp(listener_lp)` scoring, where `listener_lp` depends on `observed_utterance` through an indexed `log_softmax` term. SafeStan forbids arbitrary `target +=` scoring. Replacing this with a built-in categorical sampling statement would introduce a parameter-dependent normalization term and would not preserve the original posterior/log density. An exact translation would require a custom likelihood or a substantive marginalized-latent-state rewrite, so this is not a minor SafeStan-compatible change.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `observed_utterance` is the data variable being conditioned on by the likelihood. The other data variables are context/configuration inputs.\\n\\nGenerated files: none.\\n\\nReason: the likelihood is implemented with `target += log_sum_exp(listener_lp)`, a marginalized pragmatic listener calculation. SafeStan forbids arbitrary `target +=` scoring, and replacing this with a built-in sampling statement would require a substantive model rewrite. In particular, a categorical rewrite would introduce a normalization over utterances and would not preserve the original parameter-dependent density because `state_bias` makes the original `log_sum_exp` contribution unnormalized as a distribution over `observed_utterance`.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_03755c01ef950ab30069f16d2ddf18819cb02c50943a53d24b",
+      "id": "msg_0171c935a07dd3a90069f2322aeb308193a29d65bd80d880c9",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 3716,
+    "input_tokens": 3613,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2252,
+    "output_tokens": 1226,
     "output_tokens_details": {
-      "reasoning_tokens": 2070
+      "reasoning_tokens": 1034
     },
-    "total_tokens": 5968
+    "total_tokens": 4839
   },
   "user": null
 }

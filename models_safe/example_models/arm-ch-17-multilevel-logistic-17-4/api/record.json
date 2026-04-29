@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/example_models/arm-ch-17-multilevel-logistic-17-4/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T01:14:47+00:00",
+  "completed_at": "2026-04-29T16:17:20+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/example_models/arm-ch-17-multilevel-logistic-17-4",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_004985901659bb070069f15b7520348197ada07cc1b280f731",
+  "response_id": "resp_00ab1ea7c51c32ea0069f22efe97c0819c9b63f5f9b2fe883d",
   "safe_dir": "models_safe/example_models/arm-ch-17-multilevel-logistic-17-4",
   "service_tier": "flex",
-  "started_at": "2026-04-29T01:14:28+00:00",
+  "started_at": "2026-04-29T16:17:02+00:00",
   "usage": {
-    "input_tokens": 3759,
+    "input_tokens": 52697,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 0
     },
-    "output_tokens": 1251,
+    "output_tokens": 1241,
     "output_tokens_details": {
       "reasoning_tokens": 1034
     },
-    "total_tokens": 5010
+    "total_tokens": 53938
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

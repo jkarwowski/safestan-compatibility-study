@@ -1,7 +1,8 @@
 {
   "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-ice-ice/api",
   "compatibility": "minor",
-  "completed_at": "2026-04-29T01:48:41+00:00",
+  "completed_at": "2026-04-29T16:29:39+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/example_models/bugs-examples-vol2-ice-ice",
   "prompt_cache_key": "safestan-translation-v1",
@@ -10,20 +11,20 @@
     "cases"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_0bad046957eda0190069f163251e64819395659bcd8190f1cd",
+  "response_id": "resp_05a5a8717f207f700069f2315bda3c819d8162945e8a22b9f9",
   "safe_dir": "models_safe/example_models/bugs-examples-vol2-ice-ice",
   "service_tier": "flex",
-  "started_at": "2026-04-29T01:47:16+00:00",
+  "started_at": "2026-04-29T16:27:07+00:00",
   "usage": {
-    "input_tokens": 3373,
+    "input_tokens": 4644,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 7418,
+    "output_tokens": 14853,
     "output_tokens_details": {
-      "reasoning_tokens": 6732
+      "reasoning_tokens": 13466
     },
-    "total_tokens": 10791
+    "total_tokens": 19497
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/example_models/bpa-ch-07-cjs-trap/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T01:33:05+00:00",
+  "completed_at": "2026-04-29T16:22:24+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/example_models/bpa-ch-07-cjs-trap",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0f2bba3c6097354a0069f15fb1cc40819ca5acddec1e6c45bf",
+  "response_id": "resp_06a88e781cc1894e0069f22fc7971881958c6d9c3259d10ddc",
   "safe_dir": "models_safe/example_models/bpa-ch-07-cjs-trap",
   "service_tier": "flex",
-  "started_at": "2026-04-29T01:32:33+00:00",
+  "started_at": "2026-04-29T16:20:23+00:00",
   "usage": {
-    "input_tokens": 3909,
+    "input_tokens": 14238,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2855,
+    "output_tokens": 10592,
     "output_tokens_details": {
-      "reasoning_tokens": 2588
+      "reasoning_tokens": 10358
     },
-    "total_tokens": 6764
+    "total_tokens": 24830
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

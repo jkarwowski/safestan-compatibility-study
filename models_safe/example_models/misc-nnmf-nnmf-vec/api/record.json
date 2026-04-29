@@ -1,7 +1,8 @@
 {
   "artifacts_dir": "models_safe/example_models/misc-nnmf-nnmf-vec/api",
   "compatibility": "minor",
-  "completed_at": "2026-04-29T02:26:18+00:00",
+  "completed_at": "2026-04-29T16:32:05+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/example_models/misc-nnmf-nnmf-vec",
   "prompt_cache_key": "safestan-translation-v1",
@@ -10,20 +11,20 @@
     "X"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_0aa2c528cc96e33d0069f16bfb425081a0b0022a7ea7fbc141",
+  "response_id": "resp_0fe0bc97e48c5f1b0069f231e89c6881a28580a9797f22adad",
   "safe_dir": "models_safe/example_models/misc-nnmf-nnmf-vec",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:24:59+00:00",
+  "started_at": "2026-04-29T16:29:28+00:00",
   "usage": {
-    "input_tokens": 3246,
+    "input_tokens": 47083,
     "input_tokens_details": {
-      "cached_tokens": 2304
+      "cached_tokens": 1792
     },
-    "output_tokens": 7545,
+    "output_tokens": 14154,
     "output_tokens_details": {
-      "reasoning_tokens": 6732
+      "reasoning_tokens": 13466
     },
-    "total_tokens": 10791
+    "total_tokens": 61237
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

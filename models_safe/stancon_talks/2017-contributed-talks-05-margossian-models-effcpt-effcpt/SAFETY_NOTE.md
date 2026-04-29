@@ -2,8 +2,8 @@
 
 Compatibility: minor.
 
-Protected data: `cObs`, `respObs`.
+Protected data: `logCObs` and `respObs`. `logCObs` is the modelled log-concentration observation from the original transformed-data assignment `logCObs = log(cObs)`; `respObs` is the original response observation.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: removed the transformed-data observation `logCObs = log(cObs)` and replaced `logCObs ~ normal(log(cHatObs), sigma)` with the built-in normalized observation statement `cObs ~ lognormal(log(cHatObs), sigma)`. This makes the observed concentration vector itself a top-level protected variable and avoids reading protected data before observation. The response likelihood was already a valid top-level protected-data sampling statement. The data file is unchanged.
+Changes: promoted `logCObs` from transformed data to a top-level data variable so it can be observed with a SafeStan plain sampling statement. In `data_safe.json`, `logCObs[i] = log(cObs[i])` was computed deterministically from the supplied original `cObs`; all other retained data are copied unchanged. The likelihood terms and parameter priors are otherwise unchanged, and each protected variable and each parameter is scored exactly once by a built-in distribution outside loops.

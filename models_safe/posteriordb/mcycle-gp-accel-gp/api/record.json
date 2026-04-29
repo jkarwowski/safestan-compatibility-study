@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/posteriordb/mcycle-gp-accel-gp/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:47:52+00:00",
+  "completed_at": "2026-04-29T16:35:26+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/posteriordb/mcycle-gp-accel-gp",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_05fa75ed8aed7c240069f17113a66c81a2ad34685debe36fe9",
+  "response_id": "resp_008aed90ac453aca0069f23318560c819798e2d2fccf6c5d9d",
   "safe_dir": "models_safe/posteriordb/mcycle-gp-accel-gp",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:46:43+00:00",
+  "started_at": "2026-04-29T16:34:32+00:00",
   "usage": {
-    "input_tokens": 5120,
+    "input_tokens": 90038,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 5793,
+    "output_tokens": 4707,
     "output_tokens_details": {
-      "reasoning_tokens": 5578
+      "reasoning_tokens": 4483
     },
-    "total_tokens": 10913
+    "total_tokens": 94745
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

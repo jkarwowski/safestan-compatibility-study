@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data choice: the modelled observations are the individual ordered-category `response` values, which the original program constructs in `transformed data` from the contingency-table inputs `Ncum` and `pattern`. A SafeStan rewrite would need these observations as a top-level protected data variable, observed once with a plain sampling statement.
+Protected data: the modeled ordered categorical responses `response`, which are constructed in `transformed data` from the top-level contingency-table inputs `Ncum` and `pattern`. If a SafeStan rewrite were otherwise possible, `response` would have to be supplied as a deterministic top-level protected expansion/copy.
 
 Generated files: none.
 
-Reason: the original likelihood is not in SafeStan form because `response[i, t] ~ categorical(...)` scores a transformed-data variable inside loops rather than a top-level protected data variable. That part could in principle be mechanically rewritten by expanding the contingency table to top-level data and vectorizing the categorical likelihood. However, the parameter `a` is an unbounded `ordered[Ncut]` parameter used in the likelihood with no prior sampling statement. SafeStan requires every parameter to have exactly one built-in prior before use. Adding a proper prior for `a` would change the posterior/log density, so this cannot be translated with only minor same-density changes.
+Reason: the original likelihood is written as indexed `response[i, t] ~ categorical(p[i, t])` inside loops and the parameter priors appear after parameters are used; those parts could be mechanically rewritten. However, the parameter `a` (the ordered cutpoints used in the likelihood) has no sampling statement/prior in the original model. SafeStan requires every parameter to have exactly one built-in prior before use, and adding a prior for unbounded ordered cutpoints would change the posterior/log density. Therefore this model cannot be translated to SafeStan by a minor same-density rewrite.

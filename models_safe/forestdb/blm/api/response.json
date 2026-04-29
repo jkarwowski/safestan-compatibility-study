@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777429612,
-  "created_at": 1777429597,
+  "completed_at": 1777480205,
+  "created_at": 1777480190,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_02a87404760086510069f16c5d40f8819dbe652217f589b01a",
+  "id": "resp_084460acf4be59630069f231fe8e90819da289ca84872bb9cb",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_02a87404760086510069f16c5e5ea8819da81773b008a6406b",
+      "id": "rs_084460acf4be59630069f231ff361c819d8b5755698e4450a9",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `observed_utterance`.\\n\\nGenerated files: none.\\n\\nReason: the observation likelihood for `observed_utterance` is implemented by manual `target += log_sum_exp(listener_lp)` scoring after marginalizing over latent states. SafeStan forbids `target +=`, and replacing this term with a built-in sampling statement would change the density because the existing term is not simply a normalized built-in categorical likelihood over utterances. A SafeStan translation would require a substantive likelihood/model rewrite rather than a minor mechanical change.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `observed_utterance` is the only top-level data variable being scored/conditioned on. The size variables, `state_prior`, `qud_weight`, `semantics`, and `utility` are context inputs.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `observed_utterance` is implemented with manual `target += log_sum_exp(listener_lp)` scoring after marginalizing over latent listener states. SafeStan forbids `target +=`, and this density is not a direct built-in sampling statement for the protected observation. Replacing it would require a substantive model rewrite; in particular, a `categorical_logit` rewrite would introduce an additional normalization term depending on the parameter `state_bias`, so it would not preserve the original posterior density without further manual scoring or a non-built-in adjustment.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_02a87404760086510069f16c6ac188819d96667fe9b5af039b",
+      "id": "msg_084460acf4be59630069f2320ce908819d8b79b2a89d321428",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 3666,
+    "input_tokens": 3574,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1196,
+    "output_tokens": 1257,
     "output_tokens_details": {
       "reasoning_tokens": 1034
     },
-    "total_tokens": 4862
+    "total_tokens": 4831
   },
   "user": null
 }

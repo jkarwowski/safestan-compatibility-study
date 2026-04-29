@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: the model scores the game score difference `dif = score_1 - score_2`, which is currently computed in `transformed data`; a SafeStan rewrite would need a top-level deterministic protected copy such as `dif`.
+Protected data: the likelihood is on the game score differences `dif = score_1 - score_2` via `dif ~ student_t(...)`. In the original program `dif` is transformed data, not a top-level data variable; a SafeStan version would need a deterministic top-level protected copy of this difference.
 
 Generated files: none.
 
-Reason: the model has parameters `b`, `sigma_a`, and `sigma_y` with no explicit built-in prior sampling statements. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors for these parameters would change the posterior/log density, and the existing implicit flat priors are not finite proper priors that can be represented by a density-neutral built-in sampling statement. Therefore this cannot be translated with only minor same-density changes.
+Reason: the model has parameters `b`, `sigma_a`, and `sigma_y` with no explicit built-in prior sampling statements. They are used in the transformed parameter `a` and/or in the likelihood before any prior. SafeStan requires every parameter to have exactly one built-in prior before use. Adding priors for these parameters would change the original posterior/log density because the original model uses implicit improper flat priors, not finite bounded uniform priors that can be made explicit density-neutrally. Therefore no SafeStan-compatible rewrite can preserve the model with only minor mechanical changes.

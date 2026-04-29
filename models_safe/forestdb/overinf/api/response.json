@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777430092,
-  "created_at": 1777430069,
+  "completed_at": 1777480249,
+  "created_at": 1777480231,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0019fc534180fdc90069f16e35fb6c819e8a8de5ec0e3f9438",
+  "id": "resp_08f6a2cd7da1765c0069f23227d95c819d93b3988e95e93957",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0019fc534180fdc90069f16e369e48819ea03e48b7c87bfb56",
+      "id": "rs_08f6a2cd7da1765c0069f232286ce8819dafe096599895d191",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `observed_utterance` is the observed interface variable, because the model conditions on it inside the manual likelihood calculation. The remaining data variables (`S`, `U`, `Q`, `state_prior`, `qud_weight`, `semantics`, and `utility`) are context inputs, sizes, constants, or unused context.\\n\\nGenerated files: none.\\n\\nReason: the likelihood is implemented with `target += log_sum_exp(listener_lp)`, where `listener_lp` contains `log_softmax(speaker_logits)[observed_utterance]`. SafeStan forbids manual `target +=` scoring, and replacing this marginalized listener calculation with a built-in sampling statement would be a substantive likelihood rewrite. In particular, a normalized categorical rewrite would introduce a parameter-dependent normalizer involving `state_bias`, so it would not preserve the original posterior density.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: `observed_utterance` is the observed interface variable being scored by the model. The remaining data variables (`S`, `U`, `Q`, `state_prior`, `qud_weight`, `semantics`, and `utility`) are sizes, constants, or predictors/context inputs.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `observed_utterance` is implemented with manual `target += log_sum_exp(listener_lp)` scoring after marginalizing over listener states. SafeStan forbids arbitrary `target +=` scoring and requires the protected observation to be scored exactly once by a built-in distribution. Replacing this expression with a built-in categorical distribution would require normalizing over utterances, which would add a parameter-dependent normalization term involving `state_bias` and therefore change the posterior/log density. Thus a SafeStan-compatible version cannot be produced by a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0019fc534180fdc90069f16e4adc80819e8389efd84641bd65",
+      "id": "msg_08f6a2cd7da1765c0069f232355d9c819d8aca567455b934f1",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 3607,
+    "input_tokens": 3587,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1752,
+    "output_tokens": 1270,
     "output_tokens_details": {
-      "reasoning_tokens": 1525
+      "reasoning_tokens": 1034
     },
-    "total_tokens": 5359
+    "total_tokens": 4857
   },
   "user": null
 }

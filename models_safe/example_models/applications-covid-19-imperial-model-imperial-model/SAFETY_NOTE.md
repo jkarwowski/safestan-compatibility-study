@@ -1,11 +1,9 @@
 # SafeStan Safety Note
 
-Compatibility: minor.
+Compatibility: major.
 
-Protected data: `deaths_obs`, a deterministic flattened copy of the `deaths[EpidemicStart[m]:N[m], m]` entries scored in the original model.
+Protected data: the model conditions on the observed subset of `deaths` via country-specific slices `deaths[EpidemicStart[m] : N[m], m]`.
 
-Generated files: `model_safe.stan`, `data_safe.json`.
+Generated files: none.
 
-Changes: replaced the looped slice likelihood with one top-level protected sampling statement, `deaths_obs ~ neg_binomial_2(E_deaths_obs, phi)`, using context index arrays to gather the matching expected-death means. Vectorized the elementwise prior loop for `y[m]` to `y ~ exponential(1 / tau)` so the parameter is scored once outside loops. The original `deaths` array is not declared in the SafeStan model; its modelled entries are supplied through the protected flattened copy.
-
-Data relation: `N_deaths_obs`, `deaths_obs`, `deaths_obs_day`, and `deaths_obs_country` are deterministically constructed by scanning countries `m` and available days `i` with `EpidemicStart[m] <= i <= N[m]` and `1 <= i <= N2`, then copying `deaths[i, m]`. For the supplied synthetic data this set is empty, so the added arrays are empty.
+Reason: the likelihood is applied to ragged, indexed slices of a top-level data matrix inside a loop, and the parameter prior for `y` is also expressed elementwise inside a loop. SafeStan requires protected observations and parameter priors to be single plain top-level sampling statements outside loops. Representing this model would require changing the observed data interface to a concatenated ragged deaths vector and rebuilding the matching expected-deaths vector before a single likelihood statement, rather than a small as-is syntactic adjustment.

@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: the observed uncensored weights derived as `weight_obs` from the top-level data variable `weight`. No `--sstan-protect` list is emitted because no compatible SafeStan rewrite is generated.
+Protected data choice: the observed likelihood is for the non-censored weights, represented in the original program as transformed-data `weight_obs` deterministically split from top-level `weight` using the censoring threshold `C`.
 
 Generated files: none.
 
-Reason: the model scores `weight_obs`, a transformed-data value, rather than a top-level protected data variable. More importantly, parameters `a`, `b`, and `sigma` have implicit improper priors and are used in likelihood/prior expressions without any built-in prior sampling statements. Adding proper priors would change the posterior/log density, so this cannot be translated to SafeStan by a minor same-density rewrite.
+Reason: the likelihood target `weight_obs ~ normal(...)` is not a top-level data variable; it is constructed in `transformed data` by inspecting `weight`, so a SafeStan version would at least require deterministic top-level reshaped data. More importantly, the regression parameters `a`, `b`, and `sigma` have no explicit proper priors in the original model. SafeStan requires every parameter to have exactly one built-in prior before use. Adding priors for these parameters would change the posterior/log density, so this cannot be translated with only a minor same-density rewrite.

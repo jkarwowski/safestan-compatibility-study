@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: the likelihood scores `sqrt_dif`, a transformed-data quantity deterministically computed from `score_1` and `score_2`. No SafeStan protected-variable interface is generated because this case is classified as major.
+Protected data choice: the original likelihood scores `sqrt_dif`, a transformed-data quantity deterministically computed from the top-level score data `score_1` and `score_2`.
 
 Generated files: none.
 
-Reason: the original model has parameters `sigma_a` and `sigma_y` with no explicit built-in priors. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use; adding priors for these positive unbounded scale parameters would change the posterior density. In addition, the observed likelihood target `sqrt_dif` is not a top-level data variable but a transformed-data value. A SafeStan version would therefore require substantive changes rather than a minor same-density translation.
+Reason: the model has top-level parameters `sigma_a` and `sigma_y` with no explicit priors. SafeStan requires every parameter to have exactly one built-in prior sampling statement before use. These parameters have only improper implicit priors from their lower bounds, so adding proper built-in priors would change the posterior/log density. The likelihood also scores a transformed-data variable rather than a top-level protected data variable, but even if that observation were exposed as a top-level deterministic input, the missing improper scale priors prevent a same-density SafeStan translation.

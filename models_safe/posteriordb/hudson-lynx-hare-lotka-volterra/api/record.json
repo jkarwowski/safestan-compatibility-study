@@ -1,7 +1,8 @@
 {
   "artifacts_dir": "models_safe/posteriordb/hudson-lynx-hare-lotka-volterra/api",
   "compatibility": "minor",
-  "completed_at": "2026-04-29T02:46:10+00:00",
+  "completed_at": "2026-04-29T16:34:32+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/posteriordb/hudson-lynx-hare-lotka-volterra",
   "prompt_cache_key": "safestan-translation-v1",
@@ -11,20 +12,20 @@
     "y"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_03682fcb524246820069f170b01cd4819e8216263b54c2d558",
+  "response_id": "resp_04e7cdde7fa036aa0069f232e79748819480f0f44fc1c08147",
   "safe_dir": "models_safe/posteriordb/hudson-lynx-hare-lotka-volterra",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:45:03+00:00",
+  "started_at": "2026-04-29T16:33:43+00:00",
   "usage": {
-    "input_tokens": 3570,
+    "input_tokens": 3861,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 6701,
+    "output_tokens": 5305,
     "output_tokens_details": {
-      "reasoning_tokens": 5696
+      "reasoning_tokens": 4142
     },
-    "total_tokens": 10271
+    "total_tokens": 9166
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

@@ -2,7 +2,7 @@ data {
   int<lower=0> n_dogs;
   int<lower=0> n_trials;
   array[n_dogs, n_trials] int<lower=0, upper=1> y;
-  array[n_dogs * n_trials] int<lower=0, upper=1> y_safestan_flat;
+  array[n_dogs, n_trials] int<lower=0, upper=1> y_safestan_copy;
 }
 transformed data {
   int<lower=0> J = n_dogs;
@@ -14,8 +14,8 @@ transformed data {
     prev_shock[j, 1] = 0;
     prev_avoid[j, 1] = 0;
     for (t in 2 : T) {
-      prev_shock[j, t] = prev_shock[j, t - 1] + y[j, t - 1];
-      prev_avoid[j, t] = prev_avoid[j, t - 1] + 1 - y[j, t - 1];
+      prev_shock[j, t] = prev_shock[j, t - 1] + y_safestan_copy[j, t - 1];
+      prev_avoid[j, t] = prev_avoid[j, t - 1] + 1 - y_safestan_copy[j, t - 1];
     }
   }
 }
@@ -27,14 +27,13 @@ model {
   a ~ uniform(0, 1);
   b ~ uniform(0, 1);
   {
-    array[n_dogs * n_trials] real p_safestan_flat;
-    
+    array[J, T] real p;
     for (j in 1 : J) {
       for (t in 1 : T) {
-        p_safestan_flat[(j - 1) * T + t] = a ^ prev_shock[j, t] * b ^ prev_avoid[j, t];
+        p[j, t] = a ^ prev_shock[j, t] * b ^ prev_avoid[j, t];
       }
     }
-    y_safestan_flat ~ bernoulli(p_safestan_flat);
+    y ~ bernoulli(p);
   }
 }
 generated quantities {

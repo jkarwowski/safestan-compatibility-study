@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/posteriordb/bball-drive-event-1-hmm-drive-1/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:38:01+00:00",
+  "completed_at": "2026-04-29T16:31:18+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/posteriordb/bball-drive-event-1-hmm-drive-1",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_05b9de0ef6e0b1cc0069f16effe0ec8197b3644da427473aa5",
+  "response_id": "resp_0b6ca66239dc48f30069f232489edc81a2bb027b44caaaeff1",
   "safe_dir": "models_safe/posteriordb/bball-drive-event-1-hmm-drive-1",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:37:51+00:00",
+  "started_at": "2026-04-29T16:31:04+00:00",
   "usage": {
-    "input_tokens": 4063,
+    "input_tokens": 12111,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 689,
+    "output_tokens": 1222,
     "output_tokens_details": {
-      "reasoning_tokens": 516
+      "reasoning_tokens": 1034
     },
-    "total_tokens": 4752
+    "total_tokens": 13333
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

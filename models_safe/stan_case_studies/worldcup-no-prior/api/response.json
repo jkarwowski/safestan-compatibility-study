@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777431708,
-  "created_at": 1777431680,
+  "completed_at": 1777480610,
+  "created_at": 1777480586,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_0ffa145344f768db0069f174803a1c81a2a60a9546d3b06e96",
+  "id": "resp_0e4faa917fb53a0a0069f2338acfa881a2a99c787fa4b4af00",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_0ffa145344f768db0069f17480c42081a288d353c453e0e8bc",
+      "id": "rs_0e4faa917fb53a0a0069f2338b6ad481a2ac757423d3271142",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: the original likelihood scores `sqrt_dif`, a transformed-data quantity computed from `score_1` and `score_2`, rather than a top-level data variable.\\n\\nGenerated files: none.\\n\\nReason: the model is not SafeStan-compatible without substantive changes. The observed likelihood is placed on a transformed-data expression, so it is not a plain top-level protected data variable. More importantly, `sigma_a` and `sigma_y` are unconstrained-positive parameters with no explicit built-in priors; SafeStan requires every parameter to have exactly one prior sampling statement before use. Adding proper priors for these scale parameters would change the posterior/log density, and an improper density-neutral prior cannot be represented as a SafeStan built-in prior sampling statement.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: the original likelihood scores `sqrt_dif`, a `transformed data` value deterministically computed from top-level data `score_1` and `score_2`. No SafeStan protected variable is emitted because the scored quantity is not a top-level data variable.\\n\\nGenerated files: none.\\n\\nReason: the likelihood is written for a transformed observation (`sqrt_dif ~ student_t(...)`) rather than a top-level protected data variable. Making this SafeStan-compatible would require changing the data interface to include a new transformed observation, not merely a top-level deterministic copy/reshape. In addition, `sigma_a` and `sigma_y` have no explicit priors; adding proper built-in priors for these positive parameters would change the posterior density. Therefore the original density cannot be represented by a minor same-density SafeStan rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_0ffa145344f768db0069f1749a2e1c81a295192fc6192bd6e3",
+      "id": "msg_0e4faa917fb53a0a0069f233a0293881a29bf8e7b8e9fff4b4",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 3342,
+    "input_tokens": 4464,
     "input_tokens_details": {
-      "cached_tokens": 2816
+      "cached_tokens": 1792
     },
-    "output_tokens": 2265,
+    "output_tokens": 2292,
     "output_tokens_details": {
-      "reasoning_tokens": 2058
+      "reasoning_tokens": 2070
     },
-    "total_tokens": 5607
+    "total_tokens": 6756
   },
   "user": null
 }

@@ -1,10 +1,9 @@
 data {
   int<lower=0> N; // 1000, number of students
-  int<lower=0> R; // 32, number of patterns of results: 2^T
+  int<lower=1> R; // 32, number of patterns of results: 2^T
   int<lower=0> T; // 5, number of questions
-  array[R] int<lower=0> culm;
-  array[R, T] int<lower=0> response;
-  array[T * N] int<lower=0> r_safestan_flat;
+  array[R, T] int<lower=0, upper=1> response;
+  array[N] int<lower=1, upper=R> pattern_id;
 }
 parameters {
   array[T] real alpha;
@@ -12,18 +11,23 @@ parameters {
   real<lower=0> beta;
 }
 model {
-  vector[T * N] eta;
+  array[N] vector[R] eta;
 
   alpha ~ normal(0, 100.);
   theta ~ normal(0, 1);
   beta ~ normal(0.0, 100.);
 
-  for (k in 1 : T) {
-    for (j in 1 : N) {
-      eta[(k - 1) * N + j] = beta * theta[j] - alpha[k];
+  for (j in 1 : N) {
+    for (i in 1 : R) {
+      eta[j][i] = 0;
+      for (k in 1 : T) {
+        real q;
+        q = beta * theta[j] - alpha[k];
+        eta[j][i] += response[i, k] * q - log1p_exp(q);
+      }
     }
   }
-  r_safestan_flat ~ bernoulli_logit(eta);
+  pattern_id ~ categorical_logit(eta);
 }
 generated quantities {
   real mean_alpha;

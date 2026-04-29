@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/posteriordb/uk-drivers-state-space-stochastic-level-stochastic-seasonal/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:58:14+00:00",
+  "completed_at": "2026-04-29T16:36:53+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/posteriordb/uk-drivers-state-space-stochastic-level-stochastic-seasonal",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_08334e4fbe4603b00069f173a5f69081909086d9b6002ff2f5",
+  "response_id": "resp_05b9f1a8955b60ef0069f2337c2a7481a1958095496c701c57",
   "safe_dir": "models_safe/posteriordb/uk-drivers-state-space-stochastic-level-stochastic-seasonal",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:57:41+00:00",
+  "started_at": "2026-04-29T16:36:12+00:00",
   "usage": {
-    "input_tokens": 3155,
+    "input_tokens": 7160,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2551,
+    "output_tokens": 3396,
     "output_tokens_details": {
-      "reasoning_tokens": 2293
+      "reasoning_tokens": 3106
     },
-    "total_tokens": 5706
+    "total_tokens": 10556
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

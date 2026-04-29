@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-kidney-kidney/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T01:39:17+00:00",
+  "completed_at": "2026-04-29T16:23:45+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/example_models/bugs-examples-vol1-kidney-kidney",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0a05c2461f34dd410069f1610910dc8196a70233f6980d3ac3",
+  "response_id": "resp_029be829082c68d40069f230695ae481a09eeea4c2da9c2765",
   "safe_dir": "models_safe/example_models/bugs-examples-vol1-kidney-kidney",
   "service_tier": "flex",
-  "started_at": "2026-04-29T01:38:16+00:00",
+  "started_at": "2026-04-29T16:23:05+00:00",
   "usage": {
-    "input_tokens": 3774,
+    "input_tokens": 5164,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 4909,
+    "output_tokens": 3361,
     "output_tokens_details": {
-      "reasoning_tokens": 4660
+      "reasoning_tokens": 3106
     },
-    "total_tokens": 8683
+    "total_tokens": 8525
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

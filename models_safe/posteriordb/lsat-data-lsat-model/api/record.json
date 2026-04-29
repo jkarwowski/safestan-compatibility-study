@@ -1,29 +1,30 @@
 {
   "artifacts_dir": "models_safe/posteriordb/lsat-data-lsat-model/api",
   "compatibility": "minor",
-  "completed_at": "2026-04-29T02:48:06+00:00",
+  "completed_at": "2026-04-29T16:40:13+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/posteriordb/lsat-data-lsat-model",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [
-    "r_safestan_flat"
+    "pattern_id"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_093f187f61858ba50069f170fafe108196aadd0983e4ceb273",
+  "response_id": "resp_02c23142885e18720069f233bb62f88197a4afb206182a354a",
   "safe_dir": "models_safe/posteriordb/lsat-data-lsat-model",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:46:18+00:00",
+  "started_at": "2026-04-29T16:34:18+00:00",
   "usage": {
-    "input_tokens": 3333,
+    "input_tokens": 4196,
     "input_tokens_details": {
-      "cached_tokens": 1792
+      "cached_tokens": 3840
     },
-    "output_tokens": 9425,
+    "output_tokens": 18456,
     "output_tokens_details": {
-      "reasoning_tokens": 8804
+      "reasoning_tokens": 15538
     },
-    "total_tokens": 12758
+    "total_tokens": 22652
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

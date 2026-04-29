@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data choice: the observed data scored by sampling statements are `y`, `m`, and `J`. The remaining data variables (`nyears`, `R`, and `t_pred`) are context/configuration inputs.
+Protected data choice: the observed data variables scored by the model are `y`, `m`, and `J`.
 
 Generated files: none.
 
-Reason: the model cannot be translated to SafeStan by a minor same-density rewrite. The latent state process samples parameter elements `N1[t]` and `Nad[t]` inside a loop using user-defined `_lpdf` distributions (`real_poisson_lpdf` and `real_binomial_lpdf`), and those functions contain `reject()`. SafeStan requires sampling statements for parameters to be built-in distributions, not user-defined distributions, and disallows `_lp` functions and `reject()`. Replacing these generalized real-valued Poisson/binomial densities with built-in Stan distributions would change the support/density of the latent continuous state variables. In addition, some parameters have implicit improper flat priors, which SafeStan cannot make explicit without changing the posterior.
+Reason: the original density cannot be represented in the SafeStan subset by a minor same-density rewrite. The latent state components `N1[t]` and `Nad[t]` are scored inside loops with user-defined distributions `real_poisson_lpdf` and `real_binomial_lpdf`, including indexed parameter left-hand sides. SafeStan only permits built-in distributions on top-level protected data or top-level parameters, with each parameter given exactly one prior before use. Replacing these continuous custom Poisson/binomial extensions with built-in Stan distributions would change the model. In addition, `sigma_y` and `mean_fec` have implicit improper flat priors, which cannot be made SafeStan-compatible without adding proper priors and changing the posterior density. The program also contains `reject()` calls, which SafeStan rejects.

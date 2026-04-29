@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777430110,
-  "created_at": 1777430093,
+  "completed_at": 1777480258,
+  "created_at": 1777480237,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_026dfe4ec4d364ba0069f16e4d5578819e929b0f47e2e62709",
+  "id": "resp_0f51b7543a2df9740069f2322d169c8197add5cff858af576b",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_026dfe4ec4d364ba0069f16e4e4d28819eaeae25cc2b36e0fb",
+      "id": "rs_0f51b7543a2df9740069f2322dc1148197883fa8ab29518f6f",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `observed_utterance`.\\n\\nGenerated files: none.\\n\\nReason: the observation likelihood for `observed_utterance` is implemented by manually accumulating `target += log_sum_exp(listener_lp)`, where `listener_lp` contains a marginalized latent-state calculation and indexes `log_softmax(speaker_logits)` by the observed utterance. SafeStan forbids `target +=`, and replacing this expression with a built-in sampling statement would require a substantive likelihood rewrite. In particular, a categorical rewrite would introduce a parameter-dependent normalization over utterances that is not present in the original target contribution. Therefore no minor same-density SafeStan translation is available.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data choice: the model conditions on `observed_utterance` through the manually accumulated listener likelihood.\\n\\nGenerated files: none.\\n\\nReason: the likelihood for `observed_utterance` is implemented as `target += log_sum_exp(listener_lp)`, where `listener_lp` marginalizes over latent listener states and includes parameter-dependent state weights. SafeStan forbids `target +=`, and replacing this expression with a built-in sampling statement would require a substantive likelihood rewrite. In particular, a categorical rewrite would introduce a parameter-dependent normalization term that is not present in the original density, so it would not preserve the posterior/log density.\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_026dfe4ec4d364ba0069f16e5c6db8819eac58aa44f3acfd85",
+      "id": "msg_0f51b7543a2df9740069f23240cb0c819788e8106a56cca348",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 3644,
+    "input_tokens": 3694,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1221,
+    "output_tokens": 1616,
     "output_tokens_details": {
-      "reasoning_tokens": 1034
+      "reasoning_tokens": 1436
     },
-    "total_tokens": 4865
+    "total_tokens": 5310
   },
   "user": null
 }

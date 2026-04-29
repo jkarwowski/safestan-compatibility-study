@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: `observed_utterance`.
+Protected data choice: `observed_utterance` is the only top-level data variable being scored/conditioned on. The size variables, `state_prior`, `qud_weight`, `semantics`, and `utility` are context inputs.
 
 Generated files: none.
 
-Reason: the observation likelihood for `observed_utterance` is implemented by manual `target += log_sum_exp(listener_lp)` scoring after marginalizing over latent states. SafeStan forbids `target +=`, and replacing this term with a built-in sampling statement would change the density because the existing term is not simply a normalized built-in categorical likelihood over utterances. A SafeStan translation would require a substantive likelihood/model rewrite rather than a minor mechanical change.
+Reason: the likelihood for `observed_utterance` is implemented with manual `target += log_sum_exp(listener_lp)` scoring after marginalizing over latent listener states. SafeStan forbids `target +=`, and this density is not a direct built-in sampling statement for the protected observation. Replacing it would require a substantive model rewrite; in particular, a `categorical_logit` rewrite would introduce an additional normalization term depending on the parameter `state_bias`, so it would not preserve the original posterior density without further manual scoring or a non-built-in adjustment.

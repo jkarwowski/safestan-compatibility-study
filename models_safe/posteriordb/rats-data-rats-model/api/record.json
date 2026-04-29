@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/posteriordb/rats-data-rats-model/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:53:20+00:00",
+  "completed_at": "2026-04-29T16:34:52+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/posteriordb/rats-data-rats-model",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_09a6dece9680fb0a0069f17296bc288191bd8a1e1ebb9a884c",
+  "response_id": "resp_09db51cfcbdcca970069f2331b6e9c81928cf3f26dc8d58181",
   "safe_dir": "models_safe/posteriordb/rats-data-rats-model",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:53:10+00:00",
+  "started_at": "2026-04-29T16:34:35+00:00",
   "usage": {
-    "input_tokens": 3194,
+    "input_tokens": 4968,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 713,
+    "output_tokens": 1227,
     "output_tokens_details": {
-      "reasoning_tokens": 516
+      "reasoning_tokens": 1034
     },
-    "total_tokens": 3907
+    "total_tokens": 6195
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

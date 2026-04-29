@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/forestdb/irony/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:31:23+00:00",
+  "completed_at": "2026-04-29T16:30:49+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/forestdb/irony",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_06772669efd0b2870069f16d670f248193a939a8d1447d6112",
+  "response_id": "resp_058571f747391dad0069f232245558819f8e9e20d9da73b867",
   "safe_dir": "models_safe/forestdb/irony",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:31:02+00:00",
+  "started_at": "2026-04-29T16:30:28+00:00",
   "usage": {
-    "input_tokens": 3587,
+    "input_tokens": 3621,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1509,
+    "output_tokens": 1788,
     "output_tokens_details": {
-      "reasoning_tokens": 1325
+      "reasoning_tokens": 1552
     },
-    "total_tokens": 5096
+    "total_tokens": 5409
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

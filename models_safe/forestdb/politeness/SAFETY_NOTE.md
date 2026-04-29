@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: `observed_utterance`.
+Protected data choice: `observed_utterance` is the observed interface variable conditioned on by the likelihood calculation.
 
 Generated files: none.
 
-Reason: the observation is scored through a manually accumulated marginalized likelihood, `target += log_sum_exp(listener_lp)`, where `listener_lp` depends on `observed_utterance` through an indexed `log_softmax` term. SafeStan forbids `target +=` and requires protected observations to be scored exactly once by a built-in sampling statement with the protected variable on the left-hand side. Replacing this expression with a built-in categorical sampling statement would require a substantive likelihood rewrite and, in general, would introduce a parameter-dependent normalization term not present in the original density. Therefore this model is not SafeStan-compatible by a minor same-density translation.
+Reason: the model scores `observed_utterance` through a manual marginalized likelihood, `target += log_sum_exp(listener_lp)`, where `listener_lp` depends on latent parameters and indexes the observed utterance. SafeStan forbids direct `target +=` scoring, and replacing this term with a built-in categorical sampling statement would introduce a normalization term over utterances. In this model that normalization depends on `state_bias`, so the rewrite would change the posterior unless an additional non-built-in prior/mixture adjustment were added. That is a substantive density change rather than a minor mechanical SafeStan translation.

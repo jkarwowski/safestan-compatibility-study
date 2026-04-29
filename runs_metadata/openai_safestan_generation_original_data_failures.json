@@ -1,0 +1,2449 @@
+{
+  "artifacts_root": "/Users/jacski/synthstats/stan-collection/models_safe",
+  "data_filename": "data_original.json",
+  "failures": 0,
+  "generated_at": "2026-04-29T16:40:13+00:00",
+  "model": "gpt-5.5",
+  "models_root": "/Users/jacski/synthstats/stan-collection/models",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning_effort": "high",
+  "results": [
+    {
+      "artifacts_dir": "models_safe/example_models/applications-covid-19-imperial-model-imperial-model/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:18:38+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/applications-covid-19-imperial-model-imperial-model",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0d7bf476b57c4bb40069f22eff1158819585d99da3ee6384a9",
+      "safe_dir": "models_safe/example_models/applications-covid-19-imperial-model-imperial-model",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:17:02+00:00",
+      "usage": {
+        "input_tokens": 74051,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 7966,
+        "output_tokens_details": {
+          "reasoning_tokens": 7768
+        },
+        "total_tokens": 82017
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/arm-ch-13-earnings-vary-si-chr/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:18:02+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/arm-ch-13-earnings-vary-si-chr",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0d026660a6ea0f410069f22eff42888196990717561131cabe",
+      "safe_dir": "models_safe/example_models/arm-ch-13-earnings-vary-si-chr",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:17:02+00:00",
+      "usage": {
+        "input_tokens": 46738,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 4888,
+        "output_tokens_details": {
+          "reasoning_tokens": 4660
+        },
+        "total_tokens": 51626
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/arm-ch-14-election88-full/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:18:47+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/arm-ch-14-election88-full",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_07573149982c19760069f22efeafe08192b602c42442b2ac2e",
+      "safe_dir": "models_safe/example_models/arm-ch-14-election88-full",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:17:02+00:00",
+      "usage": {
+        "input_tokens": 457661,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 7610,
+        "output_tokens_details": {
+          "reasoning_tokens": 6732
+        },
+        "total_tokens": 465271
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/arm-ch-17-multilevel-logistic-17-4/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:17:20+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/arm-ch-17-multilevel-logistic-17-4",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_00ab1ea7c51c32ea0069f22efe97c0819c9b63f5f9b2fe883d",
+      "safe_dir": "models_safe/example_models/arm-ch-17-multilevel-logistic-17-4",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:17:02+00:00",
+      "usage": {
+        "input_tokens": 52697,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1241,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 53938
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/arm-ch-18-weight-censored/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:17:57+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/arm-ch-18-weight-censored",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_02ff8ab4bdd7dae60069f22f10c3148191a881cb027efa1433",
+      "safe_dir": "models_safe/example_models/arm-ch-18-weight-censored",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:17:20+00:00",
+      "usage": {
+        "input_tokens": 19065,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2811,
+        "output_tokens_details": {
+          "reasoning_tokens": 2588
+        },
+        "total_tokens": 21876
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/arm-ch-4-kidiq-interaction-z/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:18:12+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/arm-ch-4-kidiq-interaction-z",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_03517120c45be88e0069f22f35d3e48197b9e1a7e5dfb3f66c",
+      "safe_dir": "models_safe/example_models/arm-ch-4-kidiq-interaction-z",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:17:57+00:00",
+      "usage": {
+        "input_tokens": 12414,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1223,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 13637
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/arm-ch-4-logearn-interaction-z/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:18:33+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/arm-ch-4-logearn-interaction-z",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_067dd053d39750220069f22f3ad63881909f849449c701bca9",
+      "safe_dir": "models_safe/example_models/arm-ch-4-logearn-interaction-z",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:18:02+00:00",
+      "usage": {
+        "input_tokens": 18507,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2303,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 20810
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-04-glmm1/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:20:17+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-04-glmm1",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "obs"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_01888f429eea15300069f22f44cb9081a3b899390236955cb4",
+      "safe_dir": "models_safe/example_models/bpa-ch-04-glmm1",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:18:12+00:00",
+      "usage": {
+        "input_tokens": 28478,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 14483,
+        "output_tokens_details": {
+          "reasoning_tokens": 9322
+        },
+        "total_tokens": 42961
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-04-glmm2/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:20:56+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-04-glmm2",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "obs"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0232a13da3fb20390069f22f59c3bc81a3b1e5b38f92dd712c",
+      "safe_dir": "models_safe/example_models/bpa-ch-04-glmm2",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:18:33+00:00",
+      "usage": {
+        "input_tokens": 28554,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 13130,
+        "output_tokens_details": {
+          "reasoning_tokens": 12430
+        },
+        "total_tokens": 41684
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-07-cjs-add/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:20:23+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-07-cjs-add",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0df61e2fd046f4250069f22f5e83b88195851cded3967e23aa",
+      "safe_dir": "models_safe/example_models/bpa-ch-07-cjs-add",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:18:38+00:00",
+      "usage": {
+        "input_tokens": 65810,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 9018,
+        "output_tokens_details": {
+          "reasoning_tokens": 8804
+        },
+        "total_tokens": 74828
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-07-cjs-group/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:19:54+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-07-cjs-group",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0ec8ce9cae4accb20069f22f67a85c819d81a45756543c53a5",
+      "safe_dir": "models_safe/example_models/bpa-ch-07-cjs-group",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:18:47+00:00",
+      "usage": {
+        "input_tokens": 40820,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 5448,
+        "output_tokens_details": {
+          "reasoning_tokens": 5178
+        },
+        "total_tokens": 46268
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-07-cjs-ind-raneff/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:21:17+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-07-cjs-ind-raneff",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0c0bb39afbe16b200069f22fac021081a28ccab459c763eda8",
+      "safe_dir": "models_safe/example_models/bpa-ch-07-cjs-ind-raneff",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:19:54+00:00",
+      "usage": {
+        "input_tokens": 51863,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 6427,
+        "output_tokens_details": {
+          "reasoning_tokens": 6214
+        },
+        "total_tokens": 58290
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-07-cjs-mnl/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:21:03+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-07-cjs-mnl",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "marr"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_046a03daf9ba5ed70069f22fc20640819ea7dda2babc700669",
+      "safe_dir": "models_safe/example_models/bpa-ch-07-cjs-mnl",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:20:17+00:00",
+      "usage": {
+        "input_tokens": 4286,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 4873,
+        "output_tokens_details": {
+          "reasoning_tokens": 3106
+        },
+        "total_tokens": 9159
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-07-cjs-trap/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:24+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-07-cjs-trap",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_06a88e781cc1894e0069f22fc7971881958c6d9c3259d10ddc",
+      "safe_dir": "models_safe/example_models/bpa-ch-07-cjs-trap",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:20:23+00:00",
+      "usage": {
+        "input_tokens": 14238,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 10592,
+        "output_tokens_details": {
+          "reasoning_tokens": 10358
+        },
+        "total_tokens": 24830
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-08-mr-mnl/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:21:59+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-08-mr-mnl",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "marr"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0079f734921b010a0069f22fe8ece081a185120edda0c23023",
+      "safe_dir": "models_safe/example_models/bpa-ch-08-mr-mnl",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:20:56+00:00",
+      "usage": {
+        "input_tokens": 4161,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 6225,
+        "output_tokens_details": {
+          "reasoning_tokens": 5178
+        },
+        "total_tokens": 10386
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-08-mr-mnl-age/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:42+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-08-mr-mnl-age",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_09e935a703462de40069f22fefa8a88190b3fd22de8b2789f7",
+      "safe_dir": "models_safe/example_models/bpa-ch-08-mr-mnl-age",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:21:03+00:00",
+      "usage": {
+        "input_tokens": 5775,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 8002,
+        "output_tokens_details": {
+          "reasoning_tokens": 7768
+        },
+        "total_tokens": 13777
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-08-mr-ss/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:18+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-08-mr-ss",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_044066cb2be462c60069f22ffe27e88190ae4987f2c2997855",
+      "safe_dir": "models_safe/example_models/bpa-ch-08-mr-ss",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:21:17+00:00",
+      "usage": {
+        "input_tokens": 48574,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 4893,
+        "output_tokens_details": {
+          "reasoning_tokens": 4660
+        },
+        "total_tokens": 53467
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-09-agerecruitment/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:10+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-09-agerecruitment",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0ccf12cda2da59b30069f230277e9881968bc0e4a14e960223",
+      "safe_dir": "models_safe/example_models/bpa-ch-09-agerecruitment",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:21:59+00:00",
+      "usage": {
+        "input_tokens": 24149,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 702,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 24851
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-11-ipm-hoopoe/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:32+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-11-ipm-hoopoe",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_03e44e8a558504540069f23032d190819c80da963f155e4b97",
+      "safe_dir": "models_safe/example_models/bpa-ch-11-ipm-hoopoe",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:10+00:00",
+      "usage": {
+        "input_tokens": 6180,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1809,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 7989
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-11-ipm-pred/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:44+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-11-ipm-pred",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_097ef2ece367c4d40069f2303aa35c819f89d6176beb30719a",
+      "safe_dir": "models_safe/example_models/bpa-ch-11-ipm-pred",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:18+00:00",
+      "usage": {
+        "input_tokens": 6071,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2320,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 8391
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-11-ipm-prod/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:47+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-11-ipm-prod",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0767c39d84276a570069f23040a684819d8553d752275d2312",
+      "safe_dir": "models_safe/example_models/bpa-ch-11-ipm-prod",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:24+00:00",
+      "usage": {
+        "input_tokens": 5401,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1828,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 7229
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-12-binmix/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:41+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-12-binmix",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0b87d173d083e9170069f23048f3e4819799d70996fe9f9c1f",
+      "safe_dir": "models_safe/example_models/bpa-ch-12-binmix",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:32+00:00",
+      "usage": {
+        "input_tokens": 6385,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 663,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 7048
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-12-binmix-cov/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:50+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-12-binmix-cov",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_03733ccea3d4432b0069f230516bec8191b0ac8a84c6daace5",
+      "safe_dir": "models_safe/example_models/bpa-ch-12-binmix-cov",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:41+00:00",
+      "usage": {
+        "input_tokens": 8493,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 735,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 9228
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-12-nmix0/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:51+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-12-nmix0",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_01346026a24487110069f230531948819eb3bb373f0559bfd4",
+      "safe_dir": "models_safe/example_models/bpa-ch-12-nmix0",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:42+00:00",
+      "usage": {
+        "input_tokens": 11433,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 715,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 12148
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-12-nmix1/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:54+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-12-nmix1",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0051d41bad551e0b0069f23054b4e0819e9fec56d655c210d7",
+      "safe_dir": "models_safe/example_models/bpa-ch-12-nmix1",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:44+00:00",
+      "usage": {
+        "input_tokens": 11861,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 676,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 12537
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-12-nmix2/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:22:56+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-12-nmix2",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_03c200333393e02e0069f23057f5f4819482320d95889ca901",
+      "safe_dir": "models_safe/example_models/bpa-ch-12-nmix2",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:47+00:00",
+      "usage": {
+        "input_tokens": 12041,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 728,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 12769
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bpa-ch-13-dynocc/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:23:05+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bpa-ch-13-dynocc",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_06fcdd3bde31c1430069f2305b25e4819d9eee41bde08a4df8",
+      "safe_dir": "models_safe/example_models/bpa-ch-13-dynocc",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:50+00:00",
+      "usage": {
+        "input_tokens": 38024,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1192,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 39216
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-bones-bones/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:25:41+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol1-bones-bones",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "grade_obs"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0b73876c23308e490069f2305be6c08191abf93a5106f49929",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-bones-bones",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:51+00:00",
+      "usage": {
+        "input_tokens": 6488,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 18704,
+        "output_tokens_details": {
+          "reasoning_tokens": 15538
+        },
+        "total_tokens": 25192
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-equiv-equiv/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:23:21+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol1-equiv-equiv",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "Y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_094024fdd34f663c0069f2305e926081a0bd934f1ca7129b13",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-equiv-equiv",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:54+00:00",
+      "usage": {
+        "input_tokens": 3492,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2859,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 6351
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-inhalers-inhalers/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:23:32+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol1-inhalers-inhalers",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_08ee5120ade52d380069f230608bb881a180f8e1f8b9a8db19",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-inhalers-inhalers",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:22:56+00:00",
+      "usage": {
+        "input_tokens": 4287,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 3347,
+        "output_tokens_details": {
+          "reasoning_tokens": 3106
+        },
+        "total_tokens": 7634
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-kidney-kidney/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:23:45+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol1-kidney-kidney",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_029be829082c68d40069f230695ae481a09eeea4c2da9c2765",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-kidney-kidney",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:23:05+00:00",
+      "usage": {
+        "input_tokens": 5164,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 3361,
+        "output_tokens_details": {
+          "reasoning_tokens": 3106
+        },
+        "total_tokens": 8525
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-leukfr-leukfr/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:25:13+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol1-leukfr-leukfr",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0675952381bfc1a40069f230799e988195a938ce3035f3993c",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-leukfr-leukfr",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:23:21+00:00",
+      "usage": {
+        "input_tokens": 4270,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 11067,
+        "output_tokens_details": {
+          "reasoning_tokens": 10876
+        },
+        "total_tokens": 15337
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-lsat-lsat/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:27:13+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol1-lsat-lsat",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0d4e8c7a7da891740069f230851a30819d9ffffe04b11a1ca1",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-lsat-lsat",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:23:32+00:00",
+      "usage": {
+        "input_tokens": 4180,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 18886,
+        "output_tokens_details": {
+          "reasoning_tokens": 18646
+        },
+        "total_tokens": 23066
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-cervix-cervix2/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:27:34+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol2-cervix-cervix2",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "xc",
+        "dc",
+        "wc",
+        "di",
+        "wi"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_00e0a65567bfaea00069f23091f08c819e877fe4d7b5266e27",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-cervix-cervix2",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:23:45+00:00",
+      "usage": {
+        "input_tokens": 20376,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 19040,
+        "output_tokens_details": {
+          "reasoning_tokens": 17092
+        },
+        "total_tokens": 39416
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-endo-endo1/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:27:05+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol2-endo-endo1",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "Y1_safestan_obs"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0b1cca7d13d3df180069f230e98c7081928566a58248adf953",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-endo-endo1",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:25:13+00:00",
+      "usage": {
+        "input_tokens": 3289,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 10329,
+        "output_tokens_details": {
+          "reasoning_tokens": 9226
+        },
+        "total_tokens": 13618
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-endo-endo2/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:27:07+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol2-endo-endo2",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "y_safestan"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_02e5daff716d07480069f23105f0e0819391750bbe15d45aff",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-endo-endo2",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:25:41+00:00",
+      "usage": {
+        "input_tokens": 3408,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 8422,
+        "output_tokens_details": {
+          "reasoning_tokens": 7250
+        },
+        "total_tokens": 11830
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-endo-endo3/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:29:14+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol2-endo-endo3",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "Y1",
+        "Y2"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_05c66111192827cc0069f23159414c819fa48f69558f02073f",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-endo-endo3",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:27:05+00:00",
+      "usage": {
+        "input_tokens": 3303,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 12876,
+        "output_tokens_details": {
+          "reasoning_tokens": 11394
+        },
+        "total_tokens": 16179
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-ice-ice/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:29:39+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol2-ice-ice",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "cases"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_05a5a8717f207f700069f2315bda3c819d8162945e8a22b9f9",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-ice-ice",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:27:07+00:00",
+      "usage": {
+        "input_tokens": 4644,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 14853,
+        "output_tokens_details": {
+          "reasoning_tokens": 13466
+        },
+        "total_tokens": 19497
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-pines-pines/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:27:36+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol2-pines-pines",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_03a839484329a04d0069f23161d50c819495bcb6d9891ca7eb",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-pines-pines",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:27:13+00:00",
+      "usage": {
+        "input_tokens": 4243,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1759,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 6002
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-schools-schools/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:28:56+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/bugs-examples-vol2-schools-schools",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "Y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_08f3a404cacd61ef0069f23176c264819c96e291f87e76bb11",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-schools-schools",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:27:34+00:00",
+      "usage": {
+        "input_tokens": 127317,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 7292,
+        "output_tokens_details": {
+          "reasoning_tokens": 6214
+        },
+        "total_tokens": 134609
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/education-dina-independent-dina-independent/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:28:10+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/education-dina-independent-dina-independent",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0595cf2b596768e20069f231789c8081a09c8fc9fdceb90190",
+      "safe_dir": "models_safe/example_models/education-dina-independent-dina-independent",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:27:36+00:00",
+      "usage": {
+        "input_tokens": 49092,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2710,
+        "output_tokens_details": {
+          "reasoning_tokens": 2463
+        },
+        "total_tokens": 51802
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/knitr-chapter2-golf1/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:28:18+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/knitr-chapter2-golf1",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0c7ebfd04b4c6be40069f2319a50dc81a3b10f5fe408c61bed",
+      "safe_dir": "models_safe/example_models/knitr-chapter2-golf1",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:28:10+00:00",
+      "usage": {
+        "input_tokens": 3233,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 695,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 3928
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/knitr-chapter2-worldcup-first-try-noprior/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:28:42+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/knitr-chapter2-worldcup-first-try-noprior",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_00cfc17478b8f6670069f231a2f2a481a2ac493df2d8d5cf83",
+      "safe_dir": "models_safe/example_models/knitr-chapter2-worldcup-first-try-noprior",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:28:18+00:00",
+      "usage": {
+        "input_tokens": 4559,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2280,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 6839
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/knitr-chapter2-worldcup-no-sqrt/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:29:04+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/knitr-chapter2-worldcup-no-sqrt",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0f7d88d440150c100069f231ba946c8194a66dc4c48203af0c",
+      "safe_dir": "models_safe/example_models/knitr-chapter2-worldcup-no-sqrt",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:28:42+00:00",
+      "usage": {
+        "input_tokens": 4523,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1793,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 6316
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/knitr-chapter2-worldcup-with-replication/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:29:33+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/knitr-chapter2-worldcup-with-replication",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0897bcece50ec37a0069f231c90f3881909cffe42b542302d0",
+      "safe_dir": "models_safe/example_models/knitr-chapter2-worldcup-with-replication",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:28:56+00:00",
+      "usage": {
+        "input_tokens": 4599,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 3311,
+        "output_tokens_details": {
+          "reasoning_tokens": 3106
+        },
+        "total_tokens": 7910
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/knitr-world-cup-worldcup-first-try-noprior/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:29:28+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/knitr-world-cup-worldcup-first-try-noprior",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_08b488a09347fc280069f231d03574819dbeef435a53ff29ce",
+      "safe_dir": "models_safe/example_models/knitr-world-cup-worldcup-first-try-noprior",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:29:04+00:00",
+      "usage": {
+        "input_tokens": 4559,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2281,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 6840
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/knitr-world-cup-worldcup-fixed/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:29:50+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/knitr-world-cup-worldcup-fixed",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0f357265848109510069f231da79488191b961cb8d4bcc8eb7",
+      "safe_dir": "models_safe/example_models/knitr-world-cup-worldcup-fixed",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:29:14+00:00",
+      "usage": {
+        "input_tokens": 4579,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 3288,
+        "output_tokens_details": {
+          "reasoning_tokens": 3055
+        },
+        "total_tokens": 7867
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/misc-nnmf-nnmf-vec/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:32:05+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/misc-nnmf-nnmf-vec",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "X"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0fe0bc97e48c5f1b0069f231e89c6881a28580a9797f22adad",
+      "safe_dir": "models_safe/example_models/misc-nnmf-nnmf-vec",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:29:28+00:00",
+      "usage": {
+        "input_tokens": 47083,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 14154,
+        "output_tokens_details": {
+          "reasoning_tokens": 13466
+        },
+        "total_tokens": 61237
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/example_models/regression-tests-mother/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:30:31+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/example_models/regression-tests-mother",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0540590590be06e10069f231eda760819d89f7668c3c998c9f",
+      "safe_dir": "models_safe/example_models/regression-tests-mother",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:29:33+00:00",
+      "usage": {
+        "input_tokens": 15542,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 5371,
+        "output_tokens_details": {
+          "reasoning_tokens": 5146
+        },
+        "total_tokens": 20913
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/adjectives/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:30:06+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/adjectives",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0a494aa030d294dd0069f231f3f3d0819cbaabd8f3a7b6b7e8",
+      "safe_dir": "models_safe/forestdb/adjectives",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:29:39+00:00",
+      "usage": {
+        "input_tokens": 3663,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2238,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 5901
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/blm/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:30:06+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/blm",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_084460acf4be59630069f231fe8e90819da289ca84872bb9cb",
+      "safe_dir": "models_safe/forestdb/blm",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:29:50+00:00",
+      "usage": {
+        "input_tokens": 3574,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1257,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 4831
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/exhaustivity/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:30:21+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/exhaustivity",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_01403234b736f97c0069f2320e5cc8819f8c5dfd4bb39734e9",
+      "safe_dir": "models_safe/forestdb/exhaustivity",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:30:06+00:00",
+      "usage": {
+        "input_tokens": 3644,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1199,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 4843
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/hyperbole/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:30:28+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/hyperbole",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0dd4a90289c2c2960069f2320ef0c4819eb064d6b1b8e5eaec",
+      "safe_dir": "models_safe/forestdb/hyperbole",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:30:06+00:00",
+      "usage": {
+        "input_tokens": 3581,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1774,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 5355
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/incremental/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:30:36+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/incremental",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0171c935a07dd3a90069f2321ef0248193a01575a235c8b20f",
+      "safe_dir": "models_safe/forestdb/incremental",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:30:21+00:00",
+      "usage": {
+        "input_tokens": 3613,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1226,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 4839
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/irony/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:30:49+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/irony",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_058571f747391dad0069f232245558819f8e9e20d9da73b867",
+      "safe_dir": "models_safe/forestdb/irony",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:30:28+00:00",
+      "usage": {
+        "input_tokens": 3621,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1788,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 5409
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/overinf/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:30:49+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/overinf",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_08f6a2cd7da1765c0069f23227d95c819d93b3988e95e93957",
+      "safe_dir": "models_safe/forestdb/overinf",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:30:31+00:00",
+      "usage": {
+        "input_tokens": 3587,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1270,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 4857
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/plural-predication/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:30:58+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/plural-predication",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0f51b7543a2df9740069f2322d169c8197add5cff858af576b",
+      "safe_dir": "models_safe/forestdb/plural-predication",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:30:36+00:00",
+      "usage": {
+        "input_tokens": 3694,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1616,
+        "output_tokens_details": {
+          "reasoning_tokens": 1436
+        },
+        "total_tokens": 5310
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/politeness/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:31:15+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/politeness",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_078b1075dbeab40e0069f2323926bc81a3a3cecb5d37b80125",
+      "safe_dir": "models_safe/forestdb/politeness",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:30:49+00:00",
+      "usage": {
+        "input_tokens": 3673,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2275,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 5948
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/forestdb/prosody/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:31:04+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/forestdb/prosody",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0d4036b7d7a1c7300069f2323977e4819d8ea3924f1ff96c51",
+      "safe_dir": "models_safe/forestdb/prosody",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:30:49+00:00",
+      "usage": {
+        "input_tokens": 3658,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1222,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 4880
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/bball-drive-event-0-hmm-drive-0/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:31:19+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/bball-drive-event-0-hmm-drive-0",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0d651053b82a2fb10069f23243176c8196ab9e2b84b21f0e82",
+      "safe_dir": "models_safe/posteriordb/bball-drive-event-0-hmm-drive-0",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:30:58+00:00",
+      "usage": {
+        "input_tokens": 12044,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1786,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 13830
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/bball-drive-event-1-hmm-drive-1/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:31:18+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/bball-drive-event-1-hmm-drive-1",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0b6ca66239dc48f30069f232489edc81a2bb027b44caaaeff1",
+      "safe_dir": "models_safe/posteriordb/bball-drive-event-1-hmm-drive-1",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:31:04+00:00",
+      "usage": {
+        "input_tokens": 12111,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1222,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 13333
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/bones-data-bones-model/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:33:30+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/bones-data-bones-model",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0c41f999ab8601750069f232534a7481a3967a7caac88aa6a6",
+      "safe_dir": "models_safe/posteriordb/bones-data-bones-model",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:31:15+00:00",
+      "usage": {
+        "input_tokens": 6456,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 13643,
+        "output_tokens_details": {
+          "reasoning_tokens": 13466
+        },
+        "total_tokens": 20099
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/dogs-dogs-hierarchical/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:32:24+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/dogs-dogs-hierarchical",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_059c70c4b6bbfaef0069f2325678d481a1b6f24004311a6da9",
+      "safe_dir": "models_safe/posteriordb/dogs-dogs-hierarchical",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:31:18+00:00",
+      "usage": {
+        "input_tokens": 6459,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 8031,
+        "output_tokens_details": {
+          "reasoning_tokens": 4142
+        },
+        "total_tokens": 14490
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/dogs-dogs-nonhierarchical/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:32:35+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/dogs-dogs-nonhierarchical",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_03e0a8f3b8a399e20069f232579138819498d2b9d45d40f1c8",
+      "safe_dir": "models_safe/posteriordb/dogs-dogs-nonhierarchical",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:31:19+00:00",
+      "usage": {
+        "input_tokens": 6674,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 8746,
+        "output_tokens_details": {
+          "reasoning_tokens": 4660
+        },
+        "total_tokens": 15420
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/ecdc0401-covid19imperial-v2/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:34:12+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/ecdc0401-covid19imperial-v2",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "deaths_obs"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0bc5a91ce94ae8010069f232862cd88195bdffbc2557cd7893",
+      "safe_dir": "models_safe/posteriordb/ecdc0401-covid19imperial-v2",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:32:05+00:00",
+      "usage": {
+        "input_tokens": 75272,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 12557,
+        "output_tokens_details": {
+          "reasoning_tokens": 10206
+        },
+        "total_tokens": 87829
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/ecdc0501-covid19imperial-v3/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:34:18+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/ecdc0501-covid19imperial-v3",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0df2b5fae22aebb60069f23298a5d081a1b63f62e3d267c8cc",
+      "safe_dir": "models_safe/posteriordb/ecdc0501-covid19imperial-v3",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:32:24+00:00",
+      "usage": {
+        "input_tokens": 75466,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 10034,
+        "output_tokens_details": {
+          "reasoning_tokens": 9840
+        },
+        "total_tokens": 85500
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/election88-election88-full/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:33:43+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/election88-election88-full",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0dc198997f7811f70069f232a3f4f48191b9927e87d8fd2c64",
+      "safe_dir": "models_safe/posteriordb/election88-election88-full",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:32:35+00:00",
+      "usage": {
+        "input_tokens": 457688,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 4949,
+        "output_tokens_details": {
+          "reasoning_tokens": 4142
+        },
+        "total_tokens": 462637
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/glmm-data-glmm1-model/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:36:12+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/glmm-data-glmm1-model",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "obs"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0edbfb85d0bcb0220069f232da99488193bd5991e34522a4d7",
+      "safe_dir": "models_safe/posteriordb/glmm-data-glmm1-model",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:33:30+00:00",
+      "usage": {
+        "input_tokens": 28497,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 16835,
+        "output_tokens_details": {
+          "reasoning_tokens": 11912
+        },
+        "total_tokens": 45332
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/hudson-lynx-hare-lotka-volterra/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:34:32+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/hudson-lynx-hare-lotka-volterra",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "y_init",
+        "y"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_04e7cdde7fa036aa0069f232e79748819480f0f44fc1c08147",
+      "safe_dir": "models_safe/posteriordb/hudson-lynx-hare-lotka-volterra",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:33:43+00:00",
+      "usage": {
+        "input_tokens": 3861,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 5305,
+        "output_tokens_details": {
+          "reasoning_tokens": 4142
+        },
+        "total_tokens": 9166
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/loss-curves-losscurve-sislob/api",
+      "compatibility": "as-is",
+      "completed_at": "2026-04-29T16:34:35+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/loss-curves-losscurve-sislob",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "loss"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_01fd7b73bcd4fbfa0069f23304553081978bc89fcf245d70a4",
+      "safe_dir": "models_safe/posteriordb/loss-curves-losscurve-sislob",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:34:12+00:00",
+      "usage": {
+        "input_tokens": 4630,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2695,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 7325
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/lsat-data-lsat-model/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:40:13+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/lsat-data-lsat-model",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "pattern_id"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_02c23142885e18720069f233bb62f88197a4afb206182a354a",
+      "safe_dir": "models_safe/posteriordb/lsat-data-lsat-model",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:34:18+00:00",
+      "usage": {
+        "input_tokens": 4196,
+        "input_tokens_details": {
+          "cached_tokens": 3840
+        },
+        "output_tokens": 18456,
+        "output_tokens_details": {
+          "reasoning_tokens": 15538
+        },
+        "total_tokens": 22652
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/mcycle-gp-accel-gp/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:35:26+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/mcycle-gp-accel-gp",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_008aed90ac453aca0069f23318560c819798e2d2fccf6c5d9d",
+      "safe_dir": "models_safe/posteriordb/mcycle-gp-accel-gp",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:34:32+00:00",
+      "usage": {
+        "input_tokens": 90038,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 4707,
+        "output_tokens_details": {
+          "reasoning_tokens": 4483
+        },
+        "total_tokens": 94745
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/rats-data-rats-model/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:34:52+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/rats-data-rats-model",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_09db51cfcbdcca970069f2331b6e9c81928cf3f26dc8d58181",
+      "safe_dir": "models_safe/posteriordb/rats-data-rats-model",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:34:35+00:00",
+      "usage": {
+        "input_tokens": 4968,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1227,
+        "output_tokens_details": {
+          "reasoning_tokens": 1034
+        },
+        "total_tokens": 6195
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/synthetic-grid-rbf-kernels-kronecker-gp/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:37:05+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/synthetic-grid-rbf-kernels-kronecker-gp",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_03a128c91da7e8880069f2332ce3d8819cafe0265a6168828c",
+      "safe_dir": "models_safe/posteriordb/synthetic-grid-rbf-kernels-kronecker-gp",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:34:52+00:00",
+      "usage": {
+        "input_tokens": 13599,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 11601,
+        "output_tokens_details": {
+          "reasoning_tokens": 11394
+        },
+        "total_tokens": 25200
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/timssaustwn-irt-gpcm-latent-reg-irt/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:36:18+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/timssaustwn-irt-gpcm-latent-reg-irt",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_023ec8c80f717d870069f2334e7dc8819492c90591a18cdbdb",
+      "safe_dir": "models_safe/posteriordb/timssaustwn-irt-gpcm-latent-reg-irt",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:35:26+00:00",
+      "usage": {
+        "input_tokens": 81956,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 4372,
+        "output_tokens_details": {
+          "reasoning_tokens": 4142
+        },
+        "total_tokens": 86328
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/posteriordb/uk-drivers-state-space-stochastic-level-stochastic-seasonal/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:36:53+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/posteriordb/uk-drivers-state-space-stochastic-level-stochastic-seasonal",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_05b9f1a8955b60ef0069f2337c2a7481a1958095496c701c57",
+      "safe_dir": "models_safe/posteriordb/uk-drivers-state-space-stochastic-level-stochastic-seasonal",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:36:12+00:00",
+      "usage": {
+        "input_tokens": 7160,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 3396,
+        "output_tokens_details": {
+          "reasoning_tokens": 3106
+        },
+        "total_tokens": 10556
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/golf-putting-logistic/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:36:26+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/golf-putting-logistic",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0a225d48be73b0870069f233825f44819db9c2eae0c029d523",
+      "safe_dir": "models_safe/stan_case_studies/golf-putting-logistic",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:36:18+00:00",
+      "usage": {
+        "input_tokens": 3150,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 729,
+        "output_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "total_tokens": 3879
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/worldcup-no-prior/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:36:50+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/worldcup-no-prior",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0e4faa917fb53a0a0069f2338acfa881a2a99c787fa4b4af00",
+      "safe_dir": "models_safe/stan_case_studies/worldcup-no-prior",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:36:26+00:00",
+      "usage": {
+        "input_tokens": 4464,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2292,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 6756
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stan_case_studies/worldcup-no-sqrt/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:37:12+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/stan_case_studies/worldcup-no-sqrt",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0018eb8fb8d9682c0069f233a29eb88197b739eb4f99089de2",
+      "safe_dir": "models_safe/stan_case_studies/worldcup-no-sqrt",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:36:50+00:00",
+      "usage": {
+        "input_tokens": 4443,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 1784,
+        "output_tokens_details": {
+          "reasoning_tokens": 1552
+        },
+        "total_tokens": 6227
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-05-margossian-models-effcpt-effcpt/api",
+      "compatibility": "minor",
+      "completed_at": "2026-04-29T16:38:51+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/stancon_talks/2017-contributed-talks-05-margossian-models-effcpt-effcpt",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [
+        "logCObs",
+        "respObs"
+      ],
+      "reasoning_effort": "high",
+      "response_id": "resp_0c68edde72c9cfdf0069f233a573e48192b40df5cfb97988c3",
+      "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-05-margossian-models-effcpt-effcpt",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:36:53+00:00",
+      "usage": {
+        "input_tokens": 4554,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 12097,
+        "output_tokens_details": {
+          "reasoning_tokens": 10177
+        },
+        "total_tokens": 16651
+      },
+      "wrote_data_safe": true,
+      "wrote_model_safe": true
+    },
+    {
+      "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-05-margossian-models-twocpt-twocpt/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:37:35+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/stancon_talks/2017-contributed-talks-05-margossian-models-twocpt-twocpt",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_02d209f202b8fb140069f233b1469c8190aea6f76c1e24de5a",
+      "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-05-margossian-models-twocpt-twocpt",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:37:05+00:00",
+      "usage": {
+        "input_tokens": 6538,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2821,
+        "output_tokens_details": {
+          "reasoning_tokens": 2588
+        },
+        "total_tokens": 9359
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    },
+    {
+      "artifacts_dir": "models_safe/stancon_talks/2018-contributed-talks-08-margossian-model-steadystate/api",
+      "compatibility": "major",
+      "completed_at": "2026-04-29T16:37:38+00:00",
+      "data_filename": "data_original.json",
+      "model": "gpt-5.5",
+      "path": "models/stancon_talks/2018-contributed-talks-08-margossian-model-steadystate",
+      "prompt_cache_key": "safestan-translation-v1",
+      "prompt_cache_retention": "24h",
+      "protected_variables": [],
+      "reasoning_effort": "high",
+      "response_id": "resp_0aae8fa0a0cc20b50069f233b845a48194ab9b2654e6629126",
+      "safe_dir": "models_safe/stancon_talks/2018-contributed-talks-08-margossian-model-steadystate",
+      "service_tier": "flex",
+      "started_at": "2026-04-29T16:37:12+00:00",
+      "usage": {
+        "input_tokens": 6189,
+        "input_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "output_tokens": 2272,
+        "output_tokens_details": {
+          "reasoning_tokens": 2070
+        },
+        "total_tokens": 8461
+      },
+      "wrote_data_safe": false,
+      "wrote_model_safe": false
+    }
+  ],
+  "run_id": "models-safe-gpt55-high-flex-original-data-failures-20260429T161701Z",
+  "safe_root": "/Users/jacski/synthstats/stan-collection/models_safe",
+  "service_tier": "flex",
+  "total": 82,
+  "workers": 4
+}

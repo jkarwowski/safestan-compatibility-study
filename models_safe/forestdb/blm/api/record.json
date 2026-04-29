@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/forestdb/blm/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:26:52+00:00",
+  "completed_at": "2026-04-29T16:30:06+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/forestdb/blm",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_02a87404760086510069f16c5d40f8819dbe652217f589b01a",
+  "response_id": "resp_084460acf4be59630069f231fe8e90819da289ca84872bb9cb",
   "safe_dir": "models_safe/forestdb/blm",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:26:37+00:00",
+  "started_at": "2026-04-29T16:29:50+00:00",
   "usage": {
-    "input_tokens": 3666,
+    "input_tokens": 3574,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1196,
+    "output_tokens": 1257,
     "output_tokens_details": {
       "reasoning_tokens": 1034
     },
-    "total_tokens": 4862
+    "total_tokens": 4831
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

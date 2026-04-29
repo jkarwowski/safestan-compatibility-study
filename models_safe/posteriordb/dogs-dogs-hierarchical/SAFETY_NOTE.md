@@ -2,8 +2,10 @@
 
 Compatibility: minor.
 
-Protected data: `y_safestan_flat`, a deterministic row-major flattening of the originally observed `y` array, with Stan-index relation `y_safestan_flat[(j - 1) * n_trials + t] = y[j, t]`.
+Protected data: `y`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: added `y_safestan_flat` so the observed binary outcomes are represented by a top-level protected identifier and scored exactly once with a built-in Bernoulli distribution. The original `y` array is retained as context for the deterministic lag-count construction in `transformed data`; the supplied `data_safe.json` sets `y_safestan_flat` to the row-major flattening of `y`. The elementwise Bernoulli likelihood was vectorized into one sampling statement outside loops. Added density-neutral `a ~ uniform(0, 1)` and `b ~ uniform(0, 1)` statements for parameters already constrained to `[0, 1]`, satisfying SafeStan's unique-prior rule without changing the posterior density.
+Changes: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before its observation. The history-derived predictors `prev_shock` and `prev_avoid` are computed from this copy. Replaced the indexed likelihood statements inside loops with a single vectorized `y ~ bernoulli(p)` statement whose probabilities are computed in the model block after parameter priors. Added `a ~ uniform(0, 1)` and `b ~ uniform(0, 1)`, which are density-neutral for parameters already constrained to `[0, 1]` and satisfy SafeStan's unique-prior requirement.
+
+Deterministic data augmentation: `y_safestan_copy` is exactly equal to `y` elementwise.

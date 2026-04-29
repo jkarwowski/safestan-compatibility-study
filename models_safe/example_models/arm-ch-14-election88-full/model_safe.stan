@@ -28,27 +28,28 @@ parameters {
   real<lower=0, upper=100> sigma_d;
   real<lower=0, upper=100> sigma_e;
 }
-transformed parameters {
-  vector[N] y_hat;
-  
-  for (i in 1 : N) {
-    y_hat[i] = beta[1] + beta[2] * black[i] + beta[3] * female[i]
-               + beta[5] * female[i] * black[i] + beta[4] * v_prev_full[i]
-               + a[age[i]] + b[edu[i]] + c[age_edu[i]] + d[state[i]]
-               + e[region_full[i]];
-  }
-}
 model {
+  vector[N] y_hat;
+
   sigma_a ~ uniform(0, 100);
   sigma_b ~ uniform(0, 100);
   sigma_c ~ uniform(0, 100);
   sigma_d ~ uniform(0, 100);
   sigma_e ~ uniform(0, 100);
+
   a ~ normal(0, sigma_a);
   b ~ normal(0, sigma_b);
   c ~ normal(0, sigma_c);
   d ~ normal(0, sigma_d);
   e ~ normal(0, sigma_e);
   beta ~ normal(0, 100);
+
+  for (i in 1 : N) {
+    y_hat[i] = beta[1] + beta[2] * black[i] + beta[3] * female[i]
+               + beta[5] * female[i] * black[i] + beta[4] * v_prev_full[i]
+               + a[age[i]] + b[edu[i]] + c[age_edu[i]] + d[state[i]]
+               + e[region_full[i]];
+  }
+
   y ~ bernoulli_logit(y_hat);
 }

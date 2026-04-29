@@ -1,7 +1,8 @@
 {
   "artifacts_dir": "models_safe/posteriordb/glmm-data-glmm1-model/api",
   "compatibility": "minor",
-  "completed_at": "2026-04-29T02:45:12+00:00",
+  "completed_at": "2026-04-29T16:36:12+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/posteriordb/glmm-data-glmm1-model",
   "prompt_cache_key": "safestan-translation-v1",
@@ -10,20 +11,20 @@
     "obs"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_0f897723f9ae2f560069f1708e2598819fb922cb878b55cfe4",
+  "response_id": "resp_0edbfb85d0bcb0220069f232da99488193bd5991e34522a4d7",
   "safe_dir": "models_safe/posteriordb/glmm-data-glmm1-model",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:44:30+00:00",
+  "started_at": "2026-04-29T16:33:30+00:00",
   "usage": {
-    "input_tokens": 3343,
+    "input_tokens": 28497,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 3799,
+    "output_tokens": 16835,
     "output_tokens_details": {
-      "reasoning_tokens": 3106
+      "reasoning_tokens": 11912
     },
-    "total_tokens": 7142
+    "total_tokens": 45332
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

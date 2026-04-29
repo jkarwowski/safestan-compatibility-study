@@ -287,15 +287,15 @@ model {
 
 ```
 
-Input `data.json` for this run:
+Input `data_original.json` for this run:
 
 ```json
 {
-  "I": 4,
+  "I": 183,
   "J": 2,
-  "n01": 4,
-  "n10": 5,
-  "n11": 5
+  "n01": 7,
+  "n10": 43,
+  "n11": 12
 }
 
 ```

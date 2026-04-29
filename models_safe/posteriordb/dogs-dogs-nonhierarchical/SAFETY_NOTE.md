@@ -2,8 +2,10 @@
 
 Compatibility: minor.
 
-Protected data: `y_flat`, a deterministic row-major flattening of the original observed array `y`.
+Protected data: `y`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: added `y_flat` with deterministic relation `y_flat[(j - 1) * n_trials + t] = y[j, t]` for Stan indices `j = 1..n_dogs`, `t = 1..n_trials`. The original `y` remains as context for the deterministic history arrays `prev_shock` and `prev_avoid`. Moved all parameter priors before parameter-dependent likelihood computations, changed `to_vector(z) ~ normal(0, 1)` to the equivalent elementwise prior `z ~ normal(0, 1)`, and replaced the nested indexed Bernoulli observations with one vectorized protected observation statement `y_flat ~ bernoulli(p_flat)` outside loops.
+Changes: added `y_safestan_copy`, a deterministic copy of `y`, because the original model used `y` in `transformed data` to build lagged avoidance/shock counts before the observation statements. The likelihood was mechanically vectorized so the protected top-level variable `y` is observed exactly once with a plain built-in `bernoulli` sampling statement. Parameter prior statements were moved before any model-block use of transformed parameters depending on them, and `to_vector(z) ~ normal(0, 1)` was rewritten as the equivalent top-level `z ~ normal(0, 1)` prior.
+
+Deterministic data augmentation: `y_safestan_copy[j][t] = y[j][t]` for all dogs `j` and trials `t`.

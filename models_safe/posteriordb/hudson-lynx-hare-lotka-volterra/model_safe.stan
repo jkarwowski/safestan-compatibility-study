@@ -25,8 +25,8 @@ data {
   array[N, 2] real<lower=0> y; // measured populations
 }
 transformed data {
-  array[4] real theta_loc = {1, 0.05, 1, 0.05};
-  array[4] real theta_scale = {0.5, 0.05, 0.5, 0.05};
+  array[4] real theta_mu = {1, 0.05, 1, 0.05};
+  array[4] real theta_sigma = {0.5, 0.05, 0.5, 0.05};
 }
 parameters {
   array[4] real<lower=0> theta; // { alpha, beta, gamma, delta }
@@ -42,10 +42,11 @@ model {
   array[2] real log_z_init;
   array[N, 2] real log_z;
   array[N, 2] real sigma_y;
-  
-  theta ~ normal(theta_loc, theta_scale);
+
+  theta ~ normal(theta_mu, theta_sigma);
   sigma ~ lognormal(-1, 1);
   z_init ~ lognormal(log(10), 1);
+
   for (k in 1 : 2) {
     log_z_init[k] = log(z_init[k]);
   }
@@ -55,6 +56,7 @@ model {
       sigma_y[n, k] = sigma[k];
     }
   }
+
   y_init ~ lognormal(log_z_init, sigma);
   y ~ lognormal(log_z, sigma_y);
 }

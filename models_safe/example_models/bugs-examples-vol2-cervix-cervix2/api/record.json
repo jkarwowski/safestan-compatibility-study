@@ -1,7 +1,8 @@
 {
   "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-cervix-cervix2/api",
   "compatibility": "minor",
-  "completed_at": "2026-04-29T01:46:40+00:00",
+  "completed_at": "2026-04-29T16:27:34+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/example_models/bugs-examples-vol2-cervix-cervix2",
   "prompt_cache_key": "safestan-translation-v1",
@@ -14,20 +15,20 @@
     "wi"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_0fa21cdba680dd5c0069f162ade3cc81a2a80f9526e7cb2897",
+  "response_id": "resp_00e0a65567bfaea00069f23091f08c819e877fe4d7b5266e27",
   "safe_dir": "models_safe/example_models/bugs-examples-vol2-cervix-cervix2",
   "service_tier": "flex",
-  "started_at": "2026-04-29T01:45:17+00:00",
+  "started_at": "2026-04-29T16:23:45+00:00",
   "usage": {
-    "input_tokens": 3594,
+    "input_tokens": 20376,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 7761,
+    "output_tokens": 19040,
     "output_tokens_details": {
-      "reasoning_tokens": 6732
+      "reasoning_tokens": 17092
     },
-    "total_tokens": 11355
+    "total_tokens": 39416
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

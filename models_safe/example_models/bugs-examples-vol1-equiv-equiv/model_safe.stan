@@ -31,8 +31,6 @@ transformed parameters {
   sigma2 = sqrt(sigmasq2);
 }
 model {
-  array[N, P] real m;
-
   sigmasq1 ~ inv_gamma(.001, .001);
   sigmasq2 ~ inv_gamma(.001, .001);
   mu ~ normal(0.0, 1000);
@@ -40,12 +38,15 @@ model {
   pi ~ normal(0.0, 1000);
   delta ~ normal(0, sigma2);
 
-  for (n in 1 : N) {
-    for (p in 1 : P) {
-      m[n, p] = mu + sign[T[n, p]] * phi / 2 + sign[p] * pi / 2 + delta[n];
+  {
+    array[N, P] real m;
+    for (n in 1 : N) {
+      for (p in 1 : P) {
+        m[n, p] = mu + sign[T[n, p]] * phi / 2 + sign[p] * pi / 2 + delta[n];
+      }
     }
+    Y ~ normal(m, sigma1);
   }
-  Y ~ normal(m, sigma1);
 }
 generated quantities {
   real equiv;

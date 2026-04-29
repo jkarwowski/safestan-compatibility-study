@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data choice: `y`, because it is the only top-level data variable appearing on the left side of a sampling statement (`y ~ binomial(n, p)`). The variables `n`, `x`, `r`, `R`, and `J` are context inputs.
+Protected data: `y`.
 
 Generated files: none.
 
-Reason: the top-level parameter `sigma` is used in the likelihood but has no explicit built-in prior sampling statement. SafeStan requires every parameter to be sampled exactly once from a built-in prior before use. Adding a proper prior for `sigma` would change the posterior/log density, and the existing lower bound `real<lower=0>` only implies an improper flat prior on the positive half-line, not a finite bounded uniform prior that can be added as a density-neutral mechanical rewrite.
+Reason: the likelihood observation `y ~ binomial(n, p)` is syntactically suitable for SafeStan, with `n`, `x`, `r`, `R`, and `J` acting as context inputs. However, the parameter `sigma` has no explicit built-in prior sampling statement before it is used to compute `p`. SafeStan requires every parameter to have exactly one built-in prior before use. Adding a proper prior for `sigma` would change the posterior/log density, and its `<lower=0>` constraint corresponds only to an improper positive-uniform density, not a proper finite-bound prior that can be made explicit density-neutrally. Therefore this cannot be translated with only a minor same-density rewrite.

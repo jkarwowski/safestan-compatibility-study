@@ -1,7 +1,8 @@
 {
   "artifacts_dir": "models_safe/posteriordb/loss-curves-losscurve-sislob/api",
   "compatibility": "as-is",
-  "completed_at": "2026-04-29T02:46:41+00:00",
+  "completed_at": "2026-04-29T16:34:35+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/posteriordb/loss-curves-losscurve-sislob",
   "prompt_cache_key": "safestan-translation-v1",
@@ -10,20 +11,20 @@
     "loss"
   ],
   "reasoning_effort": "high",
-  "response_id": "resp_0a78f4038860439c0069f170f1aa74819db70c6763b864ebd4",
+  "response_id": "resp_01fd7b73bcd4fbfa0069f23304553081978bc89fcf245d70a4",
   "safe_dir": "models_safe/posteriordb/loss-curves-losscurve-sislob",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:46:09+00:00",
+  "started_at": "2026-04-29T16:34:12+00:00",
   "usage": {
-    "input_tokens": 3980,
+    "input_tokens": 4630,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 3419,
+    "output_tokens": 2695,
     "output_tokens_details": {
-      "reasoning_tokens": 2070
+      "reasoning_tokens": 1034
     },
-    "total_tokens": 7399
+    "total_tokens": 7325
   },
   "wrote_data_safe": true,
   "wrote_model_safe": true

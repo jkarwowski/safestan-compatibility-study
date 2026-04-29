@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data choice: `y` is the observed count array scored by the likelihood.
+Protected data: `y`.
 
 Generated files: none.
 
-Reason: the model implements a zero-inflated marginalized N-mixture likelihood with manual `target +=` statements, `log_sum_exp` mixture terms, and user-defined log-probability functions. The functions also contain `reject()` checks. Translating this to SafeStan sampling statements would require a substantive likelihood/model rewrite rather than a minor same-density mechanical change.
+Reason: the likelihood for `y` is a marginalized zero-inflated N-mixture model implemented with manual `target +=` statements, `log_sum_exp`, and user-defined `_lpmf` functions. The protected data are also inspected in transformed data/control flow before any SafeStan-compatible observation statement. Replacing this with a single built-in sampling statement for top-level `y` would require a substantive statistical/model rewrite rather than a minor same-density translation.

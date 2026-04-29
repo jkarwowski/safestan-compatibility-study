@@ -101,11 +101,11 @@ def utc_run_id() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
-def model_dirs(models_root: Path) -> list[Path]:
+def model_dirs(models_root: Path, data_filename: str = "data.json") -> list[Path]:
     return sorted(
         path.parent
         for path in models_root.glob("*/*/model.stan")
-        if (path.parent / "data.json").is_file()
+        if (path.parent / data_filename).is_file()
     )
 
 
@@ -136,15 +136,21 @@ def read_source_note(path: Path, max_chars: int) -> str:
     return text[:max_chars].rstrip() + "\n[truncated]"
 
 
-def render_prompt(template: Template, model_dir: Path, source_note_chars: int) -> str:
+def render_prompt(
+    template: Template,
+    model_dir: Path,
+    source_note_chars: int,
+    data_filename: str = "data.json",
+) -> str:
     model_text = (model_dir / "model.stan").read_text(encoding="utf-8")
-    data_text = (model_dir / "data.json").read_text(encoding="utf-8")
+    data_text = (model_dir / data_filename).read_text(encoding="utf-8")
     metadata = compact_metadata(model_dir / "metadata.json")
     return template.safe_substitute(
         model_dir=str(model_dir.relative_to(ROOT)),
         metadata_json=json.dumps(metadata, indent=2, sort_keys=True),
         source_note=read_source_note(model_dir / "source.md", source_note_chars),
         model_stan=model_text,
+        data_filename=data_filename,
         data_json=data_text,
     )
 
@@ -381,6 +387,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sleep-seconds", type=float, default=0.0)
     parser.add_argument("--workers", type=int, default=DEFAULT_WORKERS, help="Parallel API worker threads.")
     parser.add_argument("--source-note-chars", type=int, default=1600)
+    parser.add_argument(
+        "--data-filename",
+        default="data.json",
+        help="Data file name to include in prompts, relative to each model directory.",
+    )
     parser.add_argument("--limit", type=int)
     parser.add_argument("--only", action="append", default=[], help="Process only matching model dir suffix or path; repeatable.")
     parser.add_argument("--dry-run", action="store_true", help="Render prompts and list models without calling the API.")
@@ -410,6 +421,7 @@ def process_model(
         "started_at": utc_now(),
         "model": args.model,
         "reasoning_effort": args.reasoning_effort,
+        "data_filename": args.data_filename,
     }
     if service_tier:
         record["service_tier"] = service_tier
@@ -441,7 +453,7 @@ def process_model(
         clear_translation_outputs(safe_model_dir)
         if artifact_dir is not None:
             clear_api_artifacts(artifact_dir)
-        prompt = render_prompt(template, path, args.source_note_chars)
+        prompt = render_prompt(template, path, args.source_note_chars, args.data_filename)
         payload = response_payload(
             args.model,
             args.reasoning_effort,
@@ -491,7 +503,7 @@ def main() -> int:
     template = Template(template_path.read_text(encoding="utf-8"))
     safe_root = Path(args.safe_root).expanduser().resolve()
 
-    candidates = model_dirs(models_root)
+    candidates = model_dirs(models_root, args.data_filename)
     if args.only:
         filters = tuple(args.only)
         candidates = [
@@ -504,7 +516,7 @@ def main() -> int:
 
     if args.dry_run:
         for path in candidates:
-            prompt = render_prompt(template, path, args.source_note_chars)
+            prompt = render_prompt(template, path, args.source_note_chars, args.data_filename)
             print(f"{path.relative_to(ROOT)} prompt_chars={len(prompt)}")
         return 0
 
@@ -584,6 +596,7 @@ def main() -> int:
         "safe_root": str(safe_root),
         "model": args.model,
         "reasoning_effort": args.reasoning_effort,
+        "data_filename": args.data_filename,
         "service_tier": service_tier,
         "prompt_cache_key": prompt_cache_key,
         "prompt_cache_retention": prompt_cache_retention,

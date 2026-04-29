@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/example_models/knitr-world-cup-worldcup-fixed/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:14:04+00:00",
+  "completed_at": "2026-04-29T16:29:50+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/example_models/knitr-world-cup-worldcup-fixed",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0df5b6fea55924780069f16951ba5081919124db91420d8b55",
+  "response_id": "resp_0f357265848109510069f231da79488191b961cb8d4bcc8eb7",
   "safe_dir": "models_safe/example_models/knitr-world-cup-worldcup-fixed",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:13:37+00:00",
+  "started_at": "2026-04-29T16:29:14+00:00",
   "usage": {
-    "input_tokens": 3305,
+    "input_tokens": 4579,
     "input_tokens_details": {
-      "cached_tokens": 2304
+      "cached_tokens": 1792
     },
-    "output_tokens": 2276,
+    "output_tokens": 3288,
     "output_tokens_details": {
-      "reasoning_tokens": 2070
+      "reasoning_tokens": 3055
     },
-    "total_tokens": 5581
+    "total_tokens": 7867
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

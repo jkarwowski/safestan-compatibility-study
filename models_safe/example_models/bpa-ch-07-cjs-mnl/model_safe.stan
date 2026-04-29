@@ -1,7 +1,7 @@
 data {
   int<lower=0> n_occasions; // Number of capture occasions
   array[n_occasions - 1, n_occasions] int<lower=0> marr; // m-array
-  array[n_occasions - 1, n_occasions] int<lower=0> marr_safestan_copy; // deterministic copy of marr for pre-observation use
+  array[n_occasions - 1, n_occasions] int<lower=0> marr_safestan_copy; // deterministic copy of marr for pre-likelihood computations
 }
 transformed data {
   // Compoud declaration was enabled in Stan 2.13

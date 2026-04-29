@@ -3,11 +3,11 @@
   "billing": {
     "payer": "developer"
   },
-  "completed_at": 1777425682,
-  "created_at": 1777425667,
+  "completed_at": 1777479492,
+  "created_at": 1777479477,
   "error": null,
   "frequency_penalty": 0.0,
-  "id": "resp_02451811f9ffa66d0069f15d0391988194a7aae50307dd9e7c",
+  "id": "resp_03517120c45be88e0069f22f35d3e48197b9e1a7e5dfb3f66c",
   "incomplete_details": null,
   "instructions": null,
   "max_output_tokens": 64000,
@@ -18,7 +18,7 @@
   "object": "response",
   "output": [
     {
-      "id": "rs_02451811f9ffa66d0069f15d043a8481948737094429072ef3",
+      "id": "rs_03517120c45be88e0069f22f367e0c8197863d4569d7a077d0",
       "summary": [],
       "type": "reasoning"
     },
@@ -27,11 +27,11 @@
         {
           "annotations": [],
           "logprobs": [],
-          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `kid_score`.\\n\\nGenerated files: none.\\n\\nReason: the observed likelihood is `kid_score ~ normal_id_glm(x, alpha, beta, sigma)`, so `kid_score` is the protected interface variable and `mom_hs`/`mom_iq` are predictors. However, the parameters `alpha`, `beta`, and `sigma` have no explicit priors. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors would change the posterior/log density, and the existing unconstrained or one-sided constrained parameters do not imply finite proper uniform priors that can be added density-neutrally. Therefore this model cannot be translated with only a minor same-density rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
+          "text": "{\"compatibility\":\"major\",\"safety_note_md\":\"# SafeStan Safety Note\\n\\nCompatibility: major.\\n\\nProtected data: `kid_score`.\\n\\nGenerated files: none.\\n\\nReason: `kid_score` is the only top-level data variable scored by a sampling statement (`kid_score ~ normal_id_glm(...)`). The predictors `mom_hs` and `mom_iq` are context data used to build the design matrix. However, the parameters `alpha`, `beta`, and `sigma` have no explicit priors in the original model. SafeStan requires each parameter to have exactly one built-in prior before use. Adding proper priors would change the posterior/log density, and the existing implicit flat/improper priors cannot be represented as a same-density SafeStan rewrite.\\n\",\"model_safe_stan\":\"\",\"data_safe_json\":\"\",\"protected_variables\":[]}",
           "type": "output_text"
         }
       ],
-      "id": "msg_02451811f9ffa66d0069f15d104e208194917e0f83498df239",
+      "id": "msg_03517120c45be88e0069f22f42b8ec8197b4d0c1cdcee049ee",
       "phase": "final_answer",
       "role": "assistant",
       "status": "completed",
@@ -107,15 +107,15 @@
   "top_p": 0.98,
   "truncation": "disabled",
   "usage": {
-    "input_tokens": 3105,
+    "input_tokens": 12414,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1237,
+    "output_tokens": 1223,
     "output_tokens_details": {
       "reasoning_tokens": 1034
     },
-    "total_tokens": 4342
+    "total_tokens": 13637
   },
   "user": null
 }

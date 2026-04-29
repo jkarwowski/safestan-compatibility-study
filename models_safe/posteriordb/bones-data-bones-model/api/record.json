@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/posteriordb/bones-data-bones-model/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:39:34+00:00",
+  "completed_at": "2026-04-29T16:33:30+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/posteriordb/bones-data-bones-model",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0dccb00cde12a7200069f16f0952a081928c8c6ee9417fd3d9",
+  "response_id": "resp_0c41f999ab8601750069f232534a7481a3967a7caac88aa6a6",
   "safe_dir": "models_safe/posteriordb/bones-data-bones-model",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:38:01+00:00",
+  "started_at": "2026-04-29T16:31:15+00:00",
   "usage": {
-    "input_tokens": 3702,
+    "input_tokens": 6456,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 7473,
+    "output_tokens": 13643,
     "output_tokens_details": {
-      "reasoning_tokens": 7250
+      "reasoning_tokens": 13466
     },
-    "total_tokens": 11175
+    "total_tokens": 20099
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

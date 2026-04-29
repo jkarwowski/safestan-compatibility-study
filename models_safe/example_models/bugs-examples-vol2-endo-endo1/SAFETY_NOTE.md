@@ -2,10 +2,8 @@
 
 Compatibility: minor.
 
-Protected data: `Y1_safestan`.
+Protected data: `Y1_safestan_obs`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: the original likelihood scored the transformed-data slice `Y[1]`, which is not a top-level plain data identifier. The SafeStan version lifts that deterministic observed slice to a top-level protected data variable `Y1_safestan`, with `Y1_safestan[i] = 1` for `i = 1, ..., I`. The transformed-data helper `est1m2` is computed directly; this is the only transformed quantity used by the likelihood and is equivalent to the original `est[1] - est[2]` construction for data where the original indexing is well-defined. The parameter prior on `beta` was already a single built-in prior and was left unchanged.
-
-`data_safe.json` augments the supplied data with `Y1_safestan: [1, 1, 1]`, deterministically generated from `I = 3` and the original transformed-data assignment `Y[1, i] = 1`.
+Changes: added top-level data variable `Y1_safestan_obs` and changed the likelihood from `Y[1] ~ binomial_logit(...)` to `Y1_safestan_obs ~ binomial_logit(...)`, because SafeStan requires protected observations to be top-level plain identifiers. In `data_safe.json`, `Y1_safestan_obs` is deterministically set to an array of length `I` whose entries are all `1`, exactly matching the original transformed-data construction `Y[1, i] = 1` for `i = 1:I`. The original count inputs `n10`, `n01`, `n11`, and `I` remain context inputs. The prior on `beta` was already explicit and unchanged.

@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data choice: the original likelihood scores `log_earn`, a transformed-data value computed as `log(earn)` from the top-level data variable `earn`. No SafeStan protected variable is emitted.
+Protected data: the model scores `log_earn = log(earn)`, a transformed-data quantity derived from top-level data `earn`; `height` and `male` are predictors/context inputs.
 
 Generated files: none.
 
-Reason: the observed quantity on the left side of the sampling statement is not a plain top-level data variable; it is a transformed-data value. Making this SafeStan-compatible would require either adding a new top-level `log_earn` observation computed by a non-copy transformation of `earn`, or changing the likelihood to one on `earn` itself, which would change the target density. In addition, the parameters `alpha`, `beta`, and `sigma` have no explicit proper priors in the original model; adding such priors would substantively change the model. Therefore this model cannot be translated to SafeStan with only minor same-density rewrites.
+Reason: the likelihood is placed on `log_earn`, which is not a top-level data variable, while SafeStan requires protected observations to be top-level data identifiers on the left side of a built-in sampling statement. Making `earn` the protected variable would require changing the likelihood, for example to a lognormal density with a Jacobian term, and adding a new top-level `log_earn` observation would not be a copy/reshape of the supplied data interface. In addition, the parameters `alpha`, `beta`, and `sigma` have no explicit built-in priors; adding proper priors would change the posterior rather than preserve the original model.

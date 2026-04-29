@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: `y` is the observed count array scored by the likelihood through slices `y[i, 1:2, k]`.
+Protected data: the original model conditions on `y` through the N-mixture likelihood.
 
 Generated files: none.
 
-Reason: the likelihood is a custom marginalized bivariate Poisson distribution implemented as a user-defined `_lpmf` with `log_sum_exp` over latent states and used via `y[i, 1:2, k] ~ bivariate_poisson_log(...)` inside loops. SafeStan requires protected observations to be scored exactly once as a plain top-level identifier by a built-in Stan distribution, and also rejects user-defined distributions in sampling statements, `reject()`, and `_lp`/`_lpmf` style likelihood functions. Replacing this with SafeStan-compatible built-in sampling statements would require a substantive likelihood/model rewrite rather than a mechanical same-density translation.
+Reason: the likelihood is implemented as repeated sampling of indexed slices of `y` using a user-defined distribution, `bivariate_poisson_log_lpmf`, which internally performs a marginalized log-sum calculation and contains `reject()` checks. SafeStan requires protected observations to be scored exactly once as a plain top-level identifier using a built-in Stan distribution, and it rejects user-defined distributions, `_lpmf` likelihood paths, `reject()`, and non-plain protected-data left-hand sides. Replacing this marginalized bivariate Poisson/N-mixture likelihood with SafeStan-compatible built-in sampling statements would require a substantive model rewrite rather than a minor same-density translation.

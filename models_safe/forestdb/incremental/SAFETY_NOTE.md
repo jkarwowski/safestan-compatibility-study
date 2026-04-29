@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: `observed_utterance`.
+Protected data choice: `observed_utterance` is the data variable being conditioned on by the likelihood. The other data variables are context/configuration inputs.
 
 Generated files: none.
 
-Reason: the observation likelihood is implemented by manual `target += log_sum_exp(listener_lp)` scoring, where `listener_lp` depends on `observed_utterance` through an indexed `log_softmax` term. SafeStan forbids arbitrary `target +=` scoring. Replacing this with a built-in categorical sampling statement would introduce a parameter-dependent normalization term and would not preserve the original posterior/log density. An exact translation would require a custom likelihood or a substantive marginalized-latent-state rewrite, so this is not a minor SafeStan-compatible change.
+Reason: the likelihood is implemented with `target += log_sum_exp(listener_lp)`, a marginalized pragmatic listener calculation. SafeStan forbids arbitrary `target +=` scoring, and replacing this with a built-in sampling statement would require a substantive model rewrite. In particular, a categorical rewrite would introduce a normalization over utterances and would not preserve the original parameter-dependent density because `state_bias` makes the original `log_sum_exp` contribution unnormalized as a distribution over `observed_utterance`.

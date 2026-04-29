@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/example_models/regression-tests-mother/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:26:01+00:00",
+  "completed_at": "2026-04-29T16:30:31+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/example_models/regression-tests-mother",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0c741ada71d368750069f16c1d9b24819c92a67865399bb797",
+  "response_id": "resp_0540590590be06e10069f231eda760819d89f7668c3c998c9f",
   "safe_dir": "models_safe/example_models/regression-tests-mother",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:25:33+00:00",
+  "started_at": "2026-04-29T16:29:33+00:00",
   "usage": {
-    "input_tokens": 13505,
+    "input_tokens": 15542,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2306,
+    "output_tokens": 5371,
     "output_tokens_details": {
-      "reasoning_tokens": 2070
+      "reasoning_tokens": 5146
     },
-    "total_tokens": 15811
+    "total_tokens": 20913
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

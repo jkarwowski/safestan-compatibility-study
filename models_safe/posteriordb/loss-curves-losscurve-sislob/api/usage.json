@@ -1,11 +1,11 @@
 {
-  "input_tokens": 3980,
+  "input_tokens": 4630,
   "input_tokens_details": {
     "cached_tokens": 1792
   },
-  "output_tokens": 3419,
+  "output_tokens": 2695,
   "output_tokens_details": {
-    "reasoning_tokens": 2070
+    "reasoning_tokens": 1034
   },
-  "total_tokens": 7399
+  "total_tokens": 7325
 }

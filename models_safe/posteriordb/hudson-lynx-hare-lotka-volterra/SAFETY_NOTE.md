@@ -2,8 +2,8 @@
 
 Compatibility: minor.
 
-Protected data: `y_init` and `y`.
+Protected data: `y_init`, `y`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: rewrote the indexed/looped observation statements into one top-level sampling statement for `y_init` and one top-level sampling statement for `y`. The original two indexed priors on `theta` were combined into a single vectorized built-in normal prior with deterministic transformed-data location and scale arrays. Local helper arrays are used to match the original column-specific lognormal scales for `y`. No data values were changed or added.
+Changes: rewrote the two observed-data likelihoods so each protected top-level data variable appears exactly once on the left-hand side of a built-in sampling statement outside any loop. The column-wise `y_init[k]` and `y[:, k]` lognormal likelihoods were replaced by equivalent vectorized statements using local helper arrays for `log(z_init)`, `log(z)`, and replicated measurement-error scales. The two indexed `theta` prior statements were replaced by one equivalent vectorized prior with deterministic prior-location and prior-scale arrays. No data values were changed or added.

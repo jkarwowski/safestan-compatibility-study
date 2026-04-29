@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/forestdb/adjectives/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:26:22+00:00",
+  "completed_at": "2026-04-29T16:30:06+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/forestdb/adjectives",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0a7fc90dd989ad320069f16c39664481a2b01d82db67f25b6f",
+  "response_id": "resp_0a494aa030d294dd0069f231f3f3d0819cbaabd8f3a7b6b7e8",
   "safe_dir": "models_safe/forestdb/adjectives",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:26:01+00:00",
+  "started_at": "2026-04-29T16:29:39+00:00",
   "usage": {
-    "input_tokens": 3678,
+    "input_tokens": 3663,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 1711,
+    "output_tokens": 2238,
     "output_tokens_details": {
-      "reasoning_tokens": 1519
+      "reasoning_tokens": 2070
     },
-    "total_tokens": 5389
+    "total_tokens": 5901
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

@@ -1,9 +1,9 @@
 # SafeStan Safety Note
 
-Compatibility: minor.
+Compatibility: major.
 
-Protected data: `deaths_safestan` (a deterministic copy/reshape of the originally scored `deaths` entries).
+Protected data: the observed death-count likelihood is applied to the country/day slices `deaths[EpidemicStart[m] : N[m], m]`.
 
-Generated files: `model_safe.stan`, `data_safe.json`.
+Generated files: none.
 
-Changes: added context `N_deaths_observed` and protected data `deaths_safestan`. The new protected array is formed in country-major order from `deaths[i, m]` for all `m` and `i = EpidemicStart[m], ..., min(N[m], N2)`; when the model's stated data condition `N[m] <= N2` holds, this is exactly the original likelihood slice `deaths[EpidemicStart[m] : N[m], m]`. For the supplied synthetic JSON this deterministic relation gives `N_deaths_observed = 0` and `deaths_safestan = []`. The looped sliced likelihood was replaced by a single vectorized built-in `neg_binomial_2` sampling statement, and the elementwise prior on `y` was vectorized, preserving the same log density while satisfying SafeStan's single-use and no-sampling-in-loops restrictions.
+Reason: the likelihood scores ragged indexed slices of the top-level `deaths` matrix inside a loop. SafeStan requires protected observations to be scored exactly once with a plain top-level identifier and not inside loops. Making this compatible would require replacing the observed interface with a newly flattened protected vector of selected death counts and re-indexing the dynamic `E_deaths` likelihood accordingly; for this epidemic model that is a substantive data-interface and likelihood-organization rewrite rather than an as-is or small syntactic translation.

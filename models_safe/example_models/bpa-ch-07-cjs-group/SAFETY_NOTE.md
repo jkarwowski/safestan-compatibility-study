@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data choice: `y` is the observed capture-history variable scored by the original likelihood.
+Protected data choice: the capture-history array `y` is the natural protected interface because elements of `y` are scored in the model likelihood.
 
 Generated files: none.
 
-Reason: the likelihood scores indexed elements of `y` inside loops and conditionals, after using `y` in `transformed data` to compute `first` and `last`. The model also includes sampling statements with a constant left-hand side, such as `1 ~ bernoulli(...)`, to encode survival and terminal non-capture terms. These are part of a marginalized capture-recapture likelihood rather than ordinary top-level protected observations. Making this SafeStan-compatible would require a substantive likelihood/model rewrite, not a minor same-density syntactic translation. The missing explicit uniform priors for the bounded parameters could be repaired mechanically, but that is not sufficient to address the likelihood structure.
+Reason: the model is not representable in the SafeStan subset by a minor mechanical rewrite. The likelihood scores indexed elements `y[i, t]` inside data-dependent loops, while `y` is also read in `transformed data` to compute `first` and `last` and then used to gate which likelihood factors are applied. SafeStan requires protected data to be scored exactly once as a plain top-level identifier before any other use. The model also contains likelihood factors written as literal observations, `1 ~ bernoulli(...)`, for survival and terminal non-capture terms; making these SafeStan observations would require introducing new protected pseudo-data not present as deterministic copies or reshapes of the supplied data. Replacing the Cormack-Jolly-Seber marginalized capture-history likelihood with flattened pseudo-observations or another normalized representation would be a substantive likelihood rewrite rather than a minor same-density translation.

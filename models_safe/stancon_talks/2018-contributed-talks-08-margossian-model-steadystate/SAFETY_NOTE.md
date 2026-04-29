@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: the original likelihood scores `logCObs`, a transformed-data value defined as `log(cObs)`. No SafeStan protected interface is emitted for this major case.
+Protected data: `cObs` is the top-level observed concentration data, but the model scores the transformed quantity `logCObs = log(cObs)`.
 
 Generated files: none.
 
-Reason: the model cannot be translated to SafeStan with only minor same-density changes. In particular, parameter `ka` is used in the likelihood through `theta`, the algebraic solver, `cHat`, and `cHatObs`, but it has no explicit prior sampling statement. Its Stan constraint `real<lower = 0> ka;` gives only an improper implicit prior on the positive reals; adding any proper built-in prior would change the posterior. The likelihood also scores a transformed-data quantity (`logCObs`) rather than a top-level data variable, which would require an interface/data rewrite. Because satisfying SafeStan would require a substantive density change, no `model_safe.stan` or `data_safe.json` is generated.
+Reason: the original likelihood is applied to a transformed-data value (`logCObs ~ normal(...)`) rather than to a top-level protected data identifier. Rewriting this as a SafeStan observation of `cObs` would require changing the likelihood, for example to a lognormal likelihood with a Jacobian term, which is not the same log density. In addition, the parameter `ka` has no explicit proper built-in prior; adding one would change the posterior. Therefore a SafeStan-compatible version cannot be produced by only minor same-density mechanical changes.

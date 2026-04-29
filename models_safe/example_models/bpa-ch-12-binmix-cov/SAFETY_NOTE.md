@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: `y`.
+Protected data choice: `y` is the observed count array being scored by the likelihood. `R`, `T`, `K`, and `X` are context/configuration inputs.
 
 Generated files: none.
 
-Reason: the model conditions on `y` through a marginalized binomial-mixture likelihood implemented with manual `target += log_sum_exp(...)` scoring over the latent population size. SafeStan forbids arbitrary `target +=` scoring and requires each protected observation to be scored exactly once by a built-in sampling statement. Replacing this marginal likelihood with SafeStan sampling statements would require a substantive model rewrite, such as changing the marginalized latent-state algorithm or introducing a different likelihood representation. The model also uses `y` in `transformed data` to compute `max_y` before observation, which would need restructuring, but the primary blocker is the non-built-in marginalized likelihood.
+Reason: the likelihood for `y` is a marginalized latent-population mixture implemented with manual `target += log_sum_exp(...)` scoring and explicit `_lpmf` calls inside nested loops. Replacing this with SafeStan sampling statements would require a substantive rewrite to a different likelihood representation, not a minor same-density translation. In addition, the parameters `alpha0`, `alpha1`, `beta0`, and `beta1` use implicit improper flat priors, while SafeStan requires each parameter to have exactly one built-in prior sampling statement before use; adding proper priors would change the posterior density.

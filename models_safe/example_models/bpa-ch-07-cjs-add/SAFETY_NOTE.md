@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data choice: `y` is the observed capture-history data variable that the likelihood conditions on.
+Protected data: `y` is the capture-history data scored by the likelihood.
 
 Generated files: none.
 
-Reason: the capture-recapture likelihood cannot be represented by a minor SafeStan rewrite. The model computes `first` and `last` from `y` in `transformed data`, then uses indexed elements `y[i, t]` inside loops and an `if` condition, while SafeStan requires each protected top-level data variable to be observed exactly once with a plain built-in sampling statement before any other use. The likelihood also contains pseudo-observation terms such as `1 ~ bernoulli(phi[i, t - 1])` and `1 ~ bernoulli(chi[i, last[i]])`, which are not top-level protected data variables. Replacing this marginalized CJS likelihood with SafeStan-compatible built-in sampling statements would require a substantive model rewrite or adding new observed data, so no same-density minor translation is provided.
+Reason: the likelihood is a Cormack-Jolly-Seber capture-history likelihood assembled through data-dependent loops and conditionals using `first` and `last` values computed from `y`. The protected observation `y` is read in `transformed data` before it is scored, and its elements are later scored with indexed left-hand sides inside loops. The model also uses constant-observation sampling statements such as `1 ~ bernoulli(...)`, which SafeStan does not permit because sampling targets must be top-level protected data variables or top-level parameters. Converting this marginalized latent-state likelihood into single top-level SafeStan observations would require substantive likelihood/interface restructuring rather than a minor mechanical rewrite.

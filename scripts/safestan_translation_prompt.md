@@ -201,7 +201,7 @@ Original `model.stan`:
 ${model_stan}
 ```
 
-Input `data.json` for this run:
+Input `${data_filename}` for this run:
 
 ```json
 ${data_json}

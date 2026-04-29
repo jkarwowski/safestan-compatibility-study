@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/posteriordb/timssaustwn-irt-gpcm-latent-reg-irt/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T02:57:58+00:00",
+  "completed_at": "2026-04-29T16:36:18+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/posteriordb/timssaustwn-irt-gpcm-latent-reg-irt",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_09c4c9c17d3cd0fa0069f1734f958481a1b9b5eb8ba2ff8b7f",
+  "response_id": "resp_023ec8c80f717d870069f2334e7dc8819492c90591a18cdbdb",
   "safe_dir": "models_safe/posteriordb/timssaustwn-irt-gpcm-latent-reg-irt",
   "service_tier": "flex",
-  "started_at": "2026-04-29T02:56:15+00:00",
+  "started_at": "2026-04-29T16:35:26+00:00",
   "usage": {
-    "input_tokens": 4021,
+    "input_tokens": 81956,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 7451,
+    "output_tokens": 4372,
     "output_tokens_details": {
-      "reasoning_tokens": 7250
+      "reasoning_tokens": 4142
     },
-    "total_tokens": 11472
+    "total_tokens": 86328
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

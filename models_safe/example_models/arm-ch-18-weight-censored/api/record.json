@@ -1,27 +1,28 @@
 {
   "artifacts_dir": "models_safe/example_models/arm-ch-18-weight-censored/api",
   "compatibility": "major",
-  "completed_at": "2026-04-29T01:16:01+00:00",
+  "completed_at": "2026-04-29T16:17:57+00:00",
+  "data_filename": "data_original.json",
   "model": "gpt-5.5",
   "path": "models/example_models/arm-ch-18-weight-censored",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [],
   "reasoning_effort": "high",
-  "response_id": "resp_0e5444a7d8b2e5000069f15bb7fd1c819f97a0b7c615d2315b",
+  "response_id": "resp_02ff8ab4bdd7dae60069f22f10c3148191a881cb027efa1433",
   "safe_dir": "models_safe/example_models/arm-ch-18-weight-censored",
   "service_tier": "flex",
-  "started_at": "2026-04-29T01:15:35+00:00",
+  "started_at": "2026-04-29T16:17:20+00:00",
   "usage": {
-    "input_tokens": 3257,
+    "input_tokens": 19065,
     "input_tokens_details": {
       "cached_tokens": 1792
     },
-    "output_tokens": 2257,
+    "output_tokens": 2811,
     "output_tokens_details": {
-      "reasoning_tokens": 2070
+      "reasoning_tokens": 2588
     },
-    "total_tokens": 5514
+    "total_tokens": 21876
   },
   "wrote_data_safe": false,
   "wrote_model_safe": false

@@ -2,8 +2,8 @@
 
 Compatibility: major.
 
-Protected data: the model observes `sqrt_dif`, a transformed-data vector deterministically computed from `score_1 - score_2`.
+Protected data: no SafeStan protected-variable list is generated. The original likelihood scores `sqrt_dif`, a transformed-data quantity computed from top-level data `score_1` and `score_2`.
 
 Generated files: none.
 
-Reason: the likelihood is written for `sqrt_dif`, which is not a top-level data variable, so a SafeStan version would at least require a protected top-level deterministic observation. More importantly, the parameters `b`, `sigma_a`, and `sigma_y` are used in the model without any sampling statement/prior. SafeStan requires every parameter to have exactly one built-in prior before use. Adding proper priors would change the original posterior/log density, and the implicit improper flat priors on these unbounded or half-bounded parameters cannot be represented as density-neutral built-in sampling statements. Therefore this cannot be translated with only minor same-density changes.
+Reason: the observed quantity on the left side of the likelihood is not a top-level data variable, but a nonlinear transformed-data value. Replacing it with SafeStan sampling statements would require changing the protected interface or adding a new derived observation rather than a simple copy/reshape. Also, parameters `b`, `sigma_a`, and `sigma_y` have only Stan's implicit improper priors; adding proper built-in priors would change the posterior density. Therefore this is not a minor same-density SafeStan translation.

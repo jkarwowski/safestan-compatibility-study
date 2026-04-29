@@ -1,7 +1,7 @@
 functions{
 
   array[] real effCptModel1(real t0, real t, array[] real init, real amt, int cmt, int evid,
-			  real CL, real Q, real V1, real V2, real ka, real ke0) {
+                          real CL, real Q, real V1, real V2, real ka, real ke0) {
     real k10;
     real k12;
     real k21;
@@ -35,7 +35,7 @@ functions{
   }
 
   matrix effCptModel(array[] real time, array[] real amt, array[] int cmt, array[] int evid,
-		     real CL, real Q, real V1, real V2, real ka, real ke0) {
+                     real CL, real Q, real V1, real V2, real ka, real ke0) {
     array[4] real init;
     matrix[size(time), 4] result;
     int nt;
@@ -47,7 +47,7 @@ functions{
     t0 = time[1];
     for (i in 1:nt){
       init = effCptModel1(time[max(1, i - 1)], time[i], init, amt[i], cmt[i], evid[i],
-			       CL, Q, V1, V2, ka, ke0);
+                               CL, Q, V1, V2, ka, ke0);
       for (j in 1:4) result[i, j] = init[j];
       t0 = time[i];
     }
@@ -64,7 +64,7 @@ data {
   array[nt] int<lower = 1> cmt;
   array[nt] int<lower = 0> evid;
   array[nt] real<lower = 0> time;
-  vector<lower = 0>[nObs] cObs;
+  vector[nObs] logCObs;
   vector[nObs] respObs;
 }
 
@@ -91,8 +91,8 @@ transformed parameters {
   x = effCptModel(time, amt, cmt, evid,
                   CL, Q, V1, V2, ka, ke0);
 
-  cHat = 1000 * x[ ,2] ./ V1;
-  ceHat = 1000 * x[ ,4] ./ V1;
+  cHat = 1000 * x[, 2] ./ V1;
+  ceHat = 1000 * x[, 4] ./ V1;
   respHat = 100 * ceHat ./ (EC50 + ceHat);
 
   cHatObs = cHat[iObs];
@@ -116,7 +116,7 @@ model {
     sigma ~ cauchy(0, 2);
     sigmaResp ~ cauchy(0, 5);
 
-    cObs ~ lognormal(log(cHatObs), sigma);
+    logCObs ~ normal(log(cHatObs), sigma);
     respObs ~ normal(respHatObs, sigmaResp);
 }
 
