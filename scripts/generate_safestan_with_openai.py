@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate SafeStan translations for the small model corpus via OpenAI.
+"""Generate SafeStan translations for the model corpus via OpenAI.
 
 The script iterates over model directories containing `model.stan` and
 `data.json`, prompts an OpenAI reasoning model with a shared template, and writes
@@ -14,6 +14,7 @@ The API key is read only from `OPENAI_API_KEY`.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import os
 import sys
@@ -32,6 +33,12 @@ DEFAULT_API_URL = "https://api.openai.com/v1/responses"
 DEFAULT_MODEL = "gpt-5.5"
 DEFAULT_REASONING_EFFORT = "high"
 DEFAULT_SAFE_ROOT = ROOT / "models_safe"
+DEFAULT_SERVICE_TIER = "flex"
+DEFAULT_PROMPT_CACHE_KEY = "safestan-translation-v1"
+DEFAULT_PROMPT_CACHE_RETENTION = "24h"
+DEFAULT_MAX_OUTPUT_TOKENS = 64000
+DEFAULT_TIMEOUT = 900
+DEFAULT_WORKERS = 4
 
 OUTPUT_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -142,8 +149,17 @@ def render_prompt(template: Template, model_dir: Path, source_note_chars: int) -
     )
 
 
-def response_payload(model: str, reasoning_effort: str, prompt: str, max_output_tokens: int) -> dict[str, Any]:
-    return {
+def response_payload(
+    model: str,
+    reasoning_effort: str,
+    prompt: str,
+    max_output_tokens: int,
+    *,
+    service_tier: str | None,
+    prompt_cache_key: str | None,
+    prompt_cache_retention: str | None,
+) -> dict[str, Any]:
+    payload: dict[str, Any] = {
         "model": model,
         "reasoning": {"effort": reasoning_effort},
         "input": [
@@ -162,6 +178,13 @@ def response_payload(model: str, reasoning_effort: str, prompt: str, max_output_
         },
         "max_output_tokens": max_output_tokens,
     }
+    if service_tier:
+        payload["service_tier"] = service_tier
+    if prompt_cache_key:
+        payload["prompt_cache_key"] = prompt_cache_key
+    if prompt_cache_retention:
+        payload["prompt_cache_retention"] = prompt_cache_retention
+    return payload
 
 
 def extract_output_text(response: dict[str, Any]) -> str:
@@ -313,6 +336,15 @@ def clear_api_artifacts(artifact_dir: Path) -> None:
             path.unlink()
 
 
+def optional_string(value: str | None) -> str | None:
+    if value is None:
+        return None
+    stripped = value.strip()
+    if not stripped or stripped.lower() == "none":
+        return None
+    return stripped
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--models-root", default=str(ROOT / "models"))
@@ -326,15 +358,130 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--api-url", default=DEFAULT_API_URL)
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--reasoning-effort", default=DEFAULT_REASONING_EFFORT)
-    parser.add_argument("--max-output-tokens", type=int, default=16000)
-    parser.add_argument("--timeout", type=int, default=300)
+    parser.add_argument("--max-output-tokens", type=int, default=DEFAULT_MAX_OUTPUT_TOKENS)
+    parser.add_argument(
+        "--service-tier",
+        default=DEFAULT_SERVICE_TIER,
+        choices=["auto", "flex", "priority", "none"],
+        help="Responses API service tier. Use 'none' to omit the field.",
+    )
+    parser.add_argument(
+        "--prompt-cache-key",
+        default=DEFAULT_PROMPT_CACHE_KEY,
+        help="Stable prompt cache routing key. Use 'none' to omit the field.",
+    )
+    parser.add_argument(
+        "--prompt-cache-retention",
+        default=DEFAULT_PROMPT_CACHE_RETENTION,
+        choices=["24h", "in_memory", "none"],
+        help="Prompt cache retention policy. Use 'none' to omit the field.",
+    )
+    parser.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT)
     parser.add_argument("--retries", type=int, default=3)
     parser.add_argument("--sleep-seconds", type=float, default=0.0)
+    parser.add_argument("--workers", type=int, default=DEFAULT_WORKERS, help="Parallel API worker threads.")
     parser.add_argument("--source-note-chars", type=int, default=1600)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--only", action="append", default=[], help="Process only matching model dir suffix or path; repeatable.")
     parser.add_argument("--dry-run", action="store_true", help="Render prompts and list models without calling the API.")
     return parser.parse_args()
+
+
+def process_model(
+    *,
+    index: int,
+    total: int,
+    path: Path,
+    args: argparse.Namespace,
+    template: Template,
+    safe_root: Path,
+    api_key: str,
+    service_tier: str | None,
+    prompt_cache_key: str | None,
+    prompt_cache_retention: str | None,
+) -> dict[str, Any]:
+    rel = str(path.relative_to(ROOT))
+    print(f"[{index}/{total}] {rel}", flush=True)
+    safe_model_dir = safe_dir_for(safe_root, path)
+    artifact_dir = artifact_dir_for(safe_model_dir) if not args.no_save_artifacts else None
+    record: dict[str, Any] = {
+        "path": rel,
+        "safe_dir": str(safe_model_dir.relative_to(ROOT)),
+        "started_at": utc_now(),
+        "model": args.model,
+        "reasoning_effort": args.reasoning_effort,
+    }
+    if service_tier:
+        record["service_tier"] = service_tier
+    if prompt_cache_key:
+        record["prompt_cache_key"] = prompt_cache_key
+    if prompt_cache_retention:
+        record["prompt_cache_retention"] = prompt_cache_retention
+    if artifact_dir is not None:
+        record["artifacts_dir"] = str(artifact_dir.relative_to(ROOT))
+    try:
+        if (
+            artifact_dir is not None
+            and artifacts_complete(artifact_dir)
+            and not args.rerun_existing_artifacts
+        ):
+            previous_record = load_json(artifact_dir / "record.json")
+            translation = load_json(artifact_dir / "translation.json")
+            write_result = write_translation(safe_model_dir, translation)
+            record.update(write_result)
+            record["protected_variables"] = translation.get("protected_variables", [])
+            record["response_id"] = previous_record.get("response_id")
+            record["usage"] = load_json(artifact_dir / "usage.json")
+            record["skipped_existing_artifacts"] = True
+            record["completed_at"] = utc_now()
+            print(f"  -> {record['compatibility']} (skipped existing artifacts)", flush=True)
+            save_model_record(artifact_dir, record)
+            return record
+
+        clear_translation_outputs(safe_model_dir)
+        if artifact_dir is not None:
+            clear_api_artifacts(artifact_dir)
+        prompt = render_prompt(template, path, args.source_note_chars)
+        payload = response_payload(
+            args.model,
+            args.reasoning_effort,
+            prompt,
+            args.max_output_tokens,
+            service_tier=service_tier,
+            prompt_cache_key=prompt_cache_key,
+            prompt_cache_retention=prompt_cache_retention,
+        )
+        if artifact_dir is not None:
+            write_text(artifact_dir / "prompt.txt", prompt)
+            write_json(artifact_dir / "request.json", payload)
+        response = call_openai(
+            api_key=api_key,
+            api_url=args.api_url,
+            payload=payload,
+            timeout=args.timeout,
+            retries=args.retries,
+        )
+        if artifact_dir is not None:
+            write_json(artifact_dir / "response.json", response)
+            write_json(artifact_dir / "usage.json", response.get("usage", {}))
+        translation = parse_translation(response)
+        if artifact_dir is not None:
+            write_json(artifact_dir / "translation.json", translation)
+        write_result = write_translation(safe_model_dir, translation)
+        record.update(write_result)
+        record["protected_variables"] = translation.get("protected_variables", [])
+        record["response_id"] = response.get("id")
+        record["usage"] = response.get("usage")
+        record["completed_at"] = utc_now()
+        print(f"  -> {record['compatibility']}", flush=True)
+    except Exception as error:  # noqa: BLE001 - batch runner records and continues.
+        record["error"] = str(error)
+        record["completed_at"] = utc_now()
+        if artifact_dir is not None:
+            write_text(artifact_dir / "error.txt", str(error))
+        print(f"  !! {rel}: {error}", file=sys.stderr, flush=True)
+    save_model_record(artifact_dir, record)
+    return record
 
 
 def main() -> int:
@@ -364,86 +511,72 @@ def main() -> int:
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         raise SystemExit("OPENAI_API_KEY is not set. Export it in the shell before running this script.")
+    if args.workers < 1:
+        raise SystemExit("--workers must be at least 1")
 
     run_id = args.run_id or utc_run_id()
     safe_root.mkdir(parents=True, exist_ok=True)
+    service_tier = optional_string(args.service_tier)
+    prompt_cache_key = optional_string(args.prompt_cache_key)
+    prompt_cache_retention = optional_string(args.prompt_cache_retention)
 
-    results: list[dict[str, Any]] = []
-    failures = 0
-    for index, path in enumerate(candidates, start=1):
-        rel = str(path.relative_to(ROOT))
-        print(f"[{index}/{len(candidates)}] {rel}", flush=True)
-        safe_model_dir = safe_dir_for(safe_root, path)
-        artifact_dir = artifact_dir_for(safe_model_dir) if not args.no_save_artifacts else None
-        record: dict[str, Any] = {
-            "path": rel,
-            "safe_dir": str(safe_model_dir.relative_to(ROOT)),
-            "started_at": utc_now(),
-            "model": args.model,
-            "reasoning_effort": args.reasoning_effort,
-        }
-        if artifact_dir is not None:
-            record["artifacts_dir"] = str(artifact_dir.relative_to(ROOT))
-        try:
-            if (
-                artifact_dir is not None
-                and artifacts_complete(artifact_dir)
-                and not args.rerun_existing_artifacts
-            ):
-                previous_record = load_json(artifact_dir / "record.json")
-                translation = load_json(artifact_dir / "translation.json")
-                write_result = write_translation(safe_model_dir, translation)
-                record.update(write_result)
-                record["protected_variables"] = translation.get("protected_variables", [])
-                record["response_id"] = previous_record.get("response_id")
-                record["usage"] = load_json(artifact_dir / "usage.json")
-                record["skipped_existing_artifacts"] = True
-                record["completed_at"] = utc_now()
-                print(f"  -> {record['compatibility']} (skipped existing artifacts)", flush=True)
-                results.append(record)
+    indexed_candidates = list(enumerate(candidates, start=1))
+    results_by_index: dict[int, dict[str, Any]] = {}
+    worker_count = min(args.workers, len(indexed_candidates)) if indexed_candidates else 1
+    if worker_count == 1:
+        for index, path in indexed_candidates:
+            results_by_index[index] = process_model(
+                index=index,
+                total=len(candidates),
+                path=path,
+                args=args,
+                template=template,
+                safe_root=safe_root,
+                api_key=api_key,
+                service_tier=service_tier,
+                prompt_cache_key=prompt_cache_key,
+                prompt_cache_retention=prompt_cache_retention,
+            )
+            if args.sleep_seconds and index < len(candidates):
+                time.sleep(args.sleep_seconds)
+    else:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=worker_count) as executor:
+            futures: dict[concurrent.futures.Future[dict[str, Any]], int] = {}
+            for index, path in indexed_candidates:
+                future = executor.submit(
+                    process_model,
+                    index=index,
+                    total=len(candidates),
+                    path=path,
+                    args=args,
+                    template=template,
+                    safe_root=safe_root,
+                    api_key=api_key,
+                    service_tier=service_tier,
+                    prompt_cache_key=prompt_cache_key,
+                    prompt_cache_retention=prompt_cache_retention,
+                )
+                futures[future] = index
                 if args.sleep_seconds and index < len(candidates):
                     time.sleep(args.sleep_seconds)
-                continue
+            for future in concurrent.futures.as_completed(futures):
+                index = futures[future]
+                try:
+                    results_by_index[index] = future.result()
+                except Exception as error:  # noqa: BLE001 - defensive guard for unexpected worker errors.
+                    path = candidates[index - 1]
+                    results_by_index[index] = {
+                        "path": str(path.relative_to(ROOT)),
+                        "started_at": utc_now(),
+                        "completed_at": utc_now(),
+                        "model": args.model,
+                        "reasoning_effort": args.reasoning_effort,
+                        "error": f"worker failed: {error}",
+                    }
+                    print(f"  !! {path.relative_to(ROOT)}: worker failed: {error}", file=sys.stderr, flush=True)
 
-            clear_translation_outputs(safe_model_dir)
-            if artifact_dir is not None:
-                clear_api_artifacts(artifact_dir)
-            prompt = render_prompt(template, path, args.source_note_chars)
-            payload = response_payload(args.model, args.reasoning_effort, prompt, args.max_output_tokens)
-            if artifact_dir is not None:
-                write_text(artifact_dir / "prompt.txt", prompt)
-                write_json(artifact_dir / "request.json", payload)
-            response = call_openai(
-                api_key=api_key,
-                api_url=args.api_url,
-                payload=payload,
-                timeout=args.timeout,
-                retries=args.retries,
-            )
-            if artifact_dir is not None:
-                write_json(artifact_dir / "response.json", response)
-                write_json(artifact_dir / "usage.json", response.get("usage", {}))
-            translation = parse_translation(response)
-            if artifact_dir is not None:
-                write_json(artifact_dir / "translation.json", translation)
-            write_result = write_translation(safe_model_dir, translation)
-            record.update(write_result)
-            record["protected_variables"] = translation.get("protected_variables", [])
-            record["response_id"] = response.get("id")
-            record["usage"] = response.get("usage")
-            record["completed_at"] = utc_now()
-            print(f"  -> {record['compatibility']}", flush=True)
-        except Exception as error:  # noqa: BLE001 - batch runner records and continues.
-            failures += 1
-            record["error"] = str(error)
-            record["completed_at"] = utc_now()
-            if artifact_dir is not None:
-                write_text(artifact_dir / "error.txt", str(error))
-            print(f"  !! {error}", file=sys.stderr, flush=True)
-        save_model_record(artifact_dir, record)
-        results.append(record)
-        if args.sleep_seconds and index < len(candidates):
-            time.sleep(args.sleep_seconds)
+    results = [results_by_index[index] for index in sorted(results_by_index)]
+    failures = sum(1 for record in results if "error" in record)
 
     summary = {
         "generated_at": utc_now(),
@@ -451,6 +584,10 @@ def main() -> int:
         "safe_root": str(safe_root),
         "model": args.model,
         "reasoning_effort": args.reasoning_effort,
+        "service_tier": service_tier,
+        "prompt_cache_key": prompt_cache_key,
+        "prompt_cache_retention": prompt_cache_retention,
+        "workers": worker_count,
         "run_id": run_id,
         "artifacts_root": str(safe_root),
         "total": len(results),

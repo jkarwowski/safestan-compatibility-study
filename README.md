@@ -105,18 +105,17 @@ Use `--only <model-id>` for a single model smoke test.
 
 ## Regenerate SafeStan Translations
 
-The generator uses `gpt-5.5` with reasoning effort `high` by default and saves full per-call artifacts. It skips models that already have complete artifacts in `models_safe/<category>/<model>/api/` unless `--rerun-existing-artifacts` is passed.
+The generator uses `gpt-5.5` with reasoning effort `high`, Flex processing, 24h prompt-cache retention, and 4 parallel API workers by default. It saves full per-call artifacts and skips models that already have complete artifacts in `models_safe/<category>/<model>/api/` unless `--rerun-existing-artifacts` is passed.
 
 ```sh
 set -a; source .env; set +a
 python3 scripts/generate_safestan_with_openai.py \
-  --run-id models-safe-high-20260428T004612Z \
+  --run-id models-safe-gpt55-high-flex-$(date -u +%Y%m%dT%H%M%SZ) \
   --safe-root models_safe \
-  --reasoning-effort high \
-  --max-output-tokens 64000 \
-  --timeout 900 \
-  --retries 2 \
-  --output runs_metadata/openai_safestan_generation_models_safe_full45.json
+  --rerun-existing-artifacts \
+  --workers 4 \
+  --retries 3 \
+  --output runs_metadata/openai_safestan_generation_latest.json
 ```
 
 Use `--only <suffix>` to translate a single model directory and `--dry-run` to inspect prompt sizes without calling the API.
