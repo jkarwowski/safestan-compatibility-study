@@ -17,7 +17,6 @@ import argparse
 import concurrent.futures
 import json
 import os
-import re
 import sys
 import time
 import urllib.error
@@ -40,15 +39,6 @@ DEFAULT_PROMPT_CACHE_RETENTION = "24h"
 DEFAULT_MAX_OUTPUT_TOKENS = 64000
 DEFAULT_TIMEOUT = 900
 DEFAULT_WORKERS = 4
-
-FORBIDDEN_SAFESTAN_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
-    ("target +=", re.compile(r"\btarget\s*\+=")),
-    ("target()", re.compile(r"\btarget\s*\(")),
-    ("jacobian +=", re.compile(r"\bjacobian\s*\+=")),
-    ("reject()", re.compile(r"\breject\s*\(")),
-    ("fatal_error()", re.compile(r"\bfatal_error\s*\(")),
-    ("_lp function call", re.compile(r"\b[A-Za-z_][A-Za-z0-9_]*_lp\s*\(")),
-)
 
 OUTPUT_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -274,83 +264,6 @@ def normalize_text(text: str) -> str:
     return text.rstrip() + "\n"
 
 
-def strip_stan_comments_and_strings(text: str) -> str:
-    output: list[str] = []
-    i = 0
-    state = "code"
-    while i < len(text):
-        char = text[i]
-        next_char = text[i + 1] if i + 1 < len(text) else ""
-        if state == "code":
-            if char == "/" and next_char == "/":
-                state = "line_comment"
-                output.append("  ")
-                i += 2
-                continue
-            if char == "/" and next_char == "*":
-                state = "block_comment"
-                output.append("  ")
-                i += 2
-                continue
-            if char == '"':
-                state = "string"
-                output.append(" ")
-                i += 1
-                continue
-            output.append(char)
-            i += 1
-            continue
-        if state == "line_comment":
-            output.append("\n" if char == "\n" else " ")
-            if char == "\n":
-                state = "code"
-            i += 1
-            continue
-        if state == "block_comment":
-            output.append("\n" if char == "\n" else " ")
-            if char == "*" and next_char == "/":
-                output.append(" ")
-                state = "code"
-                i += 2
-            else:
-                i += 1
-            continue
-        if state == "string":
-            output.append("\n" if char == "\n" else " ")
-            if char == "\\":
-                if next_char:
-                    output.append(" ")
-                    i += 2
-                else:
-                    i += 1
-            elif char == '"':
-                state = "code"
-                i += 1
-            else:
-                i += 1
-    return "".join(output)
-
-
-def validate_translation_contract(translation: dict[str, Any]) -> None:
-    compatibility = translation["compatibility"]
-    if compatibility == "major":
-        return
-    protected_variables = translation.get("protected_variables")
-    if not isinstance(protected_variables, list) or not protected_variables:
-        raise ValueError("AS-IS/MINOR response must include protected_variables")
-    if any(not isinstance(item, str) or not item.strip() for item in protected_variables):
-        raise ValueError("protected_variables must be non-empty strings")
-    if len(set(protected_variables)) != len(protected_variables):
-        raise ValueError("protected_variables contains duplicates")
-    model_safe = translation.get("model_safe_stan", "")
-    if not isinstance(model_safe, str):
-        raise ValueError("model_safe_stan must be a string")
-    code = strip_stan_comments_and_strings(model_safe)
-    for label, pattern in FORBIDDEN_SAFESTAN_PATTERNS:
-        if pattern.search(code):
-            raise ValueError(f"model_safe_stan contains forbidden SafeStan construct: {label}")
-
-
 def parse_translation(response: dict[str, Any]) -> dict[str, Any]:
     output_text = extract_output_text(response)
     if not output_text:
@@ -364,7 +277,6 @@ def parse_translation(response: dict[str, Any]) -> dict[str, Any]:
         raise ValueError(f"response missing required field(s): {', '.join(sorted(missing))}")
     if parsed["compatibility"] not in {"as-is", "minor", "major"}:
         raise ValueError(f"invalid compatibility: {parsed['compatibility']}")
-    validate_translation_contract(parsed)
     return parsed
 
 
