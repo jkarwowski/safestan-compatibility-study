@@ -1,34 +1,32 @@
 {
-  "N": 4,
-  "N_factor1_levels": 3,
-  "N_factor2_levels": 3,
+  "N": 3,
+  "N_factor1_levels": 2,
+  "N_factor2_levels": 4,
   "N_factor3_levels": 3,
   "factor2_to_factor1": [
     1,
     2,
-    3
+    1,
+    1
   ],
   "factor3_to_factor2": [
+    3,
     1,
-    2,
-    3
+    4
   ],
   "log_rho_I": [
-    1.0,
-    1.0,
-    1.0,
-    1.0
+    5.4858988375362525,
+    4.326144004500613,
+    6.56128922535076
   ],
   "obs_to_factor3": [
-    1,
-    2,
     3,
-    1
+    3,
+    3
   ],
   "y": [
-    1,
-    1,
-    1,
-    1
+    2,
+    2,
+    3
   ]
 }

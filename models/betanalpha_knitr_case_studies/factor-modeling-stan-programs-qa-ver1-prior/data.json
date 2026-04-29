@@ -1,40 +1,60 @@
 {
-  "L_main_cp": 2,
+  "L_main_cp": 3,
   "L_main_ncp": 1,
-  "N_all_main_factor_levels": 3,
-  "N_factor_configs": 2,
-  "N_fine_t": 3,
+  "N_all_main_factor_levels": 11,
+  "N_factor_configs": 3,
+  "N_fine_t": 4,
   "N_main_factor_levels": [
-    2,
-    1
+    4,
+    4,
+    1,
+    2
   ],
-  "N_main_factors": 2,
+  "N_main_factors": 4,
   "fine_t": [
-    5.302978514176167,
-    4.098222104224302,
-    5.502035829045827
+    5.245544387221947,
+    3.926394662417818,
+    3.946056308848305,
+    4.587730839723676
   ],
   "main_cp_idx": [
+    2,
     2,
     2
   ],
   "main_factor_end_idx": [
-    2,
-    3
+    4,
+    8,
+    9,
+    11
   ],
   "main_factor_level_idx": [
     [
       1,
+      1,
       1
     ],
     [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      1,
       1,
       1
     ]
   ],
   "main_factor_start_idx": [
     1,
-    3
+    5,
+    9,
+    10
   ],
   "main_ncp_idx": [
     2
@@ -42,6 +62,14 @@
   "packed_main_factor_idx": [
     1,
     1,
-    2
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    4,
+    4
   ]
 }

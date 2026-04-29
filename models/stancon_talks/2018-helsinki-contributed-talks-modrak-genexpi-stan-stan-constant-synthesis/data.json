@@ -1,21 +1,19 @@
 {
-  "asymptotic_normalized_state_prior_sigma": 1.9702154072790647,
-  "degradation_prior_mean": 5.475912812776765,
-  "degradation_prior_sigma": 3.4416567675777228,
+  "asymptotic_normalized_state_prior_sigma": 3.24154576922151,
+  "degradation_prior_mean": 5.043396257201822,
+  "degradation_prior_sigma": 3.399019604025857,
   "expression": [
-    2.914371913255499,
-    2.3800170317990226,
-    0.25080938249889984,
-    1.9270756601383112
+    4.276195727867844,
+    0.862120284255873,
+    3.669440441376271
   ],
-  "initial_condition_prior_sigma": 3.8204394934983688,
-  "measurement_sigma_absolute": 3.7526800582334747,
-  "measurement_sigma_relative": 1.9555145656979833,
+  "initial_condition_prior_sigma": 1.9365935554023659,
+  "measurement_sigma_absolute": 2.4544476851350905,
+  "measurement_sigma_relative": 0.729155510124023,
   "measurement_times": [
     1,
     2,
-    3,
-    4
+    3
   ],
-  "num_measurements": 4
+  "num_measurements": 3
 }

@@ -1,5 +1,8 @@
 {
   "data_file": "data.json",
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
   "default_run": {
     "chains": 4,
     "iter_sampling": 250,
@@ -17,10 +20,17 @@
   "forestdb_upstream_commit": "e5ac903422815b645acbae784c2e5645ba55fe70",
   "id": "adjectives",
   "method": "sample",
+  "previous_data_metadata": {},
   "source_group": "forestdb",
   "source_group_label": "ForestDB translations",
   "source_url": "https://forestdb.org/models/adjectives.html",
   "stan_file": "model.stan",
+  "synthetic_data_declarations": 8,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "/Users/jacski/safe_stan/cmdstan/bin/stanc",
   "title": "Adjectives",
   "translation_archetype": "rsa_listener",
   "translation_note": "Normal Stan translation using the `rsa_listener` archetype for vague adjective threshold pragmatics; discrete choices are marginalized or represented with finite continuous relaxations."

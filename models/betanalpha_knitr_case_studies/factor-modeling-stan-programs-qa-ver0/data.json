@@ -1,81 +1,53 @@
 {
-  "N": 4,
-  "N_check_obs": 4,
-  "N_checks": 4,
-  "N_factor_configs": 3,
-  "N_fine_t": 4,
+  "N": 2,
+  "N_all_main_factor_levels": 1,
+  "N_check_obs": 1,
+  "N_checks": 2,
+  "N_factor_configs": 2,
+  "N_fine_t": 3,
   "N_main_factor_levels": [
-    3,
-    3,
-    3
+    1
   ],
-  "N_main_factors": 3,
-  "N_samples": 4,
+  "N_main_factors": 1,
+  "N_samples": 1,
   "check_idx": [
     [
-      1,
-      2,
-      3,
-      4
+      2
     ],
     [
-      1,
-      2,
-      3,
-      4
-    ],
-    [
-      1,
-      2,
-      3,
-      4
-    ],
-    [
-      1,
-      2,
-      3,
-      4
+      2
     ]
   ],
   "factor_config_idx": [
-    1,
     2,
-    3,
-    3
+    2
   ],
   "fine_t": [
-    1.0,
-    1.0,
-    1.0,
-    1.0
+    3.8053323251285485,
+    3.6396357406366215,
+    2.1578119364495336
+  ],
+  "main_factor_end_idx": [
+    1
   ],
   "main_factor_level_idx": [
     [
       1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
       1
     ]
   ],
+  "main_factor_start_idx": [
+    1
+  ],
+  "packed_main_factor_idx": [
+    1
+  ],
   "t": [
-    0.1,
-    0.2,
-    0.30000000000000004,
-    0.4
+    1.0,
+    2.0
   ],
   "y": [
     1,
-    2,
-    3,
-    4
+    1
   ]
 }

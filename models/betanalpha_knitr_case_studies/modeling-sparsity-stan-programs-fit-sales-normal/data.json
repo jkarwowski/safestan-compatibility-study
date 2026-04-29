@@ -1,17 +1,17 @@
 {
   "K_cp": 1,
-  "K_ncp": 1,
-  "N_obs": 3,
+  "K_ncp": 2,
+  "N_obs": 2,
   "N_obs_days": 2,
   "N_pred_days": 4,
   "cp_idx": [
     2
   ],
   "ncp_idx": [
+    2,
     2
   ],
   "obs_day_idx": [
-    2,
     2,
     2
   ],
@@ -22,8 +22,7 @@
     2
   ],
   "y_obs": [
-    3,
-    3,
-    3
+    2,
+    2
   ]
 }

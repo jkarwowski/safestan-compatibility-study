@@ -16,9 +16,9 @@
   "include_files": [],
   "method": "sample",
   "previous_data_metadata": {
-    "data_placeholder": true,
-    "data_source": "empty JSON object",
-    "data_status": "no_matched_upstream_data"
+    "data_placeholder": false,
+    "data_source": "synthetic/local",
+    "data_status": "synthetic_generated"
   },
   "source_group": "betanalpha_knitr_case_studies",
   "source_group_label": "Betancourt knitr case studies",
@@ -26,7 +26,7 @@
   "source_url": "https://github.com/betanalpha/knitr_case_studies/blob/8c568575d8f4ca7700cf9b83faf73dc4a2089df2/taylor_models/stan_programs/linear_multi_prior.stan",
   "stan_file": "model.stan",
   "synthetic_data_declarations": 4,
-  "synthetic_data_generator": "synthetic_data_for_missing_v1",
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
   "synthetic_data_had_data_block": true,
   "synthetic_data_method": "stanc_debug_generate_data",
   "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",

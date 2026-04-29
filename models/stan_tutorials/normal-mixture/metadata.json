@@ -1,20 +1,31 @@
 {
-  "id": "normal-mixture",
-  "title": "Normal Mixture",
-  "source_group": "stan_tutorials",
-  "source_group_label": "Stan tutorials",
-  "difficulty": "medium",
-  "description": "Two-component normal mixture model.",
-  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/normal_mixture.stan",
-  "source_path": "basic_estimators/normal_mixture",
-  "data_source": "basic_estimators/normal_mixture.data.json",
-  "stan_file": "model.stan",
   "data_file": "data.json",
-  "method": "sample",
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
   "default_run": {
     "chains": 4,
-    "iter_warmup": 250,
     "iter_sampling": 250,
+    "iter_warmup": 250,
     "seed": 12345
-  }
+  },
+  "description": "Two-component normal mixture model.",
+  "difficulty": "medium",
+  "id": "normal-mixture",
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_source": "basic_estimators/normal_mixture.data.json"
+  },
+  "source_group": "stan_tutorials",
+  "source_group_label": "Stan tutorials",
+  "source_path": "basic_estimators/normal_mixture",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/basic_estimators/normal_mixture.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 2,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "/Users/jacski/safe_stan/cmdstan/bin/stanc",
+  "title": "Normal Mixture"
 }

@@ -1,87 +1,112 @@
 {
-  "N": 4,
+  "N": 2,
+  "N_all_inter1_factor_levels": 9,
+  "N_all_inter2_factor_levels": 5,
+  "N_all_main_factor_levels": 6,
   "N_inter1_factor_levels": [
-    3,
-    3,
+    4,
+    2,
     3
   ],
   "N_inter1_factors": 3,
   "N_inter2_factor_levels": [
-    3,
-    3,
-    3
+    4,
+    1
   ],
-  "N_inter2_factors": 3,
+  "N_inter2_factors": 2,
   "N_main_factor_levels": [
-    3,
-    3,
-    3
+    4,
+    2
   ],
-  "N_main_factors": 3,
+  "N_main_factors": 2,
+  "inter1_factor_end_idx": [
+    4,
+    6,
+    9
+  ],
   "inter1_factor_level_idx": [
     [
       1,
-      1,
-      1,
       1
     ],
     [
       1,
-      1,
-      1,
       1
     ],
     [
-      1,
-      1,
       1,
       1
     ]
+  ],
+  "inter1_factor_start_idx": [
+    1,
+    5,
+    7
+  ],
+  "inter2_factor_end_idx": [
+    4,
+    5
   ],
   "inter2_factor_level_idx": [
     [
       1,
-      1,
-      1,
       1
     ],
     [
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
       1,
       1
     ]
+  ],
+  "inter2_factor_start_idx": [
+    1,
+    5
+  ],
+  "main_factor_end_idx": [
+    4,
+    6
   ],
   "main_factor_level_idx": [
     [
       1,
-      1,
-      1,
       1
     ],
     [
-      1,
-      1,
-      1,
-      1
-    ],
-    [
-      1,
-      1,
       1,
       1
     ]
   ],
+  "main_factor_start_idx": [
+    1,
+    5
+  ],
+  "packed_inter1_factor_idx": [
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    3,
+    3,
+    3
+  ],
+  "packed_inter2_factor_idx": [
+    1,
+    1,
+    1,
+    1,
+    2
+  ],
+  "packed_main_factor_idx": [
+    1,
+    1,
+    1,
+    1,
+    2,
+    2
+  ],
   "y": [
-    0.1,
-    0.2,
-    0.30000000000000004,
-    0.4
+    2.0,
+    2.0
   ]
 }

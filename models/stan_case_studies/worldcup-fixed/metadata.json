@@ -1,20 +1,31 @@
 {
-  "id": "worldcup-fixed",
-  "title": "World Cup Fixed",
-  "source_group": "stan_case_studies",
-  "source_group_label": "Stan case studies",
-  "difficulty": "medium",
-  "description": "Revised World Cup scoring model with fixed issues.",
-  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/world-cup/worldcup_fixed.stan",
-  "source_path": "knitr/world-cup/worldcup_fixed",
-  "data_source": "knitr/world-cup/worldcup_fixed.data.json",
-  "stan_file": "model.stan",
   "data_file": "data.json",
-  "method": "sample",
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
   "default_run": {
     "chains": 4,
-    "iter_warmup": 250,
     "iter_sampling": 250,
+    "iter_warmup": 250,
     "seed": 12345
-  }
+  },
+  "description": "Revised World Cup scoring model with fixed issues.",
+  "difficulty": "medium",
+  "id": "worldcup-fixed",
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_source": "knitr/world-cup/worldcup_fixed.data.json"
+  },
+  "source_group": "stan_case_studies",
+  "source_group_label": "Stan case studies",
+  "source_path": "knitr/world-cup/worldcup_fixed",
+  "source_url": "https://github.com/stan-dev/example-models/blob/e5b7d9e2e9ecc375805c7e49e4a4d4c1882b5e3b/knitr/world-cup/worldcup_fixed.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 8,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "/Users/jacski/safe_stan/cmdstan/bin/stanc",
+  "title": "World Cup Fixed"
 }

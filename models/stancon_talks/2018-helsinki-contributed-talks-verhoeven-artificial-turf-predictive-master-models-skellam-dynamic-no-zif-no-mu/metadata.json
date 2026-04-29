@@ -16,9 +16,9 @@
   "include_files": [],
   "method": "sample",
   "previous_data_metadata": {
-    "data_placeholder": true,
-    "data_source": "empty JSON object",
-    "data_status": "no_matched_upstream_data"
+    "data_placeholder": false,
+    "data_source": "synthetic/local",
+    "data_status": "synthetic_generated"
   },
   "source_group": "stancon_talks",
   "source_group_label": "StanCon talks",
@@ -26,12 +26,11 @@
   "source_url": "https://github.com/stan-dev/stancon_talks/blob/affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb/2018-helsinki/Contributed-Talks/verhoeven/artificial_turf_predictive-master/models/skellam_dynamic_no_zif_no_mu.stan",
   "stan_file": "model.stan",
   "synthetic_data_declarations": 12,
-  "synthetic_data_generator": "synthetic_data_for_missing_v1",
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
   "synthetic_data_had_data_block": true,
-  "synthetic_data_method": "data_block_parser_fallback",
+  "synthetic_data_method": "stanc_debug_generate_data",
   "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
   "synthetic_data_stanc": "/Users/jacski/safe_stan/cmdstan/bin/stanc",
-  "synthetic_data_stanc_error": "Syntax error in '/Users/jacski/synthstats/stan-collection/models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-skellam-dynamic-no-zif-no-mu/model.stan', line 53, column 40 to column 47, parsing error:",
   "title": "2018 Helsinki Contributed Talks Verhoeven Artificial Turf Predictive Master Models Skellam Dynamic No Zif No Mu",
   "upstream_commit": "affbbcbcb2b260ce5d816f79a9e69a48a8a64fdb",
   "upstream_repository": "https://github.com/stan-dev/stancon_talks"

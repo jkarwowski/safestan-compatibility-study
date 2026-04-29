@@ -20,9 +20,9 @@
   "posteriordb_data_title": "The full MNIST dataset",
   "posteriordb_model_name": "nn_rbm1bJ100",
   "previous_data_metadata": {
-    "data_placeholder": true,
-    "data_source": "posterior_database/data/data/mnist.json.zip",
-    "data_status": "skipped_large_posteriordb_json:183242496",
+    "data_placeholder": false,
+    "data_source": "synthetic/local",
+    "data_status": "synthetic_generated",
     "upstream_data_bytes": 183242496
   },
   "source_group": "posteriordb",
@@ -31,7 +31,7 @@
   "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/nn_rbm1bJ100.stan",
   "stan_file": "model.stan",
   "synthetic_data_declarations": 5,
-  "synthetic_data_generator": "synthetic_data_for_missing_v1",
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
   "synthetic_data_had_data_block": true,
   "synthetic_data_method": "stanc_debug_generate_data",
   "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
