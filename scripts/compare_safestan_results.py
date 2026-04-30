@@ -11,6 +11,7 @@ import os
 import shutil
 import subprocess
 import sys
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from statistics import mean, stdev
@@ -65,6 +66,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--run-id", default=utc_run_id(), help="Comparison run id under --output-root.")
     parser.add_argument("--cmdstan", help="CmdStan/cmdsafestan root. Defaults to CMDSAFESTAN or CMDSTAN.")
     parser.add_argument("--only", action="append", default=[], help="Model path, id, or suffix to compare. Repeatable.")
+    parser.add_argument(
+        "--from-smoke-ok-report",
+        type=Path,
+        help="Restrict comparison to models marked ok in a smoke-test report.",
+    )
     parser.add_argument("--limit", type=int, help="Compare at most this many selected models.")
     parser.add_argument("--chains", type=int, default=1)
     parser.add_argument("--iter-warmup", type=int, default=200)
@@ -72,8 +78,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=12345)
     parser.add_argument("--refresh", type=int, default=0)
     parser.add_argument("--timeout", type=int, default=1800, help="Per original/safe runner timeout in seconds.")
+    parser.add_argument("--jobs", type=int, default=1, help="Parallel comparison workers.")
     parser.add_argument("--force-recompile", action="store_true")
     parser.add_argument("--no-compile", action="store_true")
+    parser.add_argument(
+        "--stan-through-cmdsafestan",
+        action="store_true",
+        help="Compile the original Stan model with cmdsafestan --mode plain instead of make.",
+    )
     parser.add_argument("--mean-se-mult", type=float, default=4.0, help="Allowed mean delta in Monte Carlo SE units.")
     parser.add_argument("--mean-abs-tol", type=float, default=0.05, help="Minimum absolute tolerance for mean deltas.")
     parser.add_argument("--sd-rel-tol", type=float, default=0.50, help="Relative tolerance for posterior SD deltas.")
@@ -86,7 +98,19 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def selected_records(summary: dict[str, Any], only: list[str], limit: int | None) -> list[dict[str, Any]]:
+def smoke_ok_models(report_path: Path | None) -> set[str] | None:
+    if report_path is None:
+        return None
+    report = load_json(report_path.expanduser().resolve())
+    return {str(item["model"]) for item in report.get("results", []) if item.get("ok")}
+
+
+def selected_records(
+    summary: dict[str, Any],
+    only: list[str],
+    limit: int | None,
+    smoke_ok: set[str] | None,
+) -> list[dict[str, Any]]:
     records = [
         record
         for record in summary.get("results", [])
@@ -94,6 +118,8 @@ def selected_records(summary: dict[str, Any], only: list[str], limit: int | None
         and (Path(record["safe_dir"]) / "model_safe.stan").exists()
         and (Path(record["safe_dir"]) / "data_safe.json").exists()
     ]
+    if smoke_ok is not None:
+        records = [record for record in records if record["path"] in smoke_ok]
     if only:
         needles = [item.strip("/") for item in only]
 
@@ -163,9 +189,12 @@ def runner_command(
         command.append("--force-recompile")
     if args.no_compile:
         command.append("--no-compile")
+    if not safe and args.stan_through_cmdsafestan:
+        command.append("--compile-with-cmdsafestan")
     if safe:
         command.append("--safe")
-        command.extend(["--sstan-protect", ",".join(protected_variables)])
+        if protected_variables:
+            command.extend(["--sstan-protect", ",".join(protected_variables)])
     if args.dry_run:
         command.append("--dry-run")
     return command
@@ -364,6 +393,9 @@ def compare_outputs(stan_output: Path, safe_output: Path, args: argparse.Namespa
 def build_nested_array(values: dict[tuple[int, ...], float]) -> Any:
     rank = len(next(iter(values)))
     dims = [max(index[dim] for index in values) for dim in range(rank)]
+    expected = math.prod(dims)
+    if len(values) != expected:
+        raise ValueError("indexed columns do not form a dense Stan array")
 
     def build(prefix: tuple[int, ...]) -> Any:
         if len(prefix) == rank:
@@ -390,7 +422,10 @@ def draw_to_constrained_json(headers: list[str], row: list[float]) -> dict[str, 
             continue
         arrays.setdefault(parts[0], {})[index] = value
     for name, values in arrays.items():
-        payload[name] = build_nested_array(values)
+        try:
+            payload[name] = build_nested_array(values)
+        except ValueError:
+            continue
     return payload
 
 
@@ -632,16 +667,68 @@ def main() -> int:
     if cmdstan is None and not args.dry_run:
         raise SystemExit("Pass --cmdstan or set CMDSAFESTAN/CMDSTAN.")
 
-    records = selected_records(summary, args.only, args.limit)
+    smoke_ok = smoke_ok_models(args.from_smoke_ok_report)
+    records = selected_records(summary, args.only, args.limit, smoke_ok)
     output_root = Path(args.output_root).expanduser().resolve() / args.run_id
     output_root.mkdir(parents=True, exist_ok=True)
 
     results = []
-    for index, record in enumerate(records, start=1):
-        print(f"[{index}/{len(records)}] {record['path']}", flush=True)
-        result = compare_one(record, output_root, cmdstan, args)
-        results.append(result)
-        print(f"  {result['status']}", flush=True)
+
+    def persist() -> None:
+        payload = {
+            "run_id": args.run_id,
+            "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "summary": str(Path(args.summary)),
+            "cmdstan": str(cmdstan) if cmdstan else None,
+            "settings": {
+                "chains": args.chains,
+                "iter_warmup": args.iter_warmup,
+                "iter_sampling": args.iter_sampling,
+                "seed": args.seed,
+                "jobs": max(1, args.jobs),
+                "stan_through_cmdsafestan": args.stan_through_cmdsafestan,
+                "from_smoke_ok_report": str(args.from_smoke_ok_report) if args.from_smoke_ok_report else None,
+                "mean_se_mult": args.mean_se_mult,
+                "mean_abs_tol": args.mean_abs_tol,
+                "sd_rel_tol": args.sd_rel_tol,
+                "sd_abs_tol": args.sd_abs_tol,
+                "log_prob_checks": args.log_prob_checks,
+                "log_prob_tol": args.log_prob_tol,
+                "include_lp": args.include_lp,
+                "include_rep": args.include_rep,
+            },
+            "results": sorted(results, key=lambda item: item["path"]),
+        }
+        write_json(output_root / "comparison_results.json", payload)
+        write_markdown(output_root / "COMPARISON_RESULTS.md", payload)
+
+    jobs = max(1, args.jobs)
+    if jobs == 1:
+        for index, record in enumerate(records, start=1):
+            print(f"[{index}/{len(records)}] {record['path']}", flush=True)
+            result = compare_one(record, output_root, cmdstan, args)
+            results.append(result)
+            persist()
+            print(f"  {result['status']}", flush=True)
+    else:
+        with ProcessPoolExecutor(max_workers=jobs) as executor:
+            futures = {executor.submit(compare_one, record, output_root, cmdstan, args): record for record in records}
+            for index, future in enumerate(as_completed(futures), start=1):
+                record = futures[future]
+                try:
+                    result = future.result()
+                except Exception as error:  # noqa: BLE001
+                    result = {
+                        "path": record["path"],
+                        "compatibility": record["compatibility"],
+                        "status": "run-failed",
+                        "failed_side": "worker",
+                        "error": str(error),
+                        "case_dir": str((output_root / Path(record["path"]).relative_to("models")).relative_to(ROOT)),
+                    }
+                results.append(result)
+                persist()
+                print(f"[{index}/{len(records)}] {result['status']} {result['path']}", flush=True)
 
     payload = {
         "run_id": args.run_id,
@@ -653,6 +740,9 @@ def main() -> int:
             "iter_warmup": args.iter_warmup,
             "iter_sampling": args.iter_sampling,
             "seed": args.seed,
+            "jobs": jobs,
+            "stan_through_cmdsafestan": args.stan_through_cmdsafestan,
+            "from_smoke_ok_report": str(args.from_smoke_ok_report) if args.from_smoke_ok_report else None,
             "mean_se_mult": args.mean_se_mult,
             "mean_abs_tol": args.mean_abs_tol,
             "sd_rel_tol": args.sd_rel_tol,
@@ -662,7 +752,7 @@ def main() -> int:
             "include_lp": args.include_lp,
             "include_rep": args.include_rep,
         },
-        "results": results,
+        "results": sorted(results, key=lambda item: item["path"]),
     }
     write_json(output_root / "comparison_results.json", payload)
     write_markdown(output_root / "COMPARISON_RESULTS.md", payload)

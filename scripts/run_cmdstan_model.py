@@ -79,6 +79,13 @@ def load_protected_variables(safe_model_dir: Path, override: str | None) -> list
     return []
 
 
+def find_cmdstan_root(path: Path) -> Path | None:
+    for candidate in (path if path.is_dir() else path.parent, *path.parents):
+        if (candidate / "makefile").exists() or (candidate / "Makefile").exists():
+            return candidate
+    return None
+
+
 def cmdsafestan_command_for(cmdstan: Path | None, dry_run: bool) -> tuple[list[str], Path | None]:
     if cmdstan is None:
         if dry_run:
@@ -89,12 +96,16 @@ def cmdsafestan_command_for(cmdstan: Path | None, dry_run: bool) -> tuple[list[s
         )
 
     if cmdstan.is_file():
-        return [str(cmdstan)], cmdstan.parent
+        root = find_cmdstan_root(cmdstan)
+        return [str(cmdstan), "--no-stanc-sync"], root
 
-    command = cmdstan / "cmdsafestan"
+    venv_command = cmdstan / ".venv" / "bin" / "cmdsafestan"
+    command = venv_command if venv_command.exists() else cmdstan / "cmdsafestan"
     if not dry_run and not command.exists():
         raise SystemExit(f"cmdsafestan wrapper does not exist: {command}")
-    return [str(command)], cmdstan
+    if not dry_run and not os.access(command, os.X_OK):
+        raise SystemExit(f"cmdsafestan wrapper is not executable: {command}")
+    return [str(command), "--no-stanc-sync"], cmdstan
 
 
 def compile_model(
@@ -131,13 +142,26 @@ def compile_safestan_model(
     exe = model_executable_for(stan_file)
     if exe.exists() and not force_recompile:
         return exe, 0
-    if not protected_variables:
-        raise SystemExit(
-            "SafeStan compilation requires protected variables. Pass --sstan-protect "
-            "or ensure models_safe/<category>/<model>/api/translation.json contains them."
-        )
     command, cwd = cmdsafestan_command_for(cmdstan, dry_run)
-    command.extend(["--sstan-protect", ",".join(protected_variables), str(stan_file)])
+    if protected_variables:
+        command.extend(["--mode", "safestan", "--sstan-protect", ",".join(protected_variables), str(stan_file)])
+    else:
+        command.extend(["--mode", "plain", str(stan_file)])
+    return exe, run_command(command, cwd=cwd, dry_run=dry_run)
+
+
+def compile_plain_with_cmdsafestan(
+    *,
+    stan_file: Path,
+    cmdstan: Path | None,
+    force_recompile: bool,
+    dry_run: bool,
+) -> tuple[Path, int]:
+    exe = model_executable_for(stan_file)
+    if exe.exists() and not force_recompile:
+        return exe, 0
+    command, cwd = cmdsafestan_command_for(cmdstan, dry_run)
+    command.extend(["--mode", "plain", str(stan_file)])
     return exe, run_command(command, cwd=cwd, dry_run=dry_run)
 
 
@@ -224,6 +248,11 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     parser.add_argument("--init", help="Optional init file. Defaults to init.json if present.")
     parser.add_argument("--cmdstan", help="CmdStan/cmdsafestan root directory. Defaults to CMDSAFESTAN or CMDSTAN.")
     parser.add_argument("--make-command", default="make", help="Build command to run inside --cmdstan.")
+    parser.add_argument(
+        "--compile-with-cmdsafestan",
+        action="store_true",
+        help="Compile non-safe Stan with the cmdsafestan wrapper in plain mode instead of make.",
+    )
     parser.add_argument("--no-compile", action="store_true", help="Skip compilation and run the existing executable.")
     parser.add_argument("--force-recompile", action="store_true", help="Rebuild even if the executable exists.")
     parser.add_argument("--method", choices=("sample", "optimize"), help="Inference method. Defaults to metadata or sample.")
@@ -301,13 +330,21 @@ def main(argv: list[str] | None = None) -> int:
                 dry_run=args.dry_run,
             )
         else:
-            exe, compile_returncode = compile_model(
-                stan_file=stan_file,
-                cmdstan=cmdstan,
-                make_command=args.make_command,
-                force_recompile=args.force_recompile,
-                dry_run=args.dry_run,
-            )
+            if args.compile_with_cmdsafestan:
+                exe, compile_returncode = compile_plain_with_cmdsafestan(
+                    stan_file=stan_file,
+                    cmdstan=cmdstan,
+                    force_recompile=args.force_recompile,
+                    dry_run=args.dry_run,
+                )
+            else:
+                exe, compile_returncode = compile_model(
+                    stan_file=stan_file,
+                    cmdstan=cmdstan,
+                    make_command=args.make_command,
+                    force_recompile=args.force_recompile,
+                    dry_run=args.dry_run,
+                )
         if compile_returncode != 0:
             return compile_returncode
     elif not exe.exists() and not args.dry_run:
