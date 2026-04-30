@@ -2,8 +2,10 @@
 
 Compatibility: minor.
 
-Protected data: `y`.
+Manual translation date: 2026-04-30.
+
+Protected data: `y_counts_1` and `y_counts_2`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: replaced the manual `target += log_sum_exp(...)` word likelihood with an equivalent built-in `categorical` sampling statement for the top-level protected variable `y`. The categorical probabilities are computed as the same mixture over `atom[k]` weighted by `local_weight[doc[n], k]`. The Dirichlet priors over `local_weight` and `atom` were written as vectorized top-level sampling statements rather than looped indexed sampling statements. No data values were changed or added. `doc` is treated as a context index, not as protected observed data.
+Changes: aggregated token observations by document into protected multinomial counts. This avoids unsupported array/matrix-valued distribution calls while preserving the parameter-dependent log density up to data-only multinomial/binomial constants where observations were aggregated.

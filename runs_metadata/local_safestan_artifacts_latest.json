@@ -1,8 +1,19 @@
 {
-  "artifacts_root": "models_safe",
-  "failures": 0,
-  "generated_at": "2026-04-29T23:27:31+00:00",
+  "run_id": "local-safestan-artifacts-latest",
+  "source": "local_artifact_tree",
+  "generated_at": "2026-04-30T00:23:05+00:00",
   "models_root": "models",
+  "safe_root": "models_safe",
+  "artifacts_root": "models_safe",
+  "total": 1193,
+  "usage_totals": {
+    "input_tokens": 6116846,
+    "cached_input_tokens": 2317312,
+    "output_tokens": 3316659,
+    "reasoning_output_tokens": 2731134,
+    "total_tokens": 9433505
+  },
+  "failures": [],
   "results": [
     {
       "artifacts_dir": "models_safe/bda_r_demos/demos-rstan-bern/api",
@@ -1962,6 +1973,9 @@
     {
       "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/falling-fit4/api",
       "compatibility": "minor",
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Flattened obs_t_fall to a vector and represented obs_t_calib as a vector so both protected observations use valid top-level normal sampling statements.",
       "completed_at": "2026-04-29T00:53:33+00:00",
       "model": "gpt-5.5",
       "path": "models/betanalpha_knitr_case_studies/falling-fit4",
@@ -3461,6 +3475,9 @@
     {
       "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-multivariate-hierarchical-cp/api",
       "compatibility": "minor",
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Flattened y and the matching theta_obs means to vectors in observation-then-component order to avoid unsupported array-of-vector normal sampling.",
       "completed_at": "2026-04-29T00:56:38+00:00",
       "model": "gpt-5.5",
       "path": "models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-multivariate-hierarchical-cp",
@@ -3491,6 +3508,9 @@
     {
       "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-multivariate-hierarchical-ncp/api",
       "compatibility": "minor",
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Flattened y/theta_obs to vectors and flattened eta to a top-level vector so the observation and prior statements have valid plain identifiers.",
       "completed_at": "2026-04-29T00:57:04+00:00",
       "model": "gpt-5.5",
       "path": "models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-multivariate-hierarchical-ncp",
@@ -9637,7 +9657,10 @@
         "total_tokens": 7610
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/arm-ch-13-earnings-latin-square-chr/api",
@@ -9667,7 +9690,10 @@
         "total_tokens": 6918
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/arm-ch-13-earnings-vary-si/api",
@@ -15074,7 +15100,10 @@
         "total_tokens": 9159
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual attempt: row-wise multinomial protected data cannot be observed as indexed rows under current SafeStan; smoke still fails with protected data used before observation."
     },
     {
       "artifacts_dir": "models_safe/example_models/bpa-ch-07-cjs-mnl-age/api",
@@ -15105,7 +15134,10 @@
         "total_tokens": 6334
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual attempt: row-wise juvenile/adult multinomial protected data cannot be observed as indexed rows under current SafeStan; smoke still fails with protected data used before observation."
     },
     {
       "artifacts_dir": "models_safe/example_models/bpa-ch-07-cjs-mnl-ran/api",
@@ -15305,7 +15337,10 @@
         "total_tokens": 10386
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual attempt: row-wise multinomial protected data cannot be observed as indexed rows under current SafeStan; smoke still fails with protected data used before observation."
     },
     {
       "artifacts_dir": "models_safe/example_models/bpa-ch-08-mr-mnl-age/api",
@@ -16278,7 +16313,10 @@
         "total_tokens": 25192
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual attempt: observation-specific categorical probabilities require indexed protected observations; current SafeStan rejects protected data use before a plain top-level observation."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-dogs-dogs/api",
@@ -16380,7 +16418,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "Y"
+        "Y_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_094024fdd34f663c0069f2305e926081a0bd934f1ca7129b13",
@@ -16399,7 +16437,10 @@
         "total_tokens": 6351
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-inhalers-inhalers/api",
@@ -16527,7 +16568,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "r"
+        "r_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0317caf035de1e4b0069f16133c3a88191998006c8097bdc46",
@@ -16546,7 +16587,10 @@
         "total_tokens": 6345
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-litter-litter-old-param/api",
@@ -16616,8 +16660,8 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "rc_safestan_by_prior",
-        "rt_safestan_by_prior"
+        "rc_safestan_flat",
+        "rt_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0f9a01366c0205d20069f161a79fd081a29c2a99b20adb079c",
@@ -16636,7 +16680,10 @@
         "total_tokens": 14252
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-mice-mice/api",
@@ -16738,7 +16785,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "y"
+        "y_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0f18990f128af7690069f161d2dbd48197b2691fe34e490029",
@@ -16757,7 +16804,10 @@
         "total_tokens": 8723
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-rats-rats-stanified/api",
@@ -16856,7 +16906,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "y"
+        "y_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0434b6565eedaaaa0069f1620a2514819f99af434ce60fa99c",
@@ -16875,7 +16925,10 @@
         "total_tokens": 13491
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol1-salm-salm2/api",
@@ -17295,7 +17348,10 @@
         "total_tokens": 12337
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-beetles-beetles-cloglog/api",
@@ -17396,7 +17452,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "y"
+        "y_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0688a13f288eb0f50069f162a1f0bc81949d55724cad19e583",
@@ -17415,13 +17471,18 @@
         "total_tokens": 12018
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-cervix-cervix2/api",
       "compatibility": "minor",
       "completed_at": "2026-04-29T16:27:34+00:00",
       "data_filename": "data_original.json",
+      "manual_notes": "Manual fix: flattened phi prior and corrected data_safe so Ni matches the supplied di/wi protected observation vectors.",
+      "manual_translated_at": "2026-04-30",
       "model": "gpt-5.5",
       "path": "models/example_models/bugs-examples-vol2-cervix-cervix2",
       "prompt_cache_key": "safestan-translation-v1",
@@ -17438,6 +17499,7 @@
       "safe_dir": "models_safe/example_models/bugs-examples-vol2-cervix-cervix2",
       "service_tier": "flex",
       "started_at": "2026-04-29T16:23:45+00:00",
+      "translation_method": "manual",
       "usage": {
         "input_tokens": 20376,
         "input_tokens_details": {
@@ -17632,7 +17694,10 @@
         "total_tokens": 15943
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual attempt: observation-specific categorical probabilities require indexed protected observations; current SafeStan rejects protected data use before a plain top-level observation."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-ice-ice/api",
@@ -17734,7 +17799,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "Y"
+        "Y_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_026d1b7d1eb00b310069f163744c888197b4081f0731285566",
@@ -17753,7 +17818,10 @@
         "total_tokens": 6578
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-pines-pines/api",
@@ -18016,7 +18084,10 @@
         "total_tokens": 8193
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol2-stagnant-stagnant/api",
@@ -18218,7 +18289,10 @@
         "total_tokens": 12173
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/bugs-examples-vol3-fire-fire/api",
@@ -21314,7 +21388,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "y"
+        "y_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0a9a7a8731e364f80069f1674f1ac88191966d565e8c9e2d77",
@@ -21333,7 +21407,10 @@
         "total_tokens": 8229
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/knitr-irt-irt-1pl-mle/api",
@@ -21519,7 +21596,7 @@
       "prompt_cache_retention": "24h",
       "protected_variables": [
         "y_init",
-        "y"
+        "y_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_02837e0db2f23ca40069f167aab0b0819e8b9fb41a13d41952",
@@ -21538,7 +21615,10 @@
         "total_tokens": 11235
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/knitr-mle-params-logodds/api",
@@ -21658,7 +21738,10 @@
         "total_tokens": 11602
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/knitr-neural-nets-nn-k-minus-1/api",
@@ -21688,7 +21771,10 @@
         "total_tokens": 9173
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/knitr-neural-nets-nn-simple/api",
@@ -21718,7 +21804,10 @@
         "total_tokens": 7408
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/knitr-noisy-raters-dawid-skene-dawid-skene/api",
@@ -23068,7 +23157,10 @@
         "total_tokens": 14212
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual attempt: observation-specific categorical word probabilities require indexed protected observations; current SafeStan rejects protected data use before a plain top-level observation."
     },
     {
       "artifacts_dir": "models_safe/example_models/misc-cluster-naive-bayes-naive-bayes/api",
@@ -23996,7 +24088,10 @@
         "total_tokens": 7509
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/misc-gaussian-process-gp-sim-naive/api",
@@ -24170,7 +24265,10 @@
         "total_tokens": 17084
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual attempt: row-wise multinomial transition/emission counts cannot be observed as indexed rows under current SafeStan; smoke still fails with protected data used before observation."
     },
     {
       "artifacts_dir": "models_safe/example_models/misc-irt-irt/api",
@@ -24556,7 +24654,10 @@
         "total_tokens": 8684
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/misc-multivariate-probit-probit-multi/api",
@@ -24623,7 +24724,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "X"
+        "X_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0b5086b27eadcca00069f16bf5f8d48195abe984361a6fd527",
@@ -24642,7 +24743,10 @@
         "total_tokens": 11243
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/misc-nnmf-nnmf-vec/api",
@@ -24654,7 +24758,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "X"
+        "X_safestan_flat"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0fe0bc97e48c5f1b0069f231e89c6881a28580a9797f22adad",
@@ -24673,7 +24777,10 @@
         "total_tokens": 61237
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/misc-sur-sur/api",
@@ -24703,7 +24810,10 @@
         "total_tokens": 4791
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
     },
     {
       "artifacts_dir": "models_safe/example_models/misc-sur-sur-improper/api",
@@ -24830,7 +24940,10 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "obs_rule"
+        "counts_1",
+        "counts_2",
+        "counts_3",
+        "counts_4"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_02d55be54f17e8ad0069f16c4ad734819dab21679edcf641bd",
@@ -24849,7 +24962,10 @@
         "total_tokens": 15740
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite splits count rows into protected multinomial observations to avoid unsupported per-row categorical vectorization."
     },
     {
       "artifacts_dir": "models_safe/forestdb/binomial-inference/api",
@@ -25618,7 +25734,9 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "y"
+        "y_counts_1",
+        "y_counts_2",
+        "y_counts_3"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_08fd0a9b53dcbf0e0069f16cdbc7f88195a834da9112dc8c32",
@@ -25637,7 +25755,10 @@
         "total_tokens": 8099
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite aggregates observations by document and observes protected multinomial counts."
     },
     {
       "artifacts_dir": "models_safe/forestdb/hdp-lda/api",
@@ -25996,7 +26117,8 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "y"
+        "y_counts_1",
+        "y_counts_2"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_06f637ea9acb151b0069f16d3d27b881938a74b9dfea2d21b3",
@@ -26015,7 +26137,10 @@
         "total_tokens": 6492
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite aggregates observations by document and observes protected multinomial counts."
     },
     {
       "artifacts_dir": "models_safe/forestdb/infinite-mixture/api",
@@ -26056,7 +26181,9 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "rule_obs"
+        "counts_1",
+        "counts_2",
+        "counts_3"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0817b757840313230069f16d44b6b0819caf5d81521d557b02",
@@ -26075,7 +26202,10 @@
         "total_tokens": 10690
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite splits count rows into protected multinomial observations."
     },
     {
       "artifacts_dir": "models_safe/forestdb/intensifiers/api",
@@ -26351,7 +26481,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "word_safestan"
+        "word_counts_1"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_05dcfee6f450f1090069f16d926f1481949e73e0e9b1f92c90",
@@ -26370,7 +26500,10 @@
         "total_tokens": 16965
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite aggregates token expansion back to protected document word counts."
     },
     {
       "artifacts_dir": "models_safe/forestdb/learning-physics/api",
@@ -26502,7 +26635,9 @@
       "prompt_cache_retention": "24h",
       "protected_variables": [
         "y_initial",
-        "y_tail"
+        "trans_counts_1",
+        "trans_counts_2",
+        "trans_counts_3"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0ff4a09b89f4ac670069f16db02f948191b7bd22853eb5293a",
@@ -26521,7 +26656,10 @@
         "total_tokens": 12477
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite aggregates transitions by lag state into protected multinomial counts."
     },
     {
       "artifacts_dir": "models_safe/forestdb/marsaglia/api",
@@ -26704,7 +26842,11 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "y"
+        "y_counts_1",
+        "y_counts_2",
+        "y_counts_3",
+        "y_counts_4",
+        "y_counts_5"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_04ee87eb955002e00069f16df3def081a2b44c5066778b6db1",
@@ -26723,7 +26865,10 @@
         "total_tokens": 8622
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite aggregates observations by document and observes protected multinomial counts."
     },
     {
       "artifacts_dir": "models_safe/forestdb/nested-crp/api",
@@ -26843,7 +26988,10 @@
         "total_tokens": 5417
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite uses a vector parameter for matrix weights and keeps the protected Bernoulli-logit observation vector."
     },
     {
       "artifacts_dir": "models_safe/forestdb/newton/api",
@@ -26941,7 +27089,10 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "counts"
+        "counts_1",
+        "counts_2",
+        "counts_3",
+        "counts_4"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_0eefdb7bffaa0f1f0069f16e3b3d688192830a94877b8fd50e",
@@ -26960,7 +27111,10 @@
         "total_tokens": 11831
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite splits count rows into protected multinomial observations."
     },
     {
       "artifacts_dir": "models_safe/forestdb/pdia/api",
@@ -26971,7 +27125,8 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "y"
+        "y_counts_1",
+        "y_counts_2"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_02feb141053dd2290069f16e3bfdec8195848ca98e5929d8cf",
@@ -26990,7 +27145,10 @@
         "total_tokens": 10036
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite aggregates observations by document and observes protected multinomial counts."
     },
     {
       "artifacts_dir": "models_safe/forestdb/pedagogy/api",
@@ -27988,7 +28146,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "y"
+        "y_successes"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_059c70c4b6bbfaef0069f2325678d481a1b6f24004311a6da9",
@@ -28007,7 +28165,10 @@
         "total_tokens": 14490
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite aggregates Bernoulli trials by identical shock/avoid histories and observes protected binomial successes."
     },
     {
       "artifacts_dir": "models_safe/posteriordb/dogs-dogs-log/api",
@@ -28049,7 +28210,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "y"
+        "y_successes"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_03e0a8f3b8a399e20069f232579138819498d2b9d45d40f1c8",
@@ -28068,7 +28229,10 @@
         "total_tokens": 15420
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite aggregates dog-specific Bernoulli trials by identical histories and observes protected binomial successes."
     },
     {
       "artifacts_dir": "models_safe/posteriordb/dugongs-data-dugongs-model/api",
@@ -28813,7 +28977,8 @@
       "prompt_cache_retention": "24h",
       "protected_variables": [
         "y_init",
-        "y"
+        "y_1",
+        "y_2"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_04e7cdde7fa036aa0069f232e79748819480f0f44fc1c08147",
@@ -28832,7 +28997,10 @@
         "total_tokens": 9166
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite splits the two measured population columns into protected lognormal vectors."
     },
     {
       "artifacts_dir": "models_safe/posteriordb/iohmm-reg-simulated-iohmm-reg/api",
@@ -29241,7 +29409,11 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "pattern_id"
+        "r_1",
+        "r_2",
+        "r_3",
+        "r_4",
+        "r_5"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_02c23142885e18720069f233bb62f88197a4afb206182a354a",
@@ -29260,7 +29432,10 @@
         "total_tokens": 22652
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite expands response patterns into protected per-question Bernoulli response arrays."
     },
     {
       "artifacts_dir": "models_safe/posteriordb/m0-data-m0-model/api",
@@ -29599,7 +29774,10 @@
         "total_tokens": 10573
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite uses vector parameters for matrix weights and a built-in categorical_logit_glm observation."
     },
     {
       "artifacts_dir": "models_safe/posteriordb/mnist-nn-rbm1bj100/api",
@@ -29629,7 +29807,10 @@
         "total_tokens": 12188
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite uses vector parameters for matrix weights and a built-in categorical_logit_glm observation."
     },
     {
       "artifacts_dir": "models_safe/posteriordb/mt-data-mt-model/api",
@@ -31486,7 +31667,10 @@
         "total_tokens": 8760
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite uses vector parameters for GP standard-normal matrices and keeps the protected normal observation vector."
     },
     {
       "artifacts_dir": "models_safe/posteriordb/surgical-data-surgical-model/api",
@@ -31668,7 +31852,7 @@
       "prompt_cache_key": "safestan-translation-v1",
       "prompt_cache_retention": "24h",
       "protected_variables": [
-        "w"
+        "word_counts_1"
       ],
       "reasoning_effort": "high",
       "response_id": "resp_07b46aa61d0ffe020069f17321b0dc8192ad2e0c38be4b3eba",
@@ -31687,7 +31871,10 @@
         "total_tokens": 14201
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual rewrite aggregates words by document into protected multinomial word counts."
     },
     {
       "artifacts_dir": "models_safe/posteriordb/timssaustwn-irt-gpcm-latent-reg-irt/api",
@@ -32921,7 +33108,10 @@
         "total_tokens": 14430
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan rewrite: used a scalar protected `count_train` for the supplied `N_train = 1` data, scored it with the equivalent zero-truncated `poisson(exp(mu_indiv[1]))` likelihood because `poisson_log` has no truncation CDF signature, and guarded zero-length generated-quantity prediction loops."
     },
     {
       "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-02-kharratzadeh-epl-model/api",
@@ -32951,7 +33141,10 @@
         "total_tokens": 9507
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan rewrite: flattened matrix parameter `eta_a` to `eta_a_flat` for a single top-level normal prior, rebuilt the matrix deterministically, kept the protected `score_diff` likelihood as one vectorized top-level `student_t` statement, and adjusted synthetic `nweeks` to cover supplied week indexes."
     },
     {
       "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-03-lei-stancon-model/api",
@@ -32981,7 +33174,10 @@
         "total_tokens": 11290
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan rewrite: flattened the ad-platform matrix/array parameters for single top-level priors, rebuilt matrix forms deterministically, kept `y` as the single protected Bernoulli-logit observation, and corrected synthetic film dimensions to cover supplied `x_film` indexes."
     },
     {
       "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-05-margossian-models-effcpt-effcpt/api",
@@ -33268,7 +33464,10 @@
         "total_tokens": 7164
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan rewrite: flattened GP standard-normal matrices for top-level priors, rebuilt matrices deterministically, kept protected `y` in one vectorized normal likelihood, and reduced synthetic `N_years` to avoid generated-quantities indexing beyond `year_re`."
     },
     {
       "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-gp-simple-gamma-len/api",
@@ -33855,7 +34054,10 @@
         "total_tokens": 19064
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan rewrite: flattened `zb` for a single top-level normal prior, scored protected `yc` and `yb_safestan_flat` with top-level vectorized likelihoods, rebuilt local latent vectors after observing `yc`, and corrected synthetic `K` to `Kc + Kb`."
     },
     {
       "artifacts_dir": "models_safe/stancon_talks/2018-contributed-talks-13-comment-mediation-mc/api",
@@ -34090,7 +34292,10 @@
         "total_tokens": 9717
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan rewrite: replaced invalid local constrained vector syntax with an unconstrained local sigma vector, kept protected `expression` in one vectorized truncated-normal likelihood, and updated generated log likelihood to use the matching truncation normalizer."
     },
     {
       "artifacts_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-estimate-sigma-absolute/api",
@@ -34260,7 +34465,10 @@
         "total_tokens": 7107
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan rewrite: flattened `eta_a` for a single top-level normal prior, rebuilt the ability matrix deterministically, kept protected `goal_difference` in one vectorized student-t likelihood, and adjusted synthetic `n_weeks` to cover supplied week indexes."
     },
     {
       "artifacts_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-bridgesampling-models-skellam-dyn-5594cb1994/api",
@@ -34348,7 +34556,10 @@
         "total_tokens": 7394
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan rewrite: flattened `eta_a` for a single top-level normal prior, rebuilt it deterministically, and kept protected `goal_difference` in one vectorized student-t likelihood."
     },
     {
       "artifacts_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-att-def/api",
@@ -34378,7 +34589,10 @@
         "total_tokens": 10036
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan rewrite: flattened offense/defense eta matrices for single top-level priors, rebuilt matrices deterministically, kept protected `goal_difference` in one vectorized student-t likelihood, and adjusted synthetic `n_weeks` to cover supplied week indexes."
     },
     {
       "artifacts_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-ha/api",
@@ -34408,7 +34622,10 @@
         "total_tokens": 8295
       },
       "wrote_data_safe": true,
-      "wrote_model_safe": true
+      "wrote_model_safe": true,
+      "translation_method": "manual",
+      "manual_translated_at": "2026-04-30",
+      "manual_notes": "Manual SafeStan rewrite: flattened `eta_a` for a single top-level normal prior, rebuilt it deterministically, and kept protected `goal_difference` in one vectorized student-t likelihood."
     },
     {
       "artifacts_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-pooling/api",
@@ -34670,15 +34887,5 @@
       "wrote_data_safe": true,
       "wrote_model_safe": true
     }
-  ],
-  "run_id": "local-safestan-artifacts-20260430",
-  "safe_root": "models_safe",
-  "source": "local record.json artifacts",
-  "total": 1193,
-  "usage_totals": {
-    "cached_tokens": 2317312,
-    "input_tokens": 6116846,
-    "output_tokens": 3316659,
-    "reasoning_tokens": 2731134
-  }
+  ]
 }

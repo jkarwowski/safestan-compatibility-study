@@ -1,15 +1,22 @@
 // ForestDB translation: Probabilistic Context-Free Grammar
+// SafeStan rewrite: count rows split into protected multinomial observations.
 data {
   int<lower=1> C;
   int<lower=1> K;
-  array[C, K] int<lower=0> counts;
+  array[K] int<lower=0> counts_1;
+  array[K] int<lower=0> counts_2;
+  array[K] int<lower=0> counts_3;
+  array[K] int<lower=0> counts_4;
 }
 parameters {
   array[C] simplex[K] rule_prob;
 }
 model {
   rule_prob ~ dirichlet(rep_vector(1.0, K));
-  counts ~ multinomial(rule_prob);
+  counts_1 ~ multinomial(rule_prob[1]);
+  counts_2 ~ multinomial(rule_prob[2]);
+  counts_3 ~ multinomial(rule_prob[3]);
+  counts_4 ~ multinomial(rule_prob[4]);
 }
 generated quantities {
   array[C] int<lower=1, upper=K> sampled_rule;

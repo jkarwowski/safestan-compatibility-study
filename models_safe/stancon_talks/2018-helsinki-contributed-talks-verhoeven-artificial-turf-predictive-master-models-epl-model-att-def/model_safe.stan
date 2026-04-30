@@ -24,16 +24,25 @@ parameters {
   real<lower=1> nu;                    // t-dist degree of freedom
   real<lower=0> sigma_y;               // score_diff variation
   row_vector<lower=0>[n_teams] sigma_a_raw; // game-to-game variation
-  matrix[n_weeks,n_teams] eta_a_offense;         // random component
-  matrix[n_weeks,n_teams] eta_a_defense;         // random component
+  vector[n_weeks * n_teams] eta_a_offense_flat;  // random component, flattened for SafeStan prior
+  vector[n_weeks * n_teams] eta_a_defense_flat;  // random component, flattened for SafeStan prior
 
 }
 transformed parameters {
     // team abilities
   matrix[n_weeks, n_teams] a_offense;
   matrix[n_weeks, n_teams] a_defense;
+  matrix[n_weeks,n_teams] eta_a_offense;         // random component
+  matrix[n_weeks,n_teams] eta_a_defense;         // random component
 
   row_vector<lower=0>[n_teams] sigma_a; // game-to-game variation
+
+  for (w in 1:n_weeks) {
+    for (t in 1:n_teams) {
+      eta_a_offense[w, t] = eta_a_offense_flat[(w - 1) * n_teams + t];
+      eta_a_defense[w, t] = eta_a_defense_flat[(w - 1) * n_teams + t];
+    }
+  }
 
   // vectorized over teams
   a_offense[1] = b_prev_offense * prev_perf + sigma_a0 * eta_a_offense[1];
@@ -60,8 +69,8 @@ model {
   b_home ~ normal(0, 1);
   sigma_a_raw ~ normal(0, 1);
   tau_a ~ cauchy(0, 1);
-  eta_a_offense ~ normal(0, 1);
-  eta_a_defense ~ normal(0, 1);
+  eta_a_offense_flat ~ normal(0, 1);
+  eta_a_defense_flat ~ normal(0, 1);
   // Likelihood
   for (g in 1:n_games) {
     home_expected_goals[g] = b_home + a_offense[home_week[g],home_team[g]] -

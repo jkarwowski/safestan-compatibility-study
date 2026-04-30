@@ -26,5 +26,8 @@
     "total_tokens": 8684
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
 }

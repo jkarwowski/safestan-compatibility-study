@@ -38,5 +38,8 @@ model {
       pos += 1;
     }
   }
-  grade_obs ~ categorical(p_obs);
+  for (n in 1 : N_obs) {
+    int grade_obs_n = grade_obs[n];
+    grade_obs_n ~ categorical(p_obs[n]);
+  }
 }

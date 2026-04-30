@@ -5,5 +5,8 @@
   "protected_variables": [
     "y"
   ],
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the elementwise protected-data likelihood `y[n] ~ categorical_logit(...)` inside a loop was replaced by the equivalent built-in vectorized likelihood `y ~ categorical_logit_glm(x, rep_vector(0, K), beta')`, so the protected top-level data variable is observed exactly once with a plain left-hand side. The prior was changed from `to_vector(beta) ~ cauchy(0, 2.5)` to the equivalent elementwise matrix statement `beta ~ cauchy(0, 2.5)`, making the top-level parameter the direct sampling target. The prior now appears before any use of `beta` in the likelihood. `data_safe.json` is unchanged from the supplied data.\n"
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: the elementwise protected-data likelihood `y[n] ~ categorical_logit(...)` inside a loop was replaced by the equivalent built-in vectorized likelihood `y ~ categorical_logit_glm(x, rep_vector(0, K), beta')`, so the protected top-level data variable is observed exactly once with a plain left-hand side. The prior was changed from `to_vector(beta) ~ cauchy(0, 2.5)` to the equivalent elementwise matrix statement `beta ~ cauchy(0, 2.5)`, making the top-level parameter the direct sampling target. The prior now appears before any use of `beta` in the likelihood. `data_safe.json` is unchanged from the supplied data.\n",
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
 }

@@ -21,7 +21,7 @@ data {
   array[Ni] int di;
 }
 parameters {
-  array[2, 2] real<lower=0, upper=1> phi;
+  vector<lower=0, upper=1>[4] phi_raw;
   real<lower=0, upper=1> q;
   real beta0C;
   real beta;
@@ -29,11 +29,19 @@ parameters {
   // integrated out here 
   //int xi[Ni]; 
 }
+transformed parameters {
+  array[2, 2] real<lower=0, upper=1> phi;
+  for (i in 1 : 2) {
+    for (j in 1 : 2) {
+      phi[i, j] = phi_raw[(i - 1) * 2 + j];
+    }
+  }
+}
 model {
   q ~ uniform(0, 1);
   beta0C ~ normal(0, 320);
   beta ~ normal(0, 320);
-  phi ~ uniform(0, 1);
+  phi_raw ~ uniform(0, 1);
 
   xc ~ bernoulli(q);
 

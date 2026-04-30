@@ -5,6 +5,7 @@ data {
   int<lower=0> T;
   array[T] real x;
   array[N, T] real y;
+  vector[N * T] y_safestan_flat;
   real xbar;
 }
 parameters {
@@ -29,6 +30,7 @@ transformed parameters {
 }
 model {
   array[N, T] real y_hat;
+  vector[N * T] y_hat_safestan_flat;
 
   mu_alpha ~ normal(0, 100);
   mu_beta ~ normal(0, 100);
@@ -40,9 +42,10 @@ model {
   for (n in 1 : N) {
     for (t in 1 : T) {
       y_hat[n, t] = alpha[n] + beta[n] * (x[t] - xbar);
+      y_hat_safestan_flat[(n - 1) * T + t] = y_hat[n, t];
     }
   }
-  y ~ normal(y_hat, sigma_y);
+  y_safestan_flat ~ normal(y_hat_safestan_flat, sigma_y);
 }
 generated quantities {
   real alpha0;

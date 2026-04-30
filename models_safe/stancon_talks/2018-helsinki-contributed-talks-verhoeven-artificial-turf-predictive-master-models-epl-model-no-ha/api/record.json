@@ -26,5 +26,8 @@
     "total_tokens": 8295
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan rewrite: flattened `eta_a` for a single top-level normal prior, rebuilt it deterministically, and kept protected `goal_difference` in one vectorized student-t likelihood."
 }

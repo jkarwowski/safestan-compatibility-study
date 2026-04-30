@@ -6,6 +6,7 @@ data {
   int<lower=0> N;
   array[N] int group;
   array[N, P] real Y;
+  vector[N * P] Y_safestan_flat;
   array[2] int sign;
 }
 transformed data {
@@ -40,12 +41,14 @@ model {
 
   {
     array[N, P] real m;
+    vector[N * P] m_safestan_flat;
     for (n in 1 : N) {
       for (p in 1 : P) {
         m[n, p] = mu + sign[T[n, p]] * phi / 2 + sign[p] * pi / 2 + delta[n];
+        m_safestan_flat[(n - 1) * P + p] = m[n, p];
       }
     }
-    Y ~ normal(m, sigma1);
+    Y_safestan_flat ~ normal(m_safestan_flat, sigma1);
   }
 }
 generated quantities {

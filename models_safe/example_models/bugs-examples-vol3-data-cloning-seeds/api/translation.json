@@ -5,5 +5,8 @@
   "protected_variables": [
     "n_safestan_cloned"
   ],
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `n_safestan_cloned`, a deterministic cloned copy of the original observed counts `n`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the looped/indexed likelihood `n[i] ~ binomial_logit(...)` with a single top-level sampling statement for `n_safestan_cloned`. For each original row `i` and clone index `k = 1, ..., 8`, `n_safestan_cloned[(i - 1) * 8 + k] = n[i]` and `N_safestan_cloned[(i - 1) * 8 + k] = N[i]`. This preserves the original data-cloning likelihood exactly. Also vectorized the prior for `b` from looped `b[i] ~ normal(0.0, sigma)` statements to one top-level `b ~ normal(0.0, sigma)` statement so that the parameter prior is SafeStan-compatible.\n"
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `n_safestan_cloned`, a deterministic cloned copy of the original observed counts `n`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: replaced the looped/indexed likelihood `n[i] ~ binomial_logit(...)` with a single top-level sampling statement for `n_safestan_cloned`. For each original row `i` and clone index `k = 1, ..., 8`, `n_safestan_cloned[(i - 1) * 8 + k] = n[i]` and `N_safestan_cloned[(i - 1) * 8 + k] = N[i]`. This preserves the original data-cloning likelihood exactly. Also vectorized the prior for `b` from looped `b[i] ~ normal(0.0, sigma)` statements to one top-level `b ~ normal(0.0, sigma)` statement so that the parameter prior is SafeStan-compatible.\n",
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
 }

@@ -17,13 +17,19 @@ parameters {
   array[8] real beta;
   real theta;
   real phi;
-  matrix[3, M] z;
+  vector[3 * M] z_raw;
   vector[3] gamma;
   cholesky_factor_corr[3] L_Sigma;
   vector<lower=0>[3] sigma_Sigma;
 }
 transformed parameters {
+  matrix[3, M] z;
   matrix[M, 3] alpha;
+  for (i in 1 : 3) {
+    for (m in 1 : M) {
+      z[i, m] = z_raw[(i - 1) * M + m];
+    }
+  }
   alpha = transpose(rep_matrix(gamma, M)
                     + diag_pre_multiply(sigma_Sigma, L_Sigma) * z);
 }
@@ -36,7 +42,7 @@ model {
   phi ~ normal(0, 0.1);
 
   // Priors for random coefficients:
-  z ~ normal(0, 1);
+  z_raw ~ normal(0, 1);
   // implies: alpha ~ multi_normal(gamma, CovarianceMatrix);
 
   // Hyper-priors:

@@ -26,5 +26,8 @@
     "total_tokens": 14430
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan rewrite: used a scalar protected `count_train` for the supplied `N_train = 1` data, scored it with the equivalent zero-truncated `poisson(exp(mu_indiv[1]))` likelihood because `poisson_log` has no truncation CDF signature, and guarded zero-length generated-quantity prediction loops."
 }

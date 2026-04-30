@@ -3,6 +3,7 @@ data {
   int<lower=0> I;
   int<lower=0> J;
   array[I, J] int<lower=0, upper=1> y;
+  array[I * J] int<lower=0, upper=1> y_safestan_flat;
 }
 parameters {
   vector[I] b;
@@ -13,6 +14,7 @@ parameters {
 }
 model {
   array[I, J] real eta;
+  vector[I * J] eta_safestan_flat;
 
   // hyperpriors
   mu_b ~ normal(0, 5);
@@ -27,9 +29,10 @@ model {
   for (i in 1 : I) {
     for (j in 1 : J) {
       eta[i, j] = theta[j] - b[i];
+      eta_safestan_flat[(i - 1) * J + j] = eta[i, j];
     }
   }
 
   // likelihood
-  y ~ bernoulli_logit(eta);
+  y_safestan_flat ~ bernoulli_logit(eta_safestan_flat);
 }

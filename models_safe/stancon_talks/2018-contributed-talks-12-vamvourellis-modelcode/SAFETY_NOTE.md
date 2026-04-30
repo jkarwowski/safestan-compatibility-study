@@ -2,8 +2,8 @@
 
 Compatibility: minor.
 
-Protected data: `yc` and `yb_safestan_flat`. The protected `yb_safestan_flat` represents the original binary observation array `yb` as a deterministic column-major flattening: `yb_safestan_flat[(k - 1) * N + n] = yb[n, k]` for `n = 1..N` and `k = 1..Kb`, matching `to_vector(z)`.
+Protected data: `yc` and `yb_safestan_flat`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: added `yb_safestan_flat` to the data as a deterministic reshape of `yb`; moved the computation of `z` into the `model` block after `yc` has been observed, because `z` depends on protected `yc`; vectorized the `zb` prior into a single top-level parameter sampling statement; and replaced the looped/indexed binary likelihood with one built-in `bernoulli_logit` statement on the protected flat copy. These are mechanical same-density changes for data satisfying the documented deterministic copy relation.
+Manual update (2026-04-30): Manual SafeStan rewrite: flattened `zb` for a single top-level normal prior, scored protected `yc` and `yb_safestan_flat` with top-level vectorized likelihoods, rebuilt local latent vectors after observing `yc`, and corrected synthetic `K` to `Kc + Kb`.

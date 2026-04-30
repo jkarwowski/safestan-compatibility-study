@@ -1,19 +1,20 @@
 // ForestDB translation: Infinite Probabilistic Context-Free Grammar
-// SafeStan-compatible rewrite: counts are represented as expanded categorical observations.
+// SafeStan rewrite: count rows split into protected multinomial observations.
 data {
   int<lower=1> C;
   int<lower=1> K;
-  array[C, K] int<lower=0> counts;
-  int<lower=0> N_obs;
-  array[N_obs] int<lower=1, upper=C> obs_class;
-  array[N_obs] int<lower=1, upper=K> rule_obs;
+  array[K] int<lower=0> counts_1;
+  array[K] int<lower=0> counts_2;
+  array[K] int<lower=0> counts_3;
 }
 parameters {
   array[C] simplex[K] rule_prob;
 }
 model {
   rule_prob ~ dirichlet(rep_vector(1.0, K));
-  rule_obs ~ categorical(rule_prob[obs_class]);
+  counts_1 ~ multinomial(rule_prob[1]);
+  counts_2 ~ multinomial(rule_prob[2]);
+  counts_3 ~ multinomial(rule_prob[3]);
 }
 generated quantities {
   array[C] int<lower=1, upper=K> sampled_rule;

@@ -12,8 +12,8 @@ parameters {
   vector[n_eth] eta_a2;
   vector[n_age] eta_b1;
   vector[n_age] eta_b2;
-  matrix[n_eth, n_age] eta_c;
-  matrix[n_eth, n_age] eta_d;
+  vector[n_eth * n_age] eta_c_raw;
+  vector[n_eth * n_age] eta_d_raw;
   real mu_a1;
   real mu_a2;
   real mu_b1;
@@ -33,6 +33,8 @@ transformed parameters {
   vector[n_eth] a2;
   vector[n_age] b1;
   vector[n_age] b2;
+  matrix[n_eth, n_age] eta_c;
+  matrix[n_eth, n_age] eta_d;
   matrix[n_eth, n_age] c;
   matrix[n_eth, n_age] d;
   vector[N] y_hat;
@@ -41,6 +43,12 @@ transformed parameters {
   a2 = mu_a2 + sigma_a2 * eta_a2;
   b1 = 5 * mu_b1 + sigma_b1 * eta_b1;
   b2 = 0.1 * mu_b2 + sigma_b2 * eta_b2;
+  for (i in 1 : n_eth) {
+    for (j in 1 : n_age) {
+      eta_c[i, j] = eta_c_raw[(i - 1) * n_age + j];
+      eta_d[i, j] = eta_d_raw[(i - 1) * n_age + j];
+    }
+  }
   c = 0.1 * mu_c + sigma_c * eta_c;
   d = 0.01 * mu_d + sigma_d * eta_d;
   
@@ -66,11 +74,11 @@ model {
   sigma_b2 ~ uniform(0, 100);
   
   mu_c ~ normal(0, 1);
-  eta_c ~ normal(0, 1);
+  eta_c_raw ~ normal(0, 1);
   sigma_c ~ uniform(0, 100);
   
   mu_d ~ normal(0, 1);
-  eta_d ~ normal(0, 1);
+  eta_d_raw ~ normal(0, 1);
   sigma_d ~ uniform(0, 100);
   
   sigma_y ~ uniform(0, 100);

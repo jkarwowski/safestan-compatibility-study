@@ -7,7 +7,11 @@
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [
-    "y"
+    "y_counts_1",
+    "y_counts_2",
+    "y_counts_3",
+    "y_counts_4",
+    "y_counts_5"
   ],
   "reasoning_effort": "high",
   "response_id": "resp_04ee87eb955002e00069f16df3def081a2b44c5066778b6db1",
@@ -26,5 +30,8 @@
     "total_tokens": 8622
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual rewrite aggregates observations by document and observes protected multinomial counts."
 }

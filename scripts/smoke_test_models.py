@@ -121,7 +121,7 @@ def log_tail(path: Path, lines: int = 80) -> list[str]:
 
 
 def cleanup_model_build_artifacts(model_dir: Path) -> None:
-    for name in ("model", "model.o", "model.hpp"):
+    for name in ("model", "model.o", "model.hpp", "model_safe", "model_safe.o", "model_safe.hpp"):
         path = model_dir / name
         if path.exists() and path.is_file():
             path.unlink()

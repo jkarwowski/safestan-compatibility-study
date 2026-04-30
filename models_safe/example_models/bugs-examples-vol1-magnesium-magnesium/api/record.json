@@ -7,8 +7,8 @@
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [
-    "rc_safestan_by_prior",
-    "rt_safestan_by_prior"
+    "rc_safestan_flat",
+    "rt_safestan_flat"
   ],
   "reasoning_effort": "high",
   "response_id": "resp_0f9a01366c0205d20069f161a79fd081a29c2a99b20adb079c",
@@ -27,5 +27,8 @@
     "total_tokens": 14252
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
 }

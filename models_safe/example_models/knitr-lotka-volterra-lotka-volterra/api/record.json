@@ -8,7 +8,7 @@
   "prompt_cache_retention": "24h",
   "protected_variables": [
     "y_init",
-    "y"
+    "y_safestan_flat"
   ],
   "reasoning_effort": "high",
   "response_id": "resp_02837e0db2f23ca40069f167aab0b0819e8b9fb41a13d41952",
@@ -27,5 +27,8 @@
     "total_tokens": 11235
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
 }

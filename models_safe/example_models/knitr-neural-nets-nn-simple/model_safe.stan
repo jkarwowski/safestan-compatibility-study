@@ -10,15 +10,29 @@ data {
   int<lower=1> J; // num hidden units
 }
 parameters {
+  vector[M * J] alpha_raw;
+  vector[J * K] beta_raw;
+}
+transformed parameters {
   matrix[M, J] alpha;
   matrix[J, K] beta;
+  for (m in 1 : M) {
+    for (j in 1 : J) {
+      alpha[m, j] = alpha_raw[(m - 1) * J + j];
+    }
+  }
+  for (j in 1 : J) {
+    for (k in 1 : K) {
+      beta[j, k] = beta_raw[(j - 1) * K + k];
+    }
+  }
 }
 model {
   matrix[N, J] hidden;
 
   // priors
-  alpha ~ normal(0, 2);
-  beta ~ normal(0, 2);
+  alpha_raw ~ normal(0, 2);
+  beta_raw ~ normal(0, 2);
 
   // likelihood
   hidden = tanh(x * alpha);

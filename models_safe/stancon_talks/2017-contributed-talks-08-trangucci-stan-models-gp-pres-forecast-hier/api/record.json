@@ -26,5 +26,8 @@
     "total_tokens": 7164
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan rewrite: flattened GP standard-normal matrices for top-level priors, rebuilt matrices deterministically, kept protected `y` in one vectorized normal likelihood, and reduced synthetic `N_years` to avoid generated-quantities indexing beyond `year_re`."
 }

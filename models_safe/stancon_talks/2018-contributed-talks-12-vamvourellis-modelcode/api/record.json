@@ -27,5 +27,8 @@
     "total_tokens": 19064
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan rewrite: flattened `zb` for a single top-level normal prior, scored protected `yc` and `yb_safestan_flat` with top-level vectorized likelihoods, rebuilt local latent vectors after observing `yc`, and corrected synthetic `K` to `Kc + Kb`."
 }

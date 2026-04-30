@@ -20,10 +20,14 @@ transformed data {
 parameters {
   real<lower=0> sigma2_alpha;
   real<lower=0> sigma2_beta;
-  matrix[M, J] alpha;
-  matrix[J, K - 1] beta;
+  vector[M * J] alpha_vec;
+  vector[J * (K - 1)] beta_vec;
   row_vector[J] alpha1;
   row_vector[K - 1] beta1;
+}
+transformed parameters {
+  matrix[M, J] alpha = to_matrix(alpha_vec, M, J);
+  matrix[J, K - 1] beta = to_matrix(beta_vec, J, K - 1);
 }
 model {
   // Priors
@@ -32,19 +36,19 @@ model {
   sigma2_alpha ~ inv_gamma(nu_alpha / 2, nu_alpha * s2_0_alpha / 2);
   sigma2_beta ~ inv_gamma(nu_beta / 2, nu_beta * s2_0_beta / 2);
   
-  alpha ~ normal(0, sqrt(sigma2_alpha));
-  beta ~ normal(0, sqrt(sigma2_beta));
+  alpha_vec ~ normal(0, sqrt(sigma2_alpha));
+  beta_vec ~ normal(0, sqrt(sigma2_beta));
   
   {
-    matrix[N, K] v_matrix;
-    array[N] vector[K] v;
-    v_matrix = append_col(ones,
-                          append_col(ones,
-                                     tanh(x1 * append_row(alpha1, alpha)))
-                          * append_row(beta1, beta));
-    for (n in 1 : N) {
-      v[n] = v_matrix[n]';
-    }
-    y ~ categorical_logit(v);
+    matrix[N, J] h = tanh(x1 * append_row(alpha1, alpha));
+    vector[K] alpha_glm;
+    matrix[J, K] beta_glm;
+
+    alpha_glm[1] = 1;
+    alpha_glm[2 : K] = beta1';
+    beta_glm[ : , 1] = rep_vector(0, J);
+    beta_glm[ : , 2 : K] = beta;
+
+    y ~ categorical_logit_glm(h, alpha_glm, beta_glm);
   }
 }

@@ -8,7 +8,7 @@
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [
-    "y"
+    "y_successes"
   ],
   "reasoning_effort": "high",
   "response_id": "resp_059c70c4b6bbfaef0069f2325678d481a1b6f24004311a6da9",
@@ -27,5 +27,8 @@
     "total_tokens": 14490
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual rewrite aggregates Bernoulli trials by identical shock/avoid histories and observes protected binomial successes."
 }

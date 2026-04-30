@@ -31,10 +31,16 @@ parameters {
   real alpha2;
   real alpha12;
   real<lower=0> tau;
-  array[I] vector[K] b;
+  vector[I * 8] b_raw;
 }
 transformed parameters {
+  array[I] vector[K] b;
   real sigma;
+  for (i in 1 : I) {
+    for (k in 1 : K) {
+      b[i][k] = b_raw[(i - 1) * K + k];
+    }
+  }
   sigma = 1 / sqrt(tau);
 }
 model {
@@ -45,7 +51,7 @@ model {
   alpha2 ~ normal(0.0, 1.0E3);
   alpha12 ~ normal(0.0, 1.0E3);
   tau ~ gamma(1.0E-3, 1.0E-3);
-  b ~ normal(0.0, sigma);
+  b_raw ~ normal(0.0, sigma);
 
   for (i in 1 : I) {
     for (k in 1 : K) {

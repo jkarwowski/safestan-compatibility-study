@@ -2,8 +2,10 @@
 
 Compatibility: minor.
 
-Protected data: `w`. The variables `M`, `N`, `V`, and `doc` are context inputs used for sizes and indexing; they are not scored as observations.
+Manual translation date: 2026-04-30.
+
+Protected data: `word_counts_1`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: replaced the manual `target += log_sum_exp(...)` likelihood with an equivalent built-in categorical observation. The rewritten model deterministically forms `word_prob[n, v] = sum_k theta[doc[n], k] * phi[k, v]` and observes `w` once using vectorized `categorical`. The Dirichlet priors were vectorized so top-level parameters `theta` and `phi` each have exactly one built-in prior statement outside loops. No data fields were added or changed.
+Changes: aggregated words by document into protected multinomial word counts. This avoids unsupported array/matrix-valued distribution calls while preserving the parameter-dependent log density up to data-only multinomial/binomial constants where observations were aggregated.

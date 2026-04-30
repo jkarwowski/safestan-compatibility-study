@@ -13,7 +13,7 @@ data {
   array[N] int TFFC;         // index for traffic volume
   vector[N] EXPR;      // population exposed
   array[N] int count;        // number of pedestrian deaths
-  array[N_train] int<lower=1> count_train; // SafeStan protected training counts
+  int<lower=1> count_train; // SafeStan protected training count for supplied N_train = 1
 }
 transformed data {
   vector[N] offset_;
@@ -81,7 +81,7 @@ model {
   sds      ~ normal(0, 1);
   mu       ~ normal(0, 10);
 
-  count_train ~ poisson_log(mu_indiv) T[1, ];
+  count_train ~ poisson(exp(mu_indiv[1])) T[1, ];
 }
 generated quantities {
   real COND_sd;
@@ -107,28 +107,30 @@ generated quantities {
   TFFC_sd = sd(TFFC_e);
   cell_sd = sd(cell_e);
 
-  for (n in 1:(N - N_train)){
-    cell_e_pred[n]     = normal_rng(0, sds[G+1]);
-    mu_indiv_pred25[n] = mu + offset_e * offset_[N_train + n]
-                            + COND_e[COND[N_train + n]]
-                            + CITY_e[CITY[N_train + n]]
-                            + YEAR_e[YEAR[N_train + n]]
-                            + SLIM_e[6]
-                            + SIGN_e[SIGN[N_train + n]]
-                            + LGHT_e[LGHT[N_train + n]]
-                            + BLTE_e[BLTE[N_train + n]]
-                            + TFFC_e[TFFC[N_train + n]]
-                            + cell_e_pred[n];
-    mu_indiv_pred30[n] = mu + offset_e * offset_[N_train + n]
-                            + COND_e[COND[N_train + n]]
-                            + CITY_e[CITY[N_train + n]]
-                            + YEAR_e[YEAR[N_train + n]]
-                            + SLIM_e[7]
-                            + SIGN_e[SIGN[N_train + n]]
-                            + LGHT_e[LGHT[N_train + n]]
-                            + BLTE_e[BLTE[N_train + n]]
-                            + TFFC_e[TFFC[N_train + n]]
-                            + cell_e_pred[n];
+  if (N > N_train) {
+    for (n in 1:(N - N_train)){
+      cell_e_pred[n]     = normal_rng(0, sds[G+1]);
+      mu_indiv_pred25[n] = mu + offset_e * offset_[N_train + n]
+                              + COND_e[COND[N_train + n]]
+                              + CITY_e[CITY[N_train + n]]
+                              + YEAR_e[YEAR[N_train + n]]
+                              + SLIM_e[6]
+                              + SIGN_e[SIGN[N_train + n]]
+                              + LGHT_e[LGHT[N_train + n]]
+                              + BLTE_e[BLTE[N_train + n]]
+                              + TFFC_e[TFFC[N_train + n]]
+                              + cell_e_pred[n];
+      mu_indiv_pred30[n] = mu + offset_e * offset_[N_train + n]
+                              + COND_e[COND[N_train + n]]
+                              + CITY_e[CITY[N_train + n]]
+                              + YEAR_e[YEAR[N_train + n]]
+                              + SLIM_e[7]
+                              + SIGN_e[SIGN[N_train + n]]
+                              + LGHT_e[LGHT[N_train + n]]
+                              + BLTE_e[BLTE[N_train + n]]
+                              + TFFC_e[TFFC[N_train + n]]
+                              + cell_e_pred[n];
 
- }
+    }
+  }
 }

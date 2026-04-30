@@ -27,5 +27,8 @@
     "total_tokens": 9159
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual attempt: row-wise multinomial protected data cannot be observed as indexed rows under current SafeStan; smoke still fails with protected data used before observation."
 }

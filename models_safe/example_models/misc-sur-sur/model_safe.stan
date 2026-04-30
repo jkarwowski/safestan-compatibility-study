@@ -6,15 +6,23 @@ data {
   array[N] vector[K] y;
 }
 parameters {
-  matrix[K, J] beta;
+  vector[K * J] beta_raw;
   cholesky_factor_corr[K] L_Omega;
   vector<lower=0>[K] L_sigma;
+}
+transformed parameters {
+  matrix[K, J] beta;
+  for (k in 1 : K) {
+    for (j in 1 : J) {
+      beta[k, j] = beta_raw[(k - 1) * J + j];
+    }
+  }
 }
 model {
   array[N] vector[K] mu;
   matrix[K, K] L_Sigma;
 
-  beta ~ normal(0, 5);
+  beta_raw ~ normal(0, 5);
   L_Omega ~ lkj_corr_cholesky(4);
   L_sigma ~ cauchy(0, 2.5);
 

@@ -6,4 +6,4 @@ Protected data: `score_diff`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: `score_diff` is the only top-level data variable scored by a likelihood sampling statement, so it is the protected interface. The other data variables are context sizes, indices, and predictors and remain unprotected. Replaced `to_vector(eta_a) ~ normal(0,1);` with `eta_a ~ normal(0,1);` so the prior sampling statement targets the top-level parameter directly. This preserves the same elementwise standard normal prior density. No data fields or values were changed; `data_safe.json` is the supplied data.
+Manual update (2026-04-30): Manual SafeStan rewrite: flattened matrix parameter `eta_a` to `eta_a_flat` for a single top-level normal prior, rebuilt the matrix deterministically, kept the protected `score_diff` likelihood as one vectorized top-level `student_t` statement, and adjusted synthetic `nweeks` to cover supplied week indexes.

@@ -3,6 +3,8 @@
   "compatibility": "minor",
   "completed_at": "2026-04-29T16:27:34+00:00",
   "data_filename": "data_original.json",
+  "manual_notes": "Manual fix: flattened phi prior and corrected data_safe so Ni matches the supplied di/wi protected observation vectors.",
+  "manual_translated_at": "2026-04-30",
   "model": "gpt-5.5",
   "path": "models/example_models/bugs-examples-vol2-cervix-cervix2",
   "prompt_cache_key": "safestan-translation-v1",
@@ -19,6 +21,7 @@
   "safe_dir": "models_safe/example_models/bugs-examples-vol2-cervix-cervix2",
   "service_tier": "flex",
   "started_at": "2026-04-29T16:23:45+00:00",
+  "translation_method": "manual",
   "usage": {
     "input_tokens": 20376,
     "input_tokens_details": {

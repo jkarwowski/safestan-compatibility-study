@@ -2,10 +2,10 @@
 
 Compatibility: minor.
 
-Protected data: `y`.
+Manual translation date: 2026-04-30.
+
+Protected data: `y_successes`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: added `y_safestan_copy`, a deterministic copy of `y`, because the original model used `y` in `transformed data` to build lagged avoidance/shock counts before the observation statements. The likelihood was mechanically vectorized so the protected top-level variable `y` is observed exactly once with a plain built-in `bernoulli` sampling statement. Parameter prior statements were moved before any model-block use of transformed parameters depending on them, and `to_vector(z) ~ normal(0, 1)` was rewritten as the equivalent top-level `z ~ normal(0, 1)` prior.
-
-Deterministic data augmentation: `y_safestan_copy[j][t] = y[j][t]` for all dogs `j` and trials `t`.
+Changes: aggregated dog-specific Bernoulli outcomes by identical shock/avoid histories and observes protected binomial successes. This avoids unsupported array/matrix-valued distribution calls while preserving the parameter-dependent log density up to data-only multinomial/binomial constants where observations were aggregated.

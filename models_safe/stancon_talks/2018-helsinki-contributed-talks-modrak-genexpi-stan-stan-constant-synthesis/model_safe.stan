@@ -42,8 +42,9 @@ model {
 
   // Observation model
   {
-    vector<lower=0>[num_measurements] sigma = measurement_sigma_absolute + measurement_sigma_relative * predicted_expression;
-    expression ~ normal(predicted_expression, sigma) T[0,];
+    vector[num_measurements] sigma;
+    sigma = measurement_sigma_absolute + measurement_sigma_relative * predicted_expression;
+    expression ~ normal(predicted_expression, sigma) T[0, ];
   }
 }
 
@@ -59,6 +60,6 @@ generated quantities {
     real u = uniform_rng(p, 1);
     expression_replicates[m] = inv_Phi(u) * sigma + predicted_expression[m];
 
-    log_likelihood[m] = normal_lpdf(expression[m]| predicted_expression[m], sigma) - log_diff_exp(1, normal_lcdf(lower_bound | predicted_expression[m], sigma));
+    log_likelihood[m] = normal_lpdf(expression[m] | predicted_expression[m], sigma) - normal_lccdf(lower_bound | predicted_expression[m], sigma);
   }
 }

@@ -6,4 +6,4 @@ Protected data: `y`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: rewrote the observational model from a loop of indexed statements `y[n] ~ normal(...)` to a single top-level protected-data sampling statement `y ~ normal(theta_obs, sigma)`. The local `theta_obs` array is a deterministic model-block helper with `theta_obs[n] = theta[indiv_idx[n]]`, so the likelihood density is unchanged. No data fields were added; `data_safe.json` is the supplied data unchanged.
+Changes: manually corrected on 2026-04-30. The original looped vector observations `y[n] ~ normal(theta[indiv_idx[n]], sigma)` are represented by flattening `y` into a vector in observation-then-component order. The model builds the matching `theta_obs` vector with `theta_obs[(n - 1) * I + i] = theta[indiv_idx[n]][i]` and observes the protected top-level variable once with `y ~ normal(theta_obs, sigma)`. This preserves the same product normal likelihood while avoiding unsupported array-of-vector distribution arguments.

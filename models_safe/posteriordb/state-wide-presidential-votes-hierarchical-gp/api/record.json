@@ -26,5 +26,8 @@
     "total_tokens": 8760
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual rewrite uses vector parameters for GP standard-normal matrices and keeps the protected normal observation vector."
 }

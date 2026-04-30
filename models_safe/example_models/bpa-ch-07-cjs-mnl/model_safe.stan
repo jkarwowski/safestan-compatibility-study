@@ -51,7 +51,10 @@ model {
   p ~ uniform(0, 1);
   
   // Define the multinomial likelihood
-  marr ~ multinomial(pr);
+  for (t in 1 : n_occasions_minus_1) {
+    array[n_occasions] int marr_t = marr[t];
+    marr_t ~ multinomial(pr[t]);
+  }
 }
 generated quantities {
   real fit;

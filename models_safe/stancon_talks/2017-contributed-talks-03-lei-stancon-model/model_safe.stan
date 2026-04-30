@@ -45,17 +45,34 @@ parameters {
 	real<lower=0> v_ad_sigma;
 	vector[K_ads] v_ad_platform_mean;
 	vector<lower=0>[K_ads] v_ad_platform_sigma;
-	array[K_ads, K_mg] real v_ad_platform_g;
-	array[K_ads, K_mg] real<lower=0> v_ad_platform_sigma_g;
-	array[K_m, K_ads] real v_ad_platform_film;
+		vector[K_ads * K_mg] v_ad_platform_g_flat;
+		vector<lower=0>[K_ads * K_mg] v_ad_platform_sigma_g_flat;
+		vector[K_m * K_ads] v_ad_platform_film_flat;
 
-	real<lower=0> v_film_sigma;
-	vector<lower=0>[K_mg] v_film_g_sigma;
-	vector[K_mg] v_film_g;
-	vector[K_m] v_film_s;
-}
+		real<lower=0> v_film_sigma;
+		vector<lower=0>[K_mg] v_film_g_sigma;
+		vector[K_mg] v_film_g;
+		vector[K_m] v_film_s;
+	}
 
-model {
+transformed parameters {
+		matrix[K_ads, K_mg] v_ad_platform_g;
+		matrix<lower=0>[K_ads, K_mg] v_ad_platform_sigma_g;
+		matrix[K_m, K_ads] v_ad_platform_film;
+
+		for (k in 1:K_ads) {
+			for (g in 1:K_mg) {
+				v_ad_platform_g[k, g] = v_ad_platform_g_flat[(k - 1) * K_mg + g];
+				v_ad_platform_sigma_g[k, g] = v_ad_platform_sigma_g_flat[(k - 1) * K_mg + g];
+			}
+		}
+		for (m in 1:K_m) {
+			for (k in 1:K_ads)
+				v_ad_platform_film[m, k] = v_ad_platform_film_flat[(m - 1) * K_ads + k];
+		}
+	}
+
+	model {
 	array[N] real y_pred;
 
 	b ~ normal(0, 0.5);
@@ -79,9 +96,9 @@ model {
 	v_ad_platform_mean ~ normal(0, 1);
 	v_ad_platform_sigma ~ cauchy(0, 1);
 
-  v_ad_platform_g ~ normal(0, 1);
-  v_ad_platform_sigma_g ~ cauchy(0, 1);
-  v_ad_platform_film ~ normal(0, 1);
+  v_ad_platform_g_flat ~ normal(0, 1);
+  v_ad_platform_sigma_g_flat ~ cauchy(0, 1);
+  v_ad_platform_film_flat ~ normal(0, 1);
 
 	v_film_sigma ~ cauchy(0,1);
 	v_film_g_sigma ~ cauchy(0,1);

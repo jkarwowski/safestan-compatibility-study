@@ -21,8 +21,8 @@ transformed data {
     counts[i] = 2;
 }
 parameters {
-  matrix[N_years,N_regions] GP_region_std;
-  matrix[N_years,N_states] GP_state_std;
+  vector[N_years * N_regions] GP_region_std_flat;
+  vector[N_years * N_states] GP_state_std_flat;
   vector[N_years_obs] year_std;
   vector[N_states] state_std;
   vector[N_regions] region_std;
@@ -39,6 +39,8 @@ parameters {
 transformed parameters {
   matrix[N_years,N_regions] GP_region;
   matrix[N_years,N_states] GP_state;
+  matrix[N_years,N_regions] GP_region_std;
+  matrix[N_years,N_states] GP_state_std;
 
   vector[N_years_obs] year_re;
   vector[N_states] state_re;
@@ -55,6 +57,13 @@ transformed parameters {
   real sigma_GP_state_long;
   real sigma_GP_region_short;
   real sigma_GP_state_short;
+
+  for (t in 1:N_years) {
+    for (r in 1:N_regions)
+      GP_region_std[t, r] = GP_region_std_flat[(t - 1) * N_regions + r];
+    for (s in 1:N_states)
+      GP_state_std[t, s] = GP_state_std_flat[(t - 1) * N_states + s];
+  }
 
   vars = 17 * prop_var * tot_var;
   sigma_year = sqrt(vars[1]);
@@ -100,8 +109,8 @@ transformed parameters {
 model {
   vector[N] obs_mu;
 
-  GP_region_std ~ normal(0, 1);
-  GP_state_std ~ normal(0, 1);
+  GP_region_std_flat ~ normal(0, 1);
+  GP_state_std_flat ~ normal(0, 1);
   year_std ~ normal(0, 1);
   state_std ~ normal(0, 1);
   region_std ~ normal(0, 1);

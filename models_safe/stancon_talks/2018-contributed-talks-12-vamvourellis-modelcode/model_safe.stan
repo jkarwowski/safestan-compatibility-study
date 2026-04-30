@@ -13,7 +13,7 @@ transformed data {
 }
 
 parameters {
-  array[N] vector[Kb] zb;
+  vector[N * Kb] zb_flat;
   cholesky_factor_corr[K] L_R;  // first continuous, then binary
   vector<lower=0>[Kc] sigma;
   vector[K] mu;
@@ -24,11 +24,12 @@ model {
   vector[Kb] mu_b;
   matrix[N, Kb] z;
   matrix[Kc, Kc] L_inv;
+  array[N] vector[Kb] zb;
 
   mu ~ normal(0, 10);
   L_R ~ lkj_corr_cholesky(2);
   sigma ~ cauchy(0, 2.5);
-  zb ~ normal(0, 1);
+  zb_flat ~ normal(0, 1);
 
   mu_c = head(mu, Kc);
   mu_b = tail(mu, Kb);
@@ -37,7 +38,10 @@ model {
 
   L_inv = mdivide_left_tri_low(diag_pre_multiply(sigma, L_R[1:Kc, 1:Kc]), I);
   for (n in 1:N) {
-    vector[Kc] resid = L_inv * (yc[n] - mu_c);
+    vector[Kc] resid;
+    for (k in 1:Kb)
+      zb[n][k] = zb_flat[(n - 1) * Kb + k];
+    resid = L_inv * (yc[n] - mu_c);
     z[n,] = transpose(mu_b + tail(L_R * append_row(resid, zb[n]), Kb));
   }
   yb_safestan_flat ~ bernoulli_logit(to_vector(z));

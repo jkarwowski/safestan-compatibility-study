@@ -10,6 +10,8 @@ Model/API: `gpt-5.5` with reasoning effort `high`, Flex service tier, prompt cac
 
 API usage stored in the local artifacts: `6116846` input tokens, `2317312` cached input tokens, `3316659` output tokens, including `2731134` reasoning output tokens.
 
+After the canceled API rerun, `61` compile-failure translations were manually repaired. `MODEL_LIST.md` records translation provenance for every row.
+
 Original Stan smoke test: `runs_metadata/full-dataset-smoke-clean-20260429T0015Z.json` ran all `1193` original models with `1` chain, `20` warmup draws, and `20` sampling draws; result `1193` ok, `0` failed.
 
 ## Compatibility Totals
@@ -20,7 +22,7 @@ Excluded duplicates: `30` source-identical rows: `5` as-is, `6` minor, and `19` 
 
 Deduplicated compatibility units: `1163` models. Compatibility totals: `315` as-is, `406` minor, `442` major.
 
-SafeStan output files were generated for all `721` deduplicated as-is/minor artifact records: `315` as-is and `406` minor. Of those, `544` have at least one protected variable and `177` have no protected data interface.
+SafeStan output files exist for all `721` deduplicated as-is/minor artifact records: `315` as-is and `406` minor. Of those, `544` have at least one protected variable and `177` have no protected data interface.
 
 | Source family | Models | as-is | minor | major | Safe files | No protected data |
 |---|---:|---:|---:|---:|---:|---:|
@@ -91,32 +93,32 @@ Pure data simulator with no data block, for example `betanalpha_knitr_case_studi
 
 ## SafeStan Smoke Check
 
-The smoke check ran over the raw generated safe-model directories. That raw set has `732` generated SafeStan outputs; the deduplicated set has `721` because the 11 safe duplicate rows all passed and are excluded from compatibility totals.
+The smoke check ran over the raw safe-model directories. That raw set has `732` SafeStan outputs; the deduplicated set has `721` because the 11 safe duplicate rows all passed and are excluded from compatibility totals.
 
-First pass: `runs_metadata/cmdsafestan-safe-smoke-20260429T165345Z.json` tested all `732` raw generated safe models through the repository runner. Result: `467` ok, `265` failed. Of the failures, `177` were no-protected-data models that cannot be invoked with `stanc --sstanc` because SafeStan requires `--sstan-protect`.
+Pre-manual final smoke: `runs_metadata/cmdsafestan-safe-smoke-final-20260430.json` tested all `732` raw safe models through the repository runner. Result: `640` ok, `92` failed.
 
-Targeted recheck: `runs_metadata/cmdsafestan-safe-smoke-recheck-20260429T170612Z.json` reran the `265` first-pass failures. No-protected-data models were compiled via `cmdsafestan --mode plain`; protected models were rerun with the current SafeStan wrapper and `init=0`. Recheck result: `172` ok, `93` failed.
+Manual translation pass: `runs_metadata/manual-target-61-smoke-clean-20260430.json` reran the `61` compile-failure targets after manual edits. Result: `54` ok, `7` failed. The current combined report is `runs_metadata/cmdsafestan-safe-smoke-manual-updated-20260430.json`.
 
-Combined raw result after recheck: `639` of `732` generated safe models run successfully; `93` still fail.
+Combined raw result after manual repairs: `694` of `732` safe models run successfully; `38` still fail.
 
-Combined deduplicated result after removing the 11 passing duplicate safe rows: `628` of `721` generated safe models run successfully; `93` still fail.
+Combined deduplicated result after removing the 11 passing duplicate safe rows: `683` of `721` safe models run successfully; `38` still fail.
 
 | Final failure reason | Count | Notes |
 |---|---:|---|
-| Compile-time Stan/SafeStan error | 61 | Generated `model_safe.stan` is not accepted by `stanc`, usually because a translation used an unsupported array/matrix sampling form or otherwise produced invalid Stan. |
-| Initialization failure | 21 | Compilation succeeds, but short sampling fails to find a valid initial state even with `init=0`. |
-| Runtime exception after compile | 11 | Compilation succeeds, but transformed data, log-probability evaluation, or sampling fails at runtime. |
-| **Total** | **93** | 88 protected SafeStan runs and 5 no-protected-data plain-mode runs. |
+| Compile-time Stan/SafeStan error | 7 | The remaining compile failures are row-wise protected categorical/multinomial observation patterns that still hit SafeStan protected-data checks. |
+| Initialization failure | 15 | Compilation succeeds, but short sampling fails to find a valid initial state even with the wrapper settings used here. |
+| Runtime exception after compile | 16 | Compilation succeeds, but transformed data, log-probability evaluation, or sampling fails at runtime. |
+| **Total** | **38** | 35 protected SafeStan runs and 3 no-protected-data plain-mode runs. |
 
 | Source family | Compile | Init | Runtime | Final failures |
 |---|---:|---:|---:|---:|
 | `bda_r_demos` | 0 | 1 | 0 | 1 |
-| `betanalpha_knitr_case_studies` | 3 | 10 | 2 | 15 |
-| `example_models` | 30 | 7 | 6 | 43 |
-| `forestdb` | 10 | 0 | 0 | 10 |
-| `posteriordb` | 8 | 0 | 3 | 11 |
-| `stancon_talks` | 10 | 3 | 0 | 13 |
-| **Total** | **61** | **21** | **11** | **93** |
+| `betanalpha_knitr_case_studies` | 0 | 9 | 2 | 11 |
+| `example_models` | 7 | 5 | 8 | 20 |
+| `forestdb` | 0 | 0 | 0 | 0 |
+| `posteriordb` | 0 | 0 | 3 | 3 |
+| `stancon_talks` | 0 | 0 | 3 | 3 |
+| **Total** | **7** | **15** | **16** | **38** |
 
 ## Major Feature Analysis
 
