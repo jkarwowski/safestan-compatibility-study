@@ -1,0 +1,369 @@
+{
+  "cmdstan": "/home/jacski/ppl-synthesis-reward-hacking/cmdsafestan",
+  "generated_at": "2026-04-30T00:33:36+00:00",
+  "results": [
+    {
+      "case_dir": "comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange",
+      "comparison": {
+        "compared_columns": 17,
+        "extra_in_safe": [
+          "theta_raw.1",
+          "theta_raw.2",
+          "theta_raw.3"
+        ],
+        "failures": [
+          {
+            "column": "phi.1.1",
+            "mean_delta": 9.881553e+77,
+            "mean_ok": true,
+            "mean_threshold": 3.9526212e+78,
+            "mean_z": 1.0,
+            "safe_mean": 9.881553e+77,
+            "safe_sd": 1.3974626269908544e+79,
+            "sd_delta": 1.3974626269908544e+79,
+            "sd_ok": false,
+            "sd_threshold": 6.987313134954272e+78,
+            "stan_mean": 6.08593981978871e+39,
+            "stan_sd": 5.434298669960495e+40
+          },
+          {
+            "column": "phi.1.2",
+            "mean_delta": -4.0310214500003384e+177,
+            "mean_ok": true,
+            "mean_threshold": 1.6124085799999991e+178,
+            "mean_z": 1.0000000000000844,
+            "safe_mean": 1.737761166500013e+126,
+            "safe_sd": 1.738446833494605e+127,
+            "sd_delta": -5.7007252048068564e+178,
+            "sd_ok": false,
+            "sd_threshold": 2.8503626024034282e+178,
+            "stan_mean": 4.0310214500003384e+177,
+            "stan_sd": 5.7007252048068564e+178
+          },
+          {
+            "column": "phi.1.3",
+            "mean_delta": -9.97754827464003e+205,
+            "mean_ok": true,
+            "mean_threshold": 3.990849554781158e+206,
+            "mean_z": 1.000042536074719,
+            "safe_mean": -9.97754827464003e+205,
+            "safe_sd": 1.4109783914405355e+207,
+            "sd_delta": 1.4109783914405355e+207,
+            "sd_ok": false,
+            "sd_threshold": 7.054891957202677e+206,
+            "stan_mean": -6.39557804630369e+85,
+            "stan_sd": 9.044712435825884e+86
+          },
+          {
+            "column": "sigma.1",
+            "mean_delta": 715.01558823575,
+            "mean_ok": false,
+            "mean_threshold": 570.2400626178546,
+            "mean_z": 5.0155408930986765,
+            "safe_mean": 754.86044482725,
+            "safe_sd": 2003.3927608534084,
+            "sd_delta": 1777.3638723450083,
+            "sd_ok": false,
+            "sd_threshold": 1001.7463804267041,
+            "stan_mean": 39.8448565915,
+            "stan_sd": 226.02888850840017
+          },
+          {
+            "column": "sigma.3",
+            "mean_delta": -66.17485771095,
+            "mean_ok": true,
+            "mean_threshold": 297.49074624852426,
+            "mean_z": 0.8897736624811503,
+            "safe_mean": 178.0544771206,
+            "safe_sd": 370.4734067157955,
+            "sd_delta": -613.9090170455144,
+            "sd_ok": false,
+            "sd_threshold": 492.24121188065493,
+            "stan_mean": 244.22933483155,
+            "stan_sd": 984.3824237613098
+          },
+          {
+            "column": "tau.1",
+            "mean_delta": -7.7775932630469695,
+            "mean_ok": false,
+            "mean_threshold": 4.4546655976954534,
+            "mean_z": 6.983772938709992,
+            "safe_mean": 0.1822546307332316,
+            "safe_sd": 0.5691128165141576,
+            "sd_delta": -15.170222634616609,
+            "sd_ok": false,
+            "sd_threshold": 7.919667725565383,
+            "stan_mean": 7.959847893780201,
+            "stan_sd": 15.739335451130767
+          },
+          {
+            "column": "tau.2",
+            "mean_delta": 1.9242337663824203,
+            "mean_ok": true,
+            "mean_threshold": 2.594742545712567,
+            "mean_z": 2.96635790639335,
+            "safe_mean": 2.5066473755967604,
+            "safe_sd": 9.044888872083758,
+            "sd_delta": 7.512375813969069,
+            "sd_ok": false,
+            "sd_threshold": 4.572444436041879,
+            "stan_mean": 0.5824136092143402,
+            "stan_sd": 1.5325130581146897
+          },
+          {
+            "column": "tau.3",
+            "mean_delta": -6.175245064000018,
+            "mean_ok": false,
+            "mean_threshold": 4.466611572109933,
+            "mean_z": 5.530138418624983,
+            "safe_mean": 1.4242179566383915,
+            "safe_sd": 4.281318383098265,
+            "sd_delta": -10.91911087412584,
+            "sd_ok": false,
+            "sd_threshold": 7.650214628612052,
+            "stan_mean": 7.599463020638409,
+            "stan_sd": 15.200429257224105
+          },
+          {
+            "column": "theta.1.1",
+            "mean_delta": -330.87307646834,
+            "mean_ok": false,
+            "mean_threshold": 163.63242641201134,
+            "mean_z": 8.088203144656234,
+            "safe_mean": -387.5132615055,
+            "safe_sd": 574.3450469668129,
+            "sd_delta": 504.9015145594074,
+            "sd_ok": false,
+            "sd_threshold": 287.22252348340646,
+            "stan_mean": -56.64018503716,
+            "stan_sd": 69.4435324074055
+          },
+          {
+            "column": "theta.1.3",
+            "mean_delta": 63.9639520213,
+            "mean_ok": false,
+            "mean_threshold": 50.59515828649022,
+            "mean_z": 5.056922771867638,
+            "safe_mean": 52.81442894315,
+            "safe_sd": 158.07340497378155,
+            "sd_delta": 74.34065053782406,
+            "sd_ok": true,
+            "sd_threshold": 79.08670248689077,
+            "stan_mean": -11.14952307815,
+            "stan_sd": 83.73275443595749
+          }
+        ],
+        "metrics": {
+          "failed_columns": 10,
+          "max_abs_mean_delta": 9.97754827464003e+205,
+          "max_abs_sd_delta": 1.4109783914405355e+207,
+          "max_mean_z": 8.088203144656234
+        },
+        "missing_in_safe": [],
+        "safe_draws": 200,
+        "stan_draws": 200,
+        "status": "different"
+      },
+      "compatibility": "minor",
+      "log_prob": {
+        "artifact_dir": "comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob",
+        "checks": 3,
+        "details": [
+          {
+            "index": 1,
+            "safe_run": {
+              "command": [
+                "/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/safestan/model_safe",
+                "log_prob",
+                "constrained_params=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/params-1.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/safestan/data_safe.json",
+                "output",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/safestan-log-prob-1.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 1,
+              "timed_out": false
+            },
+            "stan_run": {
+              "command": [
+                "/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/stan/model",
+                "log_prob",
+                "constrained_params=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/params-1.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/stan/data.json",
+                "output",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/stan-log-prob-1.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 0,
+              "timed_out": false
+            },
+            "status": "run-failed"
+          },
+          {
+            "index": 2,
+            "safe_run": {
+              "command": [
+                "/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/safestan/model_safe",
+                "log_prob",
+                "constrained_params=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/params-2.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/safestan/data_safe.json",
+                "output",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/safestan-log-prob-2.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 1,
+              "timed_out": false
+            },
+            "stan_run": {
+              "command": [
+                "/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/stan/model",
+                "log_prob",
+                "constrained_params=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/params-2.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/stan/data.json",
+                "output",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/stan-log-prob-2.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 0,
+              "timed_out": false
+            },
+            "status": "run-failed"
+          },
+          {
+            "index": 3,
+            "safe_run": {
+              "command": [
+                "/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/safestan/model_safe",
+                "log_prob",
+                "constrained_params=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/params-3.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/safestan/data_safe.json",
+                "output",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/safestan-log-prob-3.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 1,
+              "timed_out": false
+            },
+            "stan_run": {
+              "command": [
+                "/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/stan/model",
+                "log_prob",
+                "constrained_params=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/params-3.json",
+                "propto=1",
+                "jacobian=1",
+                "data",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/stan/data.json",
+                "output",
+                "file=/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/log_prob/stan-log-prob-3.csv",
+                "sig_figs=18",
+                "refresh=0"
+              ],
+              "returncode": 0,
+              "timed_out": false
+            },
+            "status": "run-failed"
+          }
+        ],
+        "max_abs_delta": 0.0,
+        "max_failed_columns": 3,
+        "status": "different"
+      },
+      "path": "models/example_models/bugs-examples-vol2-orange-orange",
+      "protected_variables": [
+        "Y_safestan_flat"
+      ],
+      "safe_run": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/jacski/safestan-compatibility-study/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/safestan",
+          "--output-dir",
+          "/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/safestan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/home/jacski/ppl-synthesis-reward-hacking/cmdsafestan",
+          "--safe",
+          "--sstan-protect",
+          "Y_safestan_flat"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "stan_run": {
+        "command": [
+          "/usr/bin/python3",
+          "/home/jacski/safestan-compatibility-study/scripts/run_cmdstan_model.py",
+          "--model-dir",
+          "/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/stan",
+          "--output-dir",
+          "/home/jacski/safestan-compatibility-study/comparison_runs/manual-orange-200x1-20260430/example_models/bugs-examples-vol2-orange-orange/stan/run",
+          "--chains",
+          "1",
+          "--iter-warmup",
+          "200",
+          "--iter-sampling",
+          "200",
+          "--seed",
+          "12345",
+          "--refresh",
+          "0",
+          "--cmdstan",
+          "/home/jacski/ppl-synthesis-reward-hacking/cmdsafestan",
+          "--compile-with-cmdsafestan"
+        ],
+        "returncode": 0,
+        "timed_out": false
+      },
+      "status": "different"
+    }
+  ],
+  "run_id": "manual-orange-200x1-20260430",
+  "settings": {
+    "chains": 1,
+    "from_smoke_ok_report": null,
+    "include_lp": false,
+    "include_rep": false,
+    "iter_sampling": 200,
+    "iter_warmup": 200,
+    "jobs": 1,
+    "log_prob_checks": 3,
+    "log_prob_tol": 1e-06,
+    "mean_abs_tol": 0.05,
+    "mean_se_mult": 4.0,
+    "sd_abs_tol": 0.05,
+    "sd_rel_tol": 0.5,
+    "seed": 12345,
+    "stan_through_cmdsafestan": true
+  },
+  "summary": "runs_metadata/local_safestan_artifacts_latest.json"
+}

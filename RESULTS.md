@@ -120,6 +120,22 @@ Combined deduplicated result after removing the 11 passing duplicate safe rows: 
 | `stancon_talks` | 0 | 0 | 3 | 3 |
 | **Total** | **7** | **15** | **16** | **38** |
 
+## Stan vs SafeStan Result Comparison
+
+The wrapper comparison now covers all `694` raw SafeStan rows that passed the latest smoke check. It uses `1` chain, `200` warmup draws, `200` sampling draws, original Stan compiled through `cmdsafestan --mode plain`, SafeStan compiled with protection, and `3` log-probability spot checks per model.
+
+The combined report is `comparison_runs/full-wrapper-200x1-manual-updated-20260430/COMPARISON_RESULTS.md`. It merges the previous `640`-model comparison with `comparison_runs/manual-wrapper-200x1-20260430/`, the new `54`-model comparison for manually repaired translations.
+
+| Result status | Raw models | Deduplicated models | Interpretation |
+|---|---:|---:|---|
+| `same` | 563 | 552 | Posterior summaries pass the tolerance checks. |
+| `same-density-mcmc-different` | 76 | 76 | The log-probability spot checks match; short MCMC summaries differ beyond tolerance. |
+| `different` | 33 | 33 | Posterior summaries differ and log-probability checks do not establish equality. |
+| `run-failed` | 22 | 22 | The full comparison did not complete for at least one side. |
+| **Total compared** | **694** | **683** | The `11` excluded duplicate rows all had status `same`. |
+
+Equivalence-oriented count: `639 / 694` raw compared models, or `628 / 683` deduplicated compared models, are either `same` or `same-density-mcmc-different`.
+
 ## Major Feature Analysis
 
 The `442` deduplicated major cases were reviewed manually in source-family batches. The table is non-overlapping by primary blocker; many models also have secondary issues.

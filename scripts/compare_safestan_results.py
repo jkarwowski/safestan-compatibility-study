@@ -303,9 +303,18 @@ def column_stats(headers: list[str], rows: list[list[float]], columns: list[str]
             "n": len(values),
             "finite": len(values),
             "mean": mean(values),
-            "sd": stdev(values) if len(values) > 1 else 0.0,
+            "sd": safe_stdev(values),
         }
     return stats
+
+
+def safe_stdev(values: list[float]) -> float:
+    if len(values) <= 1:
+        return 0.0
+    try:
+        return stdev(values)
+    except OverflowError:
+        return math.inf
 
 
 def compare_stats(
@@ -322,11 +331,11 @@ def compare_stats(
         right = safe_stats[column]
         mean_delta = right["mean"] - left["mean"]
         sd_delta = right["sd"] - left["sd"]
-        se_delta = math.sqrt((left["sd"] ** 2) / left["n"] + (right["sd"] ** 2) / right["n"])
+        se_delta = math.hypot(left["sd"] / math.sqrt(left["n"]), right["sd"] / math.sqrt(right["n"]))
         mean_threshold = max(args.mean_abs_tol, args.mean_se_mult * se_delta)
         sd_threshold = args.sd_abs_tol + args.sd_rel_tol * max(left["sd"], right["sd"], 1e-12)
         mean_ok = math.isfinite(mean_delta) and abs(mean_delta) <= mean_threshold
-        sd_ok = math.isfinite(sd_delta) and abs(sd_delta) <= sd_threshold
+        sd_ok = math.isfinite(sd_delta) and math.isfinite(sd_threshold) and abs(sd_delta) <= sd_threshold
         mean_z = abs(mean_delta) / se_delta if se_delta > 0 else (0.0 if mean_delta == 0 else math.inf)
         max_abs_mean_delta = max(max_abs_mean_delta, abs(mean_delta))
         max_mean_z = max(max_mean_z, mean_z)
