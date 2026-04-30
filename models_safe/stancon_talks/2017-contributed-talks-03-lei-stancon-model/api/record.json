@@ -2,6 +2,8 @@
   "artifacts_dir": "models_safe/stancon_talks/2017-contributed-talks-03-lei-stancon-model/api",
   "compatibility": "minor",
   "completed_at": "2026-04-29T03:03:48+00:00",
+  "manual_notes": "Manual SafeStan repair: fixed synthetic data dimensions and kept the SafeStan-required flat ad-platform parameters, with original matrix views reconstructed as transformed parameters.",
+  "manual_translated_at": "2026-04-30",
   "model": "gpt-5.5",
   "path": "models/stancon_talks/2017-contributed-talks-03-lei-stancon-model",
   "prompt_cache_key": "safestan-translation-v1",
@@ -14,6 +16,7 @@
   "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-03-lei-stancon-model",
   "service_tier": "flex",
   "started_at": "2026-04-29T03:02:39+00:00",
+  "translation_method": "manual",
   "usage": {
     "input_tokens": 4528,
     "input_tokens_details": {
@@ -26,8 +29,5 @@
     "total_tokens": 11290
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true,
-  "translation_method": "manual",
-  "manual_translated_at": "2026-04-30",
-  "manual_notes": "Manual SafeStan rewrite: flattened the ad-platform matrix/array parameters for single top-level priors, rebuilt matrix forms deterministically, kept `y` as the single protected Bernoulli-logit observation, and corrected synthetic film dimensions to cover supplied `x_film` indexes."
+  "wrote_model_safe": true
 }

@@ -3,6 +3,8 @@
   "compatibility": "minor",
   "completed_at": "2026-04-29T16:40:13+00:00",
   "data_filename": "data_original.json",
+  "manual_notes": "Manual SafeStan repair: regenerated protected response arrays from data_original.json cumulative response counts.",
+  "manual_translated_at": "2026-04-30",
   "model": "gpt-5.5",
   "path": "models/posteriordb/lsat-data-lsat-model",
   "prompt_cache_key": "safestan-translation-v1",
@@ -19,6 +21,7 @@
   "safe_dir": "models_safe/posteriordb/lsat-data-lsat-model",
   "service_tier": "flex",
   "started_at": "2026-04-29T16:34:18+00:00",
+  "translation_method": "manual",
   "usage": {
     "input_tokens": 4196,
     "input_tokens_details": {
@@ -31,8 +34,5 @@
     "total_tokens": 22652
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true,
-  "translation_method": "manual",
-  "manual_translated_at": "2026-04-30",
-  "manual_notes": "Manual rewrite expands response patterns into protected per-question Bernoulli response arrays."
+  "wrote_model_safe": true
 }

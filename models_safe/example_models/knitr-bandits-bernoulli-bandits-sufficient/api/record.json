@@ -2,6 +2,8 @@
   "artifacts_dir": "models_safe/example_models/knitr-bandits-bernoulli-bandits-sufficient/api",
   "compatibility": "minor",
   "completed_at": "2026-04-29T01:59:37+00:00",
+  "manual_notes": "Manual data repair: adjusted synthetic two-arm sufficient statistics to match the original hard-coded transformed-data arrays.",
+  "manual_translated_at": "2026-04-30",
   "model": "gpt-5.5",
   "path": "models/example_models/knitr-bandits-bernoulli-bandits-sufficient",
   "prompt_cache_key": "safestan-translation-v1",
@@ -14,6 +16,7 @@
   "safe_dir": "models_safe/example_models/knitr-bandits-bernoulli-bandits-sufficient",
   "service_tier": "flex",
   "started_at": "2026-04-29T01:57:47+00:00",
+  "translation_method": "manual",
   "usage": {
     "input_tokens": 3170,
     "input_tokens_details": {

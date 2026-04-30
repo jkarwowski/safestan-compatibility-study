@@ -3,6 +3,8 @@
   "compatibility": "minor",
   "completed_at": "2026-04-29T16:32:05+00:00",
   "data_filename": "data_original.json",
+  "manual_notes": "Manual SafeStan repair: regenerated full protected X data from data_original.json; kept the SafeStan-required flat G_raw parameterization because the original matrix parameter shape cannot receive a legal SafeStan prior.",
+  "manual_translated_at": "2026-04-30",
   "model": "gpt-5.5",
   "path": "models/example_models/misc-nnmf-nnmf-vec",
   "prompt_cache_key": "safestan-translation-v1",
@@ -15,6 +17,7 @@
   "safe_dir": "models_safe/example_models/misc-nnmf-nnmf-vec",
   "service_tier": "flex",
   "started_at": "2026-04-29T16:29:28+00:00",
+  "translation_method": "manual",
   "usage": {
     "input_tokens": 47083,
     "input_tokens_details": {
@@ -27,8 +30,5 @@
     "total_tokens": 61237
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true,
-  "translation_method": "manual",
-  "manual_translated_at": "2026-04-30",
-  "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
+  "wrote_model_safe": true
 }

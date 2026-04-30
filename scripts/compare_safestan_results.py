@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import json
 import math
@@ -31,6 +32,67 @@ SAMPLER_COLUMNS = {
     "n_leapfrog__",
     "divergent__",
     "energy__",
+}
+
+ROW_MAJOR_SAFE_PARAM_MAPS = {
+    "models/example_models/arm-ch-13-earnings-latin-square": {
+        "c_raw": "c",
+        "d_raw": "d",
+    },
+    "models/example_models/bugs-examples-vol1-epil-epil": {
+        "b": "b",
+    },
+    "models/example_models/bugs-examples-vol1-magnesium-magnesium": {
+        "theta_raw": "theta",
+        "pc_raw": "pc",
+    },
+    "models/example_models/bugs-examples-vol1-salm-salm2": {
+        "lambda": "lambda",
+    },
+    "models/example_models/bugs-examples-vol2-orange-orange": {
+        "theta_raw": "theta",
+    },
+    "models/example_models/bugs-examples-vol3-data-cloning-seeds": {
+        "b_raw": "b",
+    },
+    "models/example_models/knitr-neural-nets-nn": {
+        "alpha_raw": "alpha",
+        "beta_raw": "beta",
+    },
+    "models/example_models/misc-multi-logit-multi-logit": {
+        "beta_raw": "beta",
+    },
+    "models/example_models/misc-sur-sur": {
+        "beta_raw": "beta",
+    },
+    "models/example_models/misc-nnmf-nnmf-vec": {
+        "G_raw": "G",
+    },
+    "models/stancon_talks/2017-contributed-talks-03-lei-stancon-model": {
+        "v_ad_platform_g_flat": "v_ad_platform_g",
+        "v_ad_platform_sigma_g_flat": "v_ad_platform_sigma_g",
+        "v_ad_platform_film_flat": "v_ad_platform_film",
+    },
+    "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-ha": {
+        "eta_a_flat": "eta_a",
+    },
+    "models/stancon_talks/2018-contributed-talks-12-vamvourellis-modelcode": {
+        "zb_flat": "zb",
+    },
+}
+
+COLUMN_MAJOR_SAFE_PARAM_MAPS = {
+    "models/posteriordb/mnist-100-nn-rbm1bj10": {
+        "alpha_vec": "alpha",
+        "beta_vec": "beta",
+    },
+    "models/posteriordb/mnist-nn-rbm1bj100": {
+        "alpha_vec": "alpha",
+        "beta_vec": "beta",
+    },
+    "models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pk-tlagmax": {
+        "Eta_vec": "Eta",
+    },
 }
 
 
@@ -147,8 +209,9 @@ def prepare_workdirs(record: dict[str, Any], case_dir: Path) -> tuple[Path, Path
     stan_work.mkdir(parents=True, exist_ok=True)
     safe_work.mkdir(parents=True, exist_ok=True)
 
-    for filename in ("model.stan", "data.json", "metadata.json", "init.json"):
+    for filename in ("model.stan", "metadata.json", "init.json"):
         copy_if_exists(model_dir / filename, stan_work / filename)
+    copy_if_exists(model_dir / str(record.get("data_filename", "data.json")), stan_work / "data.json")
     copy_if_exists(safe_dir / "model_safe.stan", safe_work / "model_safe.stan")
     copy_if_exists(safe_dir / "data_safe.json", safe_work / "data_safe.json")
     copy_if_exists(model_dir / "metadata.json", safe_work / "metadata.json")
@@ -415,6 +478,25 @@ def build_nested_array(values: dict[tuple[int, ...], float]) -> Any:
     return build(())
 
 
+def flatten_row_major(value: Any) -> list[float]:
+    if not isinstance(value, list):
+        return [float(value)]
+    flattened: list[float] = []
+    for item in value:
+        flattened.extend(flatten_row_major(item))
+    return flattened
+
+
+def flatten_column_major_2d(value: Any) -> list[float]:
+    if not isinstance(value, list) or not value:
+        return flatten_row_major(value)
+    if not isinstance(value[0], list):
+        return flatten_row_major(value)
+    rows = len(value)
+    cols = len(value[0])
+    return [float(value[row][col]) for col in range(cols) for row in range(rows)]
+
+
 def draw_to_constrained_json(headers: list[str], row: list[float]) -> dict[str, Any]:
     payload: dict[str, Any] = {}
     arrays: dict[str, dict[tuple[int, ...], float]] = {}
@@ -436,6 +518,20 @@ def draw_to_constrained_json(headers: list[str], row: list[float]) -> dict[str, 
         except ValueError:
             continue
     return payload
+
+
+def translate_params_for_safestan(model_path: str, params: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, str]]]:
+    safe_params = copy.deepcopy(params)
+    applied = []
+    for safe_name, stan_name in ROW_MAJOR_SAFE_PARAM_MAPS.get(model_path, {}).items():
+        if stan_name in params:
+            safe_params[safe_name] = flatten_row_major(params[stan_name])
+            applied.append({"safe": safe_name, "stan": stan_name, "order": "row-major"})
+    for safe_name, stan_name in COLUMN_MAJOR_SAFE_PARAM_MAPS.get(model_path, {}).items():
+        if stan_name in params:
+            safe_params[safe_name] = flatten_column_major_2d(params[stan_name])
+            applied.append({"safe": safe_name, "stan": stan_name, "order": "column-major"})
+    return safe_params, applied
 
 
 def parse_log_prob_csv(path: Path) -> dict[str, float]:
@@ -476,6 +572,7 @@ def run_log_prob(
 
 def compare_log_prob(
     *,
+    model_path: str,
     stan_work: Path,
     safe_work: Path,
     stan_output: Path,
@@ -490,15 +587,25 @@ def compare_log_prob(
     checks = []
     max_abs_delta = 0.0
     max_failed_columns = 0
+    max_gradient_failed_columns = 0
+    lp_deltas: list[float] = []
+    constant_offset_possible = True
+    applied_translations: list[dict[str, str]] = []
     for index, row in enumerate(rows[: args.log_prob_checks], start=1):
-        params_file = log_dir / f"params-{index}.json"
-        params_file.write_text(json.dumps(draw_to_constrained_json(headers, row), separators=(",", ":")), encoding="utf-8")
+        stan_params = draw_to_constrained_json(headers, row)
+        safe_params, translations = translate_params_for_safestan(model_path, stan_params)
+        if translations:
+            applied_translations = translations
+        stan_params_file = log_dir / f"params-{index}.json"
+        safe_params_file = log_dir / f"params-safestan-{index}.json"
+        stan_params_file.write_text(json.dumps(stan_params, separators=(",", ":")), encoding="utf-8")
+        safe_params_file.write_text(json.dumps(safe_params, separators=(",", ":")), encoding="utf-8")
         stan_csv = log_dir / f"stan-log-prob-{index}.csv"
         safe_csv = log_dir / f"safestan-log-prob-{index}.csv"
         stan_run = run_log_prob(
             exe=stan_work / "model",
             data_file=stan_work / "data.json",
-            params_file=params_file,
+            params_file=stan_params_file,
             output_file=stan_csv,
             log_file=log_dir / f"stan-log-prob-{index}.log",
             timeout=args.timeout,
@@ -506,7 +613,7 @@ def compare_log_prob(
         safe_run = run_log_prob(
             exe=safe_work / "model_safe",
             data_file=safe_work / "data_safe.json",
-            params_file=params_file,
+            params_file=safe_params_file,
             output_file=safe_csv,
             log_file=log_dir / f"safestan-log-prob-{index}.log",
             timeout=args.timeout,
@@ -514,42 +621,76 @@ def compare_log_prob(
         if stan_run["returncode"] != 0 or safe_run["returncode"] != 0:
             checks.append({"index": index, "status": "run-failed", "stan_run": stan_run, "safe_run": safe_run})
             max_failed_columns += 1
+            constant_offset_possible = False
             continue
         stan_lp = parse_log_prob_csv(stan_csv)
         safe_lp = parse_log_prob_csv(safe_csv)
         common = sorted(set(stan_lp) & set(safe_lp))
         failures = []
+        lp_failures = []
+        gradient_failures = []
+        lp_delta = None
         for column in common:
             delta = safe_lp[column] - stan_lp[column]
+            if column == "lp__":
+                lp_delta = delta
             max_abs_delta = max(max_abs_delta, abs(delta))
             if abs(delta) > args.log_prob_tol:
-                failures.append({"column": column, "stan": stan_lp[column], "safe": safe_lp[column], "delta": delta})
+                failure = {"column": column, "stan": stan_lp[column], "safe": safe_lp[column], "delta": delta}
+                failures.append(failure)
+                if column == "lp__":
+                    lp_failures.append(failure)
+                else:
+                    gradient_failures.append(failure)
+        if lp_delta is None:
+            constant_offset_possible = False
+        else:
+            lp_deltas.append(lp_delta)
+        if len(lp_failures) != len(failures):
+            constant_offset_possible = False
         max_failed_columns = max(max_failed_columns, len(failures))
+        max_gradient_failed_columns = max(max_gradient_failed_columns, len(gradient_failures))
         checks.append(
             {
                 "index": index,
-                "status": "same" if not failures else "different",
+                "status": "same" if not lp_failures else "different",
                 "compared_columns": len(common),
                 "failures": failures[:20],
+                "lp_failures": lp_failures[:20],
+                "gradient_failures": gradient_failures[:20],
+                "parameter_translation": translations,
                 "stan_run": stan_run,
                 "safe_run": safe_run,
             }
         )
     status = "same" if all(check["status"] == "same" for check in checks) else "different"
+    constant_log_prob_offset = None
+    if (
+        status == "different"
+        and constant_offset_possible
+        and len(lp_deltas) == len(checks)
+        and lp_deltas
+        and max(lp_deltas) - min(lp_deltas) <= args.log_prob_tol
+    ):
+        status = "same-up-to-constant"
+        constant_log_prob_offset = mean(lp_deltas)
     return {
         "status": status,
         "checks": len(checks),
         "max_abs_delta": max_abs_delta,
         "max_failed_columns": max_failed_columns,
+        "max_gradient_failed_columns": max_gradient_failed_columns,
+        "constant_log_prob_offset": constant_log_prob_offset,
+        "parameter_translation": applied_translations,
         "artifact_dir": str(log_dir.relative_to(ROOT)),
         "details": checks,
     }
 
 
 def combined_status(posterior_status: str, log_prob_status: str) -> str:
-    if posterior_status == "same" and log_prob_status in {"same", "skipped"}:
+    if posterior_status == "same" and log_prob_status in {"same", "same-up-to-constant", "skipped"}:
         return "same"
-    if log_prob_status == "same":
+    if log_prob_status in {"same", "same-up-to-constant"}:
         return "same-density-mcmc-different"
     return posterior_status
 
@@ -610,7 +751,13 @@ def compare_one(record: dict[str, Any], output_root: Path, cmdstan: Path | None,
         log_prob = {"status": "skipped", "checks": 0}
     else:
         comparison = compare_outputs(stan_output, safe_output, args)
-        log_prob = compare_log_prob(stan_work=stan_work, safe_work=safe_work, stan_output=stan_output, args=args)
+        log_prob = compare_log_prob(
+            model_path=record["path"],
+            stan_work=stan_work,
+            safe_work=safe_work,
+            stan_output=stan_output,
+            args=args,
+        )
     status = comparison["status"] if args.dry_run else combined_status(comparison["status"], log_prob["status"])
     return {
         "path": record["path"],

@@ -3,9 +3,10 @@
   "N_all_main_factor_levels": 5,
   "N_main_factor_levels": [
     1,
-    4
+    4,
+    2
   ],
-  "N_main_factors": 2,
+  "N_main_factors": 3,
   "main_factor_end_idx": [
     1,
     5
@@ -18,6 +19,10 @@
     [
       1,
       1
+    ],
+    [
+      1,
+      2
     ]
   ],
   "main_factor_start_idx": [

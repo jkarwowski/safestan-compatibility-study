@@ -10,7 +10,7 @@ Model/API: `gpt-5.5` with reasoning effort `high`, Flex service tier, prompt cac
 
 API usage stored in the local artifacts: `6116846` input tokens, `2317312` cached input tokens, `3316659` output tokens, including `2731134` reasoning output tokens.
 
-After the canceled API rerun, `61` compile-failure translations were manually repaired. `MODEL_LIST.md` records translation provenance for every row.
+After the canceled API rerun, `61` compile-failure translations were manually repaired; later comparison repair work added `2` more manual data/translation repairs. `MODEL_LIST.md` records translation provenance for every row.
 
 Original Stan smoke test: `runs_metadata/full-dataset-smoke-clean-20260429T0015Z.json` ran all `1193` original models with `1` chain, `20` warmup draws, and `20` sampling draws; result `1193` ok, `0` failed.
 
@@ -124,17 +124,28 @@ Combined deduplicated result after removing the 11 passing duplicate safe rows: 
 
 The wrapper comparison now covers all `694` raw SafeStan rows that passed the latest smoke check. It uses `1` chain, `200` warmup draws, `200` sampling draws, original Stan compiled through `cmdsafestan --mode plain`, SafeStan compiled with protection, and `3` log-probability spot checks per model.
 
-The combined report is `comparison_runs/full-wrapper-200x1-manual-updated-20260430/COMPARISON_RESULTS.md`. It merges the previous `640`-model comparison with `comparison_runs/manual-wrapper-200x1-20260430/`, the new `54`-model comparison for manually repaired translations.
+The final combined report is `comparison_runs/full-wrapper-200x1-manual-repaired-20260430/COMPARISON_RESULTS.md`. It merges the previous `640`-model comparison, `comparison_runs/manual-wrapper-200x1-20260430/`, the later data repairs for the former `run-failed` rows, and the manual constrained-parameter maps needed for log-probability checks when SafeStan must flatten matrix/array parameters.
+
+The comparison treats `log_prob` values that differ only by a constant offset as the same density. These offsets arise when the original model uses explicit `target += *_lpdf(...)` and the SafeStan rewrite uses a sampling statement; under `propto=1`, Stan drops constants for sampling statements but not for explicit target increments. Gradients are still recorded for diagnostics, but the density verdict is based on `lp__` because many legal SafeStan translations use a different flat/raw parameterization.
 
 | Result status | Raw models | Deduplicated models | Interpretation |
 |---|---:|---:|---|
-| `same` | 563 | 552 | Posterior summaries pass the tolerance checks. |
-| `same-density-mcmc-different` | 76 | 76 | The log-probability spot checks match; short MCMC summaries differ beyond tolerance. |
-| `different` | 33 | 33 | Posterior summaries differ and log-probability checks do not establish equality. |
-| `run-failed` | 22 | 22 | The full comparison did not complete for at least one side. |
+| `same` | 581 | 570 | Posterior summaries pass the tolerance checks. |
+| `same-density-mcmc-different` | 109 | 109 | The log-probability spot checks match exactly or up to a constant; short MCMC summaries differ beyond tolerance. |
+| `different` | 4 | 4 | Generated-only/no-parameter tuning programs; no meaningful `log_prob` comparison is available. |
+| `run-failed` | 0 | 0 | The full comparison did not complete for at least one side. |
 | **Total compared** | **694** | **683** | The `11` excluded duplicate rows all had status `same`. |
 
-Equivalence-oriented count: `639 / 694` raw compared models, or `628 / 683` deduplicated compared models, are either `same` or `same-density-mcmc-different`.
+Equivalence-oriented count: `690 / 694` raw compared models, or `679 / 683` deduplicated compared models, are either `same` or `same-density-mcmc-different`.
+
+The four remaining `different` rows are:
+
+- `betanalpha_knitr_case_studies/gaussian-processes-stan-programs-prior-tune`
+- `betanalpha_knitr_case_studies/some-containment-prior-models-stan-programs-alpha-tune`
+- `betanalpha_knitr_case_studies/some-containment-prior-models-stan-programs-gamma-tune`
+- `betanalpha_knitr_case_studies/some-containment-prior-models-stan-programs-inv-gamma-tune`
+
+These programs are generated-quantities/prior-tuning utilities with no parameters to estimate. The original and SafeStan files are identical in this class; the residual status reflects the comparison harness/model class rather than a SafeStan translation difference.
 
 ## Major Feature Analysis
 
