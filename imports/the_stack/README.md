@@ -9,13 +9,13 @@ The license lookup recovered notices for 781 of 848 repository/commit snapshots 
 ## Contents and selection
 
 - 2,296 candidates from 847 representative repositories, selected from the 5,441-file Stan shard.
-- 442 compile in their original form; 1,854 use the existing corpus syntax modernizer. The latter preserve upstream bytes in `model_original.stan` beside the runner's `model.stan`.
+- 442 pass stanc in their original form; 1,854 use the existing corpus syntax modernizer. The latter preserve upstream bytes in `model_original.stan` beside the runner's `model.stan`.
 - All 2,296 imported programs pass stanc; 540 have no pedantic warnings.
 - Every entry has `model.stan`, `data.json`, `metadata.json`, `source.md`, and the existing thin `run.py` wrapper.
 - Every entry has synthetic data: 2,239 generated through stanc and 57 through the existing parser fallback. All generated JSON is finite and contains exactly the compiler-declared input keys. Shape/constraint and runtime correctness are not established by those checks.
 - `licenses` is the only new per-model metadata field. Provenance uses the existing upstream repository/commit/path fields. Detailed audit facts live in the shared manifest rather than extending every metadata record.
 
-The prior audit excluded identified local overlaps, compiler fixtures, input duplicates, fragments, and models that failed compilation. Candidates require data inputs, parameters, a density-like model block, and a reference to input in that block. Lexical near-deduplication uses five-token shingle Jaccard similarity at 0.85. These are model candidates, not a count of semantically distinct model families. The selection is fixed here; it is not rerun during import.
+The prior audit excluded identified local overlaps, compiler fixtures, input duplicates, fragments, and models that failed stanc. Candidates require data inputs, parameters, a density-like model block, and a reference to input in that block. Lexical near-deduplication uses five-token shingle Jaccard similarity at 0.85. These are model candidates, not a count of semantically distinct model families. The selection is fixed here; it is not rerun during import.
 
 `dataset.json` pins the dataset revision, shard hash, selection hash, compiler hash, and original audit/modernizer hashes. `selection.jsonl` contains one candidate per row, including original/imported hashes, upstream provenance, compiler interfaces, repair counts, and review flags. [MODEL_LIST.md](MODEL_LIST.md) provides a browsable index.
 
@@ -24,6 +24,8 @@ Two selected Stack records contain resolved symlink contents. Their manifest/sou
 No observation datasets were recovered. The synthetic data uses `scripts/generate_synthetic_data_for_missing.py`: stanc's `--debug-generate-data`, existing shape/index postprocessing, then a data-block parser fallback when stanc cannot generate data. This is small schema-driven test data, not draws from the model's generative process or a replacement for scientific observations. The bounded import wrapper records failed generation as an explicit missing-data placeholder; no placeholders remain in this import.
 
 The saved [validation report](../../runs_metadata/the_stack_import_validation.json) covers source hashes, corpus layout, metadata, JSON/input-key coverage, and stanc parsing/type checking/C++ generation. It does not establish C++ build success, successful sampling, posterior propriety, semantic correctness of modernization, or SafeStan compatibility. Warnings and original source are retained for subsequent curation.
+
+The subsequent [runtime smoke test](RUNTIME_VALIDATION.md) attempts a full C++ build and a five-draw chain for every imported candidate, using its unchanged checked-in synthetic data. Its [per-model report](../../runs_metadata/the_stack_runtime_smoke.json) distinguishes build failures, runtime failures, timeouts, and completed chains; divergences and non-finite outputs are recorded separately. These short runs do not establish convergence or statistical validity.
 
 ## Reproduce the import
 

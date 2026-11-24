@@ -1,6 +1,6 @@
 # Model List
 
-The repository contains `3489` Stan model directories: the `1193` compatibility-study entries listed below and `2296` newly imported [The Stack candidates](imports/the_stack/MODEL_LIST.md). The new candidates have synthetic data and pass stanc, but have no SafeStan compatibility or runtime-comparison results yet. The compatibility tables below retain their original 1193-entry scope.
+The repository contains `3489` Stan model directories: the `1193` compatibility-study entries listed below and `2296` newly imported [The Stack candidates](imports/the_stack/MODEL_LIST.md). The new candidates have synthetic data, pass stanc, and have [C++ build and short sampling results](imports/the_stack/RUNTIME_VALIDATION.md), including recorded failures. They have no SafeStan compatibility or Stan-versus-SafeStan runtime-comparison results yet. The compatibility tables below retain their original 1193-entry scope.
 
 The original inventory is generated from each model's `metadata.json`, the matching SafeStan `record.json` and `SAFETY_NOTE.md`, the latest `cmdsafestan` smoke reports, and the small Stan-vs-SafeStan comparison artifacts already in the repository.
 
