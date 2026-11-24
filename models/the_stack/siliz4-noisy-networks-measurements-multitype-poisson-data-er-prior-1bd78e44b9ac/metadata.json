@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from SILIZ4/noisy-networks-measurements: examples/multitype_poisson_data_ER_prior.stan.",
+  "difficulty": "unknown",
+  "id": "siliz4-noisy-networks-measurements-multitype-poisson-data-er-prior-1bd78e44b9ac",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "examples/multitype_poisson_data_ER_prior.stan",
+  "source_url": "https://github.com/SILIZ4/noisy-networks-measurements/blob/12443678c1b4a542f7e06a469c97f1d070d600a9/examples/multitype_poisson_data_ER_prior.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 4,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Multitype Poisson Data Er Prior",
+  "upstream_commit": "12443678c1b4a542f7e06a469c97f1d070d600a9",
+  "upstream_repository": "https://github.com/SILIZ4/noisy-networks-measurements"
+}

@@ -1,0 +1,34 @@
+{
+  "N_games": 4,
+  "N_teams": 5,
+  "away_points": [
+    3,
+    3,
+    3,
+    2
+  ],
+  "away_team_id": [
+    5,
+    4,
+    2,
+    4
+  ],
+  "home_points": [
+    4,
+    1,
+    4,
+    4
+  ],
+  "home_team_id": [
+    3,
+    2,
+    2,
+    4
+  ],
+  "overtime": [
+    1,
+    2,
+    3,
+    4
+  ]
+}

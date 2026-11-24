@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from heavywatal/esj65: rmarkdown/multiomics2021/converge-no.stan.",
+  "difficulty": "unknown",
+  "id": "heavywatal-esj65-converge-no-d33d3029ccee",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "rmarkdown/multiomics2021/converge-no.stan",
+  "source_url": "https://github.com/heavywatal/esj65/blob/cab68a483f3d557a8e33159ad4b5acae5edb5ec3/rmarkdown/multiomics2021/converge-no.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 2,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Converge No",
+  "upstream_commit": "cab68a483f3d557a8e33159ad4b5acae5edb5ec3",
+  "upstream_repository": "https://github.com/heavywatal/esj65"
+}

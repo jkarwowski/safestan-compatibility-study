@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from cremerlab/useless_expression: code/stan/two_layer_hierarchical_growth_rate.stan.",
+  "difficulty": "unknown",
+  "id": "cremerlab-useless-expression-two-layer-hierarchical-growth-rate-6f1a06061aee",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "code/stan/two_layer_hierarchical_growth_rate.stan",
+  "source_url": "https://github.com/cremerlab/useless_expression/blob/a6020674f0ae73b4cc6173de60a0ea93016ee562/code/stan/two_layer_hierarchical_growth_rate.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 7,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Two Layer Hierarchical Growth Rate",
+  "upstream_commit": "a6020674f0ae73b4cc6173de60a0ea93016ee562",
+  "upstream_repository": "https://github.com/cremerlab/useless_expression"
+}

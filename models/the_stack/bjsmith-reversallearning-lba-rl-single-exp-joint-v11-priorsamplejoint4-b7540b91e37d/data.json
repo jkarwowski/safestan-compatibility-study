@@ -1,0 +1,8 @@
+{
+  "DELTA_N": 2,
+  "LENGTH": 2,
+  "NUM_CHOICES": 3,
+  "THETA_N": 4,
+  "prior_cauchygamma": 5.654906393413269,
+  "prior_cholesky": 5.135129376951988
+}

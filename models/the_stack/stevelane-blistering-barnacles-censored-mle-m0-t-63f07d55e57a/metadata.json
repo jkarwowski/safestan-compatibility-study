@@ -1,0 +1,41 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from SteveLane/blistering-barnacles: stan/censored-mle-m0-t.stan.",
+  "difficulty": "unknown",
+  "id": "stevelane-blistering-barnacles-censored-mle-m0-t-63f07d55e57a",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "stan/censored-mle-m0-t.stan",
+  "source_url": "https://github.com/SteveLane/blistering-barnacles/blob/0fbe0071e290547565b53bf2ecb2cbf92b01ccdf/stan/censored-mle-m0-t.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 10,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "data_block_parser_fallback",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "synthetic_data_stanc_error": "Error in './model.stan', line 32, column 13 to column 19:",
+  "title": "Censored Mle M0 T",
+  "upstream_commit": "0fbe0071e290547565b53bf2ecb2cbf92b01ccdf",
+  "upstream_repository": "https://github.com/SteveLane/blistering-barnacles"
+}

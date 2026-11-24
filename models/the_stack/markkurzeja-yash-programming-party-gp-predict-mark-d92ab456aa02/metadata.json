@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from MarkKurzeja/Yash_Programming_Party: Gaussian_Processes/sandbox/gp-predict-mark.stan.",
+  "difficulty": "unknown",
+  "id": "markkurzeja-yash-programming-party-gp-predict-mark-d92ab456aa02",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "Gaussian_Processes/sandbox/gp-predict-mark.stan",
+  "source_url": "https://github.com/MarkKurzeja/Yash_Programming_Party/blob/abe2ac6207f5dd807b228428d131512063496012/Gaussian_Processes/sandbox/gp-predict-mark.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 6,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "GP Predict Mark",
+  "upstream_commit": "abe2ac6207f5dd807b228428d131512063496012",
+  "upstream_repository": "https://github.com/MarkKurzeja/Yash_Programming_Party"
+}

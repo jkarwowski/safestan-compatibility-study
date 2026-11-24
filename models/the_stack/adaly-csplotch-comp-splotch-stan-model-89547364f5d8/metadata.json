@@ -1,0 +1,41 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from adaly/cSplotch: stan/comp_splotch_stan_model.stan.",
+  "difficulty": "unknown",
+  "id": "adaly-csplotch-comp-splotch-stan-model-89547364f5d8",
+  "include_files": [],
+  "licenses": [
+    "BSD-3-Clause"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "stan/comp_splotch_stan_model.stan",
+  "source_url": "https://github.com/adaly/cSplotch/blob/c79a5cbd155f2cd5bcc1d8b04b1824923feb1442/stan/comp_splotch_stan_model.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 21,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "data_block_parser_fallback",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "synthetic_data_stanc_error": "Error in './model.stan', line 40, column 8 to column 20:",
+  "title": "Comp Splotch Stan Model",
+  "upstream_commit": "c79a5cbd155f2cd5bcc1d8b04b1824923feb1442",
+  "upstream_repository": "https://github.com/adaly/cSplotch"
+}

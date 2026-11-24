@@ -1,0 +1,48 @@
+{
+  "decay_rate_prior_mean": 1.0,
+  "decay_rate_prior_sd": 1.0,
+  "detection_limit_log_titer": [
+    0.5,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "experiment_id": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "intercept_prior_mean": 0.5,
+  "intercept_prior_sd": 0.5,
+  "lower_lim_decay_rate": 1.0,
+  "n_experiments": 4,
+  "n_replicates": 4,
+  "n_total_datapoints": 4,
+  "n_wells": [
+    0.1,
+    0.2,
+    0.30000000000000004,
+    0.4
+  ],
+  "observed_log_titers": [
+    0.5,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "replicate_id": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "sigma_prior_mean": 1.0,
+  "sigma_prior_sd": 1.0,
+  "times": [
+    1.0,
+    2.0,
+    3.0,
+    4.0
+  ]
+}

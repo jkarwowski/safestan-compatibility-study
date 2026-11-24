@@ -1,0 +1,46 @@
+{
+  "Nclusters1": 5,
+  "Nclusters1_variance": 1,
+  "Nclusters2": 5,
+  "NgroupMap1": [
+    2,
+    3,
+    5,
+    4,
+    4
+  ],
+  "NgroupMap2": [
+    1,
+    4,
+    2,
+    5,
+    1
+  ],
+  "NsizeMap": [
+    4,
+    2,
+    2,
+    3,
+    3
+  ],
+  "Nsizes": 5,
+  "Ntotal": 5,
+  "gammaRate": 2.4015202334296575,
+  "gammaShape": 6.629793172612268,
+  "intercept": 6.447721008701464,
+  "intercept_sd": 5.110846608280916,
+  "rGroupsJitter1Map": [
+    5,
+    4,
+    4,
+    3,
+    4
+  ],
+  "y": [
+    2,
+    2,
+    6,
+    2,
+    2
+  ]
+}

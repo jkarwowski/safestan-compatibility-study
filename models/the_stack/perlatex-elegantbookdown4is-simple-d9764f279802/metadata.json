@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from perlatex/ElegantBookdown4IS: models/simple.stan.",
+  "difficulty": "unknown",
+  "id": "perlatex-elegantbookdown4is-simple-d9764f279802",
+  "include_files": [],
+  "licenses": [
+    "CC-BY-4.0"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "models/simple.stan",
+  "source_url": "https://github.com/perlatex/ElegantBookdown4IS/blob/43bf7a4aeab9ff5ed2f750f87de2169d3829785b/models/simple.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 5,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Simple",
+  "upstream_commit": "43bf7a4aeab9ff5ed2f750f87de2169d3829785b",
+  "upstream_repository": "https://github.com/perlatex/ElegantBookdown4IS"
+}

@@ -1,0 +1,41 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from mbjoseph/scr-stan: ch06/scr0-wolverine.stan.",
+  "difficulty": "unknown",
+  "id": "mbjoseph-scr-stan-scr0-wolverine-7a990c27c53d",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "ch06/scr0-wolverine.stan",
+  "source_url": "https://github.com/mbjoseph/scr-stan/blob/ed0654c21ee955b249191f59feb4e614c1dcada2/ch06/scr0-wolverine.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 8,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "data_block_parser_fallback",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "synthetic_data_stanc_error": "Error in './model.stan', line 9, column 60 to column 75:",
+  "title": "Scr0 Wolverine",
+  "upstream_commit": "ed0654c21ee955b249191f59feb4e614c1dcada2",
+  "upstream_repository": "https://github.com/mbjoseph/scr-stan"
+}

@@ -1,0 +1,41 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from TrevorKMDay/mfpca-analyses: simulation_studies/mfpca_weakPrior.stan.",
+  "difficulty": "unknown",
+  "id": "trevorkmday-mfpca-analyses-mfpca-weakprior-3b283de8de7d",
+  "include_files": [],
+  "licenses": [
+    "BSD-3-Clause"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "simulation_studies/mfpca_weakPrior.stan",
+  "source_url": "https://github.com/TrevorKMDay/mfpca-analyses/blob/74f819d424e6ef6ae25e4b122570403cf6e41e72/simulation_studies/mfpca_weakPrior.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 16,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "data_block_parser_fallback",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "synthetic_data_stanc_error": "Error in './model.stan', line 100, column 12 to column 18:",
+  "title": "Mfpca Weakprior",
+  "upstream_commit": "74f819d424e6ef6ae25e4b122570403cf6e41e72",
+  "upstream_repository": "https://github.com/TrevorKMDay/mfpca-analyses"
+}

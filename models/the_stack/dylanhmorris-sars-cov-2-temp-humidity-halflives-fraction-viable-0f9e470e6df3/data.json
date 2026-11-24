@@ -1,0 +1,26 @@
+{
+  "debug": 1,
+  "experiment_class_id": [
+    1
+  ],
+  "experiment_id": [
+    3
+  ],
+  "log10_fraction_LOD": [
+    -4.83583688034602
+  ],
+  "log10_fraction_measured": [
+    5.5249115397015025
+  ],
+  "log_hl_prior_mean": 2.71399955202465,
+  "log_hl_prior_sd": 4.697606942643991,
+  "mode_sd_sample": 3.369089912592659,
+  "n_experiment_classes": 1,
+  "n_experiments": 3,
+  "n_measurements": 1,
+  "n_measurements_used": 1,
+  "sd_sd_sample": 0.17147523642738227,
+  "time": [
+    1.0
+  ]
+}

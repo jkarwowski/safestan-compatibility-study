@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from robertness/kineticnet: R_project/inst/stan/bianconi.stan.",
+  "difficulty": "unknown",
+  "id": "robertness-kineticnet-bianconi-ed4c22a0bbcb",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "R_project/inst/stan/bianconi.stan",
+  "source_url": "https://github.com/robertness/kineticnet/blob/44323a99e6dd5856835e9044a7fd0851ebc0e944/R_project/inst/stan/bianconi.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 14,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Bianconi",
+  "upstream_commit": "44323a99e6dd5856835e9044a7fd0851ebc0e944",
+  "upstream_repository": "https://github.com/robertness/kineticnet"
+}

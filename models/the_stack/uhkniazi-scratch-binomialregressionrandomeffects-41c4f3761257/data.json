@@ -1,0 +1,16 @@
+{
+  "NfactorMap1": [
+    3,
+    4
+  ],
+  "Nlevels1": 5,
+  "Ntotal": 2,
+  "Ntrials": [
+    4,
+    6
+  ],
+  "y": [
+    2,
+    3
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "debug": 0,
+  "dilution": [
+    3,
+    6,
+    3
+  ],
+  "n_replicate_sets": 4,
+  "n_titers": 2,
+  "n_total_datapoints": 3,
+  "titer_id": [
+    1,
+    2,
+    1
+  ],
+  "titer_mean_prior_mean": 3.0747234424347134,
+  "titer_mean_prior_sd": 2.8985156722648857,
+  "titer_replicate_set_id": [
+    4,
+    2
+  ],
+  "titer_sd_prior_mean": 4.748952399814041,
+  "titer_sd_prior_sd": 0.7099761739029897,
+  "well_status": [
+    0,
+    1,
+    0
+  ]
+}

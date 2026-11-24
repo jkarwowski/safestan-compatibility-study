@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from XiangyunHuang/Thesis-Template-Bookdown: code/stan/06-rongelap_pois.stan.",
+  "difficulty": "unknown",
+  "id": "xiangyunhuang-thesis-template-bookdown-06-rongelap-pois-a693ad3db377",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "code/stan/06-rongelap_pois.stan",
+  "source_url": "https://github.com/XiangyunHuang/Thesis-Template-Bookdown/blob/e822f9ee166179a53e83ec28664dfc70c4d70e4c/code/stan/06-rongelap_pois.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 5,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "06 Rongelap Pois",
+  "upstream_commit": "e822f9ee166179a53e83ec28664dfc70c4d70e4c",
+  "upstream_repository": "https://github.com/XiangyunHuang/Thesis-Template-Bookdown"
+}

@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from pboesu/moultmcmc: inst/stan/uz4_linpred.stan.",
+  "difficulty": "unknown",
+  "id": "pboesu-moultmcmc-uz4-linpred-8b9525e7ef5a",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "inst/stan/uz4_linpred.stan",
+  "source_url": "https://github.com/pboesu/moultmcmc/blob/8e8ddb8736830dbd6e64391500e06774c9ce77ec/inst/stan/uz4_linpred.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 11,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Uz4 Linpred",
+  "upstream_commit": "8e8ddb8736830dbd6e64391500e06774c9ce77ec",
+  "upstream_repository": "https://github.com/pboesu/moultmcmc"
+}

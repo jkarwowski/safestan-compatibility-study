@@ -1,0 +1,41 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from melodiemonod/covid19Vaccination: inst/stan-models/CDC-covid-tracker_211201b.stan.",
+  "difficulty": "unknown",
+  "id": "melodiemonod-covid19vaccination-cdc-covid-tracker-211201b-5cec28f037bd",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "inst/stan-models/CDC-covid-tracker_211201b.stan",
+  "source_url": "https://github.com/melodiemonod/covid19Vaccination/blob/b1561127131adb779858c9c547a0d1d250f90e3f/inst/stan-models/CDC-covid-tracker_211201b.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 35,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "data_block_parser_fallback",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "synthetic_data_stanc_error": "Error in './model.stan', line 54, column 11 to column 25:",
+  "title": "Cdc Covid Tracker 211201b",
+  "upstream_commit": "b1561127131adb779858c9c547a0d1d250f90e3f",
+  "upstream_repository": "https://github.com/melodiemonod/covid19Vaccination"
+}

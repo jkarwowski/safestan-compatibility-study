@@ -1,0 +1,34 @@
+{
+  "debug": 5,
+  "expression_sigma": 5.883819049398564,
+  "gp_length": 5.658682315374199,
+  "gp_mean": 4.085677487566125,
+  "gp_sigma": 3.2307166030808365,
+  "num_cells": 4,
+  "num_integration_points": 4,
+  "regulator_bandwidth": 6.43842219906522,
+  "regulator_expression": [
+    5.999857315482878,
+    4.627455086481726,
+    3.081526938566536,
+    3.3068052983947007
+  ],
+  "target_expression": [
+    2.985995395111715,
+    5.656106833929746,
+    5.518476884874243,
+    5.180371258832238
+  ],
+  "time_position_prior_alpha": [
+    1.0,
+    2.0,
+    3.0,
+    4.0
+  ],
+  "time_position_prior_beta": [
+    1.0,
+    2.0,
+    3.0,
+    4.0
+  ]
+}

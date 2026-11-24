@@ -1,0 +1,42 @@
+{
+  "experiment_id": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "muij_map": [
+    3,
+    5,
+    3,
+    3
+  ],
+  "muij_to_exp": [
+    1,
+    1,
+    4,
+    1
+  ],
+  "muij_to_pep": [
+    2,
+    5,
+    1,
+    5
+  ],
+  "num_experiments": 1,
+  "num_pep_exp_pairs": 4,
+  "num_peptides": 5,
+  "num_total_observations": 4,
+  "peptide_id": [
+    5,
+    5,
+    3,
+    4
+  ],
+  "retention_times": [
+    1.0,
+    2.0,
+    3.0,
+    4.0
+  ]
+}

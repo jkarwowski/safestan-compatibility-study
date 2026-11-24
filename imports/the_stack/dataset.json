@@ -1,0 +1,27 @@
+{
+  "audit_stanc_sha256": "feef958a785b48980a92535ce4ea0dfaa7838686045dbbdcb6894dbf7c4a61fc",
+  "compile_status": {
+    "modernized_pass": 1854,
+    "original_pass": 442
+  },
+  "dataset": "bigcode/the-stack-dedup",
+  "limitations": [
+    "Lexical novelty does not establish a distinct model family.",
+    "Compiler success does not establish runtime or statistical correctness.",
+    "Automatic modernization is retained with original source for review.",
+    "Observation datasets were not recovered.",
+    "Repository license labels are upstream dataset metadata, not file-level legal determinations."
+  ],
+  "modernizer_sha256": "e46da4c7a8483cb2bba4e541f057c5b7631841d5ace9dc2bd840adadea2b6007",
+  "original_corpus_entries": 1193,
+  "pedantic_warning_free": 540,
+  "revision": "17cad72c886a2858e08d4c349a00d6466f54df63",
+  "selected_candidates": 2296,
+  "selection_audit_script_sha256": "05298dcd56f7326f55ab1efcf7d84fd9a9c2033123d6e37801065ea86fa5c582",
+  "selection_method": "Exclude local exact/token/modernized/lexical-near overlap, compiler fixtures and within-input duplicates; require data, parameters, a density-like model block referencing input, and stanc success; lexical near-dedup uses five-token Jaccard >= 0.85.",
+  "selection_refine_script_sha256": "7b09f96c3aa0ac0ee02e8b9a24d8c4ecdab012bd71130fc6d31b41b051031237",
+  "selection_sha256": "e5c683d18e34c79211c6f31e23dbf610377e0ba9fb95ddcbd04f7ce63966f69c",
+  "shard": "data/stan/data-00000-of-00001.parquet",
+  "shard_sha256": "9cc1524df35d57b1cccaf4bef72d4f3355271eb97b2c40372756081cbcb40595",
+  "source_records": 5441
+}

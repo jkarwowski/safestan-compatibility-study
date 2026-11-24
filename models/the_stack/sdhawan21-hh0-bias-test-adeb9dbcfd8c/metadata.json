@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from sdhawan21/hh0: stan/bias_test.stan.",
+  "difficulty": "unknown",
+  "id": "sdhawan21-hh0-bias-test-adeb9dbcfd8c",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "stan/bias_test.stan",
+  "source_url": "https://github.com/sdhawan21/hh0/blob/d6e4f881b614c41b6e13246d3fec8e6abb178337/stan/bias_test.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 21,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Bias Test",
+  "upstream_commit": "d6e4f881b614c41b6e13246d3fec8e6abb178337",
+  "upstream_repository": "https://github.com/sdhawan21/hh0"
+}

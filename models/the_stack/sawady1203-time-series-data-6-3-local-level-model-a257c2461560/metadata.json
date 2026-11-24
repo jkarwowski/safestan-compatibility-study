@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from sawady1203/time_series_data: 6-3-local-level-model.stan.",
+  "difficulty": "unknown",
+  "id": "sawady1203-time-series-data-6-3-local-level-model-a257c2461560",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "6-3-local-level-model.stan",
+  "source_url": "https://github.com/sawady1203/time_series_data/blob/7b7100cdce9b52159ba54fb2064cd085bf30fb51/6-3-local-level-model.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 2,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "6 3 Local Level Model",
+  "upstream_commit": "7b7100cdce9b52159ba54fb2064cd085bf30fb51",
+  "upstream_repository": "https://github.com/sawady1203/time_series_data"
+}

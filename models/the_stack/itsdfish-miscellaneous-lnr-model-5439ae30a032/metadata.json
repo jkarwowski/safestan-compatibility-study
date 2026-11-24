@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from itsdfish/Miscellaneous: examples/LNR/LNR_Model.stan.",
+  "difficulty": "unknown",
+  "id": "itsdfish-miscellaneous-lnr-model-5439ae30a032",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "examples/LNR/LNR_Model.stan",
+  "source_url": "https://github.com/itsdfish/Miscellaneous/blob/326a41a4f64aab4fcae59d2538cd302b01804d82/examples/LNR/LNR_Model.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 4,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Lnr Model",
+  "upstream_commit": "326a41a4f64aab4fcae59d2538cd302b01804d82",
+  "upstream_repository": "https://github.com/itsdfish/Miscellaneous"
+}

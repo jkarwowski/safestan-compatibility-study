@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from gbdrt/yaps: tests/stan/ch13_zero_inflation.stan.",
+  "difficulty": "unknown",
+  "id": "gbdrt-yaps-ch13-zero-inflation-52966a191acc",
+  "include_files": [],
+  "licenses": [
+    "Apache-2.0"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "tests/stan/ch13_zero_inflation.stan",
+  "source_url": "https://github.com/gbdrt/yaps/blob/39b5833ff61c8d7f0f60bc763b07205dd7058aef/tests/stan/ch13_zero_inflation.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 2,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Ch13 Zero Inflation",
+  "upstream_commit": "39b5833ff61c8d7f0f60bc763b07205dd7058aef",
+  "upstream_repository": "https://github.com/gbdrt/yaps"
+}

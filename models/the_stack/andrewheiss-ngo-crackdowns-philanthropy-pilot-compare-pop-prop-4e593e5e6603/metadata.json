@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from andrewheiss/ngo-crackdowns-philanthropy-pilot: inst/stan/compare_pop_prop.stan.",
+  "difficulty": "unknown",
+  "id": "andrewheiss-ngo-crackdowns-philanthropy-pilot-compare-pop-prop-4e593e5e6603",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "inst/stan/compare_pop_prop.stan",
+  "source_url": "https://github.com/andrewheiss/ngo-crackdowns-philanthropy-pilot/blob/9b29c2d2007699046896d7948a5912ed5406afeb/inst/stan/compare_pop_prop.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 3,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Compare Pop Prop",
+  "upstream_commit": "9b29c2d2007699046896d7948a5912ed5406afeb",
+  "upstream_repository": "https://github.com/andrewheiss/ngo-crackdowns-philanthropy-pilot"
+}

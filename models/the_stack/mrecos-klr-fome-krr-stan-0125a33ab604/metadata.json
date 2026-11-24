@@ -1,0 +1,41 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from mrecos/klr-fome: analysis/Stan_models/KRR_stan.stan.",
+  "difficulty": "unknown",
+  "id": "mrecos-klr-fome-krr-stan-0125a33ab604",
+  "include_files": [],
+  "licenses": [
+    "CC-BY-4.0",
+    "CC0-1.0"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "analysis/Stan_models/KRR_stan.stan",
+  "source_url": "https://github.com/mrecos/klr-fome/blob/fa1b6d9a328fe44c9341a7141a81a9be02396765/analysis/Stan_models/KRR_stan.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 4,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Krr Stan",
+  "upstream_commit": "fa1b6d9a328fe44c9341a7141a81a9be02396765",
+  "upstream_repository": "https://github.com/mrecos/klr-fome"
+}

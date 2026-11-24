@@ -1,0 +1,21 @@
+{
+  "DIM_SIZE": 1,
+  "NDATA": 1,
+  "NITEMS": 3,
+  "NUSERS": 4,
+  "diff_prior_scale": 1.2011461729970248,
+  "distances": [
+    2.1123453545830118
+  ],
+  "eps_limit": 4,
+  "items": [
+    3
+  ],
+  "u1s": [
+    4
+  ],
+  "u2s": [
+    1
+  ],
+  "uerr_prior_scale": 4.700207222227533
+}

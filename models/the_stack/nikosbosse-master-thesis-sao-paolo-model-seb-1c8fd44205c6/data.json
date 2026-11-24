@@ -1,0 +1,14 @@
+{
+  "R0": 3.345324933303185,
+  "cases": [
+    5,
+    2
+  ],
+  "cum_cases": [
+    6,
+    5
+  ],
+  "n_pred_timesteps": 5,
+  "n_timesteps": 2,
+  "population": 2.251987007341721
+}

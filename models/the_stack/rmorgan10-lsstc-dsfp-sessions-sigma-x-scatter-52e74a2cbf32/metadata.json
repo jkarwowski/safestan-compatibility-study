@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from rmorgan10/LSSTC-DSFP-Sessions: Session10/Day3/stan/sigma_x_scatter.stan.",
+  "difficulty": "unknown",
+  "id": "rmorgan10-lsstc-dsfp-sessions-sigma-x-scatter-52e74a2cbf32",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "Session10/Day3/stan/sigma_x_scatter.stan",
+  "source_url": "https://github.com/rmorgan10/LSSTC-DSFP-Sessions/blob/1d0b3c28fe7f6f93e00e332e74873e6d1ec29d0b/Session10/Day3/stan/sigma_x_scatter.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 5,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Sigma X Scatter",
+  "upstream_commit": "1d0b3c28fe7f6f93e00e332e74873e6d1ec29d0b",
+  "upstream_repository": "https://github.com/rmorgan10/LSSTC-DSFP-Sessions"
+}

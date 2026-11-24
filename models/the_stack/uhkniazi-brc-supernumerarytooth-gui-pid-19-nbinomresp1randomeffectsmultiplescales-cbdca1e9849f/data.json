@@ -1,0 +1,21 @@
+{
+  "NBatchMap1": [
+    1,
+    1
+  ],
+  "NScaleBatches1": 2,
+  "Nclusters1": 2,
+  "NgroupMap1": [
+    1,
+    1
+  ],
+  "Ntotal": 2,
+  "gammaRate": 2.518537557667813,
+  "gammaShape": 4.620663527770185,
+  "intercept": 5.856764304077446,
+  "intercept_sd": 4.830200507234368,
+  "y": [
+    5,
+    5
+  ]
+}

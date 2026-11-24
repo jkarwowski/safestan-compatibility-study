@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from eco4cast/Statistical-Methods-Seminar-Series: leosbarajas_hmms/OccupancyEFI.stan.",
+  "difficulty": "unknown",
+  "id": "eco4cast-statistical-methods-seminar-series-occupancyefi-a04ff44c2004",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "leosbarajas_hmms/OccupancyEFI.stan",
+  "source_url": "https://github.com/eco4cast/Statistical-Methods-Seminar-Series/blob/a511d4bd9739ce95d4494aca328f29ddca239493/leosbarajas_hmms/OccupancyEFI.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 4,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Occupancyefi",
+  "upstream_commit": "a511d4bd9739ce95d4494aca328f29ddca239493",
+  "upstream_repository": "https://github.com/eco4cast/Statistical-Methods-Seminar-Series"
+}

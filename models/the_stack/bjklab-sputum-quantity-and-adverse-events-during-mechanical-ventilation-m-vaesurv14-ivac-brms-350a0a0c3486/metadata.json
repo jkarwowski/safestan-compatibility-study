@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from bjklab/Sputum-quantity-and-adverse-events-during-mechanical-ventilation: models/survival/m_vaesurv14_ivac_brms.stan.",
+  "difficulty": "unknown",
+  "id": "bjklab-sputum-quantity-and-adverse-events-during-mechanical-ventilation-m-vaesurv14-ivac-brms-350a0a0c3486",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "models/survival/m_vaesurv14_ivac_brms.stan",
+  "source_url": "https://github.com/bjklab/Sputum-quantity-and-adverse-events-during-mechanical-ventilation/blob/71ffc3c45671cd7a0072d15799525e3005f68110/models/survival/m_vaesurv14_ivac_brms.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 8,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "M Vaesurv14 Ivac Brms",
+  "upstream_commit": "71ffc3c45671cd7a0072d15799525e3005f68110",
+  "upstream_repository": "https://github.com/bjklab/Sputum-quantity-and-adverse-events-during-mechanical-ventilation"
+}

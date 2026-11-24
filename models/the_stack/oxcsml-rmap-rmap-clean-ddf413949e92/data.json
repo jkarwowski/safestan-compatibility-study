@@ -1,0 +1,45 @@
+{
+  "Count": [
+    [
+      6,
+      2,
+      3,
+      2,
+      5
+    ]
+  ],
+  "Nproj": 4,
+  "Nstep": 5,
+  "Tall": 5,
+  "Tcond": 3,
+  "Tip": 2,
+  "Tpred": 4,
+  "Trdp": 4,
+  "Tstep": 5,
+  "Ttdp": 1,
+  "fixed_gp_time_length_scale": 6.892496120749578,
+  "gp_time_decay_scale": 3.403105608870858,
+  "gp_time_scale": 4.748436547125813,
+  "infprofile": [
+    3.835638316120546,
+    4.636501123304927
+  ],
+  "mu_scale": 3.3583064766412516,
+  "outlier_count_threshold": 1,
+  "outlier_prob_threshold": 0.12333227342188194,
+  "phi_latent_scale": 2.1161080158074705,
+  "phi_observed_scale": 4.709680635604179,
+  "reconstruct_infections": 1,
+  "resultdelayalpha": [
+    0.9441925651755341,
+    3.4392362076550893,
+    4.515549195109197,
+    1.652133650692649,
+    4.184220352250924
+  ],
+  "sigma_scale": 4.374399006511958,
+  "testdelayprofile": [
+    5.759324122434506
+  ],
+  "xi_scale": 4.268034367612184
+}

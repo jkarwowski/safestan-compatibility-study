@@ -1,0 +1,246 @@
+{
+  "A": 1,
+  "B": 1,
+  "C": 3,
+  "IDX_WEEKS": [
+    0.1
+  ],
+  "IDX_WEEKS_OBSERVED": [],
+  "IDX_WEEKS_OBSERVED_REPEATED": [
+    1
+  ],
+  "M": 3,
+  "N_idx_non_missing": [
+    [],
+    [],
+    []
+  ],
+  "N_missing": [
+    2,
+    2,
+    2
+  ],
+  "T": 4,
+  "W": 1,
+  "W_NOT_OBSERVED": 0,
+  "W_OBSERVED": 0,
+  "age": [
+    0.5
+  ],
+  "age_from_state_age_strata": [
+    1
+  ],
+  "age_from_vac_age_strata": [
+    1,
+    1,
+    1
+  ],
+  "age_missing": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "age_to_state_age_strata": [
+    1
+  ],
+  "age_to_vac_age_strata": [
+    1,
+    1,
+    1
+  ],
+  "deaths": [
+    [
+      []
+    ],
+    [
+      []
+    ],
+    [
+      []
+    ]
+  ],
+  "deaths_JHU": [
+    [
+      0.1
+    ],
+    [
+      0.2
+    ],
+    [
+      0.30000000000000004
+    ]
+  ],
+  "idx_non_missing": [
+    [
+      []
+    ],
+    [
+      []
+    ],
+    [
+      []
+    ]
+  ],
+  "idx_weeks_missing_max": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "idx_weeks_missing_min": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "inv_sum_deaths": [
+    [],
+    [],
+    []
+  ],
+  "lambda_prior_parameters": [
+    [
+      [],
+      []
+    ],
+    [
+      [],
+      []
+    ],
+    [
+      [],
+      []
+    ]
+  ],
+  "max_count_censored": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "min_count_censored": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "prop_vac_start": [
+    [
+      0.1,
+      0.2,
+      0.30000000000000004
+    ],
+    [
+      0.2,
+      0.30000000000000004,
+      0.4
+    ],
+    [
+      0.30000000000000004,
+      0.4,
+      0.5
+    ]
+  ],
+  "prop_vac_start_counterfactual": [
+    [
+      0.5,
+      1.0,
+      1.5
+    ],
+    [
+      1.0,
+      1.5,
+      2.0
+    ],
+    [
+      1.5,
+      2.0,
+      2.5
+    ]
+  ],
+  "start_or_end_period": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "sum_count_censored": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "w_start_resurgence": [
+    1,
+    1,
+    1
+  ],
+  "w_stop_resurgence": [
+    1,
+    1,
+    1
+  ],
+  "week_indices_resurgence": [
+    0.1,
+    0.2,
+    0.30000000000000004,
+    0.4
+  ]
+}

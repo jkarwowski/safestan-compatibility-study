@@ -1,0 +1,20 @@
+{
+  "N_cells_rep": 2,
+  "N_cells_uv5": 3,
+  "bohr_loc": 6.605093554746356,
+  "bohr_scale": 5.206283195410536,
+  "log_alpha_loc": 5.985927503683225,
+  "log_alpha_scale": 4.504553871245065,
+  "log_b_loc": 6.006104941904647,
+  "log_b_scale": 5.999825933558083,
+  "mRNA_counts_rep": [
+    4,
+    5
+  ],
+  "mRNA_counts_uv5": [
+    2,
+    5,
+    5
+  ],
+  "ppc": 5
+}

@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from jwatowatson/SARS-CoV2-Viral-Clearance-Kinetics: model_exp_full.stan.",
+  "difficulty": "unknown",
+  "id": "jwatowatson-sars-cov2-viral-clearance-kinetics-model-exp-full-2b7e8bece0a4",
+  "include_files": [],
+  "licenses": [
+    "CC-BY-4.0"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "model_exp_full.stan",
+  "source_url": "https://github.com/jwatowatson/SARS-CoV2-Viral-Clearance-Kinetics/blob/b0f372777337149cf559a2dfed61a0a674af6de0/model_exp_full.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 11,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Model Exp Full",
+  "upstream_commit": "b0f372777337149cf559a2dfed61a0a674af6de0",
+  "upstream_repository": "https://github.com/jwatowatson/SARS-CoV2-Viral-Clearance-Kinetics"
+}

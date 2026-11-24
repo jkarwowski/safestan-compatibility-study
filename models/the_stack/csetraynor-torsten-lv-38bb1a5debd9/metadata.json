@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from csetraynor/Torsten: example-models/lotka_volterra_ode_group_model/lv.stan.",
+  "difficulty": "unknown",
+  "id": "csetraynor-torsten-lv-38bb1a5debd9",
+  "include_files": [],
+  "licenses": [
+    "BSD-3-Clause"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "example-models/lotka_volterra_ode_group_model/lv.stan",
+  "source_url": "https://github.com/csetraynor/Torsten/blob/55b59b8068e2a539346f566ec698c755a9e3536c/example-models/lotka_volterra_ode_group_model/lv.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 5,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Lv",
+  "upstream_commit": "55b59b8068e2a539346f566ec698c755a9e3536c",
+  "upstream_repository": "https://github.com/csetraynor/Torsten"
+}

@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from pmean/papers-and-presentations: hedging-hyperprior/src/stan_hierarchy.stan.",
+  "difficulty": "unknown",
+  "id": "pmean-papers-and-presentations-stan-hierarchy-9d61c3a2ea3e",
+  "include_files": [],
+  "licenses": [
+    "CC0-1.0"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "hedging-hyperprior/src/stan_hierarchy.stan",
+  "source_url": "https://github.com/pmean/papers-and-presentations/blob/d6fe4409c0f42d3bc60b1d4b98c0be30e6a2613f/hedging-hyperprior/src/stan_hierarchy.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 3,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Stan Hierarchy",
+  "upstream_commit": "d6fe4409c0f42d3bc60b1d4b98c0be30e6a2613f",
+  "upstream_repository": "https://github.com/pmean/papers-and-presentations"
+}

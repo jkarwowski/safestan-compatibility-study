@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from generable/workshop-materials: NCB_2019/poisson_3.stan.",
+  "difficulty": "unknown",
+  "id": "generable-workshop-materials-poisson-3-7764fdd96d38",
+  "include_files": [],
+  "licenses": [
+    "BSD-3-Clause"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "NCB_2019/poisson_3.stan",
+  "source_url": "https://github.com/generable/workshop-materials/blob/0ef8017c539f70e119daa14649b0e6bb6d7d02cc/NCB_2019/poisson_3.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 2,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Poisson 3",
+  "upstream_commit": "0ef8017c539f70e119daa14649b0e6bb6d7d02cc",
+  "upstream_repository": "https://github.com/generable/workshop-materials"
+}

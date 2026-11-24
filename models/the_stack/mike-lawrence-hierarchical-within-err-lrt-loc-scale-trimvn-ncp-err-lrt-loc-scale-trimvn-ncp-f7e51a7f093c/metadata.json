@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from mike-lawrence/hierarchical_within_err_lrt_loc_scale_trimvn_ncp: stan/err_lrt_loc_scale_trimvn_ncp.stan.",
+  "difficulty": "unknown",
+  "id": "mike-lawrence-hierarchical-within-err-lrt-loc-scale-trimvn-ncp-err-lrt-loc-scale-trimvn-ncp-f7e51a7f093c",
+  "include_files": [],
+  "licenses": [
+    "BSD-3-Clause"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "stan/err_lrt_loc_scale_trimvn_ncp.stan",
+  "source_url": "https://github.com/mike-lawrence/hierarchical_within_err_lrt_loc_scale_trimvn_ncp/blob/a04e3b33fe9dd3bc7f2e0f024d5ef98406df50ac/stan/err_lrt_loc_scale_trimvn_ncp.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 11,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Err Lrt Loc Scale Trimvn Ncp",
+  "upstream_commit": "a04e3b33fe9dd3bc7f2e0f024d5ef98406df50ac",
+  "upstream_repository": "https://github.com/mike-lawrence/hierarchical_within_err_lrt_loc_scale_trimvn_ncp"
+}

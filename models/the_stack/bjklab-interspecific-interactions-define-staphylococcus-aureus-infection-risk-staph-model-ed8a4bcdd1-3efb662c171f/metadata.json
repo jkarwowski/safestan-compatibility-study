@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from bjklab/Interspecific-interactions-define-Staphylococcus-aureus-infection-risk: models/linear/staph_model_prop_ET_v_ANsv_reghs.stan.",
+  "difficulty": "unknown",
+  "id": "bjklab-interspecific-interactions-define-staphylococcus-aureus-infection-risk-staph-model-ed8a4bcdd1-3efb662c171f",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "models/linear/staph_model_prop_ET_v_ANsv_reghs.stan",
+  "source_url": "https://github.com/bjklab/Interspecific-interactions-define-Staphylococcus-aureus-infection-risk/blob/9232b37c5708f745c26163e3555855bca7caee50/models/linear/staph_model_prop_ET_v_ANsv_reghs.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 5,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Staph Model Prop Et V Ansv Reghs",
+  "upstream_commit": "9232b37c5708f745c26163e3555855bca7caee50",
+  "upstream_repository": "https://github.com/bjklab/Interspecific-interactions-define-Staphylococcus-aureus-infection-risk"
+}

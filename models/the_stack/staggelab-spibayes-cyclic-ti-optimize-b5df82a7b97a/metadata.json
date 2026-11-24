@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from staggelab/spibayes: inst/models/cyclic_ti_optimize.stan.",
+  "difficulty": "unknown",
+  "id": "staggelab-spibayes-cyclic-ti-optimize-b5df82a7b97a",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "inst/models/cyclic_ti_optimize.stan",
+  "source_url": "https://github.com/staggelab/spibayes/blob/364024c1facc8598f50f7d68f0a9425f1ea188ee/inst/models/cyclic_ti_optimize.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 17,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Cyclic Ti Optimize",
+  "upstream_commit": "364024c1facc8598f50f7d68f0a9425f1ea188ee",
+  "upstream_repository": "https://github.com/staggelab/spibayes"
+}

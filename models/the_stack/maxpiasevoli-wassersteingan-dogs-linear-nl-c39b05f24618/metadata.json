@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from maxpiasevoli/WassersteinGAN: stan/dogs_linear_nl.stan.",
+  "difficulty": "unknown",
+  "id": "maxpiasevoli-wassersteingan-dogs-linear-nl-c39b05f24618",
+  "include_files": [],
+  "licenses": [
+    "BSD-3-Clause"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "stan/dogs_linear_nl.stan",
+  "source_url": "https://github.com/maxpiasevoli/WassersteinGAN/blob/ac0e62e7c44d6c4f5d28faffa6227c26a6b805f0/stan/dogs_linear_nl.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 3,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Dogs Linear Nl",
+  "upstream_commit": "ac0e62e7c44d6c4f5d28faffa6227c26a6b805f0",
+  "upstream_repository": "https://github.com/maxpiasevoli/WassersteinGAN"
+}

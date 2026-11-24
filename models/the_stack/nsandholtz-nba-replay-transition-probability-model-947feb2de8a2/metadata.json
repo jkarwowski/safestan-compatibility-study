@@ -1,0 +1,41 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from nsandholtz/nba_replay: code/stan_models/transition_probability_model.stan.",
+  "difficulty": "unknown",
+  "id": "nsandholtz-nba-replay-transition-probability-model-947feb2de8a2",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "code/stan_models/transition_probability_model.stan",
+  "source_url": "https://github.com/nsandholtz/nba_replay/blob/7a134c2d288c06e7a647a144c32a236d787a902d/code/stan_models/transition_probability_model.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 17,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "data_block_parser_fallback",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "synthetic_data_stanc_error": "Error in './model.stan', line 13, column 8 to column 18:",
+  "title": "Transition Probability Model",
+  "upstream_commit": "7a134c2d288c06e7a647a144c32a236d787a902d",
+  "upstream_repository": "https://github.com/nsandholtz/nba_replay"
+}

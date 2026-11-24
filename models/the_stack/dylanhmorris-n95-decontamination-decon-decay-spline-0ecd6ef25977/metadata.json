@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from dylanhmorris/n95-decontamination: src/decon_decay_spline.stan.",
+  "difficulty": "unknown",
+  "id": "dylanhmorris-n95-decontamination-decon-decay-spline-0ecd6ef25977",
+  "include_files": [],
+  "licenses": [
+    "BSD-3-Clause"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "src/decon_decay_spline.stan",
+  "source_url": "https://github.com/dylanhmorris/n95-decontamination/blob/bc0be59d5c67b227a24f5226881b394b5b8dcc29/src/decon_decay_spline.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 25,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Decon Decay Spline",
+  "upstream_commit": "bc0be59d5c67b227a24f5226881b394b5b8dcc29",
+  "upstream_repository": "https://github.com/dylanhmorris/n95-decontamination"
+}

@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from drackham/CDASimStudies: inst/Models/IRT-1PL.stan.",
+  "difficulty": "unknown",
+  "id": "drackham-cdasimstudies-irt-1pl-939231221fb3",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "inst/Models/IRT-1PL.stan",
+  "source_url": "https://github.com/drackham/CDASimStudies/blob/6a66c9a54cfb14393eab5741c7dbb9a869341648/inst/Models/IRT-1PL.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 6,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "IRT 1pl",
+  "upstream_commit": "6a66c9a54cfb14393eab5741c7dbb9a869341648",
+  "upstream_repository": "https://github.com/drackham/CDASimStudies"
+}

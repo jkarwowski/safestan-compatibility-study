@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from nhtran93/kolam_signaling: stan/size_random_intercept.stan.",
+  "difficulty": "unknown",
+  "id": "nhtran93-kolam-signaling-size-random-intercept-1745dfa34d6f",
+  "include_files": [],
+  "licenses": [
+    "CC-BY-4.0"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "stan/size_random_intercept.stan",
+  "source_url": "https://github.com/nhtran93/kolam_signaling/blob/6101a5a001b93ded1ea6d0be85c7b384699db656/stan/size_random_intercept.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 8,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Size Random Intercept",
+  "upstream_commit": "6101a5a001b93ded1ea6d0be85c7b384699db656",
+  "upstream_repository": "https://github.com/nhtran93/kolam_signaling"
+}

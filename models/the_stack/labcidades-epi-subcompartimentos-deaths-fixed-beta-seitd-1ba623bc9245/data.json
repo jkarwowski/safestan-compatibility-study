@@ -1,0 +1,25 @@
+{
+  "T": 1,
+  "deaths": [
+    3,
+    3,
+    1
+  ],
+  "deaths_length": 3,
+  "deaths_starts": [
+    4,
+    5,
+    1
+  ],
+  "deaths_stops": [
+    3,
+    2,
+    5
+  ],
+  "initial_time": 2.856594987063851,
+  "n_disease_states": 5,
+  "population": 3.3993221007551258,
+  "times": [
+    1.0
+  ]
+}

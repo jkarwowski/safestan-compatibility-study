@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from djhocking/GSMNP-Elevation: Code/Stan_Models/final_stream2_od.stan.",
+  "difficulty": "unknown",
+  "id": "djhocking-gsmnp-elevation-final-stream2-od-ccba3f5ba5fc",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "Code/Stan_Models/final_stream2_od.stan",
+  "source_url": "https://github.com/djhocking/GSMNP-Elevation/blob/bcb27e3e7e768a86fa57d70661656f79171f9c2f/Code/Stan_Models/final_stream2_od.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 18,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Final Stream2 Od",
+  "upstream_commit": "bcb27e3e7e768a86fa57d70661656f79171f9c2f",
+  "upstream_repository": "https://github.com/djhocking/GSMNP-Elevation"
+}

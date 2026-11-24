@@ -1,0 +1,29 @@
+{
+  "J": 2,
+  "N_preact": 2,
+  "N_trace": 2,
+  "experiment_time_preact": [
+    1.0,
+    2.0
+  ],
+  "experiment_time_trace": [
+    1.0,
+    2.0
+  ],
+  "mch_preact": [
+    4.939110459587755,
+    4.297661396492186
+  ],
+  "mch_trace": [
+    4.9203684184036725,
+    1.7158011529541748
+  ],
+  "point_idx": [
+    2,
+    2
+  ],
+  "relative_time_trace": [
+    1.0,
+    2.0
+  ]
+}

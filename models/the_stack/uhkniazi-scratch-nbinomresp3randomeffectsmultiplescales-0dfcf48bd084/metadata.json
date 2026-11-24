@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from uhkniazi/Scratch: nbinomResp3RandomEffectsMultipleScales.stan.",
+  "difficulty": "unknown",
+  "id": "uhkniazi-scratch-nbinomresp3randomeffectsmultiplescales-0dfcf48bd084",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "nbinomResp3RandomEffectsMultipleScales.stan",
+  "source_url": "https://github.com/uhkniazi/Scratch/blob/7382827e39e3137d22eae6a13aeab34975de33e2/nbinomResp3RandomEffectsMultipleScales.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 12,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Nbinomresp3randomeffectsmultiplescales",
+  "upstream_commit": "7382827e39e3137d22eae6a13aeab34975de33e2",
+  "upstream_repository": "https://github.com/uhkniazi/Scratch"
+}
