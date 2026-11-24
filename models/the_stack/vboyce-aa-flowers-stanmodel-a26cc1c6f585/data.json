@@ -1,0 +1,30 @@
+{
+  "CountsAB": [
+    3,
+    4
+  ],
+  "CountsNotAB": [
+    3,
+    3
+  ],
+  "MarkerType": [
+    4,
+    3
+  ],
+  "NumMarkers": 1,
+  "NumObservations": 2,
+  "NumSubPops": 1,
+  "NumUtterancesAB": [
+    3,
+    4
+  ],
+  "NumUtterancesNotAB": [
+    3,
+    3
+  ],
+  "SpeakerSubPop": [
+    1,
+    4
+  ],
+  "StdDev": 1.7445734357295999
+}

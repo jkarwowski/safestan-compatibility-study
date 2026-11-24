@@ -1,0 +1,47 @@
+{
+  "correct_side": [
+    0,
+    1,
+    0
+  ],
+  "cumulative_hits_at_trial_start": [
+    3,
+    2,
+    2
+  ],
+  "experiment_id": [
+    1,
+    4,
+    3
+  ],
+  "hyper_alpha_equilibrium_E": 6.986773212459131,
+  "hyper_beta_equilibrium_E": 5.049412221826461,
+  "hyper_certainty_loc_left_bias": 5.487348928432551,
+  "hyper_certainty_p_correct_experienced": 3.464223750853446,
+  "hyper_mean_experience_half_saturation_time": 0.6167693399917604,
+  "hyper_mean_sd_left_bias": 2.8303569288699117,
+  "hyper_mode_loc_left_bias": 0.9628192383619191,
+  "hyper_mode_p_correct_experienced": 0.8370075225366145,
+  "hyper_sd_experience_half_saturation_time": 3.239616216147075,
+  "hyper_sd_sd_left_bias": 4.373365205991897,
+  "location": [
+    2,
+    3,
+    1,
+    1
+  ],
+  "min_learning_effect": 5.54849863932431,
+  "n_experiments": 4,
+  "n_failures": [
+    1,
+    1,
+    1
+  ],
+  "n_locations": 3,
+  "n_successes": [
+    4,
+    3,
+    1
+  ],
+  "n_trials_total": 3
+}

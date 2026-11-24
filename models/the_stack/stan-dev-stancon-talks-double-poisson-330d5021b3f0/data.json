@@ -1,0 +1,66 @@
+{
+  "N": 5,
+  "N_prev": 4,
+  "nseason": 5,
+  "nteams": 4,
+  "score_away": [
+    4,
+    5,
+    6,
+    2,
+    5
+  ],
+  "score_home": [
+    6,
+    6,
+    2,
+    3,
+    3
+  ],
+  "season": [
+    2,
+    2,
+    2,
+    6,
+    6
+  ],
+  "season_prev": [
+    4,
+    2,
+    6,
+    3
+  ],
+  "season_time": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "teams_away": [
+    5,
+    5,
+    3,
+    5,
+    5
+  ],
+  "teams_away_prev": [
+    3,
+    6,
+    5,
+    3
+  ],
+  "teams_home": [
+    3,
+    3,
+    5,
+    4,
+    6
+  ],
+  "teams_home_prev": [
+    3,
+    5,
+    6,
+    5
+  ]
+}

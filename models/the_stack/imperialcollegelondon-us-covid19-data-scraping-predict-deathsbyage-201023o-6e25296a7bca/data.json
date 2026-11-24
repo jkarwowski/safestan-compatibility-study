@@ -1,0 +1,42 @@
+{
+  "A": 4,
+  "B": 2,
+  "C": 1,
+  "D": 1,
+  "age": [
+    5.050249024390856,
+    4.9569065264211,
+    5.991092754070893,
+    4.221984960598219
+  ],
+  "age2": [
+    3.4166946631421395,
+    5.644441262586462,
+    4.3851527873479785,
+    4.901283585806937
+  ],
+  "age_from_ntl_age_strata": [
+    4
+  ],
+  "age_from_reporting_age_strata": [
+    5
+  ],
+  "age_from_state_age_strata": [
+    5,
+    3
+  ],
+  "age_to_ntl_age_strata": [
+    4
+  ],
+  "age_to_reporting_age_strata": [
+    3
+  ],
+  "age_to_state_age_strata": [
+    4,
+    4
+  ],
+  "deaths": [
+    2,
+    3
+  ]
+}

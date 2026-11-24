@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from anetobradley/energy_flex: 02-EnergyModel/01_Base_Posterior_Sampling/EPC_Prior_Sampling.stan.",
+  "difficulty": "unknown",
+  "id": "anetobradley-energy-flex-epc-prior-sampling-9ef92074cf7a",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "02-EnergyModel/01_Base_Posterior_Sampling/EPC_Prior_Sampling.stan",
+  "source_url": "https://github.com/anetobradley/energy_flex/blob/b28699556f04176d35115ce0c85fc902e4ef089d/02-EnergyModel/01_Base_Posterior_Sampling/EPC_Prior_Sampling.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 8,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Epc Prior Sampling",
+  "upstream_commit": "b28699556f04176d35115ce0c85fc902e4ef089d",
+  "upstream_repository": "https://github.com/anetobradley/energy_flex"
+}

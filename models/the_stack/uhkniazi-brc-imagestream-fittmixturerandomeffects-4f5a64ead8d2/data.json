@@ -1,0 +1,21 @@
+{
+  "Nclusters1": 4,
+  "Nclusters2": 3,
+  "Nclusters3": 2,
+  "NgroupMap1": [
+    1
+  ],
+  "NgroupMap2": [
+    2
+  ],
+  "NgroupMap3": [
+    1
+  ],
+  "Ntotal": 1,
+  "gammaRate": 5.607763544056548,
+  "gammaShape": 6.200665370804703,
+  "iMixtures": 6,
+  "y": [
+    6.430250538964743
+  ]
+}

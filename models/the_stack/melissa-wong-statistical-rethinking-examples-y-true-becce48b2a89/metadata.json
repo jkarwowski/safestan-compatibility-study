@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from melissa-wong/statistical_rethinking_examples: rounding_example/y_true.stan.",
+  "difficulty": "unknown",
+  "id": "melissa-wong-statistical-rethinking-examples-y-true-becce48b2a89",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "rounding_example/y_true.stan",
+  "source_url": "https://github.com/melissa-wong/statistical_rethinking_examples/blob/7a622874381185812a958871ac2b8af70bd384cb/rounding_example/y_true.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 3,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Y True",
+  "upstream_commit": "7a622874381185812a958871ac2b8af70bd384cb",
+  "upstream_repository": "https://github.com/melissa-wong/statistical_rethinking_examples"
+}

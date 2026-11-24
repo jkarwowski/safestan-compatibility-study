@@ -1,0 +1,63 @@
+{
+  "control_index": [
+    1,
+    1
+  ],
+  "debug": 0,
+  "decay_rate_prior_mean": 6.927134811630959,
+  "decay_rate_prior_sd": 0.1739957243007599,
+  "dilution": [
+    6,
+    3
+  ],
+  "experiment_id": [
+    3,
+    4
+  ],
+  "first_dilution": 5,
+  "intercept_prior_mean": 5.946714662831269,
+  "intercept_prior_sd": 4.816098297031827,
+  "last_dilution": 7,
+  "lower_lim_decay_rate": 4.074478547755774,
+  "n_experiments": 1,
+  "n_replicates": 1,
+  "n_titers": 2,
+  "n_total_datapoints": 2,
+  "n_wells": 1,
+  "replicate_id": [
+    1,
+    5
+  ],
+  "times": [
+    1.0,
+    2.0
+  ],
+  "titer_control_index": [
+    1,
+    1
+  ],
+  "titer_experiment_id": [
+    3,
+    1
+  ],
+  "titer_replicate_id": [
+    4,
+    1
+  ],
+  "titer_time": [
+    1.0,
+    2.0
+  ],
+  "titer_treatment_end_time": [
+    1.0,
+    2.0
+  ],
+  "treatment_end_time": [
+    1.0,
+    2.0
+  ],
+  "well_status": [
+    1,
+    0
+  ]
+}

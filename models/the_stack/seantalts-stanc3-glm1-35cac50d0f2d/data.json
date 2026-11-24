@@ -1,0 +1,25 @@
+{
+  "missite": [
+    2,
+    4,
+    4
+  ],
+  "misyear": [
+    3,
+    1,
+    4
+  ],
+  "nmis": 3,
+  "nobs": 1,
+  "nsite": 3,
+  "nyear": 3,
+  "obs": [
+    2
+  ],
+  "obssite": [
+    3
+  ],
+  "obsyear": [
+    1
+  ]
+}

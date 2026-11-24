@@ -1,0 +1,16 @@
+{
+  "debug": 0,
+  "dilution": [
+    5
+  ],
+  "n_titers": 2,
+  "n_total_datapoints": 1,
+  "titer_id": [
+    4
+  ],
+  "titer_prior_mean": 2.9832303647943714,
+  "titer_prior_sd": 2.4142172396212116,
+  "well_status": [
+    0
+  ]
+}

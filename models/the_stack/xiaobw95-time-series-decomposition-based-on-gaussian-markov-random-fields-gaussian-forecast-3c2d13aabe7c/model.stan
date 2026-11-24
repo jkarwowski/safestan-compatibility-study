@@ -1,0 +1,56 @@
+data {
+  int<lower=0> N; // number of observations
+	int<lower=0> J; // number of grid cells
+	vector [N] xvar1;  //locations for observations
+	vector [J-1] duxvar1;  //distances between unique locations
+  array[N] int<lower=0> xrank1; //rank order of location for each obs
+	array[N] real y;  // response for obs j
+}
+
+transformed data {
+  real muy;
+	real sdy;
+	muy = mean(y);
+  sdy = sd(y);
+}
+
+parameters {
+	array[J+10] real delta1;
+	real theta0;
+	real delta0;
+	real<lower=0.0> sigma;
+	real<lower=0.0, upper=1.0> rho1;
+	real<lower=0.0, upper=1.0> rho2;
+}
+
+transformed parameters{
+	vector[J+12] theta;
+	array[J+11] real delta;
+	delta[1] = delta0;
+	for (j in 1:(J+10)){
+	  delta[j+1] = delta1[j] + rho2 * delta[j];
+	  }
+	theta[1] = 5*sdy*theta0 + muy;
+	for (j in 1:(J+11)){
+	  theta[j+1] = delta[j] + rho1 * theta[j];
+	  }
+}
+
+model {
+  sigma ~ exponential(1);
+	theta0 ~ normal(0, 1);
+	delta0 ~ normal(0, 1);
+	delta1 ~ normal(0, 1);
+	rho1 ~ beta(2, 2);
+	rho2 ~ beta(2, 2);
+	for (i in 1:N){
+	  y[i] ~ normal(theta[xrank1[i]], sigma);
+	  }
+}
+
+generated quantities {
+  vector[N] log_lik;
+  for (i in 1:N) {
+    log_lik[i] = normal_lpdf(y[i] | theta[xrank1[i]], sigma);
+  }
+}

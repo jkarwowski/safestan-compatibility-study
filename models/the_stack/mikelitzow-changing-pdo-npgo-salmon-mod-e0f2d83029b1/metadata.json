@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from mikelitzow/changing-pdo-npgo: models/salmon.mod.stan.",
+  "difficulty": "unknown",
+  "id": "mikelitzow-changing-pdo-npgo-salmon-mod-e0f2d83029b1",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "models/salmon.mod.stan",
+  "source_url": "https://github.com/mikelitzow/changing-pdo-npgo/blob/712fb216089c3be4e74c5e707191ad302fc8c236/models/salmon.mod.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 9,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Salmon Mod",
+  "upstream_commit": "712fb216089c3be4e74c5e707191ad302fc8c236",
+  "upstream_repository": "https://github.com/mikelitzow/changing-pdo-npgo"
+}

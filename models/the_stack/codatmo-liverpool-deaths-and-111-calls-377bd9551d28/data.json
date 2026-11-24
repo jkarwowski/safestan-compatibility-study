@@ -1,0 +1,64 @@
+{
+  "T": 1,
+  "beta_left_t": [
+    4.890872697030423,
+    4.201605554911218,
+    0.9811673814067706,
+    0.5303067104317514,
+    1.2583280689307705
+  ],
+  "beta_right_t": [
+    2.6444483198980824,
+    2.8490915220837816,
+    4.808719691476354,
+    1.4355441207523691,
+    1.0739096408875446
+  ],
+  "calls_111": [
+    1,
+    4,
+    3,
+    1,
+    1
+  ],
+  "calls_111_length": 5,
+  "calls_111_start": 5,
+  "compute_likelihood": 1,
+  "deaths": [
+    4
+  ],
+  "deaths_length": 1,
+  "deaths_starts": [
+    1
+  ],
+  "deaths_stops": [
+    4
+  ],
+  "initial_time": 2.8591078572301183,
+  "integer_data": [
+    4,
+    5,
+    1
+  ],
+  "integer_data_length": 3,
+  "n_beta_pieces": 5,
+  "n_disease_states": 8,
+  "n_rho_calls_111_pieces": 2,
+  "population": 4.445706334888959,
+  "real_data": [
+    5.679004952008108,
+    5.896889885698715
+  ],
+  "real_data_length": 2,
+  "rho_calls_111_left_t": [
+    3,
+    3
+  ],
+  "rho_calls_111_right_t": [
+    1,
+    2
+  ],
+  "times": [
+    1.0
+  ]
+}

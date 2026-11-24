@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from mfalkiewicz/functional_gradients: fgrad/SDT_single.stan.",
+  "difficulty": "unknown",
+  "id": "mfalkiewicz-functional-gradients-sdt-single-ef6edd5ca0e9",
+  "include_files": [],
+  "licenses": [
+    "Apache-2.0"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "fgrad/SDT_single.stan",
+  "source_url": "https://github.com/mfalkiewicz/functional_gradients/blob/d53999a3ddf9df04c7cd65190abec47166861f4b/fgrad/SDT_single.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 5,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Sdt Single",
+  "upstream_commit": "d53999a3ddf9df04c7cd65190abec47166861f4b",
+  "upstream_repository": "https://github.com/mfalkiewicz/functional_gradients"
+}

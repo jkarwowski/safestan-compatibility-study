@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from indrark/AIrsenal: notebooks/individual_player.stan.",
+  "difficulty": "unknown",
+  "id": "indrark-airsenal-individual-player-7b830ab04dca",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "notebooks/individual_player.stan",
+  "source_url": "https://github.com/indrark/AIrsenal/blob/8cbe138c325bac4458e73f6e9dd58e71591dc327/notebooks/individual_player.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 3,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Individual Player",
+  "upstream_commit": "8cbe138c325bac4458e73f6e9dd58e71591dc327",
+  "upstream_repository": "https://github.com/indrark/AIrsenal"
+}

@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from jroy042/KSER2016_code: glmer_logistic.stan.",
+  "difficulty": "unknown",
+  "id": "jroy042-kser2016-code-glmer-logistic-c9e1fa3bc63d",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "glmer_logistic.stan",
+  "source_url": "https://github.com/jroy042/KSER2016_code/blob/d4028f81ade65899295c9beabdb9d33a1fdaa457/glmer_logistic.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 11,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Glmer Logistic",
+  "upstream_commit": "d4028f81ade65899295c9beabdb9d33a1fdaa457",
+  "upstream_repository": "https://github.com/jroy042/KSER2016_code"
+}

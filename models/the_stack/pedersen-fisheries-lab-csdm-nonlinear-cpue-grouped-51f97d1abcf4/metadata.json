@@ -1,0 +1,41 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from pedersen-fisheries-lab/csdm: inst/stan/nonlinear_cpue_grouped.stan.",
+  "difficulty": "unknown",
+  "id": "pedersen-fisheries-lab-csdm-nonlinear-cpue-grouped-51f97d1abcf4",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "inst/stan/nonlinear_cpue_grouped.stan",
+  "source_url": "https://github.com/pedersen-fisheries-lab/csdm/blob/e31af09518da6087a22abc6effff03bc9ae96552/inst/stan/nonlinear_cpue_grouped.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 18,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "data_block_parser_fallback",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "synthetic_data_stanc_error": "Warning in './model.stan', line 158, column 30 to column 48:",
+  "title": "Nonlinear Cpue Grouped",
+  "upstream_commit": "e31af09518da6087a22abc6effff03bc9ae96552",
+  "upstream_repository": "https://github.com/pedersen-fisheries-lab/csdm"
+}

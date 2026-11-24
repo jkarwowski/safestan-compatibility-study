@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from jmmorales/distance: dist_gr_pois_bin_int.stan.",
+  "difficulty": "unknown",
+  "id": "jmmorales-distance-dist-gr-pois-bin-int-8c7d6e0f9c42",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "dist_gr_pois_bin_int.stan",
+  "source_url": "https://github.com/jmmorales/distance/blob/613f5a0daeb8b2f559e9bc6271e11de1fbeff00c/dist_gr_pois_bin_int.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 15,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Dist Gr Pois Bin Int",
+  "upstream_commit": "613f5a0daeb8b2f559e9bc6271e11de1fbeff00c",
+  "upstream_repository": "https://github.com/jmmorales/distance"
+}

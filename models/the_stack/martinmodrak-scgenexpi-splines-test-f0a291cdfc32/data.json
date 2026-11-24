@@ -1,0 +1,29 @@
+{
+  "coeff_sigma": 3.4080037425624266,
+  "expression_sigma": 3.9488048981995636,
+  "knots": [
+    3.8077342369985647,
+    4.023364731596069,
+    3.0612328698919864,
+    4.30522227692107
+  ],
+  "num_cells": 2,
+  "num_knots": 4,
+  "regulator_expression": [
+    5.71580687716297,
+    3.8786581091052206
+  ],
+  "spline_degree": 6,
+  "target_expression": [
+    6.488659318963405,
+    2.0218951146471733
+  ],
+  "time_position_prior_alpha": [
+    1.0,
+    2.0
+  ],
+  "time_position_prior_beta": [
+    1.0,
+    2.0
+  ]
+}

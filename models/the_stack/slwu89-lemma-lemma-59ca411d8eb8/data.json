@@ -1,0 +1,129 @@
+{
+  "duration_natural": [
+    2.3958351229627475,
+    1.0470731283545192,
+    5.5527445183151505
+  ],
+  "duration_vaccinated": [
+    3.870261369112257,
+    5.4533764817418735,
+    2.9349741315632083
+  ],
+  "frac_hosp_multiplier_unvaccinated": [
+    2.7098255773106223,
+    1.5985946425583863,
+    2.7758622130287156
+  ],
+  "frac_hosp_multiplier_vaccinated": [
+    4.3463606329244,
+    4.710474219642547,
+    1.4046049677344652
+  ],
+  "frac_icu_multiplier_unvaccinated": [
+    0.3148405028517612,
+    2.167637021884661,
+    3.8829841964961114
+  ],
+  "frac_icu_multiplier_vaccinated": [
+    3.1488229422780574,
+    2.4589847344062985,
+    1.8201427588686436
+  ],
+  "frac_mort_multiplier_unvaccinated": [
+    4.735627678826362,
+    0.279273571796982,
+    1.810227997062699
+  ],
+  "frac_mort_multiplier_vaccinated": [
+    2.876863859769175,
+    1.950714986774063,
+    4.964839793426419
+  ],
+  "lambda_ini_exposed": 2.1842592651950685,
+  "mu_beta_inter": [
+    1.600831093805382
+  ],
+  "mu_duration_hosp_icu": 4.6741431592980796,
+  "mu_duration_hosp_mod": 4.204645430616117,
+  "mu_duration_latent": 3.5485203218202472,
+  "mu_duration_mort_nonhosp": 1.6860020852907365,
+  "mu_duration_pre_hosp": 4.885774270883737,
+  "mu_duration_rec_mild": 1.9597109555604748,
+  "mu_frac_hosp": 4.267345352320394,
+  "mu_frac_icu": 3.9074826673628102,
+  "mu_frac_mort": 0.0970288415224381,
+  "mu_frac_mort_nonhosp": 3.2608308931027095,
+  "mu_frac_tested": 0.4279724252466651,
+  "mu_len_inter": [
+    4.551707780288059
+  ],
+  "mu_r0": 4.052310702135942,
+  "mu_t_inter": [
+    2.974600575307987
+  ],
+  "ninter": 1,
+  "nobs": [
+    3
+  ],
+  "nobs_max": 2,
+  "nobs_types": 1,
+  "npop": 3.6734447423742917,
+  "nt": 3,
+  "obs_data": [
+    [
+      3.9936120887618953,
+      2.881764303241351
+    ]
+  ],
+  "prior_infection_vaccine_scale": 4.149720695042146,
+  "sigma_beta_inter": [
+    4.265631818028487
+  ],
+  "sigma_duration_hosp_icu": 2.5056643338063718,
+  "sigma_duration_hosp_mod": 3.4417760055159974,
+  "sigma_duration_latent": 3.1912877856850344,
+  "sigma_duration_mort_nonhosp": 1.1500969906042653,
+  "sigma_duration_pre_hosp": 3.067243904651254,
+  "sigma_duration_rec_mild": 3.5695513916199255,
+  "sigma_frac_hosp": 3.0200884887145163,
+  "sigma_frac_icu": 2.229895485368589,
+  "sigma_frac_mort": 4.572857094154134,
+  "sigma_frac_mort_nonhosp": 1.947712227097921,
+  "sigma_frac_tested": 2.2120993626719883,
+  "sigma_len_inter": [
+    4.823541812140976
+  ],
+  "sigma_obs_est_inv": [
+    0.6103422039867261
+  ],
+  "sigma_r0": 1.0743440882228068,
+  "sigma_t_inter": [
+    0.04131123981882123
+  ],
+  "tobs": [
+    [
+      1,
+      3
+    ]
+  ],
+  "transmission_multiplier_unvaccinated": [
+    1.888621061120321,
+    0.7238907475972032,
+    0.6768191889888443
+  ],
+  "transmission_multiplier_vaccinated": [
+    3.6284592017727095,
+    1.1125857250932216,
+    2.1264045567819787
+  ],
+  "vaccinated_per_day": [
+    2.7932569009936445,
+    1.58963979651541,
+    0.22705627994119143
+  ],
+  "vaccine_efficacy_for_susceptibility": [
+    0.6029266106208007,
+    0.6603348646722594,
+    0.0594278947677749
+  ]
+}

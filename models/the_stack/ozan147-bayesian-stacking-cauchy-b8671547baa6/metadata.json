@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from Ozan147/bayesian-stacking: src/cauchy.stan.",
+  "difficulty": "unknown",
+  "id": "ozan147-bayesian-stacking-cauchy-b8671547baa6",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "src/cauchy.stan",
+  "source_url": "https://github.com/Ozan147/bayesian-stacking/blob/6acafe615b435bccc28faec0c96ccfda890a751c/src/cauchy.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 2,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Cauchy",
+  "upstream_commit": "6acafe615b435bccc28faec0c96ccfda890a751c",
+  "upstream_repository": "https://github.com/Ozan147/bayesian-stacking"
+}

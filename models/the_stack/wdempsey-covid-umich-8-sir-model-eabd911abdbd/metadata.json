@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from wdempsey/covid-umich: methods/8_sir_model.stan.",
+  "difficulty": "unknown",
+  "id": "wdempsey-covid-umich-8-sir-model-eabd911abdbd",
+  "include_files": [],
+  "licenses": [
+    "CECILL-B"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "methods/8_sir_model.stan",
+  "source_url": "https://github.com/wdempsey/covid-umich/blob/c355fa54c8d03a3ea5d4214fe1d5fc96abd5c02f/methods/8_sir_model.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 13,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "8 Sir Model",
+  "upstream_commit": "c355fa54c8d03a3ea5d4214fe1d5fc96abd5c02f",
+  "upstream_repository": "https://github.com/wdempsey/covid-umich"
+}

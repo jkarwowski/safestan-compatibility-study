@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from dhesenkamp/conformity-xplab21: analysis/pilot/stan_models/herding.stan.",
+  "difficulty": "unknown",
+  "id": "dhesenkamp-conformity-xplab21-herding-14b520ca936e",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "analysis/pilot/stan_models/herding.stan",
+  "source_url": "https://github.com/dhesenkamp/conformity-xplab21/blob/b213e3763d4fbf7c012f6e8955ea1c5a840f0c45/analysis/pilot/stan_models/herding.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 4,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Herding",
+  "upstream_commit": "b213e3763d4fbf7c012f6e8955ea1c5a840f0c45",
+  "upstream_repository": "https://github.com/dhesenkamp/conformity-xplab21"
+}

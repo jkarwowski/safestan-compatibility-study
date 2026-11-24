@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from umich-cphds/covid_india_wave2: old versions/Initial Submission/Section 2 - Two-strain model/stan_model/base_maharashtra_simulation.stan.",
+  "difficulty": "unknown",
+  "id": "umich-cphds-covid-india-wave2-base-maharashtra-simulation-8e70e91d2903",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "old versions/Initial Submission/Section 2 - Two-strain model/stan_model/base_maharashtra_simulation.stan",
+  "source_url": "https://github.com/umich-cphds/covid_india_wave2/blob/32124bf9d51908d007d409d9bcc160eaebd2c74f/old%20versions/Initial%20Submission/Section%202%20-%20Two-strain%20model/stan_model/base_maharashtra_simulation.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 24,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Base Maharashtra Simulation",
+  "upstream_commit": "32124bf9d51908d007d409d9bcc160eaebd2c74f",
+  "upstream_repository": "https://github.com/umich-cphds/covid_india_wave2"
+}

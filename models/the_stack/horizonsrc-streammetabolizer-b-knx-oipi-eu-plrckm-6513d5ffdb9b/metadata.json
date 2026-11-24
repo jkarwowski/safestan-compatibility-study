@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from HorizonsRC/streamMetabolizer: inst/models/b_Knx_oipi_eu_plrckm.stan.",
+  "difficulty": "unknown",
+  "id": "horizonsrc-streammetabolizer-b-knx-oipi-eu-plrckm-6513d5ffdb9b",
+  "include_files": [],
+  "licenses": [
+    "CC0-1.0"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "inst/models/b_Knx_oipi_eu_plrckm.stan",
+  "source_url": "https://github.com/HorizonsRC/streamMetabolizer/blob/516421e317006739cf00ec0b86e9072a5ace818a/inst/models/b_Knx_oipi_eu_plrckm.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 23,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "B Knx Oipi Eu Plrckm",
+  "upstream_commit": "516421e317006739cf00ec0b86e9072a5ace818a",
+  "upstream_repository": "https://github.com/HorizonsRC/streamMetabolizer"
+}

@@ -1,0 +1,34 @@
+{
+  "N": 1,
+  "N_biology": 1,
+  "N_ec4_sub": 4,
+  "N_org_sub": 4,
+  "N_substrate": 3,
+  "N_test": 1,
+  "N_train": 1,
+  "biology_test": [
+    1
+  ],
+  "biology_train": [
+    1
+  ],
+  "ec4_sub": [
+    1
+  ],
+  "ix_test": [
+    1
+  ],
+  "ix_train": [
+    1
+  ],
+  "likelihood": 1,
+  "org_sub": [
+    3
+  ],
+  "substrate": [
+    3
+  ],
+  "y": [
+    1.0
+  ]
+}

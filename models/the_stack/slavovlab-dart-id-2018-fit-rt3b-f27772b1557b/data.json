@@ -1,0 +1,38 @@
+{
+  "experiment_id": [
+    2
+  ],
+  "max_retention_time": 0.6695097536985057,
+  "mean_log_rt": 4.0686920597139995,
+  "muij_map": [
+    3
+  ],
+  "muij_to_exp": [
+    2,
+    1,
+    5,
+    5,
+    1
+  ],
+  "muij_to_pep": [
+    5,
+    3,
+    3,
+    2,
+    5
+  ],
+  "num_experiments": 5,
+  "num_pep_exp_pairs": 5,
+  "num_peptides": 4,
+  "num_total_observations": 1,
+  "pep": [
+    0.6469984049610541
+  ],
+  "peptide_id": [
+    3
+  ],
+  "retention_times": [
+    1.0
+  ],
+  "sd_log_rt": 3.012713221886237
+}

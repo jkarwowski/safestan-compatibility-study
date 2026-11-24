@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from rok-cesnovar/docs: src/stan-users-guide/stan/golf1_vec.stan.",
+  "difficulty": "unknown",
+  "id": "rok-cesnovar-docs-golf1-vec-404f80227a9f",
+  "include_files": [],
+  "licenses": [
+    "BSD-3-Clause"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "src/stan-users-guide/stan/golf1_vec.stan",
+  "source_url": "https://github.com/rok-cesnovar/docs/blob/a0b1b82e5d6f49c690b5ab243f313851b56718f9/src/stan-users-guide/stan/golf1_vec.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 6,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Golf1 Vec",
+  "upstream_commit": "a0b1b82e5d6f49c690b5ab243f313851b56718f9",
+  "upstream_repository": "https://github.com/rok-cesnovar/docs"
+}

@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from SlavovLab/DART-ID_2018: Rscripts/legacy_scripts/old_fits/fit_RT3b.stan.",
+  "difficulty": "unknown",
+  "id": "slavovlab-dart-id-2018-fit-rt3b-f27772b1557b",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "Rscripts/legacy_scripts/old_fits/fit_RT3b.stan",
+  "source_url": "https://github.com/SlavovLab/DART-ID_2018/blob/84e73bc66e9e9a64d848d06463255db92561bfb7/Rscripts/legacy_scripts/old_fits/fit_RT3b.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 14,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Fit Rt3b",
+  "upstream_commit": "84e73bc66e9e9a64d848d06463255db92561bfb7",
+  "upstream_repository": "https://github.com/SlavovLab/DART-ID_2018"
+}

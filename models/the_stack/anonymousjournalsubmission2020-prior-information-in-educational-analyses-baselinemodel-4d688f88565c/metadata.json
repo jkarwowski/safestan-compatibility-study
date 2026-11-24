@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from anonymousjournalsubmission2020/Prior-Information-in-Educational-Analyses: stanmodels/baselineModel.stan.",
+  "difficulty": "unknown",
+  "id": "anonymousjournalsubmission2020-prior-information-in-educational-analyses-baselinemodel-4d688f88565c",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "stanmodels/baselineModel.stan",
+  "source_url": "https://github.com/anonymousjournalsubmission2020/Prior-Information-in-Educational-Analyses/blob/20abceccaf403b6d56d002e7b3a1c33369f69b96/stanmodels/baselineModel.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 17,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Baselinemodel",
+  "upstream_commit": "20abceccaf403b6d56d002e7b3a1c33369f69b96",
+  "upstream_repository": "https://github.com/anonymousjournalsubmission2020/Prior-Information-in-Educational-Analyses"
+}

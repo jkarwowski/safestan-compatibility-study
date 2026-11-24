@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from xuedong/rlss2019: Machine Learning Summer School 2019 (London, UK)/tutorials/mcmc/student_t.stan.",
+  "difficulty": "unknown",
+  "id": "xuedong-rlss2019-student-t-88eb8ff57ed7",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "Machine Learning Summer School 2019 (London, UK)/tutorials/mcmc/student_t.stan",
+  "source_url": "https://github.com/xuedong/rlss2019/blob/d7468c2fcf269d8afd6fb0f44993aa9797867944/Machine%20Learning%20Summer%20School%202019%20%28London%2C%20UK%29/tutorials/mcmc/student_t.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 1,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Student T",
+  "upstream_commit": "d7468c2fcf269d8afd6fb0f44993aa9797867944",
+  "upstream_repository": "https://github.com/xuedong/rlss2019"
+}

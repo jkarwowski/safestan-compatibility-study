@@ -1,0 +1,57 @@
+{
+  "debug": 6,
+  "decon_number": [
+    3,
+    1,
+    1,
+    1
+  ],
+  "ff_interval": 6.332949787879977,
+  "fit_decay_mean": 4.851377278606515,
+  "fit_decay_sd": 0.3679845288705964,
+  "logit_mask_intercept_filt_sd_mean": 3.0566101483605617,
+  "logit_mask_intercept_filt_sd_sd": 4.6281306182246515,
+  "mask_id": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "mask_intercept_filt_mean_mean": 0.022223319613593966,
+  "mask_intercept_filt_mean_sd": 0.5175350885502438,
+  "mask_treatment_id": [
+    2,
+    3
+  ],
+  "max_n_decons": 3,
+  "n_datapoints": 4,
+  "n_masks": 2,
+  "n_observations": 4,
+  "n_subjects": 2,
+  "n_treatments": 3,
+  "obs_fit": [
+    4.200492718198102,
+    2.606256347723983,
+    3.372324841273111,
+    2.863687158732866
+  ],
+  "sd_log_decay_mean": 1.674190927130319,
+  "sd_log_decay_sd": 0.03872938513487918,
+  "sd_logit_obs_mean": 3.1913886497461705,
+  "sd_logit_obs_sd": 3.246855008384723,
+  "subject_id": [
+    1,
+    2,
+    1,
+    2
+  ],
+  "treatment_effect_mean": 3.885972858502233,
+  "treatment_effect_sd": 2.527277228354871,
+  "treatment_id": [
+    1,
+    2,
+    2,
+    2
+  ],
+  "upper_ff_limit": 4.832914077991319
+}

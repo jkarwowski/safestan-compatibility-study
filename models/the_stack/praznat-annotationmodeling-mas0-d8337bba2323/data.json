@@ -1,0 +1,39 @@
+{
+  "DIM_SIZE": 4,
+  "NDATA": 4,
+  "NITEMS": 1,
+  "NUSERS": 4,
+  "diff_prior_loc_scale": 0.5781673137980204,
+  "diff_prior_scale": 1.920512545938951,
+  "distances": [
+    3.9981100365398055,
+    3.6794630792798104,
+    6.450933520331003,
+    3.112175087431893
+  ],
+  "eps_limit": 3,
+  "gold_user_err": 3.537132015290053,
+  "items": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "n_gold_users": 3,
+  "u1s": [
+    1,
+    1,
+    4,
+    4
+  ],
+  "u2s": [
+    4,
+    3,
+    1,
+    4
+  ],
+  "uerr_prior_loc_scale": 4.069093495621988,
+  "uerr_prior_scale": 1.6005008210150498,
+  "use_diff": 0,
+  "use_uerr": 1
+}

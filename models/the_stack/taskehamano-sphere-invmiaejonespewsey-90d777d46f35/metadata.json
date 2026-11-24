@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from TaskeHAMANO/SPHERE: stan/invmiaejonespewsey.stan.",
+  "difficulty": "unknown",
+  "id": "taskehamano-sphere-invmiaejonespewsey-90d777d46f35",
+  "include_files": [],
+  "licenses": [
+    "BSD-3-Clause"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "stan/invmiaejonespewsey.stan",
+  "source_url": "https://github.com/TaskeHAMANO/SPHERE/blob/22a6b7f18fa1a9cb2d50d9ce210b2d9a21f7541c/stan/invmiaejonespewsey.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 7,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Invmiaejonespewsey",
+  "upstream_commit": "22a6b7f18fa1a9cb2d50d9ce210b2d9a21f7541c",
+  "upstream_repository": "https://github.com/TaskeHAMANO/SPHERE"
+}

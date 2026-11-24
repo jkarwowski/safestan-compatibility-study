@@ -1,0 +1,27 @@
+{
+  "Nclusters1": 2,
+  "Nclusters2": 4,
+  "Nclusters3": 4,
+  "NgroupMap1": [
+    1
+  ],
+  "NgroupMap2": [
+    1
+  ],
+  "NgroupMap3": [
+    2
+  ],
+  "Ntotal": 1,
+  "X": [
+    3.997212303014455
+  ],
+  "gammaRate": 4.1395785267965675,
+  "gammaShape": 6.617296826275969,
+  "intercept_mean": 3.3230726948968976,
+  "intercept_sd": 3.8709871454674376,
+  "slope_mean": 4.282833705299746,
+  "slope_sd": 6.538685065139615,
+  "y": [
+    5
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from jwatowatson/Kenyan_phenotypic_accuracy: Oldfiles/weighted_logistic_regression.stan.",
+  "difficulty": "unknown",
+  "id": "jwatowatson-kenyan-phenotypic-accuracy-weighted-logistic-regression-5708828ac4f8",
+  "include_files": [],
+  "licenses": [
+    "CC-BY-4.0"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "Oldfiles/weighted_logistic_regression.stan",
+  "source_url": "https://github.com/jwatowatson/Kenyan_phenotypic_accuracy/blob/a6275274386bde2d5f7caa6ced57d777f0d7aa27/Oldfiles/weighted_logistic_regression.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 6,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Weighted Logistic Regression",
+  "upstream_commit": "a6275274386bde2d5f7caa6ced57d777f0d7aa27",
+  "upstream_repository": "https://github.com/jwatowatson/Kenyan_phenotypic_accuracy"
+}

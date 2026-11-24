@@ -1,0 +1,26 @@
+{
+  "beta_aug_scale_stan": 2.5475810068486107,
+  "beta_orig_scale_stan": 3.3471948892294465,
+  "global_dof_stan": 3.964156502728891,
+  "intercept_offset_stan": [
+    0.6536187303385401
+  ],
+  "local_dof_stan": 1.05866447155685,
+  "n_stan": 1,
+  "only_prior": 0,
+  "p_stan": 1,
+  "q_stan": 4,
+  "slab_precision_stan": 2.9987670225263843,
+  "x_standardized_stan": [
+    [
+      6.834436299176471,
+      4.124047088470631,
+      5.363635092409501,
+      3.885369546269465,
+      6.520837494527378
+    ]
+  ],
+  "y_stan": [
+    0
+  ]
+}

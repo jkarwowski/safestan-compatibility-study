@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from sk-rhyeu/study_rstan: source/chpt 5/model5-5b.stan.",
+  "difficulty": "unknown",
+  "id": "sk-rhyeu-study-rstan-model5-5b-340d797d5176",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "source/chpt 5/model5-5b.stan",
+  "source_url": "https://github.com/sk-rhyeu/study_rstan/blob/a5b998772358ba64996bc7ca775566f0706fa8f3/source/chpt%205/model5-5b.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 5,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Model5 5b",
+  "upstream_commit": "a5b998772358ba64996bc7ca775566f0706fa8f3",
+  "upstream_repository": "https://github.com/sk-rhyeu/study_rstan"
+}

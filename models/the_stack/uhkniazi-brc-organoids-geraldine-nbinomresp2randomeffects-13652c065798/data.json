@@ -1,0 +1,42 @@
+{
+  "Nclusters1": 1,
+  "Nclusters2": 1,
+  "Nclusters3": 2,
+  "Ncol": 3,
+  "NgroupMap1": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "NgroupMap2": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "NgroupMap3": [
+    2,
+    1,
+    2,
+    2
+  ],
+  "NsizeMap": [
+    3,
+    4,
+    1,
+    4
+  ],
+  "Nsizes": 4,
+  "Ntotal": 4,
+  "gammaRate": 5.914303856431589,
+  "gammaShape": 6.865673771922482,
+  "intercept": 6.614448739813694,
+  "intercept_sd": 6.36891899169395,
+  "y": [
+    4,
+    2,
+    4,
+    6
+  ]
+}

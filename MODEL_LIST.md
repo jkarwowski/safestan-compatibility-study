@@ -1,6 +1,8 @@
 # Model List
 
-This file lists all `1193` Stan model directories currently present under `models/`. It is generated from each model's `metadata.json`, the matching SafeStan `record.json` and `SAFETY_NOTE.md`, the latest `cmdsafestan` smoke reports, and the small Stan-vs-SafeStan comparison artifacts already in the repository.
+The repository contains `3489` Stan model directories: the `1193` compatibility-study entries listed below and `2296` newly imported [The Stack candidates](imports/the_stack/MODEL_LIST.md). The new candidates have synthetic data and pass stanc, but have no SafeStan compatibility or runtime-comparison results yet. The compatibility tables below retain their original 1193-entry scope.
+
+The original inventory is generated from each model's `metadata.json`, the matching SafeStan `record.json` and `SAFETY_NOTE.md`, the latest `cmdsafestan` smoke reports, and the small Stan-vs-SafeStan comparison artifacts already in the repository.
 
 The `stan_case_studies` and `stan_tutorials` rows are retained here for inventory completeness, but the `Duplicate of` column marks the 30 rows that are source-identical copies of `example_models` rows. Those duplicate rows are excluded from compatibility totals in `RESULTS.md`.
 

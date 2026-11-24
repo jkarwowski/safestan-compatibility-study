@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from marcomarconi/AFTS_with_Stan: models/Chapter_9/SFM.stan.",
+  "difficulty": "unknown",
+  "id": "marcomarconi-afts-with-stan-sfm-fedba7e88c2b",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "models/Chapter_9/SFM.stan",
+  "source_url": "https://github.com/marcomarconi/AFTS_with_Stan/blob/66ac4cb97be3bd27deac0e4f6b218d07fc9b9ead/models/Chapter_9/SFM.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 4,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Sfm",
+  "upstream_commit": "66ac4cb97be3bd27deac0e4f6b218d07fc9b9ead",
+  "upstream_repository": "https://github.com/marcomarconi/AFTS_with_Stan"
+}

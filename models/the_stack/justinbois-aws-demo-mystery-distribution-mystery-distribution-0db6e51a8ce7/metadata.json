@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from justinbois/aws_demo_mystery_distribution: mystery_distribution.stan.",
+  "difficulty": "unknown",
+  "id": "justinbois-aws-demo-mystery-distribution-mystery-distribution-0db6e51a8ce7",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "mystery_distribution.stan",
+  "source_url": "https://github.com/justinbois/aws_demo_mystery_distribution/blob/13e7d62ab4df4d209321c0da87c98a0a41eb3d0a/mystery_distribution.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 1,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Mystery Distribution",
+  "upstream_commit": "13e7d62ab4df4d209321c0da87c98a0a41eb3d0a",
+  "upstream_repository": "https://github.com/justinbois/aws_demo_mystery_distribution"
+}

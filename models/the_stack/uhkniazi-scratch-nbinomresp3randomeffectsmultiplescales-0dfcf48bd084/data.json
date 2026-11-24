@@ -1,0 +1,26 @@
+{
+  "NBatchMap1": [
+    2,
+    2,
+    1
+  ],
+  "NScaleBatches1": 2,
+  "Nclusters1": 3,
+  "Nclusters2": 5,
+  "Nclusters3": 5,
+  "NgroupMap1": [
+    3
+  ],
+  "NgroupMap2": [
+    1
+  ],
+  "NgroupMap3": [
+    2
+  ],
+  "Ntotal": 1,
+  "gammaRate": 6.253172971416389,
+  "gammaShape": 2.6718894251779943,
+  "y": [
+    2
+  ]
+}

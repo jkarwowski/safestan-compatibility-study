@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from SORTEE-Github-Hackathon/research_documentation: example_project/stan/beta_mort.stan.",
+  "difficulty": "unknown",
+  "id": "sortee-github-hackathon-research-documentation-beta-mort-d8006e86b93e",
+  "include_files": [],
+  "licenses": [
+    "Fair"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "example_project/stan/beta_mort.stan",
+  "source_url": "https://github.com/SORTEE-Github-Hackathon/research_documentation/blob/3564e34a2102254cf3f23e0934337b5083fb0b62/example_project/stan/beta_mort.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 12,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Beta Mort",
+  "upstream_commit": "3564e34a2102254cf3f23e0934337b5083fb0b62",
+  "upstream_repository": "https://github.com/SORTEE-Github-Hackathon/research_documentation"
+}

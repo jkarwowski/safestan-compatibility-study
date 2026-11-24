@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from IamGianluca/rethinking: models/m5_1.stan.",
+  "difficulty": "unknown",
+  "id": "iamgianluca-rethinking-m5-1-faab431f9992",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "models/m5_1.stan",
+  "source_url": "https://github.com/IamGianluca/rethinking/blob/2384c685ea0916c4c1f73651bd68cfb70dbf0615/models/m5_1.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 3,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "M5 1",
+  "upstream_commit": "2384c685ea0916c4c1f73651bd68cfb70dbf0615",
+  "upstream_repository": "https://github.com/IamGianluca/rethinking"
+}

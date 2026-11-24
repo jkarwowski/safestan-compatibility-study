@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from jpwrobinson/tropical-ssf-div: scripts/varyIntSlope_studT_rand.stan.",
+  "difficulty": "unknown",
+  "id": "jpwrobinson-tropical-ssf-div-varyintslope-studt-rand-4be30518c762",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "scripts/varyIntSlope_studT_rand.stan",
+  "source_url": "https://github.com/jpwrobinson/tropical-ssf-div/blob/0da3e952e02091f0ff3f45bf3a788da96a7895f3/scripts/varyIntSlope_studT_rand.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 7,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Varyintslope Studt Rand",
+  "upstream_commit": "0da3e952e02091f0ff3f45bf3a788da96a7895f3",
+  "upstream_repository": "https://github.com/jpwrobinson/tropical-ssf-div"
+}

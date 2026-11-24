@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from nikosbosse/mirip: inst/stan/mirip.stan.",
+  "difficulty": "unknown",
+  "id": "nikosbosse-mirip-mirip-5f8d4e9643e2",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "inst/stan/mirip.stan",
+  "source_url": "https://github.com/nikosbosse/mirip/blob/b097826b8f93d44c4ebf057c034c8b227b25e65c/inst/stan/mirip.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 12,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Mirip",
+  "upstream_commit": "b097826b8f93d44c4ebf057c034c8b227b25e65c",
+  "upstream_repository": "https://github.com/nikosbosse/mirip"
+}

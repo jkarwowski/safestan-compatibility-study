@@ -1,0 +1,41 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from mike-lawrence/StanRT: bivariate error rt/er_rt_robust.stan.",
+  "difficulty": "unknown",
+  "id": "mike-lawrence-stanrt-er-rt-robust-bba0e0ba7b14",
+  "include_files": [],
+  "licenses": [
+    "Unlicense"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "bivariate error rt/er_rt_robust.stan",
+  "source_url": "https://github.com/mike-lawrence/StanRT/blob/1e20ccb9a166e708628db3b691fb1ecbca4fb6b8/bivariate%20error%20rt/er_rt_robust.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 18,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "data_block_parser_fallback",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "synthetic_data_stanc_error": "Error in './model.stan', line 9, column 7 to column 22:",
+  "title": "Er Rt Robust",
+  "upstream_commit": "1e20ccb9a166e708628db3b691fb1ecbca4fb6b8",
+  "upstream_repository": "https://github.com/mike-lawrence/StanRT"
+}

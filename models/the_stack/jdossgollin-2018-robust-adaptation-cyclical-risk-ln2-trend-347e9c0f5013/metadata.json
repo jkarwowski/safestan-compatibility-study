@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from jdossgollin/2018-robust-adaptation-cyclical-risk: src/codebase/data/ln2-trend.stan.",
+  "difficulty": "unknown",
+  "id": "jdossgollin-2018-robust-adaptation-cyclical-risk-ln2-trend-347e9c0f5013",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "src/codebase/data/ln2-trend.stan",
+  "source_url": "https://github.com/jdossgollin/2018-robust-adaptation-cyclical-risk/blob/a618db4f8726de58a6e3f157c05e0351ce3f6d3a/src/codebase/data/ln2-trend.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 9,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Ln2 Trend",
+  "upstream_commit": "a618db4f8726de58a6e3f157c05e0351ce3f6d3a",
+  "upstream_repository": "https://github.com/jdossgollin/2018-robust-adaptation-cyclical-risk"
+}

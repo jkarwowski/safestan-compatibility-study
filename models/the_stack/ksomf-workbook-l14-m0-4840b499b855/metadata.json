@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from ksomf/workbook: statistical_rethinking2022/models/l14_m0.stan.",
+  "difficulty": "unknown",
+  "id": "ksomf-workbook-l14-m0-4840b499b855",
+  "include_files": [],
+  "licenses": [
+    "CC0-1.0"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "statistical_rethinking2022/models/l14_m0.stan",
+  "source_url": "https://github.com/ksomf/workbook/blob/12fcac2c08e235ffa9c1706d6fee4f65d97d63b9/statistical_rethinking2022/models/l14_m0.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 8,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "L14 M0",
+  "upstream_commit": "12fcac2c08e235ffa9c1706d6fee4f65d97d63b9",
+  "upstream_repository": "https://github.com/ksomf/workbook"
+}

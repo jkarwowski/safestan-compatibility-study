@@ -1,0 +1,68 @@
+{
+  "T": 4,
+  "beta_left_t": [
+    1.9956733708051817,
+    4.779665184109868,
+    2.915195224877471,
+    2.4917703765042045
+  ],
+  "beta_right_t": [
+    1.90093232299228,
+    4.044839233856483,
+    4.974985042946477,
+    4.214308212785315
+  ],
+  "deaths": [
+    2
+  ],
+  "deaths_length": 1,
+  "deaths_starts": [
+    2
+  ],
+  "deaths_stops": [
+    1
+  ],
+  "initial_time": 6.821876981160293,
+  "integer_data": [
+    4,
+    5,
+    5,
+    5,
+    2
+  ],
+  "integer_data_length": 5,
+  "n_beta_pieces": 4,
+  "n_disease_states": 8,
+  "n_rho_online_assessments_111_pieces": 3,
+  "online_assessments_111": [
+    3,
+    3,
+    4,
+    1,
+    1
+  ],
+  "online_assessments_111_length": 5,
+  "online_assessments_111_start": 1,
+  "population": 2.9244926277479486,
+  "real_data": [
+    5.477708794088191,
+    4.434980182325966
+  ],
+  "real_data_length": 2,
+  "rho_online_assessments_111_left_t": [
+    4,
+    1,
+    4
+  ],
+  "rho_online_assessments_111_right_t": [
+    4,
+    3,
+    3
+  ],
+  "times": [
+    1.0,
+    2.0,
+    3.0,
+    4.0
+  ]
+}

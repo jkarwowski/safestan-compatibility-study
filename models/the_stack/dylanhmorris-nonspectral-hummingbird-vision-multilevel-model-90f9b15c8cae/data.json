@@ -1,0 +1,62 @@
+{
+  "correct_side": [
+    0,
+    1,
+    0,
+    1
+  ],
+  "cumulative_hits_at_trial_start": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "experiment_id": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "hyper_alpha_equilibrium_E": 1.0,
+  "hyper_beta_equilibrium_E": 1.0,
+  "hyper_certainty_loc_left_bias": 2.0,
+  "hyper_certainty_treatment_mode": 0.5,
+  "hyper_mean_experience_half_saturation_time": 0.5,
+  "hyper_mean_sd_error": 1.0,
+  "hyper_mean_sd_left_bias": 0.5,
+  "hyper_mean_treatment_certainty": 0.5,
+  "hyper_mode_loc_left_bias": 0.5,
+  "hyper_mode_treatment_mode": 0.5,
+  "hyper_sd_experience_half_saturation_time": 0.5,
+  "hyper_sd_sd_error": 1.0,
+  "hyper_sd_sd_left_bias": 0.5,
+  "location": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "min_learning_effect": 0.0,
+  "n_experiments": 4,
+  "n_failures": [
+    4,
+    4,
+    4,
+    4
+  ],
+  "n_locations": 4,
+  "n_successes": [
+    4,
+    4,
+    4,
+    4
+  ],
+  "n_treatments": 4,
+  "n_trials_total": 4,
+  "treatment_id": [
+    1,
+    2,
+    3,
+    4
+  ]
+}

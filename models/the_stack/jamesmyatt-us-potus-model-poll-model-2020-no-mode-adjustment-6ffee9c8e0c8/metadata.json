@@ -1,0 +1,40 @@
+{
+  "data_file": "data.json",
+  "data_match": null,
+  "data_placeholder": false,
+  "data_source": "synthetic/local",
+  "data_status": "synthetic_generated",
+  "default_run": {
+    "chains": 4,
+    "iter_sampling": 250,
+    "iter_warmup": 250,
+    "seed": 12345
+  },
+  "description": "Imported Stan program from jamesmyatt/us-potus-model: scripts/model/poll_model_2020_no_mode_adjustment.stan.",
+  "difficulty": "unknown",
+  "id": "jamesmyatt-us-potus-model-poll-model-2020-no-mode-adjustment-6ffee9c8e0c8",
+  "include_files": [],
+  "licenses": [
+    "MIT"
+  ],
+  "method": "sample",
+  "previous_data_metadata": {
+    "data_placeholder": true,
+    "data_source": "none",
+    "data_status": "no_matched_upstream_data"
+  },
+  "source_group": "the_stack",
+  "source_group_label": "The Stack Stan candidates",
+  "source_path": "scripts/model/poll_model_2020_no_mode_adjustment.stan",
+  "source_url": "https://github.com/jamesmyatt/us-potus-model/blob/908c4cc95e36d0fd16e4dd5c27a52d5b9110f685/scripts/model/poll_model_2020_no_mode_adjustment.stan",
+  "stan_file": "model.stan",
+  "synthetic_data_declarations": 27,
+  "synthetic_data_generator": "synthetic_data_for_missing_v2",
+  "synthetic_data_had_data_block": true,
+  "synthetic_data_method": "stanc_debug_generate_data",
+  "synthetic_data_note": "Generated small synthetic data from stanc or the Stan data block because upstream data was missing or omitted.",
+  "synthetic_data_stanc": "stanc",
+  "title": "Poll Model 2020 No Mode Adjustment",
+  "upstream_commit": "908c4cc95e36d0fd16e4dd5c27a52d5b9110f685",
+  "upstream_repository": "https://github.com/jamesmyatt/us-potus-model"
+}
