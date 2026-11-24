@@ -1,7 +1,7 @@
 data {
   int<lower=0> N;      // Number of observations
   int<lower=0> I;      // Number of components
-  array[N] vector[I] y;      // Observations
+  vector[N * I] y;      // Observations, flattened by observation then component
   real<lower=0> sigma; // Measurement variability
 
   // Number of individuals in hierarchy
@@ -18,7 +18,7 @@ parameters {
 }
 
 model {
-  array[N] vector[I] theta_obs;
+  vector[N * I] theta_obs;
 
   mu ~ normal(0, 5);        // Prior model
   tau ~ normal(0, 5);       // Prior model
@@ -28,14 +28,17 @@ model {
   theta ~ multi_normal_cholesky(mu, diag_pre_multiply(tau, L));
 
   // Observational model
-  for (n in 1:N)
-    theta_obs[n] = theta[indiv_idx[n]];
+  for (n in 1:N) {
+    for (i in 1:I) {
+      theta_obs[(n - 1) * I + i] = theta[indiv_idx[n]][i];
+    }
+  }
   y ~ normal(theta_obs, sigma);
 }
 
 // Simulate a full observation from the current value of the parameters
 generated quantities {
-  array[N, I] real y_post_pred;
+  array[N] vector[I] y_post_pred;
   for (n in 1:N)
-    y_post_pred[n] = normal_rng(theta[indiv_idx[n]], sigma);
+    y_post_pred[n] = to_vector(normal_rng(theta[indiv_idx[n]], sigma));
 }

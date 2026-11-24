@@ -1,9 +1,14 @@
 data {
-  int<lower=0> N; // 1000, number of students
-  int<lower=1> R; // 32, number of patterns of results: 2^T
-  int<lower=0> T; // 5, number of questions
-  array[R, T] int<lower=0, upper=1> response;
-  array[N] int<lower=1, upper=R> pattern_id;
+  int<lower=0> N; // number of students
+  int<lower=0> T; // number of questions
+  array[N] int<lower=0, upper=1> r_1;
+  array[N] int<lower=0, upper=1> r_2;
+  array[N] int<lower=0, upper=1> r_3;
+  array[N] int<lower=0, upper=1> r_4;
+  array[N] int<lower=0, upper=1> r_5;
+}
+transformed data {
+  vector[N] ones = rep_vector(1.0, N);
 }
 parameters {
   array[T] real alpha;
@@ -11,23 +16,15 @@ parameters {
   real<lower=0> beta;
 }
 model {
-  array[N] vector[R] eta;
-
   alpha ~ normal(0, 100.);
   theta ~ normal(0, 1);
   beta ~ normal(0.0, 100.);
 
-  for (j in 1 : N) {
-    for (i in 1 : R) {
-      eta[j][i] = 0;
-      for (k in 1 : T) {
-        real q;
-        q = beta * theta[j] - alpha[k];
-        eta[j][i] += response[i, k] * q - log1p_exp(q);
-      }
-    }
-  }
-  pattern_id ~ categorical_logit(eta);
+  r_1 ~ bernoulli_logit(beta * theta - alpha[1] * ones);
+  r_2 ~ bernoulli_logit(beta * theta - alpha[2] * ones);
+  r_3 ~ bernoulli_logit(beta * theta - alpha[3] * ones);
+  r_4 ~ bernoulli_logit(beta * theta - alpha[4] * ones);
+  r_5 ~ bernoulli_logit(beta * theta - alpha[5] * ones);
 }
 generated quantities {
   real mean_alpha;

@@ -7,7 +7,7 @@
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [
-    "word_safestan"
+    "word_counts_1"
   ],
   "reasoning_effort": "high",
   "response_id": "resp_05dcfee6f450f1090069f16d926f1481949e73e0e9b1f92c90",
@@ -26,5 +26,8 @@
     "total_tokens": 16965
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual rewrite aggregates token expansion back to protected document word counts."
 }

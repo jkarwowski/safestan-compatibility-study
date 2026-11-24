@@ -1,7 +1,7 @@
 data {
   int<lower=0> N;      // Number of observations
   int<lower=0> I;      // Number of components
-  array[N] vector[I] y;      // Observations
+  vector[N * I] y;      // Observations, flattened by observation then component
   real<lower=0> sigma; // Measurement variability
 
   // Number of individuals in hierarchy
@@ -14,18 +14,21 @@ parameters {
   vector[I] mu;              // Population locations
   vector<lower=0>[I] tau;    // Population scales
   cholesky_factor_corr[I] L; // Population correlations
-  array[K] vector[I] eta;  // Non-centered individual parameters
+  vector[K * I] eta;  // Non-centered individual parameters, flattened by individual then component
 }
 
 transformed parameters {
   array[K] vector[I] theta; // Multivariate centered parameters for each individual
-  array[N] vector[I] theta_obs; // Multivariate centered parameters for each observation
+  vector[N * I] theta_obs; // Multivariate centered parameters for each observation
 
   for (k in 1:K)
-    theta[k] = mu + diag_pre_multiply(tau, L) * eta[k];
+    theta[k] = mu + diag_pre_multiply(tau, L) * segment(eta, (k - 1) * I + 1, I);
 
-  for (n in 1:N)
-    theta_obs[n] = theta[indiv_idx[n]];
+  for (n in 1:N) {
+    for (i in 1:I) {
+      theta_obs[(n - 1) * I + i] = theta[indiv_idx[n]][i];
+    }
+  }
 }
 
 model {
@@ -42,8 +45,8 @@ model {
 
 // Simulate a full observation from the current value of the parameters
 generated quantities {
-  array[N, I] real y_post_pred;
+  array[N] vector[I] y_post_pred;
   for (n in 1:N) {
-    y_post_pred[n] = normal_rng(theta_obs[n], sigma);
+    y_post_pred[n] = to_vector(normal_rng(theta[indiv_idx[n]], sigma));
   }
 }

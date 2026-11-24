@@ -10,6 +10,8 @@ Model/API: `gpt-5.5` with reasoning effort `high`, Flex service tier, prompt cac
 
 API usage stored in the local artifacts: `6116846` input tokens, `2317312` cached input tokens, `3316659` output tokens, including `2731134` reasoning output tokens.
 
+After the canceled API rerun, `61` compile-failure translations were manually repaired; later comparison repair work added `2` more manual data/translation repairs. `MODEL_LIST.md` records translation provenance for every row.
+
 Original Stan smoke test: `runs_metadata/full-dataset-smoke-clean-20260429T0015Z.json` ran all `1193` original models with `1` chain, `20` warmup draws, and `20` sampling draws; result `1193` ok, `0` failed.
 
 ## Compatibility Totals
@@ -20,7 +22,7 @@ Excluded duplicates: `30` source-identical rows: `5` as-is, `6` minor, and `19` 
 
 Deduplicated compatibility units: `1163` models. Compatibility totals: `315` as-is, `406` minor, `442` major.
 
-SafeStan output files were generated for all `721` deduplicated as-is/minor artifact records: `315` as-is and `406` minor. Of those, `544` have at least one protected variable and `177` have no protected data interface.
+SafeStan output files exist for all `721` deduplicated as-is/minor artifact records: `315` as-is and `406` minor. Of those, `544` have at least one protected variable and `177` have no protected data interface.
 
 | Source family | Models | as-is | minor | major | Safe files | No protected data |
 |---|---:|---:|---:|---:|---:|---:|
@@ -91,32 +93,59 @@ Pure data simulator with no data block, for example `betanalpha_knitr_case_studi
 
 ## SafeStan Smoke Check
 
-The smoke check ran over the raw generated safe-model directories. That raw set has `732` generated SafeStan outputs; the deduplicated set has `721` because the 11 safe duplicate rows all passed and are excluded from compatibility totals.
+The smoke check ran over the raw safe-model directories. That raw set has `732` SafeStan outputs; the deduplicated set has `721` because the 11 safe duplicate rows all passed and are excluded from compatibility totals.
 
-First pass: `runs_metadata/cmdsafestan-safe-smoke-20260429T165345Z.json` tested all `732` raw generated safe models through the repository runner. Result: `467` ok, `265` failed. Of the failures, `177` were no-protected-data models that cannot be invoked with `stanc --sstanc` because SafeStan requires `--sstan-protect`.
+Pre-manual final smoke: `runs_metadata/cmdsafestan-safe-smoke-final-20260430.json` tested all `732` raw safe models through the repository runner. Result: `640` ok, `92` failed.
 
-Targeted recheck: `runs_metadata/cmdsafestan-safe-smoke-recheck-20260429T170612Z.json` reran the `265` first-pass failures. No-protected-data models were compiled via `cmdsafestan --mode plain`; protected models were rerun with the current SafeStan wrapper and `init=0`. Recheck result: `172` ok, `93` failed.
+Manual translation pass: `runs_metadata/manual-target-61-smoke-clean-20260430.json` reran the `61` compile-failure targets after manual edits. Result: `54` ok, `7` failed. The current combined report is `runs_metadata/cmdsafestan-safe-smoke-manual-updated-20260430.json`.
 
-Combined raw result after recheck: `639` of `732` generated safe models run successfully; `93` still fail.
+Combined raw result after manual repairs: `694` of `732` safe models run successfully; `38` still fail.
 
-Combined deduplicated result after removing the 11 passing duplicate safe rows: `628` of `721` generated safe models run successfully; `93` still fail.
+Combined deduplicated result after removing the 11 passing duplicate safe rows: `683` of `721` safe models run successfully; `38` still fail.
 
 | Final failure reason | Count | Notes |
 |---|---:|---|
-| Compile-time Stan/SafeStan error | 61 | Generated `model_safe.stan` is not accepted by `stanc`, usually because a translation used an unsupported array/matrix sampling form or otherwise produced invalid Stan. |
-| Initialization failure | 21 | Compilation succeeds, but short sampling fails to find a valid initial state even with `init=0`. |
-| Runtime exception after compile | 11 | Compilation succeeds, but transformed data, log-probability evaluation, or sampling fails at runtime. |
-| **Total** | **93** | 88 protected SafeStan runs and 5 no-protected-data plain-mode runs. |
+| Compile-time Stan/SafeStan error | 7 | The remaining compile failures are row-wise protected categorical/multinomial observation patterns that still hit SafeStan protected-data checks. |
+| Initialization failure | 15 | Compilation succeeds, but short sampling fails to find a valid initial state even with the wrapper settings used here. |
+| Runtime exception after compile | 16 | Compilation succeeds, but transformed data, log-probability evaluation, or sampling fails at runtime. |
+| **Total** | **38** | 35 protected SafeStan runs and 3 no-protected-data plain-mode runs. |
 
 | Source family | Compile | Init | Runtime | Final failures |
 |---|---:|---:|---:|---:|
 | `bda_r_demos` | 0 | 1 | 0 | 1 |
-| `betanalpha_knitr_case_studies` | 3 | 10 | 2 | 15 |
-| `example_models` | 30 | 7 | 6 | 43 |
-| `forestdb` | 10 | 0 | 0 | 10 |
-| `posteriordb` | 8 | 0 | 3 | 11 |
-| `stancon_talks` | 10 | 3 | 0 | 13 |
-| **Total** | **61** | **21** | **11** | **93** |
+| `betanalpha_knitr_case_studies` | 0 | 9 | 2 | 11 |
+| `example_models` | 7 | 5 | 8 | 20 |
+| `forestdb` | 0 | 0 | 0 | 0 |
+| `posteriordb` | 0 | 0 | 3 | 3 |
+| `stancon_talks` | 0 | 0 | 3 | 3 |
+| **Total** | **7** | **15** | **16** | **38** |
+
+## Stan vs SafeStan Result Comparison
+
+The wrapper comparison now covers all `694` raw SafeStan rows that passed the latest smoke check. It uses `1` chain, `200` warmup draws, `200` sampling draws, original Stan compiled through `cmdsafestan --mode plain`, SafeStan compiled with protection, and `3` log-probability spot checks per model.
+
+The final combined report is `comparison_runs/full-wrapper-200x1-manual-repaired-20260430/COMPARISON_RESULTS.md`. It merges the previous `640`-model comparison, `comparison_runs/manual-wrapper-200x1-20260430/`, the later data repairs for the former `run-failed` rows, and the manual constrained-parameter maps needed for log-probability checks when SafeStan must flatten matrix/array parameters.
+
+The comparison treats `log_prob` values that differ only by a constant offset as the same density. These offsets arise when the original model uses explicit `target += *_lpdf(...)` and the SafeStan rewrite uses a sampling statement; under `propto=1`, Stan drops constants for sampling statements but not for explicit target increments. Gradients are still recorded for diagnostics, but the density verdict is based on `lp__` because many legal SafeStan translations use a different flat/raw parameterization.
+
+| Result status | Raw models | Deduplicated models | Interpretation |
+|---|---:|---:|---|
+| `same` | 581 | 570 | Posterior summaries pass the tolerance checks. |
+| `same-density-mcmc-different` | 109 | 109 | The log-probability spot checks match exactly or up to a constant; short MCMC summaries differ beyond tolerance. |
+| `different` | 4 | 4 | Generated-only/no-parameter tuning programs; no meaningful `log_prob` comparison is available. |
+| `run-failed` | 0 | 0 | The full comparison did not complete for at least one side. |
+| **Total compared** | **694** | **683** | The `11` excluded duplicate rows all had status `same`. |
+
+Equivalence-oriented count: `690 / 694` raw compared models, or `679 / 683` deduplicated compared models, are either `same` or `same-density-mcmc-different`.
+
+The four remaining `different` rows are:
+
+- `betanalpha_knitr_case_studies/gaussian-processes-stan-programs-prior-tune`
+- `betanalpha_knitr_case_studies/some-containment-prior-models-stan-programs-alpha-tune`
+- `betanalpha_knitr_case_studies/some-containment-prior-models-stan-programs-gamma-tune`
+- `betanalpha_knitr_case_studies/some-containment-prior-models-stan-programs-inv-gamma-tune`
+
+These programs are generated-quantities/prior-tuning utilities with no parameters to estimate. The original and SafeStan files are identical in this class; the residual status reflects the comparison harness/model class rather than a SafeStan translation difference.
 
 ## Major Feature Analysis
 

@@ -2,8 +2,10 @@
 
 Compatibility: minor.
 
-Protected data: `y`.
+Manual translation date: 2026-04-30.
+
+Protected data: `y_counts_1` through `y_counts_5`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: the original likelihood used manual `target += log_sum_exp(...)` scoring for the observed word/category variable `y`. This was algebraically rewritten as a built-in categorical likelihood with probabilities `y_prob[n][v] = sum_k local_weight[doc[n]][k] * atom[k][v]`. The looped Dirichlet priors for `local_weight` and `atom` were vectorized so parameter-prior sampling statements are not inside loops. `doc`, `D`, `K`, `V`, and `N` remain context inputs. No data fields were added; `data_safe.json` equals the supplied data.
+Changes: aggregated token observations by document into protected multinomial counts. This avoids unsupported array/matrix-valued distribution calls while preserving the parameter-dependent log density up to data-only multinomial/binomial constants where observations were aggregated.

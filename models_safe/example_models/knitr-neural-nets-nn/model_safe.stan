@@ -26,13 +26,27 @@ data {
   array[N] int<lower=1, upper=K> yt; // test category
 }
 parameters {
+  vector[M * J] alpha_raw;
+  vector[J * K] beta_raw;
+}
+transformed parameters {
   matrix[M, J] alpha;
   matrix[J, K] beta;
+  for (m in 1 : M) {
+    for (j in 1 : J) {
+      alpha[m, j] = alpha_raw[(m - 1) * J + j];
+    }
+  }
+  for (j in 1 : J) {
+    for (k in 1 : K) {
+      beta[j, k] = beta_raw[(j - 1) * K + k];
+    }
+  }
 }
 model {
   // priors
-  alpha ~ normal(0, 2);
-  beta ~ normal(0, 2);
+  alpha_raw ~ normal(0, 2);
+  beta_raw ~ normal(0, 2);
   
   // likelihood
   y ~ categorical_logit_glm(tanh(x * alpha), rep_vector(0, K), beta);
@@ -49,7 +63,7 @@ generated quantities {
   for (n in 1 : Nt) {
     vector[K] theta;
     theta = softmax(col(v, n));
-    log_p_yt = log_p_yt + categorical_lpmf(yt_sim | theta);
+    log_p_yt = log_p_yt + categorical_lpmf(yt[n] | theta);
     yt_sim[n] = categorical_rng(theta);
     if (yt_sim[n] == yt[n]) {
       accuracy = accuracy + 1;

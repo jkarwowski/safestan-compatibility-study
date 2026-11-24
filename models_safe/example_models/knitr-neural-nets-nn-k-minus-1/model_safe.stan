@@ -44,23 +44,39 @@ transformed data {
   ones = rep_vector(1, N);
 }
 parameters {
+  vector[M * J] alpha_raw;
+  vector[J * (K - 1)] beta_raw;
+}
+transformed parameters {
   matrix[M, J] alpha;
   matrix[J, K - 1] beta;
+  for (m in 1 : M) {
+    for (j in 1 : J) {
+      alpha[m, j] = alpha_raw[(m - 1) * J + j];
+    }
+  }
+  for (j in 1 : J) {
+    for (k in 1 : (K - 1)) {
+      beta[j, k] = beta_raw[(j - 1) * (K - 1) + k];
+    }
+  }
 }
 model {
-  array[N] vector[K] v;
+  matrix[J, K] beta_full;
+  matrix[N, J] hidden;
   matrix[N, K - 1] eta;
 
-  alpha ~ normal(0, 2);
-  beta ~ normal(0, 2);
+  alpha_raw ~ normal(0, 2);
+  beta_raw ~ normal(0, 2);
 
   eta = rbm(x, alpha, beta);
-  for (n in 1 : N) {
-    v[n][1] = ones[n];
+  hidden = tanh_eltwise(x * alpha);
+  for (j in 1 : J) {
+    beta_full[j, 1] = 0;
     for (k in 2 : K) {
-      v[n][k] = eta[n, k - 1];
+      beta_full[j, k] = beta[j, k - 1];
     }
   }
 
-  y ~ categorical_logit(v);
+  y ~ categorical_logit_glm(hidden, rep_vector(0, K), beta_full);
 }

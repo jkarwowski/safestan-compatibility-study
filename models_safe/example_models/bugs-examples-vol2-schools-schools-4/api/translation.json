@@ -5,5 +5,8 @@
   "protected_variables": [
     "Y"
   ],
-  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `Y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: moved all parameter prior sampling statements before any model-block use of the corresponding parameters, including use through the transformed parameter `alpha`. Replaced `to_vector(z) ~ normal(0, 1)` with the equivalent top-level matrix sampling statement `z ~ normal(0, 1)` so the parameter prior targets the top-level parameter directly. No data changes were made; all other top-level data variables are context inputs/predictors.\n"
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `Y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: moved all parameter prior sampling statements before any model-block use of the corresponding parameters, including use through the transformed parameter `alpha`. Replaced `to_vector(z) ~ normal(0, 1)` with the equivalent top-level matrix sampling statement `z ~ normal(0, 1)` so the parameter prior targets the top-level parameter directly. No data changes were made; all other top-level data variables are context inputs/predictors.\n",
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan fix: replaced unsupported matrix/array vectorization with flat top-level parameters and, where needed, deterministic flat protected data; requested smoke run passed."
 }

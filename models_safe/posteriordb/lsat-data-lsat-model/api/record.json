@@ -3,18 +3,25 @@
   "compatibility": "minor",
   "completed_at": "2026-04-29T16:40:13+00:00",
   "data_filename": "data_original.json",
+  "manual_notes": "Manual SafeStan repair: regenerated protected response arrays from data_original.json cumulative response counts.",
+  "manual_translated_at": "2026-04-30",
   "model": "gpt-5.5",
   "path": "models/posteriordb/lsat-data-lsat-model",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [
-    "pattern_id"
+    "r_1",
+    "r_2",
+    "r_3",
+    "r_4",
+    "r_5"
   ],
   "reasoning_effort": "high",
   "response_id": "resp_02c23142885e18720069f233bb62f88197a4afb206182a354a",
   "safe_dir": "models_safe/posteriordb/lsat-data-lsat-model",
   "service_tier": "flex",
   "started_at": "2026-04-29T16:34:18+00:00",
+  "translation_method": "manual",
   "usage": {
     "input_tokens": 4196,
     "input_tokens_details": {

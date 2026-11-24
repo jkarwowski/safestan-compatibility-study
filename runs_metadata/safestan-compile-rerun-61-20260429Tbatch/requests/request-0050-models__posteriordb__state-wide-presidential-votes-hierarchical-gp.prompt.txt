@@ -1,0 +1,437 @@
+You are translating a single Stan model into the SafeStan-compatible Stan subset.
+
+## SafeStan
+
+SafeStan is a static (compile-time) restriction layer over Stan. Its purpose is to prevent likelihood hacking on a designated protected data interface, as described in "Likelihood hacking in probabilistic program synthesis".
+
+SafeStan is designed so that generated models report a normalized marginal log-likelihood for the interface being modelled. To do this, it assigns roles to top-level inputs and parameters. Variables named by --sstan-protect are modelled interface variables: each must be scored by a built-in distribution, exactly once, before any other use. They cannot be inspected in an if, used to compute helper values, or referenced in transformed blocks before that scoring statement. After a modelled interface variable has been scored, it is available as an ordinary model-block quantity and may be used in later computations or later likelihood terms. Other top-level data variables are context inputs: they may be used freely as predictors, constants, indices, or configuration, but they may not appear on the left side of a sampling statement. Parameters are latent variables: each parameter must have exactly one built-in prior sampling statement before it is used in the model block. SafeStan also rejects constructs that can directly inflate, edit, or gate the log-likelihood, such as target +=, target(), jacobian +=, reject(), fatal_error(), and _lp functions.
+
+For this corpus run, `data.json` may be small synthetic data generated only to satisfy the Stan data schema. Use it to produce a valid `data_safe_json` and to preserve deterministic reshapes/copies, but infer the protected interface and compatibility label from `model.stan`, not from the particular synthetic values.
+
+### What SafeStan Enforces
+
+No arbitrary scoring:
+
+Forbids target += ...
+Forbids target()
+Forbids jacobian += ...
+Forbids reject() and fatal_error()
+Forbids _lp function definitions and calls
+Protected data single-use:
+
+Every protected variable must be a top-level data variable.
+Every top-level data variable that the model conditions on with a sampling statement is part of the protected interface, unless a same-density rewrite replaces it by a deterministic top-level protected copy/reshape.
+Do not protect ordinary predictors, covariates, sizes, indices, or constants unless the model itself observes/scores them as data.
+Each protected variable must appear exactly once on the left side of ~.
+Left side must be a plain identifier (no indexing/projections/expressions).
+Protected variables cannot be used before they are observed.
+After observation, a protected variable is treated as a normal value.
+Protected variables cannot be referenced in transformed data/parameters.
+Proper distribution path only:
+
+Sampling statements may target only protected top-level data variables or top-level parameter variables.
+Sampling statements must resolve to built-in Stan distributions.
+User-defined distributions are rejected in ~.
+Sampling statements must also be valid Stan type signatures. Do not invent vectorization.
+In particular, do not write distribution calls with `matrix`, `array[,]`, or `array[] vector`
+arguments unless Stan supports that exact distribution signature. If a protected observation is a
+matrix or two-dimensional array, either rewrite it into a deterministic top-level one-dimensional
+protected copy with a matching one-dimensional parameterization, or classify the model as `major`.
+If the likelihood has row-specific or element-specific parameters that cannot be represented by a
+single valid built-in distribution call on a plain top-level protected identifier, classify the
+model as `major`; do not fake vectorization such as `categorical(array[] int, array[] vector)` or
+`normal(matrix, vector, real)`.
+Strict parameter discipline:
+
+Each parameter must appear in exactly one sampling statement.
+Parameters cannot be used in the model block before their sampling statement.
+Uses through transformed parameters are tracked: if phi depends on theta, then using phi before theta ~ ... counts as using theta before its prior.
+Control-flow safety:
+
+Protected observations and parameter-prior sampling statements cannot appear inside loops (for/while/foreach).
+Conditional (if/else) sampling is allowed only when both branches produce identical sampling effects for protected variables and parameters.
+Reserved identifier:
+
+sstan_trusted_loglik__ is reserved in SafeStan mode.
+
+## Goal
+
+The goal is not to make the model "nicer", rather, the goal is to decide whether the original posterior/log density can be represented under SafeStan restrictions with no or only a small rewrite, preserving the model. Return only the structured JSON requested by the caller.
+
+Work method:
+
+1. Identify the observed/protected data variable(s) scored by the likelihood.
+   Use the Stan program structure for this; do not infer modelling intent from
+   the particular values in `data.json`.
+2. Check whether the protected data variables and parameters already satisfy SafeStan's
+   syntactic discipline. If it does, classify the models `as-is`.
+3. If not, look for a same-density mechanical rewrite.
+4. If the rewrite would require changing the statistical model, substantially replacing a marginalized latent-state algorithm, or changing the likelihood (e.g. by adding additional priors to parameters), classify the case as `major` and do not rewrite the model.
+5. Otherwise, classify the case as `minor`, rewrite the model (and potentially, data): e.g. you can vectorize simple likelihoods, add deterministic data copies/reshapes, switch order of computation preserving the semantics, and add explicit priors only for parameters that already have implicit proper priors with exactly matching built-in distributions (for example, `uniform(lower, upper)` for finite bounded real parameters). After that, output complete files. Do not output patches.
+
+Compatibility labels:
+
+- `as-is`: the original Stan program is already SafeStan-compatible. Return `model_safe_stan` equal to the original and `data_safe_json` equal to the supplied data.
+- `minor`: a same-posterior SafeStan version can be produced using only minor, mechanical, changes. Return new, rewritten `model_safe_stan` equivalent to the original and `data_safe_json` equivalent to the supplied data.
+- `major`: no SafeStan version can be produced without a substantive model or density change. In this case return empty strings for `model_safe_stan` and `data_safe_json`.
+
+Requirements:
+
+- Never invent new observations or new data values beyond deterministic
+  copies/reshapes of the supplied `data.json`.
+- `data_safe_json` must be a valid JSON object string. It may equal the supplied
+  `data.json` exactly, or be a deterministic augmentation/reshape of it.
+- If you add fields to `data_safe_json`, document the exact deterministic
+  relation in `safety_note_md`.
+- Preserve the intended posterior/log density for AS-IS and MINOR.
+- Before returning `as-is` or `minor`, type-check every sampling statement you emit against Stan's
+  built-in distribution signatures. If `stanc` would reject the `~` statement because of array,
+  matrix, or vector shape, return `major` instead of producing invalid Stan.
+- When adding deterministic protected copies or reshapes, every variable still declared in
+  `model_safe_stan` must be present in `data_safe_json`, and every added field in `data_safe_json`
+  must match the declared dimensions exactly.
+- `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
+  include: compatibility, protected data choice, generated files, and a concise
+  explanation of any change.
+
+Examples:
+
+Example 1: AS-IS input
+
+```stan
+data {
+  int<lower=0, upper=1> y;
+}
+parameters {
+  real<lower=0, upper=1> theta;
+}
+model {
+  theta ~ beta(1, 1);
+  y ~ bernoulli(theta);
+}
+```
+
+```json
+{"y": 1}
+```
+
+Example 1 output shape
+
+```json
+{
+  "compatibility": "as-is",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: as-is.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nNo changes were required; the protected observation is top-level data and is observed with a plain sampling statement.\n",
+  "model_safe_stan": "data {\n  int<lower=0, upper=1> y;\n}\nparameters {\n  real<lower=0, upper=1> theta;\n}\nmodel {\n  theta ~ beta(1, 1);\n  y ~ bernoulli(theta);\n}\n",
+  "data_safe_json": "{\"y\": 1}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 2: MINOR input
+
+```stan
+data {
+  int<lower=1> N;
+  array[N] int<lower=0> trials;
+  array[N] int<lower=0> y;
+}
+transformed data {
+  real mean_y = mean(to_vector(y));
+}
+parameters {
+  vector<lower=0, upper=1>[N] theta;
+}
+model {
+  y ~ binomial(trials, theta);
+}
+```
+
+```json
+{"N": 3, "trials": [10, 10, 10], "y": [4, 5, 6]}
+```
+
+Example 2 output shape
+
+```json
+{
+  "compatibility": "minor",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: minor.\n\nProtected data: `y`.\n\nGenerated files: `model_safe.stan`, `data_safe.json`.\n\nChanges: added `y_safestan_copy`, a deterministic copy of `y`, because protected data cannot be read in `transformed data` before observation. Added `theta ~ uniform(0, 1)`, which is density-neutral for a parameter already constrained to `[0, 1]` and satisfies SafeStan's unique-prior requirement.\n",
+  "model_safe_stan": "data {\n  int<lower=1> N;\n  array[N] int<lower=0> trials;\n  array[N] int<lower=0> y;\n  array[N] int<lower=0> y_safestan_copy;\n}\ntransformed data {\n  real mean_y = mean(to_vector(y_safestan_copy));\n}\nparameters {\n  vector<lower=0, upper=1>[N] theta;\n}\nmodel {\n  theta ~ uniform(0, 1);\n  y ~ binomial(trials, theta);\n}\n",
+  "data_safe_json": "{\"N\": 3, \"trials\": [10, 10, 10], \"y\": [4, 5, 6], \"y_safestan_copy\": [4, 5, 6]}",
+  "protected_variables": ["y"]
+}
+```
+
+Example 3: MAJOR input
+
+```stan
+data {
+  int<lower=1> N;
+  vector[N] y;
+}
+parameters {
+  real mu1;
+  real mu2;
+}
+model {
+  for (n in 1:N) {
+    target += log_mix(0.5, normal_lpdf(y[n] | mu1, 1), normal_lpdf(y[n] | mu2, 1));
+  }
+}
+```
+
+```json
+{"N": 3, "y": [0.1, 1.2, -0.5]}
+```
+
+Example 3 output shape
+
+```json
+{
+  "compatibility": "major",
+  "safety_note_md": "# SafeStan Safety Note\n\nCompatibility: major.\n\nProtected data: `y`.\n\nGenerated files: none.\n\nReason: the likelihood is a marginalized mixture implemented with manual `target += log_mix(...)` scoring. Replacing it with SafeStan sampling statements would require a substantive model rewrite and would not be a minor same-density translation.\n",
+  "model_safe_stan": "",
+  "data_safe_json": "",
+  "protected_variables": []
+}
+```
+
+Model directory: models/posteriordb/state-wide-presidential-votes-hierarchical-gp
+
+Metadata:
+
+```json
+{
+  "description": "Hierarchical Gaussian Process",
+  "difficulty": "unknown",
+  "id": "state-wide-presidential-votes-hierarchical-gp",
+  "method": "sample",
+  "source_group": "posteriordb",
+  "source_group_label": "PosteriorDB curated models",
+  "source_url": "https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/hierarchical_gp.stan",
+  "title": "Hierarchical Gaussian Process"
+}
+```
+
+Source note:
+
+```text
+# Hierarchical Gaussian Process
+
+- Upstream Stan file: [posterior_database/models/stan/hierarchical_gp.stan](https://github.com/stan-dev/posteriordb/blob/28f8d3d6e975315f42aa274a8399f21e07a43b30/posterior_database/models/stan/hierarchical_gp.stan)
+- Upstream data: posterior_database/data/data/state_wide_presidential_votes.json.zip
+- Data status: extracted_posteriordb_zip_json
+- Source group: PosteriorDB curated models
+- Upstream repository: https://github.com/stan-dev/posteriordb
+- Upstream commit: `28f8d3d6e975315f42aa274a8399f21e07a43b30`
+- Import note: Imported from PosteriorDB posterior `state_wide_presidential_votes-hierarchical_gp` using data `state_wide_presidential_votes`.
+
+## Synthetic Data
+
+- Data status: synthetic/local generated by `generate_synthetic_data_for_missing.py`.
+- Generation method: stanc_debug_generate_data.
+- Parsed data declarations: 10.
+- Data block present: true.
+
+```
+
+Original `model.stan`:
+
+```stan
+data {
+  int<lower=1> N;
+  int<lower=1> N_states;
+  int<lower=1> N_regions;
+  int<lower=1> N_years_obs;
+  int<lower=1> N_years;
+  array[N_states] int<lower=1> state_region_ind;
+  array[N] int<lower=1, upper=50> state_ind;
+  array[N] int<lower=1, upper=10> region_ind;
+  array[N] int<lower=1> year_ind;
+  //vector<lower=0>[N] turnout_weight;
+  vector<lower=0, upper=1>[N] y;
+}
+transformed data {
+  array[N_years] real years;
+  vector[17] counts;
+  
+  for (t in 1 : N_years) {
+    years[t] = t;
+  }
+  for (i in 1 : 17) {
+    counts[i] = 2;
+  }
+}
+parameters {
+  matrix[N_years, N_regions] GP_region_std;
+  matrix[N_years, N_states] GP_state_std;
+  vector[N_years_obs] year_std;
+  vector[N_states] state_std;
+  vector[N_regions] region_std;
+  real<lower=0> tot_var;
+  simplex[17] prop_var;
+  real mu;
+  
+  real<lower=0> length_GP_region_long;
+  real<lower=0> length_GP_state_long;
+  real<lower=0> length_GP_region_short;
+  real<lower=0> length_GP_state_short;
+}
+transformed parameters {
+  matrix[N_years, N_regions] GP_region;
+  matrix[N_years, N_states] GP_state;
+  
+  vector[N_years_obs] year_re;
+  vector[N_states] state_re;
+  vector[N_regions] region_re;
+  vector[17] vars;
+  
+  real sigma_year;
+  real sigma_region;
+  vector[10] sigma_state;
+  
+  real sigma_error_state_2;
+  
+  real sigma_GP_region_long;
+  real sigma_GP_state_long;
+  real sigma_GP_region_short;
+  real sigma_GP_state_short;
+  
+  vars = 17 * prop_var * tot_var;
+  sigma_year = sqrt(vars[1]);
+  sigma_region = sqrt(vars[2]);
+  for (i in 1 : 10) {
+    sigma_state[i] = sqrt(vars[i + 2]);
+  }
+  
+  sigma_GP_region_long = sqrt(vars[13]);
+  sigma_GP_state_long = sqrt(vars[14]);
+  sigma_GP_region_short = sqrt(vars[15]);
+  sigma_GP_state_short = sqrt(vars[16]);
+  sigma_error_state_2 = sqrt(vars[17]);
+  
+  region_re = sigma_region * region_std;
+  year_re = sigma_year * year_std;
+  state_re = sigma_state[state_region_ind] .* state_std;
+  
+  {
+    matrix[N_years, N_years] cov_region;
+    matrix[N_years, N_years] cov_state;
+    matrix[N_years, N_years] L_cov_region;
+    matrix[N_years, N_years] L_cov_state;
+    // replace cov_exp_quad with gp_exp_quad_cov. What is the difference?
+    cov_region = gp_exp_quad_cov(years, sigma_GP_region_long,
+                                 length_GP_region_long)
+                 + gp_exp_quad_cov(years, sigma_GP_region_short,
+                                   length_GP_region_short);
+    cov_state = gp_exp_quad_cov(years, sigma_GP_state_long,
+                                length_GP_state_long)
+                + gp_exp_quad_cov(years, sigma_GP_state_short,
+                                  length_GP_state_short);
+    for (year in 1 : N_years) {
+      cov_region[year, year] = cov_region[year, year] + 1e-6;
+      cov_state[year, year] = cov_state[year, year] + 1e-6;
+    }
+    
+    L_cov_region = cholesky_decompose(cov_region);
+    L_cov_state = cholesky_decompose(cov_state);
+    GP_region = L_cov_region * GP_region_std;
+    GP_state = L_cov_state * GP_state_std;
+  }
+}
+model {
+  vector[N] obs_mu;
+  
+  for (n in 1 : N) {
+    obs_mu[n] = mu + year_re[year_ind[n]] + state_re[state_ind[n]]
+                + region_re[region_ind[n]]
+                + GP_region[year_ind[n], region_ind[n]]
+                + GP_state[year_ind[n], state_ind[n]];
+  }
+  y ~ normal(obs_mu, sigma_error_state_2); //* turnout_weight);
+  
+  to_vector(GP_region_std) ~ normal(0, 1);
+  to_vector(GP_state_std) ~ normal(0, 1);
+  year_std ~ normal(0, 1);
+  state_std ~ normal(0, 1);
+  region_std ~ normal(0, 1);
+  mu ~ normal(.5, .5);
+  tot_var ~ gamma(3, 3);
+  prop_var ~ dirichlet(counts);
+  length_GP_region_long ~ weibull(30, 8);
+  length_GP_state_long ~ weibull(30, 8);
+  length_GP_region_short ~ weibull(30, 3);
+  length_GP_state_short ~ weibull(30, 3);
+}
+generated quantities {
+  matrix[N_years, N_states] y_new;
+  matrix[N_years, N_states] y_new_pred;
+  
+  {
+    real level;
+    level = normal_rng(0.5, sigma_year);
+    for (state in 1 : N_states) {
+      for (t in 1 : N_years) {
+        if (t < 12) {
+          y_new[t, state] = state_re[state]
+                            + region_re[state_region_ind[state]]
+                            + GP_state[t, state]
+                            + GP_region[t, state_region_ind[state]]
+                            + (mu + year_re[t]);
+        } else {
+          y_new[t, state] = state_re[state]
+                            + region_re[state_region_ind[state]]
+                            + GP_state[t, state]
+                            + GP_region[t, state_region_ind[state]] + level;
+        }
+        y_new_pred[t, state] = normal_rng(y_new[t, state],
+                                          sigma_error_state_2);
+      }
+    }
+  }
+}
+
+```
+
+Input `data.json` for this run:
+
+```json
+{
+  "N": 4,
+  "N_regions": 2,
+  "N_states": 4,
+  "N_years": 3,
+  "N_years_obs": 4,
+  "region_ind": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "state_ind": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "state_region_ind": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "y": [
+    1.0,
+    0.0,
+    1.0,
+    1.0
+  ],
+  "year_ind": [
+    1,
+    1,
+    1,
+    1
+  ]
+}
+
+```

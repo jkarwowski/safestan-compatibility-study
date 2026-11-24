@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import json
 import math
@@ -11,6 +12,7 @@ import os
 import shutil
 import subprocess
 import sys
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from statistics import mean, stdev
@@ -30,6 +32,67 @@ SAMPLER_COLUMNS = {
     "n_leapfrog__",
     "divergent__",
     "energy__",
+}
+
+ROW_MAJOR_SAFE_PARAM_MAPS = {
+    "models/example_models/arm-ch-13-earnings-latin-square": {
+        "c_raw": "c",
+        "d_raw": "d",
+    },
+    "models/example_models/bugs-examples-vol1-epil-epil": {
+        "b": "b",
+    },
+    "models/example_models/bugs-examples-vol1-magnesium-magnesium": {
+        "theta_raw": "theta",
+        "pc_raw": "pc",
+    },
+    "models/example_models/bugs-examples-vol1-salm-salm2": {
+        "lambda": "lambda",
+    },
+    "models/example_models/bugs-examples-vol2-orange-orange": {
+        "theta_raw": "theta",
+    },
+    "models/example_models/bugs-examples-vol3-data-cloning-seeds": {
+        "b_raw": "b",
+    },
+    "models/example_models/knitr-neural-nets-nn": {
+        "alpha_raw": "alpha",
+        "beta_raw": "beta",
+    },
+    "models/example_models/misc-multi-logit-multi-logit": {
+        "beta_raw": "beta",
+    },
+    "models/example_models/misc-sur-sur": {
+        "beta_raw": "beta",
+    },
+    "models/example_models/misc-nnmf-nnmf-vec": {
+        "G_raw": "G",
+    },
+    "models/stancon_talks/2017-contributed-talks-03-lei-stancon-model": {
+        "v_ad_platform_g_flat": "v_ad_platform_g",
+        "v_ad_platform_sigma_g_flat": "v_ad_platform_sigma_g",
+        "v_ad_platform_film_flat": "v_ad_platform_film",
+    },
+    "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-ha": {
+        "eta_a_flat": "eta_a",
+    },
+    "models/stancon_talks/2018-contributed-talks-12-vamvourellis-modelcode": {
+        "zb_flat": "zb",
+    },
+}
+
+COLUMN_MAJOR_SAFE_PARAM_MAPS = {
+    "models/posteriordb/mnist-100-nn-rbm1bj10": {
+        "alpha_vec": "alpha",
+        "beta_vec": "beta",
+    },
+    "models/posteriordb/mnist-nn-rbm1bj100": {
+        "alpha_vec": "alpha",
+        "beta_vec": "beta",
+    },
+    "models/stancon_talks/2018-helsinki-contributed-talks-weber-stancon18-master-warfarin-pk-tlagmax": {
+        "Eta_vec": "Eta",
+    },
 }
 
 
@@ -65,6 +128,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--run-id", default=utc_run_id(), help="Comparison run id under --output-root.")
     parser.add_argument("--cmdstan", help="CmdStan/cmdsafestan root. Defaults to CMDSAFESTAN or CMDSTAN.")
     parser.add_argument("--only", action="append", default=[], help="Model path, id, or suffix to compare. Repeatable.")
+    parser.add_argument(
+        "--from-smoke-ok-report",
+        type=Path,
+        help="Restrict comparison to models marked ok in a smoke-test report.",
+    )
     parser.add_argument("--limit", type=int, help="Compare at most this many selected models.")
     parser.add_argument("--chains", type=int, default=1)
     parser.add_argument("--iter-warmup", type=int, default=200)
@@ -72,8 +140,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=12345)
     parser.add_argument("--refresh", type=int, default=0)
     parser.add_argument("--timeout", type=int, default=1800, help="Per original/safe runner timeout in seconds.")
+    parser.add_argument("--jobs", type=int, default=1, help="Parallel comparison workers.")
     parser.add_argument("--force-recompile", action="store_true")
     parser.add_argument("--no-compile", action="store_true")
+    parser.add_argument(
+        "--stan-through-cmdsafestan",
+        action="store_true",
+        help="Compile the original Stan model with cmdsafestan --mode plain instead of make.",
+    )
     parser.add_argument("--mean-se-mult", type=float, default=4.0, help="Allowed mean delta in Monte Carlo SE units.")
     parser.add_argument("--mean-abs-tol", type=float, default=0.05, help="Minimum absolute tolerance for mean deltas.")
     parser.add_argument("--sd-rel-tol", type=float, default=0.50, help="Relative tolerance for posterior SD deltas.")
@@ -86,7 +160,19 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def selected_records(summary: dict[str, Any], only: list[str], limit: int | None) -> list[dict[str, Any]]:
+def smoke_ok_models(report_path: Path | None) -> set[str] | None:
+    if report_path is None:
+        return None
+    report = load_json(report_path.expanduser().resolve())
+    return {str(item["model"]) for item in report.get("results", []) if item.get("ok")}
+
+
+def selected_records(
+    summary: dict[str, Any],
+    only: list[str],
+    limit: int | None,
+    smoke_ok: set[str] | None,
+) -> list[dict[str, Any]]:
     records = [
         record
         for record in summary.get("results", [])
@@ -94,6 +180,8 @@ def selected_records(summary: dict[str, Any], only: list[str], limit: int | None
         and (Path(record["safe_dir"]) / "model_safe.stan").exists()
         and (Path(record["safe_dir"]) / "data_safe.json").exists()
     ]
+    if smoke_ok is not None:
+        records = [record for record in records if record["path"] in smoke_ok]
     if only:
         needles = [item.strip("/") for item in only]
 
@@ -121,8 +209,9 @@ def prepare_workdirs(record: dict[str, Any], case_dir: Path) -> tuple[Path, Path
     stan_work.mkdir(parents=True, exist_ok=True)
     safe_work.mkdir(parents=True, exist_ok=True)
 
-    for filename in ("model.stan", "data.json", "metadata.json", "init.json"):
+    for filename in ("model.stan", "metadata.json", "init.json"):
         copy_if_exists(model_dir / filename, stan_work / filename)
+    copy_if_exists(model_dir / str(record.get("data_filename", "data.json")), stan_work / "data.json")
     copy_if_exists(safe_dir / "model_safe.stan", safe_work / "model_safe.stan")
     copy_if_exists(safe_dir / "data_safe.json", safe_work / "data_safe.json")
     copy_if_exists(model_dir / "metadata.json", safe_work / "metadata.json")
@@ -163,9 +252,12 @@ def runner_command(
         command.append("--force-recompile")
     if args.no_compile:
         command.append("--no-compile")
+    if not safe and args.stan_through_cmdsafestan:
+        command.append("--compile-with-cmdsafestan")
     if safe:
         command.append("--safe")
-        command.extend(["--sstan-protect", ",".join(protected_variables)])
+        if protected_variables:
+            command.extend(["--sstan-protect", ",".join(protected_variables)])
     if args.dry_run:
         command.append("--dry-run")
     return command
@@ -274,9 +366,18 @@ def column_stats(headers: list[str], rows: list[list[float]], columns: list[str]
             "n": len(values),
             "finite": len(values),
             "mean": mean(values),
-            "sd": stdev(values) if len(values) > 1 else 0.0,
+            "sd": safe_stdev(values),
         }
     return stats
+
+
+def safe_stdev(values: list[float]) -> float:
+    if len(values) <= 1:
+        return 0.0
+    try:
+        return stdev(values)
+    except OverflowError:
+        return math.inf
 
 
 def compare_stats(
@@ -293,11 +394,11 @@ def compare_stats(
         right = safe_stats[column]
         mean_delta = right["mean"] - left["mean"]
         sd_delta = right["sd"] - left["sd"]
-        se_delta = math.sqrt((left["sd"] ** 2) / left["n"] + (right["sd"] ** 2) / right["n"])
+        se_delta = math.hypot(left["sd"] / math.sqrt(left["n"]), right["sd"] / math.sqrt(right["n"]))
         mean_threshold = max(args.mean_abs_tol, args.mean_se_mult * se_delta)
         sd_threshold = args.sd_abs_tol + args.sd_rel_tol * max(left["sd"], right["sd"], 1e-12)
         mean_ok = math.isfinite(mean_delta) and abs(mean_delta) <= mean_threshold
-        sd_ok = math.isfinite(sd_delta) and abs(sd_delta) <= sd_threshold
+        sd_ok = math.isfinite(sd_delta) and math.isfinite(sd_threshold) and abs(sd_delta) <= sd_threshold
         mean_z = abs(mean_delta) / se_delta if se_delta > 0 else (0.0 if mean_delta == 0 else math.inf)
         max_abs_mean_delta = max(max_abs_mean_delta, abs(mean_delta))
         max_mean_z = max(max_mean_z, mean_z)
@@ -364,6 +465,9 @@ def compare_outputs(stan_output: Path, safe_output: Path, args: argparse.Namespa
 def build_nested_array(values: dict[tuple[int, ...], float]) -> Any:
     rank = len(next(iter(values)))
     dims = [max(index[dim] for index in values) for dim in range(rank)]
+    expected = math.prod(dims)
+    if len(values) != expected:
+        raise ValueError("indexed columns do not form a dense Stan array")
 
     def build(prefix: tuple[int, ...]) -> Any:
         if len(prefix) == rank:
@@ -372,6 +476,25 @@ def build_nested_array(values: dict[tuple[int, ...], float]) -> Any:
         return [build(prefix + (idx,)) for idx in range(1, dims[dim] + 1)]
 
     return build(())
+
+
+def flatten_row_major(value: Any) -> list[float]:
+    if not isinstance(value, list):
+        return [float(value)]
+    flattened: list[float] = []
+    for item in value:
+        flattened.extend(flatten_row_major(item))
+    return flattened
+
+
+def flatten_column_major_2d(value: Any) -> list[float]:
+    if not isinstance(value, list) or not value:
+        return flatten_row_major(value)
+    if not isinstance(value[0], list):
+        return flatten_row_major(value)
+    rows = len(value)
+    cols = len(value[0])
+    return [float(value[row][col]) for col in range(cols) for row in range(rows)]
 
 
 def draw_to_constrained_json(headers: list[str], row: list[float]) -> dict[str, Any]:
@@ -390,8 +513,25 @@ def draw_to_constrained_json(headers: list[str], row: list[float]) -> dict[str, 
             continue
         arrays.setdefault(parts[0], {})[index] = value
     for name, values in arrays.items():
-        payload[name] = build_nested_array(values)
+        try:
+            payload[name] = build_nested_array(values)
+        except ValueError:
+            continue
     return payload
+
+
+def translate_params_for_safestan(model_path: str, params: dict[str, Any]) -> tuple[dict[str, Any], list[dict[str, str]]]:
+    safe_params = copy.deepcopy(params)
+    applied = []
+    for safe_name, stan_name in ROW_MAJOR_SAFE_PARAM_MAPS.get(model_path, {}).items():
+        if stan_name in params:
+            safe_params[safe_name] = flatten_row_major(params[stan_name])
+            applied.append({"safe": safe_name, "stan": stan_name, "order": "row-major"})
+    for safe_name, stan_name in COLUMN_MAJOR_SAFE_PARAM_MAPS.get(model_path, {}).items():
+        if stan_name in params:
+            safe_params[safe_name] = flatten_column_major_2d(params[stan_name])
+            applied.append({"safe": safe_name, "stan": stan_name, "order": "column-major"})
+    return safe_params, applied
 
 
 def parse_log_prob_csv(path: Path) -> dict[str, float]:
@@ -432,6 +572,7 @@ def run_log_prob(
 
 def compare_log_prob(
     *,
+    model_path: str,
     stan_work: Path,
     safe_work: Path,
     stan_output: Path,
@@ -446,15 +587,25 @@ def compare_log_prob(
     checks = []
     max_abs_delta = 0.0
     max_failed_columns = 0
+    max_gradient_failed_columns = 0
+    lp_deltas: list[float] = []
+    constant_offset_possible = True
+    applied_translations: list[dict[str, str]] = []
     for index, row in enumerate(rows[: args.log_prob_checks], start=1):
-        params_file = log_dir / f"params-{index}.json"
-        params_file.write_text(json.dumps(draw_to_constrained_json(headers, row), separators=(",", ":")), encoding="utf-8")
+        stan_params = draw_to_constrained_json(headers, row)
+        safe_params, translations = translate_params_for_safestan(model_path, stan_params)
+        if translations:
+            applied_translations = translations
+        stan_params_file = log_dir / f"params-{index}.json"
+        safe_params_file = log_dir / f"params-safestan-{index}.json"
+        stan_params_file.write_text(json.dumps(stan_params, separators=(",", ":")), encoding="utf-8")
+        safe_params_file.write_text(json.dumps(safe_params, separators=(",", ":")), encoding="utf-8")
         stan_csv = log_dir / f"stan-log-prob-{index}.csv"
         safe_csv = log_dir / f"safestan-log-prob-{index}.csv"
         stan_run = run_log_prob(
             exe=stan_work / "model",
             data_file=stan_work / "data.json",
-            params_file=params_file,
+            params_file=stan_params_file,
             output_file=stan_csv,
             log_file=log_dir / f"stan-log-prob-{index}.log",
             timeout=args.timeout,
@@ -462,7 +613,7 @@ def compare_log_prob(
         safe_run = run_log_prob(
             exe=safe_work / "model_safe",
             data_file=safe_work / "data_safe.json",
-            params_file=params_file,
+            params_file=safe_params_file,
             output_file=safe_csv,
             log_file=log_dir / f"safestan-log-prob-{index}.log",
             timeout=args.timeout,
@@ -470,42 +621,76 @@ def compare_log_prob(
         if stan_run["returncode"] != 0 or safe_run["returncode"] != 0:
             checks.append({"index": index, "status": "run-failed", "stan_run": stan_run, "safe_run": safe_run})
             max_failed_columns += 1
+            constant_offset_possible = False
             continue
         stan_lp = parse_log_prob_csv(stan_csv)
         safe_lp = parse_log_prob_csv(safe_csv)
         common = sorted(set(stan_lp) & set(safe_lp))
         failures = []
+        lp_failures = []
+        gradient_failures = []
+        lp_delta = None
         for column in common:
             delta = safe_lp[column] - stan_lp[column]
+            if column == "lp__":
+                lp_delta = delta
             max_abs_delta = max(max_abs_delta, abs(delta))
             if abs(delta) > args.log_prob_tol:
-                failures.append({"column": column, "stan": stan_lp[column], "safe": safe_lp[column], "delta": delta})
+                failure = {"column": column, "stan": stan_lp[column], "safe": safe_lp[column], "delta": delta}
+                failures.append(failure)
+                if column == "lp__":
+                    lp_failures.append(failure)
+                else:
+                    gradient_failures.append(failure)
+        if lp_delta is None:
+            constant_offset_possible = False
+        else:
+            lp_deltas.append(lp_delta)
+        if len(lp_failures) != len(failures):
+            constant_offset_possible = False
         max_failed_columns = max(max_failed_columns, len(failures))
+        max_gradient_failed_columns = max(max_gradient_failed_columns, len(gradient_failures))
         checks.append(
             {
                 "index": index,
-                "status": "same" if not failures else "different",
+                "status": "same" if not lp_failures else "different",
                 "compared_columns": len(common),
                 "failures": failures[:20],
+                "lp_failures": lp_failures[:20],
+                "gradient_failures": gradient_failures[:20],
+                "parameter_translation": translations,
                 "stan_run": stan_run,
                 "safe_run": safe_run,
             }
         )
     status = "same" if all(check["status"] == "same" for check in checks) else "different"
+    constant_log_prob_offset = None
+    if (
+        status == "different"
+        and constant_offset_possible
+        and len(lp_deltas) == len(checks)
+        and lp_deltas
+        and max(lp_deltas) - min(lp_deltas) <= args.log_prob_tol
+    ):
+        status = "same-up-to-constant"
+        constant_log_prob_offset = mean(lp_deltas)
     return {
         "status": status,
         "checks": len(checks),
         "max_abs_delta": max_abs_delta,
         "max_failed_columns": max_failed_columns,
+        "max_gradient_failed_columns": max_gradient_failed_columns,
+        "constant_log_prob_offset": constant_log_prob_offset,
+        "parameter_translation": applied_translations,
         "artifact_dir": str(log_dir.relative_to(ROOT)),
         "details": checks,
     }
 
 
 def combined_status(posterior_status: str, log_prob_status: str) -> str:
-    if posterior_status == "same" and log_prob_status in {"same", "skipped"}:
+    if posterior_status == "same" and log_prob_status in {"same", "same-up-to-constant", "skipped"}:
         return "same"
-    if log_prob_status == "same":
+    if log_prob_status in {"same", "same-up-to-constant"}:
         return "same-density-mcmc-different"
     return posterior_status
 
@@ -566,7 +751,13 @@ def compare_one(record: dict[str, Any], output_root: Path, cmdstan: Path | None,
         log_prob = {"status": "skipped", "checks": 0}
     else:
         comparison = compare_outputs(stan_output, safe_output, args)
-        log_prob = compare_log_prob(stan_work=stan_work, safe_work=safe_work, stan_output=stan_output, args=args)
+        log_prob = compare_log_prob(
+            model_path=record["path"],
+            stan_work=stan_work,
+            safe_work=safe_work,
+            stan_output=stan_output,
+            args=args,
+        )
     status = comparison["status"] if args.dry_run else combined_status(comparison["status"], log_prob["status"])
     return {
         "path": record["path"],
@@ -632,16 +823,68 @@ def main() -> int:
     if cmdstan is None and not args.dry_run:
         raise SystemExit("Pass --cmdstan or set CMDSAFESTAN/CMDSTAN.")
 
-    records = selected_records(summary, args.only, args.limit)
+    smoke_ok = smoke_ok_models(args.from_smoke_ok_report)
+    records = selected_records(summary, args.only, args.limit, smoke_ok)
     output_root = Path(args.output_root).expanduser().resolve() / args.run_id
     output_root.mkdir(parents=True, exist_ok=True)
 
     results = []
-    for index, record in enumerate(records, start=1):
-        print(f"[{index}/{len(records)}] {record['path']}", flush=True)
-        result = compare_one(record, output_root, cmdstan, args)
-        results.append(result)
-        print(f"  {result['status']}", flush=True)
+
+    def persist() -> None:
+        payload = {
+            "run_id": args.run_id,
+            "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "summary": str(Path(args.summary)),
+            "cmdstan": str(cmdstan) if cmdstan else None,
+            "settings": {
+                "chains": args.chains,
+                "iter_warmup": args.iter_warmup,
+                "iter_sampling": args.iter_sampling,
+                "seed": args.seed,
+                "jobs": max(1, args.jobs),
+                "stan_through_cmdsafestan": args.stan_through_cmdsafestan,
+                "from_smoke_ok_report": str(args.from_smoke_ok_report) if args.from_smoke_ok_report else None,
+                "mean_se_mult": args.mean_se_mult,
+                "mean_abs_tol": args.mean_abs_tol,
+                "sd_rel_tol": args.sd_rel_tol,
+                "sd_abs_tol": args.sd_abs_tol,
+                "log_prob_checks": args.log_prob_checks,
+                "log_prob_tol": args.log_prob_tol,
+                "include_lp": args.include_lp,
+                "include_rep": args.include_rep,
+            },
+            "results": sorted(results, key=lambda item: item["path"]),
+        }
+        write_json(output_root / "comparison_results.json", payload)
+        write_markdown(output_root / "COMPARISON_RESULTS.md", payload)
+
+    jobs = max(1, args.jobs)
+    if jobs == 1:
+        for index, record in enumerate(records, start=1):
+            print(f"[{index}/{len(records)}] {record['path']}", flush=True)
+            result = compare_one(record, output_root, cmdstan, args)
+            results.append(result)
+            persist()
+            print(f"  {result['status']}", flush=True)
+    else:
+        with ProcessPoolExecutor(max_workers=jobs) as executor:
+            futures = {executor.submit(compare_one, record, output_root, cmdstan, args): record for record in records}
+            for index, future in enumerate(as_completed(futures), start=1):
+                record = futures[future]
+                try:
+                    result = future.result()
+                except Exception as error:  # noqa: BLE001
+                    result = {
+                        "path": record["path"],
+                        "compatibility": record["compatibility"],
+                        "status": "run-failed",
+                        "failed_side": "worker",
+                        "error": str(error),
+                        "case_dir": str((output_root / Path(record["path"]).relative_to("models")).relative_to(ROOT)),
+                    }
+                results.append(result)
+                persist()
+                print(f"[{index}/{len(records)}] {result['status']} {result['path']}", flush=True)
 
     payload = {
         "run_id": args.run_id,
@@ -653,6 +896,9 @@ def main() -> int:
             "iter_warmup": args.iter_warmup,
             "iter_sampling": args.iter_sampling,
             "seed": args.seed,
+            "jobs": jobs,
+            "stan_through_cmdsafestan": args.stan_through_cmdsafestan,
+            "from_smoke_ok_report": str(args.from_smoke_ok_report) if args.from_smoke_ok_report else None,
             "mean_se_mult": args.mean_se_mult,
             "mean_abs_tol": args.mean_abs_tol,
             "sd_rel_tol": args.sd_rel_tol,
@@ -662,7 +908,7 @@ def main() -> int:
             "include_lp": args.include_lp,
             "include_rep": args.include_rep,
         },
-        "results": results,
+        "results": sorted(results, key=lambda item: item["path"]),
     }
     write_json(output_root / "comparison_results.json", payload)
     write_markdown(output_root / "COMPARISON_RESULTS.md", payload)

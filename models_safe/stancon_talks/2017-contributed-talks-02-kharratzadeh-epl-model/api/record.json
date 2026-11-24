@@ -26,5 +26,8 @@
     "total_tokens": 9507
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan rewrite: flattened matrix parameter `eta_a` to `eta_a_flat` for a single top-level normal prior, rebuilt the matrix deterministically, kept the protected `score_diff` likelihood as one vectorized top-level `student_t` statement, and adjusted synthetic `nweeks` to cover supplied week indexes."
 }

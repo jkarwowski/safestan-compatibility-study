@@ -23,8 +23,8 @@ transformed data {
   }
 }
 parameters {
-  matrix[N_years, N_regions] GP_region_std;
-  matrix[N_years, N_states] GP_state_std;
+  vector[N_years * N_regions] GP_region_std_vec;
+  vector[N_years * N_states] GP_state_std_vec;
   vector[N_years_obs] year_std;
   vector[N_states] state_std;
   vector[N_regions] region_std;
@@ -38,6 +38,10 @@ parameters {
   real<lower=0> length_GP_state_short;
 }
 transformed parameters {
+  matrix[N_years, N_regions] GP_region_std = to_matrix(GP_region_std_vec,
+                                                       N_years, N_regions);
+  matrix[N_years, N_states] GP_state_std = to_matrix(GP_state_std_vec,
+                                                     N_years, N_states);
   matrix[N_years, N_regions] GP_region;
   matrix[N_years, N_states] GP_state;
   
@@ -102,8 +106,8 @@ transformed parameters {
 model {
   vector[N] obs_mu;
   
-  GP_region_std ~ normal(0, 1);
-  GP_state_std ~ normal(0, 1);
+  GP_region_std_vec ~ normal(0, 1);
+  GP_state_std_vec ~ normal(0, 1);
   year_std ~ normal(0, 1);
   state_std ~ normal(0, 1);
   region_std ~ normal(0, 1);

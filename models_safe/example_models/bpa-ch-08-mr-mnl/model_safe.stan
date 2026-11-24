@@ -42,5 +42,8 @@ model {
   mean_r ~ uniform(0, 1);
   
   // Define the multinomial likelihood
-  marr ~ multinomial(pr);
+  for (t in 1 : n_occasions) {
+    array[n_occasions + 1] int marr_t = marr[t];
+    marr_t ~ multinomial(pr[t]);
+  }
 }

@@ -1,30 +1,25 @@
 data {
   int<lower=0> n_dogs;
   int<lower=0> n_trials;
-  array[n_dogs, n_trials] int<lower=0, upper=1> y;
-  array[n_dogs, n_trials] int<lower=0, upper=1> y_safestan_copy;
+  int<lower=1> N_patterns;
+  array[N_patterns] int<lower=1> dog_id;
+  array[N_patterns] int<lower=0> prev_shock_count;
+  array[N_patterns] int<lower=0> prev_avoid_count;
+  array[N_patterns] int<lower=0> y_trials;
+  array[N_patterns] int<lower=0> y_successes;
 }
 transformed data {
   int<lower=0> J = n_dogs;
   int<lower=0> T = n_trials;
-  matrix<lower=0>[J, T] prev_shock;
-  matrix<lower=0>[J, T] prev_avoid;
-  for (j in 1 : J) {
-    prev_shock[j, 1] = 0;
-    prev_avoid[j, 1] = 0;
-    for (t in 2 : T) {
-      prev_shock[j, t] = prev_shock[j, t - 1] + y_safestan_copy[j, t - 1];
-      prev_avoid[j, t] = prev_avoid[j, t - 1] + 1 - y_safestan_copy[j, t - 1];
-    }
-  }
 }
 parameters {
   vector[2] mu_logit_ab;
   vector<lower=0>[2] sigma_logit_ab;
   cholesky_factor_corr[2] L_logit_ab;
-  matrix[J, 2] z;
+  vector[J * 2] z_vec;
 }
 transformed parameters {
+  matrix[J, 2] z = to_matrix(z_vec, J, 2);
   matrix[J, 2] logit_ab = rep_vector(1, J) * mu_logit_ab'
                           + z * diag_pre_multiply(sigma_logit_ab, L_logit_ab);
   corr_matrix[2] Omega_logit_ab = L_logit_ab * L_logit_ab';
@@ -34,19 +29,18 @@ transformed parameters {
   vector[J] b = inv_logit(logit_ab[ : , 2]);
 }
 model {
-  array[J, T] real p;
+  vector[N_patterns] p;
 
   mu_logit_ab ~ logistic(0, 1);
   sigma_logit_ab ~ normal(0, 1);
   L_logit_ab ~ lkj_corr_cholesky(2);
-  z ~ normal(0, 1);
+  z_vec ~ normal(0, 1);
 
-  for (j in 1 : J) {
-    for (t in 1 : T) {
-      p[j, t] = a[j] ^ prev_shock[j, t] * b[j] ^ prev_avoid[j, t];
-    }
+  for (i in 1:N_patterns) {
+    p[i] = a[dog_id[i]] ^ prev_shock_count[i]
+           * b[dog_id[i]] ^ prev_avoid_count[i];
   }
-  y ~ bernoulli(p);
+  y_successes ~ binomial(y_trials, p);
 }
 generated quantities {
   array[J, T] int<lower=0, upper=1> y_rep;

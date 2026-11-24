@@ -2,8 +2,10 @@
 
 Compatibility: minor.
 
-Protected data: `y`.
+Manual translation date: 2026-04-30.
+
+Protected data: `y_counts_1` and `y_counts_2`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: replaced the manual `target += log_sum_exp(...)` likelihood with deterministic mixture probabilities `y_prob` and one built-in `y ~ categorical(y_prob)` observation statement for the protected data. Vectorized the Dirichlet priors for `local_weight` and `atom` so each top-level parameter is sampled exactly once outside loops. No data fields were added or changed.
+Changes: aggregated token observations by document into protected multinomial counts. This avoids unsupported array/matrix-valued distribution calls while preserving the parameter-dependent log density up to data-only multinomial/binomial constants where observations were aggregated.

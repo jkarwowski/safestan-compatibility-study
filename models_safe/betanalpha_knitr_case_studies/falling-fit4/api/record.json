@@ -1,6 +1,9 @@
 {
   "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/falling-fit4/api",
   "compatibility": "minor",
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Flattened obs_t_fall to a vector and represented obs_t_calib as a vector so both protected observations use valid top-level normal sampling statements.",
   "completed_at": "2026-04-29T00:53:33+00:00",
   "model": "gpt-5.5",
   "path": "models/betanalpha_knitr_case_studies/falling-fit4",

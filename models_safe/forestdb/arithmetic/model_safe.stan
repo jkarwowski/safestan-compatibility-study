@@ -1,18 +1,22 @@
 // ForestDB translation: Inducing Arithmetic Functions
-// SafeStan rewrite: count table expanded to categorical observations.
+// SafeStan rewrite: count rows split into protected multinomial observations.
 data {
   int<lower=1> C;
   int<lower=1> K;
-  int<lower=0> N_obs;
-  array[N_obs] int<lower=1, upper=C> obs_context;
-  array[N_obs] int<lower=1, upper=K> obs_rule;
+  array[K] int<lower=0> counts_1;
+  array[K] int<lower=0> counts_2;
+  array[K] int<lower=0> counts_3;
+  array[K] int<lower=0> counts_4;
 }
 parameters {
   array[C] simplex[K] rule_prob;
 }
 model {
   rule_prob ~ dirichlet(rep_vector(1.0, K));
-  obs_rule ~ categorical(rule_prob[obs_context]);
+  counts_1 ~ multinomial(rule_prob[1]);
+  counts_2 ~ multinomial(rule_prob[2]);
+  counts_3 ~ multinomial(rule_prob[3]);
+  counts_4 ~ multinomial(rule_prob[4]);
 }
 generated quantities {
   array[C] int<lower=1, upper=K> sampled_rule;

@@ -2,8 +2,10 @@
 
 Compatibility: minor.
 
+Manual translation date: 2026-04-30.
+
 Protected data: `y`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: rewrote the indexed likelihood loop `y[n] ~ categorical_logit(...)` as one built-in `y ~ categorical_logit_glm(...)` sampling statement with identical logits. Moved all parameter priors before any model-block use of those parameters. Replaced `to_vector(alpha)` and `to_vector(beta)` prior left sides with top-level `alpha` and `beta` sampling statements, which give the same elementwise normal priors. No data fields were added; `data_safe.json` is the supplied data.
+Changes: reparameterized matrix weights as vector parameters and uses a built-in categorical-logit GLM observation. This avoids unsupported array/matrix-valued distribution calls while preserving the parameter-dependent log density up to data-only multinomial/binomial constants where observations were aggregated.

@@ -1,0 +1,434 @@
+{
+  "batch": {
+    "cancelled_at": null,
+    "cancelling_at": 1777504736,
+    "completed_at": null,
+    "completion_window": "24h",
+    "created_at": 1777502680,
+    "endpoint": "/v1/responses",
+    "error_file_id": null,
+    "errors": null,
+    "expired_at": null,
+    "expires_at": 1777589080,
+    "failed_at": null,
+    "finalizing_at": null,
+    "id": "batch_69f289d8c2d88190974f6e2d4531e09b",
+    "in_progress_at": 1777502742,
+    "input_file_id": "file-EDaSdjgjrvBLoLz7L4H6pN",
+    "metadata": {
+      "description": "SafeStan targeted compile-failure regeneration",
+      "run_id": "safestan-compile-rerun-61-20260429Tbatch"
+    },
+    "model": "gpt-5.5-2026-04-23",
+    "object": "batch",
+    "output_file_id": null,
+    "request_counts": {
+      "completed": 46,
+      "failed": 0,
+      "total": 61
+    },
+    "status": "cancelling",
+    "usage": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 0
+    }
+  },
+  "batch_id": "batch_69f289d8c2d88190974f6e2d4531e09b",
+  "batch_input": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/batch_input.jsonl",
+  "created_at": "2026-04-29T22:23:52+00:00",
+  "data_filename": "data.json",
+  "input_file": {
+    "bytes": 965291,
+    "created_at": 1777502680,
+    "expires_at": 1780094680,
+    "filename": "batch_input.jsonl",
+    "id": "file-EDaSdjgjrvBLoLz7L4H6pN",
+    "object": "file",
+    "purpose": "batch",
+    "status": "processed",
+    "status_details": null
+  },
+  "mapping": {
+    "request-0001-models__betanalpha_knitr_case_studies__falling-fit4": {
+      "path": "models/betanalpha_knitr_case_studies/falling-fit4",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0001-models__betanalpha_knitr_case_studies__falling-fit4.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0001-models__betanalpha_knitr_case_studies__falling-fit4.request.json",
+      "safe_dir": "models_safe/betanalpha_knitr_case_studies/falling-fit4"
+    },
+    "request-0002-models__betanalpha_knitr_case_studies__hierarchical-modeling-stan-programs-multivariate-hierarchical-cp": {
+      "path": "models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-multivariate-hierarchical-cp",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0002-models__betanalpha_knitr_case_studies__hierarchical-modeling-stan-programs-multivariate-hierarchical-cp.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0002-models__betanalpha_knitr_case_studies__hierarchical-modeling-stan-programs-multivariate-hierarchical-cp.request.json",
+      "safe_dir": "models_safe/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-multivariate-hierarchical-cp"
+    },
+    "request-0003-models__betanalpha_knitr_case_studies__hierarchical-modeling-stan-programs-multivariate-hierarchical-ncp": {
+      "path": "models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-multivariate-hierarchical-ncp",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0003-models__betanalpha_knitr_case_studies__hierarchical-modeling-stan-programs-multivariate-hierarchical-ncp.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0003-models__betanalpha_knitr_case_studies__hierarchical-modeling-stan-programs-multivariate-hierarchical-ncp.request.json",
+      "safe_dir": "models_safe/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-multivariate-hierarchical-ncp"
+    },
+    "request-0004-models__example_models__arm-ch-13-earnings-latin-square": {
+      "path": "models/example_models/arm-ch-13-earnings-latin-square",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0004-models__example_models__arm-ch-13-earnings-latin-square.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0004-models__example_models__arm-ch-13-earnings-latin-square.request.json",
+      "safe_dir": "models_safe/example_models/arm-ch-13-earnings-latin-square"
+    },
+    "request-0005-models__example_models__arm-ch-13-earnings-latin-square-chr": {
+      "path": "models/example_models/arm-ch-13-earnings-latin-square-chr",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0005-models__example_models__arm-ch-13-earnings-latin-square-chr.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0005-models__example_models__arm-ch-13-earnings-latin-square-chr.request.json",
+      "safe_dir": "models_safe/example_models/arm-ch-13-earnings-latin-square-chr"
+    },
+    "request-0006-models__example_models__bpa-ch-07-cjs-mnl": {
+      "path": "models/example_models/bpa-ch-07-cjs-mnl",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0006-models__example_models__bpa-ch-07-cjs-mnl.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0006-models__example_models__bpa-ch-07-cjs-mnl.request.json",
+      "safe_dir": "models_safe/example_models/bpa-ch-07-cjs-mnl"
+    },
+    "request-0007-models__example_models__bpa-ch-07-cjs-mnl-age": {
+      "path": "models/example_models/bpa-ch-07-cjs-mnl-age",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0007-models__example_models__bpa-ch-07-cjs-mnl-age.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0007-models__example_models__bpa-ch-07-cjs-mnl-age.request.json",
+      "safe_dir": "models_safe/example_models/bpa-ch-07-cjs-mnl-age"
+    },
+    "request-0008-models__example_models__bpa-ch-08-mr-mnl": {
+      "path": "models/example_models/bpa-ch-08-mr-mnl",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0008-models__example_models__bpa-ch-08-mr-mnl.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0008-models__example_models__bpa-ch-08-mr-mnl.request.json",
+      "safe_dir": "models_safe/example_models/bpa-ch-08-mr-mnl"
+    },
+    "request-0009-models__example_models__bugs-examples-vol1-bones-bones": {
+      "path": "models/example_models/bugs-examples-vol1-bones-bones",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0009-models__example_models__bugs-examples-vol1-bones-bones.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0009-models__example_models__bugs-examples-vol1-bones-bones.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-bones-bones"
+    },
+    "request-0010-models__example_models__bugs-examples-vol1-equiv-equiv": {
+      "path": "models/example_models/bugs-examples-vol1-equiv-equiv",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0010-models__example_models__bugs-examples-vol1-equiv-equiv.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0010-models__example_models__bugs-examples-vol1-equiv-equiv.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-equiv-equiv"
+    },
+    "request-0011-models__example_models__bugs-examples-vol1-litter-litter": {
+      "path": "models/example_models/bugs-examples-vol1-litter-litter",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0011-models__example_models__bugs-examples-vol1-litter-litter.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0011-models__example_models__bugs-examples-vol1-litter-litter.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-litter-litter"
+    },
+    "request-0012-models__example_models__bugs-examples-vol1-magnesium-magnesium": {
+      "path": "models/example_models/bugs-examples-vol1-magnesium-magnesium",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0012-models__example_models__bugs-examples-vol1-magnesium-magnesium.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0012-models__example_models__bugs-examples-vol1-magnesium-magnesium.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-magnesium-magnesium"
+    },
+    "request-0013-models__example_models__bugs-examples-vol1-rats-rats": {
+      "path": "models/example_models/bugs-examples-vol1-rats-rats",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0013-models__example_models__bugs-examples-vol1-rats-rats.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0013-models__example_models__bugs-examples-vol1-rats-rats.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-rats-rats"
+    },
+    "request-0014-models__example_models__bugs-examples-vol1-salm-salm": {
+      "path": "models/example_models/bugs-examples-vol1-salm-salm",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0014-models__example_models__bugs-examples-vol1-salm-salm.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0014-models__example_models__bugs-examples-vol1-salm-salm.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol1-salm-salm"
+    },
+    "request-0015-models__example_models__bugs-examples-vol2-alli-alli2": {
+      "path": "models/example_models/bugs-examples-vol2-alli-alli2",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0015-models__example_models__bugs-examples-vol2-alli-alli2.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0015-models__example_models__bugs-examples-vol2-alli-alli2.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-alli-alli2"
+    },
+    "request-0016-models__example_models__bugs-examples-vol2-birats-birats": {
+      "path": "models/example_models/bugs-examples-vol2-birats-birats",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0016-models__example_models__bugs-examples-vol2-birats-birats.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0016-models__example_models__bugs-examples-vol2-birats-birats.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-birats-birats"
+    },
+    "request-0017-models__example_models__bugs-examples-vol2-cervix-cervix2": {
+      "path": "models/example_models/bugs-examples-vol2-cervix-cervix2",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0017-models__example_models__bugs-examples-vol2-cervix-cervix2.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0017-models__example_models__bugs-examples-vol2-cervix-cervix2.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-cervix-cervix2"
+    },
+    "request-0018-models__example_models__bugs-examples-vol2-hearts-hearts": {
+      "path": "models/example_models/bugs-examples-vol2-hearts-hearts",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0018-models__example_models__bugs-examples-vol2-hearts-hearts.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0018-models__example_models__bugs-examples-vol2-hearts-hearts.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-hearts-hearts"
+    },
+    "request-0019-models__example_models__bugs-examples-vol2-orange-orange": {
+      "path": "models/example_models/bugs-examples-vol2-orange-orange",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0019-models__example_models__bugs-examples-vol2-orange-orange.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0019-models__example_models__bugs-examples-vol2-orange-orange.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-orange-orange"
+    },
+    "request-0020-models__example_models__bugs-examples-vol2-schools-schools-4": {
+      "path": "models/example_models/bugs-examples-vol2-schools-schools-4",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0020-models__example_models__bugs-examples-vol2-schools-schools-4.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0020-models__example_models__bugs-examples-vol2-schools-schools-4.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol2-schools-schools-4"
+    },
+    "request-0021-models__example_models__bugs-examples-vol3-data-cloning-seeds": {
+      "path": "models/example_models/bugs-examples-vol3-data-cloning-seeds",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0021-models__example_models__bugs-examples-vol3-data-cloning-seeds.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0021-models__example_models__bugs-examples-vol3-data-cloning-seeds.request.json",
+      "safe_dir": "models_safe/example_models/bugs-examples-vol3-data-cloning-seeds"
+    },
+    "request-0022-models__example_models__knitr-irt-irt-1pl-hier": {
+      "path": "models/example_models/knitr-irt-irt-1pl-hier",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0022-models__example_models__knitr-irt-irt-1pl-hier.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0022-models__example_models__knitr-irt-irt-1pl-hier.request.json",
+      "safe_dir": "models_safe/example_models/knitr-irt-irt-1pl-hier"
+    },
+    "request-0023-models__example_models__knitr-lotka-volterra-lotka-volterra": {
+      "path": "models/example_models/knitr-lotka-volterra-lotka-volterra",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0023-models__example_models__knitr-lotka-volterra-lotka-volterra.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0023-models__example_models__knitr-lotka-volterra-lotka-volterra.request.json",
+      "safe_dir": "models_safe/example_models/knitr-lotka-volterra-lotka-volterra"
+    },
+    "request-0024-models__example_models__knitr-neural-nets-nn": {
+      "path": "models/example_models/knitr-neural-nets-nn",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0024-models__example_models__knitr-neural-nets-nn.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0024-models__example_models__knitr-neural-nets-nn.request.json",
+      "safe_dir": "models_safe/example_models/knitr-neural-nets-nn"
+    },
+    "request-0025-models__example_models__knitr-neural-nets-nn-k-minus-1": {
+      "path": "models/example_models/knitr-neural-nets-nn-k-minus-1",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0025-models__example_models__knitr-neural-nets-nn-k-minus-1.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0025-models__example_models__knitr-neural-nets-nn-k-minus-1.request.json",
+      "safe_dir": "models_safe/example_models/knitr-neural-nets-nn-k-minus-1"
+    },
+    "request-0026-models__example_models__knitr-neural-nets-nn-simple": {
+      "path": "models/example_models/knitr-neural-nets-nn-simple",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0026-models__example_models__knitr-neural-nets-nn-simple.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0026-models__example_models__knitr-neural-nets-nn-simple.request.json",
+      "safe_dir": "models_safe/example_models/knitr-neural-nets-nn-simple"
+    },
+    "request-0027-models__example_models__misc-cluster-lda-lda": {
+      "path": "models/example_models/misc-cluster-lda-lda",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0027-models__example_models__misc-cluster-lda-lda.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0027-models__example_models__misc-cluster-lda-lda.request.json",
+      "safe_dir": "models_safe/example_models/misc-cluster-lda-lda"
+    },
+    "request-0028-models__example_models__misc-gaussian-process-gp-sim-multi-output": {
+      "path": "models/example_models/misc-gaussian-process-gp-sim-multi-output",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0028-models__example_models__misc-gaussian-process-gp-sim-multi-output.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0028-models__example_models__misc-gaussian-process-gp-sim-multi-output.request.json",
+      "safe_dir": "models_safe/example_models/misc-gaussian-process-gp-sim-multi-output"
+    },
+    "request-0029-models__example_models__misc-hmm-hmm-sufficient": {
+      "path": "models/example_models/misc-hmm-hmm-sufficient",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0029-models__example_models__misc-hmm-hmm-sufficient.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0029-models__example_models__misc-hmm-hmm-sufficient.request.json",
+      "safe_dir": "models_safe/example_models/misc-hmm-hmm-sufficient"
+    },
+    "request-0030-models__example_models__misc-multi-logit-multi-logit": {
+      "path": "models/example_models/misc-multi-logit-multi-logit",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0030-models__example_models__misc-multi-logit-multi-logit.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0030-models__example_models__misc-multi-logit-multi-logit.request.json",
+      "safe_dir": "models_safe/example_models/misc-multi-logit-multi-logit"
+    },
+    "request-0031-models__example_models__misc-nnmf-nnmf": {
+      "path": "models/example_models/misc-nnmf-nnmf",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0031-models__example_models__misc-nnmf-nnmf.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0031-models__example_models__misc-nnmf-nnmf.request.json",
+      "safe_dir": "models_safe/example_models/misc-nnmf-nnmf"
+    },
+    "request-0032-models__example_models__misc-nnmf-nnmf-vec": {
+      "path": "models/example_models/misc-nnmf-nnmf-vec",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0032-models__example_models__misc-nnmf-nnmf-vec.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0032-models__example_models__misc-nnmf-nnmf-vec.request.json",
+      "safe_dir": "models_safe/example_models/misc-nnmf-nnmf-vec"
+    },
+    "request-0033-models__example_models__misc-sur-sur": {
+      "path": "models/example_models/misc-sur-sur",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0033-models__example_models__misc-sur-sur.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0033-models__example_models__misc-sur-sur.request.json",
+      "safe_dir": "models_safe/example_models/misc-sur-sur"
+    },
+    "request-0034-models__forestdb__arithmetic": {
+      "path": "models/forestdb/arithmetic",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0034-models__forestdb__arithmetic.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0034-models__forestdb__arithmetic.request.json",
+      "safe_dir": "models_safe/forestdb/arithmetic"
+    },
+    "request-0035-models__forestdb__hdp": {
+      "path": "models/forestdb/hdp",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0035-models__forestdb__hdp.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0035-models__forestdb__hdp.request.json",
+      "safe_dir": "models_safe/forestdb/hdp"
+    },
+    "request-0036-models__forestdb__infinite-hmm": {
+      "path": "models/forestdb/infinite-hmm",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0036-models__forestdb__infinite-hmm.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0036-models__forestdb__infinite-hmm.request.json",
+      "safe_dir": "models_safe/forestdb/infinite-hmm"
+    },
+    "request-0037-models__forestdb__infinite-pcfg": {
+      "path": "models/forestdb/infinite-pcfg",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0037-models__forestdb__infinite-pcfg.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0037-models__forestdb__infinite-pcfg.request.json",
+      "safe_dir": "models_safe/forestdb/infinite-pcfg"
+    },
+    "request-0038-models__forestdb__lda": {
+      "path": "models/forestdb/lda",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0038-models__forestdb__lda.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0038-models__forestdb__lda.request.json",
+      "safe_dir": "models_safe/forestdb/lda"
+    },
+    "request-0039-models__forestdb__markov-model": {
+      "path": "models/forestdb/markov-model",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0039-models__forestdb__markov-model.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0039-models__forestdb__markov-model.request.json",
+      "safe_dir": "models_safe/forestdb/markov-model"
+    },
+    "request-0040-models__forestdb__ncrp-hdp": {
+      "path": "models/forestdb/ncrp-hdp",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0040-models__forestdb__ncrp-hdp.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0040-models__forestdb__ncrp-hdp.request.json",
+      "safe_dir": "models_safe/forestdb/ncrp-hdp"
+    },
+    "request-0041-models__forestdb__neural-net": {
+      "path": "models/forestdb/neural-net",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0041-models__forestdb__neural-net.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0041-models__forestdb__neural-net.request.json",
+      "safe_dir": "models_safe/forestdb/neural-net"
+    },
+    "request-0042-models__forestdb__pcfg": {
+      "path": "models/forestdb/pcfg",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0042-models__forestdb__pcfg.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0042-models__forestdb__pcfg.request.json",
+      "safe_dir": "models_safe/forestdb/pcfg"
+    },
+    "request-0043-models__forestdb__pdia": {
+      "path": "models/forestdb/pdia",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0043-models__forestdb__pdia.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0043-models__forestdb__pdia.request.json",
+      "safe_dir": "models_safe/forestdb/pdia"
+    },
+    "request-0044-models__posteriordb__dogs-dogs-hierarchical": {
+      "path": "models/posteriordb/dogs-dogs-hierarchical",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0044-models__posteriordb__dogs-dogs-hierarchical.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0044-models__posteriordb__dogs-dogs-hierarchical.request.json",
+      "safe_dir": "models_safe/posteriordb/dogs-dogs-hierarchical"
+    },
+    "request-0045-models__posteriordb__dogs-dogs-nonhierarchical": {
+      "path": "models/posteriordb/dogs-dogs-nonhierarchical",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0045-models__posteriordb__dogs-dogs-nonhierarchical.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0045-models__posteriordb__dogs-dogs-nonhierarchical.request.json",
+      "safe_dir": "models_safe/posteriordb/dogs-dogs-nonhierarchical"
+    },
+    "request-0046-models__posteriordb__hudson-lynx-hare-lotka-volterra": {
+      "path": "models/posteriordb/hudson-lynx-hare-lotka-volterra",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0046-models__posteriordb__hudson-lynx-hare-lotka-volterra.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0046-models__posteriordb__hudson-lynx-hare-lotka-volterra.request.json",
+      "safe_dir": "models_safe/posteriordb/hudson-lynx-hare-lotka-volterra"
+    },
+    "request-0047-models__posteriordb__lsat-data-lsat-model": {
+      "path": "models/posteriordb/lsat-data-lsat-model",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0047-models__posteriordb__lsat-data-lsat-model.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0047-models__posteriordb__lsat-data-lsat-model.request.json",
+      "safe_dir": "models_safe/posteriordb/lsat-data-lsat-model"
+    },
+    "request-0048-models__posteriordb__mnist-100-nn-rbm1bj10": {
+      "path": "models/posteriordb/mnist-100-nn-rbm1bj10",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0048-models__posteriordb__mnist-100-nn-rbm1bj10.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0048-models__posteriordb__mnist-100-nn-rbm1bj10.request.json",
+      "safe_dir": "models_safe/posteriordb/mnist-100-nn-rbm1bj10"
+    },
+    "request-0049-models__posteriordb__mnist-nn-rbm1bj100": {
+      "path": "models/posteriordb/mnist-nn-rbm1bj100",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0049-models__posteriordb__mnist-nn-rbm1bj100.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0049-models__posteriordb__mnist-nn-rbm1bj100.request.json",
+      "safe_dir": "models_safe/posteriordb/mnist-nn-rbm1bj100"
+    },
+    "request-0050-models__posteriordb__state-wide-presidential-votes-hierarchical-gp": {
+      "path": "models/posteriordb/state-wide-presidential-votes-hierarchical-gp",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0050-models__posteriordb__state-wide-presidential-votes-hierarchical-gp.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0050-models__posteriordb__state-wide-presidential-votes-hierarchical-gp.request.json",
+      "safe_dir": "models_safe/posteriordb/state-wide-presidential-votes-hierarchical-gp"
+    },
+    "request-0051-models__posteriordb__three-men3-ldak2": {
+      "path": "models/posteriordb/three-men3-ldak2",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0051-models__posteriordb__three-men3-ldak2.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0051-models__posteriordb__three-men3-ldak2.request.json",
+      "safe_dir": "models_safe/posteriordb/three-men3-ldak2"
+    },
+    "request-0052-models__stancon_talks__2017-contributed-talks-01-auerbach-model": {
+      "path": "models/stancon_talks/2017-contributed-talks-01-auerbach-model",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0052-models__stancon_talks__2017-contributed-talks-01-auerbach-model.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0052-models__stancon_talks__2017-contributed-talks-01-auerbach-model.request.json",
+      "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-01-auerbach-model"
+    },
+    "request-0053-models__stancon_talks__2017-contributed-talks-02-kharratzadeh-epl-model": {
+      "path": "models/stancon_talks/2017-contributed-talks-02-kharratzadeh-epl-model",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0053-models__stancon_talks__2017-contributed-talks-02-kharratzadeh-epl-model.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0053-models__stancon_talks__2017-contributed-talks-02-kharratzadeh-epl-model.request.json",
+      "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-02-kharratzadeh-epl-model"
+    },
+    "request-0054-models__stancon_talks__2017-contributed-talks-03-lei-stancon-model": {
+      "path": "models/stancon_talks/2017-contributed-talks-03-lei-stancon-model",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0054-models__stancon_talks__2017-contributed-talks-03-lei-stancon-model.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0054-models__stancon_talks__2017-contributed-talks-03-lei-stancon-model.request.json",
+      "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-03-lei-stancon-model"
+    },
+    "request-0055-models__stancon_talks__2017-contributed-talks-08-trangucci-stan-models-gp-pres-forecast-hier": {
+      "path": "models/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-gp-pres-forecast-hier",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0055-models__stancon_talks__2017-contributed-talks-08-trangucci-stan-models-gp-pres-forecast-hier.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0055-models__stancon_talks__2017-contributed-talks-08-trangucci-stan-models-gp-pres-forecast-hier.request.json",
+      "safe_dir": "models_safe/stancon_talks/2017-contributed-talks-08-trangucci-stan-models-gp-pres-forecast-hier"
+    },
+    "request-0056-models__stancon_talks__2018-contributed-talks-12-vamvourellis-modelcode": {
+      "path": "models/stancon_talks/2018-contributed-talks-12-vamvourellis-modelcode",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0056-models__stancon_talks__2018-contributed-talks-12-vamvourellis-modelcode.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0056-models__stancon_talks__2018-contributed-talks-12-vamvourellis-modelcode.request.json",
+      "safe_dir": "models_safe/stancon_talks/2018-contributed-talks-12-vamvourellis-modelcode"
+    },
+    "request-0057-models__stancon_talks__2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-constant-synthesis": {
+      "path": "models/stancon_talks/2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-constant-synthesis",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0057-models__stancon_talks__2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-constant-synthesis.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0057-models__stancon_talks__2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-constant-synthesis.request.json",
+      "safe_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-modrak-genexpi-stan-stan-constant-synthesis"
+    },
+    "request-0058-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-bridgesampling-models-epl-model-retain-cnst": {
+      "path": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-bridgesampling-models-epl-model-retain-cnst",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0058-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-bridgesampling-models-epl-model-retain-cnst.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0058-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-bridgesampling-models-epl-model-retain-cnst.request.json",
+      "safe_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-bridgesampling-models-epl-model-retain-cnst"
+    },
+    "request-0059-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-art-turf": {
+      "path": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-art-turf",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0059-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-art-turf.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0059-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-art-turf.request.json",
+      "safe_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-art-turf"
+    },
+    "request-0060-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-att-def": {
+      "path": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-att-def",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0060-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-att-def.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0060-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-att-def.request.json",
+      "safe_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-att-def"
+    },
+    "request-0061-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-ha": {
+      "path": "models/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-ha",
+      "prompt_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0061-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-ha.prompt.txt",
+      "request_path": "runs_metadata/safestan-compile-rerun-61-20260429Tbatch/requests/request-0061-models__stancon_talks__2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-ha.request.json",
+      "safe_dir": "models_safe/stancon_talks/2018-helsinki-contributed-talks-verhoeven-artificial-turf-predictive-master-models-epl-model-no-ha"
+    }
+  },
+  "model": "gpt-5.5",
+  "prompt_cache_key": "safestan-translation-v1",
+  "prompt_cache_retention": "24h",
+  "reasoning_effort": "high",
+  "run_id": "safestan-compile-rerun-61-20260429Tbatch",
+  "safe_root": "models_safe",
+  "service_tier": "flex",
+  "total": 61
+}

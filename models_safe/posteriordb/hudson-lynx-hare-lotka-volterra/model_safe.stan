@@ -22,7 +22,8 @@ data {
   int<lower=0> N; // number of measurement times
   array[N] real ts; // measurement times > 0
   array[2] real y_init; // initial measured populations
-  array[N, 2] real<lower=0> y; // measured populations
+  vector<lower=0>[N] y_1; // measured prey populations
+  vector<lower=0>[N] y_2; // measured predator populations
 }
 transformed data {
   array[4] real theta_mu = {1, 0.05, 1, 0.05};
@@ -40,8 +41,8 @@ transformed parameters {
 }
 model {
   array[2] real log_z_init;
-  array[N, 2] real log_z;
-  array[N, 2] real sigma_y;
+  vector[N] log_z_1;
+  vector[N] log_z_2;
 
   theta ~ normal(theta_mu, theta_sigma);
   sigma ~ lognormal(-1, 1);
@@ -51,14 +52,13 @@ model {
     log_z_init[k] = log(z_init[k]);
   }
   for (n in 1 : N) {
-    for (k in 1 : 2) {
-      log_z[n, k] = log(z[n, k]);
-      sigma_y[n, k] = sigma[k];
-    }
+    log_z_1[n] = log(z[n, 1]);
+    log_z_2[n] = log(z[n, 2]);
   }
 
   y_init ~ lognormal(log_z_init, sigma);
-  y ~ lognormal(log_z, sigma_y);
+  y_1 ~ lognormal(log_z_1, sigma[1]);
+  y_2 ~ lognormal(log_z_2, sigma[2]);
 }
 generated quantities {
   array[2] real y_init_rep;

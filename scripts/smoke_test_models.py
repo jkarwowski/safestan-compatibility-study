@@ -14,7 +14,7 @@ import os
 import signal
 import subprocess
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -23,6 +23,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MODELS_ROOT = ROOT / "models"
+DEFAULT_SAFE_ROOT = ROOT / "models_safe"
 DEFAULT_OUTPUT_ROOT_BASE = Path("/tmp/stan-collection-runs")
 
 
@@ -47,6 +48,27 @@ def timestamp() -> str:
 
 def discover_models(models_root: Path) -> list[Path]:
     return sorted(path.parent for path in models_root.glob("*/*/run.py") if (path.parent / "model.stan").exists())
+
+
+def discover_safe_models(safe_root: Path) -> list[Path]:
+    models: list[Path] = []
+    for record_path in safe_root.glob("*/*/api/record.json"):
+        try:
+            record = load_existing(record_path) or {}
+        except json.JSONDecodeError:
+            continue
+        if record.get("compatibility") not in {"as-is", "minor"}:
+            continue
+        model = ROOT / str(record.get("path", ""))
+        safe_dir = ROOT / str(record.get("safe_dir", ""))
+        if (
+            (model / "run.py").exists()
+            and (model / "model.stan").exists()
+            and (safe_dir / "model_safe.stan").exists()
+            and (safe_dir / "data_safe.json").exists()
+        ):
+            models.append(model.resolve())
+    return sorted(set(models))
 
 
 def rel_model(path: Path) -> str:
@@ -99,7 +121,7 @@ def log_tail(path: Path, lines: int = 80) -> list[str]:
 
 
 def cleanup_model_build_artifacts(model_dir: Path) -> None:
-    for name in ("model", "model.o", "model.hpp"):
+    for name in ("model", "model.o", "model.hpp", "model_safe", "model_safe.o", "model_safe.hpp"):
         path = model_dir / name
         if path.exists() and path.is_file():
             path.unlink()
@@ -117,6 +139,8 @@ def run_one(
     force_recompile: bool,
     cleanup_exe: bool,
     refresh: int,
+    safe: bool,
+    safe_root: Path,
 ) -> SmokeResult:
     rel = rel_model(model_dir)
     output_dir = output_root / rel
@@ -140,6 +164,8 @@ def run_one(
         "--output-dir",
         str(output_dir),
     ]
+    if safe:
+        command.extend(["--safe", "--safe-root", str(safe_root)])
     if force_recompile:
         command.append("--force-recompile")
 
@@ -178,7 +204,7 @@ def run_one(
     ok = returncode == 0 and csv_count == chains and run_json_exists
 
     if cleanup_exe:
-        cleanup_model_build_artifacts(model_dir)
+        cleanup_model_build_artifacts(safe_root / model_dir.relative_to(ROOT / "models") if safe else model_dir)
 
     return SmokeResult(
         model=rel,
@@ -232,6 +258,8 @@ def report_payload(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--models-root", type=Path, default=DEFAULT_MODELS_ROOT)
+    parser.add_argument("--safe-root", type=Path, default=DEFAULT_SAFE_ROOT)
+    parser.add_argument("--safe", action="store_true", help="Run generated SafeStan translations instead of original Stan.")
     parser.add_argument("--cmdstan", type=Path, default=Path(os.environ.get("CMDSTAN", "/Users/jacski/safe_stan/cmdstan")))
     parser.add_argument("--run-id", default=f"smoke-{timestamp()}")
     parser.add_argument("--output-root", type=Path, help="Defaults to /tmp/stan-collection-runs/<run-id>.")
@@ -256,6 +284,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     models_root = args.models_root.expanduser().resolve()
+    safe_root = args.safe_root.expanduser().resolve()
     cmdstan = args.cmdstan.expanduser().resolve()
     run_id = args.run_id
     output_root = (args.output_root or DEFAULT_OUTPUT_ROOT_BASE / run_id).expanduser().resolve()
@@ -271,7 +300,7 @@ def main() -> int:
             selected.extend(explicit_model_dirs(args.model_dir, models_root))
         models = sorted(set(selected))
     else:
-        models = discover_models(models_root)
+        models = discover_safe_models(safe_root) if args.safe else discover_models(models_root)
     existing_results: list[SmokeResult] = []
     completed_ok: set[str] = set()
     if args.resume:
@@ -319,6 +348,8 @@ def main() -> int:
         "force_recompile": not args.no_force_recompile,
         "cleanup_exe": not args.keep_executables,
         "refresh": args.refresh,
+        "safe": args.safe,
+        "safe_root": safe_root,
     }
 
     if jobs == 1:
@@ -332,7 +363,7 @@ def main() -> int:
             if not result.ok and not args.continue_on_failure:
                 break
     else:
-        with ThreadPoolExecutor(max_workers=jobs) as executor:
+        with ProcessPoolExecutor(max_workers=jobs) as executor:
             futures = {executor.submit(run_one, model_dir=model_dir, **common): model_dir for model_dir in todo}
             for index, future in enumerate(as_completed(futures), 1):
                 result = future.result()

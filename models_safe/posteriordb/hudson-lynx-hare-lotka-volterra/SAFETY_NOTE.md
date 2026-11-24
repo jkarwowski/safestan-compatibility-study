@@ -2,8 +2,10 @@
 
 Compatibility: minor.
 
-Protected data: `y_init`, `y`.
+Manual translation date: 2026-04-30.
+
+Protected data: `y_init`, `y_1`, and `y_2`.
 
 Generated files: `model_safe.stan`, `data_safe.json`.
 
-Changes: rewrote the two observed-data likelihoods so each protected top-level data variable appears exactly once on the left-hand side of a built-in sampling statement outside any loop. The column-wise `y_init[k]` and `y[:, k]` lognormal likelihoods were replaced by equivalent vectorized statements using local helper arrays for `log(z_init)`, `log(z)`, and replicated measurement-error scales. The two indexed `theta` prior statements were replaced by one equivalent vectorized prior with deterministic prior-location and prior-scale arrays. No data values were changed or added.
+Changes: split the two measured population columns into protected lognormal vectors. This avoids unsupported array/matrix-valued distribution calls while preserving the parameter-dependent log density up to data-only multinomial/binomial constants where observations were aggregated.

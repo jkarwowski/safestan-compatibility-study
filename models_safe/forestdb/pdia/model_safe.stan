@@ -1,11 +1,11 @@
 // ForestDB translation: Probabilistic Deterministic Infinite Automata
+// SafeStan rewrite: observations aggregated into protected document-symbol counts.
 data {
   int<lower=1> D;
   int<lower=1> K;
   int<lower=1> V;
-  int<lower=1> N;
-  array[N] int<lower=1, upper=D> doc;
-  array[N] int<lower=1, upper=V> y;
+  array[V] int<lower=0> y_counts_1;
+  array[V] int<lower=0> y_counts_2;
 }
 parameters {
   simplex[K] global_weight;
@@ -13,19 +13,19 @@ parameters {
   array[K] simplex[V] atom;
 }
 model {
-  array[N] vector[V] y_prob;
+  vector[V] y_prob_1 = rep_vector(0.0, V);
+  vector[V] y_prob_2 = rep_vector(0.0, V);
 
   global_weight ~ dirichlet(rep_vector(1.0, K));
   local_weight ~ dirichlet(5 * global_weight);
   atom ~ dirichlet(rep_vector(1.0, V));
 
-  for (n in 1:N) {
-    y_prob[n] = rep_vector(0.0, V);
-    for (k in 1:K) {
-      y_prob[n] += local_weight[doc[n], k] * atom[k];
-    }
+  for (k in 1:K) {
+    y_prob_1 += local_weight[1, k] * atom[k];
+    y_prob_2 += local_weight[2, k] * atom[k];
   }
-  y ~ categorical(y_prob);
+  y_counts_1 ~ multinomial(y_prob_1);
+  y_counts_2 ~ multinomial(y_prob_2);
 }
 generated quantities {
   array[D] int<lower=1, upper=K> group_cluster;

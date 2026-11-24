@@ -12,18 +12,36 @@ data {
 }
 parameters {
   vector[K - 1] alpha0;
-  matrix[I - 1, K - 1] beta0;
-  matrix[J - 1, K - 1] gamma0;
-  matrix[I, J] lambda;
+  vector[(I - 1) * (K - 1)] beta0_raw;
+  vector[(J - 1) * (K - 1)] gamma0_raw;
+  vector[I * J] lambda_raw;
 }
 transformed parameters {
   vector[K] alpha;
+  matrix[I - 1, K - 1] beta0;
+  matrix[J - 1, K - 1] gamma0;
+  matrix[I, J] lambda;
   array[I] vector[K] beta;
   array[J] vector[K] gamma;
   
   alpha[1] = 0;
   for (k in 1 : (K - 1)) {
     alpha[k + 1] = alpha0[k];
+  }
+  for (i in 1 : (I - 1)) {
+    for (k in 1 : (K - 1)) {
+      beta0[i, k] = beta0_raw[(i - 1) * (K - 1) + k];
+    }
+  }
+  for (j in 1 : (J - 1)) {
+    for (k in 1 : (K - 1)) {
+      gamma0[j, k] = gamma0_raw[(j - 1) * (K - 1) + k];
+    }
+  }
+  for (i in 1 : I) {
+    for (j in 1 : J) {
+      lambda[i, j] = lambda_raw[(i - 1) * J + j];
+    }
   }
   
   for (i in 1 : I) {
@@ -57,9 +75,9 @@ model {
   int pos;
   
   alpha0 ~ normal(0, 320);
-  beta0 ~ normal(0, 320);
-  gamma0 ~ normal(0, 320);
-  lambda ~ normal(0, 320);
+  beta0_raw ~ normal(0, 320);
+  gamma0_raw ~ normal(0, 320);
+  lambda_raw ~ normal(0, 320);
   
   pos = 1;
   for (i in 1 : I) {

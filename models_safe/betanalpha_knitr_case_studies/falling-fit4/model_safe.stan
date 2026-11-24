@@ -33,13 +33,13 @@ functions {
 data {
   // Detector calibration data
   int N_calibrations;
-  array[N_calibrations] real obs_t_calib;    // seconds
+  vector[N_calibrations] obs_t_calib;    // seconds
 
   // Falling data
   int N_heights;
   array[N_heights] real<lower=0> heights;    // meters
   int N_drops;
-  array[N_drops, N_heights] real obs_t_fall; // seconds
+  vector[N_drops * N_heights] obs_t_fall; // seconds, flattened by drop then height
 
   array[N_drops] real m;                     // kilograms
 }
@@ -64,11 +64,12 @@ model {
   obs_t_calib ~ normal(rep_vector(0, N_calibrations), sigma_t);
 
   {
-    array[N_drops, N_heights] real mu_t_fall;
+    vector[N_drops * N_heights] mu_t_fall;
 
     for (n in 1:N_drops) {
       for (h in 1:N_heights) {
-        mu_t_fall[n, h] = t_fall_air(g, heights[h], v0[n], k / 1000, m[n]);
+        mu_t_fall[(n - 1) * N_heights + h] =
+          t_fall_air(g, heights[h], v0[n], k / 1000, m[n]);
       }
     }
 

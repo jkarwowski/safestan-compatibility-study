@@ -1,6 +1,9 @@
 {
   "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-multivariate-hierarchical-ncp/api",
   "compatibility": "minor",
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Flattened y/theta_obs to vectors and flattened eta to a top-level vector so the observation and prior statements have valid plain identifiers.",
   "completed_at": "2026-04-29T00:57:04+00:00",
   "model": "gpt-5.5",
   "path": "models/betanalpha_knitr_case_studies/hierarchical-modeling-stan-programs-multivariate-hierarchical-ncp",

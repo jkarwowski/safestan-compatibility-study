@@ -61,6 +61,10 @@ model {
   mean_p ~ uniform(0, 1);
   
   // Define the multinomial likelihood
-  marr_j ~ multinomial(pr_j);
-  marr_a ~ multinomial(pr_a);
+  for (t in 1 : n_occ_minus_1) {
+    array[n_occasions] int marr_j_t = marr_j[t];
+    array[n_occasions] int marr_a_t = marr_a[t];
+    marr_j_t ~ multinomial(pr_j[t]);
+    marr_a_t ~ multinomial(pr_a[t]);
+  }
 }

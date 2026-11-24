@@ -3,18 +3,21 @@
   "compatibility": "minor",
   "completed_at": "2026-04-29T16:32:05+00:00",
   "data_filename": "data_original.json",
+  "manual_notes": "Manual SafeStan repair: regenerated full protected X data from data_original.json; kept the SafeStan-required flat G_raw parameterization because the original matrix parameter shape cannot receive a legal SafeStan prior.",
+  "manual_translated_at": "2026-04-30",
   "model": "gpt-5.5",
   "path": "models/example_models/misc-nnmf-nnmf-vec",
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [
-    "X"
+    "X_safestan_flat"
   ],
   "reasoning_effort": "high",
   "response_id": "resp_0fe0bc97e48c5f1b0069f231e89c6881a28580a9797f22adad",
   "safe_dir": "models_safe/example_models/misc-nnmf-nnmf-vec",
   "service_tier": "flex",
   "started_at": "2026-04-29T16:29:28+00:00",
+  "translation_method": "manual",
   "usage": {
     "input_tokens": 47083,
     "input_tokens_details": {

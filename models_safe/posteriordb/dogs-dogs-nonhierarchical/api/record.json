@@ -8,7 +8,7 @@
   "prompt_cache_key": "safestan-translation-v1",
   "prompt_cache_retention": "24h",
   "protected_variables": [
-    "y"
+    "y_successes"
   ],
   "reasoning_effort": "high",
   "response_id": "resp_03e0a8f3b8a399e20069f232579138819498d2b9d45d40f1c8",
@@ -27,5 +27,8 @@
     "total_tokens": 15420
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual rewrite aggregates dog-specific Bernoulli trials by identical histories and observes protected binomial successes."
 }

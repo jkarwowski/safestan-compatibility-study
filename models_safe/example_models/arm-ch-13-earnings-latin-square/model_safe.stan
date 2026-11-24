@@ -12,8 +12,8 @@ parameters {
   vector[n_eth] a2;
   vector[n_age] b1;
   vector[n_age] b2;
-  matrix[n_eth, n_age] c;
-  matrix[n_eth, n_age] d;
+  vector[n_eth * n_age] c_raw;
+  vector[n_eth * n_age] d_raw;
   real mu_a1;
   real mu_a2;
   real mu_b1;
@@ -29,7 +29,15 @@ parameters {
   real<lower=0, upper=100> sigma_y;
 }
 transformed parameters {
+  matrix[n_eth, n_age] c;
+  matrix[n_eth, n_age] d;
   vector[N] y_hat;
+  for (i in 1 : n_eth) {
+    for (j in 1 : n_age) {
+      c[i, j] = c_raw[(i - 1) * n_age + j];
+      d[i, j] = d_raw[(i - 1) * n_age + j];
+    }
+  }
   for (i in 1 : N) {
     y_hat[i] = a1[eth[i]] + a2[eth[i]] * x[i] + b1[age[i]]
                + b2[age[i]] * x[i] + c[eth[i], age[i]]
@@ -53,11 +61,11 @@ model {
   
   mu_c ~ normal(0, 1);
   sigma_c ~ uniform(0, 100);
-  c ~ normal(10 * mu_c, sigma_c);
+  c_raw ~ normal(10 * mu_c, sigma_c);
   
   mu_d ~ normal(0, 1);
   sigma_d ~ uniform(0, 100);
-  d ~ normal(0.1 * mu_d, sigma_d);
+  d_raw ~ normal(0.1 * mu_d, sigma_d);
   
   sigma_y ~ uniform(0, 100);
   y ~ normal(y_hat, sigma_y);

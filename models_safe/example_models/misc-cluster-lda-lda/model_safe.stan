@@ -25,5 +25,8 @@ model {
     }
   }
 
-  w ~ categorical(word_prob);
+  for (n in 1 : N) {
+    int w_n = w[n];
+    w_n ~ categorical(word_prob[n]);
+  }
 }

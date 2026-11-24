@@ -9,7 +9,8 @@
   "prompt_cache_retention": "24h",
   "protected_variables": [
     "y_init",
-    "y"
+    "y_1",
+    "y_2"
   ],
   "reasoning_effort": "high",
   "response_id": "resp_04e7cdde7fa036aa0069f232e79748819480f0f44fc1c08147",
@@ -28,5 +29,8 @@
     "total_tokens": 9166
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual rewrite splits the two measured population columns into protected lognormal vectors."
 }

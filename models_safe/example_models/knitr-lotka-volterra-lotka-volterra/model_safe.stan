@@ -23,6 +23,7 @@ data {
   array[N] real ts; // measurement times > 0
   array[2] real y_init; // initial measured populations
   array[N, 2] real<lower=0> y; // measured populations
+  vector<lower=0>[N * 2] y_safestan_flat;
 }
 transformed data {
   array[4] real theta_mean = {1.0, 0.05, 1.0, 0.05};
@@ -42,6 +43,8 @@ model {
   array[2] real log_z_init;
   array[N, 2] real log_z;
   array[N, 2] real sigma_y;
+  vector[N * 2] log_z_safestan_flat;
+  vector[N * 2] sigma_y_safestan_flat;
   
   theta ~ normal(theta_mean, theta_sd);
   sigma ~ lognormal(-1, 1);
@@ -51,10 +54,12 @@ model {
     for (n in 1 : N) {
       log_z[n, k] = log(z[n, k]);
       sigma_y[n, k] = sigma[k];
+      log_z_safestan_flat[(n - 1) * 2 + k] = log_z[n, k];
+      sigma_y_safestan_flat[(n - 1) * 2 + k] = sigma_y[n, k];
     }
   }
   y_init ~ lognormal(log_z_init, sigma);
-  y ~ lognormal(log_z, sigma_y);
+  y_safestan_flat ~ lognormal(log_z_safestan_flat, sigma_y_safestan_flat);
 }
 generated quantities {
   array[2] real y_init_rep;

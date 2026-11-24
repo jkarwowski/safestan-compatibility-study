@@ -8,7 +8,9 @@
   "prompt_cache_retention": "24h",
   "protected_variables": [
     "y_initial",
-    "y_tail"
+    "trans_counts_1",
+    "trans_counts_2",
+    "trans_counts_3"
   ],
   "reasoning_effort": "high",
   "response_id": "resp_0ff4a09b89f4ac670069f16db02f948191b7bd22853eb5293a",
@@ -27,5 +29,8 @@
     "total_tokens": 12477
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual rewrite aggregates transitions by lag state into protected multinomial counts."
 }

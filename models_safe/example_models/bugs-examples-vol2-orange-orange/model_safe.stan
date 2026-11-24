@@ -8,17 +8,24 @@ data {
   int<lower=0> N;
   array[N] int x;
   array[K, N] real Y;
+  vector[K * N] Y_safestan_flat;
 }
 parameters {
   real<lower=0> tau_C;
-  array[K, 3] real theta;
+  vector[K * 3] theta_raw;
   array[3] real mu;
   array[3] real<lower=0> tau;
 }
 transformed parameters {
+  array[K, 3] real theta;
   array[K, 3] real phi;
   array[3] real sigma;
   real sigma_C;
+  for (k in 1 : K) {
+    for (j in 1 : 3) {
+      theta[k, j] = theta_raw[(k - 1) * 3 + j];
+    }
+  }
   for (k in 1 : K) {
     phi[k, 1] = exp(theta[k, 1]);
     phi[k, 2] = exp(theta[k, 2]) - 1;
@@ -32,7 +39,10 @@ transformed parameters {
 model {
   array[K, 3] real mu_theta;
   array[K, 3] real sigma_theta;
+  vector[K * 3] mu_theta_flat;
+  vector[K * 3] sigma_theta_flat;
   array[K, N] real m;
+  vector[K * N] m_safestan_flat;
 
   tau_C ~ gamma(0.001, 0.001);
   mu ~ normal(0, 100);
@@ -42,14 +52,17 @@ model {
     for (j in 1 : 3) {
       mu_theta[k, j] = mu[j];
       sigma_theta[k, j] = sigma[j];
+      mu_theta_flat[(k - 1) * 3 + j] = mu_theta[k, j];
+      sigma_theta_flat[(k - 1) * 3 + j] = sigma_theta[k, j];
     }
   }
-  theta ~ normal(mu_theta, sigma_theta);
+  theta_raw ~ normal(mu_theta_flat, sigma_theta_flat);
 
   for (k in 1 : K) {
     for (n in 1 : N) {
       m[k, n] = phi[k, 1] / (1 + phi[k, 2] * exp(phi[k, 3] * x[n]));
+      m_safestan_flat[(k - 1) * N + n] = m[k, n];
     }
   }
-  Y ~ normal(m, sigma_C);
+  Y_safestan_flat ~ normal(m_safestan_flat, sigma_C);
 }

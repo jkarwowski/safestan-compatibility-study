@@ -21,7 +21,12 @@ model {
   matrix[N, D] f;
 
   L_Omega ~ lkj_corr_cholesky(3);
-  eta ~ normal(0, 1);
+  for (n in 1 : N) {
+    for (d in 1 : D) {
+      real eta_nd = eta[n, d];
+      eta_nd ~ normal(0, 1);
+    }
+  }
 
   {
     matrix[N, N] K = gp_exp_quad_cov(x, 1.0, rho);
@@ -36,7 +41,12 @@ model {
     f = L_K * eta * diag_pre_multiply(alpha, L_Omega)';
   }
 
-  y ~ normal(f, sigma);
+  for (n in 1 : N) {
+    for (d in 1 : D) {
+      real y_nd = y[n, d];
+      y_nd ~ normal(f[n, d], sigma);
+    }
+  }
 }
 generated quantities {
   matrix[D, D] Omega;

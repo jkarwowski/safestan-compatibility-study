@@ -23,12 +23,17 @@ parameters {
   real<lower=1> nu;                    // t-dist degree of freedom
   real<lower=0> sigma_y;               // score_diff variation
   row_vector<lower=0>[n_teams] sigma_a_raw; // game-to-game variation
-  matrix[n_weeks,n_teams] eta_a;         // random component
+  vector[n_weeks * n_teams] eta_a_flat;  // random component, flattened for SafeStan prior
 
 }
 transformed parameters {
   matrix[n_weeks, n_teams] a;                        // team abilities
+  matrix[n_weeks,n_teams] eta_a;         // random component
   row_vector<lower=0>[n_teams] sigma_a; // game-to-game variation
+  for (w in 1:n_weeks) {
+    for (t in 1:n_teams)
+      eta_a[w, t] = eta_a_flat[(w - 1) * n_teams + t];
+  }
   a[1] = b_prev * prev_perf + sigma_a0 * eta_a[1]; // initial abilities (at week 1)
   sigma_a = tau_a * sigma_a_raw;
   for (w in 2:n_weeks) {
@@ -46,7 +51,7 @@ model {
   art_turf_effect ~ normal(0, 5);
   sigma_a_raw ~ normal(0,1);
   tau_a ~ cauchy(0,1);
-  eta_a ~ normal(0,1);
+  eta_a_flat ~ normal(0,1);
   // Likelihood
   for (g in 1:n_games) {
     a_diff[g] = art_turf_effect * art_turf[g] + a[home_week[g],home_team[g]] - a[away_week[g],away_team[g]];

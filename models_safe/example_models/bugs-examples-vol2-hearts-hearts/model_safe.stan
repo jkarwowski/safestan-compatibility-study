@@ -48,7 +48,10 @@ model {
     }
   }
 
-  y_cat ~ categorical(y_prob);
+  for (i in 1 : N) {
+    int y_cat_i = y_cat[i];
+    y_cat_i ~ categorical(y_prob[i]);
+  }
 }
 generated quantities {
   real beta;

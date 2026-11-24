@@ -27,5 +27,8 @@
     "total_tokens": 25192
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual attempt: observation-specific categorical probabilities require indexed protected observations; current SafeStan rejects protected data use before a plain top-level observation."
 }

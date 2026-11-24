@@ -32,6 +32,15 @@ Proper distribution path only:
 Sampling statements may target only protected top-level data variables or top-level parameter variables.
 Sampling statements must resolve to built-in Stan distributions.
 User-defined distributions are rejected in ~.
+Sampling statements must also be valid Stan type signatures. Do not invent vectorization.
+In particular, do not write distribution calls with `matrix`, `array[,]`, or `array[] vector`
+arguments unless Stan supports that exact distribution signature. If a protected observation is a
+matrix or two-dimensional array, either rewrite it into a deterministic top-level one-dimensional
+protected copy with a matching one-dimensional parameterization, or classify the model as `major`.
+If the likelihood has row-specific or element-specific parameters that cannot be represented by a
+single valid built-in distribution call on a plain top-level protected identifier, classify the
+model as `major`; do not fake vectorization such as `categorical(array[] int, array[] vector)` or
+`normal(matrix, vector, real)`.
 Strict parameter discipline:
 
 Each parameter must appear in exactly one sampling statement.
@@ -75,6 +84,12 @@ Requirements:
 - If you add fields to `data_safe_json`, document the exact deterministic
   relation in `safety_note_md`.
 - Preserve the intended posterior/log density for AS-IS and MINOR.
+- Before returning `as-is` or `minor`, type-check every sampling statement you emit against Stan's
+  built-in distribution signatures. If `stanc` would reject the `~` statement because of array,
+  matrix, or vector shape, return `major` instead of producing invalid Stan.
+- When adding deterministic protected copies or reshapes, every variable still declared in
+  `model_safe_stan` must be present in `data_safe_json`, and every added field in `data_safe_json`
+  must match the declared dimensions exactly.
 - `safety_note_md` must be Markdown beginning with `# SafeStan Safety Note` and
   include: compatibility, protected data choice, generated files, and a concise
   explanation of any change.

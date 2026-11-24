@@ -26,5 +26,8 @@
     "total_tokens": 10036
   },
   "wrote_data_safe": true,
-  "wrote_model_safe": true
+  "wrote_model_safe": true,
+  "translation_method": "manual",
+  "manual_translated_at": "2026-04-30",
+  "manual_notes": "Manual SafeStan rewrite: flattened offense/defense eta matrices for single top-level priors, rebuilt matrices deterministically, kept protected `goal_difference` in one vectorized student-t likelihood, and adjusted synthetic `n_weeks` to cover supplied week indexes."
 }

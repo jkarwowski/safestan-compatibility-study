@@ -17,6 +17,12 @@ model {
   theta ~ dirichlet(alpha);
   phi ~ dirichlet(beta);
 
-  trans ~ multinomial(theta);
-  emit ~ multinomial(phi);
+  for (k in 1 : K) {
+    array[K] int trans_k = trans[k];
+    trans_k ~ multinomial(theta[k]);
+  }
+  for (k in 1 : K) {
+    array[V] int emit_k = emit[k];
+    emit_k ~ multinomial(phi[k]);
+  }
 }

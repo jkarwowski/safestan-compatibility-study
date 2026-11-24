@@ -4,6 +4,7 @@ data {
   array[T] real x;
   real xbar;
   array[N, T] real y;
+  vector[N * T] y_safestan_flat;
   cov_matrix[2] Omega;
 }
 parameters {
@@ -18,6 +19,7 @@ transformed parameters {
 }
 model {
   array[N, T] real eta;
+  vector[N * T] eta_safestan_flat;
 
   sigmasq_y ~ inv_gamma(0.001, 0.001);
   mu_beta ~ normal(0, 100);
@@ -27,7 +29,8 @@ model {
   for (n in 1 : N) {
     for (t in 1 : T) {
       eta[n, t] = beta[n, 1] + beta[n, 2] * x[t];
+      eta_safestan_flat[(n - 1) * T + t] = eta[n, t];
     }
   }
-  y ~ normal(eta, sigma_y);
+  y_safestan_flat ~ normal(eta_safestan_flat, sigma_y);
 }

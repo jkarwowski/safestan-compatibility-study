@@ -2,6 +2,8 @@
   "artifacts_dir": "models_safe/betanalpha_knitr_case_studies/factor-modeling-stan-programs-construct-inter-idx-general/api",
   "compatibility": "minor",
   "completed_at": "2026-04-29T00:50:14+00:00",
+  "manual_notes": "Manual data repair: adjusted synthetic factor dimensions to satisfy the original generated-quantities model while preserving the SafeStan translation.",
+  "manual_translated_at": "2026-04-30",
   "model": "gpt-5.5",
   "path": "models/betanalpha_knitr_case_studies/factor-modeling-stan-programs-construct-inter-idx-general",
   "prompt_cache_key": "safestan-translation-v1",
@@ -12,6 +14,7 @@
   "safe_dir": "models_safe/betanalpha_knitr_case_studies/factor-modeling-stan-programs-construct-inter-idx-general",
   "service_tier": "flex",
   "started_at": "2026-04-29T00:49:26+00:00",
+  "translation_method": "manual",
   "usage": {
     "input_tokens": 4265,
     "input_tokens_details": {
